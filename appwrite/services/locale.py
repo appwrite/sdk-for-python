@@ -1,20 +1,40 @@
-from appwrite.service import Service
+from ..service import Service
 
 
 class Locale(Service):
 
     def get(self):
         """Get User Locale"""
-        pass
+
+        params = {}
+        path = '/locale'
+
+        return self.client.call('get', path, {
+        }, params)
 
     def get_countries(self):
         """List Countries"""
-        pass
+
+        params = {}
+        path = '/locale/countries'
+
+        return self.client.call('get', path, {
+        }, params)
 
     def get_countries_e_u(self):
         """List EU Countries"""
-        pass
+
+        params = {}
+        path = '/locale/countries/eu'
+
+        return self.client.call('get', path, {
+        }, params)
 
     def get_countries_phones(self):
         """List Countries Phone Codes"""
-        pass
+
+        params = {}
+        path = '/locale/countries/phones'
+
+        return self.client.call('get', path, {
+        }, params)

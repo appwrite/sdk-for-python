@@ -1,44 +1,121 @@
-from appwrite.service import Service
+from ..service import Service
 
 
 class Auth(Service):
 
     def login(self, email, password, success='', failure=''):
         """Login User"""
-        pass
+
+        params = {}
+        path = '/auth/login'
+        params['email'] = email
+        params['password'] = password
+        params['success'] = success
+        params['failure'] = failure
+
+        return self.client.call('post', path, {
+        }, params)
 
     def logout(self):
         """Logout Current Session"""
-        pass
+
+        params = {}
+        path = '/auth/logout'
+
+        return self.client.call('delete', path, {
+        }, params)
 
     def logout_by_session(self, user_id):
         """Logout Specific Session"""
-        pass
+
+        params = {}
+        path = '/auth/logout/{userId}'
+        path.replace('{userId}', user_id)                
+
+        return self.client.call('delete', path, {
+        }, params)
 
     def recovery(self, email, redirect):
         """Password Recovery"""
-        pass
+
+        params = {}
+        path = '/auth/recovery'
+        params['email'] = email
+        params['redirect'] = redirect
+
+        return self.client.call('post', path, {
+        }, params)
 
     def recovery_reset(self, user_id, token, password_a, password_b):
         """Password Reset"""
-        pass
+
+        params = {}
+        path = '/auth/recovery/reset'
+        params['userId'] = user_id
+        params['token'] = token
+        params['password-a'] = password_a
+        params['password-b'] = password_b
+
+        return self.client.call('put', path, {
+        }, params)
 
     def register(self, email, password, redirect, name='', success='', failure=''):
         """Register User"""
-        pass
+
+        params = {}
+        path = '/auth/register'
+        params['email'] = email
+        params['password'] = password
+        params['name'] = name
+        params['redirect'] = redirect
+        params['success'] = success
+        params['failure'] = failure
+
+        return self.client.call('post', path, {
+        }, params)
 
     def confirm(self, user_id, token):
         """Confirm User"""
-        pass
+
+        params = {}
+        path = '/auth/register/confirm'
+        params['userId'] = user_id
+        params['token'] = token
+
+        return self.client.call('post', path, {
+        }, params)
 
     def confirm_resend(self, redirect):
         """Resend Confirmation"""
-        pass
+
+        params = {}
+        path = '/auth/register/confirm/resend'
+        params['redirect'] = redirect
+
+        return self.client.call('post', path, {
+        }, params)
 
     def oauth_callback(self, project_id, provider, code, state=''):
         """OAuth Callback"""
-        pass
+
+        params = {}
+        path = '/oauth/callback/{provider}/{projectId}'
+        path.replace('{projectId}', project_id)                
+        path.replace('{provider}', provider)                
+        params['code'] = code
+        params['state'] = state
+
+        return self.client.call('get', path, {
+        }, params)
 
     def oauth(self, provider, success='', failure=''):
         """OAuth Login"""
-        pass
+
+        params = {}
+        path = '/oauth/{provider}'
+        path.replace('{provider}', provider)                
+        params['success'] = success
+        params['failure'] = failure
+
+        return self.client.call('get', path, {
+        }, params)
