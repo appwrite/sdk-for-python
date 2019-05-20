@@ -11,7 +11,7 @@ setup(
   maintainer = 'Appwrite Team',
   maintainer_email = 'team@appwrite.io',
   url = 'https://appwrite.io/support',
-  download_url = 'https://github.com/user/reponame/archive/v_01.tar.gz',    # I explain this later on
+  download_url='https://github.com/appwrite/sdk-for-python/archive/v1.0.0.tar.gz',
   # keywords = ['SOME', 'MEANINGFULL', 'KEYWORDS'],
   install_requires=[
           'requests',
