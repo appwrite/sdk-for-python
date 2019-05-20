@@ -45,9 +45,25 @@ class Client:
         if params is None:
             params = {}
 
-        getattr(requests, method)(  # call method dynamically https://stackoverflow.com/a/4246075/2299554
+        data = {}
+        json = {}
+        headers = {**self._global_headers, **headers}
+
+        if method != 'get':
+            data = params
+            params = {}
+
+        if headers['content-type'] == 'application/json':
+            json = data
+            data = {}
+
+        response = getattr(requests, method)(  # call method dynamically https://stackoverflow.com/a/4246075/2299554
             url=self._endpoint + path,
             params=params,
-            headers={**self._global_headers, **headers},
+            data=data,
+            json=json,
+            headers=headers,
             verify=self._self_signed,
         )
+
+        return response

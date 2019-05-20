@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
   name = 'appwrite',
   packages = ['appwrite'],
-  version = 'v1.15.47',
+  version = 'v1.0.0',
   license='MIT',
   description = 'Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to [https://appwrite.io/docs](https://appwrite.io/docs)',
   author = 'Appwrite Team',
