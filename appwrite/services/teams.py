@@ -3,7 +3,10 @@ from ..service import Service
 
 class Teams(Service):
 
-    def update_team(self, collection_id, name, read="[]", write="[]", rules="[]"):
+    def update_team(self, collection_id, name, readstring(4) ""[]""
+=[], writestring(4) ""[]""
+=[], rulesstring(4) ""[]""
+=[]):
         """Update Team"""
 
         params = {}
@@ -30,7 +33,8 @@ class Teams(Service):
         return self.client.call('get', path, {
         }, params)
 
-    def create_team(self, name, roles="[\"owner\"]"):
+    def create_team(self, name, rolesstring(13) ""[\"owner\"]""
+=[]):
         """Create Team"""
 
         params = {}

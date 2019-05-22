@@ -16,7 +16,10 @@ class Database(Service):
         return self.client.call('get', path, {
         }, params)
 
-    def create_collection(self, name, read="[]", write="[]", rules="[]"):
+    def create_collection(self, name, readstring(4) ""[]""
+=[], writestring(4) ""[]""
+=[], rulesstring(4) ""[]""
+=[]):
         """Create Collection"""
 
         params = {}
@@ -29,7 +32,8 @@ class Database(Service):
         return self.client.call('post', path, {
         }, params)
 
-    def list_documents(self, collection_id, filters="[]", offset=0, limit=50, order_field='$uid', order_type='ASC', order_cast='string', search='', first=0, last=0):
+    def list_documents(self, collection_id, filtersstring(4) ""[]""
+=[], offset=0, limit=50, order_field='$uid', order_type='ASC', order_cast='string', search='', first=0, last=0):
         """List Documents"""
 
         params = {}
@@ -48,7 +52,9 @@ class Database(Service):
         return self.client.call('get', path, {
         }, params)
 
-    def create_document(self, collection_id, data, read="[]", write="[]", parent_document='', parent_property='', parent_property_type='assign'):
+    def create_document(self, collection_id, data, readstring(4) ""[]""
+=[], writestring(4) ""[]""
+=[], parent_document='', parent_property='', parent_property_type='assign'):
         """Create Document"""
 
         params = {}
@@ -85,7 +91,9 @@ class Database(Service):
         return self.client.call('get', path, {
         }, params)
 
-    def update_document(self, collection_id, document_id, data, read="[]", write="[]"):
+    def update_document(self, collection_id, document_id, data, readstring(4) ""[]""
+=[], writestring(4) ""[]""
+=[]):
         """Update Document"""
 
         params = {}

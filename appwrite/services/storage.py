@@ -16,7 +16,9 @@ class Storage(Service):
         return self.client.call('get', path, {
         }, params)
 
-    def create_file(self, files, read="[]", write="[]", folder_id=''):
+    def create_file(self, files, readstring(4) ""[]""
+=[], writestring(4) ""[]""
+=[], folder_id=''):
         """Create File"""
 
         params = {}
