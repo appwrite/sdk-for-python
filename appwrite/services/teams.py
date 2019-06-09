@@ -3,7 +3,7 @@ from ..service import Service
 
 class Teams(Service):
 
-    def update_team(self, collection_id, name, readstring(4) ""[]""
+    def update_collection(self, collection_id, name, readstring(4) ""[]""
 =[], writestring(4) ""[]""
 =[], rulesstring(4) ""[]""
 =[]):
