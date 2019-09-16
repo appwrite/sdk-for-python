@@ -1,14 +1,12 @@
 from ..service import Service
 
-
 class Avatars(Service):
-
     def get_browser(self, code, width=100, height=100, quality=100):
         """Get Browser Icon"""
 
         params = {}
         path = '/avatars/browsers/{code}'
-        path.replace('{code}', code)                
+        path.replace('{code}', code)
         params['width'] = width
         params['height'] = height
         params['quality'] = quality
@@ -21,7 +19,7 @@ class Avatars(Service):
 
         params = {}
         path = '/avatars/credit-cards/{code}'
-        path.replace('{code}', code)                
+        path.replace('{code}', code)
         params['width'] = width
         params['height'] = height
         params['quality'] = quality
@@ -44,7 +42,7 @@ class Avatars(Service):
 
         params = {}
         path = '/avatars/flags/{code}'
-        path.replace('{code}', code)                
+        path.replace('{code}', code)
         params['width'] = width
         params['height'] = height
         params['quality'] = quality

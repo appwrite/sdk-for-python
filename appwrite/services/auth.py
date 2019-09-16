@@ -1,8 +1,6 @@
 from ..service import Service
 
-
 class Auth(Service):
-
     def login(self, email, password, success='', failure=''):
         """Login User"""
 
@@ -30,7 +28,7 @@ class Auth(Service):
 
         params = {}
         path = '/auth/logout/{id}'
-        path.replace('{id}', id)                
+        path.replace('{id}', id)
 
         return self.client.call('delete', path, {
         }, params)
@@ -40,8 +38,8 @@ class Auth(Service):
 
         params = {}
         path = '/auth/oauth/callback/{provider}/{projectId}'
-        path.replace('{projectId}', project_id)                
-        path.replace('{provider}', provider)                
+        path.replace('{projectId}', project_id)
+        path.replace('{provider}', provider)
         params['code'] = code
         params['state'] = state
 
@@ -53,7 +51,7 @@ class Auth(Service):
 
         params = {}
         path = '/auth/oauth/{provider}'
-        path.replace('{provider}', provider)                
+        path.replace('{provider}', provider)
         params['success'] = success
         params['failure'] = failure
 

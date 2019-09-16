@@ -1,8 +1,8 @@
+# theres a lot of weird function arguments in this script
+
 from ..service import Service
 
-
 class Storage(Service):
-
     def list_files(self, search='', limit=25, offset=0, order_type='ASC'):
         """List Files"""
 
@@ -37,7 +37,7 @@ class Storage(Service):
 
         params = {}
         path = '/storage/files/{fileId}'
-        path.replace('{fileId}', file_id)                
+        path.replace('{fileId}', file_id)
 
         return self.client.call('get', path, {
         }, params)
@@ -49,7 +49,7 @@ class Storage(Service):
 
         params = {}
         path = '/storage/files/{fileId}'
-        path.replace('{fileId}', file_id)                
+        path.replace('{fileId}', file_id)
         params['read'] = read
         params['write'] = write
         params['folderId'] = folder_id
@@ -62,7 +62,7 @@ class Storage(Service):
 
         params = {}
         path = '/storage/files/{fileId}'
-        path.replace('{fileId}', file_id)                
+        path.replace('{fileId}', file_id)
 
         return self.client.call('delete', path, {
         }, params)
@@ -72,7 +72,7 @@ class Storage(Service):
 
         params = {}
         path = '/storage/files/{fileId}/download'
-        path.replace('{fileId}', file_id)                
+        path.replace('{fileId}', file_id)
 
         return self.client.call('get', path, {
         }, params)
@@ -82,7 +82,7 @@ class Storage(Service):
 
         params = {}
         path = '/storage/files/{fileId}/preview'
-        path.replace('{fileId}', file_id)                
+        path.replace('{fileId}', file_id)
         params['width'] = width
         params['height'] = height
         params['quality'] = quality
@@ -97,7 +97,7 @@ class Storage(Service):
 
         params = {}
         path = '/storage/files/{fileId}/view'
-        path.replace('{fileId}', file_id)                
+        path.replace('{fileId}', file_id)
         params['as'] = as
 
         return self.client.call('get', path, {

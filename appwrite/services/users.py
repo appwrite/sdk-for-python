@@ -1,8 +1,6 @@
 from ..service import Service
 
-
 class Users(Service):
-
     def list_users(self, search='', limit=25, offset=0, order_type='ASC'):
         """List Users"""
 
@@ -33,7 +31,7 @@ class Users(Service):
 
         params = {}
         path = '/users/{userId}'
-        path.replace('{userId}', user_id)                
+        path.replace('{userId}', user_id)
 
         return self.client.call('get', path, {
         }, params)
@@ -43,7 +41,7 @@ class Users(Service):
 
         params = {}
         path = '/users/{userId}/logs'
-        path.replace('{userId}', user_id)                
+        path.replace('{userId}', user_id)
 
         return self.client.call('get', path, {
         }, params)
@@ -53,7 +51,7 @@ class Users(Service):
 
         params = {}
         path = '/users/{userId}/prefs'
-        path.replace('{userId}', user_id)                
+        path.replace('{userId}', user_id)
 
         return self.client.call('get', path, {
         }, params)
@@ -63,7 +61,7 @@ class Users(Service):
 
         params = {}
         path = '/users/{userId}/sessions'
-        path.replace('{userId}', user_id)                
+        path.replace('{userId}', user_id)
 
         return self.client.call('get', path, {
         }, params)
@@ -73,7 +71,7 @@ class Users(Service):
 
         params = {}
         path = '/users/{userId}/sessions'
-        path.replace('{userId}', user_id)                
+        path.replace('{userId}', user_id)
 
         return self.client.call('delete', path, {
         }, params)
@@ -83,7 +81,7 @@ class Users(Service):
 
         params = {}
         path = '/users/{userId}/sessions/:session'
-        path.replace('{userId}', user_id)                
+        path.replace('{userId}', user_id)
         params['sessionId'] = session_id
 
         return self.client.call('delete', path, {
@@ -94,7 +92,7 @@ class Users(Service):
 
         params = {}
         path = '/users/{userId}/status'
-        path.replace('{userId}', user_id)                
+        path.replace('{userId}', user_id)
         params['status'] = status
 
         return self.client.call('patch', path, {

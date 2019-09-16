@@ -8,7 +8,6 @@
 Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to [https://appwrite.io/docs](https://appwrite.io/docs)
 
 
-
 ![Appwrite](https://appwrite.io/images/github.png)
 
 **API Version: latest**
@@ -20,6 +19,23 @@ To install via [PyPI](https://pypi.org/):
 ```bash
 pip install appwrite
 ```
+
+## Example
+
+Here's a small and simple example:
+```py
+from appwrite import Account
+
+account = Account ()
+...
+```
+
+## Todo
+
+ToDo list:
+- Fix weird function arguments in `database.py` (`appwrite/services/database.py`)
+- Fix weird function arguments in `storage.py` (`appwrite/services/storage.py`)
+- Fix weird function arguments in `teams.py` (`appwrite/services/teams.py`)
 
 ## License
 

@@ -1,8 +1,6 @@
 from ..service import Service
 
-
 class Account(Service):
-
     def get(self):
         """Get Account"""
 
