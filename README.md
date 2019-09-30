@@ -19,6 +19,7 @@ To install via [PyPI](https://pypi.org/):
 
 ```bash
 pip install appwrite
+pip3 install appwrite
 ```
 
 ## License
