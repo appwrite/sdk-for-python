@@ -12,7 +12,7 @@ setup(
   maintainer_email = 'team@appwrite.io',
   url = 'https://appwrite.io/support',
   download_url='https://github.com/appwrite/sdk-for-python/archive/1.0.0.tar.gz',
-  # keywords = ['SOME', 'MEANINGFULL', 'KEYWORDS'],
+  # keywords = ['APPWRITE', 'BACKEND', 'DEVELOPMENT', 'KIT', 'PYTHON'],
   install_requires=[
           'requests',
       ],
