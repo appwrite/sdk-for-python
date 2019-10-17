@@ -1,6 +1,5 @@
-import requests
-
-
+import requests as rq
+#can be easily used as rq
 class Client:
     def __init__(self):
         self._self_signed = False
