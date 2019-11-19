@@ -1,6 +1,6 @@
-from distutils.core import setup
+import setuptools
 
-setup(
+setuptools.setup(
   name = 'appwrite',
   packages = ['appwrite'],
   version = '1.0.3',
@@ -17,11 +17,11 @@ setup(
           'requests',
       ],
   classifiers=[
-    'Development Status :: 5 - PRODUCTION/STABLE',
+    'Development Status :: 5 - Production/Stable',
     'Intended Audience :: Developers',
     'Environment :: Web Environment',
     'Topic :: Software Development',
-    'License :: OSI Approved :: BSD-3-Clause',
+    'License :: OSI Approved :: BSD License',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
