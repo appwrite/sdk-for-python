@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.storage import Storage
+from appwrite.services.locale import Locale
 
 client = Client()
 
@@ -8,6 +8,6 @@ client = Client()
   .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
 )
 
-storage = Storage(client)
+locale = Locale(client)
 
-result = storage.get_file_download('[FILE_ID]')
+result = locale.get()
