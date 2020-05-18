@@ -5,13 +5,11 @@ setuptools.setup(
   packages = ['appwrite', 'appwrite/services'],
   version = '0.0.4',
   license='BSD-3-Clause',
-  description = 'Appwrite is an open-source backend as a service server that abstract and simplify complex and repetitive development tasks behind a very simple to use REST API. Appwrite aims to help you develop your apps faster and in a more secure way.
-                        Use the Python SDK to integrate your app with the Appwrite server to easily start interacting with all of Appwrite backend APIs and tools.
-                        For full API documentation and tutorials go to [https://appwrite.io/docs](https://appwrite.io/docs)',
+  description = 'Appwrite is an open-source self-hosted backend server that abstract and simplify complex and repetitive development tasks behind a very simple REST API',
   author = 'Appwrite Team',
-  author_email = 'team@appwrite.io',
+  author_email = 'team@localhost.test',
   maintainer = 'Appwrite Team',
-  maintainer_email = 'team@appwrite.io',
+  maintainer_email = 'team@localhost.test',
   url = 'https://appwrite.io/support',
   download_url='https://github.com/appwrite/sdk-for-python/archive/0.0.4.tar.gz',
   # keywords = ['SOME', 'MEANINGFULL', 'KEYWORDS'],
