@@ -1,7 +1,9 @@
 import io
 import requests
 
+#Client Class
 class Client:
+    #function which will run first
     def __init__(self):
         self._self_signed = False
         self._endpoint = 'https://appwrite.io/v1'
@@ -9,7 +11,7 @@ class Client:
             'content-type': '',
             'x-sdk-version': 'appwrite:python:0.0.6',
         }
-
+     
     def set_self_signed(self, status=True):
         self._self_signed = status
         return self
