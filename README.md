@@ -18,10 +18,10 @@ Appwrite is an open-source backend as a service server that abstract and simplif
 To install via [PyPI](https://pypi.org/):
 
 ```bash
-For Windows machines
+For Windows machines:
 pip install appwrite
 
-For Linux machines
+For Linux machines:
 pip3 install appwrite
 ```
 
