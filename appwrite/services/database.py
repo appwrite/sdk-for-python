@@ -1,4 +1,5 @@
 from ..service import Service
+"""The service package adds a control infrastructure for easily starting, stopping, querying and killing"""
 
 
 class Database(Service):
@@ -48,7 +49,7 @@ class Database(Service):
     def update_collection(self, collection_id, name, read, write, rules=[]):
         """Update Collection"""
 
-        params = {}
+        params={}
         path = '/database/collections/{collectionId}'
         path = path.replace('{collectionId}', collection_id)                
         params['name'] = name
