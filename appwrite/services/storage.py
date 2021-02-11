@@ -95,13 +95,12 @@ class Storage(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_file_view(self, file_id, xas=''):
+    def get_file_view(self, file_id):
         """Get File for View"""
 
         params = {}
         path = '/storage/files/{fileId}/view'
         path = path.replace('{fileId}', file_id)                
-        params['as'] = xas
 
         return self.client.call('get', path, {
             'content-type': 'application/json',

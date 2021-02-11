@@ -65,3 +65,13 @@ class Locale(Service):
         return self.client.call('get', path, {
             'content-type': 'application/json',
         }, params)
+
+    def get_languages(self):
+        """List Languages"""
+
+        params = {}
+        path = '/locale/languages'
+
+        return self.client.call('get', path, {
+            'content-type': 'application/json',
+        }, params)

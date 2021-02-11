@@ -72,7 +72,22 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_q_r(self, text, size=400, margin=1, download=0):
+    def get_initials(self, name='', width=500, height=500, color='', background=''):
+        """Get User Initials"""
+
+        params = {}
+        path = '/avatars/initials'
+        params['name'] = name
+        params['width'] = width
+        params['height'] = height
+        params['color'] = color
+        params['background'] = background
+
+        return self.client.call('get', path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def get_q_r(self, text, size=400, margin=1, download=False):
         """Get QR Code"""
 
         params = {}

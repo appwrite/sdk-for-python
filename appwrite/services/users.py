@@ -44,6 +44,17 @@ class Users(Service):
             'content-type': 'application/json',
         }, params)
 
+    def delete_user(self, user_id):
+        """Delete User"""
+
+        params = {}
+        path = '/users/{userId}'
+        path = path.replace('{userId}', user_id)                
+
+        return self.client.call('delete', path, {
+            'content-type': 'application/json',
+        }, params)
+
     def get_logs(self, user_id):
         """Get User Logs"""
 

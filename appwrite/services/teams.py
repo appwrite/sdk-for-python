@@ -20,7 +20,7 @@ class Teams(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create(self, name, roles=[]):
+    def create(self, name, roles=["owner"]):
         """Create Team"""
 
         params = {}
@@ -66,12 +66,16 @@ class Teams(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_memberships(self, team_id):
+    def get_memberships(self, team_id, search='', limit=25, offset=0, order_type='ASC'):
         """Get Team Memberships"""
 
         params = {}
         path = '/teams/{teamId}/memberships'
         path = path.replace('{teamId}', team_id)                
+        params['search'] = search
+        params['limit'] = limit
+        params['offset'] = offset
+        params['orderType'] = order_type
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
