@@ -5,7 +5,7 @@
 
 **This SDK is compatible with Appwrite server version 0.7.0. For older versions, please check [previous releases](https://github.com/appwrite/sdk-for-python/releases).**
 
-Appwrite is an open-source backend as a service server that abstract and simplify complex and repetitive development tasks behind a very simple to use REST API. Appwrite aims to help you develop your apps faster and in a more secure way.
+Appwrite is an open-source backend as a service server that abstract and simplify complex and repetitive development tasks behind a very simple to use [REST API](https://restfulapi.net/). Appwrite aims to help you develop your apps faster and in a more secure way.
                         Use the Python SDK to integrate your app with the Appwrite server to easily start interacting with all of Appwrite backend APIs and tools.
                         For full API documentation and tutorials go to [https://appwrite.io/docs](https://appwrite.io/docs)
 
