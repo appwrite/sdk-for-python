@@ -3,7 +3,7 @@ import setuptools
 setuptools.setup(
   name = 'appwrite',
   packages = ['appwrite', 'appwrite/services'],
-  version = '0.1.0',
+  version = '0.1.1',
   license='BSD-3-Clause',
   description = 'Appwrite is an open-source self-hosted backend server that abstract and simplify complex and repetitive development tasks behind a very simple REST API',
   author = 'Appwrite Team',
