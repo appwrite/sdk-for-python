@@ -96,14 +96,41 @@ class Teams(Service):
             'content-type': 'application/json',
         }, params)
 
-    def delete_membership(self, team_id, invite_id):
+    def update_membership_roles(self, team_id, membership_id, roles):
+        """Update Membership Roles"""
+
+        params = {}
+        path = '/teams/{teamId}/memberships/{membershipId}'
+        path = path.replace('{teamId}', team_id)                
+        path = path.replace('{membershipId}', membership_id)                
+        params['roles'] = roles
+
+        return self.client.call('patch', path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def delete_membership(self, team_id, membership_id):
         """Delete Team Membership"""
 
         params = {}
-        path = '/teams/{teamId}/memberships/{inviteId}'
+        path = '/teams/{teamId}/memberships/{membershipId}'
         path = path.replace('{teamId}', team_id)                
-        path = path.replace('{inviteId}', invite_id)                
+        path = path.replace('{membershipId}', membership_id)                
 
         return self.client.call('delete', path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def update_membership_status(self, team_id, membership_id, user_id, secret):
+        """Update Team Membership Status"""
+
+        params = {}
+        path = '/teams/{teamId}/memberships/{membershipId}/status'
+        path = path.replace('{teamId}', team_id)                
+        path = path.replace('{membershipId}', membership_id)                
+        params['userId'] = user_id
+        params['secret'] = secret
+
+        return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)

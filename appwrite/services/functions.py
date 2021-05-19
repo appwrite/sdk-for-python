@@ -91,12 +91,13 @@ class Functions(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create_execution(self, function_id):
+    def create_execution(self, function_id, data=''):
         """Create Execution"""
 
         params = {}
         path = '/functions/{functionId}/executions'
         path = path.replace('{functionId}', function_id)                
+        params['data'] = data
 
         return self.client.call('post', path, {
             'content-type': 'application/json',

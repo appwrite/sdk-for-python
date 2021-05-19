@@ -20,7 +20,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create_file(self, file, read, write):
+    def create_file(self, file, read=[], write=[]):
         """Create File"""
 
         params = {}
@@ -79,7 +79,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_file_preview(self, file_id, width=0, height=0, quality=100, background='', output=''):
+    def get_file_preview(self, file_id, width=0, height=0, quality=100, border_width=0, border_color='', border_radius=0, opacity=1, rotation=0, background='', output=''):
         """Get File Preview"""
 
         params = {}
@@ -88,6 +88,11 @@ class Storage(Service):
         params['width'] = width
         params['height'] = height
         params['quality'] = quality
+        params['borderWidth'] = border_width
+        params['borderColor'] = border_color
+        params['borderRadius'] = border_radius
+        params['opacity'] = opacity
+        params['rotation'] = rotation
         params['background'] = background
         params['output'] = output
 

@@ -1,5 +1,6 @@
 import io
 import requests
+from .exception import AppwriteException
 
 class Client:
     def __init__(self):
@@ -7,7 +8,8 @@ class Client:
         self._endpoint = 'https://appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'x-sdk-version': 'appwrite:python:0.1.0',
+            'x-sdk-version': 'appwrite:python:0.2.0',
+            'X-Appwrite-Response-Format' : '0.8.0',
         }
 
     def set_self_signed(self, status=True):
@@ -32,6 +34,12 @@ class Client:
         """Your secret API key"""
 
         self._global_headers['x-appwrite-key'] = value.lower()
+        return self
+
+    def set_j_w_t(self, value):
+        """Your secret JSON Web Token"""
+
+        self._global_headers['x-appwrite-jwt'] = value.lower()
         return self
 
     def set_locale(self, value):
@@ -66,26 +74,36 @@ class Client:
                 if isinstance(data[key], io.BufferedIOBase):
                     files[key] = data[key]
                     del data[key]
+        response = None
+        try:
+            response = requests.request(  # call method dynamically https://stackoverflow.com/a/4246075/2299554
+                method=method,
+                url=self._endpoint + path,
+                params=self.flatten(params),
+                data=self.flatten(data),
+                json=json,
+                files=files,
+                headers=headers,
+                verify=self._self_signed,
+            )
 
-        response = requests.request(  # call method dynamically https://stackoverflow.com/a/4246075/2299554
-            method=method,
-            url=self._endpoint + path,
-            params=self.flatten(params),
-            data=self.flatten(data),
-            json=json,
-            files=files,
-            headers=headers,
-            verify=self._self_signed,
-        )
+            response.raise_for_status()
 
-        response.raise_for_status()
+            content_type = response.headers['Content-Type']
 
-        content_type = response.headers['Content-Type']
+            if content_type.startswith('application/json'):
+                return response.json()
 
-        if content_type.startswith('application/json'):
-            return response.json()
-
-        return response._content
+            return response._content
+        except Exception as e:
+            if response != None:
+                content_type = response.headers['Content-Type']
+                if content_type.startswith('application/json'):
+                    raise AppwriteException(response.json()['message'], response.status_code, response.json())
+                else:
+                    raise AppwriteException(response.text, response.status_code)
+            else:
+                raise AppwriteException(e)
 
     def flatten(self, data, prefix=''):
         output = {}

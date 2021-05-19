@@ -44,7 +44,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, params)
 
-    def delete_user(self, user_id):
+    def delete(self, user_id):
         """Delete User"""
 
         params = {}

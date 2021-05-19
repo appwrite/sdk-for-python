@@ -11,4 +11,4 @@ client = Client()
 
 users = Users(client)
 
-result = users.delete_user('[USER_ID]')
+result = users.delete('[USER_ID]')

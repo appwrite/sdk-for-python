@@ -6,9 +6,9 @@ client = Client()
 (client
   .set_endpoint('https://[HOSTNAME_OR_IP]/v1') # Your API Endpoint
   .set_project('5df5acd0d48c2') # Your project ID
-  .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
+  .set_j_w_t('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ...') # Your secret JSON Web Token
 )
 
 teams = Teams(client)
 
-result = teams.delete_membership('[TEAM_ID]', '[MEMBERSHIP_ID]')
+result = teams.update_membership_status('[TEAM_ID]', '[MEMBERSHIP_ID]', '[USER_ID]', '[SECRET]')
