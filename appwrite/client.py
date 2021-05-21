@@ -8,7 +8,7 @@ class Client:
         self._endpoint = 'https://appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'x-sdk-version': 'appwrite:python:0.2.0',
+            'x-sdk-version': 'appwrite:python:0.2.1',
             'X-Appwrite-Response-Format' : '0.8.0',
         }
 
@@ -21,7 +21,7 @@ class Client:
         return self
 
     def add_header(self, key, value):
-        self._global_headers[key.lower()] = value.lower()
+        self._global_headers[key.lower()] = value
         return self
 
     def set_project(self, value):
