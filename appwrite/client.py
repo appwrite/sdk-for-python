@@ -8,7 +8,7 @@ class Client:
         self._endpoint = 'https://appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'x-sdk-version': 'appwrite:python:0.2.1',
+            'x-sdk-version': 'appwrite:python:0.2.2',
             'X-Appwrite-Response-Format' : '0.8.0',
         }
 

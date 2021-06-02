@@ -1,5 +1,5 @@
 from ..service import Service
-
+from ..exception import AppwriteException
 
 class Health(Service):
 
