@@ -8,7 +8,7 @@ class Client:
         self._endpoint = 'https://appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'x-sdk-version': 'appwrite:python:0.2.2',
+            'x-sdk-version': 'appwrite:python:0.2.3',
             'X-Appwrite-Response-Format' : '0.8.0',
         }
 
@@ -27,23 +27,23 @@ class Client:
     def set_project(self, value):
         """Your project ID"""
 
-        self._global_headers['x-appwrite-project'] = value.lower()
+        self._global_headers['x-appwrite-project'] = value
         return self
 
     def set_key(self, value):
         """Your secret API key"""
 
-        self._global_headers['x-appwrite-key'] = value.lower()
+        self._global_headers['x-appwrite-key'] = value
         return self
 
-    def set_j_w_t(self, value):
+    def set_jwt(self, value):
         """Your secret JSON Web Token"""
 
-        self._global_headers['x-appwrite-jwt'] = value.lower()
+        self._global_headers['x-appwrite-jwt'] = value
         return self
 
     def set_locale(self, value):
-        self._global_headers['x-appwrite-locale'] = value.lower()
+        self._global_headers['x-appwrite-locale'] = value
         return self
 
     def call(self, method, path='', headers=None, params=None):

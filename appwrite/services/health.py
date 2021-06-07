@@ -36,7 +36,7 @@ class Health(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_d_b(self):
+    def get_db(self):
         """Get DB"""
 
         params = {}

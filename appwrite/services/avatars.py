@@ -138,7 +138,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_q_r(self, text, size = None, margin = None, download = None):
+    def get_qr(self, text, size = None, margin = None, download = None):
         """Get QR Code"""
 
         if text is None: 
