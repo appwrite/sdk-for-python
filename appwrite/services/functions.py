@@ -28,7 +28,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create(self, name, execute, env, vars = None, events = None, schedule = None, timeout = None):
+    def create(self, name, execute, runtime, vars = None, events = None, schedule = None, timeout = None):
         """Create Function"""
 
         if name is None: 
@@ -37,8 +37,8 @@ class Functions(Service):
         if execute is None: 
             raise AppwriteException('Missing required parameter: "execute"')
 
-        if env is None: 
-            raise AppwriteException('Missing required parameter: "env"')
+        if runtime is None: 
+            raise AppwriteException('Missing required parameter: "runtime"')
 
         params = {}
         path = '/functions'
@@ -49,8 +49,8 @@ class Functions(Service):
         if execute is not None: 
             params['execute'] = execute
 
-        if env is not None: 
-            params['env'] = env
+        if runtime is not None: 
+            params['runtime'] = runtime
 
         if vars is not None: 
             params['vars'] = vars

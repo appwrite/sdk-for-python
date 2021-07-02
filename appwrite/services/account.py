@@ -195,6 +195,20 @@ class Account(Service):
             'content-type': 'application/json',
         }, params)
 
+    def get_session(self, session_id):
+        """Get Session By ID"""
+
+        if session_id is None: 
+            raise AppwriteException('Missing required parameter: "session_id"')
+
+        params = {}
+        path = '/account/sessions/{sessionId}'
+        path = path.replace('{sessionId}', session_id)                
+
+        return self.client.call('get', path, {
+            'content-type': 'application/json',
+        }, params)
+
     def delete_session(self, session_id):
         """Delete Account Session"""
 

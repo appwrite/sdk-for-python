@@ -118,7 +118,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_file_preview(self, file_id, width = None, height = None, quality = None, border_width = None, border_color = None, border_radius = None, opacity = None, rotation = None, background = None, output = None):
+    def get_file_preview(self, file_id, width = None, height = None, gravity = None, quality = None, border_width = None, border_color = None, border_radius = None, opacity = None, rotation = None, background = None, output = None):
         """Get File Preview"""
 
         if file_id is None: 
@@ -133,6 +133,9 @@ class Storage(Service):
 
         if height is not None: 
             params['height'] = height
+
+        if gravity is not None: 
+            params['gravity'] = gravity
 
         if quality is not None: 
             params['quality'] = quality
