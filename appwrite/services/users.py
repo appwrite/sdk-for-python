@@ -194,3 +194,23 @@ class Users(Service):
         return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)
+
+    def update_verification(self, user_id, email_verification):
+        """Update Email Verification"""
+
+        if user_id is None: 
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if email_verification is None: 
+            raise AppwriteException('Missing required parameter: "email_verification"')
+
+        params = {}
+        path = '/users/{userId}/verification'
+        path = path.replace('{userId}', user_id)                
+
+        if email_verification is not None: 
+            params['emailVerification'] = email_verification
+
+        return self.client.call('patch', path, {
+            'content-type': 'application/json',
+        }, params)
