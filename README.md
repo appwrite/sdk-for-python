@@ -1,12 +1,12 @@
 # Appwrite Python SDK
 
 ![License](https://img.shields.io/github/license/appwrite/sdk-for-python.svg?style=flat-square)
-![Version](https://img.shields.io/badge/api%20version-0.9.0-blue.svg?style=flat-square)
+![Version](https://img.shields.io/badge/api%20version-0.10.0-blue.svg?style=flat-square)
 [![Build Status](https://img.shields.io/travis/com/appwrite/sdk-generator?style=flat-square)](https://travis-ci.com/appwrite/sdk-generator)
 [![Twitter Account](https://img.shields.io/twitter/follow/appwrite_io?color=00acee&label=twitter&style=flat-square)](https://twitter.com/appwrite_io)
 [![Discord](https://img.shields.io/discord/564160730845151244?label=discord&style=flat-square)](https://appwrite.io/discord)
 
-**This SDK is compatible with Appwrite server version 0.9.x. For older versions, please check [previous releases](https://github.com/appwrite/sdk-for-python/releases).**
+**This SDK is compatible with Appwrite server version 0.10.x. For older versions, please check [previous releases](https://github.com/appwrite/sdk-for-python/releases).**
 
 Appwrite is an open-source backend as a service server that abstract and simplify complex and repetitive development tasks behind a very simple to use REST API. Appwrite aims to help you develop your apps faster and in a more secure way. Use the Python SDK to integrate your app with the Appwrite server to easily start interacting with all of Appwrite backend APIs and tools. For full API documentation and tutorials go to [https://appwrite.io/docs](https://appwrite.io/docs)
 
@@ -80,7 +80,7 @@ except AppwriteException as e:
 ```
 
 ### Learn more
-You can use following resources to learn more and get help
+You can use the following resources to learn more and get help
 - 🚀 [Getting Started Tutorial](https://appwrite.io/docs/getting-started-for-server)
 - 📜 [Appwrite Docs](https://appwrite.io/docs)
 - 💬 [Discord Community](https://appwrite.io/discord)

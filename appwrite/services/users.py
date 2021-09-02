@@ -81,6 +81,26 @@ class Users(Service):
             'content-type': 'application/json',
         }, params)
 
+    def update_email(self, user_id, email):
+        """Update Email"""
+
+        if user_id is None: 
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if email is None: 
+            raise AppwriteException('Missing required parameter: "email"')
+
+        params = {}
+        path = '/users/{userId}/email'
+        path = path.replace('{userId}', user_id)                
+
+        if email is not None: 
+            params['email'] = email
+
+        return self.client.call('patch', path, {
+            'content-type': 'application/json',
+        }, params)
+
     def get_logs(self, user_id):
         """Get User Logs"""
 
@@ -92,6 +112,46 @@ class Users(Service):
         path = path.replace('{userId}', user_id)                
 
         return self.client.call('get', path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def update_name(self, user_id, name):
+        """Update Name"""
+
+        if user_id is None: 
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if name is None: 
+            raise AppwriteException('Missing required parameter: "name"')
+
+        params = {}
+        path = '/users/{userId}/name'
+        path = path.replace('{userId}', user_id)                
+
+        if name is not None: 
+            params['name'] = name
+
+        return self.client.call('patch', path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def update_password(self, user_id, password):
+        """Update Password"""
+
+        if user_id is None: 
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if password is None: 
+            raise AppwriteException('Missing required parameter: "password"')
+
+        params = {}
+        path = '/users/{userId}/password'
+        path = path.replace('{userId}', user_id)                
+
+        if password is not None: 
+            params['password'] = password
+
+        return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)
 

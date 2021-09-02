@@ -8,8 +8,8 @@ class Client:
         self._endpoint = 'https://appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'x-sdk-version': 'appwrite:python:0.4.0',
-            'X-Appwrite-Response-Format' : '0.9.0',
+            'x-sdk-version': 'appwrite:python:0.5.0',
+            'X-Appwrite-Response-Format' : '0.10.0',
         }
 
     def set_self_signed(self, status=True):

@@ -142,7 +142,7 @@ class Account(Service):
         }, params)
 
     def update_recovery(self, user_id, secret, password, password_again):
-        """Complete Password Recovery"""
+        """Create Password Recovery (confirmation)"""
 
         if user_id is None: 
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -240,7 +240,7 @@ class Account(Service):
         }, params)
 
     def update_verification(self, user_id, secret):
-        """Complete Email Verification"""
+        """Create Email Verification (confirmation)"""
 
         if user_id is None: 
             raise AppwriteException('Missing required parameter: "user_id"')
