@@ -1,11 +1,12 @@
 from ..service import Service
 from ..exception import AppwriteException
 
-class Avatars(Service):
 
+class Avatars(Service):
     def __init__(self, client):
         super(Avatars, self).__init__(client)
 
+        
     def get_browser(self, code, width = None, height = None, quality = None):
         """Get Browser Icon"""
 
@@ -29,6 +30,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, params)
 
+    
     def get_credit_card(self, code, width = None, height = None, quality = None):
         """Get Credit Card Icon"""
 
@@ -52,6 +54,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, params)
 
+    
     def get_favicon(self, url):
         """Get Favicon"""
 
@@ -68,6 +71,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, params)
 
+    
     def get_flag(self, code, width = None, height = None, quality = None):
         """Get Country Flag"""
 
@@ -91,6 +95,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, params)
 
+    
     def get_image(self, url, width = None, height = None):
         """Get Image from URL"""
 
@@ -113,6 +118,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, params)
 
+    
     def get_initials(self, name = None, width = None, height = None, color = None, background = None):
         """Get User Initials"""
 
@@ -138,6 +144,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, params)
 
+    
     def get_qr(self, text, size = None, margin = None, download = None):
         """Get QR Code"""
 
