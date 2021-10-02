@@ -3,6 +3,7 @@ import requests
 from .exception import AppwriteException
 
 class Client:
+
     def __init__(self):
         self._self_signed = False
         self._endpoint = 'https://appwrite.io/v1'
@@ -95,8 +96,9 @@ class Client:
                 return response.json()
 
             return response._content
+            
         except Exception as e:
-            if response != None:
+            if response :
                 content_type = response.headers['Content-Type']
                 if content_type.startswith('application/json'):
                     raise AppwriteException(response.json()['message'], response.status_code, response.json())
