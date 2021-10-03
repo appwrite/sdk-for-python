@@ -25,19 +25,19 @@ class Client:
         return self
 
     def set_project(self, value):
-        """Your project ID"""
+        # <Enter Your project ID Here>
 
         self._global_headers['x-appwrite-project'] = value
         return self
 
     def set_key(self, value):
-        """Your secret API key"""
+        # <Enter Your secret API key Here>
 
         self._global_headers['x-appwrite-key'] = value
         return self
 
     def set_jwt(self, value):
-        """Your secret JSON Web Token"""
+        # <Enter Your secret JSON Web Token>
 
         self._global_headers['x-appwrite-jwt'] = value
         return self
@@ -59,7 +59,7 @@ class Client:
         
         headers = {**self._global_headers, **headers}
 
-        if method != 'get':
+        if method.lower() != 'get':
             data = params
             params = {}
 
@@ -121,4 +121,4 @@ class Client:
                 output[finalKey] = value
 
         return output
-
+    
