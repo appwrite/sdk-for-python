@@ -143,14 +143,14 @@ class Teams(Service):
         if email is not None: 
             params['email'] = email
 
-        if name is not None: 
-            params['name'] = name
-
         if roles is not None: 
             params['roles'] = roles
 
         if url is not None: 
             params['url'] = url
+
+        if name is not None: 
+            params['name'] = name
 
         return self.client.call('post', path, {
             'content-type': 'application/json',
