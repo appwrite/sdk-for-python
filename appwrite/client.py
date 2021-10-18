@@ -9,7 +9,7 @@ class Client:
         self._global_headers = {
             'content-type': '',
             'x-sdk-version': 'appwrite:python:0.5.1',
-            'X-Appwrite-Response-Format' : '0.10.0',
+            'X-Appwrite-Response-Format' : '0.11.0',
         }
 
     def set_self_signed(self, status=True):
