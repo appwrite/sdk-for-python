@@ -5,11 +5,11 @@ from .exception import AppwriteException
 class Client:
     def __init__(self):
         self._self_signed = False
-        self._endpoint = 'https://appwrite.io/v1'
+        self._endpoint = 'https://HOSTNAME/v1'
         self._global_headers = {
             'content-type': '',
             'x-sdk-version': 'appwrite:python:0.5.1',
-            'X-Appwrite-Response-Format' : '0.11.0',
+            'X-Appwrite-Response-Format' : '0.12.0',
         }
 
     def set_self_signed(self, status=True):

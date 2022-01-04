@@ -48,11 +48,17 @@ class Account(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_logs(self):
+    def get_logs(self, limit = None, offset = None):
         """Get Account Logs"""
 
         params = {}
         path = '/account/logs'
+
+        if limit is not None: 
+            params['limit'] = limit
+
+        if offset is not None: 
+            params['offset'] = offset
 
         return self.client.call('get', path, {
             'content-type': 'application/json',

@@ -6,7 +6,7 @@ class Teams(Service):
     def __init__(self, client):
         super(Teams, self).__init__(client)
 
-    def list(self, search = None, limit = None, offset = None, order_type = None):
+    def list(self, search = None, limit = None, offset = None, cursor = None, cursor_direction = None, order_type = None):
         """List Teams"""
 
         params = {}
@@ -21,6 +21,12 @@ class Teams(Service):
         if offset is not None: 
             params['offset'] = offset
 
+        if cursor is not None: 
+            params['cursor'] = cursor
+
+        if cursor_direction is not None: 
+            params['cursorDirection'] = cursor_direction
+
         if order_type is not None: 
             params['orderType'] = order_type
 
@@ -28,14 +34,20 @@ class Teams(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create(self, name, roles = None):
+    def create(self, team_id, name, roles = None):
         """Create Team"""
+
+        if team_id is None: 
+            raise AppwriteException('Missing required parameter: "team_id"')
 
         if name is None: 
             raise AppwriteException('Missing required parameter: "name"')
 
         params = {}
         path = '/teams'
+
+        if team_id is not None: 
+            params['teamId'] = team_id
 
         if name is not None: 
             params['name'] = name
@@ -95,7 +107,7 @@ class Teams(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_memberships(self, team_id, search = None, limit = None, offset = None, order_type = None):
+    def get_memberships(self, team_id, search = None, limit = None, offset = None, cursor = None, cursor_direction = None, order_type = None):
         """Get Team Memberships"""
 
         if team_id is None: 
@@ -113,6 +125,12 @@ class Teams(Service):
 
         if offset is not None: 
             params['offset'] = offset
+
+        if cursor is not None: 
+            params['cursor'] = cursor
+
+        if cursor_direction is not None: 
+            params['cursorDirection'] = cursor_direction
 
         if order_type is not None: 
             params['orderType'] = order_type
@@ -153,6 +171,24 @@ class Teams(Service):
             params['name'] = name
 
         return self.client.call('post', path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def get_membership(self, team_id, membership_id):
+        """Get Team Membership"""
+
+        if team_id is None: 
+            raise AppwriteException('Missing required parameter: "team_id"')
+
+        if membership_id is None: 
+            raise AppwriteException('Missing required parameter: "membership_id"')
+
+        params = {}
+        path = '/teams/{teamId}/memberships/{membershipId}'
+        path = path.replace('{teamId}', team_id)                
+        path = path.replace('{membershipId}', membership_id)                
+
+        return self.client.call('get', path, {
             'content-type': 'application/json',
         }, params)
 

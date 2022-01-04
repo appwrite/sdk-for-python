@@ -11,4 +11,4 @@ client = Client()
 
 teams = Teams(client)
 
-result = teams.create('', '[NAME]')
+result = teams.get_membership('[TEAM_ID]', '[MEMBERSHIP_ID]')

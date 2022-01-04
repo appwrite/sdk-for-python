@@ -6,7 +6,7 @@ class Storage(Service):
     def __init__(self, client):
         super(Storage, self).__init__(client)
 
-    def list_files(self, search = None, limit = None, offset = None, order_type = None):
+    def list_files(self, search = None, limit = None, offset = None, cursor = None, cursor_direction = None, order_type = None):
         """List Files"""
 
         params = {}
@@ -21,6 +21,12 @@ class Storage(Service):
         if offset is not None: 
             params['offset'] = offset
 
+        if cursor is not None: 
+            params['cursor'] = cursor
+
+        if cursor_direction is not None: 
+            params['cursorDirection'] = cursor_direction
+
         if order_type is not None: 
             params['orderType'] = order_type
 
@@ -28,14 +34,20 @@ class Storage(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create_file(self, file, read = None, write = None):
+    def create_file(self, file_id, file, read = None, write = None):
         """Create File"""
+
+        if file_id is None: 
+            raise AppwriteException('Missing required parameter: "file_id"')
 
         if file is None: 
             raise AppwriteException('Missing required parameter: "file"')
 
         params = {}
         path = '/storage/files'
+
+        if file_id is not None: 
+            params['fileId'] = file_id
 
         if file is not None: 
             params['file'] = file

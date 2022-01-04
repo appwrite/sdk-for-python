@@ -6,7 +6,7 @@ class Users(Service):
     def __init__(self, client):
         super(Users, self).__init__(client)
 
-    def list(self, search = None, limit = None, offset = None, order_type = None):
+    def list(self, search = None, limit = None, offset = None, cursor = None, cursor_direction = None, order_type = None):
         """List Users"""
 
         params = {}
@@ -21,6 +21,12 @@ class Users(Service):
         if offset is not None: 
             params['offset'] = offset
 
+        if cursor is not None: 
+            params['cursor'] = cursor
+
+        if cursor_direction is not None: 
+            params['cursorDirection'] = cursor_direction
+
         if order_type is not None: 
             params['orderType'] = order_type
 
@@ -28,8 +34,11 @@ class Users(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create(self, email, password, name = None):
+    def create(self, user_id, email, password, name = None):
         """Create User"""
+
+        if user_id is None: 
+            raise AppwriteException('Missing required parameter: "user_id"')
 
         if email is None: 
             raise AppwriteException('Missing required parameter: "email"')
@@ -39,6 +48,9 @@ class Users(Service):
 
         params = {}
         path = '/users'
+
+        if user_id is not None: 
+            params['userId'] = user_id
 
         if email is not None: 
             params['email'] = email
@@ -101,7 +113,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_logs(self, user_id):
+    def get_logs(self, user_id, limit = None, offset = None):
         """Get User Logs"""
 
         if user_id is None: 
@@ -110,6 +122,12 @@ class Users(Service):
         params = {}
         path = '/users/{userId}/logs'
         path = path.replace('{userId}', user_id)                
+
+        if limit is not None: 
+            params['limit'] = limit
+
+        if offset is not None: 
+            params['offset'] = offset
 
         return self.client.call('get', path, {
             'content-type': 'application/json',

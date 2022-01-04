@@ -16,8 +16,8 @@ class Health(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_anti_virus(self):
-        """Get Anti virus"""
+    def get_antivirus(self):
+        """Get Antivirus"""
 
         params = {}
         path = '/health/anti-virus'
@@ -47,7 +47,7 @@ class Health(Service):
         }, params)
 
     def get_queue_certificates(self):
-        """Get Certificate Queue"""
+        """Get Certificates Queue"""
 
         params = {}
         path = '/health/queue/certificates'
@@ -71,16 +71,6 @@ class Health(Service):
 
         params = {}
         path = '/health/queue/logs'
-
-        return self.client.call('get', path, {
-            'content-type': 'application/json',
-        }, params)
-
-    def get_queue_tasks(self):
-        """Get Tasks Queue"""
-
-        params = {}
-        path = '/health/queue/tasks'
 
         return self.client.call('get', path, {
             'content-type': 'application/json',

@@ -11,4 +11,4 @@ client = Client()
 
 storage = Storage(client)
 
-result = storage.create_file(open('/path/to/file.png', 'rb'))
+result = storage.create_file('', open('/path/to/file.png', 'rb'))
