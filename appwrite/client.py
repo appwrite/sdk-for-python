@@ -8,7 +8,7 @@ class Client:
         self._endpoint = 'https://HOSTNAME/v1'
         self._global_headers = {
             'content-type': '',
-            'x-sdk-version': 'appwrite:python:0.5.1',
+            'x-sdk-version': 'appwrite:python:0.6.0',
             'X-Appwrite-Response-Format' : '0.12.0',
         }
 
