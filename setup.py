@@ -1,11 +1,16 @@
 import setuptools
 
+
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setuptools.setup(
   name = 'appwrite',
   packages = ['appwrite', 'appwrite/services'],
   version = '0.6.1',
   license='BSD-3-Clause',
   description = 'Appwrite is an open-source self-hosted backend server that abstract and simplify complex and repetitive development tasks behind a very simple REST API',
+  long_description = long_description,
   author = 'Appwrite Team',
   author_email = 'team@appwrite.io',
   maintainer = 'Appwrite Team',
