@@ -11,7 +11,7 @@ class Client:
         self._endpoint = 'https://HOSTNAME/v1'
         self._global_headers = {
             'content-type': '',
-            'x-sdk-version': 'appwrite:python:0.6.0',
+            'x-sdk-version': 'appwrite:python:0.7.0',
             'X-Appwrite-Response-Format' : '0.13.0',
         }
 
