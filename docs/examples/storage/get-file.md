@@ -11,4 +11,4 @@ client = Client()
 
 storage = Storage(client)
 
-result = storage.get_file('[FILE_ID]')
+result = storage.get_file('[BUCKET_ID]', '[FILE_ID]')

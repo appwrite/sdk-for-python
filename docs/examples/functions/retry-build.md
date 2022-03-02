@@ -11,4 +11,4 @@ client = Client()
 
 functions = Functions(client)
 
-result = functions.get_tag('[FUNCTION_ID]', '[TAG_ID]')
+result = functions.retry_build('[FUNCTION_ID]', '[DEPLOYMENT_ID]', '[BUILD_ID]')

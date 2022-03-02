@@ -11,4 +11,4 @@ client = Client()
 
 storage = Storage(client)
 
-result = storage.get_file_view('[FILE_ID]')
+result = storage.get_file_view('[BUCKET_ID]', '[FILE_ID]')

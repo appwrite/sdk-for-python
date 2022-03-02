@@ -11,4 +11,4 @@ client = Client()
 
 storage = Storage(client)
 
-result = storage.delete_file('[FILE_ID]')
+result = storage.delete_file('[BUCKET_ID]', '[FILE_ID]')

@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.storage import Storage
+from appwrite.services.functions import Functions
 
 client = Client()
 
@@ -9,6 +9,6 @@ client = Client()
   .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
 )
 
-storage = Storage(client)
+functions = Functions(client)
 
-result = storage.update_file('[BUCKET_ID]', '[FILE_ID]')
+result = functions.create_deployment('[FUNCTION_ID]', '[ENTRYPOINT]', open('/path/to/file.png', 'rb'), False)

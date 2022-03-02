@@ -215,6 +215,20 @@ class Account(Service):
             'content-type': 'application/json',
         }, params)
 
+    def update_session(self, session_id):
+        """Update Session (Refresh Tokens)"""
+
+        if session_id is None: 
+            raise AppwriteException('Missing required parameter: "session_id"')
+
+        params = {}
+        path = '/account/sessions/{sessionId}'
+        path = path.replace('{sessionId}', session_id)                
+
+        return self.client.call('patch', path, {
+            'content-type': 'application/json',
+        }, params)
+
     def delete_session(self, session_id):
         """Delete Account Session"""
 

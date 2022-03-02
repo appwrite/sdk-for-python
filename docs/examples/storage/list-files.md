@@ -11,4 +11,4 @@ client = Client()
 
 storage = Storage(client)
 
-result = storage.list_files()
+result = storage.list_files('[BUCKET_ID]')

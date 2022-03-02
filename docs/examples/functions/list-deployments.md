@@ -11,4 +11,4 @@ client = Client()
 
 functions = Functions(client)
 
-result = functions.create_tag('[FUNCTION_ID]', '[COMMAND]', open('/path/to/file.png', 'rb'))
+result = functions.list_deployments('[FUNCTION_ID]')

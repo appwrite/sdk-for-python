@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.functions import Functions
+from appwrite.services.storage import Storage
 
 client = Client()
 
@@ -9,6 +9,6 @@ client = Client()
   .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
 )
 
-functions = Functions(client)
+storage = Storage(client)
 
-result = functions.delete_tag('[FUNCTION_ID]', '[TAG_ID]')
+result = storage.list_buckets()

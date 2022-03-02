@@ -11,4 +11,4 @@ client = Client()
 
 storage = Storage(client)
 
-result = storage.update_file('[BUCKET_ID]', '[FILE_ID]')
+result = storage.delete_bucket('[BUCKET_ID]')

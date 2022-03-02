@@ -11,4 +11,4 @@ client = Client()
 
 functions = Functions(client)
 
-result = functions.list_tags('[FUNCTION_ID]')
+result = functions.update_deployment('[FUNCTION_ID]', '[DEPLOYMENT_ID]')
