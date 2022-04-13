@@ -220,9 +220,13 @@ class Storage(Service):
 
         param_name = 'file'
 
+
+        upload_id = ''
+        upload_id = file_id
+
         return self.client.chunked_upload(path, {
             'content-type': 'multipart/form-data',
-        }, params, param_name, on_progress)
+        }, params, param_name, on_progress, upload_id)
 
     def get_file(self, bucket_id, file_id):
         """Get File"""

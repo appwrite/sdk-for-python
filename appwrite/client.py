@@ -11,7 +11,7 @@ class Client:
         self._endpoint = 'https://HOSTNAME/v1'
         self._global_headers = {
             'content-type': '',
-            'x-sdk-version': 'appwrite:python:0.7.0',
+            'x-sdk-version': 'appwrite:python:0.8.0',
             'X-Appwrite-Response-Format' : '0.13.0',
         }
 
@@ -116,6 +116,7 @@ class Client:
         params = None,
         param_name = '',
         on_progress = None,
+        upload_id = ''
     ):
         file_path = str(params[param_name])
         file_name = os.path.basename(file_path)
@@ -133,6 +134,18 @@ class Client:
 
         input = open(file_path, 'rb')
         offset = 0
+        counter = 0
+
+        if upload_id != 'unique()':
+            try:
+                result = self.call('get', path + '/' + upload_id, headers)
+                counter = result['chunksUploaded']
+            except:
+                pass
+
+        if counter > 0:
+            offset = counter * self._chunk_size
+            input.seek(offset)
 
         while offset < size:
             slice = input.read(self._chunk_size) or input.read(size - offset)
@@ -153,6 +166,7 @@ class Client:
                 headers["x-appwrite-id"] = result["$id"]
 
             if on_progress is not None:
+                end = min((((counter * self._chunk_size) + self._chunk_size) - 1), size)
                 on_progress({
                     "$id": result["$id"],
                     "progress": min(offset, size)/size * 100,
@@ -160,6 +174,8 @@ class Client:
                     "chunksTotal": result["chunksTotal"],
                     "chunksUploaded": result["chunksUploaded"],
                 })
+
+            counter = counter + 1
 
         return result
 
