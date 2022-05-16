@@ -81,7 +81,7 @@ class Functions(Service):
         }, params)
 
     def list_runtimes(self):
-        """List the currently active function runtimes."""
+        """List runtimes"""
 
         params = {}
         path = '/functions/runtimes'

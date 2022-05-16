@@ -133,6 +133,20 @@ class Users(Service):
             'content-type': 'application/json',
         }, params)
 
+    def get_memberships(self, user_id):
+        """Get User Memberships"""
+
+        if user_id is None: 
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        params = {}
+        path = '/users/{userId}/memberships'
+        path = path.replace('{userId}', user_id)                
+
+        return self.client.call('get', path, {
+            'content-type': 'application/json',
+        }, params)
+
     def update_name(self, user_id, name):
         """Update Name"""
 

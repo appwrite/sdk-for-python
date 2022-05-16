@@ -76,16 +76,6 @@ class Health(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_queue_usage(self):
-        """Get Usage Queue"""
-
-        params = {}
-        path = '/health/queue/usage'
-
-        return self.client.call('get', path, {
-            'content-type': 'application/json',
-        }, params)
-
     def get_queue_webhooks(self):
         """Get Webhooks Queue"""
 

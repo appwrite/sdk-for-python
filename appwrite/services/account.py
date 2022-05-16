@@ -16,16 +16,6 @@ class Account(Service):
             'content-type': 'application/json',
         }, params)
 
-    def delete(self):
-        """Delete Account"""
-
-        params = {}
-        path = '/account'
-
-        return self.client.call('delete', path, {
-            'content-type': 'application/json',
-        }, params)
-
     def update_email(self, email, password):
         """Update Account Email"""
 
@@ -240,6 +230,16 @@ class Account(Service):
         path = path.replace('{sessionId}', session_id)                
 
         return self.client.call('delete', path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def update_status(self):
+        """Update Account Status"""
+
+        params = {}
+        path = '/account/status'
+
+        return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)
 

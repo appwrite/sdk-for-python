@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.health import Health
+from appwrite.services.users import Users
 
 client = Client()
 
@@ -9,6 +9,6 @@ client = Client()
   .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
 )
 
-health = Health(client)
+users = Users(client)
 
-result = health.get_queue_usage()
+result = users.get_memberships('[USER_ID]')
