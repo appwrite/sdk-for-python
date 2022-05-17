@@ -51,16 +51,12 @@ class Users(Service):
 
         if user_id is not None: 
             params['userId'] = user_id
-
         if email is not None: 
             params['email'] = email
-
         if password is not None: 
             params['password'] = password
-
         if name is not None: 
             params['name'] = name
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -108,7 +104,6 @@ class Users(Service):
 
         if email is not None: 
             params['email'] = email
-
         return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)
@@ -162,7 +157,6 @@ class Users(Service):
 
         if name is not None: 
             params['name'] = name
-
         return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)
@@ -182,7 +176,6 @@ class Users(Service):
 
         if password is not None: 
             params['password'] = password
-
         return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)
@@ -216,7 +209,6 @@ class Users(Service):
 
         if prefs is not None: 
             params['prefs'] = prefs
-
         return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)
@@ -282,7 +274,6 @@ class Users(Service):
 
         if status is not None: 
             params['status'] = status
-
         return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)
@@ -302,7 +293,6 @@ class Users(Service):
 
         if email_verification is not None: 
             params['emailVerification'] = email_verification
-
         return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)

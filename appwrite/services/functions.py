@@ -54,28 +54,20 @@ class Functions(Service):
 
         if function_id is not None: 
             params['functionId'] = function_id
-
         if name is not None: 
             params['name'] = name
-
         if execute is not None: 
             params['execute'] = execute
-
         if runtime is not None: 
             params['runtime'] = runtime
-
         if vars is not None: 
             params['vars'] = vars
-
         if events is not None: 
             params['events'] = events
-
         if schedule is not None: 
             params['schedule'] = schedule
-
         if timeout is not None: 
             params['timeout'] = timeout
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -122,22 +114,16 @@ class Functions(Service):
 
         if name is not None: 
             params['name'] = name
-
         if execute is not None: 
             params['execute'] = execute
-
         if vars is not None: 
             params['vars'] = vars
-
         if events is not None: 
             params['events'] = events
-
         if schedule is not None: 
             params['schedule'] = schedule
-
         if timeout is not None: 
             params['timeout'] = timeout
-
         return self.client.call('put', path, {
             'content-type': 'application/json',
         }, params)
@@ -209,13 +195,10 @@ class Functions(Service):
 
         if entrypoint is not None: 
             params['entrypoint'] = entrypoint
-
         if code is not None: 
-            params['code'] = code
-
+            params['code'] = str(code).lower() if type(code) is bool else code
         if activate is not None: 
-            params['activate'] = activate
-
+            params['activate'] = str(activate).lower() if type(activate) is bool else activate
         param_name = 'code'
 
 
@@ -342,10 +325,8 @@ class Functions(Service):
 
         if data is not None: 
             params['data'] = data
-
         if xasync is not None: 
             params['async'] = xasync
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)

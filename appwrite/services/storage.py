@@ -51,34 +51,24 @@ class Storage(Service):
 
         if bucket_id is not None: 
             params['bucketId'] = bucket_id
-
         if name is not None: 
             params['name'] = name
-
         if permission is not None: 
             params['permission'] = permission
-
         if read is not None: 
             params['read'] = read
-
         if write is not None: 
             params['write'] = write
-
         if enabled is not None: 
             params['enabled'] = enabled
-
         if maximum_file_size is not None: 
             params['maximumFileSize'] = maximum_file_size
-
         if allowed_file_extensions is not None: 
             params['allowedFileExtensions'] = allowed_file_extensions
-
         if encryption is not None: 
             params['encryption'] = encryption
-
         if antivirus is not None: 
             params['antivirus'] = antivirus
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -115,31 +105,22 @@ class Storage(Service):
 
         if name is not None: 
             params['name'] = name
-
         if permission is not None: 
             params['permission'] = permission
-
         if read is not None: 
             params['read'] = read
-
         if write is not None: 
             params['write'] = write
-
         if enabled is not None: 
             params['enabled'] = enabled
-
         if maximum_file_size is not None: 
             params['maximumFileSize'] = maximum_file_size
-
         if allowed_file_extensions is not None: 
             params['allowedFileExtensions'] = allowed_file_extensions
-
         if encryption is not None: 
             params['encryption'] = encryption
-
         if antivirus is not None: 
             params['antivirus'] = antivirus
-
         return self.client.call('put', path, {
             'content-type': 'application/json',
         }, params)
@@ -208,16 +189,12 @@ class Storage(Service):
 
         if file_id is not None: 
             params['fileId'] = file_id
-
         if file is not None: 
-            params['file'] = file
-
+            params['file'] = str(file).lower() if type(file) is bool else file
         if read is not None: 
             params['read'] = read
-
         if write is not None: 
             params['write'] = write
-
         param_name = 'file'
 
 
@@ -262,10 +239,8 @@ class Storage(Service):
 
         if read is not None: 
             params['read'] = read
-
         if write is not None: 
             params['write'] = write
-
         return self.client.call('put', path, {
             'content-type': 'application/json',
         }, params)

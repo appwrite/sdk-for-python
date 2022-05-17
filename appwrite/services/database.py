@@ -57,19 +57,14 @@ class Database(Service):
 
         if collection_id is not None: 
             params['collectionId'] = collection_id
-
         if name is not None: 
             params['name'] = name
-
         if permission is not None: 
             params['permission'] = permission
-
         if read is not None: 
             params['read'] = read
-
         if write is not None: 
             params['write'] = write
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -106,19 +101,14 @@ class Database(Service):
 
         if name is not None: 
             params['name'] = name
-
         if permission is not None: 
             params['permission'] = permission
-
         if read is not None: 
             params['read'] = read
-
         if write is not None: 
             params['write'] = write
-
         if enabled is not None: 
             params['enabled'] = enabled
-
         return self.client.call('put', path, {
             'content-type': 'application/json',
         }, params)
@@ -169,16 +159,12 @@ class Database(Service):
 
         if key is not None: 
             params['key'] = key
-
         if required is not None: 
             params['required'] = required
-
         if default is not None: 
             params['default'] = default
-
         if array is not None: 
             params['array'] = array
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -201,16 +187,12 @@ class Database(Service):
 
         if key is not None: 
             params['key'] = key
-
         if required is not None: 
             params['required'] = required
-
         if default is not None: 
             params['default'] = default
-
         if array is not None: 
             params['array'] = array
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -236,19 +218,14 @@ class Database(Service):
 
         if key is not None: 
             params['key'] = key
-
         if elements is not None: 
             params['elements'] = elements
-
         if required is not None: 
             params['required'] = required
-
         if default is not None: 
             params['default'] = default
-
         if array is not None: 
             params['array'] = array
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -271,22 +248,16 @@ class Database(Service):
 
         if key is not None: 
             params['key'] = key
-
         if required is not None: 
             params['required'] = required
-
         if min is not None: 
             params['min'] = min
-
         if max is not None: 
             params['max'] = max
-
         if default is not None: 
             params['default'] = default
-
         if array is not None: 
             params['array'] = array
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -309,22 +280,16 @@ class Database(Service):
 
         if key is not None: 
             params['key'] = key
-
         if required is not None: 
             params['required'] = required
-
         if min is not None: 
             params['min'] = min
-
         if max is not None: 
             params['max'] = max
-
         if default is not None: 
             params['default'] = default
-
         if array is not None: 
             params['array'] = array
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -347,16 +312,12 @@ class Database(Service):
 
         if key is not None: 
             params['key'] = key
-
         if required is not None: 
             params['required'] = required
-
         if default is not None: 
             params['default'] = default
-
         if array is not None: 
             params['array'] = array
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -382,19 +343,14 @@ class Database(Service):
 
         if key is not None: 
             params['key'] = key
-
         if size is not None: 
             params['size'] = size
-
         if required is not None: 
             params['required'] = required
-
         if default is not None: 
             params['default'] = default
-
         if array is not None: 
             params['array'] = array
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -417,16 +373,12 @@ class Database(Service):
 
         if key is not None: 
             params['key'] = key
-
         if required is not None: 
             params['required'] = required
-
         if default is not None: 
             params['default'] = default
-
         if array is not None: 
             params['array'] = array
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -520,16 +472,12 @@ class Database(Service):
 
         if document_id is not None: 
             params['documentId'] = document_id
-
         if data is not None: 
             params['data'] = data
-
         if read is not None: 
             params['read'] = read
-
         if write is not None: 
             params['write'] = write
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -571,13 +519,10 @@ class Database(Service):
 
         if data is not None: 
             params['data'] = data
-
         if read is not None: 
             params['read'] = read
-
         if write is not None: 
             params['write'] = write
-
         return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)
@@ -635,16 +580,12 @@ class Database(Service):
 
         if key is not None: 
             params['key'] = key
-
         if type is not None: 
             params['type'] = type
-
         if attributes is not None: 
             params['attributes'] = attributes
-
         if orders is not None: 
             params['orders'] = orders
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)

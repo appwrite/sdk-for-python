@@ -48,13 +48,10 @@ class Teams(Service):
 
         if team_id is not None: 
             params['teamId'] = team_id
-
         if name is not None: 
             params['name'] = name
-
         if roles is not None: 
             params['roles'] = roles
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -88,7 +85,6 @@ class Teams(Service):
 
         if name is not None: 
             params['name'] = name
-
         return self.client.call('put', path, {
             'content-type': 'application/json',
         }, params)
@@ -160,16 +156,12 @@ class Teams(Service):
 
         if email is not None: 
             params['email'] = email
-
         if roles is not None: 
             params['roles'] = roles
-
         if url is not None: 
             params['url'] = url
-
         if name is not None: 
             params['name'] = name
-
         return self.client.call('post', path, {
             'content-type': 'application/json',
         }, params)
@@ -211,7 +203,6 @@ class Teams(Service):
 
         if roles is not None: 
             params['roles'] = roles
-
         return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)
@@ -256,10 +247,8 @@ class Teams(Service):
 
         if user_id is not None: 
             params['userId'] = user_id
-
         if secret is not None: 
             params['secret'] = secret
-
         return self.client.call('patch', path, {
             'content-type': 'application/json',
         }, params)
