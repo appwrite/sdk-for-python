@@ -11,8 +11,8 @@ class Client:
         self._endpoint = 'https://HOSTNAME/v1'
         self._global_headers = {
             'content-type': '',
-            'x-sdk-version': 'appwrite:python:0.9.0',
-            'X-Appwrite-Response-Format' : '0.14.0',
+            'x-sdk-version': 'appwrite:python:0.10.0',
+            'X-Appwrite-Response-Format' : '0.15.0',
         }
 
     def set_self_signed(self, status=True):
@@ -76,7 +76,7 @@ class Client:
             stringify = True
             for key in data.copy():
                 if isinstance(data[key], InputFile):
-                    files[key] = (data[key].name, data[key].file)
+                    files[key] = (data[key].filename, data[key].data)
                     del data[key]
         response = None
         try:
@@ -118,13 +118,20 @@ class Client:
         on_progress = None,
         upload_id = ''
     ):
-        file_path = str(params[param_name])
-        file_name = os.path.basename(file_path)
-        size = os.stat(file_path).st_size
+        input_file = params[param_name]
+
+        if input_file.source_type == 'path':
+            size = os.stat(input_file.path).st_size
+            input = open(input_file.path, 'rb')
+        elif input_file.source_type == 'bytes':
+            size = len(input_file.data)
+            input = input_file.data
 
         if size < self._chunk_size:
-            slice = open(file_path, 'rb').read()
-            params[param_name] = InputFile(file_path, file_name, slice)
+            if input_file.source_type == 'path':
+                input_file.data = input.read()
+
+            params[param_name] = input_file
             return self.call(
                 'post',
                 path,
@@ -132,7 +139,6 @@ class Client:
                 params
             )
 
-        input = open(file_path, 'rb')
         offset = 0
         counter = 0
 
@@ -148,9 +154,16 @@ class Client:
             input.seek(offset)
 
         while offset < size:
-            slice = input.read(self._chunk_size) or input.read(size - offset)
+            if input_file.source_type == 'path':
+                input_file.data = input.read(self._chunk_size) or input.read(size - offset)
+            elif input_file.source_type == 'bytes':
+                if offset + self._chunk_size < size:
+                    end = offset + self._chunk_size
+                else:
+                    end = size - offset
+                input_file.data = input[offset:end]
 
-            params[param_name] = InputFile(file_path, file_name, slice)
+            params[param_name] = input_file
             headers["content-range"] = f'bytes {offset}-{min((offset + self._chunk_size) - 1, size)}/{size}'
 
             result = self.call(

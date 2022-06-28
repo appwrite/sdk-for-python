@@ -12,6 +12,7 @@ class Health(Service):
         params = {}
         path = '/health'
 
+
         return self.client.call('get', path, {
             'content-type': 'application/json',
         }, params)
@@ -21,6 +22,7 @@ class Health(Service):
 
         params = {}
         path = '/health/anti-virus'
+
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -32,6 +34,7 @@ class Health(Service):
         params = {}
         path = '/health/cache'
 
+
         return self.client.call('get', path, {
             'content-type': 'application/json',
         }, params)
@@ -41,6 +44,7 @@ class Health(Service):
 
         params = {}
         path = '/health/db'
+
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -52,6 +56,7 @@ class Health(Service):
         params = {}
         path = '/health/queue/certificates'
 
+
         return self.client.call('get', path, {
             'content-type': 'application/json',
         }, params)
@@ -61,6 +66,7 @@ class Health(Service):
 
         params = {}
         path = '/health/queue/functions'
+
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -72,6 +78,7 @@ class Health(Service):
         params = {}
         path = '/health/queue/logs'
 
+
         return self.client.call('get', path, {
             'content-type': 'application/json',
         }, params)
@@ -81,6 +88,7 @@ class Health(Service):
 
         params = {}
         path = '/health/queue/webhooks'
+
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -92,6 +100,7 @@ class Health(Service):
         params = {}
         path = '/health/storage/local'
 
+
         return self.client.call('get', path, {
             'content-type': 'application/json',
         }, params)
@@ -101,6 +110,7 @@ class Health(Service):
 
         params = {}
         path = '/health/time'
+
 
         return self.client.call('get', path, {
             'content-type': 'application/json',

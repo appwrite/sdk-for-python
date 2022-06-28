@@ -12,6 +12,7 @@ class Locale(Service):
         params = {}
         path = '/locale'
 
+
         return self.client.call('get', path, {
             'content-type': 'application/json',
         }, params)
@@ -21,6 +22,7 @@ class Locale(Service):
 
         params = {}
         path = '/locale/continents'
+
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -32,6 +34,7 @@ class Locale(Service):
         params = {}
         path = '/locale/countries'
 
+
         return self.client.call('get', path, {
             'content-type': 'application/json',
         }, params)
@@ -41,6 +44,7 @@ class Locale(Service):
 
         params = {}
         path = '/locale/countries/eu'
+
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -52,6 +56,7 @@ class Locale(Service):
         params = {}
         path = '/locale/countries/phones'
 
+
         return self.client.call('get', path, {
             'content-type': 'application/json',
         }, params)
@@ -62,6 +67,7 @@ class Locale(Service):
         params = {}
         path = '/locale/currencies'
 
+
         return self.client.call('get', path, {
             'content-type': 'application/json',
         }, params)
@@ -71,6 +77,7 @@ class Locale(Service):
 
         params = {}
         path = '/locale/languages'
+
 
         return self.client.call('get', path, {
             'content-type': 'application/json',

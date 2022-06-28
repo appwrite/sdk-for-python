@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.storage import Storage
+from appwrite.services.users import Users
 
 client = Client()
 
@@ -9,6 +9,6 @@ client = Client()
   .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
 )
 
-storage = Storage(client)
+users = Users(client)
 
-result = storage.create_file('[BUCKET_ID]', '[FILE_ID]', InputFile.from_path('file.png'))
+result = users.update_phone_verification('[USER_ID]', False)
