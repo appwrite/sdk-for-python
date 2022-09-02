@@ -6,18 +6,15 @@ class Teams(Service):
     def __init__(self, client):
         super(Teams, self).__init__(client)
 
-    def list(self, search = None, limit = None, offset = None, cursor = None, cursor_direction = None, order_type = None):
+    def list(self, queries = None, search = None):
         """List Teams"""
 
-        params = {}
+        
         path = '/teams'
+        params = {}
 
+        params['queries'] = queries
         params['search'] = search
-        params['limit'] = limit
-        params['offset'] = offset
-        params['cursor'] = cursor
-        params['cursorDirection'] = cursor_direction
-        params['orderType'] = order_type
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -26,14 +23,15 @@ class Teams(Service):
     def create(self, team_id, name, roles = None):
         """Create Team"""
 
+        
+        path = '/teams'
+        params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
 
-        params = {}
-        path = '/teams'
 
         params['teamId'] = team_id
         params['name'] = name
@@ -46,11 +44,12 @@ class Teams(Service):
     def get(self, team_id):
         """Get Team"""
 
+        
+        path = '/teams/{teamId}'
+        params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
-        params = {}
-        path = '/teams/{teamId}'
         path = path.replace('{teamId}', team_id)
 
 
@@ -61,14 +60,15 @@ class Teams(Service):
     def update(self, team_id, name):
         """Update Team"""
 
+        
+        path = '/teams/{teamId}'
+        params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
 
-        params = {}
-        path = '/teams/{teamId}'
         path = path.replace('{teamId}', team_id)
 
         params['name'] = name
@@ -80,11 +80,12 @@ class Teams(Service):
     def delete(self, team_id):
         """Delete Team"""
 
+        
+        path = '/teams/{teamId}'
+        params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
-        params = {}
-        path = '/teams/{teamId}'
         path = path.replace('{teamId}', team_id)
 
 
@@ -92,22 +93,19 @@ class Teams(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_memberships(self, team_id, search = None, limit = None, offset = None, cursor = None, cursor_direction = None, order_type = None):
+    def get_memberships(self, team_id, queries = None, search = None):
         """Get Team Memberships"""
 
+        
+        path = '/teams/{teamId}/memberships'
+        params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
-        params = {}
-        path = '/teams/{teamId}/memberships'
         path = path.replace('{teamId}', team_id)
 
+        params['queries'] = queries
         params['search'] = search
-        params['limit'] = limit
-        params['offset'] = offset
-        params['cursor'] = cursor
-        params['cursorDirection'] = cursor_direction
-        params['orderType'] = order_type
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -116,6 +114,9 @@ class Teams(Service):
     def create_membership(self, team_id, email, roles, url, name = None):
         """Create Team Membership"""
 
+        
+        path = '/teams/{teamId}/memberships'
+        params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
@@ -128,8 +129,6 @@ class Teams(Service):
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
 
-        params = {}
-        path = '/teams/{teamId}/memberships'
         path = path.replace('{teamId}', team_id)
 
         params['email'] = email
@@ -144,14 +143,15 @@ class Teams(Service):
     def get_membership(self, team_id, membership_id):
         """Get Team Membership"""
 
+        
+        path = '/teams/{teamId}/memberships/{membershipId}'
+        params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
         if membership_id is None:
             raise AppwriteException('Missing required parameter: "membership_id"')
 
-        params = {}
-        path = '/teams/{teamId}/memberships/{membershipId}'
         path = path.replace('{teamId}', team_id)
         path = path.replace('{membershipId}', membership_id)
 
@@ -163,6 +163,9 @@ class Teams(Service):
     def update_membership_roles(self, team_id, membership_id, roles):
         """Update Membership Roles"""
 
+        
+        path = '/teams/{teamId}/memberships/{membershipId}'
+        params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
@@ -172,8 +175,6 @@ class Teams(Service):
         if roles is None:
             raise AppwriteException('Missing required parameter: "roles"')
 
-        params = {}
-        path = '/teams/{teamId}/memberships/{membershipId}'
         path = path.replace('{teamId}', team_id)
         path = path.replace('{membershipId}', membership_id)
 
@@ -186,14 +187,15 @@ class Teams(Service):
     def delete_membership(self, team_id, membership_id):
         """Delete Team Membership"""
 
+        
+        path = '/teams/{teamId}/memberships/{membershipId}'
+        params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
         if membership_id is None:
             raise AppwriteException('Missing required parameter: "membership_id"')
 
-        params = {}
-        path = '/teams/{teamId}/memberships/{membershipId}'
         path = path.replace('{teamId}', team_id)
         path = path.replace('{membershipId}', membership_id)
 
@@ -205,6 +207,9 @@ class Teams(Service):
     def update_membership_status(self, team_id, membership_id, user_id, secret):
         """Update Team Membership Status"""
 
+        
+        path = '/teams/{teamId}/memberships/{membershipId}/status'
+        params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
@@ -217,8 +222,6 @@ class Teams(Service):
         if secret is None:
             raise AppwriteException('Missing required parameter: "secret"')
 
-        params = {}
-        path = '/teams/{teamId}/memberships/{membershipId}/status'
         path = path.replace('{teamId}', team_id)
         path = path.replace('{membershipId}', membership_id)
 

@@ -11,4 +11,4 @@ client = Client()
 
 databases = Databases(client)
 
-result = databases.update('[DATABASE_ID]', '[NAME]')
+result = databases.create_datetime_attribute('[DATABASE_ID]', '[COLLECTION_ID]', '', False)

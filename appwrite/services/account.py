@@ -9,9 +9,9 @@ class Account(Service):
     def get(self):
         """Get Account"""
 
-        params = {}
+        
         path = '/account'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -20,14 +20,15 @@ class Account(Service):
     def update_email(self, email, password):
         """Update Account Email"""
 
+        
+        path = '/account/email'
+        params = {}
         if email is None:
             raise AppwriteException('Missing required parameter: "email"')
 
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
 
-        params = {}
-        path = '/account/email'
 
         params['email'] = email
         params['password'] = password
@@ -36,14 +37,14 @@ class Account(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_logs(self, limit = None, offset = None):
+    def get_logs(self, queries = None):
         """Get Account Logs"""
 
-        params = {}
+        
         path = '/account/logs'
+        params = {}
 
-        params['limit'] = limit
-        params['offset'] = offset
+        params['queries'] = queries
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -52,11 +53,12 @@ class Account(Service):
     def update_name(self, name):
         """Update Account Name"""
 
+        
+        path = '/account/name'
+        params = {}
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
 
-        params = {}
-        path = '/account/name'
 
         params['name'] = name
 
@@ -67,11 +69,12 @@ class Account(Service):
     def update_password(self, password, old_password = None):
         """Update Account Password"""
 
+        
+        path = '/account/password'
+        params = {}
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
 
-        params = {}
-        path = '/account/password'
 
         params['password'] = password
         params['oldPassword'] = old_password
@@ -80,19 +83,20 @@ class Account(Service):
             'content-type': 'application/json',
         }, params)
 
-    def update_phone(self, number, password):
+    def update_phone(self, phone, password):
         """Update Account Phone"""
 
-        if number is None:
-            raise AppwriteException('Missing required parameter: "number"')
+        
+        path = '/account/phone'
+        params = {}
+        if phone is None:
+            raise AppwriteException('Missing required parameter: "phone"')
 
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
 
-        params = {}
-        path = '/account/phone'
 
-        params['number'] = number
+        params['phone'] = phone
         params['password'] = password
 
         return self.client.call('patch', path, {
@@ -102,9 +106,9 @@ class Account(Service):
     def get_prefs(self):
         """Get Account Preferences"""
 
-        params = {}
+        
         path = '/account/prefs'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -113,11 +117,12 @@ class Account(Service):
     def update_prefs(self, prefs):
         """Update Account Preferences"""
 
+        
+        path = '/account/prefs'
+        params = {}
         if prefs is None:
             raise AppwriteException('Missing required parameter: "prefs"')
 
-        params = {}
-        path = '/account/prefs'
 
         params['prefs'] = prefs
 
@@ -128,14 +133,15 @@ class Account(Service):
     def create_recovery(self, email, url):
         """Create Password Recovery"""
 
+        
+        path = '/account/recovery'
+        params = {}
         if email is None:
             raise AppwriteException('Missing required parameter: "email"')
 
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
 
-        params = {}
-        path = '/account/recovery'
 
         params['email'] = email
         params['url'] = url
@@ -147,6 +153,9 @@ class Account(Service):
     def update_recovery(self, user_id, secret, password, password_again):
         """Create Password Recovery (confirmation)"""
 
+        
+        path = '/account/recovery'
+        params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
@@ -159,8 +168,6 @@ class Account(Service):
         if password_again is None:
             raise AppwriteException('Missing required parameter: "password_again"')
 
-        params = {}
-        path = '/account/recovery'
 
         params['userId'] = user_id
         params['secret'] = secret
@@ -174,9 +181,9 @@ class Account(Service):
     def get_sessions(self):
         """Get Account Sessions"""
 
-        params = {}
+        
         path = '/account/sessions'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -185,9 +192,9 @@ class Account(Service):
     def delete_sessions(self):
         """Delete All Account Sessions"""
 
-        params = {}
+        
         path = '/account/sessions'
-
+        params = {}
 
         return self.client.call('delete', path, {
             'content-type': 'application/json',
@@ -196,11 +203,12 @@ class Account(Service):
     def get_session(self, session_id):
         """Get Session By ID"""
 
+        
+        path = '/account/sessions/{sessionId}'
+        params = {}
         if session_id is None:
             raise AppwriteException('Missing required parameter: "session_id"')
 
-        params = {}
-        path = '/account/sessions/{sessionId}'
         path = path.replace('{sessionId}', session_id)
 
 
@@ -211,11 +219,12 @@ class Account(Service):
     def update_session(self, session_id):
         """Update Session (Refresh Tokens)"""
 
+        
+        path = '/account/sessions/{sessionId}'
+        params = {}
         if session_id is None:
             raise AppwriteException('Missing required parameter: "session_id"')
 
-        params = {}
-        path = '/account/sessions/{sessionId}'
         path = path.replace('{sessionId}', session_id)
 
 
@@ -226,11 +235,12 @@ class Account(Service):
     def delete_session(self, session_id):
         """Delete Account Session"""
 
+        
+        path = '/account/sessions/{sessionId}'
+        params = {}
         if session_id is None:
             raise AppwriteException('Missing required parameter: "session_id"')
 
-        params = {}
-        path = '/account/sessions/{sessionId}'
         path = path.replace('{sessionId}', session_id)
 
 
@@ -241,9 +251,9 @@ class Account(Service):
     def update_status(self):
         """Update Account Status"""
 
-        params = {}
+        
         path = '/account/status'
-
+        params = {}
 
         return self.client.call('patch', path, {
             'content-type': 'application/json',
@@ -252,11 +262,12 @@ class Account(Service):
     def create_verification(self, url):
         """Create Email Verification"""
 
+        
+        path = '/account/verification'
+        params = {}
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
 
-        params = {}
-        path = '/account/verification'
 
         params['url'] = url
 
@@ -267,14 +278,15 @@ class Account(Service):
     def update_verification(self, user_id, secret):
         """Create Email Verification (confirmation)"""
 
+        
+        path = '/account/verification'
+        params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
         if secret is None:
             raise AppwriteException('Missing required parameter: "secret"')
 
-        params = {}
-        path = '/account/verification'
 
         params['userId'] = user_id
         params['secret'] = secret
@@ -286,9 +298,9 @@ class Account(Service):
     def create_phone_verification(self):
         """Create Phone Verification"""
 
-        params = {}
+        
         path = '/account/verification/phone'
-
+        params = {}
 
         return self.client.call('post', path, {
             'content-type': 'application/json',
@@ -297,14 +309,15 @@ class Account(Service):
     def update_phone_verification(self, user_id, secret):
         """Create Phone Verification (confirmation)"""
 
+        
+        path = '/account/verification/phone'
+        params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
         if secret is None:
             raise AppwriteException('Missing required parameter: "secret"')
 
-        params = {}
-        path = '/account/verification/phone'
 
         params['userId'] = user_id
         params['secret'] = secret
