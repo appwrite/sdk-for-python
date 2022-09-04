@@ -110,7 +110,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create_collection(self, database_id, collection_id, name, permissions, document_security):
+    def create_collection(self, database_id, collection_id, name, permissions = None, document_security = None):
         """Create Collection"""
 
         
@@ -124,12 +124,6 @@ class Databases(Service):
 
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-        if permissions is None:
-            raise AppwriteException('Missing required parameter: "permissions"')
-
-        if document_security is None:
-            raise AppwriteException('Missing required parameter: "document_security"')
 
         path = path.replace('{databaseId}', database_id)
 
@@ -162,7 +156,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, params)
 
-    def update_collection(self, database_id, collection_id, name, document_security, permissions = None, enabled = None):
+    def update_collection(self, database_id, collection_id, name, permissions = None, document_security = None, enabled = None):
         """Update Collection"""
 
         
@@ -176,9 +170,6 @@ class Databases(Service):
 
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-        if document_security is None:
-            raise AppwriteException('Missing required parameter: "document_security"')
 
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)

@@ -20,7 +20,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create_bucket(self, bucket_id, name, file_security, permissions = None, enabled = None, maximum_file_size = None, allowed_file_extensions = None, compression = None, encryption = None, antivirus = None):
+    def create_bucket(self, bucket_id, name, permissions = None, file_security = None, enabled = None, maximum_file_size = None, allowed_file_extensions = None, compression = None, encryption = None, antivirus = None):
         """Create bucket"""
 
         
@@ -31,9 +31,6 @@ class Storage(Service):
 
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-        if file_security is None:
-            raise AppwriteException('Missing required parameter: "file_security"')
 
 
         params['bucketId'] = bucket_id
@@ -67,7 +64,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, params)
 
-    def update_bucket(self, bucket_id, name, file_security, permissions = None, enabled = None, maximum_file_size = None, allowed_file_extensions = None, compression = None, encryption = None, antivirus = None):
+    def update_bucket(self, bucket_id, name, permissions = None, file_security = None, enabled = None, maximum_file_size = None, allowed_file_extensions = None, compression = None, encryption = None, antivirus = None):
         """Update Bucket"""
 
         
@@ -78,9 +75,6 @@ class Storage(Service):
 
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-        if file_security is None:
-            raise AppwriteException('Missing required parameter: "file_security"')
 
         path = path.replace('{bucketId}', bucket_id)
 
