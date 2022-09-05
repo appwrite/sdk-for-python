@@ -97,7 +97,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_initials(self, name = None, width = None, height = None, color = None, background = None):
+    def get_initials(self, name = None, width = None, height = None, background = None):
         """Get User Initials"""
 
         
@@ -107,7 +107,6 @@ class Avatars(Service):
         params['name'] = name
         params['width'] = width
         params['height'] = height
-        params['color'] = color
         params['background'] = background
 
         return self.client.call('get', path, {
