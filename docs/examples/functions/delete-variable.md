@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.databases import Databases
+from appwrite.services.functions import Functions
 
 client = Client()
 
@@ -9,6 +9,6 @@ client = Client()
   .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
 )
 
-databases = Databases(client)
+functions = Functions(client)
 
-result = databases.update('[DATABASE_ID]', '[NAME]')
+result = functions.delete_variable('[FUNCTION_ID]', '[VARIABLE_ID]')

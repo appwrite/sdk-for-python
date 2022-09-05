@@ -9,9 +9,9 @@ class Health(Service):
     def get(self):
         """Get HTTP"""
 
-        params = {}
+        
         path = '/health'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -20,9 +20,9 @@ class Health(Service):
     def get_antivirus(self):
         """Get Antivirus"""
 
-        params = {}
+        
         path = '/health/anti-virus'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -31,9 +31,9 @@ class Health(Service):
     def get_cache(self):
         """Get Cache"""
 
-        params = {}
+        
         path = '/health/cache'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -42,9 +42,9 @@ class Health(Service):
     def get_db(self):
         """Get DB"""
 
-        params = {}
+        
         path = '/health/db'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -53,9 +53,9 @@ class Health(Service):
     def get_queue_certificates(self):
         """Get Certificates Queue"""
 
-        params = {}
+        
         path = '/health/queue/certificates'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -64,9 +64,9 @@ class Health(Service):
     def get_queue_functions(self):
         """Get Functions Queue"""
 
-        params = {}
+        
         path = '/health/queue/functions'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -75,9 +75,9 @@ class Health(Service):
     def get_queue_logs(self):
         """Get Logs Queue"""
 
-        params = {}
+        
         path = '/health/queue/logs'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -86,9 +86,9 @@ class Health(Service):
     def get_queue_webhooks(self):
         """Get Webhooks Queue"""
 
-        params = {}
+        
         path = '/health/queue/webhooks'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -97,9 +97,9 @@ class Health(Service):
     def get_storage_local(self):
         """Get Local Storage"""
 
-        params = {}
+        
         path = '/health/storage/local'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',
@@ -108,9 +108,9 @@ class Health(Service):
     def get_time(self):
         """Get Time"""
 
-        params = {}
+        
         path = '/health/time'
-
+        params = {}
 
         return self.client.call('get', path, {
             'content-type': 'application/json',

@@ -9,11 +9,12 @@ class Avatars(Service):
     def get_browser(self, code, width = None, height = None, quality = None):
         """Get Browser Icon"""
 
+        
+        path = '/avatars/browsers/{code}'
+        params = {}
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
 
-        params = {}
-        path = '/avatars/browsers/{code}'
         path = path.replace('{code}', code)
 
         params['width'] = width
@@ -27,11 +28,12 @@ class Avatars(Service):
     def get_credit_card(self, code, width = None, height = None, quality = None):
         """Get Credit Card Icon"""
 
+        
+        path = '/avatars/credit-cards/{code}'
+        params = {}
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
 
-        params = {}
-        path = '/avatars/credit-cards/{code}'
         path = path.replace('{code}', code)
 
         params['width'] = width
@@ -45,11 +47,12 @@ class Avatars(Service):
     def get_favicon(self, url):
         """Get Favicon"""
 
+        
+        path = '/avatars/favicon'
+        params = {}
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
 
-        params = {}
-        path = '/avatars/favicon'
 
         params['url'] = url
 
@@ -60,11 +63,12 @@ class Avatars(Service):
     def get_flag(self, code, width = None, height = None, quality = None):
         """Get Country Flag"""
 
+        
+        path = '/avatars/flags/{code}'
+        params = {}
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
 
-        params = {}
-        path = '/avatars/flags/{code}'
         path = path.replace('{code}', code)
 
         params['width'] = width
@@ -78,11 +82,12 @@ class Avatars(Service):
     def get_image(self, url, width = None, height = None):
         """Get Image from URL"""
 
+        
+        path = '/avatars/image'
+        params = {}
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
 
-        params = {}
-        path = '/avatars/image'
 
         params['url'] = url
         params['width'] = width
@@ -92,16 +97,16 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_initials(self, name = None, width = None, height = None, color = None, background = None):
+    def get_initials(self, name = None, width = None, height = None, background = None):
         """Get User Initials"""
 
-        params = {}
+        
         path = '/avatars/initials'
+        params = {}
 
         params['name'] = name
         params['width'] = width
         params['height'] = height
-        params['color'] = color
         params['background'] = background
 
         return self.client.call('get', path, {
@@ -111,11 +116,12 @@ class Avatars(Service):
     def get_qr(self, text, size = None, margin = None, download = None):
         """Get QR Code"""
 
+        
+        path = '/avatars/qr'
+        params = {}
         if text is None:
             raise AppwriteException('Missing required parameter: "text"')
 
-        params = {}
-        path = '/avatars/qr'
 
         params['text'] = text
         params['size'] = size

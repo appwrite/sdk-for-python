@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.databases import Databases
+from appwrite.services.users import Users
 
 client = Client()
 
@@ -9,6 +9,6 @@ client = Client()
   .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
 )
 
-databases = Databases(client)
+users = Users(client)
 
-result = databases.update('[DATABASE_ID]', '[NAME]')
+result = users.create_scrypt_user('[USER_ID]', 'email@example.com', 'password', '[PASSWORD_SALT]', None, None, None, None)
