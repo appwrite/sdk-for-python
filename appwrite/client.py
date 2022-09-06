@@ -14,7 +14,7 @@ class Client:
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '1.0.0-RC1',
+            'x-sdk-version': '1.0.0-RC2',
             'X-Appwrite-Response-Format' : '1.0.0-RC1',
         }
 
