@@ -4,11 +4,15 @@ class Role:
         return 'any'
 
     @staticmethod
-    def user(id):
+    def user(id, status = ""):
+        if status:
+            return f'user:{id}/{status}'
         return f'user:{id}'
 
     @staticmethod
-    def users():
+    def users(status = ""):
+        if status:
+            return f'users/{status}'
         return 'users'
     
     @staticmethod
@@ -20,6 +24,10 @@ class Role:
         if role:
             return f'team:{id}/{role}'
         return f'team:{id}'
+
+    @staticmethod
+    def member(id):
+        return f'member:{id}'
 
     @staticmethod
     def status(status):

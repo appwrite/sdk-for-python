@@ -37,8 +37,8 @@ class Account(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_logs(self, queries = None):
-        """Get Account Logs"""
+    def list_logs(self, queries = None):
+        """List Account Logs"""
 
         
         path = '/account/logs'
@@ -178,8 +178,8 @@ class Account(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_sessions(self):
-        """Get Account Sessions"""
+    def list_sessions(self):
+        """List Account Sessions"""
 
         
         path = '/account/sessions'

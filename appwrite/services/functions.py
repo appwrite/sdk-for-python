@@ -20,7 +20,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create(self, function_id, name, execute, runtime, events = None, schedule = None, timeout = None):
+    def create(self, function_id, name, execute, runtime, events = None, schedule = None, timeout = None, enabled = None):
         """Create Function"""
 
         
@@ -46,6 +46,7 @@ class Functions(Service):
         params['events'] = events
         params['schedule'] = schedule
         params['timeout'] = timeout
+        params['enabled'] = enabled
 
         return self.client.call('post', path, {
             'content-type': 'application/json',
@@ -78,7 +79,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, params)
 
-    def update(self, function_id, name, execute, events = None, schedule = None, timeout = None):
+    def update(self, function_id, name, execute, events = None, schedule = None, timeout = None, enabled = None):
         """Update Function"""
 
         
@@ -100,6 +101,7 @@ class Functions(Service):
         params['events'] = events
         params['schedule'] = schedule
         params['timeout'] = timeout
+        params['enabled'] = enabled
 
         return self.client.call('put', path, {
             'content-type': 'application/json',
@@ -312,7 +314,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, params)
 
-    def list_variables(self, function_id, queries = None, search = None):
+    def list_variables(self, function_id):
         """List Variables"""
 
         
@@ -323,8 +325,6 @@ class Functions(Service):
 
         path = path.replace('{functionId}', function_id)
 
-        params['queries'] = queries
-        params['search'] = search
 
         return self.client.call('get', path, {
             'content-type': 'application/json',

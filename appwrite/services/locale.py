@@ -17,7 +17,7 @@ class Locale(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_continents(self):
+    def list_continents(self):
         """List Continents"""
 
         
@@ -28,7 +28,7 @@ class Locale(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_countries(self):
+    def list_countries(self):
         """List Countries"""
 
         
@@ -39,7 +39,7 @@ class Locale(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_countries_eu(self):
+    def list_countries_eu(self):
         """List EU Countries"""
 
         
@@ -50,7 +50,7 @@ class Locale(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_countries_phones(self):
+    def list_countries_phones(self):
         """List Countries Phone Codes"""
 
         
@@ -61,7 +61,7 @@ class Locale(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_currencies(self):
+    def list_currencies(self):
         """List Currencies"""
 
         
@@ -72,7 +72,7 @@ class Locale(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_languages(self):
+    def list_languages(self):
         """List Languages"""
 
         

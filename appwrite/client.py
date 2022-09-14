@@ -14,8 +14,8 @@ class Client:
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '1.0.0-RC1',
-            'X-Appwrite-Response-Format' : '1.0.0-RC1',
+            'x-sdk-version': '1.0.0',
+            'X-Appwrite-Response-Format' : '1.0.0',
         }
 
     def set_self_signed(self, status=True):

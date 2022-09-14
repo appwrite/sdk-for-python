@@ -93,8 +93,8 @@ class Teams(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_memberships(self, team_id, queries = None, search = None):
-        """Get Team Memberships"""
+    def list_memberships(self, team_id, queries = None, search = None):
+        """List Team Memberships"""
 
         
         path = '/teams/{teamId}/memberships'
