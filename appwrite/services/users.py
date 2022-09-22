@@ -300,8 +300,8 @@ class Users(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_logs(self, user_id, queries = None):
-        """Get User Logs"""
+    def list_logs(self, user_id, queries = None):
+        """List User Logs"""
 
         
         path = '/users/{userId}/logs'
@@ -317,8 +317,8 @@ class Users(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_memberships(self, user_id):
-        """Get User Memberships"""
+    def list_memberships(self, user_id):
+        """List User Memberships"""
 
         
         path = '/users/{userId}/memberships'
@@ -429,8 +429,8 @@ class Users(Service):
             'content-type': 'application/json',
         }, params)
 
-    def get_sessions(self, user_id):
-        """Get User Sessions"""
+    def list_sessions(self, user_id):
+        """List User Sessions"""
 
         
         path = '/users/{userId}/sessions'
