@@ -1,9 +1,10 @@
 from ..service import Service
 from ..exception import AppwriteException
+from ..client import Client
 
 class Functions(Service):
 
-    def __init__(self, client):
+    def __init__(self, client: Client):
         super(Functions, self).__init__(client)
 
     def list(self, queries = None, search = None):

@@ -1,9 +1,9 @@
 from ..service import Service
-from ..exception import AppwriteException
+from ..client import Client
 
 class Locale(Service):
 
-    def __init__(self, client):
+    def __init__(self, client: Client):
         super(Locale, self).__init__(client)
 
     def get(self):

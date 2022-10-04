@@ -1,9 +1,10 @@
 from ..service import Service
 from ..exception import AppwriteException
+from ..client import Client
 
 class Account(Service):
 
-    def __init__(self, client):
+    def __init__(self, client: Client):
         super(Account, self).__init__(client)
 
     def get(self):

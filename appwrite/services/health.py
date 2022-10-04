@@ -1,9 +1,9 @@
 from ..service import Service
-from ..exception import AppwriteException
+from ..client import Client
 
 class Health(Service):
 
-    def __init__(self, client):
+    def __init__(self, client: Client):
         super(Health, self).__init__(client)
 
     def get(self):

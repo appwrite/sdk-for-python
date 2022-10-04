@@ -1,9 +1,10 @@
 from ..service import Service
 from ..exception import AppwriteException
+from ..client import Client
 
 class Storage(Service):
 
-    def __init__(self, client):
+    def __init__(self, client: Client):
         super(Storage, self).__init__(client)
 
     def list_buckets(self, queries = None, search = None):

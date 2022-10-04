@@ -1,9 +1,10 @@
 from ..service import Service
 from ..exception import AppwriteException
+from ..client import Client
 
 class Avatars(Service):
 
-    def __init__(self, client):
+    def __init__(self, client: Client):
         super(Avatars, self).__init__(client)
 
     def get_browser(self, code, width = None, height = None, quality = None):
