@@ -8,7 +8,7 @@
 
 **This SDK is compatible with Appwrite server version 1.0.x. For older versions, please check [previous releases](https://github.com/appwrite/sdk-for-python/releases).**
 
-Appwrite is an open-source backend as a service server that abstract and simplify complex and repetitive development tasks behind a very simple to use REST API. Appwrite aims to help you develop your apps faster and in a more secure way. Use the Python SDK to integrate your app with the Appwrite server to easily start interacting with all of Appwrite backend APIs and tools. For full API documentation and tutorials go to [https://appwrite.io/docs](https://appwrite.io/docs)
+Appwrite is an open-source backend as a service server that abstracts and simplifies complex and repetitive development tasks behind a very simple-to-use REST API. Appwrite aims to help you develop your apps faster and in a more secure way. Use the Python SDK to integrate your app with the Appwrite server to easily start interacting with all of Appwrite backend APIs and tools. For full API documentation and tutorials go to [https://appwrite.io/docs](https://appwrite.io/docs)
 
 ![Appwrite](https://appwrite.io/images/github.png)
 
@@ -24,7 +24,7 @@ pip install appwrite
 ## Getting Started
 
 ### Init your SDK
-Initialize your SDK with your Appwrite server API endpoint and project ID which can be found on your project settings page and your new API secret Key from project's API keys section.
+Initialize your SDK with your Appwrite server API endpoint and project ID which can be found on your project settings page and your new API secret Key from the project's API keys section.
 
 ```python
 from appwrite.client import Client
@@ -70,7 +70,7 @@ result = users.create(ID.unique(), 'email@example.com', 'password')
 ```
 
 ### Error Handling
-The Appwrite Python SDK raises `AppwriteException` object with `message`, `code` and `response` properties. You can handle any errors by catching `AppwriteException` and present the `message` to the user or handle it yourself based on the provided error information. Below is an example.
+The Appwrite Python SDK raises `AppwriteException` object with `message`, `code`, and `response` properties. You can handle any errors by catching `AppwriteException` and presenting the `message` to the user or handling it yourself based on the provided error information. Below is an example.
 
 ```python
 users = Users(client)
