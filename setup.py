@@ -1,10 +1,17 @@
 import setuptools
 
+long_description: str
+
+with open("README.md", "r", encoding="utf-8") as readme_file:
+    long_description = readme_file.read()
+
 setuptools.setup(
   name = 'appwrite',
   packages = ['appwrite', 'appwrite/services'],
   version = '1.1.0',
   license='BSD-3-Clause',
+  long_description=long_description,
+  long_description_content_type="text/markdown",
   description = 'Appwrite is an open-source self-hosted backend server that abstract and simplify complex and repetitive development tasks behind a very simple REST API',
   author = 'Appwrite Team',
   author_email = 'team@appwrite.io',
