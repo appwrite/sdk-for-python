@@ -234,8 +234,8 @@ class Functions(Service):
             'content-type': 'application/json',
         }, params)
 
-    def retry_build(self, function_id, deployment_id, build_id):
-        """Retry Build"""
+    def create_build(self, function_id, deployment_id, build_id):
+        """Create Build"""
 
         
         path = '/functions/{functionId}/deployments/{deploymentId}/builds/{buildId}'

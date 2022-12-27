@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.functions import Functions
+from appwrite.services.graphql import Graphql
 
 client = Client()
 
@@ -9,6 +9,6 @@ client = Client()
   .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
 )
 
-functions = Functions(client)
+graphql = Graphql(client)
 
-result = functions.retry_build('[FUNCTION_ID]', '[DEPLOYMENT_ID]', '[BUILD_ID]')
+result = graphql.query({})

@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.locale import Locale
+from appwrite.services.functions import Functions
 
 client = Client()
 
@@ -9,6 +9,6 @@ client = Client()
   .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
 )
 
-locale = Locale(client)
+functions = Functions(client)
 
-result = locale.get_languages()
+result = functions.create_build('[FUNCTION_ID]', '[DEPLOYMENT_ID]', '[BUILD_ID]')

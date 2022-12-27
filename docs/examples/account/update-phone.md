@@ -11,4 +11,4 @@ client = Client()
 
 account = Account(client)
 
-result = account.update_phone('', 'password')
+result = account.update_phone('+12065550100', 'password')

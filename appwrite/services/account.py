@@ -18,7 +18,7 @@ class Account(Service):
         }, params)
 
     def update_email(self, email, password):
-        """Update Account Email"""
+        """Update Email"""
 
         
         path = '/account/email'
@@ -38,7 +38,7 @@ class Account(Service):
         }, params)
 
     def list_logs(self, queries = None):
-        """List Account Logs"""
+        """List Logs"""
 
         
         path = '/account/logs'
@@ -51,7 +51,7 @@ class Account(Service):
         }, params)
 
     def update_name(self, name):
-        """Update Account Name"""
+        """Update Name"""
 
         
         path = '/account/name'
@@ -67,7 +67,7 @@ class Account(Service):
         }, params)
 
     def update_password(self, password, old_password = None):
-        """Update Account Password"""
+        """Update Password"""
 
         
         path = '/account/password'
@@ -84,7 +84,7 @@ class Account(Service):
         }, params)
 
     def update_phone(self, phone, password):
-        """Update Account Phone"""
+        """Update Phone"""
 
         
         path = '/account/phone'
@@ -115,7 +115,7 @@ class Account(Service):
         }, params)
 
     def update_prefs(self, prefs):
-        """Update Account Preferences"""
+        """Update Preferences"""
 
         
         path = '/account/prefs'
@@ -179,7 +179,7 @@ class Account(Service):
         }, params)
 
     def list_sessions(self):
-        """List Account Sessions"""
+        """List Sessions"""
 
         
         path = '/account/sessions'
@@ -190,7 +190,7 @@ class Account(Service):
         }, params)
 
     def delete_sessions(self):
-        """Delete All Account Sessions"""
+        """Delete Sessions"""
 
         
         path = '/account/sessions'
@@ -201,7 +201,7 @@ class Account(Service):
         }, params)
 
     def get_session(self, session_id):
-        """Get Session By ID"""
+        """Get Session"""
 
         
         path = '/account/sessions/{sessionId}'
@@ -217,7 +217,7 @@ class Account(Service):
         }, params)
 
     def update_session(self, session_id):
-        """Update Session (Refresh Tokens)"""
+        """Update OAuth Session (Refresh Tokens)"""
 
         
         path = '/account/sessions/{sessionId}'
@@ -233,7 +233,7 @@ class Account(Service):
         }, params)
 
     def delete_session(self, session_id):
-        """Delete Account Session"""
+        """Delete Session"""
 
         
         path = '/account/sessions/{sessionId}'
@@ -249,7 +249,7 @@ class Account(Service):
         }, params)
 
     def update_status(self):
-        """Update Account Status"""
+        """Update Status"""
 
         
         path = '/account/status'

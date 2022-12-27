@@ -11,4 +11,4 @@ client = Client()
 
 users = Users(client)
 
-result = users.update_phone('[USER_ID]', '')
+result = users.update_phone('[USER_ID]', '+12065550100')
