@@ -32,12 +32,10 @@ from appwrite.services.users import Users
 
 client = Client()
 
-(client
-  .set_endpoint('https://[HOSTNAME_OR_IP]/v1') # Your API Endpoint
-  .set_project('5df5acd0d48c2') # Your project ID
-  .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
-  .set_self_signed() # Use only on dev mode with a self-signed SSL cert
-)
+client.endpoint = 'http://HOSTNAME/v1'
+client.project = 'project_ID'
+client.key = 'secret_key'
+client.self_signed=False
 ```
 
 ### Make Your First Request
@@ -57,12 +55,10 @@ from appwrite.id import ID
 
 client = Client()
 
-(client
-  .set_endpoint('https://[HOSTNAME_OR_IP]/v1') # Your API Endpoint
-  .set_project('5df5acd0d48c2') # Your project ID
-  .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
-  .set_self_signed() # Use only on dev mode with a self-signed SSL cert
-)
+client.endpoint = 'http://HOSTNAME/v1'
+client.project = 'project_ID'
+client.key = 'secret_key'
+client.self_signed=False
 
 users = Users(client)
 
