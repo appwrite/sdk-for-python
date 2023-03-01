@@ -16,41 +16,75 @@ class Client:
             'x-sdk-language': 'python',
             'x-sdk-version': '1.2.0',
             'X-Appwrite-Response-Format' : '1.0.0',
+            'x-appwrite-project':'my_project_ID',
+            'x-appwrite-key':'my_secret_key',
+            'x-appwrite-jwt':'my_secret_JSON_Web_Token',
+            'x-appwrite-locale':'en_US',
         }
 
-    def set_self_signed(self, status=True):
+    @property
+    def self_signed(self):
+        """Your Project self_signed"""
+        return self._self_signed
+    @self_signed.setter
+    def self_signed(self, status=True):
+        """Your Project self_signed"""
         self._self_signed = status
-        return self
 
-    def set_endpoint(self, endpoint):
-        self._endpoint = endpoint
-        return self
+    @property
+    def endpoint(self):
+        """Your Project Endpoint"""
+        return self._endpoint
+    @endpoint.setter
+    def endpoint(self, value):
+        """Your Project Endpoint"""
+        self._endpoint = value
 
-    def add_header(self, key, value):
+    @property
+    def global_headers(self):
+        """Your Project headers"""
+        return self._global_headers
+    @global_headers.setter
+    def global_headers(self, key,value):
+        """Your Project headers"""
         self._global_headers[key.lower()] = value
         return self
 
-    def set_project(self, value):
+    @property
+    def projectID(self):
         """Your project ID"""
-
+        return self._global_headers['x-appwrite-project']
+    @projectID.setter
+    def projectID(self,value):
+        """Your project ID"""
         self._global_headers['x-appwrite-project'] = value
-        return self
 
-    def set_key(self, value):
+    @property
+    def key(self):
         """Your secret API key"""
-
+        return self._global_headers['x-appwrite-key']
+    @key.setter
+    def key(self,value):
+        """Your secret API key"""
         self._global_headers['x-appwrite-key'] = value
-        return self
 
-    def set_jwt(self, value):
+    @property
+    def jwt(self):
         """Your secret JSON Web Token"""
-
+        return self._global_headers['x-appwrite-jwt']
+    @jwt.setter
+    def jwt(self,value):
+        """Your secret JSON Web Token"""
         self._global_headers['x-appwrite-jwt'] = value
-        return self
 
-    def set_locale(self, value):
-        self._global_headers['x-appwrite-locale'] = value
-        return self
+    @property
+    def locale(self):
+        """Locale"""
+        return self._global_headers['x-appwrite-locale']
+    @locale.setter
+    def locale(self,values):
+        """Locale"""
+        self._global_headers['x-appwrite-locale'] = values
 
     def call(self, method, path='', headers=None, params=None):
         if headers is None:
