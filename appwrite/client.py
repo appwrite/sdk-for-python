@@ -18,7 +18,6 @@ class Client:
             'X-Appwrite-Response-Format' : '1.0.0',
             'x-appwrite-project':'my_project_ID',
             'x-appwrite-key':'my_secret_key',
-            'x-appwrite-jwt':'my_secret_JSON_Web_Token',
             'x-appwrite-locale':'en_US',
         }
 
