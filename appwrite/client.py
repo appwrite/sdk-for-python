@@ -51,11 +51,11 @@ class Client:
         return self
 
     @property
-    def projectID(self):
+    def project(self):
         """Your project ID"""
         return self._global_headers['x-appwrite-project']
-    @projectID.setter
-    def projectID(self,value):
+    @project.setter
+    def project(self,value):
         """Your project ID"""
         self._global_headers['x-appwrite-project'] = value
 
