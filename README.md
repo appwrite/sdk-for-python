@@ -75,6 +75,9 @@ try:
 except AppwriteException as e:
   print(e.message)
 ```
+### YouTube Video
+
+[Interact with appwrite using python : YouTube](https://youtu.be/TbIJUwTTTyc)
 
 ### Learn more
 You can use the following resources to learn more and get help
