@@ -20,7 +20,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create(self, function_id, name, execute, runtime, events = None, schedule = None, timeout = None, enabled = None):
+    def create(self, function_id, name, runtime, execute = None, events = None, schedule = None, timeout = None, enabled = None):
         """Create Function"""
 
         
@@ -31,9 +31,6 @@ class Functions(Service):
 
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-        if execute is None:
-            raise AppwriteException('Missing required parameter: "execute"')
 
         if runtime is None:
             raise AppwriteException('Missing required parameter: "runtime"')
@@ -79,7 +76,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, params)
 
-    def update(self, function_id, name, execute, events = None, schedule = None, timeout = None, enabled = None):
+    def update(self, function_id, name, execute = None, events = None, schedule = None, timeout = None, enabled = None):
         """Update Function"""
 
         
@@ -90,9 +87,6 @@ class Functions(Service):
 
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-        if execute is None:
-            raise AppwriteException('Missing required parameter: "execute"')
 
         path = path.replace('{functionId}', function_id)
 
