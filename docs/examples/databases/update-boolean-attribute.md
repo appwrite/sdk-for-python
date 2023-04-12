@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.users import Users
+from appwrite.services.databases import Databases
 
 client = Client()
 
@@ -9,6 +9,6 @@ client = Client()
   .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
 )
 
-users = Users(client)
+databases = Databases(client)
 
-result = users.update_password('[USER_ID]', '')
+result = databases.update_boolean_attribute('[DATABASE_ID]', '[COLLECTION_ID]', '', False, False)

@@ -57,8 +57,8 @@ class Teams(Service):
             'content-type': 'application/json',
         }, params)
 
-    def update(self, team_id, name):
-        """Update Team"""
+    def update_name(self, team_id, name):
+        """Update Name"""
 
         
         path = '/teams/{teamId}'
@@ -111,7 +111,7 @@ class Teams(Service):
             'content-type': 'application/json',
         }, params)
 
-    def create_membership(self, team_id, email, roles, url, name = None):
+    def create_membership(self, team_id, roles, url, email = None, user_id = None, phone = None, name = None):
         """Create Team Membership"""
 
         
@@ -119,9 +119,6 @@ class Teams(Service):
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
-
-        if email is None:
-            raise AppwriteException('Missing required parameter: "email"')
 
         if roles is None:
             raise AppwriteException('Missing required parameter: "roles"')
@@ -132,6 +129,8 @@ class Teams(Service):
         path = path.replace('{teamId}', team_id)
 
         params['email'] = email
+        params['userId'] = user_id
+        params['phone'] = phone
         params['roles'] = roles
         params['url'] = url
         params['name'] = name
@@ -229,5 +228,41 @@ class Teams(Service):
         params['secret'] = secret
 
         return self.client.call('patch', path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def get_prefs(self, team_id):
+        """Get Team Preferences"""
+
+        
+        path = '/teams/{teamId}/prefs'
+        params = {}
+        if team_id is None:
+            raise AppwriteException('Missing required parameter: "team_id"')
+
+        path = path.replace('{teamId}', team_id)
+
+
+        return self.client.call('get', path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def update_prefs(self, team_id, prefs):
+        """Update Preferences"""
+
+        
+        path = '/teams/{teamId}/prefs'
+        params = {}
+        if team_id is None:
+            raise AppwriteException('Missing required parameter: "team_id"')
+
+        if prefs is None:
+            raise AppwriteException('Missing required parameter: "prefs"')
+
+        path = path.replace('{teamId}', team_id)
+
+        params['prefs'] = prefs
+
+        return self.client.call('put', path, {
             'content-type': 'application/json',
         }, params)
