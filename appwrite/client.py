@@ -11,10 +11,11 @@ class Client:
         self._endpoint = 'https://HOSTNAME/v1'
         self._global_headers = {
             'content-type': '',
+            'user-agent' : 'AppwritePythonSDK/2.0.1 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '2.0.0',
+            'x-sdk-version': '2.0.1',
             'X-Appwrite-Response-Format' : '1.0.0',
         }
 
@@ -58,6 +59,8 @@ class Client:
 
         if params is None:
             params = {}
+
+        params = {k: v for k, v in params.items() if v is not None}  # Remove None values from params dictionary
 
         data = {}
         json = {}
