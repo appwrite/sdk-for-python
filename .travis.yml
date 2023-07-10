@@ -5,10 +5,6 @@ dist: bionic
 python:
   - "3.8"
 
-before_install:
-  - pip uninstall -y urllib3
-  - pip install urllib3==1.26.6
-
 jobs:
   include:
     - stage: pypi release
