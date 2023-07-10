@@ -271,6 +271,9 @@ class Databases(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
+        if default is None:
+            raise AppwriteException('Missing required parameter: "default"')
+
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)
         path = path.replace('{key}', key)
@@ -330,6 +333,9 @@ class Databases(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
+        if default is None:
+            raise AppwriteException('Missing required parameter: "default"')
+
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)
         path = path.replace('{key}', key)
@@ -388,6 +394,9 @@ class Databases(Service):
 
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
+
+        if default is None:
+            raise AppwriteException('Missing required parameter: "default"')
 
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)
@@ -454,6 +463,9 @@ class Databases(Service):
 
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
+
+        if default is None:
+            raise AppwriteException('Missing required parameter: "default"')
 
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)
@@ -522,6 +534,9 @@ class Databases(Service):
 
         if max is None:
             raise AppwriteException('Missing required parameter: "max"')
+
+        if default is None:
+            raise AppwriteException('Missing required parameter: "default"')
 
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)
@@ -592,6 +607,9 @@ class Databases(Service):
         if max is None:
             raise AppwriteException('Missing required parameter: "max"')
 
+        if default is None:
+            raise AppwriteException('Missing required parameter: "default"')
+
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)
         path = path.replace('{key}', key)
@@ -652,6 +670,9 @@ class Databases(Service):
 
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
+
+        if default is None:
+            raise AppwriteException('Missing required parameter: "default"')
 
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)
@@ -748,6 +769,9 @@ class Databases(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
+        if default is None:
+            raise AppwriteException('Missing required parameter: "default"')
+
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)
         path = path.replace('{key}', key)
@@ -806,6 +830,9 @@ class Databases(Service):
 
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
+
+        if default is None:
+            raise AppwriteException('Missing required parameter: "default"')
 
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)
