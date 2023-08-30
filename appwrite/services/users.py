@@ -10,13 +10,13 @@ class Users(Service):
         """List Users"""
 
         
-        path = '/users'
+        api_path = '/users'
         params = {}
 
         params['queries'] = queries
         params['search'] = search
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -24,7 +24,7 @@ class Users(Service):
         """Create User"""
 
         
-        path = '/users'
+        api_path = '/users'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -36,7 +36,7 @@ class Users(Service):
         params['password'] = password
         params['name'] = name
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -44,7 +44,7 @@ class Users(Service):
         """Create User with Argon2 Password"""
 
         
-        path = '/users/argon2'
+        api_path = '/users/argon2'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -61,7 +61,7 @@ class Users(Service):
         params['password'] = password
         params['name'] = name
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -69,7 +69,7 @@ class Users(Service):
         """Create User with Bcrypt Password"""
 
         
-        path = '/users/bcrypt'
+        api_path = '/users/bcrypt'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -86,7 +86,37 @@ class Users(Service):
         params['password'] = password
         params['name'] = name
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def list_identities(self, queries = None, search = None):
+        """List Identities"""
+
+        
+        api_path = '/users/identities'
+        params = {}
+
+        params['queries'] = queries
+        params['search'] = search
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def delete_identity(self, identity_id):
+        """Delete Identity"""
+
+        
+        api_path = '/users/identities/{identityId}'
+        params = {}
+        if identity_id is None:
+            raise AppwriteException('Missing required parameter: "identity_id"')
+
+        path = path.replace('{identityId}', identity_id)
+
+
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -94,7 +124,7 @@ class Users(Service):
         """Create User with MD5 Password"""
 
         
-        path = '/users/md5'
+        api_path = '/users/md5'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -111,7 +141,7 @@ class Users(Service):
         params['password'] = password
         params['name'] = name
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -119,7 +149,7 @@ class Users(Service):
         """Create User with PHPass Password"""
 
         
-        path = '/users/phpass'
+        api_path = '/users/phpass'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -136,7 +166,7 @@ class Users(Service):
         params['password'] = password
         params['name'] = name
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -144,7 +174,7 @@ class Users(Service):
         """Create User with Scrypt Password"""
 
         
-        path = '/users/scrypt'
+        api_path = '/users/scrypt'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -181,7 +211,7 @@ class Users(Service):
         params['passwordLength'] = password_length
         params['name'] = name
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -189,7 +219,7 @@ class Users(Service):
         """Create User with Scrypt Modified Password"""
 
         
-        path = '/users/scrypt-modified'
+        api_path = '/users/scrypt-modified'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -218,7 +248,7 @@ class Users(Service):
         params['passwordSignerKey'] = password_signer_key
         params['name'] = name
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -226,7 +256,7 @@ class Users(Service):
         """Create User with SHA Password"""
 
         
-        path = '/users/sha'
+        api_path = '/users/sha'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -244,7 +274,7 @@ class Users(Service):
         params['passwordVersion'] = password_version
         params['name'] = name
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -252,7 +282,7 @@ class Users(Service):
         """Get User"""
 
         
-        path = '/users/{userId}'
+        api_path = '/users/{userId}'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -260,7 +290,7 @@ class Users(Service):
         path = path.replace('{userId}', user_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -268,7 +298,7 @@ class Users(Service):
         """Delete User"""
 
         
-        path = '/users/{userId}'
+        api_path = '/users/{userId}'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -276,7 +306,7 @@ class Users(Service):
         path = path.replace('{userId}', user_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -284,7 +314,7 @@ class Users(Service):
         """Update Email"""
 
         
-        path = '/users/{userId}/email'
+        api_path = '/users/{userId}/email'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -296,7 +326,27 @@ class Users(Service):
 
         params['email'] = email
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def update_labels(self, user_id, labels):
+        """Update User Labels"""
+
+        
+        api_path = '/users/{userId}/labels'
+        params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if labels is None:
+            raise AppwriteException('Missing required parameter: "labels"')
+
+        path = path.replace('{userId}', user_id)
+
+        params['labels'] = labels
+
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -304,7 +354,7 @@ class Users(Service):
         """List User Logs"""
 
         
-        path = '/users/{userId}/logs'
+        api_path = '/users/{userId}/logs'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -313,7 +363,7 @@ class Users(Service):
 
         params['queries'] = queries
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -321,7 +371,7 @@ class Users(Service):
         """List User Memberships"""
 
         
-        path = '/users/{userId}/memberships'
+        api_path = '/users/{userId}/memberships'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -329,7 +379,7 @@ class Users(Service):
         path = path.replace('{userId}', user_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -337,7 +387,7 @@ class Users(Service):
         """Update Name"""
 
         
-        path = '/users/{userId}/name'
+        api_path = '/users/{userId}/name'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -349,7 +399,7 @@ class Users(Service):
 
         params['name'] = name
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -357,7 +407,7 @@ class Users(Service):
         """Update Password"""
 
         
-        path = '/users/{userId}/password'
+        api_path = '/users/{userId}/password'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -369,7 +419,7 @@ class Users(Service):
 
         params['password'] = password
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -377,7 +427,7 @@ class Users(Service):
         """Update Phone"""
 
         
-        path = '/users/{userId}/phone'
+        api_path = '/users/{userId}/phone'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -389,7 +439,7 @@ class Users(Service):
 
         params['number'] = number
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -397,7 +447,7 @@ class Users(Service):
         """Get User Preferences"""
 
         
-        path = '/users/{userId}/prefs'
+        api_path = '/users/{userId}/prefs'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -405,7 +455,7 @@ class Users(Service):
         path = path.replace('{userId}', user_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -413,7 +463,7 @@ class Users(Service):
         """Update User Preferences"""
 
         
-        path = '/users/{userId}/prefs'
+        api_path = '/users/{userId}/prefs'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -425,7 +475,7 @@ class Users(Service):
 
         params['prefs'] = prefs
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -433,7 +483,7 @@ class Users(Service):
         """List User Sessions"""
 
         
-        path = '/users/{userId}/sessions'
+        api_path = '/users/{userId}/sessions'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -441,7 +491,7 @@ class Users(Service):
         path = path.replace('{userId}', user_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -449,7 +499,7 @@ class Users(Service):
         """Delete User Sessions"""
 
         
-        path = '/users/{userId}/sessions'
+        api_path = '/users/{userId}/sessions'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -457,7 +507,7 @@ class Users(Service):
         path = path.replace('{userId}', user_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -465,7 +515,7 @@ class Users(Service):
         """Delete User Session"""
 
         
-        path = '/users/{userId}/sessions/{sessionId}'
+        api_path = '/users/{userId}/sessions/{sessionId}'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -477,7 +527,7 @@ class Users(Service):
         path = path.replace('{sessionId}', session_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -485,7 +535,7 @@ class Users(Service):
         """Update User Status"""
 
         
-        path = '/users/{userId}/status'
+        api_path = '/users/{userId}/status'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -497,7 +547,7 @@ class Users(Service):
 
         params['status'] = status
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -505,7 +555,7 @@ class Users(Service):
         """Update Email Verification"""
 
         
-        path = '/users/{userId}/verification'
+        api_path = '/users/{userId}/verification'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -517,7 +567,7 @@ class Users(Service):
 
         params['emailVerification'] = email_verification
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -525,7 +575,7 @@ class Users(Service):
         """Update Phone Verification"""
 
         
-        path = '/users/{userId}/verification/phone'
+        api_path = '/users/{userId}/verification/phone'
         params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -537,6 +587,6 @@ class Users(Service):
 
         params['phoneVerification'] = phone_verification
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)

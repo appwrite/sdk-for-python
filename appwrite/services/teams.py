@@ -10,13 +10,13 @@ class Teams(Service):
         """List Teams"""
 
         
-        path = '/teams'
+        api_path = '/teams'
         params = {}
 
         params['queries'] = queries
         params['search'] = search
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -24,7 +24,7 @@ class Teams(Service):
         """Create Team"""
 
         
-        path = '/teams'
+        api_path = '/teams'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -37,7 +37,7 @@ class Teams(Service):
         params['name'] = name
         params['roles'] = roles
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -45,7 +45,7 @@ class Teams(Service):
         """Get Team"""
 
         
-        path = '/teams/{teamId}'
+        api_path = '/teams/{teamId}'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -53,7 +53,7 @@ class Teams(Service):
         path = path.replace('{teamId}', team_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -61,7 +61,7 @@ class Teams(Service):
         """Update Name"""
 
         
-        path = '/teams/{teamId}'
+        api_path = '/teams/{teamId}'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -73,7 +73,7 @@ class Teams(Service):
 
         params['name'] = name
 
-        return self.client.call('put', path, {
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -81,7 +81,7 @@ class Teams(Service):
         """Delete Team"""
 
         
-        path = '/teams/{teamId}'
+        api_path = '/teams/{teamId}'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -89,7 +89,7 @@ class Teams(Service):
         path = path.replace('{teamId}', team_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -97,7 +97,7 @@ class Teams(Service):
         """List Team Memberships"""
 
         
-        path = '/teams/{teamId}/memberships'
+        api_path = '/teams/{teamId}/memberships'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -107,7 +107,7 @@ class Teams(Service):
         params['queries'] = queries
         params['search'] = search
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -115,7 +115,7 @@ class Teams(Service):
         """Create Team Membership"""
 
         
-        path = '/teams/{teamId}/memberships'
+        api_path = '/teams/{teamId}/memberships'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -135,7 +135,7 @@ class Teams(Service):
         params['url'] = url
         params['name'] = name
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -143,7 +143,7 @@ class Teams(Service):
         """Get Team Membership"""
 
         
-        path = '/teams/{teamId}/memberships/{membershipId}'
+        api_path = '/teams/{teamId}/memberships/{membershipId}'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -155,15 +155,15 @@ class Teams(Service):
         path = path.replace('{membershipId}', membership_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def update_membership_roles(self, team_id, membership_id, roles):
-        """Update Membership Roles"""
+    def update_membership(self, team_id, membership_id, roles):
+        """Update Membership"""
 
         
-        path = '/teams/{teamId}/memberships/{membershipId}'
+        api_path = '/teams/{teamId}/memberships/{membershipId}'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -179,7 +179,7 @@ class Teams(Service):
 
         params['roles'] = roles
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -187,7 +187,7 @@ class Teams(Service):
         """Delete Team Membership"""
 
         
-        path = '/teams/{teamId}/memberships/{membershipId}'
+        api_path = '/teams/{teamId}/memberships/{membershipId}'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -199,7 +199,7 @@ class Teams(Service):
         path = path.replace('{membershipId}', membership_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -207,7 +207,7 @@ class Teams(Service):
         """Update Team Membership Status"""
 
         
-        path = '/teams/{teamId}/memberships/{membershipId}/status'
+        api_path = '/teams/{teamId}/memberships/{membershipId}/status'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -227,7 +227,7 @@ class Teams(Service):
         params['userId'] = user_id
         params['secret'] = secret
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -235,7 +235,7 @@ class Teams(Service):
         """Get Team Preferences"""
 
         
-        path = '/teams/{teamId}/prefs'
+        api_path = '/teams/{teamId}/prefs'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -243,7 +243,7 @@ class Teams(Service):
         path = path.replace('{teamId}', team_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -251,7 +251,7 @@ class Teams(Service):
         """Update Preferences"""
 
         
-        path = '/teams/{teamId}/prefs'
+        api_path = '/teams/{teamId}/prefs'
         params = {}
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -263,6 +263,6 @@ class Teams(Service):
 
         params['prefs'] = prefs
 
-        return self.client.call('put', path, {
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, params)

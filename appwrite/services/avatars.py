@@ -10,7 +10,7 @@ class Avatars(Service):
         """Get Browser Icon"""
 
         
-        path = '/avatars/browsers/{code}'
+        api_path = '/avatars/browsers/{code}'
         params = {}
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
@@ -21,7 +21,7 @@ class Avatars(Service):
         params['height'] = height
         params['quality'] = quality
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -29,7 +29,7 @@ class Avatars(Service):
         """Get Credit Card Icon"""
 
         
-        path = '/avatars/credit-cards/{code}'
+        api_path = '/avatars/credit-cards/{code}'
         params = {}
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
@@ -40,7 +40,7 @@ class Avatars(Service):
         params['height'] = height
         params['quality'] = quality
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -48,7 +48,7 @@ class Avatars(Service):
         """Get Favicon"""
 
         
-        path = '/avatars/favicon'
+        api_path = '/avatars/favicon'
         params = {}
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
@@ -56,7 +56,7 @@ class Avatars(Service):
 
         params['url'] = url
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -64,7 +64,7 @@ class Avatars(Service):
         """Get Country Flag"""
 
         
-        path = '/avatars/flags/{code}'
+        api_path = '/avatars/flags/{code}'
         params = {}
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
@@ -75,7 +75,7 @@ class Avatars(Service):
         params['height'] = height
         params['quality'] = quality
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -83,7 +83,7 @@ class Avatars(Service):
         """Get Image from URL"""
 
         
-        path = '/avatars/image'
+        api_path = '/avatars/image'
         params = {}
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
@@ -93,7 +93,7 @@ class Avatars(Service):
         params['width'] = width
         params['height'] = height
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -101,7 +101,7 @@ class Avatars(Service):
         """Get User Initials"""
 
         
-        path = '/avatars/initials'
+        api_path = '/avatars/initials'
         params = {}
 
         params['name'] = name
@@ -109,7 +109,7 @@ class Avatars(Service):
         params['height'] = height
         params['background'] = background
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -117,7 +117,7 @@ class Avatars(Service):
         """Get QR Code"""
 
         
-        path = '/avatars/qr'
+        api_path = '/avatars/qr'
         params = {}
         if text is None:
             raise AppwriteException('Missing required parameter: "text"')
@@ -128,6 +128,6 @@ class Avatars(Service):
         params['margin'] = margin
         params['download'] = download
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)

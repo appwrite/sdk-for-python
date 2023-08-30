@@ -10,13 +10,13 @@ class Storage(Service):
         """List buckets"""
 
         
-        path = '/storage/buckets'
+        api_path = '/storage/buckets'
         params = {}
 
         params['queries'] = queries
         params['search'] = search
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -24,7 +24,7 @@ class Storage(Service):
         """Create bucket"""
 
         
-        path = '/storage/buckets'
+        api_path = '/storage/buckets'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -44,7 +44,7 @@ class Storage(Service):
         params['encryption'] = encryption
         params['antivirus'] = antivirus
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -52,7 +52,7 @@ class Storage(Service):
         """Get Bucket"""
 
         
-        path = '/storage/buckets/{bucketId}'
+        api_path = '/storage/buckets/{bucketId}'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -60,7 +60,7 @@ class Storage(Service):
         path = path.replace('{bucketId}', bucket_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -68,7 +68,7 @@ class Storage(Service):
         """Update Bucket"""
 
         
-        path = '/storage/buckets/{bucketId}'
+        api_path = '/storage/buckets/{bucketId}'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -88,7 +88,7 @@ class Storage(Service):
         params['encryption'] = encryption
         params['antivirus'] = antivirus
 
-        return self.client.call('put', path, {
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -96,7 +96,7 @@ class Storage(Service):
         """Delete Bucket"""
 
         
-        path = '/storage/buckets/{bucketId}'
+        api_path = '/storage/buckets/{bucketId}'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -104,7 +104,7 @@ class Storage(Service):
         path = path.replace('{bucketId}', bucket_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -112,7 +112,7 @@ class Storage(Service):
         """List Files"""
 
         
-        path = '/storage/buckets/{bucketId}/files'
+        api_path = '/storage/buckets/{bucketId}/files'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -122,7 +122,7 @@ class Storage(Service):
         params['queries'] = queries
         params['search'] = search
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -130,7 +130,7 @@ class Storage(Service):
         """Create File"""
 
         
-        path = '/storage/buckets/{bucketId}/files'
+        api_path = '/storage/buckets/{bucketId}/files'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -153,7 +153,7 @@ class Storage(Service):
         upload_id = ''
         upload_id = file_id
 
-        return self.client.chunked_upload(path, {
+        return self.client.chunked_upload(api_path, {
             'content-type': 'multipart/form-data',
         }, params, param_name, on_progress, upload_id)
 
@@ -161,7 +161,7 @@ class Storage(Service):
         """Get File"""
 
         
-        path = '/storage/buckets/{bucketId}/files/{fileId}'
+        api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -173,15 +173,15 @@ class Storage(Service):
         path = path.replace('{fileId}', file_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def update_file(self, bucket_id, file_id, permissions = None):
+    def update_file(self, bucket_id, file_id, name = None, permissions = None):
         """Update File"""
 
         
-        path = '/storage/buckets/{bucketId}/files/{fileId}'
+        api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -192,9 +192,10 @@ class Storage(Service):
         path = path.replace('{bucketId}', bucket_id)
         path = path.replace('{fileId}', file_id)
 
+        params['name'] = name
         params['permissions'] = permissions
 
-        return self.client.call('put', path, {
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -202,7 +203,7 @@ class Storage(Service):
         """Delete File"""
 
         
-        path = '/storage/buckets/{bucketId}/files/{fileId}'
+        api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -214,7 +215,7 @@ class Storage(Service):
         path = path.replace('{fileId}', file_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -222,7 +223,7 @@ class Storage(Service):
         """Get File for Download"""
 
         
-        path = '/storage/buckets/{bucketId}/files/{fileId}/download'
+        api_path = '/storage/buckets/{bucketId}/files/{fileId}/download'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -234,7 +235,7 @@ class Storage(Service):
         path = path.replace('{fileId}', file_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -242,7 +243,7 @@ class Storage(Service):
         """Get File Preview"""
 
         
-        path = '/storage/buckets/{bucketId}/files/{fileId}/preview'
+        api_path = '/storage/buckets/{bucketId}/files/{fileId}/preview'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -265,7 +266,7 @@ class Storage(Service):
         params['background'] = background
         params['output'] = output
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -273,7 +274,7 @@ class Storage(Service):
         """Get File for View"""
 
         
-        path = '/storage/buckets/{bucketId}/files/{fileId}/view'
+        api_path = '/storage/buckets/{bucketId}/files/{fileId}/view'
         params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
@@ -285,6 +286,6 @@ class Storage(Service):
         path = path.replace('{fileId}', file_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)

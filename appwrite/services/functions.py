@@ -10,21 +10,21 @@ class Functions(Service):
         """List Functions"""
 
         
-        path = '/functions'
+        api_path = '/functions'
         params = {}
 
         params['queries'] = queries
         params['search'] = search
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def create(self, function_id, name, runtime, execute = None, events = None, schedule = None, timeout = None, enabled = None):
+    def create(self, function_id, name, runtime, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None, template_repository = None, template_owner = None, template_root_directory = None, template_branch = None):
         """Create Function"""
 
         
-        path = '/functions'
+        api_path = '/functions'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -38,14 +38,26 @@ class Functions(Service):
 
         params['functionId'] = function_id
         params['name'] = name
-        params['execute'] = execute
         params['runtime'] = runtime
+        params['execute'] = execute
         params['events'] = events
         params['schedule'] = schedule
         params['timeout'] = timeout
         params['enabled'] = enabled
+        params['logging'] = logging
+        params['entrypoint'] = entrypoint
+        params['commands'] = commands
+        params['installationId'] = installation_id
+        params['providerRepositoryId'] = provider_repository_id
+        params['providerBranch'] = provider_branch
+        params['providerSilentMode'] = provider_silent_mode
+        params['providerRootDirectory'] = provider_root_directory
+        params['templateRepository'] = template_repository
+        params['templateOwner'] = template_owner
+        params['templateRootDirectory'] = template_root_directory
+        params['templateBranch'] = template_branch
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -53,10 +65,10 @@ class Functions(Service):
         """List runtimes"""
 
         
-        path = '/functions/runtimes'
+        api_path = '/functions/runtimes'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -64,7 +76,7 @@ class Functions(Service):
         """Get Function"""
 
         
-        path = '/functions/{functionId}'
+        api_path = '/functions/{functionId}'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -72,15 +84,15 @@ class Functions(Service):
         path = path.replace('{functionId}', function_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def update(self, function_id, name, execute = None, events = None, schedule = None, timeout = None, enabled = None):
+    def update(self, function_id, name, runtime, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None):
         """Update Function"""
 
         
-        path = '/functions/{functionId}'
+        api_path = '/functions/{functionId}'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -88,16 +100,28 @@ class Functions(Service):
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
 
+        if runtime is None:
+            raise AppwriteException('Missing required parameter: "runtime"')
+
         path = path.replace('{functionId}', function_id)
 
         params['name'] = name
+        params['runtime'] = runtime
         params['execute'] = execute
         params['events'] = events
         params['schedule'] = schedule
         params['timeout'] = timeout
         params['enabled'] = enabled
+        params['logging'] = logging
+        params['entrypoint'] = entrypoint
+        params['commands'] = commands
+        params['installationId'] = installation_id
+        params['providerRepositoryId'] = provider_repository_id
+        params['providerBranch'] = provider_branch
+        params['providerSilentMode'] = provider_silent_mode
+        params['providerRootDirectory'] = provider_root_directory
 
-        return self.client.call('put', path, {
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -105,7 +129,7 @@ class Functions(Service):
         """Delete Function"""
 
         
-        path = '/functions/{functionId}'
+        api_path = '/functions/{functionId}'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -113,7 +137,7 @@ class Functions(Service):
         path = path.replace('{functionId}', function_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -121,7 +145,7 @@ class Functions(Service):
         """List Deployments"""
 
         
-        path = '/functions/{functionId}/deployments'
+        api_path = '/functions/{functionId}/deployments'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -131,21 +155,18 @@ class Functions(Service):
         params['queries'] = queries
         params['search'] = search
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def create_deployment(self, function_id, entrypoint, code, activate, on_progress = None):
+    def create_deployment(self, function_id, code, activate, entrypoint = None, commands = None, on_progress = None):
         """Create Deployment"""
 
         
-        path = '/functions/{functionId}/deployments'
+        api_path = '/functions/{functionId}/deployments'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
-
-        if entrypoint is None:
-            raise AppwriteException('Missing required parameter: "entrypoint"')
 
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
@@ -156,6 +177,7 @@ class Functions(Service):
         path = path.replace('{functionId}', function_id)
 
         params['entrypoint'] = entrypoint
+        params['commands'] = commands
         params['code'] = str(code).lower() if type(code) is bool else code
         params['activate'] = str(activate).lower() if type(activate) is bool else activate
 
@@ -164,7 +186,7 @@ class Functions(Service):
 
         upload_id = ''
 
-        return self.client.chunked_upload(path, {
+        return self.client.chunked_upload(api_path, {
             'content-type': 'multipart/form-data',
         }, params, param_name, on_progress, upload_id)
 
@@ -172,7 +194,7 @@ class Functions(Service):
         """Get Deployment"""
 
         
-        path = '/functions/{functionId}/deployments/{deploymentId}'
+        api_path = '/functions/{functionId}/deployments/{deploymentId}'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -184,7 +206,7 @@ class Functions(Service):
         path = path.replace('{deploymentId}', deployment_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -192,7 +214,7 @@ class Functions(Service):
         """Update Function Deployment"""
 
         
-        path = '/functions/{functionId}/deployments/{deploymentId}'
+        api_path = '/functions/{functionId}/deployments/{deploymentId}'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -204,7 +226,7 @@ class Functions(Service):
         path = path.replace('{deploymentId}', deployment_id)
 
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -212,7 +234,7 @@ class Functions(Service):
         """Delete Deployment"""
 
         
-        path = '/functions/{functionId}/deployments/{deploymentId}'
+        api_path = '/functions/{functionId}/deployments/{deploymentId}'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -224,7 +246,7 @@ class Functions(Service):
         path = path.replace('{deploymentId}', deployment_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -232,7 +254,7 @@ class Functions(Service):
         """Create Build"""
 
         
-        path = '/functions/{functionId}/deployments/{deploymentId}/builds/{buildId}'
+        api_path = '/functions/{functionId}/deployments/{deploymentId}/builds/{buildId}'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -248,7 +270,27 @@ class Functions(Service):
         path = path.replace('{buildId}', build_id)
 
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def download_deployment(self, function_id, deployment_id):
+        """Download Deployment"""
+
+        
+        api_path = '/functions/{functionId}/deployments/{deploymentId}/download'
+        params = {}
+        if function_id is None:
+            raise AppwriteException('Missing required parameter: "function_id"')
+
+        if deployment_id is None:
+            raise AppwriteException('Missing required parameter: "deployment_id"')
+
+        path = path.replace('{functionId}', function_id)
+        path = path.replace('{deploymentId}', deployment_id)
+
+
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -256,7 +298,7 @@ class Functions(Service):
         """List Executions"""
 
         
-        path = '/functions/{functionId}/executions'
+        api_path = '/functions/{functionId}/executions'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -266,25 +308,28 @@ class Functions(Service):
         params['queries'] = queries
         params['search'] = search
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def create_execution(self, function_id, data = None, xasync = None):
+    def create_execution(self, function_id, body = None, xasync = None, path = None, method = None, headers = None):
         """Create Execution"""
 
         
-        path = '/functions/{functionId}/executions'
+        api_path = '/functions/{functionId}/executions'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
 
         path = path.replace('{functionId}', function_id)
 
-        params['data'] = data
+        params['body'] = body
         params['async'] = xasync
+        params['path'] = path
+        params['method'] = method
+        params['headers'] = headers
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -292,7 +337,7 @@ class Functions(Service):
         """Get Execution"""
 
         
-        path = '/functions/{functionId}/executions/{executionId}'
+        api_path = '/functions/{functionId}/executions/{executionId}'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -304,7 +349,7 @@ class Functions(Service):
         path = path.replace('{executionId}', execution_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -312,7 +357,7 @@ class Functions(Service):
         """List Variables"""
 
         
-        path = '/functions/{functionId}/variables'
+        api_path = '/functions/{functionId}/variables'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -320,7 +365,7 @@ class Functions(Service):
         path = path.replace('{functionId}', function_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -328,7 +373,7 @@ class Functions(Service):
         """Create Variable"""
 
         
-        path = '/functions/{functionId}/variables'
+        api_path = '/functions/{functionId}/variables'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -344,7 +389,7 @@ class Functions(Service):
         params['key'] = key
         params['value'] = value
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -352,7 +397,7 @@ class Functions(Service):
         """Get Variable"""
 
         
-        path = '/functions/{functionId}/variables/{variableId}'
+        api_path = '/functions/{functionId}/variables/{variableId}'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -364,7 +409,7 @@ class Functions(Service):
         path = path.replace('{variableId}', variable_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -372,7 +417,7 @@ class Functions(Service):
         """Update Variable"""
 
         
-        path = '/functions/{functionId}/variables/{variableId}'
+        api_path = '/functions/{functionId}/variables/{variableId}'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -389,7 +434,7 @@ class Functions(Service):
         params['key'] = key
         params['value'] = value
 
-        return self.client.call('put', path, {
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -397,7 +442,7 @@ class Functions(Service):
         """Delete Variable"""
 
         
-        path = '/functions/{functionId}/variables/{variableId}'
+        api_path = '/functions/{functionId}/variables/{variableId}'
         params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -409,6 +454,6 @@ class Functions(Service):
         path = path.replace('{variableId}', variable_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
