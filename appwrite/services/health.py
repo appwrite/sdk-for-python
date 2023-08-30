@@ -10,10 +10,10 @@ class Health(Service):
         """Get HTTP"""
 
         
-        path = '/health'
+        api_path = '/health'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -21,10 +21,10 @@ class Health(Service):
         """Get Antivirus"""
 
         
-        path = '/health/anti-virus'
+        api_path = '/health/anti-virus'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -32,10 +32,10 @@ class Health(Service):
         """Get Cache"""
 
         
-        path = '/health/cache'
+        api_path = '/health/cache'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -43,10 +43,32 @@ class Health(Service):
         """Get DB"""
 
         
-        path = '/health/db'
+        api_path = '/health/db'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def get_pub_sub(self):
+        """Get PubSub"""
+
+        
+        api_path = '/health/pubsub'
+        params = {}
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def get_queue(self):
+        """Get Queue"""
+
+        
+        api_path = '/health/queue'
+        params = {}
+
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -54,10 +76,10 @@ class Health(Service):
         """Get Certificates Queue"""
 
         
-        path = '/health/queue/certificates'
+        api_path = '/health/queue/certificates'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -65,10 +87,10 @@ class Health(Service):
         """Get Functions Queue"""
 
         
-        path = '/health/queue/functions'
+        api_path = '/health/queue/functions'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -76,10 +98,10 @@ class Health(Service):
         """Get Logs Queue"""
 
         
-        path = '/health/queue/logs'
+        api_path = '/health/queue/logs'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -87,10 +109,10 @@ class Health(Service):
         """Get Webhooks Queue"""
 
         
-        path = '/health/queue/webhooks'
+        api_path = '/health/queue/webhooks'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -98,10 +120,10 @@ class Health(Service):
         """Get Local Storage"""
 
         
-        path = '/health/storage/local'
+        api_path = '/health/storage/local'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -109,9 +131,9 @@ class Health(Service):
         """Get Time"""
 
         
-        path = '/health/time'
+        api_path = '/health/time'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)

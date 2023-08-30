@@ -10,10 +10,21 @@ class Locale(Service):
         """Get User Locale"""
 
         
-        path = '/locale'
+        api_path = '/locale'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, params)
+
+    def list_codes(self):
+        """List Locale Codes"""
+
+        
+        api_path = '/locale/codes'
+        params = {}
+
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -21,10 +32,10 @@ class Locale(Service):
         """List Continents"""
 
         
-        path = '/locale/continents'
+        api_path = '/locale/continents'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -32,10 +43,10 @@ class Locale(Service):
         """List Countries"""
 
         
-        path = '/locale/countries'
+        api_path = '/locale/countries'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -43,10 +54,10 @@ class Locale(Service):
         """List EU Countries"""
 
         
-        path = '/locale/countries/eu'
+        api_path = '/locale/countries/eu'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -54,10 +65,10 @@ class Locale(Service):
         """List Countries Phone Codes"""
 
         
-        path = '/locale/countries/phones'
+        api_path = '/locale/countries/phones'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -65,10 +76,10 @@ class Locale(Service):
         """List Currencies"""
 
         
-        path = '/locale/currencies'
+        api_path = '/locale/currencies'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -76,9 +87,9 @@ class Locale(Service):
         """List Languages"""
 
         
-        path = '/locale/languages'
+        api_path = '/locale/languages'
         params = {}
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)

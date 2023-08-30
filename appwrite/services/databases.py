@@ -10,21 +10,21 @@ class Databases(Service):
         """List Databases"""
 
         
-        path = '/databases'
+        api_path = '/databases'
         params = {}
 
         params['queries'] = queries
         params['search'] = search
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def create(self, database_id, name):
+    def create(self, database_id, name, enabled = None):
         """Create Database"""
 
         
-        path = '/databases'
+        api_path = '/databases'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -35,8 +35,9 @@ class Databases(Service):
 
         params['databaseId'] = database_id
         params['name'] = name
+        params['enabled'] = enabled
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -44,7 +45,7 @@ class Databases(Service):
         """Get Database"""
 
         
-        path = '/databases/{databaseId}'
+        api_path = '/databases/{databaseId}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -52,15 +53,15 @@ class Databases(Service):
         path = path.replace('{databaseId}', database_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def update(self, database_id, name):
+    def update(self, database_id, name, enabled = None):
         """Update Database"""
 
         
-        path = '/databases/{databaseId}'
+        api_path = '/databases/{databaseId}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -71,8 +72,9 @@ class Databases(Service):
         path = path.replace('{databaseId}', database_id)
 
         params['name'] = name
+        params['enabled'] = enabled
 
-        return self.client.call('put', path, {
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -80,7 +82,7 @@ class Databases(Service):
         """Delete Database"""
 
         
-        path = '/databases/{databaseId}'
+        api_path = '/databases/{databaseId}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -88,7 +90,7 @@ class Databases(Service):
         path = path.replace('{databaseId}', database_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -96,7 +98,7 @@ class Databases(Service):
         """List Collections"""
 
         
-        path = '/databases/{databaseId}/collections'
+        api_path = '/databases/{databaseId}/collections'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -106,15 +108,15 @@ class Databases(Service):
         params['queries'] = queries
         params['search'] = search
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def create_collection(self, database_id, collection_id, name, permissions = None, document_security = None):
+    def create_collection(self, database_id, collection_id, name, permissions = None, document_security = None, enabled = None):
         """Create Collection"""
 
         
-        path = '/databases/{databaseId}/collections'
+        api_path = '/databases/{databaseId}/collections'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -131,8 +133,9 @@ class Databases(Service):
         params['name'] = name
         params['permissions'] = permissions
         params['documentSecurity'] = document_security
+        params['enabled'] = enabled
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -140,7 +143,7 @@ class Databases(Service):
         """Get Collection"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -152,7 +155,7 @@ class Databases(Service):
         path = path.replace('{collectionId}', collection_id)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -160,7 +163,7 @@ class Databases(Service):
         """Update Collection"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -179,7 +182,7 @@ class Databases(Service):
         params['documentSecurity'] = document_security
         params['enabled'] = enabled
 
-        return self.client.call('put', path, {
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -187,7 +190,7 @@ class Databases(Service):
         """Delete Collection"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -199,15 +202,15 @@ class Databases(Service):
         path = path.replace('{collectionId}', collection_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def list_attributes(self, database_id, collection_id):
+    def list_attributes(self, database_id, collection_id, queries = None):
         """List Attributes"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -218,8 +221,9 @@ class Databases(Service):
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)
 
+        params['queries'] = queries
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -227,7 +231,7 @@ class Databases(Service):
         """Create Boolean Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/boolean'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/boolean'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -249,7 +253,7 @@ class Databases(Service):
         params['default'] = default
         params['array'] = array
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -257,7 +261,7 @@ class Databases(Service):
         """Update Boolean Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/boolean/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/boolean/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -278,7 +282,7 @@ class Databases(Service):
         params['required'] = required
         params['default'] = default
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -286,7 +290,7 @@ class Databases(Service):
         """Create DateTime Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/datetime'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/datetime'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -308,7 +312,7 @@ class Databases(Service):
         params['default'] = default
         params['array'] = array
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -316,7 +320,7 @@ class Databases(Service):
         """Update DateTime Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/datetime/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/datetime/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -337,7 +341,7 @@ class Databases(Service):
         params['required'] = required
         params['default'] = default
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -345,7 +349,7 @@ class Databases(Service):
         """Create Email Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/email'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/email'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -367,7 +371,7 @@ class Databases(Service):
         params['default'] = default
         params['array'] = array
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -375,7 +379,7 @@ class Databases(Service):
         """Update Email Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/email/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/email/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -396,7 +400,7 @@ class Databases(Service):
         params['required'] = required
         params['default'] = default
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -404,7 +408,7 @@ class Databases(Service):
         """Create Enum Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/enum'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/enum'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -430,7 +434,7 @@ class Databases(Service):
         params['default'] = default
         params['array'] = array
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -438,7 +442,7 @@ class Databases(Service):
         """Update Enum Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/enum/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/enum/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -463,7 +467,7 @@ class Databases(Service):
         params['required'] = required
         params['default'] = default
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -471,7 +475,7 @@ class Databases(Service):
         """Create Float Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/float'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/float'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -495,7 +499,7 @@ class Databases(Service):
         params['default'] = default
         params['array'] = array
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -503,7 +507,7 @@ class Databases(Service):
         """Update Float Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/float/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/float/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -532,7 +536,7 @@ class Databases(Service):
         params['max'] = max
         params['default'] = default
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -540,7 +544,7 @@ class Databases(Service):
         """Create Integer Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/integer'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/integer'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -564,7 +568,7 @@ class Databases(Service):
         params['default'] = default
         params['array'] = array
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -572,7 +576,7 @@ class Databases(Service):
         """Update Integer Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/integer/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/integer/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -601,7 +605,7 @@ class Databases(Service):
         params['max'] = max
         params['default'] = default
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -609,7 +613,7 @@ class Databases(Service):
         """Create IP Address Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/ip'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/ip'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -631,7 +635,7 @@ class Databases(Service):
         params['default'] = default
         params['array'] = array
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -639,7 +643,7 @@ class Databases(Service):
         """Update IP Address Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/ip/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/ip/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -660,7 +664,7 @@ class Databases(Service):
         params['required'] = required
         params['default'] = default
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -668,7 +672,7 @@ class Databases(Service):
         """Create Relationship Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/relationship'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/relationship'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -692,15 +696,15 @@ class Databases(Service):
         params['twoWayKey'] = two_way_key
         params['onDelete'] = on_delete
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def create_string_attribute(self, database_id, collection_id, key, size, required, default = None, array = None):
+    def create_string_attribute(self, database_id, collection_id, key, size, required, default = None, array = None, encrypt = None):
         """Create String Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/string'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/string'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -725,8 +729,9 @@ class Databases(Service):
         params['required'] = required
         params['default'] = default
         params['array'] = array
+        params['encrypt'] = encrypt
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -734,7 +739,7 @@ class Databases(Service):
         """Update String Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/string/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/string/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -755,7 +760,7 @@ class Databases(Service):
         params['required'] = required
         params['default'] = default
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -763,7 +768,7 @@ class Databases(Service):
         """Create URL Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/url'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/url'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -785,7 +790,7 @@ class Databases(Service):
         params['default'] = default
         params['array'] = array
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -793,7 +798,7 @@ class Databases(Service):
         """Update URL Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/url/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/url/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -814,7 +819,7 @@ class Databases(Service):
         params['required'] = required
         params['default'] = default
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -822,7 +827,7 @@ class Databases(Service):
         """Get Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -838,7 +843,7 @@ class Databases(Service):
         path = path.replace('{key}', key)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -846,7 +851,7 @@ class Databases(Service):
         """Delete Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -862,7 +867,7 @@ class Databases(Service):
         path = path.replace('{key}', key)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -870,7 +875,7 @@ class Databases(Service):
         """Update Relationship Attribute"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}/relationship'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}/relationship'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -887,7 +892,7 @@ class Databases(Service):
 
         params['onDelete'] = on_delete
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -895,7 +900,7 @@ class Databases(Service):
         """List Documents"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/documents'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -908,7 +913,7 @@ class Databases(Service):
 
         params['queries'] = queries
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -916,7 +921,7 @@ class Databases(Service):
         """Create Document"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/documents'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -937,7 +942,7 @@ class Databases(Service):
         params['data'] = data
         params['permissions'] = permissions
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -945,7 +950,7 @@ class Databases(Service):
         """Get Document"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -962,7 +967,7 @@ class Databases(Service):
 
         params['queries'] = queries
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -970,7 +975,7 @@ class Databases(Service):
         """Update Document"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -988,7 +993,7 @@ class Databases(Service):
         params['data'] = data
         params['permissions'] = permissions
 
-        return self.client.call('patch', path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -996,7 +1001,7 @@ class Databases(Service):
         """Delete Document"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -1012,15 +1017,15 @@ class Databases(Service):
         path = path.replace('{documentId}', document_id)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)
 
-    def list_indexes(self, database_id, collection_id):
+    def list_indexes(self, database_id, collection_id, queries = None):
         """List Indexes"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/indexes'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/indexes'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -1031,8 +1036,9 @@ class Databases(Service):
         path = path.replace('{databaseId}', database_id)
         path = path.replace('{collectionId}', collection_id)
 
+        params['queries'] = queries
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -1040,7 +1046,7 @@ class Databases(Service):
         """Create Index"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/indexes'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/indexes'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -1065,7 +1071,7 @@ class Databases(Service):
         params['attributes'] = attributes
         params['orders'] = orders
 
-        return self.client.call('post', path, {
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -1073,7 +1079,7 @@ class Databases(Service):
         """Get Index"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/indexes/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/indexes/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -1089,7 +1095,7 @@ class Databases(Service):
         path = path.replace('{key}', key)
 
 
-        return self.client.call('get', path, {
+        return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, params)
 
@@ -1097,7 +1103,7 @@ class Databases(Service):
         """Delete Index"""
 
         
-        path = '/databases/{databaseId}/collections/{collectionId}/indexes/{key}'
+        api_path = '/databases/{databaseId}/collections/{collectionId}/indexes/{key}'
         params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
@@ -1113,6 +1119,6 @@ class Databases(Service):
         path = path.replace('{key}', key)
 
 
-        return self.client.call('delete', path, {
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, params)

@@ -11,4 +11,4 @@ client = Client()
 
 functions = Functions(client)
 
-result = functions.update('[FUNCTION_ID]', '[NAME]', 'node-14.5')
+result = functions.download_deployment('[FUNCTION_ID]', '[DEPLOYMENT_ID]')
