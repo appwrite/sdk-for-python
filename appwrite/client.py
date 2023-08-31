@@ -11,11 +11,11 @@ class Client:
         self._endpoint = 'https://HOSTNAME/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : 'AppwritePythonSDK/3.0.0 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
+            'user-agent' : 'AppwritePythonSDK/3.0.1 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '3.0.0',
+            'x-sdk-version': '3.0.1',
             'X-Appwrite-Response-Format' : '1.4.0',
         }
 
@@ -170,7 +170,7 @@ class Client:
                 input_file.data = input[offset:end]
 
             params[param_name] = input_file
-            headers["content-range"] = f'bytes {offset}-{min((offset + self._chunk_size) - 1, size)}/{size}'
+            headers["content-range"] = f'bytes {offset}-{min((offset + self._chunk_size) - 1, size - 1)}/{size}'
 
             result = self.call(
                 'post',
@@ -185,7 +185,7 @@ class Client:
                 headers["x-appwrite-id"] = result["$id"]
 
             if on_progress is not None:
-                end = min((((counter * self._chunk_size) + self._chunk_size) - 1), size)
+                end = min((((counter * self._chunk_size) + self._chunk_size) - 1), size - 1)
                 on_progress({
                     "$id": result["$id"],
                     "progress": min(offset, size)/size * 100,

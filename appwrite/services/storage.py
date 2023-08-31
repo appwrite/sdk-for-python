@@ -11,21 +11,21 @@ class Storage(Service):
 
         
         api_path = '/storage/buckets'
-        params = {}
+        api_params = {}
 
-        params['queries'] = queries
-        params['search'] = search
+        api_params['queries'] = queries
+        api_params['search'] = search
 
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def create_bucket(self, bucket_id, name, permissions = None, file_security = None, enabled = None, maximum_file_size = None, allowed_file_extensions = None, compression = None, encryption = None, antivirus = None):
         """Create bucket"""
 
         
         api_path = '/storage/buckets'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
@@ -33,105 +33,105 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "name"')
 
 
-        params['bucketId'] = bucket_id
-        params['name'] = name
-        params['permissions'] = permissions
-        params['fileSecurity'] = file_security
-        params['enabled'] = enabled
-        params['maximumFileSize'] = maximum_file_size
-        params['allowedFileExtensions'] = allowed_file_extensions
-        params['compression'] = compression
-        params['encryption'] = encryption
-        params['antivirus'] = antivirus
+        api_params['bucketId'] = bucket_id
+        api_params['name'] = name
+        api_params['permissions'] = permissions
+        api_params['fileSecurity'] = file_security
+        api_params['enabled'] = enabled
+        api_params['maximumFileSize'] = maximum_file_size
+        api_params['allowedFileExtensions'] = allowed_file_extensions
+        api_params['compression'] = compression
+        api_params['encryption'] = encryption
+        api_params['antivirus'] = antivirus
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def get_bucket(self, bucket_id):
         """Get Bucket"""
 
         
         api_path = '/storage/buckets/{bucketId}'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
-        path = path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{bucketId}', bucket_id)
 
 
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def update_bucket(self, bucket_id, name, permissions = None, file_security = None, enabled = None, maximum_file_size = None, allowed_file_extensions = None, compression = None, encryption = None, antivirus = None):
         """Update Bucket"""
 
         
         api_path = '/storage/buckets/{bucketId}'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
 
-        path = path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{bucketId}', bucket_id)
 
-        params['name'] = name
-        params['permissions'] = permissions
-        params['fileSecurity'] = file_security
-        params['enabled'] = enabled
-        params['maximumFileSize'] = maximum_file_size
-        params['allowedFileExtensions'] = allowed_file_extensions
-        params['compression'] = compression
-        params['encryption'] = encryption
-        params['antivirus'] = antivirus
+        api_params['name'] = name
+        api_params['permissions'] = permissions
+        api_params['fileSecurity'] = file_security
+        api_params['enabled'] = enabled
+        api_params['maximumFileSize'] = maximum_file_size
+        api_params['allowedFileExtensions'] = allowed_file_extensions
+        api_params['compression'] = compression
+        api_params['encryption'] = encryption
+        api_params['antivirus'] = antivirus
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def delete_bucket(self, bucket_id):
         """Delete Bucket"""
 
         
         api_path = '/storage/buckets/{bucketId}'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
-        path = path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{bucketId}', bucket_id)
 
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def list_files(self, bucket_id, queries = None, search = None):
         """List Files"""
 
         
         api_path = '/storage/buckets/{bucketId}/files'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
-        path = path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{bucketId}', bucket_id)
 
-        params['queries'] = queries
-        params['search'] = search
+        api_params['queries'] = queries
+        api_params['search'] = search
 
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def create_file(self, bucket_id, file_id, file, permissions = None, on_progress = None):
         """Create File"""
 
         
         api_path = '/storage/buckets/{bucketId}/files'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
@@ -141,11 +141,11 @@ class Storage(Service):
         if file is None:
             raise AppwriteException('Missing required parameter: "file"')
 
-        path = path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{bucketId}', bucket_id)
 
-        params['fileId'] = file_id
-        params['file'] = str(file).lower() if type(file) is bool else file
-        params['permissions'] = permissions
+        api_params['fileId'] = file_id
+        api_params['file'] = str(file).lower() if type(file) is bool else file
+        api_params['permissions'] = permissions
 
         param_name = 'file'
 
@@ -155,137 +155,137 @@ class Storage(Service):
 
         return self.client.chunked_upload(api_path, {
             'content-type': 'multipart/form-data',
-        }, params, param_name, on_progress, upload_id)
+        }, api_params, param_name, on_progress, upload_id)
 
     def get_file(self, bucket_id, file_id):
         """Get File"""
 
         
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        path = path.replace('{bucketId}', bucket_id)
-        path = path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{fileId}', file_id)
 
 
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def update_file(self, bucket_id, file_id, name = None, permissions = None):
         """Update File"""
 
         
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        path = path.replace('{bucketId}', bucket_id)
-        path = path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{fileId}', file_id)
 
-        params['name'] = name
-        params['permissions'] = permissions
+        api_params['name'] = name
+        api_params['permissions'] = permissions
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def delete_file(self, bucket_id, file_id):
         """Delete File"""
 
         
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        path = path.replace('{bucketId}', bucket_id)
-        path = path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{fileId}', file_id)
 
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def get_file_download(self, bucket_id, file_id):
         """Get File for Download"""
 
         
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/download'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        path = path.replace('{bucketId}', bucket_id)
-        path = path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{fileId}', file_id)
 
 
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def get_file_preview(self, bucket_id, file_id, width = None, height = None, gravity = None, quality = None, border_width = None, border_color = None, border_radius = None, opacity = None, rotation = None, background = None, output = None):
         """Get File Preview"""
 
         
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/preview'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        path = path.replace('{bucketId}', bucket_id)
-        path = path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{fileId}', file_id)
 
-        params['width'] = width
-        params['height'] = height
-        params['gravity'] = gravity
-        params['quality'] = quality
-        params['borderWidth'] = border_width
-        params['borderColor'] = border_color
-        params['borderRadius'] = border_radius
-        params['opacity'] = opacity
-        params['rotation'] = rotation
-        params['background'] = background
-        params['output'] = output
+        api_params['width'] = width
+        api_params['height'] = height
+        api_params['gravity'] = gravity
+        api_params['quality'] = quality
+        api_params['borderWidth'] = border_width
+        api_params['borderColor'] = border_color
+        api_params['borderRadius'] = border_radius
+        api_params['opacity'] = opacity
+        api_params['rotation'] = rotation
+        api_params['background'] = background
+        api_params['output'] = output
 
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def get_file_view(self, bucket_id, file_id):
         """Get File for View"""
 
         
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/view'
-        params = {}
+        api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        path = path.replace('{bucketId}', bucket_id)
-        path = path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{fileId}', file_id)
 
 
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
-        }, params)
+        }, api_params)

@@ -11,31 +11,31 @@ class Graphql(Service):
 
         
         api_path = '/graphql'
-        params = {}
+        api_params = {}
         if query is None:
             raise AppwriteException('Missing required parameter: "query"')
 
 
-        params['query'] = query
+        api_params['query'] = query
 
         return self.client.call('post', api_path, {
             'x-sdk-graphql': 'true',
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
 
     def mutation(self, query):
         """GraphQL Endpoint"""
 
         
         api_path = '/graphql/mutation'
-        params = {}
+        api_params = {}
         if query is None:
             raise AppwriteException('Missing required parameter: "query"')
 
 
-        params['query'] = query
+        api_params['query'] = query
 
         return self.client.call('post', api_path, {
             'x-sdk-graphql': 'true',
             'content-type': 'application/json',
-        }, params)
+        }, api_params)
