@@ -88,7 +88,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update(self, function_id, name, runtime, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None):
+    def update(self, function_id, name, runtime = None, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None):
         """Update Function"""
 
         
@@ -99,9 +99,6 @@ class Functions(Service):
 
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-        if runtime is None:
-            raise AppwriteException('Missing required parameter: "runtime"')
 
         api_path = api_path.replace('{functionId}', function_id)
 
