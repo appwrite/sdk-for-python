@@ -111,7 +111,7 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_membership(self, team_id, roles, url, email = None, user_id = None, phone = None, name = None):
+    def create_membership(self, team_id, roles, email = None, user_id = None, phone = None, url = None, name = None):
         """Create Team Membership"""
 
         
@@ -122,9 +122,6 @@ class Teams(Service):
 
         if roles is None:
             raise AppwriteException('Missing required parameter: "roles"')
-
-        if url is None:
-            raise AppwriteException('Missing required parameter: "url"')
 
         api_path = api_path.replace('{teamId}', team_id)
 
