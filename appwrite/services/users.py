@@ -7,7 +7,7 @@ class Users(Service):
         super(Users, self).__init__(client)
 
     def list(self, queries = None, search = None):
-        """List Users"""
+        """List users"""
 
         
         api_path = '/users'
@@ -21,7 +21,7 @@ class Users(Service):
         }, api_params)
 
     def create(self, user_id, email = None, phone = None, password = None, name = None):
-        """Create User"""
+        """Create user"""
 
         
         api_path = '/users'
@@ -41,7 +41,7 @@ class Users(Service):
         }, api_params)
 
     def create_argon2_user(self, user_id, email, password, name = None):
-        """Create User with Argon2 Password"""
+        """Create user with Argon2 password"""
 
         
         api_path = '/users/argon2'
@@ -66,7 +66,7 @@ class Users(Service):
         }, api_params)
 
     def create_bcrypt_user(self, user_id, email, password, name = None):
-        """Create User with Bcrypt Password"""
+        """Create user with bcrypt password"""
 
         
         api_path = '/users/bcrypt'
@@ -121,7 +121,7 @@ class Users(Service):
         }, api_params)
 
     def create_md5_user(self, user_id, email, password, name = None):
-        """Create User with MD5 Password"""
+        """Create user with MD5 password"""
 
         
         api_path = '/users/md5'
@@ -146,7 +146,7 @@ class Users(Service):
         }, api_params)
 
     def create_ph_pass_user(self, user_id, email, password, name = None):
-        """Create User with PHPass Password"""
+        """Create user with PHPass password"""
 
         
         api_path = '/users/phpass'
@@ -171,7 +171,7 @@ class Users(Service):
         }, api_params)
 
     def create_scrypt_user(self, user_id, email, password, password_salt, password_cpu, password_memory, password_parallel, password_length, name = None):
-        """Create User with Scrypt Password"""
+        """Create user with Scrypt password"""
 
         
         api_path = '/users/scrypt'
@@ -216,7 +216,7 @@ class Users(Service):
         }, api_params)
 
     def create_scrypt_modified_user(self, user_id, email, password, password_salt, password_salt_separator, password_signer_key, name = None):
-        """Create User with Scrypt Modified Password"""
+        """Create user with Scrypt modified password"""
 
         
         api_path = '/users/scrypt-modified'
@@ -253,7 +253,7 @@ class Users(Service):
         }, api_params)
 
     def create_sha_user(self, user_id, email, password, password_version = None, name = None):
-        """Create User with SHA Password"""
+        """Create user with SHA password"""
 
         
         api_path = '/users/sha'
@@ -279,7 +279,7 @@ class Users(Service):
         }, api_params)
 
     def get(self, user_id):
-        """Get User"""
+        """Get user"""
 
         
         api_path = '/users/{userId}'
@@ -295,7 +295,7 @@ class Users(Service):
         }, api_params)
 
     def delete(self, user_id):
-        """Delete User"""
+        """Delete user"""
 
         
         api_path = '/users/{userId}'
@@ -311,7 +311,7 @@ class Users(Service):
         }, api_params)
 
     def update_email(self, user_id, email):
-        """Update Email"""
+        """Update email"""
 
         
         api_path = '/users/{userId}/email'
@@ -331,7 +331,7 @@ class Users(Service):
         }, api_params)
 
     def update_labels(self, user_id, labels):
-        """Update User Labels"""
+        """Update user labels"""
 
         
         api_path = '/users/{userId}/labels'
@@ -351,7 +351,7 @@ class Users(Service):
         }, api_params)
 
     def list_logs(self, user_id, queries = None):
-        """List User Logs"""
+        """List user logs"""
 
         
         api_path = '/users/{userId}/logs'
@@ -368,7 +368,7 @@ class Users(Service):
         }, api_params)
 
     def list_memberships(self, user_id):
-        """List User Memberships"""
+        """List user memberships"""
 
         
         api_path = '/users/{userId}/memberships'
@@ -384,7 +384,7 @@ class Users(Service):
         }, api_params)
 
     def update_name(self, user_id, name):
-        """Update Name"""
+        """Update name"""
 
         
         api_path = '/users/{userId}/name'
@@ -404,7 +404,7 @@ class Users(Service):
         }, api_params)
 
     def update_password(self, user_id, password):
-        """Update Password"""
+        """Update password"""
 
         
         api_path = '/users/{userId}/password'
@@ -424,7 +424,7 @@ class Users(Service):
         }, api_params)
 
     def update_phone(self, user_id, number):
-        """Update Phone"""
+        """Update phone"""
 
         
         api_path = '/users/{userId}/phone'
@@ -444,7 +444,7 @@ class Users(Service):
         }, api_params)
 
     def get_prefs(self, user_id):
-        """Get User Preferences"""
+        """Get user preferences"""
 
         
         api_path = '/users/{userId}/prefs'
@@ -460,7 +460,7 @@ class Users(Service):
         }, api_params)
 
     def update_prefs(self, user_id, prefs):
-        """Update User Preferences"""
+        """Update user preferences"""
 
         
         api_path = '/users/{userId}/prefs'
@@ -480,7 +480,7 @@ class Users(Service):
         }, api_params)
 
     def list_sessions(self, user_id):
-        """List User Sessions"""
+        """List user sessions"""
 
         
         api_path = '/users/{userId}/sessions'
@@ -496,7 +496,7 @@ class Users(Service):
         }, api_params)
 
     def delete_sessions(self, user_id):
-        """Delete User Sessions"""
+        """Delete user sessions"""
 
         
         api_path = '/users/{userId}/sessions'
@@ -512,7 +512,7 @@ class Users(Service):
         }, api_params)
 
     def delete_session(self, user_id, session_id):
-        """Delete User Session"""
+        """Delete user session"""
 
         
         api_path = '/users/{userId}/sessions/{sessionId}'
@@ -532,7 +532,7 @@ class Users(Service):
         }, api_params)
 
     def update_status(self, user_id, status):
-        """Update User Status"""
+        """Update user status"""
 
         
         api_path = '/users/{userId}/status'
@@ -552,7 +552,7 @@ class Users(Service):
         }, api_params)
 
     def update_email_verification(self, user_id, email_verification):
-        """Update Email Verification"""
+        """Update email verification"""
 
         
         api_path = '/users/{userId}/verification'
@@ -572,7 +572,7 @@ class Users(Service):
         }, api_params)
 
     def update_phone_verification(self, user_id, phone_verification):
-        """Update Phone Verification"""
+        """Update phone verification"""
 
         
         api_path = '/users/{userId}/verification/phone'

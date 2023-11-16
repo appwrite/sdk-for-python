@@ -7,7 +7,7 @@ class Functions(Service):
         super(Functions, self).__init__(client)
 
     def list(self, queries = None, search = None):
-        """List Functions"""
+        """List functions"""
 
         
         api_path = '/functions'
@@ -21,7 +21,7 @@ class Functions(Service):
         }, api_params)
 
     def create(self, function_id, name, runtime, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None, template_repository = None, template_owner = None, template_root_directory = None, template_branch = None):
-        """Create Function"""
+        """Create function"""
 
         
         api_path = '/functions'
@@ -73,7 +73,7 @@ class Functions(Service):
         }, api_params)
 
     def get(self, function_id):
-        """Get Function"""
+        """Get function"""
 
         
         api_path = '/functions/{functionId}'
@@ -89,7 +89,7 @@ class Functions(Service):
         }, api_params)
 
     def update(self, function_id, name, runtime = None, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None):
-        """Update Function"""
+        """Update function"""
 
         
         api_path = '/functions/{functionId}'
@@ -123,7 +123,7 @@ class Functions(Service):
         }, api_params)
 
     def delete(self, function_id):
-        """Delete Function"""
+        """Delete function"""
 
         
         api_path = '/functions/{functionId}'
@@ -139,7 +139,7 @@ class Functions(Service):
         }, api_params)
 
     def list_deployments(self, function_id, queries = None, search = None):
-        """List Deployments"""
+        """List deployments"""
 
         
         api_path = '/functions/{functionId}/deployments'
@@ -157,7 +157,7 @@ class Functions(Service):
         }, api_params)
 
     def create_deployment(self, function_id, code, activate, entrypoint = None, commands = None, on_progress = None):
-        """Create Deployment"""
+        """Create deployment"""
 
         
         api_path = '/functions/{functionId}/deployments'
@@ -188,7 +188,7 @@ class Functions(Service):
         }, api_params, param_name, on_progress, upload_id)
 
     def get_deployment(self, function_id, deployment_id):
-        """Get Deployment"""
+        """Get deployment"""
 
         
         api_path = '/functions/{functionId}/deployments/{deploymentId}'
@@ -208,7 +208,7 @@ class Functions(Service):
         }, api_params)
 
     def update_deployment(self, function_id, deployment_id):
-        """Update Function Deployment"""
+        """Update function deployment"""
 
         
         api_path = '/functions/{functionId}/deployments/{deploymentId}'
@@ -228,7 +228,7 @@ class Functions(Service):
         }, api_params)
 
     def delete_deployment(self, function_id, deployment_id):
-        """Delete Deployment"""
+        """Delete deployment"""
 
         
         api_path = '/functions/{functionId}/deployments/{deploymentId}'
@@ -248,7 +248,7 @@ class Functions(Service):
         }, api_params)
 
     def create_build(self, function_id, deployment_id, build_id):
-        """Create Build"""
+        """Create build"""
 
         
         api_path = '/functions/{functionId}/deployments/{deploymentId}/builds/{buildId}'
@@ -292,7 +292,7 @@ class Functions(Service):
         }, api_params)
 
     def list_executions(self, function_id, queries = None, search = None):
-        """List Executions"""
+        """List executions"""
 
         
         api_path = '/functions/{functionId}/executions'
@@ -310,7 +310,7 @@ class Functions(Service):
         }, api_params)
 
     def create_execution(self, function_id, body = None, xasync = None, path = None, method = None, headers = None):
-        """Create Execution"""
+        """Create execution"""
 
         
         api_path = '/functions/{functionId}/executions'
@@ -331,7 +331,7 @@ class Functions(Service):
         }, api_params)
 
     def get_execution(self, function_id, execution_id):
-        """Get Execution"""
+        """Get execution"""
 
         
         api_path = '/functions/{functionId}/executions/{executionId}'
@@ -351,7 +351,7 @@ class Functions(Service):
         }, api_params)
 
     def list_variables(self, function_id):
-        """List Variables"""
+        """List variables"""
 
         
         api_path = '/functions/{functionId}/variables'
@@ -367,7 +367,7 @@ class Functions(Service):
         }, api_params)
 
     def create_variable(self, function_id, key, value):
-        """Create Variable"""
+        """Create variable"""
 
         
         api_path = '/functions/{functionId}/variables'
@@ -391,7 +391,7 @@ class Functions(Service):
         }, api_params)
 
     def get_variable(self, function_id, variable_id):
-        """Get Variable"""
+        """Get variable"""
 
         
         api_path = '/functions/{functionId}/variables/{variableId}'
@@ -411,7 +411,7 @@ class Functions(Service):
         }, api_params)
 
     def update_variable(self, function_id, variable_id, key, value = None):
-        """Update Variable"""
+        """Update variable"""
 
         
         api_path = '/functions/{functionId}/variables/{variableId}'
@@ -436,7 +436,7 @@ class Functions(Service):
         }, api_params)
 
     def delete_variable(self, function_id, variable_id):
-        """Delete Variable"""
+        """Delete variable"""
 
         
         api_path = '/functions/{functionId}/variables/{variableId}'

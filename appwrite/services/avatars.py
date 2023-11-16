@@ -7,7 +7,7 @@ class Avatars(Service):
         super(Avatars, self).__init__(client)
 
     def get_browser(self, code, width = None, height = None, quality = None):
-        """Get Browser Icon"""
+        """Get browser icon"""
 
         
         api_path = '/avatars/browsers/{code}'
@@ -26,7 +26,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_credit_card(self, code, width = None, height = None, quality = None):
-        """Get Credit Card Icon"""
+        """Get credit card icon"""
 
         
         api_path = '/avatars/credit-cards/{code}'
@@ -45,7 +45,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_favicon(self, url):
-        """Get Favicon"""
+        """Get favicon"""
 
         
         api_path = '/avatars/favicon'
@@ -61,7 +61,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_flag(self, code, width = None, height = None, quality = None):
-        """Get Country Flag"""
+        """Get country flag"""
 
         
         api_path = '/avatars/flags/{code}'
@@ -80,7 +80,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_image(self, url, width = None, height = None):
-        """Get Image from URL"""
+        """Get image from URL"""
 
         
         api_path = '/avatars/image'
@@ -98,7 +98,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_initials(self, name = None, width = None, height = None, background = None):
-        """Get User Initials"""
+        """Get user initials"""
 
         
         api_path = '/avatars/initials'
@@ -114,7 +114,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_qr(self, text, size = None, margin = None, download = None):
-        """Get QR Code"""
+        """Get QR code"""
 
         
         api_path = '/avatars/qr'

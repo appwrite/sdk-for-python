@@ -7,7 +7,7 @@ class Teams(Service):
         super(Teams, self).__init__(client)
 
     def list(self, queries = None, search = None):
-        """List Teams"""
+        """List teams"""
 
         
         api_path = '/teams'
@@ -21,7 +21,7 @@ class Teams(Service):
         }, api_params)
 
     def create(self, team_id, name, roles = None):
-        """Create Team"""
+        """Create team"""
 
         
         api_path = '/teams'
@@ -42,7 +42,7 @@ class Teams(Service):
         }, api_params)
 
     def get(self, team_id):
-        """Get Team"""
+        """Get team"""
 
         
         api_path = '/teams/{teamId}'
@@ -58,7 +58,7 @@ class Teams(Service):
         }, api_params)
 
     def update_name(self, team_id, name):
-        """Update Name"""
+        """Update name"""
 
         
         api_path = '/teams/{teamId}'
@@ -78,7 +78,7 @@ class Teams(Service):
         }, api_params)
 
     def delete(self, team_id):
-        """Delete Team"""
+        """Delete team"""
 
         
         api_path = '/teams/{teamId}'
@@ -94,7 +94,7 @@ class Teams(Service):
         }, api_params)
 
     def list_memberships(self, team_id, queries = None, search = None):
-        """List Team Memberships"""
+        """List team memberships"""
 
         
         api_path = '/teams/{teamId}/memberships'
@@ -112,7 +112,7 @@ class Teams(Service):
         }, api_params)
 
     def create_membership(self, team_id, roles, email = None, user_id = None, phone = None, url = None, name = None):
-        """Create Team Membership"""
+        """Create team membership"""
 
         
         api_path = '/teams/{teamId}/memberships'
@@ -137,7 +137,7 @@ class Teams(Service):
         }, api_params)
 
     def get_membership(self, team_id, membership_id):
-        """Get Team Membership"""
+        """Get team membership"""
 
         
         api_path = '/teams/{teamId}/memberships/{membershipId}'
@@ -157,7 +157,7 @@ class Teams(Service):
         }, api_params)
 
     def update_membership(self, team_id, membership_id, roles):
-        """Update Membership"""
+        """Update membership"""
 
         
         api_path = '/teams/{teamId}/memberships/{membershipId}'
@@ -181,7 +181,7 @@ class Teams(Service):
         }, api_params)
 
     def delete_membership(self, team_id, membership_id):
-        """Delete Team Membership"""
+        """Delete team membership"""
 
         
         api_path = '/teams/{teamId}/memberships/{membershipId}'
@@ -201,7 +201,7 @@ class Teams(Service):
         }, api_params)
 
     def update_membership_status(self, team_id, membership_id, user_id, secret):
-        """Update Team Membership Status"""
+        """Update team membership status"""
 
         
         api_path = '/teams/{teamId}/memberships/{membershipId}/status'
@@ -229,7 +229,7 @@ class Teams(Service):
         }, api_params)
 
     def get_prefs(self, team_id):
-        """Get Team Preferences"""
+        """Get team preferences"""
 
         
         api_path = '/teams/{teamId}/prefs'
@@ -245,7 +245,7 @@ class Teams(Service):
         }, api_params)
 
     def update_prefs(self, team_id, prefs):
-        """Update Preferences"""
+        """Update preferences"""
 
         
         api_path = '/teams/{teamId}/prefs'
