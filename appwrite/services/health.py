@@ -18,7 +18,7 @@ class Health(Service):
         }, api_params)
 
     def get_antivirus(self):
-        """Get Antivirus"""
+        """Get antivirus"""
 
         
         api_path = '/health/anti-virus'
@@ -29,7 +29,7 @@ class Health(Service):
         }, api_params)
 
     def get_cache(self):
-        """Get Cache"""
+        """Get cache"""
 
         
         api_path = '/health/cache'
@@ -51,7 +51,7 @@ class Health(Service):
         }, api_params)
 
     def get_pub_sub(self):
-        """Get PubSub"""
+        """Get pubsub"""
 
         
         api_path = '/health/pubsub'
@@ -62,7 +62,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue(self):
-        """Get Queue"""
+        """Get queue"""
 
         
         api_path = '/health/queue'
@@ -72,52 +72,139 @@ class Health(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_queue_certificates(self):
-        """Get Certificates Queue"""
+    def get_queue_builds(self, threshold = None):
+        """Get builds queue"""
+
+        
+        api_path = '/health/queue/builds'
+        api_params = {}
+
+        api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_queue_certificates(self, threshold = None):
+        """Get certificates queue"""
 
         
         api_path = '/health/queue/certificates'
         api_params = {}
 
+        api_params['threshold'] = threshold
+
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_queue_functions(self):
-        """Get Functions Queue"""
+    def get_queue_databases(self, name = None, threshold = None):
+        """Get databases queue"""
+
+        
+        api_path = '/health/queue/databases'
+        api_params = {}
+
+        api_params['name'] = name
+        api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_queue_deletes(self, threshold = None):
+        """Get deletes queue"""
+
+        
+        api_path = '/health/queue/deletes'
+        api_params = {}
+
+        api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_queue_functions(self, threshold = None):
+        """Get functions queue"""
 
         
         api_path = '/health/queue/functions'
         api_params = {}
 
+        api_params['threshold'] = threshold
+
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_queue_logs(self):
-        """Get Logs Queue"""
+    def get_queue_logs(self, threshold = None):
+        """Get logs queue"""
 
         
         api_path = '/health/queue/logs'
         api_params = {}
 
+        api_params['threshold'] = threshold
+
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_queue_webhooks(self):
-        """Get Webhooks Queue"""
+    def get_queue_mails(self, threshold = None):
+        """Get mails queue"""
+
+        
+        api_path = '/health/queue/mails'
+        api_params = {}
+
+        api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_queue_messaging(self, threshold = None):
+        """Get messaging queue"""
+
+        
+        api_path = '/health/queue/messaging'
+        api_params = {}
+
+        api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_queue_migrations(self, threshold = None):
+        """Get migrations queue"""
+
+        
+        api_path = '/health/queue/migrations'
+        api_params = {}
+
+        api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_queue_webhooks(self, threshold = None):
+        """Get webhooks queue"""
 
         
         api_path = '/health/queue/webhooks'
         api_params = {}
+
+        api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
     def get_storage_local(self):
-        """Get Local Storage"""
+        """Get local storage"""
 
         
         api_path = '/health/storage/local'
@@ -128,7 +215,7 @@ class Health(Service):
         }, api_params)
 
     def get_time(self):
-        """Get Time"""
+        """Get time"""
 
         
         api_path = '/health/time'

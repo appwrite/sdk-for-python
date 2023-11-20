@@ -7,7 +7,7 @@ class Account(Service):
         super(Account, self).__init__(client)
 
     def get(self):
-        """Get Account"""
+        """Get account"""
 
         
         api_path = '/account'
@@ -18,7 +18,7 @@ class Account(Service):
         }, api_params)
 
     def update_email(self, email, password):
-        """Update Email"""
+        """Update email"""
 
         
         api_path = '/account/email'
@@ -67,7 +67,7 @@ class Account(Service):
         }, api_params)
 
     def list_logs(self, queries = None):
-        """List Logs"""
+        """List logs"""
 
         
         api_path = '/account/logs'
@@ -80,7 +80,7 @@ class Account(Service):
         }, api_params)
 
     def update_name(self, name):
-        """Update Name"""
+        """Update name"""
 
         
         api_path = '/account/name'
@@ -96,7 +96,7 @@ class Account(Service):
         }, api_params)
 
     def update_password(self, password, old_password = None):
-        """Update Password"""
+        """Update password"""
 
         
         api_path = '/account/password'
@@ -113,7 +113,7 @@ class Account(Service):
         }, api_params)
 
     def update_phone(self, phone, password):
-        """Update Phone"""
+        """Update phone"""
 
         
         api_path = '/account/phone'
@@ -133,7 +133,7 @@ class Account(Service):
         }, api_params)
 
     def get_prefs(self):
-        """Get Account Preferences"""
+        """Get account preferences"""
 
         
         api_path = '/account/prefs'
@@ -144,7 +144,7 @@ class Account(Service):
         }, api_params)
 
     def update_prefs(self, prefs):
-        """Update Preferences"""
+        """Update preferences"""
 
         
         api_path = '/account/prefs'
@@ -160,7 +160,7 @@ class Account(Service):
         }, api_params)
 
     def create_recovery(self, email, url):
-        """Create Password Recovery"""
+        """Create password recovery"""
 
         
         api_path = '/account/recovery'
@@ -180,7 +180,7 @@ class Account(Service):
         }, api_params)
 
     def update_recovery(self, user_id, secret, password, password_again):
-        """Create Password Recovery (confirmation)"""
+        """Create password recovery (confirmation)"""
 
         
         api_path = '/account/recovery'
@@ -208,7 +208,7 @@ class Account(Service):
         }, api_params)
 
     def list_sessions(self):
-        """List Sessions"""
+        """List sessions"""
 
         
         api_path = '/account/sessions'
@@ -219,7 +219,7 @@ class Account(Service):
         }, api_params)
 
     def delete_sessions(self):
-        """Delete Sessions"""
+        """Delete sessions"""
 
         
         api_path = '/account/sessions'
@@ -230,7 +230,7 @@ class Account(Service):
         }, api_params)
 
     def get_session(self, session_id):
-        """Get Session"""
+        """Get session"""
 
         
         api_path = '/account/sessions/{sessionId}'
@@ -246,7 +246,7 @@ class Account(Service):
         }, api_params)
 
     def update_session(self, session_id):
-        """Update OAuth Session (Refresh Tokens)"""
+        """Update OAuth session (refresh tokens)"""
 
         
         api_path = '/account/sessions/{sessionId}'
@@ -262,7 +262,7 @@ class Account(Service):
         }, api_params)
 
     def delete_session(self, session_id):
-        """Delete Session"""
+        """Delete session"""
 
         
         api_path = '/account/sessions/{sessionId}'
@@ -278,7 +278,7 @@ class Account(Service):
         }, api_params)
 
     def update_status(self):
-        """Update Status"""
+        """Update status"""
 
         
         api_path = '/account/status'
@@ -289,7 +289,7 @@ class Account(Service):
         }, api_params)
 
     def create_verification(self, url):
-        """Create Email Verification"""
+        """Create email verification"""
 
         
         api_path = '/account/verification'
@@ -305,7 +305,7 @@ class Account(Service):
         }, api_params)
 
     def update_verification(self, user_id, secret):
-        """Create Email Verification (confirmation)"""
+        """Create email verification (confirmation)"""
 
         
         api_path = '/account/verification'
@@ -325,7 +325,7 @@ class Account(Service):
         }, api_params)
 
     def create_phone_verification(self):
-        """Create Phone Verification"""
+        """Create phone verification"""
 
         
         api_path = '/account/verification/phone'
@@ -336,7 +336,7 @@ class Account(Service):
         }, api_params)
 
     def update_phone_verification(self, user_id, secret):
-        """Create Phone Verification (confirmation)"""
+        """Create phone verification (confirmation)"""
 
         
         api_path = '/account/verification/phone'

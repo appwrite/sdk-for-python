@@ -49,7 +49,7 @@ class Storage(Service):
         }, api_params)
 
     def get_bucket(self, bucket_id):
-        """Get Bucket"""
+        """Get bucket"""
 
         
         api_path = '/storage/buckets/{bucketId}'
@@ -65,7 +65,7 @@ class Storage(Service):
         }, api_params)
 
     def update_bucket(self, bucket_id, name, permissions = None, file_security = None, enabled = None, maximum_file_size = None, allowed_file_extensions = None, compression = None, encryption = None, antivirus = None):
-        """Update Bucket"""
+        """Update bucket"""
 
         
         api_path = '/storage/buckets/{bucketId}'
@@ -93,7 +93,7 @@ class Storage(Service):
         }, api_params)
 
     def delete_bucket(self, bucket_id):
-        """Delete Bucket"""
+        """Delete bucket"""
 
         
         api_path = '/storage/buckets/{bucketId}'
@@ -109,7 +109,7 @@ class Storage(Service):
         }, api_params)
 
     def list_files(self, bucket_id, queries = None, search = None):
-        """List Files"""
+        """List files"""
 
         
         api_path = '/storage/buckets/{bucketId}/files'
@@ -127,7 +127,7 @@ class Storage(Service):
         }, api_params)
 
     def create_file(self, bucket_id, file_id, file, permissions = None, on_progress = None):
-        """Create File"""
+        """Create file"""
 
         
         api_path = '/storage/buckets/{bucketId}/files'
@@ -158,7 +158,7 @@ class Storage(Service):
         }, api_params, param_name, on_progress, upload_id)
 
     def get_file(self, bucket_id, file_id):
-        """Get File"""
+        """Get file"""
 
         
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
@@ -178,7 +178,7 @@ class Storage(Service):
         }, api_params)
 
     def update_file(self, bucket_id, file_id, name = None, permissions = None):
-        """Update File"""
+        """Update file"""
 
         
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
@@ -220,7 +220,7 @@ class Storage(Service):
         }, api_params)
 
     def get_file_download(self, bucket_id, file_id):
-        """Get File for Download"""
+        """Get file for download"""
 
         
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/download'
@@ -240,7 +240,7 @@ class Storage(Service):
         }, api_params)
 
     def get_file_preview(self, bucket_id, file_id, width = None, height = None, gravity = None, quality = None, border_width = None, border_color = None, border_radius = None, opacity = None, rotation = None, background = None, output = None):
-        """Get File Preview"""
+        """Get file preview"""
 
         
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/preview'
@@ -271,7 +271,7 @@ class Storage(Service):
         }, api_params)
 
     def get_file_view(self, bucket_id, file_id):
-        """Get File for View"""
+        """Get file for view"""
 
         
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/view'
