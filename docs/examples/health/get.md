@@ -1,5 +1,4 @@
 from appwrite.client import Client
-from appwrite.services.health import Health
 
 client = Client()
 

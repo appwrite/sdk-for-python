@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.functions import Functions
+from Appwrite.enums import 
 
 client = Client()
 
@@ -11,4 +11,4 @@ client = Client()
 
 functions = Functions(client)
 
-result = functions.create('[FUNCTION_ID]', '[NAME]', 'node-18.0')
+result = functions.create('[FUNCTION_ID]', '[NAME]', .NODE-18.0)
