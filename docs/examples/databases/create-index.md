@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from Appwrite.enums import IndexType
+from appwrite.services.databases import Databases
 
 client = Client()
 
@@ -11,4 +11,4 @@ client = Client()
 
 databases = Databases(client)
 
-result = databases.create_index('[DATABASE_ID]', '[COLLECTION_ID]', '', IndexType.KEY, [])
+result = databases.create_index('[DATABASE_ID]', '[COLLECTION_ID]', '', 'key', [])

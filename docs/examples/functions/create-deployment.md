@@ -1,5 +1,6 @@
 from appwrite.client import Client
 from appwrite.input_file import InputFile
+from appwrite.services.functions import Functions
 
 client = Client()
 

@@ -1,4 +1,5 @@
 from appwrite.client import Client
+from appwrite.services.graphql import Graphql
 
 client = Client()
 
