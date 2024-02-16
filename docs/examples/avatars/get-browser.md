@@ -1,14 +1,14 @@
 from appwrite.client import Client
-from appwrite.services.avatars import Avatars
+from Appwrite.enums import Browser
 
 client = Client()
 
 (client
   .set_endpoint('https://cloud.appwrite.io/v1') # Your API Endpoint
   .set_project('5df5acd0d48c2') # Your project ID
-  .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
+  .set_session('') # The user session to authenticate with
 )
 
 avatars = Avatars(client)
 
-result = avatars.get_browser('aa')
+result = avatars.get_browser(Browser.AVANT_BROWSER)

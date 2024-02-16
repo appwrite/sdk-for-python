@@ -39,6 +39,19 @@ class Health(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def get_certificate(self, domain = None):
+        """Get the SSL certificate for a domain"""
+
+        
+        api_path = '/health/certificate'
+        api_params = {}
+
+        api_params['domain'] = domain
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def get_db(self):
         """Get DB"""
 
@@ -118,6 +131,23 @@ class Health(Service):
         
         api_path = '/health/queue/deletes'
         api_params = {}
+
+        api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_failed_jobs(self, name, threshold = None):
+        """Get number of failed queue jobs"""
+
+        
+        api_path = '/health/queue/failed/{name}'
+        api_params = {}
+        if name is None:
+            raise AppwriteException('Missing required parameter: "name"')
+
+        api_path = api_path.replace('{name}', name)
 
         api_params['threshold'] = threshold
 

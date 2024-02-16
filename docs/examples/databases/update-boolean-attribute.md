@@ -1,5 +1,4 @@
 from appwrite.client import Client
-from appwrite.services.databases import Databases
 
 client = Client()
 

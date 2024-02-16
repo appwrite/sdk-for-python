@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.services.databases import Databases
+from Appwrite.enums import RelationshipType
 
 client = Client()
 
@@ -11,4 +11,4 @@ client = Client()
 
 databases = Databases(client)
 
-result = databases.create_relationship_attribute('[DATABASE_ID]', '[COLLECTION_ID]', '[RELATED_COLLECTION_ID]', 'oneToOne')
+result = databases.create_relationship_attribute('[DATABASE_ID]', '[COLLECTION_ID]', '[RELATED_COLLECTION_ID]', RelationshipType.ONE_TO_ONE)
