@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from Appwrite.enums import 
+from Appwrite.enums import AuthenticatorType
 
 client = Client()
 
@@ -11,4 +11,4 @@ client = Client()
 
 account = Account(client)
 
-result = account.add_authenticator(.TOTP)
+result = account.add_authenticator(AuthenticatorType.TOTP)

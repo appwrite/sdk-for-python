@@ -1,4 +1,4 @@
 from enum import Enum
 
-class Type(Enum):
+class AuthenticatorType(Enum):
     TOTP = "totp"

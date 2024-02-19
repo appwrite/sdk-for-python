@@ -8,7 +8,7 @@ with open("README.md", "r", encoding="utf-8") as readme_file_desc:
 setuptools.setup(
   name = 'appwrite',
   packages = ['appwrite', 'appwrite/services'],
-  version = '5.0.0-rc.2',
+  version = '5.0.0-rc.3',
   license='BSD-3-Clause',
   description = 'Appwrite is an open-source self-hosted backend server that abstract and simplify complex and repetitive development tasks behind a very simple REST API',
   long_description = long_description,
@@ -18,7 +18,7 @@ setuptools.setup(
   maintainer = 'Appwrite Team',
   maintainer_email = 'team@appwrite.io',
   url = 'https://appwrite.io/support',
-  download_url='https://github.com/appwrite/sdk-for-python/archive/5.0.0-rc.2.tar.gz',
+  download_url='https://github.com/appwrite/sdk-for-python/archive/5.0.0-rc.3.tar.gz',
   # keywords = ['SOME', 'MEANINGFULL', 'KEYWORDS'],
   install_requires=[
           'requests',

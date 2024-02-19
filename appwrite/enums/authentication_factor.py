@@ -1,6 +1,6 @@
 from enum import Enum
 
-class Factor(Enum):
+class AuthenticationFactor(Enum):
     TOTP = "totp"
     PHONE = "phone"
     EMAIL = "email"

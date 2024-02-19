@@ -1,6 +1,6 @@
 import json
-from ..enums.factor import Factor
-from ..enums.type import Type
+from ..enums.authentication_factor import AuthenticationFactor
+from ..enums.authenticator_type import AuthenticatorType
 from ..enums.o_auth_provider import OAuthProvider
 from ..enums.browser import Browser
 from ..enums.credit_card import CreditCard
@@ -21,10 +21,10 @@ from ..enums.messaging_provider_type import MessagingProviderType
 
 class ValueClassEncoder(json.JSONEncoder):
     def default(self, o):
-        if isinstance(o, Factor):
+        if isinstance(o, AuthenticationFactor):
             return o.value
 
-        if isinstance(o, Type):
+        if isinstance(o, AuthenticatorType):
             return o.value
 
         if isinstance(o, OAuthProvider):
