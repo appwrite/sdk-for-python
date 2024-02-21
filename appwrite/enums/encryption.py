@@ -1,6 +1,6 @@
 from enum import Enum
 
-class SMTPEncryption(Enum):
+class Encryption(Enum):
     NONE = "none"
     SSL = "ssl"
     TLS = "tls"

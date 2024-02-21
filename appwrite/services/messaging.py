@@ -20,8 +20,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_email(self, message_id, subject, content, topics = None, users = None, targets = None, cc = None, bcc = None, status = None, html = None, scheduled_at = None):
-        """Create an email."""
+    def create_email(self, message_id, subject, content, topics = None, users = None, targets = None, cc = None, bcc = None, attachments = None, status = None, html = None, scheduled_at = None):
+        """Create an email"""
 
         
         api_path = '/messaging/messages/email'
@@ -44,6 +44,7 @@ class Messaging(Service):
         api_params['targets'] = targets
         api_params['cc'] = cc
         api_params['bcc'] = bcc
+        api_params['attachments'] = attachments
         api_params['status'] = status
         api_params['html'] = html
         api_params['scheduledAt'] = scheduled_at
@@ -53,7 +54,7 @@ class Messaging(Service):
         }, api_params)
 
     def update_email(self, message_id, topics = None, users = None, targets = None, subject = None, content = None, status = None, html = None, cc = None, bcc = None, scheduled_at = None):
-        """Update an email."""
+        """Update an email"""
 
         
         api_path = '/messaging/messages/email/{messageId}'
@@ -78,8 +79,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_push(self, message_id, title, body, topics = None, users = None, targets = None, data = None, action = None, icon = None, sound = None, color = None, tag = None, badge = None, status = None, scheduled_at = None):
-        """Create a push notification."""
+    def create_push(self, message_id, title, body, topics = None, users = None, targets = None, data = None, action = None, image = None, icon = None, sound = None, color = None, tag = None, badge = None, status = None, scheduled_at = None):
+        """Create a push notification"""
 
         
         api_path = '/messaging/messages/push'
@@ -102,6 +103,7 @@ class Messaging(Service):
         api_params['targets'] = targets
         api_params['data'] = data
         api_params['action'] = action
+        api_params['image'] = image
         api_params['icon'] = icon
         api_params['sound'] = sound
         api_params['color'] = color
@@ -114,8 +116,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_push(self, message_id, topics = None, users = None, targets = None, title = None, body = None, data = None, action = None, icon = None, sound = None, color = None, tag = None, badge = None, status = None, scheduled_at = None):
-        """Update a push notification."""
+    def update_push(self, message_id, topics = None, users = None, targets = None, title = None, body = None, data = None, action = None, image = None, icon = None, sound = None, color = None, tag = None, badge = None, status = None, scheduled_at = None):
+        """Update a push notification"""
 
         
         api_path = '/messaging/messages/push/{messageId}'
@@ -132,6 +134,7 @@ class Messaging(Service):
         api_params['body'] = body
         api_params['data'] = data
         api_params['action'] = action
+        api_params['image'] = image
         api_params['icon'] = icon
         api_params['sound'] = sound
         api_params['color'] = color
@@ -145,7 +148,7 @@ class Messaging(Service):
         }, api_params)
 
     def create_sms(self, message_id, content, topics = None, users = None, targets = None, status = None, scheduled_at = None):
-        """Create an SMS."""
+        """Create an SMS"""
 
         
         api_path = '/messaging/messages/sms'
@@ -170,7 +173,7 @@ class Messaging(Service):
         }, api_params)
 
     def update_sms(self, message_id, topics = None, users = None, targets = None, content = None, status = None, scheduled_at = None):
-        """Update an SMS."""
+        """Update an SMS"""
 
         
         api_path = '/messaging/messages/sms/{messageId}'
@@ -817,7 +820,7 @@ class Messaging(Service):
         }, api_params)
 
     def list_topics(self, queries = None, search = None):
-        """List topics."""
+        """List topics"""
 
         
         api_path = '/messaging/topics'
@@ -831,7 +834,7 @@ class Messaging(Service):
         }, api_params)
 
     def create_topic(self, topic_id, name, subscribe = None):
-        """Create a topic."""
+        """Create a topic"""
 
         
         api_path = '/messaging/topics'
@@ -852,7 +855,7 @@ class Messaging(Service):
         }, api_params)
 
     def get_topic(self, topic_id):
-        """Get a topic."""
+        """Get a topic"""
 
         
         api_path = '/messaging/topics/{topicId}'
@@ -868,7 +871,7 @@ class Messaging(Service):
         }, api_params)
 
     def update_topic(self, topic_id, name = None):
-        """Update a topic."""
+        """Update a topic"""
 
         
         api_path = '/messaging/topics/{topicId}'
@@ -885,7 +888,7 @@ class Messaging(Service):
         }, api_params)
 
     def delete_topic(self, topic_id):
-        """Delete a topic."""
+        """Delete a topic"""
 
         
         api_path = '/messaging/topics/{topicId}'
@@ -918,7 +921,7 @@ class Messaging(Service):
         }, api_params)
 
     def list_subscribers(self, topic_id, queries = None, search = None):
-        """List subscribers."""
+        """List subscribers"""
 
         
         api_path = '/messaging/topics/{topicId}/subscribers'
@@ -936,7 +939,7 @@ class Messaging(Service):
         }, api_params)
 
     def create_subscriber(self, topic_id, subscriber_id, target_id):
-        """Create a subscriber."""
+        """Create a subscriber"""
 
         
         api_path = '/messaging/topics/{topicId}/subscribers'
@@ -960,7 +963,7 @@ class Messaging(Service):
         }, api_params)
 
     def get_subscriber(self, topic_id, subscriber_id):
-        """Get a subscriber."""
+        """Get a subscriber"""
 
         
         api_path = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
@@ -980,7 +983,7 @@ class Messaging(Service):
         }, api_params)
 
     def delete_subscriber(self, topic_id, subscriber_id):
-        """Delete a subscriber."""
+        """Delete a subscriber"""
 
         
         api_path = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
