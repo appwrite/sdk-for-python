@@ -13,11 +13,11 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : 'AppwritePythonSDK/5.0.0-rc.4 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
+            'user-agent' : 'AppwritePythonSDK/5.0.0-rc.5 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '5.0.0-rc.4',
+            'x-sdk-version': '5.0.0-rc.5',
             'X-Appwrite-Response-Format' : '1.5.0',
         }
 
@@ -61,19 +61,13 @@ class Client:
         self._global_headers['x-appwrite-session'] = value
         return self
 
-    def set_forwarded_for(self, value):
-        """The IP address of the client that made the request"""
-
-        self._global_headers['x-forwarded-for'] = value
-        return self
-
     def set_forwarded_user_agent(self, value):
         """The user agent string of the client that made the request"""
 
         self._global_headers['x-forwarded-user-agent'] = value
         return self
 
-    def call(self, method, path='', headers=None, params=None):
+    def call(self, method, path='', headers=None, params=None, response_type='json'):
         if headers is None:
             headers = {}
 
@@ -103,6 +97,7 @@ class Client:
                     files[key] = (data[key].filename, data[key].data)
                     del data[key]
             data = self.flatten(data, stringify=stringify)
+
         response = None
         try:
             response = requests.request(  # call method dynamically https://stackoverflow.com/a/4246075/2299554
@@ -113,11 +108,15 @@ class Client:
                 files=files,
                 headers=headers,
                 verify=(not self._self_signed),
+                allow_redirects=False if response_type == 'location' else True
             )
 
             response.raise_for_status()
 
             content_type = response.headers['Content-Type']
+
+            if response_type == 'location':
+                return response.headers.get('Location')
 
             if content_type.startswith('application/json'):
                 return response.json()

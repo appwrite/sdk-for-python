@@ -274,7 +274,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_apns_provider(self, provider_id, name, auth_key = None, auth_key_id = None, team_id = None, bundle_id = None, enabled = None):
+    def create_apns_provider(self, provider_id, name, auth_key = None, auth_key_id = None, team_id = None, bundle_id = None, sandbox = None, enabled = None):
         """Create APNS provider"""
 
         
@@ -293,13 +293,14 @@ class Messaging(Service):
         api_params['authKeyId'] = auth_key_id
         api_params['teamId'] = team_id
         api_params['bundleId'] = bundle_id
+        api_params['sandbox'] = sandbox
         api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_apns_provider(self, provider_id, name = None, enabled = None, auth_key = None, auth_key_id = None, team_id = None, bundle_id = None):
+    def update_apns_provider(self, provider_id, name = None, enabled = None, auth_key = None, auth_key_id = None, team_id = None, bundle_id = None, sandbox = None):
         """Update APNS provider"""
 
         
@@ -316,6 +317,7 @@ class Messaging(Service):
         api_params['authKeyId'] = auth_key_id
         api_params['teamId'] = team_id
         api_params['bundleId'] = bundle_id
+        api_params['sandbox'] = sandbox
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -870,7 +872,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_topic(self, topic_id, name = None):
+    def update_topic(self, topic_id, name = None, subscribe = None):
         """Update a topic"""
 
         
@@ -882,6 +884,7 @@ class Messaging(Service):
         api_path = api_path.replace('{topicId}', topic_id)
 
         api_params['name'] = name
+        api_params['subscribe'] = subscribe
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',

@@ -7,6 +7,6 @@ client.set_project('5df5acd0d48c2') # Your project ID
 
 account = Account(client)
 
-result = account.create2_fa_challenge(
+result = account.create_challenge(
     factor = AuthenticationFactor.TOTP
 )

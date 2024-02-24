@@ -12,7 +12,7 @@ from ..enums.runtime import Runtime
 from ..enums.execution_method import ExecutionMethod
 from ..enums.name import Name
 from ..enums.message_status import MessageStatus
-from ..enums.encryption import Encryption
+from ..enums.smtp_encryption import SmtpEncryption
 from ..enums.compression import Compression
 from ..enums.image_gravity import ImageGravity
 from ..enums.image_format import ImageFormat
@@ -60,7 +60,7 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, MessageStatus):
             return o.value
 
-        if isinstance(o, Encryption):
+        if isinstance(o, SmtpEncryption):
             return o.value
 
         if isinstance(o, Compression):

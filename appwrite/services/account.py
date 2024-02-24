@@ -131,7 +131,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create2_fa_challenge(self, factor):
+    def create_challenge(self, factor):
         """Create 2FA Challenge"""
 
         
@@ -431,7 +431,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_o_auth2_session(self, provider, success = None, failure = None, token = None, scopes = None):
+    def create_o_auth2_session(self, provider, success = None, failure = None, scopes = None):
         """Create OAuth2 session"""
 
         
@@ -444,12 +444,11 @@ class Account(Service):
 
         api_params['success'] = success
         api_params['failure'] = failure
-        api_params['token'] = token
         api_params['scopes'] = scopes
 
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
-        }, api_params)
+        }, api_params, response_type='location')
 
     def create_session(self, user_id, secret):
         """Create session"""
@@ -572,6 +571,25 @@ class Account(Service):
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
+
+    def create_o_auth2_token(self, provider, success = None, failure = None, scopes = None):
+        """Create OAuth2 token"""
+
+        
+        api_path = '/account/tokens/oauth2/{provider}'
+        api_params = {}
+        if provider is None:
+            raise AppwriteException('Missing required parameter: "provider"')
+
+        api_path = api_path.replace('{provider}', provider)
+
+        api_params['success'] = success
+        api_params['failure'] = failure
+        api_params['scopes'] = scopes
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params, response_type='location')
 
     def create_phone_token(self, user_id, phone):
         """Create phone token"""
