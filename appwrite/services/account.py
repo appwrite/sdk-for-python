@@ -412,7 +412,7 @@ class Account(Service):
         }, api_params)
 
     def update_magic_url_session(self, user_id, secret):
-        """Create session (deprecated)"""
+        """Update magic URL session"""
 
         
         api_path = '/account/sessions/magic-url'
@@ -431,24 +431,25 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_o_auth2_session(self, provider, success = None, failure = None, scopes = None):
-        """Create OAuth2 session"""
+    def update_phone_session(self, user_id, secret):
+        """Update phone session"""
 
         
-        api_path = '/account/sessions/oauth2/{provider}'
+        api_path = '/account/sessions/phone'
         api_params = {}
-        if provider is None:
-            raise AppwriteException('Missing required parameter: "provider"')
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{provider}', provider)
+        if secret is None:
+            raise AppwriteException('Missing required parameter: "secret"')
 
-        api_params['success'] = success
-        api_params['failure'] = failure
-        api_params['scopes'] = scopes
 
-        return self.client.call('get', api_path, {
+        api_params['userId'] = user_id
+        api_params['secret'] = secret
+
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
-        }, api_params, response_type='location')
+        }, api_params)
 
     def create_session(self, user_id, secret):
         """Create session"""
@@ -487,7 +488,7 @@ class Account(Service):
         }, api_params)
 
     def update_session(self, session_id):
-        """Update (or renew) a session"""
+        """Update (or renew) session"""
 
         
         api_path = '/account/sessions/{sessionId}'

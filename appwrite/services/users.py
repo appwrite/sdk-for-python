@@ -419,7 +419,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_authenticator(self, user_id, type, otp):
+    def delete_authenticator(self, user_id, type):
         """Delete Authenticator"""
 
         
@@ -431,13 +431,9 @@ class Users(Service):
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
 
-        if otp is None:
-            raise AppwriteException('Missing required parameter: "otp"')
-
         api_path = api_path.replace('{userId}', user_id)
         api_path = api_path.replace('{type}', type)
 
-        api_params['otp'] = otp
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
