@@ -233,7 +233,7 @@ class Health(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_queue_usage(self, threshold = None):
+    def get_queue_usage_dump(self, threshold = None):
         """Get usage dump queue"""
 
         
