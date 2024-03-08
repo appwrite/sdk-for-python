@@ -220,6 +220,32 @@ class Health(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def get_queue_usage(self, threshold = None):
+        """Get usage queue"""
+
+        
+        api_path = '/health/queue/usage'
+        api_params = {}
+
+        api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_queue_usage(self, threshold = None):
+        """Get usage dump queue"""
+
+        
+        api_path = '/health/queue/usage-dump'
+        api_params = {}
+
+        api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def get_queue_webhooks(self, threshold = None):
         """Get webhooks queue"""
 
@@ -228,6 +254,17 @@ class Health(Service):
         api_params = {}
 
         api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_storage(self):
+        """Get storage"""
+
+        
+        api_path = '/health/storage'
+        api_params = {}
 
         return self.client.call('get', api_path, {
             'content-type': 'application/json',

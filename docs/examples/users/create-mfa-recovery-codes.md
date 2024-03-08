@@ -1,5 +1,4 @@
 from appwrite.client import Client
-from appwrite.enums import AuthenticatorType
 
 client = Client()
 client.set_endpoint('https://cloud.appwrite.io/v1') # Your API Endpoint
@@ -8,7 +7,6 @@ client.set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
 
 users = Users(client)
 
-result = users.delete_authenticator(
-    user_id = '<USER_ID>',
-    type = AuthenticatorType.TOTP
+result = users.create_mfa_recovery_codes(
+    user_id = '<USER_ID>'
 )

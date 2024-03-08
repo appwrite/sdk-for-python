@@ -403,7 +403,27 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_factors(self, user_id):
+    def delete_mfa_authenticator(self, user_id, type):
+        """Delete Authenticator"""
+
+        
+        api_path = '/users/{userId}/mfa/authenticators/{type}'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{type}', type)
+
+
+        return self.client.call('delete', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def list_mfa_factors(self, user_id):
         """List Factors"""
 
         
@@ -419,23 +439,51 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_authenticator(self, user_id, type):
-        """Delete Authenticator"""
+    def get_mfa_recovery_codes(self, user_id):
+        """Get MFA Recovery Codes"""
 
         
-        api_path = '/users/{userId}/mfa/{type}'
+        api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        if type is None:
-            raise AppwriteException('Missing required parameter: "type"')
+        api_path = api_path.replace('{userId}', user_id)
+
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mfa_recovery_codes(self, user_id):
+        """Regenerate MFA Recovery Codes"""
+
+        
+        api_path = '/users/{userId}/mfa/recovery-codes'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
 
         api_path = api_path.replace('{userId}', user_id)
-        api_path = api_path.replace('{type}', type)
 
 
-        return self.client.call('delete', api_path, {
+        return self.client.call('put', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_mfa_recovery_codes(self, user_id):
+        """Create MFA Recovery Codes"""
+
+        
+        api_path = '/users/{userId}/mfa/recovery-codes'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        api_path = api_path.replace('{userId}', user_id)
+
+
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 

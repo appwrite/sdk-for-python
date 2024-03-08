@@ -7,4 +7,4 @@ client.set_session('') # The user session to authenticate with
 
 account = Account(client)
 
-result = account.list_factors()
+result = account.get_mfa_recovery_codes()

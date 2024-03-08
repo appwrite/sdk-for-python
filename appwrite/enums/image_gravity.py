@@ -2,11 +2,11 @@ from enum import Enum
 
 class ImageGravity(Enum):
     CENTER = "center"
-    TOPLEFT = "top-left"
+    TOP_LEFT = "top-left"
     TOP = "top"
-    TOPRIGHT = "top-right"
+    TOP_RIGHT = "top-right"
     LEFT = "left"
     RIGHT = "right"
-    BOTTOMLEFT = "bottom-left"
+    BOTTOM_LEFT = "bottom-left"
     BOTTOM = "bottom"
-    BOTTOMRIGHT = "bottom-right"
+    BOTTOM_RIGHT = "bottom-right"

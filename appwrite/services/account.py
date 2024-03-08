@@ -131,7 +131,63 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_challenge(self, factor):
+    def create_mfa_authenticator(self, type):
+        """Add Authenticator"""
+
+        
+        api_path = '/account/mfa/authenticators/{type}'
+        api_params = {}
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        api_path = api_path.replace('{type}', type)
+
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mfa_authenticator(self, type, otp):
+        """Verify Authenticator"""
+
+        
+        api_path = '/account/mfa/authenticators/{type}'
+        api_params = {}
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        if otp is None:
+            raise AppwriteException('Missing required parameter: "otp"')
+
+        api_path = api_path.replace('{type}', type)
+
+        api_params['otp'] = otp
+
+        return self.client.call('put', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def delete_mfa_authenticator(self, type, otp):
+        """Delete Authenticator"""
+
+        
+        api_path = '/account/mfa/authenticators/{type}'
+        api_params = {}
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        if otp is None:
+            raise AppwriteException('Missing required parameter: "otp"')
+
+        api_path = api_path.replace('{type}', type)
+
+        api_params['otp'] = otp
+
+        return self.client.call('delete', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_mfa_challenge(self, factor):
         """Create 2FA Challenge"""
 
         
@@ -147,7 +203,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_challenge(self, challenge_id, otp):
+    def update_mfa_challenge(self, challenge_id, otp):
         """Create MFA Challenge (confirmation)"""
 
         
@@ -167,7 +223,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_factors(self):
+    def list_mfa_factors(self):
         """List Factors"""
 
         
@@ -178,59 +234,36 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def add_authenticator(self, type):
-        """Add Authenticator"""
+    def get_mfa_recovery_codes(self):
+        """Get MFA Recovery Codes"""
 
         
-        api_path = '/account/mfa/{type}'
+        api_path = '/account/mfa/recovery-codes'
         api_params = {}
-        if type is None:
-            raise AppwriteException('Missing required parameter: "type"')
 
-        api_path = api_path.replace('{type}', type)
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
 
+    def create_mfa_recovery_codes(self):
+        """Create MFA Recovery Codes"""
+
+        
+        api_path = '/account/mfa/recovery-codes'
+        api_params = {}
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def verify_authenticator(self, type, otp):
-        """Verify Authenticator"""
+    def update_mfa_recovery_codes(self):
+        """Regenerate MFA Recovery Codes"""
 
         
-        api_path = '/account/mfa/{type}'
+        api_path = '/account/mfa/recovery-codes'
         api_params = {}
-        if type is None:
-            raise AppwriteException('Missing required parameter: "type"')
 
-        if otp is None:
-            raise AppwriteException('Missing required parameter: "otp"')
-
-        api_path = api_path.replace('{type}', type)
-
-        api_params['otp'] = otp
-
-        return self.client.call('put', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
-    def delete_authenticator(self, type, otp):
-        """Delete Authenticator"""
-
-        
-        api_path = '/account/mfa/{type}'
-        api_params = {}
-        if type is None:
-            raise AppwriteException('Missing required parameter: "type"')
-
-        if otp is None:
-            raise AppwriteException('Missing required parameter: "otp"')
-
-        api_path = api_path.replace('{type}', type)
-
-        api_params['otp'] = otp
-
-        return self.client.call('delete', api_path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
@@ -488,7 +521,7 @@ class Account(Service):
         }, api_params)
 
     def update_session(self, session_id):
-        """Update (or renew) session"""
+        """Update session"""
 
         
         api_path = '/account/sessions/{sessionId}'

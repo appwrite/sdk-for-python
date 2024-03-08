@@ -1,6 +1,7 @@
 from enum import Enum
 
 class AuthenticationFactor(Enum):
-    TOTP = "totp"
-    PHONE = "phone"
     EMAIL = "email"
+    PHONE = "phone"
+    TOTP = "totp"
+    RECOVERYCODE = "recoverycode"
