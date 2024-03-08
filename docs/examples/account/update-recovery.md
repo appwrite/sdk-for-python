@@ -1,14 +1,14 @@
 from appwrite.client import Client
-from appwrite.services.account import Account
 
 client = Client()
-
-(client
-  .set_endpoint('https://cloud.appwrite.io/v1') # Your API Endpoint
-  .set_project('5df5acd0d48c2') # Your project ID
-  .set_jwt('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ...') # Your secret JSON Web Token
-)
+client.set_endpoint('https://cloud.appwrite.io/v1') # Your API Endpoint
+client.set_project('5df5acd0d48c2') # Your project ID
+client.set_session('') # The user session to authenticate with
 
 account = Account(client)
 
-result = account.update_recovery('[USER_ID]', '[SECRET]', 'password', 'password')
+result = account.update_recovery(
+    user_id = '<USER_ID>',
+    secret = '<SECRET>',
+    password = ''
+)

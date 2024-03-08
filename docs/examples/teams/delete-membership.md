@@ -1,14 +1,13 @@
 from appwrite.client import Client
-from appwrite.services.teams import Teams
 
 client = Client()
-
-(client
-  .set_endpoint('https://cloud.appwrite.io/v1') # Your API Endpoint
-  .set_project('5df5acd0d48c2') # Your project ID
-  .set_key('919c2d18fb5d4...a2ae413da83346ad2') # Your secret API key
-)
+client.set_endpoint('https://cloud.appwrite.io/v1') # Your API Endpoint
+client.set_project('5df5acd0d48c2') # Your project ID
+client.set_session('') # The user session to authenticate with
 
 teams = Teams(client)
 
-result = teams.delete_membership('[TEAM_ID]', '[MEMBERSHIP_ID]')
+result = teams.delete_membership(
+    team_id = '<TEAM_ID>',
+    membership_id = '<MEMBERSHIP_ID>'
+)

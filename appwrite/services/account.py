@@ -17,6 +17,31 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def create(self, user_id, email, password, name = None):
+        """Create account"""
+
+        
+        api_path = '/account'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if email is None:
+            raise AppwriteException('Missing required parameter: "email"')
+
+        if password is None:
+            raise AppwriteException('Missing required parameter: "password"')
+
+
+        api_params['userId'] = user_id
+        api_params['email'] = email
+        api_params['password'] = password
+        api_params['name'] = name
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def update_email(self, email, password):
         """Update email"""
 
@@ -51,7 +76,7 @@ class Account(Service):
         }, api_params)
 
     def delete_identity(self, identity_id):
-        """Delete Identity"""
+        """Delete identity"""
 
         
         api_path = '/account/identities/{identityId}'
@@ -66,6 +91,17 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def create_jwt(self):
+        """Create JWT"""
+
+        
+        api_path = '/account/jwt'
+        api_params = {}
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def list_logs(self, queries = None):
         """List logs"""
 
@@ -76,6 +112,158 @@ class Account(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mfa(self, mfa):
+        """Update MFA"""
+
+        
+        api_path = '/account/mfa'
+        api_params = {}
+        if mfa is None:
+            raise AppwriteException('Missing required parameter: "mfa"')
+
+
+        api_params['mfa'] = mfa
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_mfa_authenticator(self, type):
+        """Add Authenticator"""
+
+        
+        api_path = '/account/mfa/authenticators/{type}'
+        api_params = {}
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        api_path = api_path.replace('{type}', type)
+
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mfa_authenticator(self, type, otp):
+        """Verify Authenticator"""
+
+        
+        api_path = '/account/mfa/authenticators/{type}'
+        api_params = {}
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        if otp is None:
+            raise AppwriteException('Missing required parameter: "otp"')
+
+        api_path = api_path.replace('{type}', type)
+
+        api_params['otp'] = otp
+
+        return self.client.call('put', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def delete_mfa_authenticator(self, type, otp):
+        """Delete Authenticator"""
+
+        
+        api_path = '/account/mfa/authenticators/{type}'
+        api_params = {}
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        if otp is None:
+            raise AppwriteException('Missing required parameter: "otp"')
+
+        api_path = api_path.replace('{type}', type)
+
+        api_params['otp'] = otp
+
+        return self.client.call('delete', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_mfa_challenge(self, factor):
+        """Create 2FA Challenge"""
+
+        
+        api_path = '/account/mfa/challenge'
+        api_params = {}
+        if factor is None:
+            raise AppwriteException('Missing required parameter: "factor"')
+
+
+        api_params['factor'] = factor
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mfa_challenge(self, challenge_id, otp):
+        """Create MFA Challenge (confirmation)"""
+
+        
+        api_path = '/account/mfa/challenge'
+        api_params = {}
+        if challenge_id is None:
+            raise AppwriteException('Missing required parameter: "challenge_id"')
+
+        if otp is None:
+            raise AppwriteException('Missing required parameter: "otp"')
+
+
+        api_params['challengeId'] = challenge_id
+        api_params['otp'] = otp
+
+        return self.client.call('put', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def list_mfa_factors(self):
+        """List Factors"""
+
+        
+        api_path = '/account/mfa/factors'
+        api_params = {}
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_mfa_recovery_codes(self):
+        """Get MFA Recovery Codes"""
+
+        
+        api_path = '/account/mfa/recovery-codes'
+        api_params = {}
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_mfa_recovery_codes(self):
+        """Create MFA Recovery Codes"""
+
+        
+        api_path = '/account/mfa/recovery-codes'
+        api_params = {}
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mfa_recovery_codes(self):
+        """Regenerate MFA Recovery Codes"""
+
+        
+        api_path = '/account/mfa/recovery-codes'
+        api_params = {}
+
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
@@ -179,7 +367,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_recovery(self, user_id, secret, password, password_again):
+    def update_recovery(self, user_id, secret, password):
         """Create password recovery (confirmation)"""
 
         
@@ -194,14 +382,10 @@ class Account(Service):
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
 
-        if password_again is None:
-            raise AppwriteException('Missing required parameter: "password_again"')
-
 
         api_params['userId'] = user_id
         api_params['secret'] = secret
         api_params['password'] = password
-        api_params['passwordAgain'] = password_again
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -229,6 +413,97 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def create_anonymous_session(self):
+        """Create anonymous session"""
+
+        
+        api_path = '/account/sessions/anonymous'
+        api_params = {}
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_email_password_session(self, email, password):
+        """Create email password session"""
+
+        
+        api_path = '/account/sessions/email'
+        api_params = {}
+        if email is None:
+            raise AppwriteException('Missing required parameter: "email"')
+
+        if password is None:
+            raise AppwriteException('Missing required parameter: "password"')
+
+
+        api_params['email'] = email
+        api_params['password'] = password
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_magic_url_session(self, user_id, secret):
+        """Update magic URL session"""
+
+        
+        api_path = '/account/sessions/magic-url'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if secret is None:
+            raise AppwriteException('Missing required parameter: "secret"')
+
+
+        api_params['userId'] = user_id
+        api_params['secret'] = secret
+
+        return self.client.call('put', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_phone_session(self, user_id, secret):
+        """Update phone session"""
+
+        
+        api_path = '/account/sessions/phone'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if secret is None:
+            raise AppwriteException('Missing required parameter: "secret"')
+
+
+        api_params['userId'] = user_id
+        api_params['secret'] = secret
+
+        return self.client.call('put', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_session(self, user_id, secret):
+        """Create session"""
+
+        
+        api_path = '/account/sessions/token'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if secret is None:
+            raise AppwriteException('Missing required parameter: "secret"')
+
+
+        api_params['userId'] = user_id
+        api_params['secret'] = secret
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def get_session(self, session_id):
         """Get session"""
 
@@ -246,7 +521,7 @@ class Account(Service):
         }, api_params)
 
     def update_session(self, session_id):
-        """Update OAuth session (refresh tokens)"""
+        """Update session"""
 
         
         api_path = '/account/sessions/{sessionId}'
@@ -285,6 +560,88 @@ class Account(Service):
         api_params = {}
 
         return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_email_token(self, user_id, email, phrase = None):
+        """Create email token (OTP)"""
+
+        
+        api_path = '/account/tokens/email'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if email is None:
+            raise AppwriteException('Missing required parameter: "email"')
+
+
+        api_params['userId'] = user_id
+        api_params['email'] = email
+        api_params['phrase'] = phrase
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_magic_url_token(self, user_id, email, url = None, phrase = None):
+        """Create magic URL token"""
+
+        
+        api_path = '/account/tokens/magic-url'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if email is None:
+            raise AppwriteException('Missing required parameter: "email"')
+
+
+        api_params['userId'] = user_id
+        api_params['email'] = email
+        api_params['url'] = url
+        api_params['phrase'] = phrase
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_o_auth2_token(self, provider, success = None, failure = None, scopes = None):
+        """Create OAuth2 token"""
+
+        
+        api_path = '/account/tokens/oauth2/{provider}'
+        api_params = {}
+        if provider is None:
+            raise AppwriteException('Missing required parameter: "provider"')
+
+        api_path = api_path.replace('{provider}', provider)
+
+        api_params['success'] = success
+        api_params['failure'] = failure
+        api_params['scopes'] = scopes
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params, response_type='location')
+
+    def create_phone_token(self, user_id, phone):
+        """Create phone token"""
+
+        
+        api_path = '/account/tokens/phone'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if phone is None:
+            raise AppwriteException('Missing required parameter: "phone"')
+
+
+        api_params['userId'] = user_id
+        api_params['phone'] = phone
+
+        return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 

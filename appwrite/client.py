@@ -1,22 +1,24 @@
 import io
-import requests
+import json
 import os
+import requests
 from .input_file import InputFile
 from .exception import AppwriteException
+from .encoders.value_class_encoder import ValueClassEncoder
 
 class Client:
     def __init__(self):
         self._chunk_size = 5*1024*1024
         self._self_signed = False
-        self._endpoint = 'https://HOSTNAME/v1'
+        self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : 'AppwritePythonSDK/4.1.0 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
+            'user-agent' : 'AppwritePythonSDK/5.0.0 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '4.1.0',
-            'X-Appwrite-Response-Format' : '1.4.0',
+            'x-sdk-version': '5.0.0',
+            'X-Appwrite-Response-Format' : '1.5.0',
         }
 
     def set_self_signed(self, status=True):
@@ -53,7 +55,19 @@ class Client:
         self._global_headers['x-appwrite-locale'] = value
         return self
 
-    def call(self, method, path='', headers=None, params=None):
+    def set_session(self, value):
+        """The user session to authenticate with"""
+
+        self._global_headers['x-appwrite-session'] = value
+        return self
+
+    def set_forwarded_user_agent(self, value):
+        """The user agent string of the client that made the request"""
+
+        self._global_headers['x-forwarded-user-agent'] = value
+        return self
+
+    def call(self, method, path='', headers=None, params=None, response_type='json'):
         if headers is None:
             headers = {}
 
@@ -63,7 +77,6 @@ class Client:
         params = {k: v for k, v in params.items() if v is not None}  # Remove None values from params dictionary
 
         data = {}
-        json = {}
         files = {}
         stringify = False
         
@@ -74,8 +87,7 @@ class Client:
             params = {}
 
         if headers['content-type'].startswith('application/json'):
-            json = data
-            data = {}
+            data = json.dumps(data, cls=ValueClassEncoder)
 
         if headers['content-type'].startswith('multipart/form-data'):
             del headers['content-type']
@@ -84,22 +96,27 @@ class Client:
                 if isinstance(data[key], InputFile):
                     files[key] = (data[key].filename, data[key].data)
                     del data[key]
+            data = self.flatten(data, stringify=stringify)
+
         response = None
         try:
             response = requests.request(  # call method dynamically https://stackoverflow.com/a/4246075/2299554
                 method=method,
                 url=self._endpoint + path,
                 params=self.flatten(params, stringify=stringify),
-                data=self.flatten(data),
-                json=json,
+                data=data,
                 files=files,
                 headers=headers,
                 verify=(not self._self_signed),
+                allow_redirects=False if response_type == 'location' else True
             )
 
             response.raise_for_status()
 
             content_type = response.headers['Content-Type']
+
+            if response_type == 'location':
+                return response.headers.get('Location')
 
             if content_type.startswith('application/json'):
                 return response.json()
