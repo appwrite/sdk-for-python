@@ -417,7 +417,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_msg91_provider(self, provider_id, name, xfrom = None, sender_id = None, auth_key = None, enabled = None):
+    def create_msg91_provider(self, provider_id, name, template_id = None, sender_id = None, auth_key = None, enabled = None):
         """Create Msg91 provider"""
 
         
@@ -432,7 +432,7 @@ class Messaging(Service):
 
         api_params['providerId'] = provider_id
         api_params['name'] = name
-        api_params['from'] = xfrom
+        api_params['templateId'] = template_id
         api_params['senderId'] = sender_id
         api_params['authKey'] = auth_key
         api_params['enabled'] = enabled
@@ -441,7 +441,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_msg91_provider(self, provider_id, name = None, enabled = None, sender_id = None, auth_key = None, xfrom = None):
+    def update_msg91_provider(self, provider_id, name = None, enabled = None, template_id = None, sender_id = None, auth_key = None):
         """Update Msg91 provider"""
 
         
@@ -454,9 +454,9 @@ class Messaging(Service):
 
         api_params['name'] = name
         api_params['enabled'] = enabled
+        api_params['templateId'] = template_id
         api_params['senderId'] = sender_id
         api_params['authKey'] = auth_key
-        api_params['from'] = xfrom
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
