@@ -53,7 +53,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_email(self, message_id, topics = None, users = None, targets = None, subject = None, content = None, draft = None, html = None, cc = None, bcc = None, scheduled_at = None):
+    def update_email(self, message_id, topics = None, users = None, targets = None, subject = None, content = None, draft = None, html = None, cc = None, bcc = None, scheduled_at = None, attachments = None):
         """Update email"""
 
         
@@ -74,6 +74,7 @@ class Messaging(Service):
         api_params['cc'] = cc
         api_params['bcc'] = bcc
         api_params['scheduledAt'] = scheduled_at
+        api_params['attachments'] = attachments
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',

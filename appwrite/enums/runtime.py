@@ -20,6 +20,7 @@ class Runtime(Enum):
     PYTHON_3_10 = "python-3.10"
     PYTHON_3_11 = "python-3.11"
     PYTHON_3_12 = "python-3.12"
+    PYTHON_ML_3_11 = "python-ml-3.11"
     DENO_1_40 = "deno-1.40"
     DART_2_15 = "dart-2.15"
     DART_2_16 = "dart-2.16"

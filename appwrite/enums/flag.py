@@ -142,6 +142,7 @@ class Flag(Enum):
     PALAU = "pw"
     PAPUA_NEW_GUINEA = "pg"
     POLAND = "pl"
+    FRENCH_POLYNESIA = "pf"
     NORTH_KOREA = "kp"
     PORTUGAL = "pt"
     PARAGUAY = "py"
