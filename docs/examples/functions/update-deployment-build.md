@@ -5,13 +5,9 @@ client.set_endpoint('https://cloud.appwrite.io/v1') # Your API Endpoint
 client.set_project('&lt;YOUR_PROJECT_ID&gt;') # Your project ID
 client.set_key('&lt;YOUR_API_KEY&gt;') # Your secret API key
 
-databases = Databases(client)
+functions = Functions(client)
 
-result = databases.create_datetime_attribute(
-    database_id = '<DATABASE_ID>',
-    collection_id = '<COLLECTION_ID>',
-    key = '',
-    required = False,
-    default = '', # optional
-    array = False # optional
+result = functions.update_deployment_build(
+    function_id = '<FUNCTION_ID>',
+    deployment_id = '<DEPLOYMENT_ID>'
 )

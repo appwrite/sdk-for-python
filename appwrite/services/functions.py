@@ -20,7 +20,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create(self, function_id, name, runtime, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None, template_repository = None, template_owner = None, template_root_directory = None, template_branch = None):
+    def create(self, function_id, name, runtime, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, scopes = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None, template_repository = None, template_owner = None, template_root_directory = None, template_branch = None):
         """Create function"""
 
         
@@ -47,6 +47,7 @@ class Functions(Service):
         api_params['logging'] = logging
         api_params['entrypoint'] = entrypoint
         api_params['commands'] = commands
+        api_params['scopes'] = scopes
         api_params['installationId'] = installation_id
         api_params['providerRepositoryId'] = provider_repository_id
         api_params['providerBranch'] = provider_branch
@@ -88,7 +89,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update(self, function_id, name, runtime = None, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None):
+    def update(self, function_id, name, runtime = None, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, scopes = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None):
         """Update function"""
 
         
@@ -112,6 +113,7 @@ class Functions(Service):
         api_params['logging'] = logging
         api_params['entrypoint'] = entrypoint
         api_params['commands'] = commands
+        api_params['scopes'] = scopes
         api_params['installationId'] = installation_id
         api_params['providerRepositoryId'] = provider_repository_id
         api_params['providerBranch'] = provider_branch
@@ -247,11 +249,11 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_build(self, function_id, deployment_id, build_id):
-        """Create build"""
+    def create_build(self, function_id, deployment_id, build_id = None):
+        """Rebuild deployment"""
 
         
-        api_path = '/functions/{functionId}/deployments/{deploymentId}/builds/{buildId}'
+        api_path = '/functions/{functionId}/deployments/{deploymentId}/build'
         api_params = {}
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
@@ -259,15 +261,32 @@ class Functions(Service):
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
 
-        if build_id is None:
-            raise AppwriteException('Missing required parameter: "build_id"')
+        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{deploymentId}', deployment_id)
+
+        api_params['buildId'] = build_id
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_deployment_build(self, function_id, deployment_id):
+        """Cancel deployment"""
+
+        
+        api_path = '/functions/{functionId}/deployments/{deploymentId}/build'
+        api_params = {}
+        if function_id is None:
+            raise AppwriteException('Missing required parameter: "function_id"')
+
+        if deployment_id is None:
+            raise AppwriteException('Missing required parameter: "deployment_id"')
 
         api_path = api_path.replace('{functionId}', function_id)
         api_path = api_path.replace('{deploymentId}', deployment_id)
-        api_path = api_path.replace('{buildId}', build_id)
 
 
-        return self.client.call('post', api_path, {
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
@@ -309,7 +328,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_execution(self, function_id, body = None, xasync = None, path = None, method = None, headers = None):
+    def create_execution(self, function_id, body = None, xasync = None, path = None, method = None, headers = None, scheduled_at = None):
         """Create execution"""
 
         
@@ -325,6 +344,7 @@ class Functions(Service):
         api_params['path'] = path
         api_params['method'] = method
         api_params['headers'] = headers
+        api_params['scheduledAt'] = scheduled_at
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -347,6 +367,26 @@ class Functions(Service):
 
 
         return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def delete_execution(self, function_id, execution_id):
+        """Delete execution"""
+
+        
+        api_path = '/functions/{functionId}/executions/{executionId}'
+        api_params = {}
+        if function_id is None:
+            raise AppwriteException('Missing required parameter: "function_id"')
+
+        if execution_id is None:
+            raise AppwriteException('Missing required parameter: "execution_id"')
+
+        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{executionId}', execution_id)
+
+
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 

@@ -113,6 +113,11 @@ class Client:
 
             response.raise_for_status()
 
+            warnings = response.headers.get('x-appwrite-warning')
+            if warnings:
+                for warning in warnings.split(';'):
+                    print(f'Warning: {warning}')
+
             content_type = response.headers['Content-Type']
 
             if response_type == 'location':

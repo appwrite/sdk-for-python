@@ -95,7 +95,7 @@ class Account(Service):
         """Create JWT"""
 
         
-        api_path = '/account/jwt'
+        api_path = '/account/jwts'
         api_params = {}
 
         return self.client.call('post', api_path, {
