@@ -13,12 +13,12 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : 'AppwritePythonSDK/5.0.3 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
+            'user-agent' : 'AppwritePythonSDK/6.0.0-rc.1 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '5.0.3',
-            'X-Appwrite-Response-Format' : '1.5.0',
+            'x-sdk-version': '6.0.0-rc.1',
+            'X-Appwrite-Response-Format' : '1.6.0',
         }
 
     def set_self_signed(self, status=True):

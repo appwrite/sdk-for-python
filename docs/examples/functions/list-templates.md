@@ -3,11 +3,12 @@ from appwrite.client import Client
 client = Client()
 client.set_endpoint('https://cloud.appwrite.io/v1') # Your API Endpoint
 client.set_project('&lt;YOUR_PROJECT_ID&gt;') # Your project ID
-client.set_key('&lt;YOUR_API_KEY&gt;') # Your secret API key
 
 functions = Functions(client)
 
-result = functions.download_deployment(
-    function_id = '<FUNCTION_ID>',
-    deployment_id = '<DEPLOYMENT_ID>'
+result = functions.list_templates(
+    runtimes = [], # optional
+    use_cases = [], # optional
+    limit = 1, # optional
+    offset = 0 # optional
 )
