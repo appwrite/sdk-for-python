@@ -20,7 +20,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create(self, function_id, name, runtime, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, scopes = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None, template_repository = None, template_owner = None, template_root_directory = None, template_version = None):
+    def create(self, function_id, name, runtime, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, scopes = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None, template_repository = None, template_owner = None, template_root_directory = None, template_version = None, specification = None):
         """Create function"""
 
         
@@ -57,6 +57,7 @@ class Functions(Service):
         api_params['templateOwner'] = template_owner
         api_params['templateRootDirectory'] = template_root_directory
         api_params['templateVersion'] = template_version
+        api_params['specification'] = specification
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -67,6 +68,17 @@ class Functions(Service):
 
         
         api_path = '/functions/runtimes'
+        api_params = {}
+
+        return self.client.call('get', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def list_specifications(self):
+        """List available function runtime specifications"""
+
+        
+        api_path = '/functions/specifications'
         api_params = {}
 
         return self.client.call('get', api_path, {
@@ -121,7 +133,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update(self, function_id, name, runtime = None, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, scopes = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None):
+    def update(self, function_id, name, runtime = None, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, scopes = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None, specification = None):
         """Update function"""
 
         
@@ -151,6 +163,7 @@ class Functions(Service):
         api_params['providerBranch'] = provider_branch
         api_params['providerSilentMode'] = provider_silent_mode
         api_params['providerRootDirectory'] = provider_root_directory
+        api_params['specification'] = specification
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -360,7 +373,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_execution(self, function_id, body = None, xasync = None, path = None, method = None, headers = None, scheduled_at = None, on_progress = None):
+    def create_execution(self, function_id, body = None, xasync = None, path = None, method = None, headers = None, scheduled_at = None):
         """Create execution"""
 
         
@@ -372,18 +385,15 @@ class Functions(Service):
         api_path = api_path.replace('{functionId}', function_id)
 
         api_params['body'] = body
-        api_params['async'] = str(xasync).lower() if type(xasync) is bool else xasync
+        api_params['async'] = xasync
         api_params['path'] = path
         api_params['method'] = method
-        api_params['headers'] = str(headers).lower() if type(headers) is bool else headers
+        api_params['headers'] = headers
         api_params['scheduledAt'] = scheduled_at
 
-
-        upload_id = ''
-
-        return self.client.chunked_upload(api_path, {
-            'content-type': 'multipart/form-data',
-        }, api_params, param_name, on_progress, upload_id)
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
 
     def get_execution(self, function_id, execution_id):
         """Get execution"""
