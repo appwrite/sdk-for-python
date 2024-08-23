@@ -1,3 +1,19 @@
+"""
+This module defines a custom JSON encoder that handles various enum classes.
+
+It provides a convenient way to serialize enum values to their corresponding string representations
+when encoding objects to JSON.
+
+Usage:
+    import json
+    from your_module import ValueClassEncoder
+
+    # Create an instance of the encoder
+    encoder = ValueClassEncoder()
+
+    # Serialize an object containing enum values
+    json_data = json.dumps(your_object, cls=ValueClassEncoder)
+"""
 import json
 from ..enums.authenticator_type import AuthenticatorType
 from ..enums.authentication_factor import AuthenticationFactor
@@ -18,60 +34,41 @@ from ..enums.image_format import ImageFormat
 from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
 
+
 class ValueClassEncoder(json.JSONEncoder):
+    """Custom JSON encoder for handling enum classes."""
+    
+    VALUE_CLASSES = (
+        AuthenticatorType,
+        AuthenticationFactor,
+        OAuthProvider,
+        Browser,
+        CreditCard,
+        Flag,
+        RelationshipType,
+        RelationMutate,
+        IndexType,
+        Runtime,
+        ExecutionMethod,
+        Name,
+        SmtpEncryption,
+        Compression,
+        ImageGravity,
+        ImageFormat,
+        PasswordHash,
+        MessagingProviderType,
+    )
+
     def default(self, o):
-        if isinstance(o, AuthenticatorType):
-            return o.value
+        """Encodes the given object to a JSON representation.
 
-        if isinstance(o, AuthenticationFactor):
-            return o.value
+        Args:
+            o: The object to be encoded.
 
-        if isinstance(o, OAuthProvider):
-            return o.value
-
-        if isinstance(o, Browser):
-            return o.value
-
-        if isinstance(o, CreditCard):
-            return o.value
-
-        if isinstance(o, Flag):
-            return o.value
-
-        if isinstance(o, RelationshipType):
-            return o.value
-
-        if isinstance(o, RelationMutate):
-            return o.value
-
-        if isinstance(o, IndexType):
-            return o.value
-
-        if isinstance(o, Runtime):
-            return o.value
-
-        if isinstance(o, ExecutionMethod):
-            return o.value
-
-        if isinstance(o, Name):
-            return o.value
-
-        if isinstance(o, SmtpEncryption):
-            return o.value
-
-        if isinstance(o, Compression):
-            return o.value
-
-        if isinstance(o, ImageGravity):
-            return o.value
-
-        if isinstance(o, ImageFormat):
-            return o.value
-
-        if isinstance(o, PasswordHash):
-            return o.value
-
-        if isinstance(o, MessagingProviderType):
-            return o.value
-
+        Returns:
+            The JSON representation of the object.
+        """
+        for enum_class in self.VALUE_CLASSES:
+            if isinstance(o, enum_class):
+                return o.value
         return super().default(o)
