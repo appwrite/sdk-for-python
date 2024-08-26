@@ -19,9 +19,9 @@ setuptools.setup(
   long_description = long_description,
   long_description_content_type = 'text/markdown',
   author = 'Appwrite Team',
-  author_email = 'team@localhost.test',
+  author_email = 'team@appwrite.io',
   maintainer = 'Appwrite Team',
-  maintainer_email = 'team@localhost.test',
+  maintainer_email = 'team@appwrite.io',
   url = 'https://appwrite.io/support',
   download_url='https://github.com/appwrite/sdk-for-python/archive/6.0.0.tar.gz',
   install_requires=[
