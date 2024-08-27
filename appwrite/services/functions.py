@@ -85,22 +85,6 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_templates(self, runtimes = None, use_cases = None, limit = None, offset = None):
-        """List function templates"""
-
-        
-        api_path = '/functions/templates'
-        api_params = {}
-
-        api_params['runtimes'] = runtimes
-        api_params['useCases'] = use_cases
-        api_params['limit'] = limit
-        api_params['offset'] = offset
-
-        return self.client.call('get', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
     def get_template(self, template_id):
         """Get function template"""
 
