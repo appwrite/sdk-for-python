@@ -95,7 +95,7 @@ class Account(Service):
         """Create JWT"""
 
         
-        api_path = '/account/jwt'
+        api_path = '/account/jwts'
         api_params = {}
 
         return self.client.call('post', api_path, {
@@ -132,7 +132,7 @@ class Account(Service):
         }, api_params)
 
     def create_mfa_authenticator(self, type):
-        """Add Authenticator"""
+        """Create Authenticator"""
 
         
         api_path = '/account/mfa/authenticators/{type}'
@@ -167,7 +167,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_mfa_authenticator(self, type, otp):
+    def delete_mfa_authenticator(self, type):
         """Delete Authenticator"""
 
         
@@ -176,19 +176,15 @@ class Account(Service):
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
 
-        if otp is None:
-            raise AppwriteException('Missing required parameter: "otp"')
-
         api_path = api_path.replace('{type}', type)
 
-        api_params['otp'] = otp
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
     def create_mfa_challenge(self, factor):
-        """Create 2FA Challenge"""
+        """Create MFA Challenge"""
 
         
         api_path = '/account/mfa/challenge'
@@ -693,7 +689,7 @@ class Account(Service):
         }, api_params)
 
     def update_phone_verification(self, user_id, secret):
-        """Create phone verification (confirmation)"""
+        """Update phone verification (confirmation)"""
 
         
         api_path = '/account/verification/phone'

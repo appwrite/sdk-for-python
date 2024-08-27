@@ -330,6 +330,24 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def create_jwt(self, user_id, session_id = None, duration = None):
+        """Create user JWT"""
+
+        
+        api_path = '/users/{userId}/jwts'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        api_path = api_path.replace('{userId}', user_id)
+
+        api_params['sessionId'] = session_id
+        api_params['duration'] = duration
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def update_labels(self, user_id, labels):
         """Update user labels"""
 
