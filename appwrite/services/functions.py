@@ -85,22 +85,6 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_template(self, template_id):
-        """Get function template"""
-
-        
-        api_path = '/functions/templates/{templateId}'
-        api_params = {}
-        if template_id is None:
-            raise AppwriteException('Missing required parameter: "template_id"')
-
-        api_path = api_path.replace('{templateId}', template_id)
-
-
-        return self.client.call('get', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
     def get(self, function_id):
         """Get function"""
 
