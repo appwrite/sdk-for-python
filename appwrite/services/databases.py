@@ -257,7 +257,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_boolean_attribute(self, database_id, collection_id, key, required, default):
+    def update_boolean_attribute(self, database_id, collection_id, key, required, default, new_key = None):
         """Update boolean attribute"""
 
         
@@ -281,6 +281,7 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -316,7 +317,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_datetime_attribute(self, database_id, collection_id, key, required, default):
+    def update_datetime_attribute(self, database_id, collection_id, key, required, default, new_key = None):
         """Update dateTime attribute"""
 
         
@@ -340,6 +341,7 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -375,7 +377,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_email_attribute(self, database_id, collection_id, key, required, default):
+    def update_email_attribute(self, database_id, collection_id, key, required, default, new_key = None):
         """Update email attribute"""
 
         
@@ -399,6 +401,7 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -438,7 +441,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_enum_attribute(self, database_id, collection_id, key, elements, required, default):
+    def update_enum_attribute(self, database_id, collection_id, key, elements, required, default, new_key = None):
         """Update enum attribute"""
 
         
@@ -466,6 +469,7 @@ class Databases(Service):
         api_params['elements'] = elements
         api_params['required'] = required
         api_params['default'] = default
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -503,7 +507,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_float_attribute(self, database_id, collection_id, key, required, min, max, default):
+    def update_float_attribute(self, database_id, collection_id, key, required, min, max, default, new_key = None):
         """Update float attribute"""
 
         
@@ -535,6 +539,7 @@ class Databases(Service):
         api_params['min'] = min
         api_params['max'] = max
         api_params['default'] = default
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -572,7 +577,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_integer_attribute(self, database_id, collection_id, key, required, min, max, default):
+    def update_integer_attribute(self, database_id, collection_id, key, required, min, max, default, new_key = None):
         """Update integer attribute"""
 
         
@@ -604,6 +609,7 @@ class Databases(Service):
         api_params['min'] = min
         api_params['max'] = max
         api_params['default'] = default
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -639,7 +645,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_ip_attribute(self, database_id, collection_id, key, required, default):
+    def update_ip_attribute(self, database_id, collection_id, key, required, default, new_key = None):
         """Update IP address attribute"""
 
         
@@ -663,6 +669,7 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -735,7 +742,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_string_attribute(self, database_id, collection_id, key, required, default):
+    def update_string_attribute(self, database_id, collection_id, key, required, default, size = None, new_key = None):
         """Update string attribute"""
 
         
@@ -759,6 +766,8 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
+        api_params['size'] = size
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -794,7 +803,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_url_attribute(self, database_id, collection_id, key, required, default):
+    def update_url_attribute(self, database_id, collection_id, key, required, default, new_key = None):
         """Update URL attribute"""
 
         
@@ -818,6 +827,7 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -871,7 +881,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_relationship_attribute(self, database_id, collection_id, key, on_delete = None):
+    def update_relationship_attribute(self, database_id, collection_id, key, on_delete = None, new_key = None):
         """Update relationship attribute"""
 
         
@@ -891,6 +901,7 @@ class Databases(Service):
         api_path = api_path.replace('{key}', key)
 
         api_params['onDelete'] = on_delete
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
