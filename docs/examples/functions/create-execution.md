@@ -9,7 +9,7 @@ functions = Functions(client)
 
 result = functions.create_execution(
     function_id = '<FUNCTION_ID>',
-    body = '<BODY>', # optional
+    body = Payload.from_json({"x": "y"}), # optional
     async = False, # optional
     path = '<PATH>', # optional
     method = ExecutionMethod.GET, # optional

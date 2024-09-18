@@ -7,9 +7,7 @@ class Account(Service):
         super(Account, self).__init__(client)
 
     def get(self):
-        """Get account"""
-
-        
+        """Get account"""        
         api_path = '/account'
         api_params = {}
 
@@ -18,9 +16,7 @@ class Account(Service):
         }, api_params)
 
     def create(self, user_id, email, password, name = None):
-        """Create account"""
-
-        
+        """Create account"""        
         api_path = '/account'
         api_params = {}
         if user_id is None:
@@ -43,9 +39,7 @@ class Account(Service):
         }, api_params)
 
     def update_email(self, email, password):
-        """Update email"""
-
-        
+        """Update email"""        
         api_path = '/account/email'
         api_params = {}
         if email is None:
@@ -63,9 +57,7 @@ class Account(Service):
         }, api_params)
 
     def list_identities(self, queries = None):
-        """List Identities"""
-
-        
+        """List Identities"""        
         api_path = '/account/identities'
         api_params = {}
 
@@ -76,9 +68,7 @@ class Account(Service):
         }, api_params)
 
     def delete_identity(self, identity_id):
-        """Delete identity"""
-
-        
+        """Delete identity"""        
         api_path = '/account/identities/{identityId}'
         api_params = {}
         if identity_id is None:
@@ -92,9 +82,7 @@ class Account(Service):
         }, api_params)
 
     def create_jwt(self):
-        """Create JWT"""
-
-        
+        """Create JWT"""        
         api_path = '/account/jwts'
         api_params = {}
 
@@ -103,9 +91,7 @@ class Account(Service):
         }, api_params)
 
     def list_logs(self, queries = None):
-        """List logs"""
-
-        
+        """List logs"""        
         api_path = '/account/logs'
         api_params = {}
 
@@ -116,9 +102,7 @@ class Account(Service):
         }, api_params)
 
     def update_mfa(self, mfa):
-        """Update MFA"""
-
-        
+        """Update MFA"""        
         api_path = '/account/mfa'
         api_params = {}
         if mfa is None:
@@ -132,9 +116,7 @@ class Account(Service):
         }, api_params)
 
     def create_mfa_authenticator(self, type):
-        """Create Authenticator"""
-
-        
+        """Create Authenticator"""        
         api_path = '/account/mfa/authenticators/{type}'
         api_params = {}
         if type is None:
@@ -148,9 +130,7 @@ class Account(Service):
         }, api_params)
 
     def update_mfa_authenticator(self, type, otp):
-        """Verify Authenticator"""
-
-        
+        """Verify Authenticator"""        
         api_path = '/account/mfa/authenticators/{type}'
         api_params = {}
         if type is None:
@@ -168,9 +148,7 @@ class Account(Service):
         }, api_params)
 
     def delete_mfa_authenticator(self, type):
-        """Delete Authenticator"""
-
-        
+        """Delete Authenticator"""        
         api_path = '/account/mfa/authenticators/{type}'
         api_params = {}
         if type is None:
@@ -184,9 +162,7 @@ class Account(Service):
         }, api_params)
 
     def create_mfa_challenge(self, factor):
-        """Create MFA Challenge"""
-
-        
+        """Create MFA Challenge"""        
         api_path = '/account/mfa/challenge'
         api_params = {}
         if factor is None:
@@ -200,9 +176,7 @@ class Account(Service):
         }, api_params)
 
     def update_mfa_challenge(self, challenge_id, otp):
-        """Create MFA Challenge (confirmation)"""
-
-        
+        """Create MFA Challenge (confirmation)"""        
         api_path = '/account/mfa/challenge'
         api_params = {}
         if challenge_id is None:
@@ -220,9 +194,7 @@ class Account(Service):
         }, api_params)
 
     def list_mfa_factors(self):
-        """List Factors"""
-
-        
+        """List Factors"""        
         api_path = '/account/mfa/factors'
         api_params = {}
 
@@ -231,9 +203,7 @@ class Account(Service):
         }, api_params)
 
     def get_mfa_recovery_codes(self):
-        """Get MFA Recovery Codes"""
-
-        
+        """Get MFA Recovery Codes"""        
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 
@@ -242,9 +212,7 @@ class Account(Service):
         }, api_params)
 
     def create_mfa_recovery_codes(self):
-        """Create MFA Recovery Codes"""
-
-        
+        """Create MFA Recovery Codes"""        
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 
@@ -253,9 +221,7 @@ class Account(Service):
         }, api_params)
 
     def update_mfa_recovery_codes(self):
-        """Regenerate MFA Recovery Codes"""
-
-        
+        """Regenerate MFA Recovery Codes"""        
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 
@@ -264,9 +230,7 @@ class Account(Service):
         }, api_params)
 
     def update_name(self, name):
-        """Update name"""
-
-        
+        """Update name"""        
         api_path = '/account/name'
         api_params = {}
         if name is None:
@@ -280,9 +244,7 @@ class Account(Service):
         }, api_params)
 
     def update_password(self, password, old_password = None):
-        """Update password"""
-
-        
+        """Update password"""        
         api_path = '/account/password'
         api_params = {}
         if password is None:
@@ -297,9 +259,7 @@ class Account(Service):
         }, api_params)
 
     def update_phone(self, phone, password):
-        """Update phone"""
-
-        
+        """Update phone"""        
         api_path = '/account/phone'
         api_params = {}
         if phone is None:
@@ -317,9 +277,7 @@ class Account(Service):
         }, api_params)
 
     def get_prefs(self):
-        """Get account preferences"""
-
-        
+        """Get account preferences"""        
         api_path = '/account/prefs'
         api_params = {}
 
@@ -328,9 +286,7 @@ class Account(Service):
         }, api_params)
 
     def update_prefs(self, prefs):
-        """Update preferences"""
-
-        
+        """Update preferences"""        
         api_path = '/account/prefs'
         api_params = {}
         if prefs is None:
@@ -344,9 +300,7 @@ class Account(Service):
         }, api_params)
 
     def create_recovery(self, email, url):
-        """Create password recovery"""
-
-        
+        """Create password recovery"""        
         api_path = '/account/recovery'
         api_params = {}
         if email is None:
@@ -364,9 +318,7 @@ class Account(Service):
         }, api_params)
 
     def update_recovery(self, user_id, secret, password):
-        """Create password recovery (confirmation)"""
-
-        
+        """Create password recovery (confirmation)"""        
         api_path = '/account/recovery'
         api_params = {}
         if user_id is None:
@@ -388,9 +340,7 @@ class Account(Service):
         }, api_params)
 
     def list_sessions(self):
-        """List sessions"""
-
-        
+        """List sessions"""        
         api_path = '/account/sessions'
         api_params = {}
 
@@ -399,9 +349,7 @@ class Account(Service):
         }, api_params)
 
     def delete_sessions(self):
-        """Delete sessions"""
-
-        
+        """Delete sessions"""        
         api_path = '/account/sessions'
         api_params = {}
 
@@ -410,9 +358,7 @@ class Account(Service):
         }, api_params)
 
     def create_anonymous_session(self):
-        """Create anonymous session"""
-
-        
+        """Create anonymous session"""        
         api_path = '/account/sessions/anonymous'
         api_params = {}
 
@@ -421,9 +367,7 @@ class Account(Service):
         }, api_params)
 
     def create_email_password_session(self, email, password):
-        """Create email password session"""
-
-        
+        """Create email password session"""        
         api_path = '/account/sessions/email'
         api_params = {}
         if email is None:
@@ -441,9 +385,7 @@ class Account(Service):
         }, api_params)
 
     def update_magic_url_session(self, user_id, secret):
-        """Update magic URL session"""
-
-        
+        """Update magic URL session"""        
         api_path = '/account/sessions/magic-url'
         api_params = {}
         if user_id is None:
@@ -461,9 +403,7 @@ class Account(Service):
         }, api_params)
 
     def update_phone_session(self, user_id, secret):
-        """Update phone session"""
-
-        
+        """Update phone session"""        
         api_path = '/account/sessions/phone'
         api_params = {}
         if user_id is None:
@@ -481,9 +421,7 @@ class Account(Service):
         }, api_params)
 
     def create_session(self, user_id, secret):
-        """Create session"""
-
-        
+        """Create session"""        
         api_path = '/account/sessions/token'
         api_params = {}
         if user_id is None:
@@ -501,9 +439,7 @@ class Account(Service):
         }, api_params)
 
     def get_session(self, session_id):
-        """Get session"""
-
-        
+        """Get session"""        
         api_path = '/account/sessions/{sessionId}'
         api_params = {}
         if session_id is None:
@@ -517,9 +453,7 @@ class Account(Service):
         }, api_params)
 
     def update_session(self, session_id):
-        """Update session"""
-
-        
+        """Update session"""        
         api_path = '/account/sessions/{sessionId}'
         api_params = {}
         if session_id is None:
@@ -533,9 +467,7 @@ class Account(Service):
         }, api_params)
 
     def delete_session(self, session_id):
-        """Delete session"""
-
-        
+        """Delete session"""        
         api_path = '/account/sessions/{sessionId}'
         api_params = {}
         if session_id is None:
@@ -549,9 +481,7 @@ class Account(Service):
         }, api_params)
 
     def update_status(self):
-        """Update status"""
-
-        
+        """Update status"""        
         api_path = '/account/status'
         api_params = {}
 
@@ -560,9 +490,7 @@ class Account(Service):
         }, api_params)
 
     def create_email_token(self, user_id, email, phrase = None):
-        """Create email token (OTP)"""
-
-        
+        """Create email token (OTP)"""        
         api_path = '/account/tokens/email'
         api_params = {}
         if user_id is None:
@@ -581,9 +509,7 @@ class Account(Service):
         }, api_params)
 
     def create_magic_url_token(self, user_id, email, url = None, phrase = None):
-        """Create magic URL token"""
-
-        
+        """Create magic URL token"""        
         api_path = '/account/tokens/magic-url'
         api_params = {}
         if user_id is None:
@@ -603,9 +529,7 @@ class Account(Service):
         }, api_params)
 
     def create_o_auth2_token(self, provider, success = None, failure = None, scopes = None):
-        """Create OAuth2 token"""
-
-        
+        """Create OAuth2 token"""        
         api_path = '/account/tokens/oauth2/{provider}'
         api_params = {}
         if provider is None:
@@ -622,9 +546,7 @@ class Account(Service):
         }, api_params, response_type='location')
 
     def create_phone_token(self, user_id, phone):
-        """Create phone token"""
-
-        
+        """Create phone token"""        
         api_path = '/account/tokens/phone'
         api_params = {}
         if user_id is None:
@@ -642,9 +564,7 @@ class Account(Service):
         }, api_params)
 
     def create_verification(self, url):
-        """Create email verification"""
-
-        
+        """Create email verification"""        
         api_path = '/account/verification'
         api_params = {}
         if url is None:
@@ -658,9 +578,7 @@ class Account(Service):
         }, api_params)
 
     def update_verification(self, user_id, secret):
-        """Create email verification (confirmation)"""
-
-        
+        """Create email verification (confirmation)"""        
         api_path = '/account/verification'
         api_params = {}
         if user_id is None:
@@ -678,9 +596,7 @@ class Account(Service):
         }, api_params)
 
     def create_phone_verification(self):
-        """Create phone verification"""
-
-        
+        """Create phone verification"""        
         api_path = '/account/verification/phone'
         api_params = {}
 
@@ -689,9 +605,7 @@ class Account(Service):
         }, api_params)
 
     def update_phone_verification(self, user_id, secret):
-        """Update phone verification (confirmation)"""
-
-        
+        """Update phone verification (confirmation)"""        
         api_path = '/account/verification/phone'
         api_params = {}
         if user_id is None:
@@ -707,3 +621,4 @@ class Account(Service):
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
+

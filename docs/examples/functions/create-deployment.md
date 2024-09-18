@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.input_file import InputFile
+from appwrite.payload import Payload
 
 client = Client()
 client.set_endpoint('https://cloud.appwrite.io/v1') # Your API Endpoint
@@ -10,7 +10,7 @@ functions = Functions(client)
 
 result = functions.create_deployment(
     function_id = '<FUNCTION_ID>',
-    code = InputFile.from_path('file.png'),
+    code = Payload.from_file('/path/to/file.png'),
     activate = False,
     entrypoint = '<ENTRYPOINT>', # optional
     commands = '<COMMANDS>' # optional
