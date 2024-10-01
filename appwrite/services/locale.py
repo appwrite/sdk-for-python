@@ -16,7 +16,7 @@ class Locale(Service):
         }, api_params)
 
     def list_codes(self):
-        """List Locale Codes"""        
+        """List locale codes"""        
         api_path = '/locale/codes'
         api_params = {}
 

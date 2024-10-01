@@ -180,7 +180,7 @@ class Storage(Service):
         }, api_params)
 
     def delete_file(self, bucket_id, file_id):
-        """Delete File"""        
+        """Delete file"""        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         api_params = {}
         if bucket_id is None:

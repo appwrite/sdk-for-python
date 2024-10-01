@@ -57,7 +57,7 @@ class Account(Service):
         }, api_params)
 
     def list_identities(self, queries = None):
-        """List Identities"""        
+        """List identities"""        
         api_path = '/account/identities'
         api_params = {}
 
@@ -116,7 +116,7 @@ class Account(Service):
         }, api_params)
 
     def create_mfa_authenticator(self, type):
-        """Create Authenticator"""        
+        """Create authenticator"""        
         api_path = '/account/mfa/authenticators/{type}'
         api_params = {}
         if type is None:
@@ -130,7 +130,7 @@ class Account(Service):
         }, api_params)
 
     def update_mfa_authenticator(self, type, otp):
-        """Verify Authenticator"""        
+        """Verify authenticator"""        
         api_path = '/account/mfa/authenticators/{type}'
         api_params = {}
         if type is None:
@@ -148,7 +148,7 @@ class Account(Service):
         }, api_params)
 
     def delete_mfa_authenticator(self, type):
-        """Delete Authenticator"""        
+        """Delete authenticator"""        
         api_path = '/account/mfa/authenticators/{type}'
         api_params = {}
         if type is None:
@@ -162,7 +162,7 @@ class Account(Service):
         }, api_params)
 
     def create_mfa_challenge(self, factor):
-        """Create MFA Challenge"""        
+        """Create MFA challenge"""        
         api_path = '/account/mfa/challenge'
         api_params = {}
         if factor is None:
@@ -176,7 +176,7 @@ class Account(Service):
         }, api_params)
 
     def update_mfa_challenge(self, challenge_id, otp):
-        """Create MFA Challenge (confirmation)"""        
+        """Create MFA challenge (confirmation)"""        
         api_path = '/account/mfa/challenge'
         api_params = {}
         if challenge_id is None:
@@ -194,7 +194,7 @@ class Account(Service):
         }, api_params)
 
     def list_mfa_factors(self):
-        """List Factors"""        
+        """List factors"""        
         api_path = '/account/mfa/factors'
         api_params = {}
 
@@ -203,7 +203,7 @@ class Account(Service):
         }, api_params)
 
     def get_mfa_recovery_codes(self):
-        """Get MFA Recovery Codes"""        
+        """Get MFA recovery codes"""        
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 
@@ -212,7 +212,7 @@ class Account(Service):
         }, api_params)
 
     def create_mfa_recovery_codes(self):
-        """Create MFA Recovery Codes"""        
+        """Create MFA recovery codes"""        
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 
@@ -221,7 +221,7 @@ class Account(Service):
         }, api_params)
 
     def update_mfa_recovery_codes(self):
-        """Regenerate MFA Recovery Codes"""        
+        """Regenerate MFA recovery codes"""        
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 

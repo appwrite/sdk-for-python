@@ -12,11 +12,11 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : 'AppwritePythonSDK/7.0.0-rc1 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
+            'user-agent' : 'AppwritePythonSDK/7.0.0 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '7.0.0-rc1',
+            'x-sdk-version': '7.0.0',
             'X-Appwrite-Response-Format' : '1.6.0',
         }
 
@@ -96,9 +96,9 @@ class Client:
                 if isinstance(data[key], Payload):
                     if data[key].filename:
                         files[key] = (data[key].filename, data[key].to_binary())
+                        del data[key]
                     else:
-                        data[key] = data[key].to_binary()
-                    del data[key]
+                        data[key] = data[key].to_string()  
             data = self.flatten(data, stringify=stringify)
 
         response = None

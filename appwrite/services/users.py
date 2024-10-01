@@ -83,7 +83,7 @@ class Users(Service):
         }, api_params)
 
     def list_identities(self, queries = None, search = None):
-        """List Identities"""        
+        """List identities"""        
         api_path = '/users/identities'
         api_params = {}
 
@@ -384,7 +384,7 @@ class Users(Service):
         }, api_params)
 
     def delete_mfa_authenticator(self, user_id, type):
-        """Delete Authenticator"""        
+        """Delete authenticator"""        
         api_path = '/users/{userId}/mfa/authenticators/{type}'
         api_params = {}
         if user_id is None:
@@ -402,7 +402,7 @@ class Users(Service):
         }, api_params)
 
     def list_mfa_factors(self, user_id):
-        """List Factors"""        
+        """List factors"""        
         api_path = '/users/{userId}/mfa/factors'
         api_params = {}
         if user_id is None:
@@ -416,7 +416,7 @@ class Users(Service):
         }, api_params)
 
     def get_mfa_recovery_codes(self, user_id):
-        """Get MFA Recovery Codes"""        
+        """Get MFA recovery codes"""        
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
         if user_id is None:
@@ -430,7 +430,7 @@ class Users(Service):
         }, api_params)
 
     def update_mfa_recovery_codes(self, user_id):
-        """Regenerate MFA Recovery Codes"""        
+        """Regenerate MFA recovery codes"""        
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
         if user_id is None:
@@ -444,7 +444,7 @@ class Users(Service):
         }, api_params)
 
     def create_mfa_recovery_codes(self, user_id):
-        """Create MFA Recovery Codes"""        
+        """Create MFA recovery codes"""        
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
         if user_id is None:
@@ -622,7 +622,7 @@ class Users(Service):
         }, api_params)
 
     def list_targets(self, user_id, queries = None):
-        """List User Targets"""        
+        """List user targets"""        
         api_path = '/users/{userId}/targets'
         api_params = {}
         if user_id is None:
@@ -637,7 +637,7 @@ class Users(Service):
         }, api_params)
 
     def create_target(self, user_id, target_id, provider_type, identifier, provider_id = None, name = None):
-        """Create User Target"""        
+        """Create user target"""        
         api_path = '/users/{userId}/targets'
         api_params = {}
         if user_id is None:
@@ -665,7 +665,7 @@ class Users(Service):
         }, api_params)
 
     def get_target(self, user_id, target_id):
-        """Get User Target"""        
+        """Get user target"""        
         api_path = '/users/{userId}/targets/{targetId}'
         api_params = {}
         if user_id is None:
@@ -683,7 +683,7 @@ class Users(Service):
         }, api_params)
 
     def update_target(self, user_id, target_id, identifier = None, provider_id = None, name = None):
-        """Update User target"""        
+        """Update user target"""        
         api_path = '/users/{userId}/targets/{targetId}'
         api_params = {}
         if user_id is None:
