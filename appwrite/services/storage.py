@@ -7,9 +7,7 @@ class Storage(Service):
         super(Storage, self).__init__(client)
 
     def list_buckets(self, queries = None, search = None):
-        """List buckets"""
-
-        
+        """List buckets"""        
         api_path = '/storage/buckets'
         api_params = {}
 
@@ -21,9 +19,7 @@ class Storage(Service):
         }, api_params)
 
     def create_bucket(self, bucket_id, name, permissions = None, file_security = None, enabled = None, maximum_file_size = None, allowed_file_extensions = None, compression = None, encryption = None, antivirus = None):
-        """Create bucket"""
-
-        
+        """Create bucket"""        
         api_path = '/storage/buckets'
         api_params = {}
         if bucket_id is None:
@@ -49,9 +45,7 @@ class Storage(Service):
         }, api_params)
 
     def get_bucket(self, bucket_id):
-        """Get bucket"""
-
-        
+        """Get bucket"""        
         api_path = '/storage/buckets/{bucketId}'
         api_params = {}
         if bucket_id is None:
@@ -65,9 +59,7 @@ class Storage(Service):
         }, api_params)
 
     def update_bucket(self, bucket_id, name, permissions = None, file_security = None, enabled = None, maximum_file_size = None, allowed_file_extensions = None, compression = None, encryption = None, antivirus = None):
-        """Update bucket"""
-
-        
+        """Update bucket"""        
         api_path = '/storage/buckets/{bucketId}'
         api_params = {}
         if bucket_id is None:
@@ -93,9 +85,7 @@ class Storage(Service):
         }, api_params)
 
     def delete_bucket(self, bucket_id):
-        """Delete bucket"""
-
-        
+        """Delete bucket"""        
         api_path = '/storage/buckets/{bucketId}'
         api_params = {}
         if bucket_id is None:
@@ -109,9 +99,7 @@ class Storage(Service):
         }, api_params)
 
     def list_files(self, bucket_id, queries = None, search = None):
-        """List files"""
-
-        
+        """List files"""        
         api_path = '/storage/buckets/{bucketId}/files'
         api_params = {}
         if bucket_id is None:
@@ -127,9 +115,7 @@ class Storage(Service):
         }, api_params)
 
     def create_file(self, bucket_id, file_id, file, permissions = None, on_progress = None):
-        """Create file"""
-
-        
+        """Create file"""        
         api_path = '/storage/buckets/{bucketId}/files'
         api_params = {}
         if bucket_id is None:
@@ -148,19 +134,15 @@ class Storage(Service):
         api_params['permissions'] = permissions
 
         param_name = 'file'
-
-
         upload_id = ''
         upload_id = file_id
-
         return self.client.chunked_upload(api_path, {
             'content-type': 'multipart/form-data',
         }, api_params, param_name, on_progress, upload_id)
 
-    def get_file(self, bucket_id, file_id):
-        """Get file"""
 
-        
+    def get_file(self, bucket_id, file_id):
+        """Get file"""        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         api_params = {}
         if bucket_id is None:
@@ -178,9 +160,7 @@ class Storage(Service):
         }, api_params)
 
     def update_file(self, bucket_id, file_id, name = None, permissions = None):
-        """Update file"""
-
-        
+        """Update file"""        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         api_params = {}
         if bucket_id is None:
@@ -200,9 +180,7 @@ class Storage(Service):
         }, api_params)
 
     def delete_file(self, bucket_id, file_id):
-        """Delete File"""
-
-        
+        """Delete file"""        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         api_params = {}
         if bucket_id is None:
@@ -220,9 +198,7 @@ class Storage(Service):
         }, api_params)
 
     def get_file_download(self, bucket_id, file_id):
-        """Get file for download"""
-
-        
+        """Get file for download"""        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/download'
         api_params = {}
         if bucket_id is None:
@@ -240,9 +216,7 @@ class Storage(Service):
         }, api_params)
 
     def get_file_preview(self, bucket_id, file_id, width = None, height = None, gravity = None, quality = None, border_width = None, border_color = None, border_radius = None, opacity = None, rotation = None, background = None, output = None):
-        """Get file preview"""
-
-        
+        """Get file preview"""        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/preview'
         api_params = {}
         if bucket_id is None:
@@ -271,9 +245,7 @@ class Storage(Service):
         }, api_params)
 
     def get_file_view(self, bucket_id, file_id):
-        """Get file for view"""
-
-        
+        """Get file for view"""        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/view'
         api_params = {}
         if bucket_id is None:
@@ -289,3 +261,4 @@ class Storage(Service):
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, api_params)
+

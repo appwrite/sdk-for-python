@@ -7,9 +7,7 @@ class Health(Service):
         super(Health, self).__init__(client)
 
     def get(self):
-        """Get HTTP"""
-
-        
+        """Get HTTP"""        
         api_path = '/health'
         api_params = {}
 
@@ -18,9 +16,7 @@ class Health(Service):
         }, api_params)
 
     def get_antivirus(self):
-        """Get antivirus"""
-
-        
+        """Get antivirus"""        
         api_path = '/health/anti-virus'
         api_params = {}
 
@@ -29,9 +25,7 @@ class Health(Service):
         }, api_params)
 
     def get_cache(self):
-        """Get cache"""
-
-        
+        """Get cache"""        
         api_path = '/health/cache'
         api_params = {}
 
@@ -40,9 +34,7 @@ class Health(Service):
         }, api_params)
 
     def get_certificate(self, domain = None):
-        """Get the SSL certificate for a domain"""
-
-        
+        """Get the SSL certificate for a domain"""        
         api_path = '/health/certificate'
         api_params = {}
 
@@ -53,9 +45,7 @@ class Health(Service):
         }, api_params)
 
     def get_db(self):
-        """Get DB"""
-
-        
+        """Get DB"""        
         api_path = '/health/db'
         api_params = {}
 
@@ -64,9 +54,7 @@ class Health(Service):
         }, api_params)
 
     def get_pub_sub(self):
-        """Get pubsub"""
-
-        
+        """Get pubsub"""        
         api_path = '/health/pubsub'
         api_params = {}
 
@@ -75,9 +63,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue(self):
-        """Get queue"""
-
-        
+        """Get queue"""        
         api_path = '/health/queue'
         api_params = {}
 
@@ -86,9 +72,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_builds(self, threshold = None):
-        """Get builds queue"""
-
-        
+        """Get builds queue"""        
         api_path = '/health/queue/builds'
         api_params = {}
 
@@ -99,9 +83,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_certificates(self, threshold = None):
-        """Get certificates queue"""
-
-        
+        """Get certificates queue"""        
         api_path = '/health/queue/certificates'
         api_params = {}
 
@@ -112,9 +94,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_databases(self, name = None, threshold = None):
-        """Get databases queue"""
-
-        
+        """Get databases queue"""        
         api_path = '/health/queue/databases'
         api_params = {}
 
@@ -126,9 +106,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_deletes(self, threshold = None):
-        """Get deletes queue"""
-
-        
+        """Get deletes queue"""        
         api_path = '/health/queue/deletes'
         api_params = {}
 
@@ -139,9 +117,7 @@ class Health(Service):
         }, api_params)
 
     def get_failed_jobs(self, name, threshold = None):
-        """Get number of failed queue jobs"""
-
-        
+        """Get number of failed queue jobs"""        
         api_path = '/health/queue/failed/{name}'
         api_params = {}
         if name is None:
@@ -156,9 +132,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_functions(self, threshold = None):
-        """Get functions queue"""
-
-        
+        """Get functions queue"""        
         api_path = '/health/queue/functions'
         api_params = {}
 
@@ -169,9 +143,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_logs(self, threshold = None):
-        """Get logs queue"""
-
-        
+        """Get logs queue"""        
         api_path = '/health/queue/logs'
         api_params = {}
 
@@ -182,9 +154,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_mails(self, threshold = None):
-        """Get mails queue"""
-
-        
+        """Get mails queue"""        
         api_path = '/health/queue/mails'
         api_params = {}
 
@@ -195,9 +165,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_messaging(self, threshold = None):
-        """Get messaging queue"""
-
-        
+        """Get messaging queue"""        
         api_path = '/health/queue/messaging'
         api_params = {}
 
@@ -208,9 +176,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_migrations(self, threshold = None):
-        """Get migrations queue"""
-
-        
+        """Get migrations queue"""        
         api_path = '/health/queue/migrations'
         api_params = {}
 
@@ -221,9 +187,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_usage(self, threshold = None):
-        """Get usage queue"""
-
-        
+        """Get usage queue"""        
         api_path = '/health/queue/usage'
         api_params = {}
 
@@ -234,9 +198,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_usage_dump(self, threshold = None):
-        """Get usage dump queue"""
-
-        
+        """Get usage dump queue"""        
         api_path = '/health/queue/usage-dump'
         api_params = {}
 
@@ -247,9 +209,7 @@ class Health(Service):
         }, api_params)
 
     def get_queue_webhooks(self, threshold = None):
-        """Get webhooks queue"""
-
-        
+        """Get webhooks queue"""        
         api_path = '/health/queue/webhooks'
         api_params = {}
 
@@ -260,9 +220,7 @@ class Health(Service):
         }, api_params)
 
     def get_storage(self):
-        """Get storage"""
-
-        
+        """Get storage"""        
         api_path = '/health/storage'
         api_params = {}
 
@@ -271,9 +229,7 @@ class Health(Service):
         }, api_params)
 
     def get_storage_local(self):
-        """Get local storage"""
-
-        
+        """Get local storage"""        
         api_path = '/health/storage/local'
         api_params = {}
 
@@ -282,12 +238,11 @@ class Health(Service):
         }, api_params)
 
     def get_time(self):
-        """Get time"""
-
-        
+        """Get time"""        
         api_path = '/health/time'
         api_params = {}
 
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, api_params)
+

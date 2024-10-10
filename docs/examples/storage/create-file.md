@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.input_file import InputFile
+from appwrite.payload import Payload
 
 client = Client()
 client.set_endpoint('https://cloud.appwrite.io/v1') # Your API Endpoint
@@ -11,6 +11,6 @@ storage = Storage(client)
 result = storage.create_file(
     bucket_id = '<BUCKET_ID>',
     file_id = '<FILE_ID>',
-    file = InputFile.from_path('file.png'),
+    file = Payload.from_file('/path/to/file.png'),
     permissions = ["read("any")"] # optional
 )

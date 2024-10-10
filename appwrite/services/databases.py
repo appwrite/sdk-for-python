@@ -7,9 +7,7 @@ class Databases(Service):
         super(Databases, self).__init__(client)
 
     def list(self, queries = None, search = None):
-        """List databases"""
-
-        
+        """List databases"""        
         api_path = '/databases'
         api_params = {}
 
@@ -21,9 +19,7 @@ class Databases(Service):
         }, api_params)
 
     def create(self, database_id, name, enabled = None):
-        """Create database"""
-
-        
+        """Create database"""        
         api_path = '/databases'
         api_params = {}
         if database_id is None:
@@ -42,9 +38,7 @@ class Databases(Service):
         }, api_params)
 
     def get(self, database_id):
-        """Get database"""
-
-        
+        """Get database"""        
         api_path = '/databases/{databaseId}'
         api_params = {}
         if database_id is None:
@@ -58,9 +52,7 @@ class Databases(Service):
         }, api_params)
 
     def update(self, database_id, name, enabled = None):
-        """Update database"""
-
-        
+        """Update database"""        
         api_path = '/databases/{databaseId}'
         api_params = {}
         if database_id is None:
@@ -79,9 +71,7 @@ class Databases(Service):
         }, api_params)
 
     def delete(self, database_id):
-        """Delete database"""
-
-        
+        """Delete database"""        
         api_path = '/databases/{databaseId}'
         api_params = {}
         if database_id is None:
@@ -95,9 +85,7 @@ class Databases(Service):
         }, api_params)
 
     def list_collections(self, database_id, queries = None, search = None):
-        """List collections"""
-
-        
+        """List collections"""        
         api_path = '/databases/{databaseId}/collections'
         api_params = {}
         if database_id is None:
@@ -113,9 +101,7 @@ class Databases(Service):
         }, api_params)
 
     def create_collection(self, database_id, collection_id, name, permissions = None, document_security = None, enabled = None):
-        """Create collection"""
-
-        
+        """Create collection"""        
         api_path = '/databases/{databaseId}/collections'
         api_params = {}
         if database_id is None:
@@ -140,9 +126,7 @@ class Databases(Service):
         }, api_params)
 
     def get_collection(self, database_id, collection_id):
-        """Get collection"""
-
-        
+        """Get collection"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}'
         api_params = {}
         if database_id is None:
@@ -160,9 +144,7 @@ class Databases(Service):
         }, api_params)
 
     def update_collection(self, database_id, collection_id, name, permissions = None, document_security = None, enabled = None):
-        """Update collection"""
-
-        
+        """Update collection"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}'
         api_params = {}
         if database_id is None:
@@ -187,9 +169,7 @@ class Databases(Service):
         }, api_params)
 
     def delete_collection(self, database_id, collection_id):
-        """Delete collection"""
-
-        
+        """Delete collection"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}'
         api_params = {}
         if database_id is None:
@@ -207,9 +187,7 @@ class Databases(Service):
         }, api_params)
 
     def list_attributes(self, database_id, collection_id, queries = None):
-        """List attributes"""
-
-        
+        """List attributes"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes'
         api_params = {}
         if database_id is None:
@@ -228,9 +206,7 @@ class Databases(Service):
         }, api_params)
 
     def create_boolean_attribute(self, database_id, collection_id, key, required, default = None, array = None):
-        """Create boolean attribute"""
-
-        
+        """Create boolean attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/boolean'
         api_params = {}
         if database_id is None:
@@ -258,9 +234,7 @@ class Databases(Service):
         }, api_params)
 
     def update_boolean_attribute(self, database_id, collection_id, key, required, default, new_key = None):
-        """Update boolean attribute"""
-
-        
+        """Update boolean attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/boolean/{key}'
         api_params = {}
         if database_id is None:
@@ -288,9 +262,7 @@ class Databases(Service):
         }, api_params)
 
     def create_datetime_attribute(self, database_id, collection_id, key, required, default = None, array = None):
-        """Create datetime attribute"""
-
-        
+        """Create datetime attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/datetime'
         api_params = {}
         if database_id is None:
@@ -318,9 +290,7 @@ class Databases(Service):
         }, api_params)
 
     def update_datetime_attribute(self, database_id, collection_id, key, required, default, new_key = None):
-        """Update dateTime attribute"""
-
-        
+        """Update dateTime attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/datetime/{key}'
         api_params = {}
         if database_id is None:
@@ -348,9 +318,7 @@ class Databases(Service):
         }, api_params)
 
     def create_email_attribute(self, database_id, collection_id, key, required, default = None, array = None):
-        """Create email attribute"""
-
-        
+        """Create email attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/email'
         api_params = {}
         if database_id is None:
@@ -378,9 +346,7 @@ class Databases(Service):
         }, api_params)
 
     def update_email_attribute(self, database_id, collection_id, key, required, default, new_key = None):
-        """Update email attribute"""
-
-        
+        """Update email attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/email/{key}'
         api_params = {}
         if database_id is None:
@@ -408,9 +374,7 @@ class Databases(Service):
         }, api_params)
 
     def create_enum_attribute(self, database_id, collection_id, key, elements, required, default = None, array = None):
-        """Create enum attribute"""
-
-        
+        """Create enum attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/enum'
         api_params = {}
         if database_id is None:
@@ -442,9 +406,7 @@ class Databases(Service):
         }, api_params)
 
     def update_enum_attribute(self, database_id, collection_id, key, elements, required, default, new_key = None):
-        """Update enum attribute"""
-
-        
+        """Update enum attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/enum/{key}'
         api_params = {}
         if database_id is None:
@@ -476,9 +438,7 @@ class Databases(Service):
         }, api_params)
 
     def create_float_attribute(self, database_id, collection_id, key, required, min = None, max = None, default = None, array = None):
-        """Create float attribute"""
-
-        
+        """Create float attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/float'
         api_params = {}
         if database_id is None:
@@ -508,9 +468,7 @@ class Databases(Service):
         }, api_params)
 
     def update_float_attribute(self, database_id, collection_id, key, required, min, max, default, new_key = None):
-        """Update float attribute"""
-
-        
+        """Update float attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/float/{key}'
         api_params = {}
         if database_id is None:
@@ -546,9 +504,7 @@ class Databases(Service):
         }, api_params)
 
     def create_integer_attribute(self, database_id, collection_id, key, required, min = None, max = None, default = None, array = None):
-        """Create integer attribute"""
-
-        
+        """Create integer attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/integer'
         api_params = {}
         if database_id is None:
@@ -578,9 +534,7 @@ class Databases(Service):
         }, api_params)
 
     def update_integer_attribute(self, database_id, collection_id, key, required, min, max, default, new_key = None):
-        """Update integer attribute"""
-
-        
+        """Update integer attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/integer/{key}'
         api_params = {}
         if database_id is None:
@@ -616,9 +570,7 @@ class Databases(Service):
         }, api_params)
 
     def create_ip_attribute(self, database_id, collection_id, key, required, default = None, array = None):
-        """Create IP address attribute"""
-
-        
+        """Create IP address attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/ip'
         api_params = {}
         if database_id is None:
@@ -646,9 +598,7 @@ class Databases(Service):
         }, api_params)
 
     def update_ip_attribute(self, database_id, collection_id, key, required, default, new_key = None):
-        """Update IP address attribute"""
-
-        
+        """Update IP address attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/ip/{key}'
         api_params = {}
         if database_id is None:
@@ -676,9 +626,7 @@ class Databases(Service):
         }, api_params)
 
     def create_relationship_attribute(self, database_id, collection_id, related_collection_id, type, two_way = None, key = None, two_way_key = None, on_delete = None):
-        """Create relationship attribute"""
-
-        
+        """Create relationship attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/relationship'
         api_params = {}
         if database_id is None:
@@ -708,9 +656,7 @@ class Databases(Service):
         }, api_params)
 
     def create_string_attribute(self, database_id, collection_id, key, size, required, default = None, array = None, encrypt = None):
-        """Create string attribute"""
-
-        
+        """Create string attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/string'
         api_params = {}
         if database_id is None:
@@ -743,9 +689,7 @@ class Databases(Service):
         }, api_params)
 
     def update_string_attribute(self, database_id, collection_id, key, required, default, size = None, new_key = None):
-        """Update string attribute"""
-
-        
+        """Update string attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/string/{key}'
         api_params = {}
         if database_id is None:
@@ -774,9 +718,7 @@ class Databases(Service):
         }, api_params)
 
     def create_url_attribute(self, database_id, collection_id, key, required, default = None, array = None):
-        """Create URL attribute"""
-
-        
+        """Create URL attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/url'
         api_params = {}
         if database_id is None:
@@ -804,9 +746,7 @@ class Databases(Service):
         }, api_params)
 
     def update_url_attribute(self, database_id, collection_id, key, required, default, new_key = None):
-        """Update URL attribute"""
-
-        
+        """Update URL attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/url/{key}'
         api_params = {}
         if database_id is None:
@@ -834,9 +774,7 @@ class Databases(Service):
         }, api_params)
 
     def get_attribute(self, database_id, collection_id, key):
-        """Get attribute"""
-
-        
+        """Get attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}'
         api_params = {}
         if database_id is None:
@@ -858,9 +796,7 @@ class Databases(Service):
         }, api_params)
 
     def delete_attribute(self, database_id, collection_id, key):
-        """Delete attribute"""
-
-        
+        """Delete attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}'
         api_params = {}
         if database_id is None:
@@ -882,9 +818,7 @@ class Databases(Service):
         }, api_params)
 
     def update_relationship_attribute(self, database_id, collection_id, key, on_delete = None, new_key = None):
-        """Update relationship attribute"""
-
-        
+        """Update relationship attribute"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}/relationship'
         api_params = {}
         if database_id is None:
@@ -908,9 +842,7 @@ class Databases(Service):
         }, api_params)
 
     def list_documents(self, database_id, collection_id, queries = None):
-        """List documents"""
-
-        
+        """List documents"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/documents'
         api_params = {}
         if database_id is None:
@@ -929,9 +861,7 @@ class Databases(Service):
         }, api_params)
 
     def create_document(self, database_id, collection_id, document_id, data, permissions = None):
-        """Create document"""
-
-        
+        """Create document"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/documents'
         api_params = {}
         if database_id is None:
@@ -958,9 +888,7 @@ class Databases(Service):
         }, api_params)
 
     def get_document(self, database_id, collection_id, document_id, queries = None):
-        """Get document"""
-
-        
+        """Get document"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
         api_params = {}
         if database_id is None:
@@ -983,9 +911,7 @@ class Databases(Service):
         }, api_params)
 
     def update_document(self, database_id, collection_id, document_id, data = None, permissions = None):
-        """Update document"""
-
-        
+        """Update document"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
         api_params = {}
         if database_id is None:
@@ -1009,9 +935,7 @@ class Databases(Service):
         }, api_params)
 
     def delete_document(self, database_id, collection_id, document_id):
-        """Delete document"""
-
-        
+        """Delete document"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
         api_params = {}
         if database_id is None:
@@ -1033,9 +957,7 @@ class Databases(Service):
         }, api_params)
 
     def list_indexes(self, database_id, collection_id, queries = None):
-        """List indexes"""
-
-        
+        """List indexes"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/indexes'
         api_params = {}
         if database_id is None:
@@ -1054,9 +976,7 @@ class Databases(Service):
         }, api_params)
 
     def create_index(self, database_id, collection_id, key, type, attributes, orders = None):
-        """Create index"""
-
-        
+        """Create index"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/indexes'
         api_params = {}
         if database_id is None:
@@ -1087,9 +1007,7 @@ class Databases(Service):
         }, api_params)
 
     def get_index(self, database_id, collection_id, key):
-        """Get index"""
-
-        
+        """Get index"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/indexes/{key}'
         api_params = {}
         if database_id is None:
@@ -1111,9 +1029,7 @@ class Databases(Service):
         }, api_params)
 
     def delete_index(self, database_id, collection_id, key):
-        """Delete index"""
-
-        
+        """Delete index"""        
         api_path = '/databases/{databaseId}/collections/{collectionId}/indexes/{key}'
         api_params = {}
         if database_id is None:
@@ -1133,3 +1049,4 @@ class Databases(Service):
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
+

@@ -7,9 +7,7 @@ class Users(Service):
         super(Users, self).__init__(client)
 
     def list(self, queries = None, search = None):
-        """List users"""
-
-        
+        """List users"""        
         api_path = '/users'
         api_params = {}
 
@@ -21,9 +19,7 @@ class Users(Service):
         }, api_params)
 
     def create(self, user_id, email = None, phone = None, password = None, name = None):
-        """Create user"""
-
-        
+        """Create user"""        
         api_path = '/users'
         api_params = {}
         if user_id is None:
@@ -41,9 +37,7 @@ class Users(Service):
         }, api_params)
 
     def create_argon2_user(self, user_id, email, password, name = None):
-        """Create user with Argon2 password"""
-
-        
+        """Create user with Argon2 password"""        
         api_path = '/users/argon2'
         api_params = {}
         if user_id is None:
@@ -66,9 +60,7 @@ class Users(Service):
         }, api_params)
 
     def create_bcrypt_user(self, user_id, email, password, name = None):
-        """Create user with bcrypt password"""
-
-        
+        """Create user with bcrypt password"""        
         api_path = '/users/bcrypt'
         api_params = {}
         if user_id is None:
@@ -91,9 +83,7 @@ class Users(Service):
         }, api_params)
 
     def list_identities(self, queries = None, search = None):
-        """List Identities"""
-
-        
+        """List identities"""        
         api_path = '/users/identities'
         api_params = {}
 
@@ -105,9 +95,7 @@ class Users(Service):
         }, api_params)
 
     def delete_identity(self, identity_id):
-        """Delete identity"""
-
-        
+        """Delete identity"""        
         api_path = '/users/identities/{identityId}'
         api_params = {}
         if identity_id is None:
@@ -121,9 +109,7 @@ class Users(Service):
         }, api_params)
 
     def create_md5_user(self, user_id, email, password, name = None):
-        """Create user with MD5 password"""
-
-        
+        """Create user with MD5 password"""        
         api_path = '/users/md5'
         api_params = {}
         if user_id is None:
@@ -146,9 +132,7 @@ class Users(Service):
         }, api_params)
 
     def create_ph_pass_user(self, user_id, email, password, name = None):
-        """Create user with PHPass password"""
-
-        
+        """Create user with PHPass password"""        
         api_path = '/users/phpass'
         api_params = {}
         if user_id is None:
@@ -171,9 +155,7 @@ class Users(Service):
         }, api_params)
 
     def create_scrypt_user(self, user_id, email, password, password_salt, password_cpu, password_memory, password_parallel, password_length, name = None):
-        """Create user with Scrypt password"""
-
-        
+        """Create user with Scrypt password"""        
         api_path = '/users/scrypt'
         api_params = {}
         if user_id is None:
@@ -216,9 +198,7 @@ class Users(Service):
         }, api_params)
 
     def create_scrypt_modified_user(self, user_id, email, password, password_salt, password_salt_separator, password_signer_key, name = None):
-        """Create user with Scrypt modified password"""
-
-        
+        """Create user with Scrypt modified password"""        
         api_path = '/users/scrypt-modified'
         api_params = {}
         if user_id is None:
@@ -253,9 +233,7 @@ class Users(Service):
         }, api_params)
 
     def create_sha_user(self, user_id, email, password, password_version = None, name = None):
-        """Create user with SHA password"""
-
-        
+        """Create user with SHA password"""        
         api_path = '/users/sha'
         api_params = {}
         if user_id is None:
@@ -279,9 +257,7 @@ class Users(Service):
         }, api_params)
 
     def get(self, user_id):
-        """Get user"""
-
-        
+        """Get user"""        
         api_path = '/users/{userId}'
         api_params = {}
         if user_id is None:
@@ -295,9 +271,7 @@ class Users(Service):
         }, api_params)
 
     def delete(self, user_id):
-        """Delete user"""
-
-        
+        """Delete user"""        
         api_path = '/users/{userId}'
         api_params = {}
         if user_id is None:
@@ -311,9 +285,7 @@ class Users(Service):
         }, api_params)
 
     def update_email(self, user_id, email):
-        """Update email"""
-
-        
+        """Update email"""        
         api_path = '/users/{userId}/email'
         api_params = {}
         if user_id is None:
@@ -331,9 +303,7 @@ class Users(Service):
         }, api_params)
 
     def create_jwt(self, user_id, session_id = None, duration = None):
-        """Create user JWT"""
-
-        
+        """Create user JWT"""        
         api_path = '/users/{userId}/jwts'
         api_params = {}
         if user_id is None:
@@ -349,9 +319,7 @@ class Users(Service):
         }, api_params)
 
     def update_labels(self, user_id, labels):
-        """Update user labels"""
-
-        
+        """Update user labels"""        
         api_path = '/users/{userId}/labels'
         api_params = {}
         if user_id is None:
@@ -369,9 +337,7 @@ class Users(Service):
         }, api_params)
 
     def list_logs(self, user_id, queries = None):
-        """List user logs"""
-
-        
+        """List user logs"""        
         api_path = '/users/{userId}/logs'
         api_params = {}
         if user_id is None:
@@ -386,9 +352,7 @@ class Users(Service):
         }, api_params)
 
     def list_memberships(self, user_id):
-        """List user memberships"""
-
-        
+        """List user memberships"""        
         api_path = '/users/{userId}/memberships'
         api_params = {}
         if user_id is None:
@@ -402,9 +366,7 @@ class Users(Service):
         }, api_params)
 
     def update_mfa(self, user_id, mfa):
-        """Update MFA"""
-
-        
+        """Update MFA"""        
         api_path = '/users/{userId}/mfa'
         api_params = {}
         if user_id is None:
@@ -422,9 +384,7 @@ class Users(Service):
         }, api_params)
 
     def delete_mfa_authenticator(self, user_id, type):
-        """Delete Authenticator"""
-
-        
+        """Delete authenticator"""        
         api_path = '/users/{userId}/mfa/authenticators/{type}'
         api_params = {}
         if user_id is None:
@@ -442,9 +402,7 @@ class Users(Service):
         }, api_params)
 
     def list_mfa_factors(self, user_id):
-        """List Factors"""
-
-        
+        """List factors"""        
         api_path = '/users/{userId}/mfa/factors'
         api_params = {}
         if user_id is None:
@@ -458,9 +416,7 @@ class Users(Service):
         }, api_params)
 
     def get_mfa_recovery_codes(self, user_id):
-        """Get MFA Recovery Codes"""
-
-        
+        """Get MFA recovery codes"""        
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
         if user_id is None:
@@ -474,9 +430,7 @@ class Users(Service):
         }, api_params)
 
     def update_mfa_recovery_codes(self, user_id):
-        """Regenerate MFA Recovery Codes"""
-
-        
+        """Regenerate MFA recovery codes"""        
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
         if user_id is None:
@@ -490,9 +444,7 @@ class Users(Service):
         }, api_params)
 
     def create_mfa_recovery_codes(self, user_id):
-        """Create MFA Recovery Codes"""
-
-        
+        """Create MFA recovery codes"""        
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
         if user_id is None:
@@ -506,9 +458,7 @@ class Users(Service):
         }, api_params)
 
     def update_name(self, user_id, name):
-        """Update name"""
-
-        
+        """Update name"""        
         api_path = '/users/{userId}/name'
         api_params = {}
         if user_id is None:
@@ -526,9 +476,7 @@ class Users(Service):
         }, api_params)
 
     def update_password(self, user_id, password):
-        """Update password"""
-
-        
+        """Update password"""        
         api_path = '/users/{userId}/password'
         api_params = {}
         if user_id is None:
@@ -546,9 +494,7 @@ class Users(Service):
         }, api_params)
 
     def update_phone(self, user_id, number):
-        """Update phone"""
-
-        
+        """Update phone"""        
         api_path = '/users/{userId}/phone'
         api_params = {}
         if user_id is None:
@@ -566,9 +512,7 @@ class Users(Service):
         }, api_params)
 
     def get_prefs(self, user_id):
-        """Get user preferences"""
-
-        
+        """Get user preferences"""        
         api_path = '/users/{userId}/prefs'
         api_params = {}
         if user_id is None:
@@ -582,9 +526,7 @@ class Users(Service):
         }, api_params)
 
     def update_prefs(self, user_id, prefs):
-        """Update user preferences"""
-
-        
+        """Update user preferences"""        
         api_path = '/users/{userId}/prefs'
         api_params = {}
         if user_id is None:
@@ -602,9 +544,7 @@ class Users(Service):
         }, api_params)
 
     def list_sessions(self, user_id):
-        """List user sessions"""
-
-        
+        """List user sessions"""        
         api_path = '/users/{userId}/sessions'
         api_params = {}
         if user_id is None:
@@ -618,9 +558,7 @@ class Users(Service):
         }, api_params)
 
     def create_session(self, user_id):
-        """Create session"""
-
-        
+        """Create session"""        
         api_path = '/users/{userId}/sessions'
         api_params = {}
         if user_id is None:
@@ -634,9 +572,7 @@ class Users(Service):
         }, api_params)
 
     def delete_sessions(self, user_id):
-        """Delete user sessions"""
-
-        
+        """Delete user sessions"""        
         api_path = '/users/{userId}/sessions'
         api_params = {}
         if user_id is None:
@@ -650,9 +586,7 @@ class Users(Service):
         }, api_params)
 
     def delete_session(self, user_id, session_id):
-        """Delete user session"""
-
-        
+        """Delete user session"""        
         api_path = '/users/{userId}/sessions/{sessionId}'
         api_params = {}
         if user_id is None:
@@ -670,9 +604,7 @@ class Users(Service):
         }, api_params)
 
     def update_status(self, user_id, status):
-        """Update user status"""
-
-        
+        """Update user status"""        
         api_path = '/users/{userId}/status'
         api_params = {}
         if user_id is None:
@@ -690,9 +622,7 @@ class Users(Service):
         }, api_params)
 
     def list_targets(self, user_id, queries = None):
-        """List User Targets"""
-
-        
+        """List user targets"""        
         api_path = '/users/{userId}/targets'
         api_params = {}
         if user_id is None:
@@ -707,9 +637,7 @@ class Users(Service):
         }, api_params)
 
     def create_target(self, user_id, target_id, provider_type, identifier, provider_id = None, name = None):
-        """Create User Target"""
-
-        
+        """Create user target"""        
         api_path = '/users/{userId}/targets'
         api_params = {}
         if user_id is None:
@@ -737,9 +665,7 @@ class Users(Service):
         }, api_params)
 
     def get_target(self, user_id, target_id):
-        """Get User Target"""
-
-        
+        """Get user target"""        
         api_path = '/users/{userId}/targets/{targetId}'
         api_params = {}
         if user_id is None:
@@ -757,9 +683,7 @@ class Users(Service):
         }, api_params)
 
     def update_target(self, user_id, target_id, identifier = None, provider_id = None, name = None):
-        """Update User target"""
-
-        
+        """Update user target"""        
         api_path = '/users/{userId}/targets/{targetId}'
         api_params = {}
         if user_id is None:
@@ -780,9 +704,7 @@ class Users(Service):
         }, api_params)
 
     def delete_target(self, user_id, target_id):
-        """Delete user target"""
-
-        
+        """Delete user target"""        
         api_path = '/users/{userId}/targets/{targetId}'
         api_params = {}
         if user_id is None:
@@ -800,9 +722,7 @@ class Users(Service):
         }, api_params)
 
     def create_token(self, user_id, length = None, expire = None):
-        """Create token"""
-
-        
+        """Create token"""        
         api_path = '/users/{userId}/tokens'
         api_params = {}
         if user_id is None:
@@ -818,9 +738,7 @@ class Users(Service):
         }, api_params)
 
     def update_email_verification(self, user_id, email_verification):
-        """Update email verification"""
-
-        
+        """Update email verification"""        
         api_path = '/users/{userId}/verification'
         api_params = {}
         if user_id is None:
@@ -838,9 +756,7 @@ class Users(Service):
         }, api_params)
 
     def update_phone_verification(self, user_id, phone_verification):
-        """Update phone verification"""
-
-        
+        """Update phone verification"""        
         api_path = '/users/{userId}/verification/phone'
         api_params = {}
         if user_id is None:
@@ -856,3 +772,4 @@ class Users(Service):
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
+
