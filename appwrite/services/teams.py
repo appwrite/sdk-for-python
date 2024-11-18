@@ -7,7 +7,9 @@ class Teams(Service):
         super(Teams, self).__init__(client)
 
     def list(self, queries = None, search = None):
-        """List teams"""        
+        """List teams"""
+
+        
         api_path = '/teams'
         api_params = {}
 
@@ -19,7 +21,9 @@ class Teams(Service):
         }, api_params)
 
     def create(self, team_id, name, roles = None):
-        """Create team"""        
+        """Create team"""
+
+        
         api_path = '/teams'
         api_params = {}
         if team_id is None:
@@ -38,7 +42,9 @@ class Teams(Service):
         }, api_params)
 
     def get(self, team_id):
-        """Get team"""        
+        """Get team"""
+
+        
         api_path = '/teams/{teamId}'
         api_params = {}
         if team_id is None:
@@ -52,7 +58,9 @@ class Teams(Service):
         }, api_params)
 
     def update_name(self, team_id, name):
-        """Update name"""        
+        """Update name"""
+
+        
         api_path = '/teams/{teamId}'
         api_params = {}
         if team_id is None:
@@ -70,7 +78,9 @@ class Teams(Service):
         }, api_params)
 
     def delete(self, team_id):
-        """Delete team"""        
+        """Delete team"""
+
+        
         api_path = '/teams/{teamId}'
         api_params = {}
         if team_id is None:
@@ -84,7 +94,9 @@ class Teams(Service):
         }, api_params)
 
     def list_memberships(self, team_id, queries = None, search = None):
-        """List team memberships"""        
+        """List team memberships"""
+
+        
         api_path = '/teams/{teamId}/memberships'
         api_params = {}
         if team_id is None:
@@ -100,7 +112,9 @@ class Teams(Service):
         }, api_params)
 
     def create_membership(self, team_id, roles, email = None, user_id = None, phone = None, url = None, name = None):
-        """Create team membership"""        
+        """Create team membership"""
+
+        
         api_path = '/teams/{teamId}/memberships'
         api_params = {}
         if team_id is None:
@@ -123,7 +137,9 @@ class Teams(Service):
         }, api_params)
 
     def get_membership(self, team_id, membership_id):
-        """Get team membership"""        
+        """Get team membership"""
+
+        
         api_path = '/teams/{teamId}/memberships/{membershipId}'
         api_params = {}
         if team_id is None:
@@ -141,7 +157,9 @@ class Teams(Service):
         }, api_params)
 
     def update_membership(self, team_id, membership_id, roles):
-        """Update membership"""        
+        """Update membership"""
+
+        
         api_path = '/teams/{teamId}/memberships/{membershipId}'
         api_params = {}
         if team_id is None:
@@ -163,7 +181,9 @@ class Teams(Service):
         }, api_params)
 
     def delete_membership(self, team_id, membership_id):
-        """Delete team membership"""        
+        """Delete team membership"""
+
+        
         api_path = '/teams/{teamId}/memberships/{membershipId}'
         api_params = {}
         if team_id is None:
@@ -181,7 +201,9 @@ class Teams(Service):
         }, api_params)
 
     def update_membership_status(self, team_id, membership_id, user_id, secret):
-        """Update team membership status"""        
+        """Update team membership status"""
+
+        
         api_path = '/teams/{teamId}/memberships/{membershipId}/status'
         api_params = {}
         if team_id is None:
@@ -207,7 +229,9 @@ class Teams(Service):
         }, api_params)
 
     def get_prefs(self, team_id):
-        """Get team preferences"""        
+        """Get team preferences"""
+
+        
         api_path = '/teams/{teamId}/prefs'
         api_params = {}
         if team_id is None:
@@ -221,7 +245,9 @@ class Teams(Service):
         }, api_params)
 
     def update_prefs(self, team_id, prefs):
-        """Update preferences"""        
+        """Update preferences"""
+
+        
         api_path = '/teams/{teamId}/prefs'
         api_params = {}
         if team_id is None:
@@ -237,4 +263,3 @@ class Teams(Service):
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
-
