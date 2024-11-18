@@ -7,7 +7,9 @@ class Avatars(Service):
         super(Avatars, self).__init__(client)
 
     def get_browser(self, code, width = None, height = None, quality = None):
-        """Get browser icon"""        
+        """Get browser icon"""
+
+        
         api_path = '/avatars/browsers/{code}'
         api_params = {}
         if code is None:
@@ -24,7 +26,9 @@ class Avatars(Service):
         }, api_params)
 
     def get_credit_card(self, code, width = None, height = None, quality = None):
-        """Get credit card icon"""        
+        """Get credit card icon"""
+
+        
         api_path = '/avatars/credit-cards/{code}'
         api_params = {}
         if code is None:
@@ -41,7 +45,9 @@ class Avatars(Service):
         }, api_params)
 
     def get_favicon(self, url):
-        """Get favicon"""        
+        """Get favicon"""
+
+        
         api_path = '/avatars/favicon'
         api_params = {}
         if url is None:
@@ -55,7 +61,9 @@ class Avatars(Service):
         }, api_params)
 
     def get_flag(self, code, width = None, height = None, quality = None):
-        """Get country flag"""        
+        """Get country flag"""
+
+        
         api_path = '/avatars/flags/{code}'
         api_params = {}
         if code is None:
@@ -72,7 +80,9 @@ class Avatars(Service):
         }, api_params)
 
     def get_image(self, url, width = None, height = None):
-        """Get image from URL"""        
+        """Get image from URL"""
+
+        
         api_path = '/avatars/image'
         api_params = {}
         if url is None:
@@ -88,7 +98,9 @@ class Avatars(Service):
         }, api_params)
 
     def get_initials(self, name = None, width = None, height = None, background = None):
-        """Get user initials"""        
+        """Get user initials"""
+
+        
         api_path = '/avatars/initials'
         api_params = {}
 
@@ -102,7 +114,9 @@ class Avatars(Service):
         }, api_params)
 
     def get_qr(self, text, size = None, margin = None, download = None):
-        """Get QR code"""        
+        """Get QR code"""
+
+        
         api_path = '/avatars/qr'
         api_params = {}
         if text is None:
@@ -117,4 +131,3 @@ class Avatars(Service):
         return self.client.call('get', api_path, {
             'content-type': 'application/json',
         }, api_params)
-

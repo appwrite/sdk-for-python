@@ -7,7 +7,9 @@ class Graphql(Service):
         super(Graphql, self).__init__(client)
 
     def query(self, query):
-        """GraphQL endpoint"""        
+        """GraphQL endpoint"""
+
+        
         api_path = '/graphql'
         api_params = {}
         if query is None:
@@ -22,7 +24,9 @@ class Graphql(Service):
         }, api_params)
 
     def mutation(self, query):
-        """GraphQL endpoint"""        
+        """GraphQL endpoint"""
+
+        
         api_path = '/graphql/mutation'
         api_params = {}
         if query is None:
@@ -35,4 +39,3 @@ class Graphql(Service):
             'x-sdk-graphql': 'true',
             'content-type': 'application/json',
         }, api_params)
-
