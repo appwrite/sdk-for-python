@@ -11,6 +11,7 @@ class Client:
         self._chunk_size = 5*1024*1024
         self._self_signed = False
         self._endpoint = 'https://cloud.appwrite.io/v1'
+        self._session = None
         self._global_headers = {
             'content-type': '',
             'user-agent' : 'AppwritePythonSDK/7.0.1 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
@@ -36,30 +37,37 @@ class Client:
     def set_project(self, value):
         """Your project ID"""
 
-        self._global_headers['x-appwrite-project'] = value
+        self._global_headers['x-Appwrite-project'] = value
         return self
 
     def set_key(self, value):
         """Your secret API key"""
 
-        self._global_headers['x-appwrite-key'] = value
+        self._global_headers['x-Appwrite-key'] = value
         return self
 
     def set_jwt(self, value):
         """Your secret JSON Web Token"""
 
-        self._global_headers['x-appwrite-jwt'] = value
+        self._global_headers['x-Appwrite-jwt'] = value
         return self
 
     def set_locale(self, value):
-        self._global_headers['x-appwrite-locale'] = value
+        self._global_headers['x-Appwrite-locale'] = value
         return self
 
     def set_session(self, value):
         """The user session to authenticate with"""
 
-        self._global_headers['x-appwrite-session'] = value
+        self._global_headers['x-Appwrite-session'] = value
         return self
+
+    def get_session(self):
+        """ Get the current session """
+        if self._session is None:
+            self._session = requests.Session()
+            self._session.headers.update(self._global_headers)
+        return self._session
 
     def set_forwarded_user_agent(self, value):
         """The user agent string of the client that made the request"""
@@ -79,7 +87,7 @@ class Client:
         data = {}
         files = {}
         stringify = False
-        
+
         headers = {**self._global_headers, **headers}
 
         if method != 'get':
@@ -100,7 +108,7 @@ class Client:
 
         response = None
         try:
-            response = requests.request(  # call method dynamically https://stackoverflow.com/a/4246075/2299554
+            response = self.get_session().request(
                 method=method,
                 url=self._endpoint + path,
                 params=self.flatten(params, stringify=stringify),
@@ -113,7 +121,7 @@ class Client:
 
             response.raise_for_status()
 
-            warnings = response.headers.get('x-appwrite-warning')
+            warnings = response.headers.get('x-Appwrite-warning')
             if warnings:
                 for warning in warnings.split(';'):
                     print(f'Warning: {warning}')
@@ -200,11 +208,11 @@ class Client:
                 headers,
                 params,
             )
-            
+
             offset = offset + self._chunk_size
-            
-            if "$id" in result: 
-                headers["x-appwrite-id"] = result["$id"]
+
+            if "$id" in result:
+                headers["x-Appwrite-id"] = result["$id"]
 
             if on_progress is not None:
                 end = min((((counter * self._chunk_size) + self._chunk_size) - 1), size - 1)
@@ -229,7 +237,7 @@ class Client:
             finalKey = prefix + '[' + key +']' if prefix else key
             finalKey = prefix + '[' + str(i) +']' if isinstance(data, list) else finalKey
             i += 1
-            
+
             if isinstance(value, list) or isinstance(value, dict):
                 output = {**output, **self.flatten(value, finalKey, stringify)}
             else:
@@ -239,4 +247,3 @@ class Client:
                     output[finalKey] = value
 
         return output
-
