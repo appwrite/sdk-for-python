@@ -80,7 +80,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_push(self, message_id, title, body, topics = None, users = None, targets = None, data = None, action = None, image = None, icon = None, sound = None, color = None, tag = None, badge = None, draft = None, scheduled_at = None):
+    def create_push(self, message_id, title = None, body = None, topics = None, users = None, targets = None, data = None, action = None, image = None, icon = None, sound = None, color = None, tag = None, badge = None, draft = None, scheduled_at = None, content_available = None, critical = None, priority = None):
         """Create push notification"""
 
         
@@ -88,12 +88,6 @@ class Messaging(Service):
         api_params = {}
         if message_id is None:
             raise AppwriteException('Missing required parameter: "message_id"')
-
-        if title is None:
-            raise AppwriteException('Missing required parameter: "title"')
-
-        if body is None:
-            raise AppwriteException('Missing required parameter: "body"')
 
 
         api_params['messageId'] = message_id
@@ -112,12 +106,15 @@ class Messaging(Service):
         api_params['badge'] = badge
         api_params['draft'] = draft
         api_params['scheduledAt'] = scheduled_at
+        api_params['contentAvailable'] = content_available
+        api_params['critical'] = critical
+        api_params['priority'] = priority
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_push(self, message_id, topics = None, users = None, targets = None, title = None, body = None, data = None, action = None, image = None, icon = None, sound = None, color = None, tag = None, badge = None, draft = None, scheduled_at = None):
+    def update_push(self, message_id, topics = None, users = None, targets = None, title = None, body = None, data = None, action = None, image = None, icon = None, sound = None, color = None, tag = None, badge = None, draft = None, scheduled_at = None, content_available = None, critical = None, priority = None):
         """Update push notification"""
 
         
@@ -143,6 +140,9 @@ class Messaging(Service):
         api_params['badge'] = badge
         api_params['draft'] = draft
         api_params['scheduledAt'] = scheduled_at
+        api_params['contentAvailable'] = content_available
+        api_params['critical'] = critical
+        api_params['priority'] = priority
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
