@@ -13,11 +13,11 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : 'AppwritePythonSDK/6.2.0 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
+            'user-agent' : 'AppwritePythonSDK/7.1.1 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '6.2.0',
+            'x-sdk-version': '7.1.1',
             'X-Appwrite-Response-Format' : '1.6.0',
         }
 
@@ -79,7 +79,7 @@ class Client:
         data = {}
         files = {}
         stringify = False
-        
+
         headers = {**self._global_headers, **headers}
 
         if method != 'get':
@@ -170,12 +170,11 @@ class Client:
         offset = 0
         counter = 0
 
-        if upload_id != 'unique()':
-            try:
-                result = self.call('get', path + '/' + upload_id, headers)
-                counter = result['chunksUploaded']
-            except:
-                pass
+        try:
+            result = self.call('get', path + '/' + upload_id, headers)
+            counter = result['chunksUploaded']
+        except:
+            pass
 
         if counter > 0:
             offset = counter * self._chunk_size
@@ -188,7 +187,7 @@ class Client:
                 if offset + self._chunk_size < size:
                     end = offset + self._chunk_size
                 else:
-                    end = size - offset
+                    end = size
                 input_file.data = input[offset:end]
 
             params[param_name] = input_file
@@ -200,10 +199,10 @@ class Client:
                 headers,
                 params,
             )
-            
+
             offset = offset + self._chunk_size
-            
-            if "$id" in result: 
+
+            if "$id" in result:
                 headers["x-appwrite-id"] = result["$id"]
 
             if on_progress is not None:
@@ -229,7 +228,7 @@ class Client:
             finalKey = prefix + '[' + key +']' if prefix else key
             finalKey = prefix + '[' + str(i) +']' if isinstance(data, list) else finalKey
             i += 1
-            
+
             if isinstance(value, list) or isinstance(value, dict):
                 output = {**output, **self.flatten(value, finalKey, stringify)}
             else:
@@ -239,4 +238,3 @@ class Client:
                     output[finalKey] = value
 
         return output
-
