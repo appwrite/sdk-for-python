@@ -6,4 +6,5 @@ class ImageFormat(Enum):
     GIF = "gif"
     PNG = "png"
     WEBP = "webp"
+    HEIC = "heic"
     AVIF = "avif"
