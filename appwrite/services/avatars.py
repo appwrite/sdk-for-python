@@ -10,6 +10,7 @@ class Avatars(Service):
         super(Avatars, self).__init__(client)
 
     def get_browser(self, code: Browser, width: float = None, height: float = None, quality: float = None):
+        """Get browser icon"""
 
         api_path = '/avatars/browsers/{code}'
         api_params = {}
@@ -27,6 +28,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_credit_card(self, code: CreditCard, width: float = None, height: float = None, quality: float = None):
+        """Get credit card icon"""
 
         api_path = '/avatars/credit-cards/{code}'
         api_params = {}
@@ -44,6 +46,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_favicon(self, url: str):
+        """Get favicon"""
 
         api_path = '/avatars/favicon'
         api_params = {}
@@ -58,6 +61,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_flag(self, code: Flag, width: float = None, height: float = None, quality: float = None):
+        """Get country flag"""
 
         api_path = '/avatars/flags/{code}'
         api_params = {}
@@ -75,6 +79,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_image(self, url: str, width: float = None, height: float = None):
+        """Get image from URL"""
 
         api_path = '/avatars/image'
         api_params = {}
@@ -91,6 +96,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_initials(self, name: str = None, width: float = None, height: float = None, background: str = None):
+        """Get user initials"""
 
         api_path = '/avatars/initials'
         api_params = {}
@@ -105,6 +111,7 @@ class Avatars(Service):
         }, api_params)
 
     def get_qr(self, text: str, size: float = None, margin: float = None, download: bool = None):
+        """Get QR code"""
 
         api_path = '/avatars/qr'
         api_params = {}

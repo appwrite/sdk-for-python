@@ -6,7 +6,8 @@ class Teams(Service):
     def __init__(self, client):
         super(Teams, self).__init__(client)
 
-    def list(self, queries: list = None, search: str = None):
+    def list(self, queries: list[str] = None, search: str = None):
+        """List teams"""
 
         api_path = '/teams'
         api_params = {}
@@ -18,7 +19,8 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create(self, team_id: str, name: str, roles: list = None):
+    def create(self, team_id: str, name: str, roles: list[str] = None):
+        """Create team"""
 
         api_path = '/teams'
         api_params = {}
@@ -38,6 +40,7 @@ class Teams(Service):
         }, api_params)
 
     def get(self, team_id: str):
+        """Get team"""
 
         api_path = '/teams/{teamId}'
         api_params = {}
@@ -52,6 +55,7 @@ class Teams(Service):
         }, api_params)
 
     def update_name(self, team_id: str, name: str):
+        """Update name"""
 
         api_path = '/teams/{teamId}'
         api_params = {}
@@ -70,6 +74,7 @@ class Teams(Service):
         }, api_params)
 
     def delete(self, team_id: str):
+        """Delete team"""
 
         api_path = '/teams/{teamId}'
         api_params = {}
@@ -83,7 +88,8 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_memberships(self, team_id: str, queries: list = None, search: str = None):
+    def list_memberships(self, team_id: str, queries: list[str] = None, search: str = None):
+        """List team memberships"""
 
         api_path = '/teams/{teamId}/memberships'
         api_params = {}
@@ -99,7 +105,8 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_membership(self, team_id: str, roles: list, email: str = None, user_id: str = None, phone: str = None, url: str = None, name: str = None):
+    def create_membership(self, team_id: str, roles: list[str], email: str = None, user_id: str = None, phone: str = None, url: str = None, name: str = None):
+        """Create team membership"""
 
         api_path = '/teams/{teamId}/memberships'
         api_params = {}
@@ -123,6 +130,7 @@ class Teams(Service):
         }, api_params)
 
     def get_membership(self, team_id: str, membership_id: str):
+        """Get team membership"""
 
         api_path = '/teams/{teamId}/memberships/{membershipId}'
         api_params = {}
@@ -140,7 +148,8 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_membership(self, team_id: str, membership_id: str, roles: list):
+    def update_membership(self, team_id: str, membership_id: str, roles: list[str]):
+        """Update membership"""
 
         api_path = '/teams/{teamId}/memberships/{membershipId}'
         api_params = {}
@@ -163,6 +172,7 @@ class Teams(Service):
         }, api_params)
 
     def delete_membership(self, team_id: str, membership_id: str):
+        """Delete team membership"""
 
         api_path = '/teams/{teamId}/memberships/{membershipId}'
         api_params = {}
@@ -181,6 +191,7 @@ class Teams(Service):
         }, api_params)
 
     def update_membership_status(self, team_id: str, membership_id: str, user_id: str, secret: str):
+        """Update team membership status"""
 
         api_path = '/teams/{teamId}/memberships/{membershipId}/status'
         api_params = {}
@@ -207,6 +218,7 @@ class Teams(Service):
         }, api_params)
 
     def get_prefs(self, team_id: str):
+        """Get team preferences"""
 
         api_path = '/teams/{teamId}/prefs'
         api_params = {}
@@ -221,6 +233,7 @@ class Teams(Service):
         }, api_params)
 
     def update_prefs(self, team_id: str, prefs: dict):
+        """Update preferences"""
 
         api_path = '/teams/{teamId}/prefs'
         api_params = {}

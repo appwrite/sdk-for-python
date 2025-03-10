@@ -9,7 +9,8 @@ class Users(Service):
     def __init__(self, client):
         super(Users, self).__init__(client)
 
-    def list(self, queries: list = None, search: str = None):
+    def list(self, queries: list[str] = None, search: str = None):
+        """List users"""
 
         api_path = '/users'
         api_params = {}
@@ -22,6 +23,7 @@ class Users(Service):
         }, api_params)
 
     def create(self, user_id: str, email: str = None, phone: str = None, password: str = None, name: str = None):
+        """Create user"""
 
         api_path = '/users'
         api_params = {}
@@ -40,6 +42,7 @@ class Users(Service):
         }, api_params)
 
     def create_argon2_user(self, user_id: str, email: str, password: str, name: str = None):
+        """Create user with Argon2 password"""
 
         api_path = '/users/argon2'
         api_params = {}
@@ -63,6 +66,7 @@ class Users(Service):
         }, api_params)
 
     def create_bcrypt_user(self, user_id: str, email: str, password: str, name: str = None):
+        """Create user with bcrypt password"""
 
         api_path = '/users/bcrypt'
         api_params = {}
@@ -85,7 +89,8 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_identities(self, queries: list = None, search: str = None):
+    def list_identities(self, queries: list[str] = None, search: str = None):
+        """List identities"""
 
         api_path = '/users/identities'
         api_params = {}
@@ -98,6 +103,7 @@ class Users(Service):
         }, api_params)
 
     def delete_identity(self, identity_id: str):
+        """Delete identity"""
 
         api_path = '/users/identities/{identityId}'
         api_params = {}
@@ -112,6 +118,7 @@ class Users(Service):
         }, api_params)
 
     def create_md5_user(self, user_id: str, email: str, password: str, name: str = None):
+        """Create user with MD5 password"""
 
         api_path = '/users/md5'
         api_params = {}
@@ -135,6 +142,7 @@ class Users(Service):
         }, api_params)
 
     def create_ph_pass_user(self, user_id: str, email: str, password: str, name: str = None):
+        """Create user with PHPass password"""
 
         api_path = '/users/phpass'
         api_params = {}
@@ -158,6 +166,7 @@ class Users(Service):
         }, api_params)
 
     def create_scrypt_user(self, user_id: str, email: str, password: str, password_salt: str, password_cpu: float, password_memory: float, password_parallel: float, password_length: float, name: str = None):
+        """Create user with Scrypt password"""
 
         api_path = '/users/scrypt'
         api_params = {}
@@ -201,6 +210,7 @@ class Users(Service):
         }, api_params)
 
     def create_scrypt_modified_user(self, user_id: str, email: str, password: str, password_salt: str, password_salt_separator: str, password_signer_key: str, name: str = None):
+        """Create user with Scrypt modified password"""
 
         api_path = '/users/scrypt-modified'
         api_params = {}
@@ -236,6 +246,7 @@ class Users(Service):
         }, api_params)
 
     def create_sha_user(self, user_id: str, email: str, password: str, password_version: PasswordHash = None, name: str = None):
+        """Create user with SHA password"""
 
         api_path = '/users/sha'
         api_params = {}
@@ -260,6 +271,7 @@ class Users(Service):
         }, api_params)
 
     def get(self, user_id: str):
+        """Get user"""
 
         api_path = '/users/{userId}'
         api_params = {}
@@ -274,6 +286,7 @@ class Users(Service):
         }, api_params)
 
     def delete(self, user_id: str):
+        """Delete user"""
 
         api_path = '/users/{userId}'
         api_params = {}
@@ -288,6 +301,7 @@ class Users(Service):
         }, api_params)
 
     def update_email(self, user_id: str, email: str):
+        """Update email"""
 
         api_path = '/users/{userId}/email'
         api_params = {}
@@ -306,6 +320,7 @@ class Users(Service):
         }, api_params)
 
     def create_jwt(self, user_id: str, session_id: str = None, duration: float = None):
+        """Create user JWT"""
 
         api_path = '/users/{userId}/jwts'
         api_params = {}
@@ -321,7 +336,8 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_labels(self, user_id: str, labels: list):
+    def update_labels(self, user_id: str, labels: list[str]):
+        """Update user labels"""
 
         api_path = '/users/{userId}/labels'
         api_params = {}
@@ -339,7 +355,8 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_logs(self, user_id: str, queries: list = None):
+    def list_logs(self, user_id: str, queries: list[str] = None):
+        """List user logs"""
 
         api_path = '/users/{userId}/logs'
         api_params = {}
@@ -355,6 +372,7 @@ class Users(Service):
         }, api_params)
 
     def list_memberships(self, user_id: str):
+        """List user memberships"""
 
         api_path = '/users/{userId}/memberships'
         api_params = {}
@@ -369,6 +387,7 @@ class Users(Service):
         }, api_params)
 
     def update_mfa(self, user_id: str, mfa: bool):
+        """Update MFA"""
 
         api_path = '/users/{userId}/mfa'
         api_params = {}
@@ -387,6 +406,7 @@ class Users(Service):
         }, api_params)
 
     def delete_mfa_authenticator(self, user_id: str, type: AuthenticatorType):
+        """Delete authenticator"""
 
         api_path = '/users/{userId}/mfa/authenticators/{type}'
         api_params = {}
@@ -405,6 +425,7 @@ class Users(Service):
         }, api_params)
 
     def list_mfa_factors(self, user_id: str):
+        """List factors"""
 
         api_path = '/users/{userId}/mfa/factors'
         api_params = {}
@@ -419,6 +440,7 @@ class Users(Service):
         }, api_params)
 
     def get_mfa_recovery_codes(self, user_id: str):
+        """Get MFA recovery codes"""
 
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
@@ -433,6 +455,7 @@ class Users(Service):
         }, api_params)
 
     def update_mfa_recovery_codes(self, user_id: str):
+        """Regenerate MFA recovery codes"""
 
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
@@ -447,6 +470,7 @@ class Users(Service):
         }, api_params)
 
     def create_mfa_recovery_codes(self, user_id: str):
+        """Create MFA recovery codes"""
 
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
@@ -461,6 +485,7 @@ class Users(Service):
         }, api_params)
 
     def update_name(self, user_id: str, name: str):
+        """Update name"""
 
         api_path = '/users/{userId}/name'
         api_params = {}
@@ -479,6 +504,7 @@ class Users(Service):
         }, api_params)
 
     def update_password(self, user_id: str, password: str):
+        """Update password"""
 
         api_path = '/users/{userId}/password'
         api_params = {}
@@ -497,6 +523,7 @@ class Users(Service):
         }, api_params)
 
     def update_phone(self, user_id: str, number: str):
+        """Update phone"""
 
         api_path = '/users/{userId}/phone'
         api_params = {}
@@ -515,6 +542,7 @@ class Users(Service):
         }, api_params)
 
     def get_prefs(self, user_id: str):
+        """Get user preferences"""
 
         api_path = '/users/{userId}/prefs'
         api_params = {}
@@ -529,6 +557,7 @@ class Users(Service):
         }, api_params)
 
     def update_prefs(self, user_id: str, prefs: dict):
+        """Update user preferences"""
 
         api_path = '/users/{userId}/prefs'
         api_params = {}
@@ -547,6 +576,7 @@ class Users(Service):
         }, api_params)
 
     def list_sessions(self, user_id: str):
+        """List user sessions"""
 
         api_path = '/users/{userId}/sessions'
         api_params = {}
@@ -561,6 +591,7 @@ class Users(Service):
         }, api_params)
 
     def create_session(self, user_id: str):
+        """Create session"""
 
         api_path = '/users/{userId}/sessions'
         api_params = {}
@@ -575,6 +606,7 @@ class Users(Service):
         }, api_params)
 
     def delete_sessions(self, user_id: str):
+        """Delete user sessions"""
 
         api_path = '/users/{userId}/sessions'
         api_params = {}
@@ -589,6 +621,7 @@ class Users(Service):
         }, api_params)
 
     def delete_session(self, user_id: str, session_id: str):
+        """Delete user session"""
 
         api_path = '/users/{userId}/sessions/{sessionId}'
         api_params = {}
@@ -607,6 +640,7 @@ class Users(Service):
         }, api_params)
 
     def update_status(self, user_id: str, status: bool):
+        """Update user status"""
 
         api_path = '/users/{userId}/status'
         api_params = {}
@@ -624,7 +658,8 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_targets(self, user_id: str, queries: list = None):
+    def list_targets(self, user_id: str, queries: list[str] = None):
+        """List user targets"""
 
         api_path = '/users/{userId}/targets'
         api_params = {}
@@ -640,6 +675,7 @@ class Users(Service):
         }, api_params)
 
     def create_target(self, user_id: str, target_id: str, provider_type: MessagingProviderType, identifier: str, provider_id: str = None, name: str = None):
+        """Create user target"""
 
         api_path = '/users/{userId}/targets'
         api_params = {}
@@ -668,6 +704,7 @@ class Users(Service):
         }, api_params)
 
     def get_target(self, user_id: str, target_id: str):
+        """Get user target"""
 
         api_path = '/users/{userId}/targets/{targetId}'
         api_params = {}
@@ -686,6 +723,7 @@ class Users(Service):
         }, api_params)
 
     def update_target(self, user_id: str, target_id: str, identifier: str = None, provider_id: str = None, name: str = None):
+        """Update user target"""
 
         api_path = '/users/{userId}/targets/{targetId}'
         api_params = {}
@@ -707,6 +745,7 @@ class Users(Service):
         }, api_params)
 
     def delete_target(self, user_id: str, target_id: str):
+        """Delete user target"""
 
         api_path = '/users/{userId}/targets/{targetId}'
         api_params = {}
@@ -725,6 +764,7 @@ class Users(Service):
         }, api_params)
 
     def create_token(self, user_id: str, length: float = None, expire: float = None):
+        """Create token"""
 
         api_path = '/users/{userId}/tokens'
         api_params = {}
@@ -741,6 +781,7 @@ class Users(Service):
         }, api_params)
 
     def update_email_verification(self, user_id: str, email_verification: bool):
+        """Update email verification"""
 
         api_path = '/users/{userId}/verification'
         api_params = {}
@@ -759,6 +800,7 @@ class Users(Service):
         }, api_params)
 
     def update_phone_verification(self, user_id: str, phone_verification: bool):
+        """Update phone verification"""
 
         api_path = '/users/{userId}/verification/phone'
         api_params = {}

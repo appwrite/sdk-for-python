@@ -7,6 +7,7 @@ class Graphql(Service):
         super(Graphql, self).__init__(client)
 
     def query(self, query: dict):
+        """GraphQL endpoint"""
 
         api_path = '/graphql'
         api_params = {}
@@ -22,6 +23,7 @@ class Graphql(Service):
         }, api_params)
 
     def mutation(self, query: dict):
+        """GraphQL endpoint"""
 
         api_path = '/graphql/mutation'
         api_params = {}
