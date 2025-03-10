@@ -1,4 +1,5 @@
 from ..service import Service
+from typing import List
 from ..exception import AppwriteException
 from ..enums.password_hash import PasswordHash;
 from ..enums.authenticator_type import AuthenticatorType;
@@ -9,7 +10,7 @@ class Users(Service):
     def __init__(self, client):
         super(Users, self).__init__(client)
 
-    def list(self, queries: list[str] = None, search: str = None):
+    def list(self, queries: List[str] = None, search: str = None):
         """List users"""
 
         api_path = '/users'
@@ -89,7 +90,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_identities(self, queries: list[str] = None, search: str = None):
+    def list_identities(self, queries: List[str] = None, search: str = None):
         """List identities"""
 
         api_path = '/users/identities'
@@ -336,7 +337,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_labels(self, user_id: str, labels: list[str]):
+    def update_labels(self, user_id: str, labels: List[str]):
         """Update user labels"""
 
         api_path = '/users/{userId}/labels'
@@ -355,7 +356,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_logs(self, user_id: str, queries: list[str] = None):
+    def list_logs(self, user_id: str, queries: List[str] = None):
         """List user logs"""
 
         api_path = '/users/{userId}/logs'
@@ -658,7 +659,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_targets(self, user_id: str, queries: list[str] = None):
+    def list_targets(self, user_id: str, queries: List[str] = None):
         """List user targets"""
 
         api_path = '/users/{userId}/targets'

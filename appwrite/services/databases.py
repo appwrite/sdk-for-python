@@ -1,4 +1,5 @@
 from ..service import Service
+from typing import List
 from ..exception import AppwriteException
 from ..enums.relationship_type import RelationshipType;
 from ..enums.relation_mutate import RelationMutate;
@@ -9,7 +10,7 @@ class Databases(Service):
     def __init__(self, client):
         super(Databases, self).__init__(client)
 
-    def list(self, queries: list[str] = None, search: str = None):
+    def list(self, queries: List[str] = None, search: str = None):
         """List databases"""
 
         api_path = '/databases'
@@ -92,7 +93,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_collections(self, database_id: str, queries: list[str] = None, search: str = None):
+    def list_collections(self, database_id: str, queries: List[str] = None, search: str = None):
         """List collections"""
 
         api_path = '/databases/{databaseId}/collections'
@@ -109,7 +110,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_collection(self, database_id: str, collection_id: str, name: str, permissions: list[str] = None, document_security: bool = None, enabled: bool = None):
+    def create_collection(self, database_id: str, collection_id: str, name: str, permissions: List[str] = None, document_security: bool = None, enabled: bool = None):
         """Create collection"""
 
         api_path = '/databases/{databaseId}/collections'
@@ -154,7 +155,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_collection(self, database_id: str, collection_id: str, name: str, permissions: list[str] = None, document_security: bool = None, enabled: bool = None):
+    def update_collection(self, database_id: str, collection_id: str, name: str, permissions: List[str] = None, document_security: bool = None, enabled: bool = None):
         """Update collection"""
 
         api_path = '/databases/{databaseId}/collections/{collectionId}'
@@ -199,7 +200,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_attributes(self, database_id: str, collection_id: str, queries: list[str] = None):
+    def list_attributes(self, database_id: str, collection_id: str, queries: List[str] = None):
         """List attributes"""
 
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes'
@@ -393,7 +394,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_enum_attribute(self, database_id: str, collection_id: str, key: str, elements: list[str], required: bool, default: str = None, array: bool = None):
+    def create_enum_attribute(self, database_id: str, collection_id: str, key: str, elements: List[str], required: bool, default: str = None, array: bool = None):
         """Create enum attribute"""
 
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/enum'
@@ -426,7 +427,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_enum_attribute(self, database_id: str, collection_id: str, key: str, elements: list[str], required: bool, default: str, new_key: str = None):
+    def update_enum_attribute(self, database_id: str, collection_id: str, key: str, elements: List[str], required: bool, default: str, new_key: str = None):
         """Update enum attribute"""
 
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/enum/{key}'
@@ -865,7 +866,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_documents(self, database_id: str, collection_id: str, queries: list[str] = None):
+    def list_documents(self, database_id: str, collection_id: str, queries: List[str] = None):
         """List documents"""
 
         api_path = '/databases/{databaseId}/collections/{collectionId}/documents'
@@ -885,7 +886,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: list[str] = None):
+    def create_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: List[str] = None):
         """Create document"""
 
         api_path = '/databases/{databaseId}/collections/{collectionId}/documents'
@@ -913,7 +914,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_document(self, database_id: str, collection_id: str, document_id: str, queries: list[str] = None):
+    def get_document(self, database_id: str, collection_id: str, document_id: str, queries: List[str] = None):
         """Get document"""
 
         api_path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
@@ -937,7 +938,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_document(self, database_id: str, collection_id: str, document_id: str, data: dict = None, permissions: list[str] = None):
+    def update_document(self, database_id: str, collection_id: str, document_id: str, data: dict = None, permissions: List[str] = None):
         """Update document"""
 
         api_path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
@@ -985,7 +986,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_indexes(self, database_id: str, collection_id: str, queries: list[str] = None):
+    def list_indexes(self, database_id: str, collection_id: str, queries: List[str] = None):
         """List indexes"""
 
         api_path = '/databases/{databaseId}/collections/{collectionId}/indexes'
@@ -1005,7 +1006,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_index(self, database_id: str, collection_id: str, key: str, type: IndexType, attributes: list[str], orders: list[str] = None):
+    def create_index(self, database_id: str, collection_id: str, key: str, type: IndexType, attributes: List[str], orders: List[str] = None):
         """Create index"""
 
         api_path = '/databases/{databaseId}/collections/{collectionId}/indexes'

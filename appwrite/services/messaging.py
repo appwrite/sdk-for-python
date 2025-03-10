@@ -1,4 +1,5 @@
 from ..service import Service
+from typing import List
 from ..exception import AppwriteException
 from ..enums.message_priority import MessagePriority;
 from ..enums.smtp_encryption import SmtpEncryption;
@@ -8,7 +9,7 @@ class Messaging(Service):
     def __init__(self, client):
         super(Messaging, self).__init__(client)
 
-    def list_messages(self, queries: list[str] = None, search: str = None):
+    def list_messages(self, queries: List[str] = None, search: str = None):
         """List messages"""
 
         api_path = '/messaging/messages'
@@ -21,7 +22,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_email(self, message_id: str, subject: str, content: str, topics: list[str] = None, users: list[str] = None, targets: list[str] = None, cc: list[str] = None, bcc: list[str] = None, attachments: list[str] = None, draft: bool = None, html: bool = None, scheduled_at: str = None):
+    def create_email(self, message_id: str, subject: str, content: str, topics: List[str] = None, users: List[str] = None, targets: List[str] = None, cc: List[str] = None, bcc: List[str] = None, attachments: List[str] = None, draft: bool = None, html: bool = None, scheduled_at: str = None):
         """Create email"""
 
         api_path = '/messaging/messages/email'
@@ -53,7 +54,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_email(self, message_id: str, topics: list[str] = None, users: list[str] = None, targets: list[str] = None, subject: str = None, content: str = None, draft: bool = None, html: bool = None, cc: list[str] = None, bcc: list[str] = None, scheduled_at: str = None, attachments: list[str] = None):
+    def update_email(self, message_id: str, topics: List[str] = None, users: List[str] = None, targets: List[str] = None, subject: str = None, content: str = None, draft: bool = None, html: bool = None, cc: List[str] = None, bcc: List[str] = None, scheduled_at: str = None, attachments: List[str] = None):
         """Update email"""
 
         api_path = '/messaging/messages/email/{messageId}'
@@ -79,7 +80,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_push(self, message_id: str, title: str = None, body: str = None, topics: list[str] = None, users: list[str] = None, targets: list[str] = None, data: dict = None, action: str = None, image: str = None, icon: str = None, sound: str = None, color: str = None, tag: str = None, badge: float = None, draft: bool = None, scheduled_at: str = None, content_available: bool = None, critical: bool = None, priority: MessagePriority = None):
+    def create_push(self, message_id: str, title: str = None, body: str = None, topics: List[str] = None, users: List[str] = None, targets: List[str] = None, data: dict = None, action: str = None, image: str = None, icon: str = None, sound: str = None, color: str = None, tag: str = None, badge: float = None, draft: bool = None, scheduled_at: str = None, content_available: bool = None, critical: bool = None, priority: MessagePriority = None):
         """Create push notification"""
 
         api_path = '/messaging/messages/push'
@@ -112,7 +113,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_push(self, message_id: str, topics: list[str] = None, users: list[str] = None, targets: list[str] = None, title: str = None, body: str = None, data: dict = None, action: str = None, image: str = None, icon: str = None, sound: str = None, color: str = None, tag: str = None, badge: float = None, draft: bool = None, scheduled_at: str = None, content_available: bool = None, critical: bool = None, priority: MessagePriority = None):
+    def update_push(self, message_id: str, topics: List[str] = None, users: List[str] = None, targets: List[str] = None, title: str = None, body: str = None, data: dict = None, action: str = None, image: str = None, icon: str = None, sound: str = None, color: str = None, tag: str = None, badge: float = None, draft: bool = None, scheduled_at: str = None, content_available: bool = None, critical: bool = None, priority: MessagePriority = None):
         """Update push notification"""
 
         api_path = '/messaging/messages/push/{messageId}'
@@ -145,7 +146,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_sms(self, message_id: str, content: str, topics: list[str] = None, users: list[str] = None, targets: list[str] = None, draft: bool = None, scheduled_at: str = None):
+    def create_sms(self, message_id: str, content: str, topics: List[str] = None, users: List[str] = None, targets: List[str] = None, draft: bool = None, scheduled_at: str = None):
         """Create SMS"""
 
         api_path = '/messaging/messages/sms'
@@ -169,7 +170,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_sms(self, message_id: str, topics: list[str] = None, users: list[str] = None, targets: list[str] = None, content: str = None, draft: bool = None, scheduled_at: str = None):
+    def update_sms(self, message_id: str, topics: List[str] = None, users: List[str] = None, targets: List[str] = None, content: str = None, draft: bool = None, scheduled_at: str = None):
         """Update SMS"""
 
         api_path = '/messaging/messages/sms/{messageId}'
@@ -220,7 +221,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_message_logs(self, message_id: str, queries: list[str] = None):
+    def list_message_logs(self, message_id: str, queries: List[str] = None):
         """List message logs"""
 
         api_path = '/messaging/messages/{messageId}/logs'
@@ -236,7 +237,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_targets(self, message_id: str, queries: list[str] = None):
+    def list_targets(self, message_id: str, queries: List[str] = None):
         """List message targets"""
 
         api_path = '/messaging/messages/{messageId}/targets'
@@ -252,7 +253,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_providers(self, queries: list[str] = None, search: str = None):
+    def list_providers(self, queries: List[str] = None, search: str = None):
         """List providers"""
 
         api_path = '/messaging/providers'
@@ -756,7 +757,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_provider_logs(self, provider_id: str, queries: list[str] = None):
+    def list_provider_logs(self, provider_id: str, queries: List[str] = None):
         """List provider logs"""
 
         api_path = '/messaging/providers/{providerId}/logs'
@@ -772,7 +773,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_subscriber_logs(self, subscriber_id: str, queries: list[str] = None):
+    def list_subscriber_logs(self, subscriber_id: str, queries: List[str] = None):
         """List subscriber logs"""
 
         api_path = '/messaging/subscribers/{subscriberId}/logs'
@@ -788,7 +789,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_topics(self, queries: list[str] = None, search: str = None):
+    def list_topics(self, queries: List[str] = None, search: str = None):
         """List topics"""
 
         api_path = '/messaging/topics'
@@ -801,7 +802,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_topic(self, topic_id: str, name: str, subscribe: list[str] = None):
+    def create_topic(self, topic_id: str, name: str, subscribe: List[str] = None):
         """Create topic"""
 
         api_path = '/messaging/topics'
@@ -836,7 +837,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_topic(self, topic_id: str, name: str = None, subscribe: list[str] = None):
+    def update_topic(self, topic_id: str, name: str = None, subscribe: List[str] = None):
         """Update topic"""
 
         api_path = '/messaging/topics/{topicId}'
@@ -868,7 +869,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_topic_logs(self, topic_id: str, queries: list[str] = None):
+    def list_topic_logs(self, topic_id: str, queries: List[str] = None):
         """List topic logs"""
 
         api_path = '/messaging/topics/{topicId}/logs'
@@ -884,7 +885,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_subscribers(self, topic_id: str, queries: list[str] = None, search: str = None):
+    def list_subscribers(self, topic_id: str, queries: List[str] = None, search: str = None):
         """List subscribers"""
 
         api_path = '/messaging/topics/{topicId}/subscribers'

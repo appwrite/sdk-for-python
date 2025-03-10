@@ -1,4 +1,5 @@
 from ..service import Service
+from typing import List
 from ..exception import AppwriteException
 from ..enums.authenticator_type import AuthenticatorType;
 from ..enums.authentication_factor import AuthenticationFactor;
@@ -62,7 +63,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_identities(self, queries: list[str] = None):
+    def list_identities(self, queries: List[str] = None):
         """List identities"""
 
         api_path = '/account/identities'
@@ -99,7 +100,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_logs(self, queries: list[str] = None):
+    def list_logs(self, queries: List[str] = None):
         """List logs"""
 
         api_path = '/account/logs'
@@ -568,7 +569,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_o_auth2_token(self, provider: OAuthProvider, success: str = None, failure: str = None, scopes: list[str] = None):
+    def create_o_auth2_token(self, provider: OAuthProvider, success: str = None, failure: str = None, scopes: List[str] = None):
         """Create OAuth2 token"""
 
         api_path = '/account/tokens/oauth2/{provider}'

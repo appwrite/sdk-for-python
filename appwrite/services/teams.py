@@ -1,4 +1,5 @@
 from ..service import Service
+from typing import List
 from ..exception import AppwriteException
 
 class Teams(Service):
@@ -6,7 +7,7 @@ class Teams(Service):
     def __init__(self, client):
         super(Teams, self).__init__(client)
 
-    def list(self, queries: list[str] = None, search: str = None):
+    def list(self, queries: List[str] = None, search: str = None):
         """List teams"""
 
         api_path = '/teams'
@@ -19,7 +20,7 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create(self, team_id: str, name: str, roles: list[str] = None):
+    def create(self, team_id: str, name: str, roles: List[str] = None):
         """Create team"""
 
         api_path = '/teams'
@@ -88,7 +89,7 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_memberships(self, team_id: str, queries: list[str] = None, search: str = None):
+    def list_memberships(self, team_id: str, queries: List[str] = None, search: str = None):
         """List team memberships"""
 
         api_path = '/teams/{teamId}/memberships'
@@ -105,7 +106,7 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_membership(self, team_id: str, roles: list[str], email: str = None, user_id: str = None, phone: str = None, url: str = None, name: str = None):
+    def create_membership(self, team_id: str, roles: List[str], email: str = None, user_id: str = None, phone: str = None, url: str = None, name: str = None):
         """Create team membership"""
 
         api_path = '/teams/{teamId}/memberships'
@@ -148,7 +149,7 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_membership(self, team_id: str, membership_id: str, roles: list[str]):
+    def update_membership(self, team_id: str, membership_id: str, roles: List[str]):
         """Update membership"""
 
         api_path = '/teams/{teamId}/memberships/{membershipId}'
