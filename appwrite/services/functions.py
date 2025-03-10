@@ -1,15 +1,17 @@
 from ..service import Service
 from ..exception import AppwriteException
+from ..enums.runtime import Runtime;
+from ..input_file import InputFile
+from ..enums.execution_method import ExecutionMethod;
 
 class Functions(Service):
 
     def __init__(self, client):
         super(Functions, self).__init__(client)
 
-    def list(self, queries = None, search = None):
+    def list(self, queries: list[str] = None, search: str = None):
         """List functions"""
 
-        
         api_path = '/functions'
         api_params = {}
 
@@ -20,10 +22,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create(self, function_id, name, runtime, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, scopes = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None, template_repository = None, template_owner = None, template_root_directory = None, template_version = None, specification = None):
+    def create(self, function_id: str, name: str, runtime: Runtime, execute: list[str] = None, events: list[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: list[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, template_repository: str = None, template_owner: str = None, template_root_directory: str = None, template_version: str = None, specification: str = None):
         """Create function"""
 
-        
         api_path = '/functions'
         api_params = {}
         if function_id is None:
@@ -66,7 +67,6 @@ class Functions(Service):
     def list_runtimes(self):
         """List runtimes"""
 
-        
         api_path = '/functions/runtimes'
         api_params = {}
 
@@ -77,7 +77,6 @@ class Functions(Service):
     def list_specifications(self):
         """List available function runtime specifications"""
 
-        
         api_path = '/functions/specifications'
         api_params = {}
 
@@ -85,10 +84,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get(self, function_id):
+    def get(self, function_id: str):
         """Get function"""
 
-        
         api_path = '/functions/{functionId}'
         api_params = {}
         if function_id is None:
@@ -101,10 +99,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update(self, function_id, name, runtime = None, execute = None, events = None, schedule = None, timeout = None, enabled = None, logging = None, entrypoint = None, commands = None, scopes = None, installation_id = None, provider_repository_id = None, provider_branch = None, provider_silent_mode = None, provider_root_directory = None, specification = None):
+    def update(self, function_id: str, name: str, runtime: Runtime = None, execute: list[str] = None, events: list[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: list[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None):
         """Update function"""
 
-        
         api_path = '/functions/{functionId}'
         api_params = {}
         if function_id is None:
@@ -137,10 +134,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete(self, function_id):
+    def delete(self, function_id: str):
         """Delete function"""
 
-        
         api_path = '/functions/{functionId}'
         api_params = {}
         if function_id is None:
@@ -153,10 +149,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_deployments(self, function_id, queries = None, search = None):
+    def list_deployments(self, function_id: str, queries: list[str] = None, search: str = None):
         """List deployments"""
 
-        
         api_path = '/functions/{functionId}/deployments'
         api_params = {}
         if function_id is None:
@@ -171,10 +166,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_deployment(self, function_id, code, activate, entrypoint = None, commands = None, on_progress = None):
+    def create_deployment(self, function_id: str, code: InputFile, activate: bool, entrypoint: str = None, commands: str = None, on_progress = None):
         """Create deployment"""
 
-        
         api_path = '/functions/{functionId}/deployments'
         api_params = {}
         if function_id is None:
@@ -202,10 +196,9 @@ class Functions(Service):
             'content-type': 'multipart/form-data',
         }, api_params, param_name, on_progress, upload_id)
 
-    def get_deployment(self, function_id, deployment_id):
+    def get_deployment(self, function_id: str, deployment_id: str):
         """Get deployment"""
 
-        
         api_path = '/functions/{functionId}/deployments/{deploymentId}'
         api_params = {}
         if function_id is None:
@@ -222,10 +215,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_deployment(self, function_id, deployment_id):
+    def update_deployment(self, function_id: str, deployment_id: str):
         """Update deployment"""
 
-        
         api_path = '/functions/{functionId}/deployments/{deploymentId}'
         api_params = {}
         if function_id is None:
@@ -242,10 +234,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_deployment(self, function_id, deployment_id):
+    def delete_deployment(self, function_id: str, deployment_id: str):
         """Delete deployment"""
 
-        
         api_path = '/functions/{functionId}/deployments/{deploymentId}'
         api_params = {}
         if function_id is None:
@@ -262,10 +253,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_build(self, function_id, deployment_id, build_id = None):
+    def create_build(self, function_id: str, deployment_id: str, build_id: str = None):
         """Rebuild deployment"""
 
-        
         api_path = '/functions/{functionId}/deployments/{deploymentId}/build'
         api_params = {}
         if function_id is None:
@@ -283,10 +273,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_deployment_build(self, function_id, deployment_id):
+    def update_deployment_build(self, function_id: str, deployment_id: str):
         """Cancel deployment"""
 
-        
         api_path = '/functions/{functionId}/deployments/{deploymentId}/build'
         api_params = {}
         if function_id is None:
@@ -303,10 +292,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_deployment_download(self, function_id, deployment_id):
+    def get_deployment_download(self, function_id: str, deployment_id: str):
         """Download deployment"""
 
-        
         api_path = '/functions/{functionId}/deployments/{deploymentId}/download'
         api_params = {}
         if function_id is None:
@@ -323,10 +311,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_executions(self, function_id, queries = None, search = None):
+    def list_executions(self, function_id: str, queries: list[str] = None, search: str = None):
         """List executions"""
 
-        
         api_path = '/functions/{functionId}/executions'
         api_params = {}
         if function_id is None:
@@ -341,10 +328,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_execution(self, function_id, body = None, xasync = None, path = None, method = None, headers = None, scheduled_at = None):
+    def create_execution(self, function_id: str, body: str = None, xasync: bool = None, path: str = None, method: ExecutionMethod = None, headers: dict = None, scheduled_at: str = None):
         """Create execution"""
 
-        
         api_path = '/functions/{functionId}/executions'
         api_params = {}
         if function_id is None:
@@ -363,10 +349,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_execution(self, function_id, execution_id):
+    def get_execution(self, function_id: str, execution_id: str):
         """Get execution"""
 
-        
         api_path = '/functions/{functionId}/executions/{executionId}'
         api_params = {}
         if function_id is None:
@@ -383,10 +368,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_execution(self, function_id, execution_id):
+    def delete_execution(self, function_id: str, execution_id: str):
         """Delete execution"""
 
-        
         api_path = '/functions/{functionId}/executions/{executionId}'
         api_params = {}
         if function_id is None:
@@ -403,10 +387,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_variables(self, function_id):
+    def list_variables(self, function_id: str):
         """List variables"""
 
-        
         api_path = '/functions/{functionId}/variables'
         api_params = {}
         if function_id is None:
@@ -419,10 +402,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_variable(self, function_id, key, value):
+    def create_variable(self, function_id: str, key: str, value: str):
         """Create variable"""
 
-        
         api_path = '/functions/{functionId}/variables'
         api_params = {}
         if function_id is None:
@@ -443,10 +425,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_variable(self, function_id, variable_id):
+    def get_variable(self, function_id: str, variable_id: str):
         """Get variable"""
 
-        
         api_path = '/functions/{functionId}/variables/{variableId}'
         api_params = {}
         if function_id is None:
@@ -463,10 +444,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_variable(self, function_id, variable_id, key, value = None):
+    def update_variable(self, function_id: str, variable_id: str, key: str, value: str = None):
         """Update variable"""
 
-        
         api_path = '/functions/{functionId}/variables/{variableId}'
         api_params = {}
         if function_id is None:
@@ -488,10 +468,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_variable(self, function_id, variable_id):
+    def delete_variable(self, function_id: str, variable_id: str):
         """Delete variable"""
 
-        
         api_path = '/functions/{functionId}/variables/{variableId}'
         api_params = {}
         if function_id is None:

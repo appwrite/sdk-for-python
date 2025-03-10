@@ -8,6 +8,6 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 health = Health(client)
 
-result = health.get_queue_usage_dump(
+result = health.get_queue_stats_usage_dump(
     threshold = None # optional
 )
