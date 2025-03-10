@@ -1,15 +1,15 @@
 from ..service import Service
 from ..exception import AppwriteException
+from ..enums.message_priority import MessagePriority;
+from ..enums.smtp_encryption import SmtpEncryption;
 
 class Messaging(Service):
 
     def __init__(self, client):
         super(Messaging, self).__init__(client)
 
-    def list_messages(self, queries = None, search = None):
-        """List messages"""
+    def list_messages(self, queries: list = None, search: str = None):
 
-        
         api_path = '/messaging/messages'
         api_params = {}
 
@@ -20,10 +20,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_email(self, message_id, subject, content, topics = None, users = None, targets = None, cc = None, bcc = None, attachments = None, draft = None, html = None, scheduled_at = None):
-        """Create email"""
+    def create_email(self, message_id: str, subject: str, content: str, topics: list = None, users: list = None, targets: list = None, cc: list = None, bcc: list = None, attachments: list = None, draft: bool = None, html: bool = None, scheduled_at: str = None):
 
-        
         api_path = '/messaging/messages/email'
         api_params = {}
         if message_id is None:
@@ -53,10 +51,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_email(self, message_id, topics = None, users = None, targets = None, subject = None, content = None, draft = None, html = None, cc = None, bcc = None, scheduled_at = None, attachments = None):
-        """Update email"""
+    def update_email(self, message_id: str, topics: list = None, users: list = None, targets: list = None, subject: str = None, content: str = None, draft: bool = None, html: bool = None, cc: list = None, bcc: list = None, scheduled_at: str = None, attachments: list = None):
 
-        
         api_path = '/messaging/messages/email/{messageId}'
         api_params = {}
         if message_id is None:
@@ -80,10 +76,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_push(self, message_id, title = None, body = None, topics = None, users = None, targets = None, data = None, action = None, image = None, icon = None, sound = None, color = None, tag = None, badge = None, draft = None, scheduled_at = None, content_available = None, critical = None, priority = None):
-        """Create push notification"""
+    def create_push(self, message_id: str, title: str = None, body: str = None, topics: list = None, users: list = None, targets: list = None, data: dict = None, action: str = None, image: str = None, icon: str = None, sound: str = None, color: str = None, tag: str = None, badge: float = None, draft: bool = None, scheduled_at: str = None, content_available: bool = None, critical: bool = None, priority: MessagePriority = None):
 
-        
         api_path = '/messaging/messages/push'
         api_params = {}
         if message_id is None:
@@ -114,10 +108,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_push(self, message_id, topics = None, users = None, targets = None, title = None, body = None, data = None, action = None, image = None, icon = None, sound = None, color = None, tag = None, badge = None, draft = None, scheduled_at = None, content_available = None, critical = None, priority = None):
-        """Update push notification"""
+    def update_push(self, message_id: str, topics: list = None, users: list = None, targets: list = None, title: str = None, body: str = None, data: dict = None, action: str = None, image: str = None, icon: str = None, sound: str = None, color: str = None, tag: str = None, badge: float = None, draft: bool = None, scheduled_at: str = None, content_available: bool = None, critical: bool = None, priority: MessagePriority = None):
 
-        
         api_path = '/messaging/messages/push/{messageId}'
         api_params = {}
         if message_id is None:
@@ -148,10 +140,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_sms(self, message_id, content, topics = None, users = None, targets = None, draft = None, scheduled_at = None):
-        """Create SMS"""
+    def create_sms(self, message_id: str, content: str, topics: list = None, users: list = None, targets: list = None, draft: bool = None, scheduled_at: str = None):
 
-        
         api_path = '/messaging/messages/sms'
         api_params = {}
         if message_id is None:
@@ -173,10 +163,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_sms(self, message_id, topics = None, users = None, targets = None, content = None, draft = None, scheduled_at = None):
-        """Update SMS"""
+    def update_sms(self, message_id: str, topics: list = None, users: list = None, targets: list = None, content: str = None, draft: bool = None, scheduled_at: str = None):
 
-        
         api_path = '/messaging/messages/sms/{messageId}'
         api_params = {}
         if message_id is None:
@@ -195,10 +183,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_message(self, message_id):
-        """Get message"""
+    def get_message(self, message_id: str):
 
-        
         api_path = '/messaging/messages/{messageId}'
         api_params = {}
         if message_id is None:
@@ -211,10 +197,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete(self, message_id):
-        """Delete message"""
+    def delete(self, message_id: str):
 
-        
         api_path = '/messaging/messages/{messageId}'
         api_params = {}
         if message_id is None:
@@ -227,10 +211,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_message_logs(self, message_id, queries = None):
-        """List message logs"""
+    def list_message_logs(self, message_id: str, queries: list = None):
 
-        
         api_path = '/messaging/messages/{messageId}/logs'
         api_params = {}
         if message_id is None:
@@ -244,10 +226,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_targets(self, message_id, queries = None):
-        """List message targets"""
+    def list_targets(self, message_id: str, queries: list = None):
 
-        
         api_path = '/messaging/messages/{messageId}/targets'
         api_params = {}
         if message_id is None:
@@ -261,10 +241,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_providers(self, queries = None, search = None):
-        """List providers"""
+    def list_providers(self, queries: list = None, search: str = None):
 
-        
         api_path = '/messaging/providers'
         api_params = {}
 
@@ -275,10 +253,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_apns_provider(self, provider_id, name, auth_key = None, auth_key_id = None, team_id = None, bundle_id = None, sandbox = None, enabled = None):
-        """Create APNS provider"""
+    def create_apns_provider(self, provider_id: str, name: str, auth_key: str = None, auth_key_id: str = None, team_id: str = None, bundle_id: str = None, sandbox: bool = None, enabled: bool = None):
 
-        
         api_path = '/messaging/providers/apns'
         api_params = {}
         if provider_id is None:
@@ -301,10 +277,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_apns_provider(self, provider_id, name = None, enabled = None, auth_key = None, auth_key_id = None, team_id = None, bundle_id = None, sandbox = None):
-        """Update APNS provider"""
+    def update_apns_provider(self, provider_id: str, name: str = None, enabled: bool = None, auth_key: str = None, auth_key_id: str = None, team_id: str = None, bundle_id: str = None, sandbox: bool = None):
 
-        
         api_path = '/messaging/providers/apns/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -324,10 +298,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_fcm_provider(self, provider_id, name, service_account_json = None, enabled = None):
-        """Create FCM provider"""
+    def create_fcm_provider(self, provider_id: str, name: str, service_account_json: dict = None, enabled: bool = None):
 
-        
         api_path = '/messaging/providers/fcm'
         api_params = {}
         if provider_id is None:
@@ -346,10 +318,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_fcm_provider(self, provider_id, name = None, enabled = None, service_account_json = None):
-        """Update FCM provider"""
+    def update_fcm_provider(self, provider_id: str, name: str = None, enabled: bool = None, service_account_json: dict = None):
 
-        
         api_path = '/messaging/providers/fcm/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -365,10 +335,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_mailgun_provider(self, provider_id, name, api_key = None, domain = None, is_eu_region = None, from_name = None, from_email = None, reply_to_name = None, reply_to_email = None, enabled = None):
-        """Create Mailgun provider"""
+    def create_mailgun_provider(self, provider_id: str, name: str, api_key: str = None, domain: str = None, is_eu_region: bool = None, from_name: str = None, from_email: str = None, reply_to_name: str = None, reply_to_email: str = None, enabled: bool = None):
 
-        
         api_path = '/messaging/providers/mailgun'
         api_params = {}
         if provider_id is None:
@@ -393,10 +361,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_mailgun_provider(self, provider_id, name = None, api_key = None, domain = None, is_eu_region = None, enabled = None, from_name = None, from_email = None, reply_to_name = None, reply_to_email = None):
-        """Update Mailgun provider"""
+    def update_mailgun_provider(self, provider_id: str, name: str = None, api_key: str = None, domain: str = None, is_eu_region: bool = None, enabled: bool = None, from_name: str = None, from_email: str = None, reply_to_name: str = None, reply_to_email: str = None):
 
-        
         api_path = '/messaging/providers/mailgun/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -418,10 +384,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_msg91_provider(self, provider_id, name, template_id = None, sender_id = None, auth_key = None, enabled = None):
-        """Create Msg91 provider"""
+    def create_msg91_provider(self, provider_id: str, name: str, template_id: str = None, sender_id: str = None, auth_key: str = None, enabled: bool = None):
 
-        
         api_path = '/messaging/providers/msg91'
         api_params = {}
         if provider_id is None:
@@ -442,10 +406,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_msg91_provider(self, provider_id, name = None, enabled = None, template_id = None, sender_id = None, auth_key = None):
-        """Update Msg91 provider"""
+    def update_msg91_provider(self, provider_id: str, name: str = None, enabled: bool = None, template_id: str = None, sender_id: str = None, auth_key: str = None):
 
-        
         api_path = '/messaging/providers/msg91/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -463,10 +425,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_sendgrid_provider(self, provider_id, name, api_key = None, from_name = None, from_email = None, reply_to_name = None, reply_to_email = None, enabled = None):
-        """Create Sendgrid provider"""
+    def create_sendgrid_provider(self, provider_id: str, name: str, api_key: str = None, from_name: str = None, from_email: str = None, reply_to_name: str = None, reply_to_email: str = None, enabled: bool = None):
 
-        
         api_path = '/messaging/providers/sendgrid'
         api_params = {}
         if provider_id is None:
@@ -489,10 +449,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_sendgrid_provider(self, provider_id, name = None, enabled = None, api_key = None, from_name = None, from_email = None, reply_to_name = None, reply_to_email = None):
-        """Update Sendgrid provider"""
+    def update_sendgrid_provider(self, provider_id: str, name: str = None, enabled: bool = None, api_key: str = None, from_name: str = None, from_email: str = None, reply_to_name: str = None, reply_to_email: str = None):
 
-        
         api_path = '/messaging/providers/sendgrid/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -512,10 +470,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_smtp_provider(self, provider_id, name, host, port = None, username = None, password = None, encryption = None, auto_tls = None, mailer = None, from_name = None, from_email = None, reply_to_name = None, reply_to_email = None, enabled = None):
-        """Create SMTP provider"""
+    def create_smtp_provider(self, provider_id: str, name: str, host: str, port: float = None, username: str = None, password: str = None, encryption: SmtpEncryption = None, auto_tls: bool = None, mailer: str = None, from_name: str = None, from_email: str = None, reply_to_name: str = None, reply_to_email: str = None, enabled: bool = None):
 
-        
         api_path = '/messaging/providers/smtp'
         api_params = {}
         if provider_id is None:
@@ -547,10 +503,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_smtp_provider(self, provider_id, name = None, host = None, port = None, username = None, password = None, encryption = None, auto_tls = None, mailer = None, from_name = None, from_email = None, reply_to_name = None, reply_to_email = None, enabled = None):
-        """Update SMTP provider"""
+    def update_smtp_provider(self, provider_id: str, name: str = None, host: str = None, port: float = None, username: str = None, password: str = None, encryption: SmtpEncryption = None, auto_tls: bool = None, mailer: str = None, from_name: str = None, from_email: str = None, reply_to_name: str = None, reply_to_email: str = None, enabled: bool = None):
 
-        
         api_path = '/messaging/providers/smtp/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -576,10 +530,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_telesign_provider(self, provider_id, name, xfrom = None, customer_id = None, api_key = None, enabled = None):
-        """Create Telesign provider"""
+    def create_telesign_provider(self, provider_id: str, name: str, xfrom: str = None, customer_id: str = None, api_key: str = None, enabled: bool = None):
 
-        
         api_path = '/messaging/providers/telesign'
         api_params = {}
         if provider_id is None:
@@ -600,10 +552,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_telesign_provider(self, provider_id, name = None, enabled = None, customer_id = None, api_key = None, xfrom = None):
-        """Update Telesign provider"""
+    def update_telesign_provider(self, provider_id: str, name: str = None, enabled: bool = None, customer_id: str = None, api_key: str = None, xfrom: str = None):
 
-        
         api_path = '/messaging/providers/telesign/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -621,10 +571,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_textmagic_provider(self, provider_id, name, xfrom = None, username = None, api_key = None, enabled = None):
-        """Create Textmagic provider"""
+    def create_textmagic_provider(self, provider_id: str, name: str, xfrom: str = None, username: str = None, api_key: str = None, enabled: bool = None):
 
-        
         api_path = '/messaging/providers/textmagic'
         api_params = {}
         if provider_id is None:
@@ -645,10 +593,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_textmagic_provider(self, provider_id, name = None, enabled = None, username = None, api_key = None, xfrom = None):
-        """Update Textmagic provider"""
+    def update_textmagic_provider(self, provider_id: str, name: str = None, enabled: bool = None, username: str = None, api_key: str = None, xfrom: str = None):
 
-        
         api_path = '/messaging/providers/textmagic/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -666,10 +612,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_twilio_provider(self, provider_id, name, xfrom = None, account_sid = None, auth_token = None, enabled = None):
-        """Create Twilio provider"""
+    def create_twilio_provider(self, provider_id: str, name: str, xfrom: str = None, account_sid: str = None, auth_token: str = None, enabled: bool = None):
 
-        
         api_path = '/messaging/providers/twilio'
         api_params = {}
         if provider_id is None:
@@ -690,10 +634,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_twilio_provider(self, provider_id, name = None, enabled = None, account_sid = None, auth_token = None, xfrom = None):
-        """Update Twilio provider"""
+    def update_twilio_provider(self, provider_id: str, name: str = None, enabled: bool = None, account_sid: str = None, auth_token: str = None, xfrom: str = None):
 
-        
         api_path = '/messaging/providers/twilio/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -711,10 +653,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_vonage_provider(self, provider_id, name, xfrom = None, api_key = None, api_secret = None, enabled = None):
-        """Create Vonage provider"""
+    def create_vonage_provider(self, provider_id: str, name: str, xfrom: str = None, api_key: str = None, api_secret: str = None, enabled: bool = None):
 
-        
         api_path = '/messaging/providers/vonage'
         api_params = {}
         if provider_id is None:
@@ -735,10 +675,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_vonage_provider(self, provider_id, name = None, enabled = None, api_key = None, api_secret = None, xfrom = None):
-        """Update Vonage provider"""
+    def update_vonage_provider(self, provider_id: str, name: str = None, enabled: bool = None, api_key: str = None, api_secret: str = None, xfrom: str = None):
 
-        
         api_path = '/messaging/providers/vonage/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -756,10 +694,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_provider(self, provider_id):
-        """Get provider"""
+    def get_provider(self, provider_id: str):
 
-        
         api_path = '/messaging/providers/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -772,10 +708,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_provider(self, provider_id):
-        """Delete provider"""
+    def delete_provider(self, provider_id: str):
 
-        
         api_path = '/messaging/providers/{providerId}'
         api_params = {}
         if provider_id is None:
@@ -788,10 +722,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_provider_logs(self, provider_id, queries = None):
-        """List provider logs"""
+    def list_provider_logs(self, provider_id: str, queries: list = None):
 
-        
         api_path = '/messaging/providers/{providerId}/logs'
         api_params = {}
         if provider_id is None:
@@ -805,10 +737,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_subscriber_logs(self, subscriber_id, queries = None):
-        """List subscriber logs"""
+    def list_subscriber_logs(self, subscriber_id: str, queries: list = None):
 
-        
         api_path = '/messaging/subscribers/{subscriberId}/logs'
         api_params = {}
         if subscriber_id is None:
@@ -822,10 +752,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_topics(self, queries = None, search = None):
-        """List topics"""
+    def list_topics(self, queries: list = None, search: str = None):
 
-        
         api_path = '/messaging/topics'
         api_params = {}
 
@@ -836,10 +764,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_topic(self, topic_id, name, subscribe = None):
-        """Create topic"""
+    def create_topic(self, topic_id: str, name: str, subscribe: list = None):
 
-        
         api_path = '/messaging/topics'
         api_params = {}
         if topic_id is None:
@@ -857,10 +783,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_topic(self, topic_id):
-        """Get topic"""
+    def get_topic(self, topic_id: str):
 
-        
         api_path = '/messaging/topics/{topicId}'
         api_params = {}
         if topic_id is None:
@@ -873,10 +797,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_topic(self, topic_id, name = None, subscribe = None):
-        """Update topic"""
+    def update_topic(self, topic_id: str, name: str = None, subscribe: list = None):
 
-        
         api_path = '/messaging/topics/{topicId}'
         api_params = {}
         if topic_id is None:
@@ -891,10 +813,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_topic(self, topic_id):
-        """Delete topic"""
+    def delete_topic(self, topic_id: str):
 
-        
         api_path = '/messaging/topics/{topicId}'
         api_params = {}
         if topic_id is None:
@@ -907,10 +827,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_topic_logs(self, topic_id, queries = None):
-        """List topic logs"""
+    def list_topic_logs(self, topic_id: str, queries: list = None):
 
-        
         api_path = '/messaging/topics/{topicId}/logs'
         api_params = {}
         if topic_id is None:
@@ -924,10 +842,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_subscribers(self, topic_id, queries = None, search = None):
-        """List subscribers"""
+    def list_subscribers(self, topic_id: str, queries: list = None, search: str = None):
 
-        
         api_path = '/messaging/topics/{topicId}/subscribers'
         api_params = {}
         if topic_id is None:
@@ -942,10 +858,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_subscriber(self, topic_id, subscriber_id, target_id):
-        """Create subscriber"""
+    def create_subscriber(self, topic_id: str, subscriber_id: str, target_id: str):
 
-        
         api_path = '/messaging/topics/{topicId}/subscribers'
         api_params = {}
         if topic_id is None:
@@ -966,10 +880,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_subscriber(self, topic_id, subscriber_id):
-        """Get subscriber"""
+    def get_subscriber(self, topic_id: str, subscriber_id: str):
 
-        
         api_path = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
         api_params = {}
         if topic_id is None:
@@ -986,10 +898,8 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_subscriber(self, topic_id, subscriber_id):
-        """Delete subscriber"""
+    def delete_subscriber(self, topic_id: str, subscriber_id: str):
 
-        
         api_path = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
         api_params = {}
         if topic_id is None:

@@ -1,15 +1,17 @@
 from ..service import Service
 from ..exception import AppwriteException
+from ..enums.compression import Compression;
+from ..input_file import InputFile
+from ..enums.image_gravity import ImageGravity;
+from ..enums.image_format import ImageFormat;
 
 class Storage(Service):
 
     def __init__(self, client):
         super(Storage, self).__init__(client)
 
-    def list_buckets(self, queries = None, search = None):
-        """List buckets"""
+    def list_buckets(self, queries: list = None, search: str = None):
 
-        
         api_path = '/storage/buckets'
         api_params = {}
 
@@ -20,10 +22,8 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_bucket(self, bucket_id, name, permissions = None, file_security = None, enabled = None, maximum_file_size = None, allowed_file_extensions = None, compression = None, encryption = None, antivirus = None):
-        """Create bucket"""
+    def create_bucket(self, bucket_id: str, name: str, permissions: list = None, file_security: bool = None, enabled: bool = None, maximum_file_size: float = None, allowed_file_extensions: list = None, compression: Compression = None, encryption: bool = None, antivirus: bool = None):
 
-        
         api_path = '/storage/buckets'
         api_params = {}
         if bucket_id is None:
@@ -48,10 +48,8 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_bucket(self, bucket_id):
-        """Get bucket"""
+    def get_bucket(self, bucket_id: str):
 
-        
         api_path = '/storage/buckets/{bucketId}'
         api_params = {}
         if bucket_id is None:
@@ -64,10 +62,8 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_bucket(self, bucket_id, name, permissions = None, file_security = None, enabled = None, maximum_file_size = None, allowed_file_extensions = None, compression = None, encryption = None, antivirus = None):
-        """Update bucket"""
+    def update_bucket(self, bucket_id: str, name: str, permissions: list = None, file_security: bool = None, enabled: bool = None, maximum_file_size: float = None, allowed_file_extensions: list = None, compression: Compression = None, encryption: bool = None, antivirus: bool = None):
 
-        
         api_path = '/storage/buckets/{bucketId}'
         api_params = {}
         if bucket_id is None:
@@ -92,10 +88,8 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_bucket(self, bucket_id):
-        """Delete bucket"""
+    def delete_bucket(self, bucket_id: str):
 
-        
         api_path = '/storage/buckets/{bucketId}'
         api_params = {}
         if bucket_id is None:
@@ -108,10 +102,8 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_files(self, bucket_id, queries = None, search = None):
-        """List files"""
+    def list_files(self, bucket_id: str, queries: list = None, search: str = None):
 
-        
         api_path = '/storage/buckets/{bucketId}/files'
         api_params = {}
         if bucket_id is None:
@@ -126,10 +118,8 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_file(self, bucket_id, file_id, file, permissions = None, on_progress = None):
-        """Create file"""
+    def create_file(self, bucket_id: str, file_id: str, file: InputFile, permissions: list = None, on_progress = None):
 
-        
         api_path = '/storage/buckets/{bucketId}/files'
         api_params = {}
         if bucket_id is None:
@@ -157,10 +147,8 @@ class Storage(Service):
             'content-type': 'multipart/form-data',
         }, api_params, param_name, on_progress, upload_id)
 
-    def get_file(self, bucket_id, file_id):
-        """Get file"""
+    def get_file(self, bucket_id: str, file_id: str):
 
-        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         api_params = {}
         if bucket_id is None:
@@ -177,10 +165,8 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_file(self, bucket_id, file_id, name = None, permissions = None):
-        """Update file"""
+    def update_file(self, bucket_id: str, file_id: str, name: str = None, permissions: list = None):
 
-        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         api_params = {}
         if bucket_id is None:
@@ -199,10 +185,8 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_file(self, bucket_id, file_id):
-        """Delete file"""
+    def delete_file(self, bucket_id: str, file_id: str):
 
-        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         api_params = {}
         if bucket_id is None:
@@ -219,10 +203,8 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_file_download(self, bucket_id, file_id):
-        """Get file for download"""
+    def get_file_download(self, bucket_id: str, file_id: str):
 
-        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/download'
         api_params = {}
         if bucket_id is None:
@@ -239,10 +221,8 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_file_preview(self, bucket_id, file_id, width = None, height = None, gravity = None, quality = None, border_width = None, border_color = None, border_radius = None, opacity = None, rotation = None, background = None, output = None):
-        """Get file preview"""
+    def get_file_preview(self, bucket_id: str, file_id: str, width: float = None, height: float = None, gravity: ImageGravity = None, quality: float = None, border_width: float = None, border_color: str = None, border_radius: float = None, opacity: float = None, rotation: float = None, background: str = None, output: ImageFormat = None):
 
-        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/preview'
         api_params = {}
         if bucket_id is None:
@@ -270,10 +250,8 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_file_view(self, bucket_id, file_id):
-        """Get file for view"""
+    def get_file_view(self, bucket_id: str, file_id: str):
 
-        
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/view'
         api_params = {}
         if bucket_id is None:

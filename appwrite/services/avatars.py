@@ -1,15 +1,16 @@
 from ..service import Service
 from ..exception import AppwriteException
+from ..enums.browser import Browser;
+from ..enums.credit_card import CreditCard;
+from ..enums.flag import Flag;
 
 class Avatars(Service):
 
     def __init__(self, client):
         super(Avatars, self).__init__(client)
 
-    def get_browser(self, code, width = None, height = None, quality = None):
-        """Get browser icon"""
+    def get_browser(self, code: Browser, width: float = None, height: float = None, quality: float = None):
 
-        
         api_path = '/avatars/browsers/{code}'
         api_params = {}
         if code is None:
@@ -25,10 +26,8 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_credit_card(self, code, width = None, height = None, quality = None):
-        """Get credit card icon"""
+    def get_credit_card(self, code: CreditCard, width: float = None, height: float = None, quality: float = None):
 
-        
         api_path = '/avatars/credit-cards/{code}'
         api_params = {}
         if code is None:
@@ -44,10 +43,8 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_favicon(self, url):
-        """Get favicon"""
+    def get_favicon(self, url: str):
 
-        
         api_path = '/avatars/favicon'
         api_params = {}
         if url is None:
@@ -60,10 +57,8 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_flag(self, code, width = None, height = None, quality = None):
-        """Get country flag"""
+    def get_flag(self, code: Flag, width: float = None, height: float = None, quality: float = None):
 
-        
         api_path = '/avatars/flags/{code}'
         api_params = {}
         if code is None:
@@ -79,10 +74,8 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_image(self, url, width = None, height = None):
-        """Get image from URL"""
+    def get_image(self, url: str, width: float = None, height: float = None):
 
-        
         api_path = '/avatars/image'
         api_params = {}
         if url is None:
@@ -97,10 +90,8 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_initials(self, name = None, width = None, height = None, background = None):
-        """Get user initials"""
+    def get_initials(self, name: str = None, width: float = None, height: float = None, background: str = None):
 
-        
         api_path = '/avatars/initials'
         api_params = {}
 
@@ -113,10 +104,8 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_qr(self, text, size = None, margin = None, download = None):
-        """Get QR code"""
+    def get_qr(self, text: str, size: float = None, margin: float = None, download: bool = None):
 
-        
         api_path = '/avatars/qr'
         api_params = {}
         if text is None:

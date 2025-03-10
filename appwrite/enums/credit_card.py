@@ -17,3 +17,4 @@ class CreditCard(Enum):
     VISA = "visa"
     MIR = "mir"
     MAESTRO = "maestro"
+    RUPAY = "rupay"

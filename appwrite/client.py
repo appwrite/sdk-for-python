@@ -13,11 +13,11 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : 'AppwritePythonSDK/8.0.0 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
+            'user-agent' : 'AppwritePythonSDK/9.0.0 (${os.uname().sysname}; ${os.uname().version}; ${os.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '8.0.0',
+            'x-sdk-version': '9.0.0',
             'X-Appwrite-Response-Format' : '1.6.0',
         }
 
@@ -131,9 +131,9 @@ class Client:
             if response != None:
                 content_type = response.headers['Content-Type']
                 if content_type.startswith('application/json'):
-                    raise AppwriteException(response.json()['message'], response.status_code, response.json().get('type'), response.json())
+                    raise AppwriteException(response.json()['message'], response.status_code, response.json().get('type'), response.text)
                 else:
-                    raise AppwriteException(response.text, response.status_code)
+                    raise AppwriteException(response.text, response.status_code, None, response.text)
             else:
                 raise AppwriteException(e)
 

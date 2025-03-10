@@ -7,9 +7,7 @@ class Locale(Service):
         super(Locale, self).__init__(client)
 
     def get(self):
-        """Get user locale"""
 
-        
         api_path = '/locale'
         api_params = {}
 
@@ -18,9 +16,7 @@ class Locale(Service):
         }, api_params)
 
     def list_codes(self):
-        """List locale codes"""
 
-        
         api_path = '/locale/codes'
         api_params = {}
 
@@ -29,9 +25,7 @@ class Locale(Service):
         }, api_params)
 
     def list_continents(self):
-        """List continents"""
 
-        
         api_path = '/locale/continents'
         api_params = {}
 
@@ -40,9 +34,7 @@ class Locale(Service):
         }, api_params)
 
     def list_countries(self):
-        """List countries"""
 
-        
         api_path = '/locale/countries'
         api_params = {}
 
@@ -51,9 +43,7 @@ class Locale(Service):
         }, api_params)
 
     def list_countries_eu(self):
-        """List EU countries"""
 
-        
         api_path = '/locale/countries/eu'
         api_params = {}
 
@@ -62,9 +52,7 @@ class Locale(Service):
         }, api_params)
 
     def list_countries_phones(self):
-        """List countries phone codes"""
 
-        
         api_path = '/locale/countries/phones'
         api_params = {}
 
@@ -73,9 +61,7 @@ class Locale(Service):
         }, api_params)
 
     def list_currencies(self):
-        """List currencies"""
 
-        
         api_path = '/locale/currencies'
         api_params = {}
 
@@ -84,9 +70,7 @@ class Locale(Service):
         }, api_params)
 
     def list_languages(self):
-        """List languages"""
 
-        
         api_path = '/locale/languages'
         api_params = {}
 
