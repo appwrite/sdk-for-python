@@ -1,4 +1,5 @@
 from ..service import Service
+from typing import List
 from ..exception import AppwriteException
 from ..enums.compression import Compression;
 from ..input_file import InputFile
@@ -10,7 +11,7 @@ class Storage(Service):
     def __init__(self, client):
         super(Storage, self).__init__(client)
 
-    def list_buckets(self, queries: list[str] = None, search: str = None):
+    def list_buckets(self, queries: List[str] = None, search: str = None):
         """List buckets"""
 
         api_path = '/storage/buckets'
@@ -23,7 +24,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_bucket(self, bucket_id: str, name: str, permissions: list[str] = None, file_security: bool = None, enabled: bool = None, maximum_file_size: float = None, allowed_file_extensions: list[str] = None, compression: Compression = None, encryption: bool = None, antivirus: bool = None):
+    def create_bucket(self, bucket_id: str, name: str, permissions: List[str] = None, file_security: bool = None, enabled: bool = None, maximum_file_size: float = None, allowed_file_extensions: List[str] = None, compression: Compression = None, encryption: bool = None, antivirus: bool = None):
         """Create bucket"""
 
         api_path = '/storage/buckets'
@@ -65,7 +66,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_bucket(self, bucket_id: str, name: str, permissions: list[str] = None, file_security: bool = None, enabled: bool = None, maximum_file_size: float = None, allowed_file_extensions: list[str] = None, compression: Compression = None, encryption: bool = None, antivirus: bool = None):
+    def update_bucket(self, bucket_id: str, name: str, permissions: List[str] = None, file_security: bool = None, enabled: bool = None, maximum_file_size: float = None, allowed_file_extensions: List[str] = None, compression: Compression = None, encryption: bool = None, antivirus: bool = None):
         """Update bucket"""
 
         api_path = '/storage/buckets/{bucketId}'
@@ -107,7 +108,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_files(self, bucket_id: str, queries: list[str] = None, search: str = None):
+    def list_files(self, bucket_id: str, queries: List[str] = None, search: str = None):
         """List files"""
 
         api_path = '/storage/buckets/{bucketId}/files'
@@ -124,7 +125,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_file(self, bucket_id: str, file_id: str, file: InputFile, permissions: list[str] = None, on_progress = None):
+    def create_file(self, bucket_id: str, file_id: str, file: InputFile, permissions: List[str] = None, on_progress = None):
         """Create file"""
 
         api_path = '/storage/buckets/{bucketId}/files'
@@ -173,7 +174,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_file(self, bucket_id: str, file_id: str, name: str = None, permissions: list[str] = None):
+    def update_file(self, bucket_id: str, file_id: str, name: str = None, permissions: List[str] = None):
         """Update file"""
 
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'

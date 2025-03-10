@@ -1,4 +1,5 @@
 from ..service import Service
+from typing import List
 from ..exception import AppwriteException
 from ..enums.runtime import Runtime;
 from ..input_file import InputFile
@@ -9,7 +10,7 @@ class Functions(Service):
     def __init__(self, client):
         super(Functions, self).__init__(client)
 
-    def list(self, queries: list[str] = None, search: str = None):
+    def list(self, queries: List[str] = None, search: str = None):
         """List functions"""
 
         api_path = '/functions'
@@ -22,7 +23,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create(self, function_id: str, name: str, runtime: Runtime, execute: list[str] = None, events: list[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: list[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, template_repository: str = None, template_owner: str = None, template_root_directory: str = None, template_version: str = None, specification: str = None):
+    def create(self, function_id: str, name: str, runtime: Runtime, execute: List[str] = None, events: List[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: List[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, template_repository: str = None, template_owner: str = None, template_root_directory: str = None, template_version: str = None, specification: str = None):
         """Create function"""
 
         api_path = '/functions'
@@ -99,7 +100,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update(self, function_id: str, name: str, runtime: Runtime = None, execute: list[str] = None, events: list[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: list[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None):
+    def update(self, function_id: str, name: str, runtime: Runtime = None, execute: List[str] = None, events: List[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: List[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None):
         """Update function"""
 
         api_path = '/functions/{functionId}'
@@ -149,7 +150,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_deployments(self, function_id: str, queries: list[str] = None, search: str = None):
+    def list_deployments(self, function_id: str, queries: List[str] = None, search: str = None):
         """List deployments"""
 
         api_path = '/functions/{functionId}/deployments'
@@ -311,7 +312,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_executions(self, function_id: str, queries: list[str] = None, search: str = None):
+    def list_executions(self, function_id: str, queries: List[str] = None, search: str = None):
         """List executions"""
 
         api_path = '/functions/{functionId}/executions'
