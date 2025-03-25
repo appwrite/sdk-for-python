@@ -15,6 +15,7 @@ class Avatars(Service):
         You can use this endpoint to show different browser icons to your users. The code argument receives the browser code as it appears in your user [GET /account/sessions](https://appwrite.io/docs/references/cloud/client-web/account#getSessions) endpoint. Use width, height and quality arguments to change the output settings.
         
         When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.
+
         Parameters
         ----------
         code : Browser
@@ -58,6 +59,7 @@ class Avatars(Service):
         
         When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.
         
+
         Parameters
         ----------
         code : CreditCard
@@ -100,6 +102,7 @@ class Avatars(Service):
         Use this endpoint to fetch the favorite icon (AKA favicon) of any remote website URL.
         
         This endpoint does not follow HTTP redirects.
+
         Parameters
         ----------
         url : str
@@ -134,6 +137,7 @@ class Avatars(Service):
         
         When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.
         
+
         Parameters
         ----------
         code : Flag
@@ -178,6 +182,7 @@ class Avatars(Service):
         When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 400x400px.
         
         This endpoint does not follow HTTP redirects.
+
         Parameters
         ----------
         url : str
@@ -220,6 +225,7 @@ class Avatars(Service):
         
         When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.
         
+
         Parameters
         ----------
         name : str
@@ -258,6 +264,7 @@ class Avatars(Service):
         """
         Converts a given plain text to a QR code image. You can use the query parameters to change the size and style of the resulting image.
         
+
         Parameters
         ----------
         text : str

@@ -10,6 +10,7 @@ class Teams(Service):
     def list(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
         Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
+
         Parameters
         ----------
         queries : List[str]
@@ -41,6 +42,7 @@ class Teams(Service):
     def create(self, team_id: str, name: str, roles: List[str] = None) -> Dict[str, Any]:
         """
         Create a new team. The user who creates the team will automatically be assigned as the owner of the team. Only the users with the owner role can invite new members, add new owners and delete or update the team.
+
         Parameters
         ----------
         team_id : str
@@ -81,6 +83,7 @@ class Teams(Service):
     def get(self, team_id: str) -> Dict[str, Any]:
         """
         Get a team by its ID. All team members have read access for this resource.
+
         Parameters
         ----------
         team_id : str
@@ -112,6 +115,7 @@ class Teams(Service):
     def update_name(self, team_id: str, name: str) -> Dict[str, Any]:
         """
         Update the team's name by its unique ID.
+
         Parameters
         ----------
         team_id : str
@@ -149,6 +153,7 @@ class Teams(Service):
     def delete(self, team_id: str) -> Dict[str, Any]:
         """
         Delete a team using its ID. Only team members with the owner role can delete the team.
+
         Parameters
         ----------
         team_id : str
@@ -180,6 +185,7 @@ class Teams(Service):
     def list_memberships(self, team_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
         Use this endpoint to list a team's members using the team's ID. All team members have read access to this endpoint. Hide sensitive attributes from the response by toggling membership privacy in the Console.
+
         Parameters
         ----------
         team_id : str
@@ -224,6 +230,7 @@ class Teams(Service):
         
         Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md) Appwrite will accept the only redirect URLs under the domains you have added as a platform on the Appwrite Console.
         
+
         Parameters
         ----------
         team_id : str
@@ -276,6 +283,7 @@ class Teams(Service):
     def get_membership(self, team_id: str, membership_id: str) -> Dict[str, Any]:
         """
         Get a team member by the membership unique id. All team members have read access for this resource. Hide sensitive attributes from the response by toggling membership privacy in the Console.
+
         Parameters
         ----------
         team_id : str
@@ -314,6 +322,7 @@ class Teams(Service):
         """
         Modify the roles of a team member. Only team members with the owner role have access to this endpoint. Learn more about [roles and permissions](https://appwrite.io/docs/permissions).
         
+
         Parameters
         ----------
         team_id : str
@@ -357,6 +366,7 @@ class Teams(Service):
     def delete_membership(self, team_id: str, membership_id: str) -> Dict[str, Any]:
         """
         This endpoint allows a user to leave a team or for a team owner to delete the membership of any other team member. You can also use this endpoint to delete a user membership even if it is not accepted.
+
         Parameters
         ----------
         team_id : str
@@ -397,6 +407,7 @@ class Teams(Service):
         
         If the request is successful, a session for the user is automatically created.
         
+
         Parameters
         ----------
         team_id : str
@@ -446,6 +457,7 @@ class Teams(Service):
     def get_prefs(self, team_id: str) -> Dict[str, Any]:
         """
         Get the team's shared preferences by its unique ID. If a preference doesn't need to be shared by all team members, prefer storing them in [user preferences](https://appwrite.io/docs/references/cloud/client-web/account#getPrefs).
+
         Parameters
         ----------
         team_id : str
@@ -477,6 +489,7 @@ class Teams(Service):
     def update_prefs(self, team_id: str, prefs: dict) -> Dict[str, Any]:
         """
         Update the team's preferences by its unique ID. The object you pass is stored as is and replaces any previous value. The maximum allowed prefs size is 64kB and throws an error if exceeded.
+
         Parameters
         ----------
         team_id : str

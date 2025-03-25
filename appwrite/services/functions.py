@@ -13,6 +13,7 @@ class Functions(Service):
     def list(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
         Get a list of all the project's functions. You can use the query params to filter your results.
+
         Parameters
         ----------
         queries : List[str]
@@ -44,6 +45,7 @@ class Functions(Service):
     def create(self, function_id: str, name: str, runtime: Runtime, execute: List[str] = None, events: List[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: List[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, template_repository: str = None, template_owner: str = None, template_root_directory: str = None, template_version: str = None, specification: str = None) -> Dict[str, Any]:
         """
         Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
+
         Parameters
         ----------
         function_id : str
@@ -144,6 +146,7 @@ class Functions(Service):
     def list_runtimes(self) -> Dict[str, Any]:
         """
         Get a list of all runtimes that are currently active on your instance.
+
         Returns
         -------
         Dict[str, Any]
@@ -166,6 +169,7 @@ class Functions(Service):
         """
         List allowed function specifications for this instance.
         
+
         Returns
         -------
         Dict[str, Any]
@@ -187,6 +191,7 @@ class Functions(Service):
     def get(self, function_id: str) -> Dict[str, Any]:
         """
         Get a function by its unique ID.
+
         Parameters
         ----------
         function_id : str
@@ -218,6 +223,7 @@ class Functions(Service):
     def update(self, function_id: str, name: str, runtime: Runtime = None, execute: List[str] = None, events: List[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: List[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None) -> Dict[str, Any]:
         """
         Update function by its unique ID.
+
         Parameters
         ----------
         function_id : str
@@ -303,6 +309,7 @@ class Functions(Service):
     def delete(self, function_id: str) -> Dict[str, Any]:
         """
         Delete a function by its unique ID.
+
         Parameters
         ----------
         function_id : str
@@ -334,6 +341,7 @@ class Functions(Service):
     def list_deployments(self, function_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
         Get a list of all the project's code deployments. You can use the query params to filter your results.
+
         Parameters
         ----------
         function_id : str
@@ -375,6 +383,7 @@ class Functions(Service):
         This endpoint accepts a tar.gz file compressed with your code. Make sure to include any dependencies your code has within the compressed file. You can learn more about code packaging in the [Appwrite Cloud Functions tutorial](https://appwrite.io/docs/functions).
         
         Use the "command" param to set the entrypoint used to execute your code.
+
         Parameters
         ----------
         function_id : str
@@ -431,6 +440,7 @@ class Functions(Service):
     def get_deployment(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
         """
         Get a code deployment by its unique ID.
+
         Parameters
         ----------
         function_id : str
@@ -468,6 +478,7 @@ class Functions(Service):
     def update_deployment(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
         """
         Update the function code deployment ID using the unique function ID. Use this endpoint to switch the code deployment that should be executed by the execution endpoint.
+
         Parameters
         ----------
         function_id : str
@@ -505,6 +516,7 @@ class Functions(Service):
     def delete_deployment(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
         """
         Delete a code deployment by its unique ID.
+
         Parameters
         ----------
         function_id : str
@@ -542,6 +554,7 @@ class Functions(Service):
     def create_build(self, function_id: str, deployment_id: str, build_id: str = None) -> Dict[str, Any]:
         """
         Create a new build for an existing function deployment. This endpoint allows you to rebuild a deployment with the updated function configuration, including its entrypoint and build commands if they have been modified The build process will be queued and executed asynchronously. The original deployment's code will be preserved and used for the new build.
+
         Parameters
         ----------
         function_id : str
@@ -582,6 +595,7 @@ class Functions(Service):
     def update_deployment_build(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
         """
         Cancel an ongoing function deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn't started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status 'ready') or failed. The response includes the final build status and details.
+
         Parameters
         ----------
         function_id : str
@@ -619,6 +633,7 @@ class Functions(Service):
     def get_deployment_download(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
         """
         Get a Deployment's contents by its unique ID. This endpoint supports range requests for partial or streaming file download.
+
         Parameters
         ----------
         function_id : str
@@ -656,6 +671,7 @@ class Functions(Service):
     def list_executions(self, function_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
         Get a list of all the current user function execution logs. You can use the query params to filter your results.
+
         Parameters
         ----------
         function_id : str
@@ -693,6 +709,7 @@ class Functions(Service):
     def create_execution(self, function_id: str, body: str = None, xasync: bool = None, path: str = None, method: ExecutionMethod = None, headers: dict = None, scheduled_at: str = None) -> Dict[str, Any]:
         """
         Trigger a function execution. The returned object will return you the current execution status. You can ping the `Get Execution` endpoint to get updates on the current execution status. Once this endpoint is called, your function execution process will start asynchronously.
+
         Parameters
         ----------
         function_id : str
@@ -742,6 +759,7 @@ class Functions(Service):
     def get_execution(self, function_id: str, execution_id: str) -> Dict[str, Any]:
         """
         Get a function execution log by its unique ID.
+
         Parameters
         ----------
         function_id : str
@@ -780,6 +798,7 @@ class Functions(Service):
         """
         Delete a function execution by its unique ID.
         
+
         Parameters
         ----------
         function_id : str
@@ -817,6 +836,7 @@ class Functions(Service):
     def list_variables(self, function_id: str) -> Dict[str, Any]:
         """
         Get a list of all variables of a specific function.
+
         Parameters
         ----------
         function_id : str
@@ -848,6 +868,7 @@ class Functions(Service):
     def create_variable(self, function_id: str, key: str, value: str) -> Dict[str, Any]:
         """
         Create a new function environment variable. These variables can be accessed in the function at runtime as environment variables.
+
         Parameters
         ----------
         function_id : str
@@ -891,6 +912,7 @@ class Functions(Service):
     def get_variable(self, function_id: str, variable_id: str) -> Dict[str, Any]:
         """
         Get a variable by its unique ID.
+
         Parameters
         ----------
         function_id : str
@@ -928,6 +950,7 @@ class Functions(Service):
     def update_variable(self, function_id: str, variable_id: str, key: str, value: str = None) -> Dict[str, Any]:
         """
         Update variable by its unique ID.
+
         Parameters
         ----------
         function_id : str
@@ -974,6 +997,7 @@ class Functions(Service):
     def delete_variable(self, function_id: str, variable_id: str) -> Dict[str, Any]:
         """
         Delete a variable by its unique ID.
+
         Parameters
         ----------
         function_id : str
