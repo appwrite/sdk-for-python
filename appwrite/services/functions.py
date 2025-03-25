@@ -630,7 +630,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_deployment_download(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
+    def get_deployment_download(self, function_id: str, deployment_id: str) -> str:
         """
         Get a Deployment's contents by its unique ID. This endpoint supports range requests for partial or streaming file download.
 
@@ -643,8 +643,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        str
+            Response as a string
         
         Raises
         ------

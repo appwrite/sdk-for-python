@@ -451,7 +451,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_file_download(self, bucket_id: str, file_id: str) -> Dict[str, Any]:
+    def get_file_download(self, bucket_id: str, file_id: str) -> str:
         """
         Get a file content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
 
@@ -464,8 +464,8 @@ class Storage(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        str
+            Response as a string
         
         Raises
         ------
@@ -489,7 +489,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_file_preview(self, bucket_id: str, file_id: str, width: float = None, height: float = None, gravity: ImageGravity = None, quality: float = None, border_width: float = None, border_color: str = None, border_radius: float = None, opacity: float = None, rotation: float = None, background: str = None, output: ImageFormat = None) -> Dict[str, Any]:
+    def get_file_preview(self, bucket_id: str, file_id: str, width: float = None, height: float = None, gravity: ImageGravity = None, quality: float = None, border_width: float = None, border_color: str = None, border_radius: float = None, opacity: float = None, rotation: float = None, background: str = None, output: ImageFormat = None) -> str:
         """
         Get a file preview image. Currently, this method supports preview for image files (jpg, png, and gif), other supported formats, like pdf, docs, slides, and spreadsheets, will return the file icon image. You can also pass query string arguments for cutting and resizing your preview image. Preview is supported only for image files smaller than 10MB.
 
@@ -524,8 +524,8 @@ class Storage(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        str
+            Response as a string
         
         Raises
         ------
@@ -560,7 +560,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_file_view(self, bucket_id: str, file_id: str) -> Dict[str, Any]:
+    def get_file_view(self, bucket_id: str, file_id: str) -> str:
         """
         Get a file content by its unique ID. This endpoint is similar to the download method but returns with no  'Content-Disposition: attachment' header.
 
@@ -573,8 +573,8 @@ class Storage(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        str
+            Response as a string
         
         Raises
         ------

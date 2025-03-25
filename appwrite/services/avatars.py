@@ -10,7 +10,7 @@ class Avatars(Service):
     def __init__(self, client) -> None:
         super(Avatars, self).__init__(client)
 
-    def get_browser(self, code: Browser, width: float = None, height: float = None, quality: float = None) -> Dict[str, Any]:
+    def get_browser(self, code: Browser, width: float = None, height: float = None, quality: float = None) -> str:
         """
         You can use this endpoint to show different browser icons to your users. The code argument receives the browser code as it appears in your user [GET /account/sessions](https://appwrite.io/docs/references/cloud/client-web/account#getSessions) endpoint. Use width, height and quality arguments to change the output settings.
         
@@ -29,8 +29,8 @@ class Avatars(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        str
+            Response as a string
         
         Raises
         ------
@@ -53,7 +53,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_credit_card(self, code: CreditCard, width: float = None, height: float = None, quality: float = None) -> Dict[str, Any]:
+    def get_credit_card(self, code: CreditCard, width: float = None, height: float = None, quality: float = None) -> str:
         """
         The credit card endpoint will return you the icon of the credit card provider you need. Use width, height and quality arguments to change the output settings.
         
@@ -73,8 +73,8 @@ class Avatars(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        str
+            Response as a string
         
         Raises
         ------
@@ -97,7 +97,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_favicon(self, url: str) -> Dict[str, Any]:
+    def get_favicon(self, url: str) -> str:
         """
         Use this endpoint to fetch the favorite icon (AKA favicon) of any remote website URL.
         
@@ -110,8 +110,8 @@ class Avatars(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        str
+            Response as a string
         
         Raises
         ------
@@ -131,7 +131,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_flag(self, code: Flag, width: float = None, height: float = None, quality: float = None) -> Dict[str, Any]:
+    def get_flag(self, code: Flag, width: float = None, height: float = None, quality: float = None) -> str:
         """
         You can use this endpoint to show different country flags icons to your users. The code argument receives the 2 letter country code. Use width, height and quality arguments to change the output settings. Country codes follow the [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) standard.
         
@@ -151,8 +151,8 @@ class Avatars(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        str
+            Response as a string
         
         Raises
         ------
@@ -175,7 +175,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_image(self, url: str, width: float = None, height: float = None) -> Dict[str, Any]:
+    def get_image(self, url: str, width: float = None, height: float = None) -> str:
         """
         Use this endpoint to fetch a remote image URL and crop it to any image size you want. This endpoint is very useful if you need to crop and display remote images in your app or in case you want to make sure a 3rd party image is properly served using a TLS protocol.
         
@@ -194,8 +194,8 @@ class Avatars(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        str
+            Response as a string
         
         Raises
         ------
@@ -217,7 +217,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_initials(self, name: str = None, width: float = None, height: float = None, background: str = None) -> Dict[str, Any]:
+    def get_initials(self, name: str = None, width: float = None, height: float = None, background: str = None) -> str:
         """
         Use this endpoint to show your user initials avatar icon on your website or app. By default, this route will try to print your logged-in user name or email initials. You can also overwrite the user name if you pass the 'name' parameter. If no name is given and no user is logged, an empty avatar will be returned.
         
@@ -239,8 +239,8 @@ class Avatars(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        str
+            Response as a string
         
         Raises
         ------
@@ -260,7 +260,7 @@ class Avatars(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_qr(self, text: str, size: float = None, margin: float = None, download: bool = None) -> Dict[str, Any]:
+    def get_qr(self, text: str, size: float = None, margin: float = None, download: bool = None) -> str:
         """
         Converts a given plain text to a QR code image. You can use the query parameters to change the size and style of the resulting image.
         
@@ -278,8 +278,8 @@ class Avatars(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        str
+            Response as a string
         
         Raises
         ------
