@@ -28,7 +28,6 @@ class Locale(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_codes(self) -> Dict[str, Any]:
@@ -50,7 +49,6 @@ class Locale(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_continents(self) -> Dict[str, Any]:
@@ -72,7 +70,6 @@ class Locale(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_countries(self) -> Dict[str, Any]:
@@ -94,7 +91,6 @@ class Locale(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_countries_eu(self) -> Dict[str, Any]:
@@ -116,7 +112,6 @@ class Locale(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_countries_phones(self) -> Dict[str, Any]:
@@ -138,7 +133,6 @@ class Locale(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_currencies(self) -> Dict[str, Any]:
@@ -160,7 +154,6 @@ class Locale(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_languages(self) -> Dict[str, Any]:
@@ -182,5 +175,4 @@ class Locale(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)

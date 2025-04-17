@@ -38,7 +38,6 @@ class Messaging(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_email(self, message_id: str, subject: str, content: str, topics: List[str] = None, users: List[str] = None, targets: List[str] = None, cc: List[str] = None, bcc: List[str] = None, attachments: List[str] = None, draft: bool = None, html: bool = None, scheduled_at: str = None) -> Dict[str, Any]:
@@ -485,7 +484,6 @@ class Messaging(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def delete(self, message_id: str) -> Dict[str, Any]:
@@ -552,7 +550,6 @@ class Messaging(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_targets(self, message_id: str, queries: List[str] = None) -> Dict[str, Any]:
@@ -587,7 +584,6 @@ class Messaging(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_providers(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
@@ -619,7 +615,6 @@ class Messaging(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_apns_provider(self, provider_id: str, name: str, auth_key: str = None, auth_key_id: str = None, team_id: str = None, bundle_id: str = None, sandbox: bool = None, enabled: bool = None) -> Dict[str, Any]:
@@ -1709,7 +1704,6 @@ class Messaging(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def delete_provider(self, provider_id: str) -> Dict[str, Any]:
@@ -1776,7 +1770,6 @@ class Messaging(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_subscriber_logs(self, subscriber_id: str, queries: List[str] = None) -> Dict[str, Any]:
@@ -1811,7 +1804,6 @@ class Messaging(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_topics(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
@@ -1843,7 +1835,6 @@ class Messaging(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_topic(self, topic_id: str, name: str, subscribe: List[str] = None) -> Dict[str, Any]:
@@ -1917,7 +1908,6 @@ class Messaging(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_topic(self, topic_id: str, name: str = None, subscribe: List[str] = None) -> Dict[str, Any]:
@@ -2023,7 +2013,6 @@ class Messaging(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_subscribers(self, topic_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
@@ -2061,7 +2050,6 @@ class Messaging(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_subscriber(self, topic_id: str, subscriber_id: str, target_id: str) -> Dict[str, Any]:
@@ -2144,7 +2132,6 @@ class Messaging(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def delete_subscriber(self, topic_id: str, subscriber_id: str) -> Dict[str, Any]:

@@ -39,7 +39,6 @@ class Functions(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create(self, function_id: str, name: str, runtime: Runtime, execute: List[str] = None, events: List[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: List[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, template_repository: str = None, template_owner: str = None, template_root_directory: str = None, template_version: str = None, specification: str = None) -> Dict[str, Any]:
@@ -162,7 +161,6 @@ class Functions(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_specifications(self) -> Dict[str, Any]:
@@ -185,7 +183,6 @@ class Functions(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def get(self, function_id: str) -> Dict[str, Any]:
@@ -217,7 +214,6 @@ class Functions(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update(self, function_id: str, name: str, runtime: Runtime = None, execute: List[str] = None, events: List[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: List[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None) -> Dict[str, Any]:
@@ -373,7 +369,6 @@ class Functions(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_deployment(self, function_id: str, code: InputFile, activate: bool, entrypoint: str = None, commands: str = None, on_progress = None) -> Dict[str, Any]:
@@ -472,7 +467,6 @@ class Functions(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_deployment(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
@@ -665,7 +659,6 @@ class Functions(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_executions(self, function_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
@@ -703,7 +696,6 @@ class Functions(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_execution(self, function_id: str, body: str = None, xasync: bool = None, path: str = None, method: ExecutionMethod = None, headers: dict = None, scheduled_at: str = None) -> Dict[str, Any]:
@@ -791,7 +783,6 @@ class Functions(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def delete_execution(self, function_id: str, execution_id: str) -> Dict[str, Any]:
@@ -862,7 +853,6 @@ class Functions(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_variable(self, function_id: str, key: str, value: str) -> Dict[str, Any]:
@@ -944,7 +934,6 @@ class Functions(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_variable(self, function_id: str, variable_id: str, key: str, value: str = None) -> Dict[str, Any]:

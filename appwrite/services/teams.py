@@ -36,7 +36,6 @@ class Teams(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create(self, team_id: str, name: str, roles: List[str] = None) -> Dict[str, Any]:
@@ -109,7 +108,6 @@ class Teams(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_name(self, team_id: str, name: str) -> Dict[str, Any]:
@@ -217,7 +215,6 @@ class Teams(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_membership(self, team_id: str, roles: List[str], email: str = None, user_id: str = None, phone: str = None, url: str = None, name: str = None) -> Dict[str, Any]:
@@ -315,7 +312,6 @@ class Teams(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_membership(self, team_id: str, membership_id: str, roles: List[str]) -> Dict[str, Any]:
@@ -483,7 +479,6 @@ class Teams(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_prefs(self, team_id: str, prefs: dict) -> Dict[str, Any]:

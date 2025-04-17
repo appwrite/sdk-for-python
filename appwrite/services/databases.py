@@ -39,7 +39,6 @@ class Databases(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create(self, database_id: str, name: str, enabled: bool = None) -> Dict[str, Any]:
@@ -113,7 +112,6 @@ class Databases(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update(self, database_id: str, name: str, enabled: bool = None) -> Dict[str, Any]:
@@ -224,7 +222,6 @@ class Databases(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_collection(self, database_id: str, collection_id: str, name: str, permissions: List[str] = None, document_security: bool = None, enabled: bool = None) -> Dict[str, Any]:
@@ -315,7 +312,6 @@ class Databases(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_collection(self, database_id: str, collection_id: str, name: str, permissions: List[str] = None, document_security: bool = None, enabled: bool = None) -> Dict[str, Any]:
@@ -447,7 +443,6 @@ class Databases(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_boolean_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: bool = None, array: bool = None) -> Dict[str, Any]:
@@ -1625,7 +1620,6 @@ class Databases(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def delete_attribute(self, database_id: str, collection_id: str, key: str) -> Dict[str, Any]:
@@ -1761,7 +1755,6 @@ class Databases(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: List[str] = None) -> Dict[str, Any]:
@@ -1862,7 +1855,6 @@ class Databases(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_document(self, database_id: str, collection_id: str, document_id: str, data: dict = None, permissions: List[str] = None) -> Dict[str, Any]:
@@ -1997,7 +1989,6 @@ class Databases(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_index(self, database_id: str, collection_id: str, key: str, type: IndexType, attributes: List[str], orders: List[str] = None) -> Dict[str, Any]:
@@ -2101,7 +2092,6 @@ class Databases(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def delete_index(self, database_id: str, collection_id: str, key: str) -> Dict[str, Any]:

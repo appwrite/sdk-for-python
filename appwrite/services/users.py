@@ -39,7 +39,6 @@ class Users(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create(self, user_id: str, email: str = None, phone: str = None, password: str = None, name: str = None) -> Dict[str, Any]:
@@ -209,7 +208,6 @@ class Users(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def delete_identity(self, identity_id: str) -> Dict[str, Any]:
@@ -559,7 +557,6 @@ class Users(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def delete(self, user_id: str) -> Dict[str, Any]:
@@ -742,7 +739,6 @@ class Users(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def list_memberships(self, user_id: str) -> Dict[str, Any]:
@@ -774,7 +770,6 @@ class Users(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_mfa(self, user_id: str, mfa: bool) -> Dict[str, Any]:
@@ -882,7 +877,6 @@ class Users(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def get_mfa_recovery_codes(self, user_id: str) -> Dict[str, Any]:
@@ -914,7 +908,6 @@ class Users(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_mfa_recovery_codes(self, user_id: str) -> Dict[str, Any]:
@@ -1124,7 +1117,6 @@ class Users(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_prefs(self, user_id: str, prefs: dict) -> Dict[str, Any]:
@@ -1194,7 +1186,6 @@ class Users(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_session(self, user_id: str) -> Dict[str, Any]:
@@ -1371,7 +1362,6 @@ class Users(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_target(self, user_id: str, target_id: str, provider_type: MessagingProviderType, identifier: str, provider_id: str = None, name: str = None) -> Dict[str, Any]:
@@ -1465,7 +1455,6 @@ class Users(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_target(self, user_id: str, target_id: str, identifier: str = None, provider_id: str = None, name: str = None) -> Dict[str, Any]:
