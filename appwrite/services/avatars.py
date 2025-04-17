@@ -50,7 +50,6 @@ class Avatars(Service):
         api_params['quality'] = quality
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def get_credit_card(self, code: CreditCard, width: float = None, height: float = None, quality: float = None) -> bytes:
@@ -94,7 +93,6 @@ class Avatars(Service):
         api_params['quality'] = quality
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def get_favicon(self, url: str) -> bytes:
@@ -128,7 +126,6 @@ class Avatars(Service):
         api_params['url'] = url
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def get_flag(self, code: Flag, width: float = None, height: float = None, quality: float = None) -> bytes:
@@ -172,7 +169,6 @@ class Avatars(Service):
         api_params['quality'] = quality
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def get_image(self, url: str, width: float = None, height: float = None) -> bytes:
@@ -214,7 +210,6 @@ class Avatars(Service):
         api_params['height'] = height
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def get_initials(self, name: str = None, width: float = None, height: float = None, background: str = None) -> bytes:
@@ -257,7 +252,6 @@ class Avatars(Service):
         api_params['background'] = background
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def get_qr(self, text: str, size: float = None, margin: float = None, download: bool = None) -> bytes:
@@ -299,5 +293,4 @@ class Avatars(Service):
         api_params['download'] = download
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)

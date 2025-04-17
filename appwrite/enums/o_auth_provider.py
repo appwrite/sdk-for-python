@@ -15,6 +15,7 @@ class OAuthProvider(Enum):
     DROPBOX = "dropbox"
     ETSY = "etsy"
     FACEBOOK = "facebook"
+    FIGMA = "figma"
     GITHUB = "github"
     GITLAB = "gitlab"
     GOOGLE = "google"

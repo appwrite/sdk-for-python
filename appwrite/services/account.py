@@ -29,7 +29,6 @@ class Account(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create(self, user_id: str, email: str, password: str, name: str = None) -> Dict[str, Any]:
@@ -145,7 +144,6 @@ class Account(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def delete_identity(self, identity_id: str) -> Dict[str, Any]:
@@ -228,7 +226,6 @@ class Account(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_mfa(self, mfa: bool) -> Dict[str, Any]:
@@ -454,7 +451,6 @@ class Account(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def get_mfa_recovery_codes(self) -> Dict[str, Any]:
@@ -476,7 +472,6 @@ class Account(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_mfa_recovery_codes(self) -> Dict[str, Any]:
@@ -647,7 +642,6 @@ class Account(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_prefs(self, prefs: dict) -> Dict[str, Any]:
@@ -785,7 +779,6 @@ class Account(Service):
         api_params = {}
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def delete_sessions(self) -> Dict[str, Any]:
@@ -1015,7 +1008,6 @@ class Account(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_session(self, session_id: str) -> Dict[str, Any]:
@@ -1205,7 +1197,7 @@ class Account(Service):
         Parameters
         ----------
         provider : OAuthProvider
-            OAuth2 Provider. Currently, supported providers are: amazon, apple, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, github, gitlab, google, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, yahoo, yammer, yandex, zoho, zoom.
+            OAuth2 Provider. Currently, supported providers are: amazon, apple, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, github, gitlab, google, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, yahoo, yammer, yandex, zoho, zoom.
         success : str
             URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
         failure : str
@@ -1236,7 +1228,6 @@ class Account(Service):
         api_params['scopes'] = scopes
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params, response_type='location')
 
     def create_phone_token(self, user_id: str, phone: str) -> Dict[str, Any]:

@@ -40,7 +40,6 @@ class Storage(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_bucket(self, bucket_id: str, name: str, permissions: List[str] = None, file_security: bool = None, enabled: bool = None, maximum_file_size: float = None, allowed_file_extensions: List[str] = None, compression: Compression = None, encryption: bool = None, antivirus: bool = None) -> Dict[str, Any]:
@@ -134,7 +133,6 @@ class Storage(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_bucket(self, bucket_id: str, name: str, permissions: List[str] = None, file_security: bool = None, enabled: bool = None, maximum_file_size: float = None, allowed_file_extensions: List[str] = None, compression: Compression = None, encryption: bool = None, antivirus: bool = None) -> Dict[str, Any]:
@@ -266,7 +264,6 @@ class Storage(Service):
         api_params['search'] = search
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def create_file(self, bucket_id: str, file_id: str, file: InputFile, permissions: List[str] = None, on_progress = None) -> Dict[str, Any]:
@@ -366,7 +363,6 @@ class Storage(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def update_file(self, bucket_id: str, file_id: str, name: str = None, permissions: List[str] = None) -> Dict[str, Any]:
@@ -486,7 +482,6 @@ class Storage(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def get_file_preview(self, bucket_id: str, file_id: str, width: float = None, height: float = None, gravity: ImageGravity = None, quality: float = None, border_width: float = None, border_color: str = None, border_radius: float = None, opacity: float = None, rotation: float = None, background: str = None, output: ImageFormat = None) -> bytes:
@@ -557,7 +552,6 @@ class Storage(Service):
         api_params['output'] = output
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def get_file_view(self, bucket_id: str, file_id: str) -> bytes:
@@ -595,5 +589,4 @@ class Storage(Service):
 
 
         return self.client.call('get', api_path, {
-            'content-type': 'application/json',
         }, api_params)
