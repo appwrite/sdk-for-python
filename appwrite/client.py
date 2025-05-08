@@ -14,11 +14,11 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : f'AppwritePythonSDK/10.0.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
+            'user-agent' : f'AppwritePythonSDK/10.1.0-rc.1 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '10.0.0',
+            'x-sdk-version': '10.1.0-rc.1',
             'X-Appwrite-Response-Format' : '1.6.0',
         }
 
