@@ -3,6 +3,8 @@ from typing import List, Dict, Any
 from ..exception import AppwriteException
 from ..enums.runtime import Runtime;
 from ..input_file import InputFile
+from ..enums.vcs_deployment_type import VCSDeploymentType;
+from ..enums.deployment_download_type import DeploymentDownloadType;
 from ..enums.execution_method import ExecutionMethod;
 
 class Functions(Service):
@@ -17,7 +19,7 @@ class Functions(Service):
         Parameters
         ----------
         queries : List[str]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, enabled, runtime, deployment, schedule, scheduleNext, schedulePrevious, timeout, entrypoint, commands, installationId
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, enabled, runtime, deploymentId, schedule, scheduleNext, schedulePrevious, timeout, entrypoint, commands, installationId
         search : str
             Search term to filter your list results. Max length: 256 chars.
         
@@ -41,7 +43,7 @@ class Functions(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, function_id: str, name: str, runtime: Runtime, execute: List[str] = None, events: List[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: List[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, template_repository: str = None, template_owner: str = None, template_root_directory: str = None, template_version: str = None, specification: str = None) -> Dict[str, Any]:
+    def create(self, function_id: str, name: str, runtime: Runtime, execute: List[str] = None, events: List[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: List[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None) -> Dict[str, Any]:
         """
         Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
 
@@ -64,7 +66,7 @@ class Functions(Service):
         enabled : bool
             Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
         logging : bool
-            Whether executions will be logged. When set to false, executions will not be logged, but will reduce resource used by your Appwrite project.
+            When disabled, executions will exclude logs and errors, and will be slightly faster.
         entrypoint : str
             Entrypoint File. This path is relative to the "providerRootDirectory".
         commands : str
@@ -81,14 +83,6 @@ class Functions(Service):
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
         provider_root_directory : str
             Path to function code in the linked repo.
-        template_repository : str
-            Repository name of the template.
-        template_owner : str
-            The name of the owner of the template.
-        template_root_directory : str
-            Path to function code in the template repo.
-        template_version : str
-            Version (tag) for the repo linked to the function template.
         specification : str
             Runtime specification for the function and builds.
         
@@ -132,10 +126,6 @@ class Functions(Service):
         api_params['providerBranch'] = provider_branch
         api_params['providerSilentMode'] = provider_silent_mode
         api_params['providerRootDirectory'] = provider_root_directory
-        api_params['templateRepository'] = template_repository
-        api_params['templateOwner'] = template_owner
-        api_params['templateRootDirectory'] = template_root_directory
-        api_params['templateVersion'] = template_version
         api_params['specification'] = specification
 
         return self.client.call('post', api_path, {
@@ -166,7 +156,6 @@ class Functions(Service):
     def list_specifications(self) -> Dict[str, Any]:
         """
         List allowed function specifications for this instance.
-        
 
         Returns
         -------
@@ -239,7 +228,7 @@ class Functions(Service):
         enabled : bool
             Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
         logging : bool
-            Whether executions will be logged. When set to false, executions will not be logged, but will reduce resource used by your Appwrite project.
+            When disabled, executions will exclude logs and errors, and will be slightly faster.
         entrypoint : str
             Entrypoint File. This path is relative to the "providerRootDirectory".
         commands : str
@@ -334,16 +323,54 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def update_function_deployment(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
+        """
+        Update the function active deployment. Use this endpoint to switch the code deployment that should be used when visitor opens your function.
+
+        Parameters
+        ----------
+        function_id : str
+            Function ID.
+        deployment_id : str
+            Deployment ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/functions/{functionId}/deployment'
+        api_params = {}
+        if function_id is None:
+            raise AppwriteException('Missing required parameter: "function_id"')
+
+        if deployment_id is None:
+            raise AppwriteException('Missing required parameter: "deployment_id"')
+
+        api_path = api_path.replace('{functionId}', function_id)
+
+        api_params['deploymentId'] = deployment_id
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def list_deployments(self, function_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
-        Get a list of all the project's code deployments. You can use the query params to filter your results.
+        Get a list of all the function's code deployments. You can use the query params to filter your results.
 
         Parameters
         ----------
         function_id : str
             Function ID.
         queries : List[str]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: size, buildId, activate, entrypoint, commands, type, size
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: buildSize, sourceSize, totalSize, buildDuration, status, activate, type
         search : str
             Search term to filter your list results. Max length: 256 chars.
         
@@ -432,9 +459,160 @@ class Functions(Service):
             'content-type': 'multipart/form-data',
         }, api_params, param_name, on_progress, upload_id)
 
+    def create_duplicate_deployment(self, function_id: str, deployment_id: str, build_id: str = None) -> Dict[str, Any]:
+        """
+        Create a new build for an existing function deployment. This endpoint allows you to rebuild a deployment with the updated function configuration, including its entrypoint and build commands if they have been modified. The build process will be queued and executed asynchronously. The original deployment's code will be preserved and used for the new build.
+
+        Parameters
+        ----------
+        function_id : str
+            Function ID.
+        deployment_id : str
+            Deployment ID.
+        build_id : str
+            Build unique ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/functions/{functionId}/deployments/duplicate'
+        api_params = {}
+        if function_id is None:
+            raise AppwriteException('Missing required parameter: "function_id"')
+
+        if deployment_id is None:
+            raise AppwriteException('Missing required parameter: "deployment_id"')
+
+        api_path = api_path.replace('{functionId}', function_id)
+
+        api_params['deploymentId'] = deployment_id
+        api_params['buildId'] = build_id
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_template_deployment(self, function_id: str, repository: str, owner: str, root_directory: str, version: str, activate: bool = None) -> Dict[str, Any]:
+        """
+        Create a deployment based on a template.
+        
+        Use this endpoint with combination of [listTemplates](https://appwrite.io/docs/server/functions#listTemplates) to find the template details.
+
+        Parameters
+        ----------
+        function_id : str
+            Function ID.
+        repository : str
+            Repository name of the template.
+        owner : str
+            The name of the owner of the template.
+        root_directory : str
+            Path to function code in the template repo.
+        version : str
+            Version (tag) for the repo linked to the function template.
+        activate : bool
+            Automatically activate the deployment when it is finished building.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/functions/{functionId}/deployments/template'
+        api_params = {}
+        if function_id is None:
+            raise AppwriteException('Missing required parameter: "function_id"')
+
+        if repository is None:
+            raise AppwriteException('Missing required parameter: "repository"')
+
+        if owner is None:
+            raise AppwriteException('Missing required parameter: "owner"')
+
+        if root_directory is None:
+            raise AppwriteException('Missing required parameter: "root_directory"')
+
+        if version is None:
+            raise AppwriteException('Missing required parameter: "version"')
+
+        api_path = api_path.replace('{functionId}', function_id)
+
+        api_params['repository'] = repository
+        api_params['owner'] = owner
+        api_params['rootDirectory'] = root_directory
+        api_params['version'] = version
+        api_params['activate'] = activate
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_vcs_deployment(self, function_id: str, type: VCSDeploymentType, reference: str, activate: bool = None) -> Dict[str, Any]:
+        """
+        Create a deployment when a function is connected to VCS.
+        
+        This endpoint lets you create deployment from a branch, commit, or a tag.
+
+        Parameters
+        ----------
+        function_id : str
+            Function ID.
+        type : VCSDeploymentType
+            Type of reference passed. Allowed values are: branch, commit
+        reference : str
+            VCS reference to create deployment from. Depending on type this can be: branch name, commit hash
+        activate : bool
+            Automatically activate the deployment when it is finished building.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/functions/{functionId}/deployments/vcs'
+        api_params = {}
+        if function_id is None:
+            raise AppwriteException('Missing required parameter: "function_id"')
+
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        if reference is None:
+            raise AppwriteException('Missing required parameter: "reference"')
+
+        api_path = api_path.replace('{functionId}', function_id)
+
+        api_params['type'] = type
+        api_params['reference'] = reference
+        api_params['activate'] = activate
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def get_deployment(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
         """
-        Get a code deployment by its unique ID.
+        Get a function deployment by its unique ID.
 
         Parameters
         ----------
@@ -467,44 +645,6 @@ class Functions(Service):
 
 
         return self.client.call('get', api_path, {
-        }, api_params)
-
-    def update_deployment(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
-        """
-        Update the function code deployment ID using the unique function ID. Use this endpoint to switch the code deployment that should be executed by the execution endpoint.
-
-        Parameters
-        ----------
-        function_id : str
-            Function ID.
-        deployment_id : str
-            Deployment ID.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/functions/{functionId}/deployments/{deploymentId}'
-        api_params = {}
-        if function_id is None:
-            raise AppwriteException('Missing required parameter: "function_id"')
-
-        if deployment_id is None:
-            raise AppwriteException('Missing required parameter: "deployment_id"')
-
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{deploymentId}', deployment_id)
-
-
-        return self.client.call('patch', api_path, {
-            'content-type': 'application/json',
         }, api_params)
 
     def delete_deployment(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
@@ -545,9 +685,9 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_build(self, function_id: str, deployment_id: str, build_id: str = None) -> Dict[str, Any]:
+    def get_deployment_download(self, function_id: str, deployment_id: str, type: DeploymentDownloadType = None) -> bytes:
         """
-        Create a new build for an existing function deployment. This endpoint allows you to rebuild a deployment with the updated function configuration, including its entrypoint and build commands if they have been modified The build process will be queued and executed asynchronously. The original deployment's code will be preserved and used for the new build.
+        Get a function deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
 
         Parameters
         ----------
@@ -555,85 +695,8 @@ class Functions(Service):
             Function ID.
         deployment_id : str
             Deployment ID.
-        build_id : str
-            Build unique ID.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/functions/{functionId}/deployments/{deploymentId}/build'
-        api_params = {}
-        if function_id is None:
-            raise AppwriteException('Missing required parameter: "function_id"')
-
-        if deployment_id is None:
-            raise AppwriteException('Missing required parameter: "deployment_id"')
-
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{deploymentId}', deployment_id)
-
-        api_params['buildId'] = build_id
-
-        return self.client.call('post', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
-    def update_deployment_build(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
-        """
-        Cancel an ongoing function deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn't started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status 'ready') or failed. The response includes the final build status and details.
-
-        Parameters
-        ----------
-        function_id : str
-            Function ID.
-        deployment_id : str
-            Deployment ID.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/functions/{functionId}/deployments/{deploymentId}/build'
-        api_params = {}
-        if function_id is None:
-            raise AppwriteException('Missing required parameter: "function_id"')
-
-        if deployment_id is None:
-            raise AppwriteException('Missing required parameter: "deployment_id"')
-
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{deploymentId}', deployment_id)
-
-
-        return self.client.call('patch', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
-    def get_deployment_download(self, function_id: str, deployment_id: str) -> bytes:
-        """
-        Get a Deployment's contents by its unique ID. This endpoint supports range requests for partial or streaming file download.
-
-        Parameters
-        ----------
-        function_id : str
-            Function ID.
-        deployment_id : str
-            Deployment ID.
+        type : DeploymentDownloadType
+            Deployment file to download. Can be: "source", "output".
         
         Returns
         -------
@@ -657,11 +720,50 @@ class Functions(Service):
         api_path = api_path.replace('{functionId}', function_id)
         api_path = api_path.replace('{deploymentId}', deployment_id)
 
+        api_params['type'] = type
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def list_executions(self, function_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def update_deployment_status(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
+        """
+        Cancel an ongoing function deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn't started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status 'ready') or failed. The response includes the final build status and details.
+
+        Parameters
+        ----------
+        function_id : str
+            Function ID.
+        deployment_id : str
+            Deployment ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/functions/{functionId}/deployments/{deploymentId}/status'
+        api_params = {}
+        if function_id is None:
+            raise AppwriteException('Missing required parameter: "function_id"')
+
+        if deployment_id is None:
+            raise AppwriteException('Missing required parameter: "deployment_id"')
+
+        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{deploymentId}', deployment_id)
+
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def list_executions(self, function_id: str, queries: List[str] = None) -> Dict[str, Any]:
         """
         Get a list of all the current user function execution logs. You can use the query params to filter your results.
 
@@ -671,8 +773,6 @@ class Functions(Service):
             Function ID.
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: trigger, status, responseStatusCode, duration, requestMethod, requestPath, deploymentId
-        search : str
-            Search term to filter your list results. Max length: 256 chars.
         
         Returns
         -------
@@ -693,7 +793,6 @@ class Functions(Service):
         api_path = api_path.replace('{functionId}', function_id)
 
         api_params['queries'] = queries
-        api_params['search'] = search
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -788,7 +887,6 @@ class Functions(Service):
     def delete_execution(self, function_id: str, execution_id: str) -> Dict[str, Any]:
         """
         Delete a function execution by its unique ID.
-        
 
         Parameters
         ----------
@@ -855,7 +953,7 @@ class Functions(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_variable(self, function_id: str, key: str, value: str) -> Dict[str, Any]:
+    def create_variable(self, function_id: str, key: str, value: str, secret: bool = None) -> Dict[str, Any]:
         """
         Create a new function environment variable. These variables can be accessed in the function at runtime as environment variables.
 
@@ -867,6 +965,8 @@ class Functions(Service):
             Variable key. Max length: 255 chars.
         value : str
             Variable value. Max length: 8192 chars.
+        secret : bool
+            Secret variables can be updated or deleted, but only functions can read them during build and runtime.
         
         Returns
         -------
@@ -894,6 +994,7 @@ class Functions(Service):
 
         api_params['key'] = key
         api_params['value'] = value
+        api_params['secret'] = secret
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -936,7 +1037,7 @@ class Functions(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update_variable(self, function_id: str, variable_id: str, key: str, value: str = None) -> Dict[str, Any]:
+    def update_variable(self, function_id: str, variable_id: str, key: str, value: str = None, secret: bool = None) -> Dict[str, Any]:
         """
         Update variable by its unique ID.
 
@@ -950,6 +1051,8 @@ class Functions(Service):
             Variable key. Max length: 255 chars.
         value : str
             Variable value. Max length: 8192 chars.
+        secret : bool
+            Secret variables can be updated or deleted, but only functions can read them during build and runtime.
         
         Returns
         -------
@@ -978,6 +1081,7 @@ class Functions(Service):
 
         api_params['key'] = key
         api_params['value'] = value
+        api_params['secret'] = secret
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',

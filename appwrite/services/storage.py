@@ -447,7 +447,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_file_download(self, bucket_id: str, file_id: str) -> bytes:
+    def get_file_download(self, bucket_id: str, file_id: str, token: str = None) -> bytes:
         """
         Get a file content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
 
@@ -457,6 +457,8 @@ class Storage(Service):
             Storage bucket ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
         file_id : str
             File ID.
+        token : str
+            File token for accessing this file.
         
         Returns
         -------
@@ -480,11 +482,12 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
         api_path = api_path.replace('{fileId}', file_id)
 
+        api_params['token'] = token
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_file_preview(self, bucket_id: str, file_id: str, width: float = None, height: float = None, gravity: ImageGravity = None, quality: float = None, border_width: float = None, border_color: str = None, border_radius: float = None, opacity: float = None, rotation: float = None, background: str = None, output: ImageFormat = None) -> bytes:
+    def get_file_preview(self, bucket_id: str, file_id: str, width: float = None, height: float = None, gravity: ImageGravity = None, quality: float = None, border_width: float = None, border_color: str = None, border_radius: float = None, opacity: float = None, rotation: float = None, background: str = None, output: ImageFormat = None, token: str = None) -> bytes:
         """
         Get a file preview image. Currently, this method supports preview for image files (jpg, png, and gif), other supported formats, like pdf, docs, slides, and spreadsheets, will return the file icon image. You can also pass query string arguments for cutting and resizing your preview image. Preview is supported only for image files smaller than 10MB.
 
@@ -501,7 +504,7 @@ class Storage(Service):
         gravity : ImageGravity
             Image crop gravity. Can be one of center,top-left,top,top-right,left,right,bottom-left,bottom,bottom-right
         quality : float
-            Preview image quality. Pass an integer between 0 to 100. Defaults to 100.
+            Preview image quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
         border_width : float
             Preview image border in pixels. Pass an integer between 0 to 100. Defaults to 0.
         border_color : str
@@ -516,6 +519,8 @@ class Storage(Service):
             Preview image background color. Only works with transparent images (png). Use a valid HEX color, no # is needed for prefix.
         output : ImageFormat
             Output format type (jpeg, jpg, png, gif and webp).
+        token : str
+            File token for accessing this file.
         
         Returns
         -------
@@ -550,11 +555,12 @@ class Storage(Service):
         api_params['rotation'] = rotation
         api_params['background'] = background
         api_params['output'] = output
+        api_params['token'] = token
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_file_view(self, bucket_id: str, file_id: str) -> bytes:
+    def get_file_view(self, bucket_id: str, file_id: str, token: str = None) -> bytes:
         """
         Get a file content by its unique ID. This endpoint is similar to the download method but returns with no  'Content-Disposition: attachment' header.
 
@@ -564,6 +570,8 @@ class Storage(Service):
             Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
         file_id : str
             File ID.
+        token : str
+            File token for accessing this file.
         
         Returns
         -------
@@ -587,6 +595,7 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
         api_path = api_path.replace('{fileId}', file_id)
 
+        api_params['token'] = token
 
         return self.client.call('get', api_path, {
         }, api_params)
