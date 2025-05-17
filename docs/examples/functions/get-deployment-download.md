@@ -10,5 +10,6 @@ functions = Functions(client)
 
 result = functions.get_deployment_download(
     function_id = '<FUNCTION_ID>',
-    deployment_id = '<DEPLOYMENT_ID>'
+    deployment_id = '<DEPLOYMENT_ID>',
+    type = DeploymentDownloadType.SOURCE # optional
 )

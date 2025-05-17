@@ -1813,7 +1813,6 @@ class Databases(Service):
     def create_documents(self, database_id: str, collection_id: str, documents: List[dict]) -> Dict[str, Any]:
         """
         Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
-        
 
         Parameters
         ----------
@@ -2162,7 +2161,7 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_index(self, database_id: str, collection_id: str, key: str, type: IndexType, attributes: List[str], orders: List[str] = None) -> Dict[str, Any]:
+    def create_index(self, database_id: str, collection_id: str, key: str, type: IndexType, attributes: List[str], orders: List[str] = None, lengths: List[float] = None) -> Dict[str, Any]:
         """
         Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
         Attributes can be `key`, `fulltext`, and `unique`.
@@ -2181,6 +2180,8 @@ class Databases(Service):
             Array of attributes to index. Maximum of 100 attributes are allowed, each 32 characters long.
         orders : List[str]
             Array of index orders. Maximum of 100 orders are allowed.
+        lengths : List[float]
+            Length of index. Maximum of 100
         
         Returns
         -------
@@ -2217,6 +2218,7 @@ class Databases(Service):
         api_params['type'] = type
         api_params['attributes'] = attributes
         api_params['orders'] = orders
+        api_params['lengths'] = lengths
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',

@@ -1,14 +1,14 @@
 from appwrite.client import Client
-from appwrite.services.functions import Functions
+from appwrite.services.sites import Sites
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
 client.set_project('<YOUR_PROJECT_ID>') # Your project ID
 client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-functions = Functions(client)
+sites = Sites(client)
 
-result = functions.update_deployment(
-    function_id = '<FUNCTION_ID>',
-    deployment_id = '<DEPLOYMENT_ID>'
+result = sites.delete_log(
+    site_id = '<SITE_ID>',
+    log_id = '<LOG_ID>'
 )

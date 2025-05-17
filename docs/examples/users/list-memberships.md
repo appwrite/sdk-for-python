@@ -9,5 +9,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 users = Users(client)
 
 result = users.list_memberships(
-    user_id = '<USER_ID>'
+    user_id = '<USER_ID>',
+    queries = [], # optional
+    search = '<SEARCH>' # optional
 )

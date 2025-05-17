@@ -27,9 +27,5 @@ result = functions.create(
     provider_branch = '<PROVIDER_BRANCH>', # optional
     provider_silent_mode = False, # optional
     provider_root_directory = '<PROVIDER_ROOT_DIRECTORY>', # optional
-    template_repository = '<TEMPLATE_REPOSITORY>', # optional
-    template_owner = '<TEMPLATE_OWNER>', # optional
-    template_root_directory = '<TEMPLATE_ROOT_DIRECTORY>', # optional
-    template_version = '<TEMPLATE_VERSION>', # optional
     specification = '' # optional
 )

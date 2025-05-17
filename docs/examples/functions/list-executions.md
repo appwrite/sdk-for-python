@@ -10,6 +10,5 @@ functions = Functions(client)
 
 result = functions.list_executions(
     function_id = '<FUNCTION_ID>',
-    queries = [], # optional
-    search = '<SEARCH>' # optional
+    queries = [] # optional
 )

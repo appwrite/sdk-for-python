@@ -9,10 +9,15 @@ from ..enums.relationship_type import RelationshipType
 from ..enums.relation_mutate import RelationMutate
 from ..enums.index_type import IndexType
 from ..enums.runtime import Runtime
+from ..enums.vcs_deployment_type import VCSDeploymentType
+from ..enums.deployment_download_type import DeploymentDownloadType
 from ..enums.execution_method import ExecutionMethod
 from ..enums.name import Name
 from ..enums.message_priority import MessagePriority
 from ..enums.smtp_encryption import SmtpEncryption
+from ..enums.framework import Framework
+from ..enums.build_runtime import BuildRuntime
+from ..enums.adapter import Adapter
 from ..enums.compression import Compression
 from ..enums.image_gravity import ImageGravity
 from ..enums.image_format import ImageFormat
@@ -51,6 +56,12 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, Runtime):
             return o.value
 
+        if isinstance(o, VCSDeploymentType):
+            return o.value
+
+        if isinstance(o, DeploymentDownloadType):
+            return o.value
+
         if isinstance(o, ExecutionMethod):
             return o.value
 
@@ -61,6 +72,15 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, SmtpEncryption):
+            return o.value
+
+        if isinstance(o, Framework):
+            return o.value
+
+        if isinstance(o, BuildRuntime):
+            return o.value
+
+        if isinstance(o, Adapter):
             return o.value
 
         if isinstance(o, Compression):

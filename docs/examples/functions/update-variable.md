@@ -12,5 +12,6 @@ result = functions.update_variable(
     function_id = '<FUNCTION_ID>',
     variable_id = '<VARIABLE_ID>',
     key = '<KEY>',
-    value = '<VALUE>' # optional
+    value = '<VALUE>', # optional
+    secret = False # optional
 )
