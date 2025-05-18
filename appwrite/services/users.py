@@ -741,7 +741,7 @@ class Users(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def list_memberships(self, user_id: str) -> Dict[str, Any]:
+    def list_memberships(self, user_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
         Get the user membership list by its unique ID.
 
@@ -749,6 +749,10 @@ class Users(Service):
         ----------
         user_id : str
             User ID.
+        queries : List[str]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, teamId, invited, joined, confirm, roles
+        search : str
+            Search term to filter your list results. Max length: 256 chars.
         
         Returns
         -------
@@ -768,6 +772,8 @@ class Users(Service):
 
         api_path = api_path.replace('{userId}', user_id)
 
+        api_params['queries'] = queries
+        api_params['search'] = search
 
         return self.client.call('get', api_path, {
         }, api_params)

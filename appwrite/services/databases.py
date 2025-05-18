@@ -1760,7 +1760,6 @@ class Databases(Service):
     def create_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: List[str] = None) -> Dict[str, Any]:
         """
         Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
-        
 
         Parameters
         ----------
@@ -1808,6 +1807,177 @@ class Databases(Service):
         api_params['permissions'] = permissions
 
         return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_documents(self, database_id: str, collection_id: str, documents: List[dict]) -> Dict[str, Any]:
+        """
+        Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection). Make sure to define attributes before creating documents.
+        documents : List[dict]
+            Array of documents data as JSON objects.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if documents is None:
+            raise AppwriteException('Missing required parameter: "documents"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+
+        api_params['documents'] = documents
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def upsert_documents(self, database_id: str, collection_id: str, documents: List[dict] = None) -> Dict[str, Any]:
+        """
+        Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID.
+        documents : List[dict]
+            Array of document data as JSON objects. May contain partial documents.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+
+        api_params['documents'] = documents
+
+        return self.client.call('put', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_documents(self, database_id: str, collection_id: str, data: dict = None, queries: List[str] = None) -> Dict[str, Any]:
+        """
+        Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID.
+        data : dict
+            Document data as JSON object. Include only attribute and value pairs to be updated.
+        queries : List[str]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+
+        api_params['data'] = data
+        api_params['queries'] = queries
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def delete_documents(self, database_id: str, collection_id: str, queries: List[str] = None) -> Dict[str, Any]:
+        """
+        Bulk delete documents using queries, if no queries are passed then all documents are deleted.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        queries : List[str]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+
+        api_params['queries'] = queries
+
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
@@ -1991,7 +2161,7 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_index(self, database_id: str, collection_id: str, key: str, type: IndexType, attributes: List[str], orders: List[str] = None) -> Dict[str, Any]:
+    def create_index(self, database_id: str, collection_id: str, key: str, type: IndexType, attributes: List[str], orders: List[str] = None, lengths: List[float] = None) -> Dict[str, Any]:
         """
         Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
         Attributes can be `key`, `fulltext`, and `unique`.
@@ -2010,6 +2180,8 @@ class Databases(Service):
             Array of attributes to index. Maximum of 100 attributes are allowed, each 32 characters long.
         orders : List[str]
             Array of index orders. Maximum of 100 orders are allowed.
+        lengths : List[float]
+            Length of index. Maximum of 100
         
         Returns
         -------
@@ -2046,6 +2218,7 @@ class Databases(Service):
         api_params['type'] = type
         api_params['attributes'] = attributes
         api_params['orders'] = orders
+        api_params['lengths'] = lengths
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',

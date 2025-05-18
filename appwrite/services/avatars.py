@@ -25,7 +25,7 @@ class Avatars(Service):
         height : float
             Image height. Pass an integer between 0 to 2000. Defaults to 100.
         quality : float
-            Image quality. Pass an integer between 0 to 100. Defaults to 100.
+            Image quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
         
         Returns
         -------
@@ -68,7 +68,7 @@ class Avatars(Service):
         height : float
             Image height. Pass an integer between 0 to 2000. Defaults to 100.
         quality : float
-            Image quality. Pass an integer between 0 to 100. Defaults to 100.
+            Image quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
         
         Returns
         -------
@@ -144,7 +144,7 @@ class Avatars(Service):
         height : float
             Image height. Pass an integer between 0 to 2000. Defaults to 100.
         quality : float
-            Image quality. Pass an integer between 0 to 100. Defaults to 100.
+            Image quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
         
         Returns
         -------
