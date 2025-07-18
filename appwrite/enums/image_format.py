@@ -7,3 +7,4 @@ class ImageFormat(Enum):
     WEBP = "webp"
     HEIC = "heic"
     AVIF = "avif"
+    GIF = "gif"

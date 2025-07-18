@@ -1812,6 +1812,8 @@ class Databases(Service):
 
     def create_documents(self, database_id: str, collection_id: str, documents: List[dict]) -> Dict[str, Any]:
         """
+        **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
+        
         Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
         Parameters
@@ -1854,10 +1856,11 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def upsert_documents(self, database_id: str, collection_id: str, documents: List[dict] = None) -> Dict[str, Any]:
+    def upsert_documents(self, database_id: str, collection_id: str, documents: List[dict]) -> Dict[str, Any]:
         """
-        Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
+        **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
         
+        Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
         Parameters
         ----------
@@ -1887,6 +1890,9 @@ class Databases(Service):
         if collection_id is None:
             raise AppwriteException('Missing required parameter: "collection_id"')
 
+        if documents is None:
+            raise AppwriteException('Missing required parameter: "documents"')
+
         api_path = api_path.replace('{databaseId}', database_id)
         api_path = api_path.replace('{collectionId}', collection_id)
 
@@ -1898,6 +1904,8 @@ class Databases(Service):
 
     def update_documents(self, database_id: str, collection_id: str, data: dict = None, queries: List[str] = None) -> Dict[str, Any]:
         """
+        **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
+        
         Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
 
         Parameters
@@ -1942,6 +1950,8 @@ class Databases(Service):
 
     def delete_documents(self, database_id: str, collection_id: str, queries: List[str] = None) -> Dict[str, Any]:
         """
+        **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
+        
         Bulk delete documents using queries, if no queries are passed then all documents are deleted.
 
         Parameters
@@ -2025,6 +2035,61 @@ class Databases(Service):
         api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
+        }, api_params)
+
+    def upsert_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: List[str] = None) -> Dict[str, Any]:
+        """
+        **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
+        
+        Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID.
+        document_id : str
+            Document ID.
+        data : dict
+            Document data as JSON object. Include all required attributes of the document to be created or updated.
+        permissions : List[str]
+            An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if document_id is None:
+            raise AppwriteException('Missing required parameter: "document_id"')
+
+        if data is None:
+            raise AppwriteException('Missing required parameter: "data"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+        api_path = api_path.replace('{documentId}', document_id)
+
+        api_params['data'] = data
+        api_params['permissions'] = permissions
+
+        return self.client.call('put', api_path, {
+            'content-type': 'application/json',
         }, api_params)
 
     def update_document(self, database_id: str, collection_id: str, document_id: str, data: dict = None, permissions: List[str] = None) -> Dict[str, Any]:
@@ -2118,6 +2183,118 @@ class Databases(Service):
 
 
         return self.client.call('delete', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def decrement_document_attribute(self, database_id: str, collection_id: str, document_id: str, attribute: str, value: float = None, min: float = None) -> Dict[str, Any]:
+        """
+        Decrement a specific attribute of a document by a given value.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID.
+        document_id : str
+            Document ID.
+        attribute : str
+            Attribute key.
+        value : float
+            Value to decrement the attribute by. The value must be a number.
+        min : float
+            Minimum value for the attribute. If the current value is lesser than this value, an exception will be thrown.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/decrement'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if document_id is None:
+            raise AppwriteException('Missing required parameter: "document_id"')
+
+        if attribute is None:
+            raise AppwriteException('Missing required parameter: "attribute"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+        api_path = api_path.replace('{documentId}', document_id)
+        api_path = api_path.replace('{attribute}', attribute)
+
+        api_params['value'] = value
+        api_params['min'] = min
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def increment_document_attribute(self, database_id: str, collection_id: str, document_id: str, attribute: str, value: float = None, max: float = None) -> Dict[str, Any]:
+        """
+        Increment a specific attribute of a document by a given value.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID.
+        document_id : str
+            Document ID.
+        attribute : str
+            Attribute key.
+        value : float
+            Value to increment the attribute by. The value must be a number.
+        max : float
+            Maximum value for the attribute. If the current value is greater than this value, an error will be thrown.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/increment'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if document_id is None:
+            raise AppwriteException('Missing required parameter: "document_id"')
+
+        if attribute is None:
+            raise AppwriteException('Missing required parameter: "attribute"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+        api_path = api_path.replace('{documentId}', document_id)
+        api_path = api_path.replace('{attribute}', attribute)
+
+        api_params['value'] = value
+        api_params['max'] = max
+
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 

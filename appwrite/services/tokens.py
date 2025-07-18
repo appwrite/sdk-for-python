@@ -49,7 +49,7 @@ class Tokens(Service):
 
     def create_file_token(self, bucket_id: str, file_id: str, expire: str = None) -> Dict[str, Any]:
         """
-        Create a new token. A token is linked to a file. Token can be passed as a header or request get parameter.
+        Create a new token. A token is linked to a file. Token can be passed as a request URL search parameter.
 
         Parameters
         ----------
