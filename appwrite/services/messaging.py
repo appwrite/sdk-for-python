@@ -13,6 +13,7 @@ class Messaging(Service):
         """
         Get a list of all messages from the current Appwrite project.
 
+
         Parameters
         ----------
         queries : List[str]
@@ -43,6 +44,7 @@ class Messaging(Service):
     def create_email(self, message_id: str, subject: str, content: str, topics: List[str] = None, users: List[str] = None, targets: List[str] = None, cc: List[str] = None, bcc: List[str] = None, attachments: List[str] = None, draft: bool = None, html: bool = None, scheduled_at: str = None) -> Dict[str, Any]:
         """
         Create a new email message.
+
 
         Parameters
         ----------
@@ -116,6 +118,7 @@ class Messaging(Service):
         Update an email message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
         
 
+
         Parameters
         ----------
         message_id : str
@@ -180,6 +183,7 @@ class Messaging(Service):
     def create_push(self, message_id: str, title: str = None, body: str = None, topics: List[str] = None, users: List[str] = None, targets: List[str] = None, data: dict = None, action: str = None, image: str = None, icon: str = None, sound: str = None, color: str = None, tag: str = None, badge: float = None, draft: bool = None, scheduled_at: str = None, content_available: bool = None, critical: bool = None, priority: MessagePriority = None) -> Dict[str, Any]:
         """
         Create a new push notification.
+
 
         Parameters
         ----------
@@ -268,6 +272,7 @@ class Messaging(Service):
         Update a push notification by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
         
 
+
         Parameters
         ----------
         message_id : str
@@ -354,6 +359,7 @@ class Messaging(Service):
         """
         Create a new SMS message.
 
+
         Parameters
         ----------
         message_id : str
@@ -408,6 +414,7 @@ class Messaging(Service):
         Update an SMS message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
         
 
+
         Parameters
         ----------
         message_id : str
@@ -459,6 +466,7 @@ class Messaging(Service):
         Get a message by its unique ID.
         
 
+
         Parameters
         ----------
         message_id : str
@@ -489,6 +497,7 @@ class Messaging(Service):
     def delete(self, message_id: str) -> Dict[str, Any]:
         """
         Delete a message. If the message is not a draft or scheduled, but has been sent, this will not recall the message.
+
 
         Parameters
         ----------
@@ -521,6 +530,7 @@ class Messaging(Service):
     def list_message_logs(self, message_id: str, queries: List[str] = None) -> Dict[str, Any]:
         """
         Get the message activity logs listed by its unique ID.
+
 
         Parameters
         ----------
@@ -556,6 +566,7 @@ class Messaging(Service):
         """
         Get a list of the targets associated with a message.
 
+
         Parameters
         ----------
         message_id : str
@@ -590,6 +601,7 @@ class Messaging(Service):
         """
         Get a list of all providers from the current Appwrite project.
 
+
         Parameters
         ----------
         queries : List[str]
@@ -620,6 +632,7 @@ class Messaging(Service):
     def create_apns_provider(self, provider_id: str, name: str, auth_key: str = None, auth_key_id: str = None, team_id: str = None, bundle_id: str = None, sandbox: bool = None, enabled: bool = None) -> Dict[str, Any]:
         """
         Create a new Apple Push Notification service provider.
+
 
         Parameters
         ----------
@@ -677,6 +690,7 @@ class Messaging(Service):
         """
         Update a Apple Push Notification service provider by its unique ID.
 
+
         Parameters
         ----------
         provider_id : str
@@ -730,6 +744,7 @@ class Messaging(Service):
         """
         Create a new Firebase Cloud Messaging provider.
 
+
         Parameters
         ----------
         provider_id : str
@@ -774,6 +789,7 @@ class Messaging(Service):
         """
         Update a Firebase Cloud Messaging provider by its unique ID.
 
+
         Parameters
         ----------
         provider_id : str
@@ -814,6 +830,7 @@ class Messaging(Service):
     def create_mailgun_provider(self, provider_id: str, name: str, api_key: str = None, domain: str = None, is_eu_region: bool = None, from_name: str = None, from_email: str = None, reply_to_name: str = None, reply_to_email: str = None, enabled: bool = None) -> Dict[str, Any]:
         """
         Create a new Mailgun provider.
+
 
         Parameters
         ----------
@@ -877,6 +894,7 @@ class Messaging(Service):
         """
         Update a Mailgun provider by its unique ID.
 
+
         Parameters
         ----------
         provider_id : str
@@ -936,6 +954,7 @@ class Messaging(Service):
         """
         Create a new MSG91 provider.
 
+
         Parameters
         ----------
         provider_id : str
@@ -986,6 +1005,7 @@ class Messaging(Service):
         """
         Update a MSG91 provider by its unique ID.
 
+
         Parameters
         ----------
         provider_id : str
@@ -1032,6 +1052,7 @@ class Messaging(Service):
     def create_sendgrid_provider(self, provider_id: str, name: str, api_key: str = None, from_name: str = None, from_email: str = None, reply_to_name: str = None, reply_to_email: str = None, enabled: bool = None) -> Dict[str, Any]:
         """
         Create a new Sendgrid provider.
+
 
         Parameters
         ----------
@@ -1089,6 +1110,7 @@ class Messaging(Service):
         """
         Update a Sendgrid provider by its unique ID.
 
+
         Parameters
         ----------
         provider_id : str
@@ -1141,6 +1163,7 @@ class Messaging(Service):
     def create_smtp_provider(self, provider_id: str, name: str, host: str, port: float = None, username: str = None, password: str = None, encryption: SmtpEncryption = None, auto_tls: bool = None, mailer: str = None, from_name: str = None, from_email: str = None, reply_to_name: str = None, reply_to_email: str = None, enabled: bool = None) -> Dict[str, Any]:
         """
         Create a new SMTP provider.
+
 
         Parameters
         ----------
@@ -1219,6 +1242,7 @@ class Messaging(Service):
         """
         Update a SMTP provider by its unique ID.
 
+
         Parameters
         ----------
         provider_id : str
@@ -1290,6 +1314,7 @@ class Messaging(Service):
         """
         Create a new Telesign provider.
 
+
         Parameters
         ----------
         provider_id : str
@@ -1340,6 +1365,7 @@ class Messaging(Service):
         """
         Update a Telesign provider by its unique ID.
 
+
         Parameters
         ----------
         provider_id : str
@@ -1386,6 +1412,7 @@ class Messaging(Service):
     def create_textmagic_provider(self, provider_id: str, name: str, xfrom: str = None, username: str = None, api_key: str = None, enabled: bool = None) -> Dict[str, Any]:
         """
         Create a new Textmagic provider.
+
 
         Parameters
         ----------
@@ -1437,6 +1464,7 @@ class Messaging(Service):
         """
         Update a Textmagic provider by its unique ID.
 
+
         Parameters
         ----------
         provider_id : str
@@ -1483,6 +1511,7 @@ class Messaging(Service):
     def create_twilio_provider(self, provider_id: str, name: str, xfrom: str = None, account_sid: str = None, auth_token: str = None, enabled: bool = None) -> Dict[str, Any]:
         """
         Create a new Twilio provider.
+
 
         Parameters
         ----------
@@ -1534,6 +1563,7 @@ class Messaging(Service):
         """
         Update a Twilio provider by its unique ID.
 
+
         Parameters
         ----------
         provider_id : str
@@ -1580,6 +1610,7 @@ class Messaging(Service):
     def create_vonage_provider(self, provider_id: str, name: str, xfrom: str = None, api_key: str = None, api_secret: str = None, enabled: bool = None) -> Dict[str, Any]:
         """
         Create a new Vonage provider.
+
 
         Parameters
         ----------
@@ -1631,6 +1662,7 @@ class Messaging(Service):
         """
         Update a Vonage provider by its unique ID.
 
+
         Parameters
         ----------
         provider_id : str
@@ -1679,6 +1711,7 @@ class Messaging(Service):
         Get a provider by its unique ID.
         
 
+
         Parameters
         ----------
         provider_id : str
@@ -1709,6 +1742,7 @@ class Messaging(Service):
     def delete_provider(self, provider_id: str) -> Dict[str, Any]:
         """
         Delete a provider by its unique ID.
+
 
         Parameters
         ----------
@@ -1741,6 +1775,7 @@ class Messaging(Service):
     def list_provider_logs(self, provider_id: str, queries: List[str] = None) -> Dict[str, Any]:
         """
         Get the provider activity logs listed by its unique ID.
+
 
         Parameters
         ----------
@@ -1776,6 +1811,7 @@ class Messaging(Service):
         """
         Get the subscriber activity logs listed by its unique ID.
 
+
         Parameters
         ----------
         subscriber_id : str
@@ -1810,6 +1846,7 @@ class Messaging(Service):
         """
         Get a list of all topics from the current Appwrite project.
 
+
         Parameters
         ----------
         queries : List[str]
@@ -1840,6 +1877,7 @@ class Messaging(Service):
     def create_topic(self, topic_id: str, name: str, subscribe: List[str] = None) -> Dict[str, Any]:
         """
         Create a new topic.
+
 
         Parameters
         ----------
@@ -1883,6 +1921,7 @@ class Messaging(Service):
         Get a topic by its unique ID.
         
 
+
         Parameters
         ----------
         topic_id : str
@@ -1914,6 +1953,7 @@ class Messaging(Service):
         """
         Update a topic by its unique ID.
         
+
 
         Parameters
         ----------
@@ -1953,6 +1993,7 @@ class Messaging(Service):
         """
         Delete a topic by its unique ID.
 
+
         Parameters
         ----------
         topic_id : str
@@ -1984,6 +2025,7 @@ class Messaging(Service):
     def list_topic_logs(self, topic_id: str, queries: List[str] = None) -> Dict[str, Any]:
         """
         Get the topic activity logs listed by its unique ID.
+
 
         Parameters
         ----------
@@ -2018,6 +2060,7 @@ class Messaging(Service):
     def list_subscribers(self, topic_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
         Get a list of all subscribers from the current Appwrite project.
+
 
         Parameters
         ----------
@@ -2055,6 +2098,7 @@ class Messaging(Service):
     def create_subscriber(self, topic_id: str, subscriber_id: str, target_id: str) -> Dict[str, Any]:
         """
         Create a new subscriber.
+
 
         Parameters
         ----------
@@ -2101,6 +2145,7 @@ class Messaging(Service):
         Get a subscriber by its unique ID.
         
 
+
         Parameters
         ----------
         topic_id : str
@@ -2137,6 +2182,7 @@ class Messaging(Service):
     def delete_subscriber(self, topic_id: str, subscriber_id: str) -> Dict[str, Any]:
         """
         Delete a subscriber by its unique ID.
+
 
         Parameters
         ----------

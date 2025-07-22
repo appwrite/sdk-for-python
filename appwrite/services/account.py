@@ -35,6 +35,7 @@ class Account(Service):
         """
         Use this endpoint to allow a new user to register a new account in your project. After the user registration completes successfully, you can use the [/account/verfication](https://appwrite.io/docs/references/cloud/client-web/account#createVerification) route to start verifying the user email address. To allow the new user to login to their new account, you need to create a new [account session](https://appwrite.io/docs/references/cloud/client-web/account#createEmailSession).
 
+
         Parameters
         ----------
         user_id : str
@@ -84,6 +85,7 @@ class Account(Service):
         This endpoint can also be used to convert an anonymous account to a normal one, by passing an email address and a new password.
         
 
+
         Parameters
         ----------
         email : str
@@ -122,6 +124,7 @@ class Account(Service):
         """
         Get the list of identities for the currently logged in user.
 
+
         Parameters
         ----------
         queries : List[str]
@@ -149,6 +152,7 @@ class Account(Service):
     def delete_identity(self, identity_id: str) -> Dict[str, Any]:
         """
         Delete an identity by its unique ID.
+
 
         Parameters
         ----------
@@ -204,6 +208,7 @@ class Account(Service):
         """
         Get the list of latest security activity logs for the currently logged in user. Each log returns user IP address, location and date and time of log.
 
+
         Parameters
         ----------
         queries : List[str]
@@ -231,6 +236,7 @@ class Account(Service):
     def update_mfa(self, mfa: bool) -> Dict[str, Any]:
         """
         Enable or disable MFA on an account.
+
 
         Parameters
         ----------
@@ -264,6 +270,7 @@ class Account(Service):
         """
         Add an authenticator app to be used as an MFA factor. Verify the authenticator using the [verify authenticator](/docs/references/cloud/client-web/account#updateMfaAuthenticator) method.
 
+
         Parameters
         ----------
         type : AuthenticatorType
@@ -295,6 +302,7 @@ class Account(Service):
     def update_mfa_authenticator(self, type: AuthenticatorType, otp: str) -> Dict[str, Any]:
         """
         Verify an authenticator app after adding it using the [add authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator) method.
+
 
         Parameters
         ----------
@@ -334,6 +342,7 @@ class Account(Service):
         """
         Delete an authenticator for a user by ID.
 
+
         Parameters
         ----------
         type : AuthenticatorType
@@ -366,6 +375,7 @@ class Account(Service):
         """
         Begin the process of MFA verification after sign-in. Finish the flow with [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge) method.
 
+
         Parameters
         ----------
         factor : AuthenticationFactor
@@ -397,6 +407,7 @@ class Account(Service):
     def update_mfa_challenge(self, challenge_id: str, otp: str) -> Dict[str, Any]:
         """
         Complete the MFA challenge by providing the one-time password. Finish the process of MFA verification by providing the one-time password. To begin the flow, use [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method.
+
 
         Parameters
         ----------
@@ -522,6 +533,7 @@ class Account(Service):
         """
         Update currently logged in user account name.
 
+
         Parameters
         ----------
         name : str
@@ -553,6 +565,7 @@ class Account(Service):
     def update_password(self, password: str, old_password: str = None) -> Dict[str, Any]:
         """
         Update currently logged in user password. For validation, user is required to pass in the new password, and the old password. For users created with OAuth, Team Invites and Magic URL, oldPassword is optional.
+
 
         Parameters
         ----------
@@ -588,6 +601,7 @@ class Account(Service):
     def update_phone(self, phone: str, password: str) -> Dict[str, Any]:
         """
         Update the currently logged in user's phone number. After updating the phone number, the phone verification status will be reset. A confirmation SMS is not sent automatically, however you can use the [POST /account/verification/phone](https://appwrite.io/docs/references/cloud/client-web/account#createPhoneVerification) endpoint to send a confirmation SMS.
+
 
         Parameters
         ----------
@@ -648,6 +662,7 @@ class Account(Service):
         """
         Update currently logged in user account preferences. The object you pass is stored as is, and replaces any previous value. The maximum allowed prefs size is 64kB and throws error if exceeded.
 
+
         Parameters
         ----------
         prefs : dict
@@ -679,6 +694,7 @@ class Account(Service):
     def create_recovery(self, email: str, url: str) -> Dict[str, Any]:
         """
         Sends the user an email with a temporary secret key for password reset. When the user clicks the confirmation link he is redirected back to your app password reset URL with the secret key and email address values attached to the URL query string. Use the query string params to submit a request to the [PUT /account/recovery](https://appwrite.io/docs/references/cloud/client-web/account#updateRecovery) endpoint to complete the process. The verification link sent to the user's email address is valid for 1 hour.
+
 
         Parameters
         ----------
@@ -719,6 +735,7 @@ class Account(Service):
         Use this endpoint to complete the user account password reset. Both the **userId** and **secret** arguments will be passed as query parameters to the redirect URL you have provided when sending your request to the [POST /account/recovery](https://appwrite.io/docs/references/cloud/client-web/account#createRecovery) endpoint.
         
         Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md) the only valid redirect URLs are the ones from domains you have set when adding your platforms in the console interface.
+
 
         Parameters
         ----------
@@ -831,6 +848,7 @@ class Account(Service):
         
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
 
+
         Parameters
         ----------
         email : str
@@ -868,6 +886,9 @@ class Account(Service):
     def update_magic_url_session(self, user_id: str, secret: str) -> Dict[str, Any]:
         """
         Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
+
+        .. deprecated::
+            This API has been deprecated.
 
         Parameters
         ----------
@@ -907,6 +928,9 @@ class Account(Service):
         """
         Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
 
+        .. deprecated::
+            This API has been deprecated.
+
         Parameters
         ----------
         user_id : str
@@ -944,6 +968,7 @@ class Account(Service):
     def create_session(self, user_id: str, secret: str) -> Dict[str, Any]:
         """
         Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
+
 
         Parameters
         ----------
@@ -983,6 +1008,7 @@ class Account(Service):
         """
         Use this endpoint to get a logged in user's session using a Session ID. Inputting 'current' will return the current session being used.
 
+
         Parameters
         ----------
         session_id : str
@@ -1013,6 +1039,7 @@ class Account(Service):
     def update_session(self, session_id: str) -> Dict[str, Any]:
         """
         Use this endpoint to extend a session's length. Extending a session is useful when session expiry is short. If the session was created using an OAuth provider, this endpoint refreshes the access token from the provider.
+
 
         Parameters
         ----------
@@ -1045,6 +1072,7 @@ class Account(Service):
     def delete_session(self, session_id: str) -> Dict[str, Any]:
         """
         Logout the user. Use 'current' as the session ID to logout on this device, use a session ID to logout on another device. If you're looking to logout the user on all devices, use [Delete Sessions](https://appwrite.io/docs/references/cloud/client-web/account#deleteSessions) instead.
+
 
         Parameters
         ----------
@@ -1102,6 +1130,7 @@ class Account(Service):
         
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
 
+
         Parameters
         ----------
         user_id : str
@@ -1145,6 +1174,7 @@ class Account(Service):
         
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
         
+
 
         Parameters
         ----------
@@ -1194,6 +1224,7 @@ class Account(Service):
         
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
 
+
         Parameters
         ----------
         provider : OAuthProvider
@@ -1236,6 +1267,7 @@ class Account(Service):
         
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
 
+
         Parameters
         ----------
         user_id : str
@@ -1277,6 +1309,7 @@ class Account(Service):
         Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md), the only valid redirect URLs are the ones from domains you have set when adding your platforms in the console interface.
         
 
+
         Parameters
         ----------
         url : str
@@ -1308,6 +1341,7 @@ class Account(Service):
     def update_verification(self, user_id: str, secret: str) -> Dict[str, Any]:
         """
         Use this endpoint to complete the user email verification process. Use both the **userId** and **secret** parameters that were attached to your app URL to verify the user email ownership. If confirmed this route will return a 200 status code.
+
 
         Parameters
         ----------
@@ -1368,6 +1402,7 @@ class Account(Service):
     def update_phone_verification(self, user_id: str, secret: str) -> Dict[str, Any]:
         """
         Use this endpoint to complete the user phone verification process. Use the **userId** and **secret** that were sent to your user's phone number to verify the user email ownership. If confirmed this route will return a 200 status code.
+
 
         Parameters
         ----------

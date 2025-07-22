@@ -1,15 +1,15 @@
 from appwrite.client import Client
-from appwrite.services.databases import Databases
+from appwrite.services.tables import Tables
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_admin('') # 
+client.set_project('<YOUR_PROJECT_ID>') # Your project ID
 client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-databases = Databases(client)
+tables = Tables(client)
 
-result = databases.create_documents(
+result = tables.get_column(
     database_id = '<DATABASE_ID>',
-    collection_id = '<COLLECTION_ID>',
-    documents = []
+    table_id = '<TABLE_ID>',
+    key = ''
 )
