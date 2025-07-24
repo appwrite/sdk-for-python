@@ -11,6 +11,7 @@ class Tokens(Service):
         """
         List all the tokens created for a specific file or bucket. You can use the query params to filter your results.
 
+
         Parameters
         ----------
         bucket_id : str
@@ -50,6 +51,7 @@ class Tokens(Service):
     def create_file_token(self, bucket_id: str, file_id: str, expire: str = None) -> Dict[str, Any]:
         """
         Create a new token. A token is linked to a file. Token can be passed as a request URL search parameter.
+
 
         Parameters
         ----------
@@ -92,6 +94,7 @@ class Tokens(Service):
         """
         Get a token by its unique ID.
 
+
         Parameters
         ----------
         token_id : str
@@ -122,6 +125,7 @@ class Tokens(Service):
     def update(self, token_id: str, expire: str = None) -> Dict[str, Any]:
         """
         Update a token by its unique ID. Use this endpoint to update a token's expiry date.
+
 
         Parameters
         ----------
@@ -157,6 +161,7 @@ class Tokens(Service):
     def delete(self, token_id: str) -> Dict[str, Any]:
         """
         Delete a token by its unique ID.
+
 
         Parameters
         ----------

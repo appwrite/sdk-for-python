@@ -14,6 +14,7 @@ class Users(Service):
         """
         Get a list of all the project's users. You can use the query params to filter your results.
 
+
         Parameters
         ----------
         queries : List[str]
@@ -44,6 +45,7 @@ class Users(Service):
     def create(self, user_id: str, email: str = None, phone: str = None, password: str = None, name: str = None) -> Dict[str, Any]:
         """
         Create a new user.
+
 
         Parameters
         ----------
@@ -88,6 +90,7 @@ class Users(Service):
     def create_argon2_user(self, user_id: str, email: str, password: str, name: str = None) -> Dict[str, Any]:
         """
         Create a new user. Password provided must be hashed with the [Argon2](https://en.wikipedia.org/wiki/Argon2) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
+
 
         Parameters
         ----------
@@ -136,6 +139,7 @@ class Users(Service):
         """
         Create a new user. Password provided must be hashed with the [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
+
         Parameters
         ----------
         user_id : str
@@ -183,6 +187,7 @@ class Users(Service):
         """
         Get identities for all users.
 
+
         Parameters
         ----------
         queries : List[str]
@@ -213,6 +218,7 @@ class Users(Service):
     def delete_identity(self, identity_id: str) -> Dict[str, Any]:
         """
         Delete an identity by its unique ID.
+
 
         Parameters
         ----------
@@ -245,6 +251,7 @@ class Users(Service):
     def create_md5_user(self, user_id: str, email: str, password: str, name: str = None) -> Dict[str, Any]:
         """
         Create a new user. Password provided must be hashed with the [MD5](https://en.wikipedia.org/wiki/MD5) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
+
 
         Parameters
         ----------
@@ -293,6 +300,7 @@ class Users(Service):
         """
         Create a new user. Password provided must be hashed with the [PHPass](https://www.openwall.com/phpass/) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
+
         Parameters
         ----------
         user_id : str
@@ -339,6 +347,7 @@ class Users(Service):
     def create_scrypt_user(self, user_id: str, email: str, password: str, password_salt: str, password_cpu: float, password_memory: float, password_parallel: float, password_length: float, name: str = None) -> Dict[str, Any]:
         """
         Create a new user. Password provided must be hashed with the [Scrypt](https://github.com/Tarsnap/scrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
+
 
         Parameters
         ----------
@@ -417,6 +426,7 @@ class Users(Service):
         """
         Create a new user. Password provided must be hashed with the [Scrypt Modified](https://gist.github.com/Meldiron/eecf84a0225eccb5a378d45bb27462cc) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
+
         Parameters
         ----------
         user_id : str
@@ -482,6 +492,7 @@ class Users(Service):
         """
         Create a new user. Password provided must be hashed with the [SHA](https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
+
         Parameters
         ----------
         user_id : str
@@ -532,6 +543,7 @@ class Users(Service):
         """
         Get a user by its unique ID.
 
+
         Parameters
         ----------
         user_id : str
@@ -562,6 +574,7 @@ class Users(Service):
     def delete(self, user_id: str) -> Dict[str, Any]:
         """
         Delete a user by its unique ID, thereby releasing it's ID. Since ID is released and can be reused, all user-related resources like documents or storage files should be deleted before user deletion. If you want to keep ID reserved, use the [updateStatus](https://appwrite.io/docs/server/users#usersUpdateStatus) endpoint instead.
+
 
         Parameters
         ----------
@@ -594,6 +607,7 @@ class Users(Service):
     def update_email(self, user_id: str, email: str) -> Dict[str, Any]:
         """
         Update the user email by its unique ID.
+
 
         Parameters
         ----------
@@ -632,6 +646,7 @@ class Users(Service):
     def create_jwt(self, user_id: str, session_id: str = None, duration: float = None) -> Dict[str, Any]:
         """
         Use this endpoint to create a JSON Web Token for user by its unique ID. You can use the resulting JWT to authenticate on behalf of the user. The JWT secret will become invalid if the session it uses gets deleted.
+
 
         Parameters
         ----------
@@ -673,6 +688,7 @@ class Users(Service):
         
         Labels can be used to grant access to resources. While teams are a way for user's to share access to a resource, labels can be defined by the developer to grant access without an invitation. See the [Permissions docs](https://appwrite.io/docs/permissions) for more info.
 
+
         Parameters
         ----------
         user_id : str
@@ -711,6 +727,7 @@ class Users(Service):
         """
         Get the user activity logs list by its unique ID.
 
+
         Parameters
         ----------
         user_id : str
@@ -744,6 +761,7 @@ class Users(Service):
     def list_memberships(self, user_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
         Get the user membership list by its unique ID.
+
 
         Parameters
         ----------
@@ -781,6 +799,7 @@ class Users(Service):
     def update_mfa(self, user_id: str, mfa: bool) -> Dict[str, Any]:
         """
         Enable or disable MFA on a user account.
+
 
         Parameters
         ----------
@@ -820,6 +839,7 @@ class Users(Service):
         """
         Delete an authenticator app.
 
+
         Parameters
         ----------
         user_id : str
@@ -858,6 +878,7 @@ class Users(Service):
         """
         List the factors available on the account to be used as a MFA challange.
 
+
         Parameters
         ----------
         user_id : str
@@ -889,6 +910,7 @@ class Users(Service):
         """
         Get recovery codes that can be used as backup for MFA flow by User ID. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
 
+
         Parameters
         ----------
         user_id : str
@@ -919,6 +941,7 @@ class Users(Service):
     def update_mfa_recovery_codes(self, user_id: str) -> Dict[str, Any]:
         """
         Regenerate recovery codes that can be used as backup for MFA flow by User ID. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
+
 
         Parameters
         ----------
@@ -952,6 +975,7 @@ class Users(Service):
         """
         Generate recovery codes used as backup for MFA flow for User ID. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method by client SDK.
 
+
         Parameters
         ----------
         user_id : str
@@ -983,6 +1007,7 @@ class Users(Service):
     def update_name(self, user_id: str, name: str) -> Dict[str, Any]:
         """
         Update the user name by its unique ID.
+
 
         Parameters
         ----------
@@ -1022,6 +1047,7 @@ class Users(Service):
         """
         Update the user password by its unique ID.
 
+
         Parameters
         ----------
         user_id : str
@@ -1059,6 +1085,7 @@ class Users(Service):
     def update_phone(self, user_id: str, number: str) -> Dict[str, Any]:
         """
         Update the user phone by its unique ID.
+
 
         Parameters
         ----------
@@ -1098,6 +1125,7 @@ class Users(Service):
         """
         Get the user preferences by its unique ID.
 
+
         Parameters
         ----------
         user_id : str
@@ -1128,6 +1156,7 @@ class Users(Service):
     def update_prefs(self, user_id: str, prefs: dict) -> Dict[str, Any]:
         """
         Update the user preferences by its unique ID. The object you pass is stored as is, and replaces any previous value. The maximum allowed prefs size is 64kB and throws error if exceeded.
+
 
         Parameters
         ----------
@@ -1167,6 +1196,7 @@ class Users(Service):
         """
         Get the user sessions list by its unique ID.
 
+
         Parameters
         ----------
         user_id : str
@@ -1200,6 +1230,7 @@ class Users(Service):
         
         If you want to generate a token for a custom authentication flow, use the [POST /users/{userId}/tokens](https://appwrite.io/docs/server/users#createToken) endpoint.
 
+
         Parameters
         ----------
         user_id : str
@@ -1232,6 +1263,7 @@ class Users(Service):
         """
         Delete all user's sessions by using the user's unique ID.
 
+
         Parameters
         ----------
         user_id : str
@@ -1263,6 +1295,7 @@ class Users(Service):
     def delete_session(self, user_id: str, session_id: str) -> Dict[str, Any]:
         """
         Delete a user sessions by its unique ID.
+
 
         Parameters
         ----------
@@ -1302,6 +1335,7 @@ class Users(Service):
         """
         Update the user status by its unique ID. Use this endpoint as an alternative to deleting a user if you want to keep user's ID reserved.
 
+
         Parameters
         ----------
         user_id : str
@@ -1340,6 +1374,7 @@ class Users(Service):
         """
         List the messaging targets that are associated with a user.
 
+
         Parameters
         ----------
         user_id : str
@@ -1373,6 +1408,7 @@ class Users(Service):
     def create_target(self, user_id: str, target_id: str, provider_type: MessagingProviderType, identifier: str, provider_id: str = None, name: str = None) -> Dict[str, Any]:
         """
         Create a messaging target.
+
 
         Parameters
         ----------
@@ -1430,6 +1466,7 @@ class Users(Service):
         """
         Get a user's push notification target by ID.
 
+
         Parameters
         ----------
         user_id : str
@@ -1466,6 +1503,7 @@ class Users(Service):
     def update_target(self, user_id: str, target_id: str, identifier: str = None, provider_id: str = None, name: str = None) -> Dict[str, Any]:
         """
         Update a messaging target.
+
 
         Parameters
         ----------
@@ -1514,6 +1552,7 @@ class Users(Service):
         """
         Delete a messaging target.
 
+
         Parameters
         ----------
         user_id : str
@@ -1553,6 +1592,7 @@ class Users(Service):
         Returns a token with a secret key for creating a session. Use the user ID and secret and submit a request to the [PUT /account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process.
         
 
+
         Parameters
         ----------
         user_id : str
@@ -1591,6 +1631,7 @@ class Users(Service):
         """
         Update the user email verification status by its unique ID.
 
+
         Parameters
         ----------
         user_id : str
@@ -1628,6 +1669,7 @@ class Users(Service):
     def update_phone_verification(self, user_id: str, phone_verification: bool) -> Dict[str, Any]:
         """
         Update the user phone verification status by its unique ID.
+
 
         Parameters
         ----------
