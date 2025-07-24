@@ -15,7 +15,6 @@ class Storage(Service):
         """
         Get a list of all the storage buckets. You can use the query params to filter your results.
 
-
         Parameters
         ----------
         queries : List[str]
@@ -46,7 +45,6 @@ class Storage(Service):
     def create_bucket(self, bucket_id: str, name: str, permissions: List[str] = None, file_security: bool = None, enabled: bool = None, maximum_file_size: float = None, allowed_file_extensions: List[str] = None, compression: Compression = None, encryption: bool = None, antivirus: bool = None) -> Dict[str, Any]:
         """
         Create a new storage bucket.
-
 
         Parameters
         ----------
@@ -110,7 +108,6 @@ class Storage(Service):
         """
         Get a storage bucket by its unique ID. This endpoint response returns a JSON object with the storage bucket metadata.
 
-
         Parameters
         ----------
         bucket_id : str
@@ -141,7 +138,6 @@ class Storage(Service):
     def update_bucket(self, bucket_id: str, name: str, permissions: List[str] = None, file_security: bool = None, enabled: bool = None, maximum_file_size: float = None, allowed_file_extensions: List[str] = None, compression: Compression = None, encryption: bool = None, antivirus: bool = None) -> Dict[str, Any]:
         """
         Update a storage bucket by its unique ID.
-
 
         Parameters
         ----------
@@ -205,7 +201,6 @@ class Storage(Service):
         """
         Delete a storage bucket by its unique ID.
 
-
         Parameters
         ----------
         bucket_id : str
@@ -237,7 +232,6 @@ class Storage(Service):
     def list_files(self, bucket_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
         Get a list of all the user files. You can use the query params to filter your results.
-
 
         Parameters
         ----------
@@ -282,7 +276,6 @@ class Storage(Service):
         
         If you're creating a new file using one of the Appwrite SDKs, all the chunking logic will be managed by the SDK internally.
         
-
 
         Parameters
         ----------
@@ -339,7 +332,6 @@ class Storage(Service):
         """
         Get a file by its unique ID. This endpoint response returns a JSON object with the file metadata.
 
-
         Parameters
         ----------
         bucket_id : str
@@ -376,7 +368,6 @@ class Storage(Service):
     def update_file(self, bucket_id: str, file_id: str, name: str = None, permissions: List[str] = None) -> Dict[str, Any]:
         """
         Update a file by its unique ID. Only users with write permissions have access to update this resource.
-
 
         Parameters
         ----------
@@ -422,7 +413,6 @@ class Storage(Service):
         """
         Delete a file by its unique ID. Only users with write permissions have access to delete this resource.
 
-
         Parameters
         ----------
         bucket_id : str
@@ -460,7 +450,6 @@ class Storage(Service):
     def get_file_download(self, bucket_id: str, file_id: str, token: str = None) -> bytes:
         """
         Get a file content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
-
 
         Parameters
         ----------
@@ -501,7 +490,6 @@ class Storage(Service):
     def get_file_preview(self, bucket_id: str, file_id: str, width: float = None, height: float = None, gravity: ImageGravity = None, quality: float = None, border_width: float = None, border_color: str = None, border_radius: float = None, opacity: float = None, rotation: float = None, background: str = None, output: ImageFormat = None, token: str = None) -> bytes:
         """
         Get a file preview image. Currently, this method supports preview for image files (jpg, png, and gif), other supported formats, like pdf, docs, slides, and spreadsheets, will return the file icon image. You can also pass query string arguments for cutting and resizing your preview image. Preview is supported only for image files smaller than 10MB.
-
 
         Parameters
         ----------
@@ -575,7 +563,6 @@ class Storage(Service):
     def get_file_view(self, bucket_id: str, file_id: str, token: str = None) -> bytes:
         """
         Get a file content by its unique ID. This endpoint is similar to the download method but returns with no  'Content-Disposition: attachment' header.
-
 
         Parameters
         ----------

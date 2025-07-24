@@ -75,7 +75,6 @@ class Health(Service):
         """
         Get the SSL certificate for a domain
 
-
         Parameters
         ----------
         domain : str
@@ -146,7 +145,6 @@ class Health(Service):
         """
         Get the number of builds that are waiting to be processed in the Appwrite internal queue server.
 
-
         Parameters
         ----------
         threshold : float
@@ -175,7 +173,6 @@ class Health(Service):
         """
         Get the number of certificates that are waiting to be issued against [Letsencrypt](https://letsencrypt.org/) in the Appwrite internal queue server.
 
-
         Parameters
         ----------
         threshold : float
@@ -203,7 +200,6 @@ class Health(Service):
     def get_queue_databases(self, name: str = None, threshold: float = None) -> Dict[str, Any]:
         """
         Get the number of database changes that are waiting to be processed in the Appwrite internal queue server.
-
 
         Parameters
         ----------
@@ -236,7 +232,6 @@ class Health(Service):
         """
         Get the number of background destructive changes that are waiting to be processed in the Appwrite internal queue server.
 
-
         Parameters
         ----------
         threshold : float
@@ -265,7 +260,6 @@ class Health(Service):
         """
         Returns the amount of failed jobs in a given queue.
         
-
 
         Parameters
         ----------
@@ -301,7 +295,6 @@ class Health(Service):
         """
         Get the number of function executions that are waiting to be processed in the Appwrite internal queue server.
 
-
         Parameters
         ----------
         threshold : float
@@ -329,7 +322,6 @@ class Health(Service):
     def get_queue_logs(self, threshold: float = None) -> Dict[str, Any]:
         """
         Get the number of logs that are waiting to be processed in the Appwrite internal queue server.
-
 
         Parameters
         ----------
@@ -359,7 +351,6 @@ class Health(Service):
         """
         Get the number of mails that are waiting to be processed in the Appwrite internal queue server.
 
-
         Parameters
         ----------
         threshold : float
@@ -387,7 +378,6 @@ class Health(Service):
     def get_queue_messaging(self, threshold: float = None) -> Dict[str, Any]:
         """
         Get the number of messages that are waiting to be processed in the Appwrite internal queue server.
-
 
         Parameters
         ----------
@@ -417,7 +407,6 @@ class Health(Service):
         """
         Get the number of migrations that are waiting to be processed in the Appwrite internal queue server.
 
-
         Parameters
         ----------
         threshold : float
@@ -445,7 +434,6 @@ class Health(Service):
     def get_queue_stats_resources(self, threshold: float = None) -> Dict[str, Any]:
         """
         Get the number of metrics that are waiting to be processed in the Appwrite stats resources queue.
-
 
         Parameters
         ----------
@@ -475,7 +463,6 @@ class Health(Service):
         """
         Get the number of metrics that are waiting to be processed in the Appwrite internal queue server.
 
-
         Parameters
         ----------
         threshold : float
@@ -503,7 +490,6 @@ class Health(Service):
     def get_queue_webhooks(self, threshold: float = None) -> Dict[str, Any]:
         """
         Get the number of webhooks that are waiting to be processed in the Appwrite internal queue server.
-
 
         Parameters
         ----------

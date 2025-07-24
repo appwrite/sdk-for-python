@@ -14,7 +14,6 @@ class Databases(Service):
         """
         Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
 
-
         Parameters
         ----------
         queries : List[str]
@@ -46,7 +45,6 @@ class Databases(Service):
         """
         Create a new Database.
         
-
 
         Parameters
         ----------
@@ -89,7 +87,6 @@ class Databases(Service):
         """
         Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
 
-
         Parameters
         ----------
         database_id : str
@@ -120,7 +117,6 @@ class Databases(Service):
     def update(self, database_id: str, name: str, enabled: bool = None) -> Dict[str, Any]:
         """
         Update a database by its unique ID.
-
 
         Parameters
         ----------
@@ -163,7 +159,6 @@ class Databases(Service):
         """
         Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
 
-
         Parameters
         ----------
         database_id : str
@@ -195,7 +190,6 @@ class Databases(Service):
     def list_collections(self, database_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
         Get a list of all collections that belong to the provided databaseId. You can use the search parameter to filter your results.
-
 
         Parameters
         ----------
@@ -233,7 +227,6 @@ class Databases(Service):
     def create_collection(self, database_id: str, collection_id: str, name: str, permissions: List[str] = None, document_security: bool = None, enabled: bool = None) -> Dict[str, Any]:
         """
         Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
-
 
         Parameters
         ----------
@@ -288,7 +281,6 @@ class Databases(Service):
         """
         Get a collection by its unique ID. This endpoint response returns a JSON object with the collection metadata.
 
-
         Parameters
         ----------
         database_id : str
@@ -325,7 +317,6 @@ class Databases(Service):
     def update_collection(self, database_id: str, collection_id: str, name: str, permissions: List[str] = None, document_security: bool = None, enabled: bool = None) -> Dict[str, Any]:
         """
         Update a collection by its unique ID.
-
 
         Parameters
         ----------
@@ -380,7 +371,6 @@ class Databases(Service):
         """
         Delete a collection by its unique ID. Only users with write permissions have access to delete this resource.
 
-
         Parameters
         ----------
         database_id : str
@@ -418,7 +408,6 @@ class Databases(Service):
     def list_attributes(self, database_id: str, collection_id: str, queries: List[str] = None) -> Dict[str, Any]:
         """
         List attributes in the collection.
-
 
         Parameters
         ----------
@@ -460,7 +449,6 @@ class Databases(Service):
         """
         Create a boolean attribute.
         
-
 
         Parameters
         ----------
@@ -518,7 +506,6 @@ class Databases(Service):
         """
         Update a boolean attribute. Changing the `default` value will not update already existing documents.
 
-
         Parameters
         ----------
         database_id : str
@@ -575,7 +562,6 @@ class Databases(Service):
         """
         Create a date time attribute according to the ISO 8601 standard.
 
-
         Parameters
         ----------
         database_id : str
@@ -631,7 +617,6 @@ class Databases(Service):
     def update_datetime_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str, new_key: str = None) -> Dict[str, Any]:
         """
         Update a date time attribute. Changing the `default` value will not update already existing documents.
-
 
         Parameters
         ----------
@@ -690,7 +675,6 @@ class Databases(Service):
         Create an email attribute.
         
 
-
         Parameters
         ----------
         database_id : str
@@ -748,7 +732,6 @@ class Databases(Service):
         Update an email attribute. Changing the `default` value will not update already existing documents.
         
 
-
         Parameters
         ----------
         database_id : str
@@ -805,7 +788,6 @@ class Databases(Service):
         """
         Create an enumeration attribute. The `elements` param acts as a white-list of accepted values for this attribute. 
         
-
 
         Parameters
         ----------
@@ -870,7 +852,6 @@ class Databases(Service):
         Update an enum attribute. Changing the `default` value will not update already existing documents.
         
 
-
         Parameters
         ----------
         database_id : str
@@ -933,7 +914,6 @@ class Databases(Service):
         """
         Create a float attribute. Optionally, minimum and maximum values can be provided.
         
-
 
         Parameters
         ----------
@@ -998,7 +978,6 @@ class Databases(Service):
         Update a float attribute. Changing the `default` value will not update already existing documents.
         
 
-
         Parameters
         ----------
         database_id : str
@@ -1061,7 +1040,6 @@ class Databases(Service):
         """
         Create an integer attribute. Optionally, minimum and maximum values can be provided.
         
-
 
         Parameters
         ----------
@@ -1126,7 +1104,6 @@ class Databases(Service):
         Update an integer attribute. Changing the `default` value will not update already existing documents.
         
 
-
         Parameters
         ----------
         database_id : str
@@ -1190,7 +1167,6 @@ class Databases(Service):
         Create IP address attribute.
         
 
-
         Parameters
         ----------
         database_id : str
@@ -1248,7 +1224,6 @@ class Databases(Service):
         Update an ip attribute. Changing the `default` value will not update already existing documents.
         
 
-
         Parameters
         ----------
         database_id : str
@@ -1305,7 +1280,6 @@ class Databases(Service):
         """
         Create relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
         
-
 
         Parameters
         ----------
@@ -1369,7 +1343,6 @@ class Databases(Service):
         """
         Create a string attribute.
         
-
 
         Parameters
         ----------
@@ -1437,7 +1410,6 @@ class Databases(Service):
         Update a string attribute. Changing the `default` value will not update already existing documents.
         
 
-
         Parameters
         ----------
         database_id : str
@@ -1498,7 +1470,6 @@ class Databases(Service):
         Create a URL attribute.
         
 
-
         Parameters
         ----------
         database_id : str
@@ -1556,7 +1527,6 @@ class Databases(Service):
         Update an url attribute. Changing the `default` value will not update already existing documents.
         
 
-
         Parameters
         ----------
         database_id : str
@@ -1613,7 +1583,6 @@ class Databases(Service):
         """
         Get attribute by ID.
 
-
         Parameters
         ----------
         database_id : str
@@ -1656,7 +1625,6 @@ class Databases(Service):
     def delete_attribute(self, database_id: str, collection_id: str, key: str) -> Dict[str, Any]:
         """
         Deletes an attribute.
-
 
         Parameters
         ----------
@@ -1702,7 +1670,6 @@ class Databases(Service):
         """
         Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
         
-
 
         Parameters
         ----------
@@ -1754,7 +1721,6 @@ class Databases(Service):
         """
         Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
 
-
         Parameters
         ----------
         database_id : str
@@ -1794,7 +1760,6 @@ class Databases(Service):
     def create_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: List[str] = None) -> Dict[str, Any]:
         """
         Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
-
 
         Parameters
         ----------
@@ -1851,7 +1816,6 @@ class Databases(Service):
         
         Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
-
         Parameters
         ----------
         database_id : str
@@ -1899,7 +1863,6 @@ class Databases(Service):
         Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
         
 
-
         Parameters
         ----------
         database_id : str
@@ -1945,7 +1908,6 @@ class Databases(Service):
         **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
         
         Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
-
 
         Parameters
         ----------
@@ -1993,7 +1955,6 @@ class Databases(Service):
         
         Bulk delete documents using queries, if no queries are passed then all documents are deleted.
 
-
         Parameters
         ----------
         database_id : str
@@ -2034,7 +1995,6 @@ class Databases(Service):
     def get_document(self, database_id: str, collection_id: str, document_id: str, queries: List[str] = None) -> Dict[str, Any]:
         """
         Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
-
 
         Parameters
         ----------
@@ -2083,7 +2043,6 @@ class Databases(Service):
         **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
         
         Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
-
 
         Parameters
         ----------
@@ -2138,7 +2097,6 @@ class Databases(Service):
         """
         Update a document by its unique ID. Using the patch method you can pass only specific fields that will get updated.
 
-
         Parameters
         ----------
         database_id : str
@@ -2189,7 +2147,6 @@ class Databases(Service):
         """
         Delete a document by its unique ID.
 
-
         Parameters
         ----------
         database_id : str
@@ -2233,7 +2190,6 @@ class Databases(Service):
     def decrement_document_attribute(self, database_id: str, collection_id: str, document_id: str, attribute: str, value: float = None, min: float = None) -> Dict[str, Any]:
         """
         Decrement a specific attribute of a document by a given value.
-
 
         Parameters
         ----------
@@ -2291,7 +2247,6 @@ class Databases(Service):
         """
         Increment a specific attribute of a document by a given value.
 
-
         Parameters
         ----------
         database_id : str
@@ -2348,7 +2303,6 @@ class Databases(Service):
         """
         List indexes in the collection.
 
-
         Parameters
         ----------
         database_id : str
@@ -2389,7 +2343,6 @@ class Databases(Service):
         """
         Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
         Attributes can be `key`, `fulltext`, and `unique`.
-
 
         Parameters
         ----------
@@ -2453,7 +2406,6 @@ class Databases(Service):
         """
         Get index by ID.
 
-
         Parameters
         ----------
         database_id : str
@@ -2496,7 +2448,6 @@ class Databases(Service):
     def delete_index(self, database_id: str, collection_id: str, key: str) -> Dict[str, Any]:
         """
         Delete an index.
-
 
         Parameters
         ----------

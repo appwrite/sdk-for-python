@@ -16,7 +16,6 @@ class Avatars(Service):
         
         When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.
 
-
         Parameters
         ----------
         code : Browser
@@ -60,7 +59,6 @@ class Avatars(Service):
         When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.
         
 
-
         Parameters
         ----------
         code : CreditCard
@@ -103,7 +101,6 @@ class Avatars(Service):
         
         This endpoint does not follow HTTP redirects.
 
-
         Parameters
         ----------
         url : str
@@ -137,7 +134,6 @@ class Avatars(Service):
         
         When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.
         
-
 
         Parameters
         ----------
@@ -183,7 +179,6 @@ class Avatars(Service):
         
         This endpoint does not follow HTTP redirects.
 
-
         Parameters
         ----------
         url : str
@@ -226,7 +221,6 @@ class Avatars(Service):
         When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.
         
 
-
         Parameters
         ----------
         name : str
@@ -264,7 +258,6 @@ class Avatars(Service):
         """
         Converts a given plain text to a QR code image. You can use the query parameters to change the size and style of the resulting image.
         
-
 
         Parameters
         ----------
