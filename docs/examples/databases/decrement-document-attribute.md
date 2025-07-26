@@ -8,8 +8,11 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 databases = Databases(client)
 
-result = databases.create_documents(
+result = databases.decrement_document_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    documents = []
+    document_id = '<DOCUMENT_ID>',
+    attribute = '',
+    value = None, # optional
+    min = None # optional
 )
