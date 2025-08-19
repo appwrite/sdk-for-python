@@ -1,16 +1,18 @@
 from appwrite.client import Client
-from appwrite.services.databases import Databases
+from appwrite.services.tables_db import TablesDb
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
 client.set_project('<YOUR_PROJECT_ID>') # Your project ID
 client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-databases = Databases(client)
+tables_db = TablesDb(client)
 
-result = databases.create(
+result = tables_db.update_table(
     database_id = '<DATABASE_ID>',
+    table_id = '<TABLE_ID>',
     name = '<NAME>',
-    enabled = False, # optional
-    type = .TABLESDB # optional
+    permissions = ["read("any")"], # optional
+    row_security = False, # optional
+    enabled = False # optional
 )
