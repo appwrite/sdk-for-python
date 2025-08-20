@@ -1,7 +1,6 @@
 from ..service import Service
 from typing import List, Dict, Any
 from ..exception import AppwriteException
-from ..enums.type import Type;
 from ..enums.relationship_type import RelationshipType;
 from ..enums.relation_mutate import RelationMutate;
 from ..enums.index_type import IndexType;
@@ -42,7 +41,7 @@ class TablesDb(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, database_id: str, name: str, enabled: bool = None, type: Type = None) -> Dict[str, Any]:
+    def create(self, database_id: str, name: str, enabled: bool = None) -> Dict[str, Any]:
         """
         Create a new Database.
         
@@ -55,8 +54,6 @@ class TablesDb(Service):
             Database name. Max length: 128 chars.
         enabled : bool
             Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-        type : Type
-            Database type.
         
         Returns
         -------
@@ -81,7 +78,6 @@ class TablesDb(Service):
         api_params['databaseId'] = database_id
         api_params['name'] = name
         api_params['enabled'] = enabled
-        api_params['type'] = type
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1722,7 +1718,7 @@ class TablesDb(Service):
 
     def list_indexes(self, database_id: str, table_id: str, queries: List[str] = None) -> Dict[str, Any]:
         """
-        List indexes in the collection.
+        List indexes on the table.
 
         Parameters
         ----------
@@ -1763,7 +1759,7 @@ class TablesDb(Service):
     def create_index(self, database_id: str, table_id: str, key: str, type: IndexType, columns: List[str], orders: List[str] = None, lengths: List[float] = None) -> Dict[str, Any]:
         """
         Creates an index on the columns listed. Your index should include all the columns you will query in a single request.
-        Attributes can be `key`, `fulltext`, and `unique`.
+        Type can be `key`, `fulltext`, or `unique`.
 
         Parameters
         ----------

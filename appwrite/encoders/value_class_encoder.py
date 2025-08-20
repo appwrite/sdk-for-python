@@ -5,7 +5,6 @@ from ..enums.o_auth_provider import OAuthProvider
 from ..enums.browser import Browser
 from ..enums.credit_card import CreditCard
 from ..enums.flag import Flag
-from ..enums.type import Type
 from ..enums.relationship_type import RelationshipType
 from ..enums.relation_mutate import RelationMutate
 from ..enums.index_type import IndexType
@@ -43,9 +42,6 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, Flag):
-            return o.value
-
-        if isinstance(o, Type):
             return o.value
 
         if isinstance(o, RelationshipType):

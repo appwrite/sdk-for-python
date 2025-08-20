@@ -11,6 +11,5 @@ databases = Databases(client)
 result = databases.create(
     database_id = '<DATABASE_ID>',
     name = '<NAME>',
-    enabled = False, # optional
-    type = .TABLESDB # optional
+    enabled = False # optional
 )

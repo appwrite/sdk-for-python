@@ -1,7 +1,6 @@
 from ..service import Service
 from typing import List, Dict, Any
 from ..exception import AppwriteException
-from ..enums.type import Type;
 from ..enums.relationship_type import RelationshipType;
 from ..enums.relation_mutate import RelationMutate;
 from ..enums.index_type import IndexType;
@@ -44,7 +43,7 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, database_id: str, name: str, enabled: bool = None, type: Type = None) -> Dict[str, Any]:
+    def create(self, database_id: str, name: str, enabled: bool = None) -> Dict[str, Any]:
         """
         Create a new Database.
         
@@ -59,8 +58,6 @@ class Databases(Service):
             Database name. Max length: 128 chars.
         enabled : bool
             Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-        type : Type
-            Database type.
         
         Returns
         -------
@@ -85,7 +82,6 @@ class Databases(Service):
         api_params['databaseId'] = database_id
         api_params['name'] = name
         api_params['enabled'] = enabled
-        api_params['type'] = type
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
