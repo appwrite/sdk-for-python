@@ -264,6 +264,8 @@ class Account(Service):
         """
         Add an authenticator app to be used as an MFA factor. Verify the authenticator using the [verify authenticator](/docs/references/cloud/client-web/account#updateMfaAuthenticator) method.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `create_mfa_authenticator` instead.
         Parameters
         ----------
         type : AuthenticatorType
@@ -289,6 +291,78 @@ class Account(Service):
 
 
         return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_mfa_authenticator(self, type: AuthenticatorType) -> Dict[str, Any]:
+        """
+        Add an authenticator app to be used as an MFA factor. Verify the authenticator using the [verify authenticator](/docs/references/cloud/client-web/account#updateMfaAuthenticator) method.
+
+        Parameters
+        ----------
+        type : AuthenticatorType
+            Type of authenticator. Must be `totp`
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/mfa/authenticators/{type}'
+        api_params = {}
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        api_path = api_path.replace('{type}', type)
+
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mfa_authenticator(self, type: AuthenticatorType, otp: str) -> Dict[str, Any]:
+        """
+        Verify an authenticator app after adding it using the [add authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator) method.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `update_mfa_authenticator` instead.
+        Parameters
+        ----------
+        type : AuthenticatorType
+            Type of authenticator.
+        otp : str
+            Valid verification token.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/mfa/authenticators/{type}'
+        api_params = {}
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        if otp is None:
+            raise AppwriteException('Missing required parameter: "otp"')
+
+        api_path = api_path.replace('{type}', type)
+
+        api_params['otp'] = otp
+
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
@@ -334,6 +408,40 @@ class Account(Service):
         """
         Delete an authenticator for a user by ID.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `delete_mfa_authenticator` instead.
+        Parameters
+        ----------
+        type : AuthenticatorType
+            Type of authenticator.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/mfa/authenticators/{type}'
+        api_params = {}
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        api_path = api_path.replace('{type}', type)
+
+
+        return self.client.call('delete', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def delete_mfa_authenticator(self, type: AuthenticatorType) -> Dict[str, Any]:
+        """
+        Delete an authenticator for a user by ID.
+
         Parameters
         ----------
         type : AuthenticatorType
@@ -366,6 +474,8 @@ class Account(Service):
         """
         Begin the process of MFA verification after sign-in. Finish the flow with [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge) method.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `create_mfa_challenge` instead.
         Parameters
         ----------
         factor : AuthenticationFactor
@@ -391,6 +501,78 @@ class Account(Service):
         api_params['factor'] = factor
 
         return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_mfa_challenge(self, factor: AuthenticationFactor) -> Dict[str, Any]:
+        """
+        Begin the process of MFA verification after sign-in. Finish the flow with [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge) method.
+
+        Parameters
+        ----------
+        factor : AuthenticationFactor
+            Factor used for verification. Must be one of following: `email`, `phone`, `totp`, `recoveryCode`.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/mfa/challenge'
+        api_params = {}
+        if factor is None:
+            raise AppwriteException('Missing required parameter: "factor"')
+
+
+        api_params['factor'] = factor
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mfa_challenge(self, challenge_id: str, otp: str) -> Dict[str, Any]:
+        """
+        Complete the MFA challenge by providing the one-time password. Finish the process of MFA verification by providing the one-time password. To begin the flow, use [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `update_mfa_challenge` instead.
+        Parameters
+        ----------
+        challenge_id : str
+            ID of the challenge.
+        otp : str
+            Valid verification token.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/mfa/challenge'
+        api_params = {}
+        if challenge_id is None:
+            raise AppwriteException('Missing required parameter: "challenge_id"')
+
+        if otp is None:
+            raise AppwriteException('Missing required parameter: "otp"')
+
+
+        api_params['challengeId'] = challenge_id
+        api_params['otp'] = otp
+
+        return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
@@ -453,6 +635,48 @@ class Account(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
+    def list_mfa_factors(self) -> Dict[str, Any]:
+        """
+        List the factors available on the account to be used as a MFA challange.
+
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/mfa/factors'
+        api_params = {}
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
+    def get_mfa_recovery_codes(self) -> Dict[str, Any]:
+        """
+        Get recovery codes that can be used as backup for MFA flow. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method. An OTP challenge is required to read recovery codes.
+
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/mfa/recovery-codes'
+        api_params = {}
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
     def get_mfa_recovery_codes(self) -> Dict[str, Any]:
         """
         Get recovery codes that can be used as backup for MFA flow. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method. An OTP challenge is required to read recovery codes.
@@ -493,6 +717,50 @@ class Account(Service):
         api_params = {}
 
         return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_mfa_recovery_codes(self) -> Dict[str, Any]:
+        """
+        Generate recovery codes as backup for MFA flow. It's recommended to generate and show then immediately after user successfully adds their authehticator. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method.
+
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/mfa/recovery-codes'
+        api_params = {}
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mfa_recovery_codes(self) -> Dict[str, Any]:
+        """
+        Regenerate recovery codes that can be used as backup for MFA flow. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method. An OTP challenge is required to regenreate recovery codes.
+
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/mfa/recovery-codes'
+        api_params = {}
+
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 

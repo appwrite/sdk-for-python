@@ -782,6 +782,8 @@ class Users(Service):
         """
         Enable or disable MFA on a user account.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `update_mfa` instead.
         Parameters
         ----------
         user_id : str
@@ -813,6 +815,84 @@ class Users(Service):
         api_params['mfa'] = mfa
 
         return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mfa(self, user_id: str, mfa: bool) -> Dict[str, Any]:
+        """
+        Enable or disable MFA on a user account.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        mfa : bool
+            Enable or disable MFA.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/mfa'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if mfa is None:
+            raise AppwriteException('Missing required parameter: "mfa"')
+
+        api_path = api_path.replace('{userId}', user_id)
+
+        api_params['mfa'] = mfa
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def delete_mfa_authenticator(self, user_id: str, type: AuthenticatorType) -> Dict[str, Any]:
+        """
+        Delete an authenticator app.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `delete_mfa_authenticator` instead.
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        type : AuthenticatorType
+            Type of authenticator.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/mfa/authenticators/{type}'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{type}', type)
+
+
+        return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
@@ -858,6 +938,8 @@ class Users(Service):
         """
         List the factors available on the account to be used as a MFA challange.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `list_mfa_factors` instead.
         Parameters
         ----------
         user_id : str
@@ -875,6 +957,70 @@ class Users(Service):
         """
 
         api_path = '/users/{userId}/mfa/factors'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        api_path = api_path.replace('{userId}', user_id)
+
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
+    def list_mfa_factors(self, user_id: str) -> Dict[str, Any]:
+        """
+        List the factors available on the account to be used as a MFA challange.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/mfa/factors'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        api_path = api_path.replace('{userId}', user_id)
+
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
+    def get_mfa_recovery_codes(self, user_id: str) -> Dict[str, Any]:
+        """
+        Get recovery codes that can be used as backup for MFA flow by User ID. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `get_mfa_recovery_codes` instead.
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -920,6 +1066,8 @@ class Users(Service):
         """
         Regenerate recovery codes that can be used as backup for MFA flow by User ID. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `update_mfa_recovery_codes` instead.
         Parameters
         ----------
         user_id : str
@@ -945,6 +1093,72 @@ class Users(Service):
 
 
         return self.client.call('put', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mfa_recovery_codes(self, user_id: str) -> Dict[str, Any]:
+        """
+        Regenerate recovery codes that can be used as backup for MFA flow by User ID. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/mfa/recovery-codes'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        api_path = api_path.replace('{userId}', user_id)
+
+
+        return self.client.call('put', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_mfa_recovery_codes(self, user_id: str) -> Dict[str, Any]:
+        """
+        Generate recovery codes used as backup for MFA flow for User ID. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method by client SDK.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `create_mfa_recovery_codes` instead.
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/mfa/recovery-codes'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        api_path = api_path.replace('{userId}', user_id)
+
+
+        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 

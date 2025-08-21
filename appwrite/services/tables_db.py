@@ -5,10 +5,10 @@ from ..enums.relationship_type import RelationshipType;
 from ..enums.relation_mutate import RelationMutate;
 from ..enums.index_type import IndexType;
 
-class TablesDb(Service):
+class TablesDB(Service):
 
     def __init__(self, client) -> None:
-        super(TablesDb, self).__init__(client)
+        super(TablesDB, self).__init__(client)
 
     def list(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
         """
@@ -226,7 +226,7 @@ class TablesDb(Service):
 
     def create_table(self, database_id: str, table_id: str, name: str, permissions: List[str] = None, row_security: bool = None, enabled: bool = None) -> Dict[str, Any]:
         """
-        Create a new Table. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateTable) API or directly from your database console.
+        Create a new Table. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable) API or directly from your database console.
 
         Parameters
         ----------
@@ -455,7 +455,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         key : str
             Column Key.
         required : bool
@@ -511,7 +511,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         key : str
             Column Key.
         required : bool
@@ -1348,7 +1348,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         key : str
             Column Key.
         size : float
@@ -1414,7 +1414,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         key : str
             Column Key.
         required : bool
@@ -1725,7 +1725,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: key, type, status, attributes, error
         
@@ -1766,7 +1766,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         key : str
             Index Key.
         type : IndexType
@@ -1828,7 +1828,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         key : str
             Index Key.
         
@@ -1871,7 +1871,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         key : str
             Index Key.
         
@@ -1915,7 +1915,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the TableDB service [server integration](https://appwrite.io/docs/server/tablesdbdb#tablesdbCreate).
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         
@@ -1948,14 +1948,14 @@ class TablesDb(Service):
 
     def create_row(self, database_id: str, table_id: str, row_id: str, data: dict, permissions: List[str] = None) -> Dict[str, Any]:
         """
-        Create a new Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateTable) API or directly from your database console.
+        Create a new Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable) API or directly from your database console.
 
         Parameters
         ----------
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate). Make sure to define columns before creating rows.
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate). Make sure to define columns before creating rows.
         row_id : str
             Row ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         data : dict
@@ -2001,14 +2001,14 @@ class TablesDb(Service):
 
     def create_rows(self, database_id: str, table_id: str, rows: List[dict]) -> Dict[str, Any]:
         """
-        Create new Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateTable) API or directly from your database console.
+        Create new Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable) API or directly from your database console.
 
         Parameters
         ----------
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate). Make sure to define columns before creating rows.
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate). Make sure to define columns before creating rows.
         rows : List[dict]
             Array of documents data as JSON objects.
         
@@ -2045,7 +2045,7 @@ class TablesDb(Service):
 
     def upsert_rows(self, database_id: str, table_id: str, rows: List[dict]) -> Dict[str, Any]:
         """
-        Create or update Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateTable) API or directly from your database console.
+        Create or update Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable) API or directly from your database console.
         
 
         Parameters
@@ -2141,7 +2141,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         
@@ -2182,7 +2182,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         row_id : str
             Row ID.
         queries : List[str]
@@ -2221,7 +2221,7 @@ class TablesDb(Service):
 
     def upsert_row(self, database_id: str, table_id: str, row_id: str, data: dict = None, permissions: List[str] = None) -> Dict[str, Any]:
         """
-        Create or update a Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateTable) API or directly from your database console.
+        Create or update a Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable) API or directly from your database console.
 
         Parameters
         ----------
@@ -2328,7 +2328,7 @@ class TablesDb(Service):
         database_id : str
             Database ID.
         table_id : str
-            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tables#tablesCreate).
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         row_id : str
             Row ID.
         

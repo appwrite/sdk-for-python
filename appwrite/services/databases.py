@@ -15,7 +15,7 @@ class Databases(Service):
         Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.list` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.list` instead.
         Parameters
         ----------
         queries : List[str]
@@ -49,7 +49,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_database` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_database` instead.
         Parameters
         ----------
         database_id : str
@@ -92,7 +92,7 @@ class Databases(Service):
         Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.get` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.get` instead.
         Parameters
         ----------
         database_id : str
@@ -125,7 +125,7 @@ class Databases(Service):
         Update a database by its unique ID.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update` instead.
         Parameters
         ----------
         database_id : str
@@ -168,7 +168,7 @@ class Databases(Service):
         Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.delete` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.delete` instead.
         Parameters
         ----------
         database_id : str
@@ -202,7 +202,7 @@ class Databases(Service):
         Get a list of all collections that belong to the provided databaseId. You can use the search parameter to filter your results.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.list_tables` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.list_tables` instead.
         Parameters
         ----------
         database_id : str
@@ -241,7 +241,7 @@ class Databases(Service):
         Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_table` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_table` instead.
         Parameters
         ----------
         database_id : str
@@ -296,7 +296,7 @@ class Databases(Service):
         Get a collection by its unique ID. This endpoint response returns a JSON object with the collection metadata.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.get_table` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.get_table` instead.
         Parameters
         ----------
         database_id : str
@@ -335,7 +335,7 @@ class Databases(Service):
         Update a collection by its unique ID.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_table` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_table` instead.
         Parameters
         ----------
         database_id : str
@@ -390,7 +390,7 @@ class Databases(Service):
         Delete a collection by its unique ID. Only users with write permissions have access to delete this resource.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.delete_table` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.delete_table` instead.
         Parameters
         ----------
         database_id : str
@@ -430,7 +430,7 @@ class Databases(Service):
         List attributes in the collection.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.list_columns` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.list_columns` instead.
         Parameters
         ----------
         database_id : str
@@ -473,7 +473,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_boolean_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_boolean_column` instead.
         Parameters
         ----------
         database_id : str
@@ -531,7 +531,7 @@ class Databases(Service):
         Update a boolean attribute. Changing the `default` value will not update already existing documents.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_boolean_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_boolean_column` instead.
         Parameters
         ----------
         database_id : str
@@ -589,7 +589,7 @@ class Databases(Service):
         Create a date time attribute according to the ISO 8601 standard.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_datetime_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_datetime_column` instead.
         Parameters
         ----------
         database_id : str
@@ -647,7 +647,7 @@ class Databases(Service):
         Update a date time attribute. Changing the `default` value will not update already existing documents.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_datetime_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_datetime_column` instead.
         Parameters
         ----------
         database_id : str
@@ -706,7 +706,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_email_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_email_column` instead.
         Parameters
         ----------
         database_id : str
@@ -765,7 +765,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_email_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_email_column` instead.
         Parameters
         ----------
         database_id : str
@@ -824,7 +824,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_enum_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_enum_column` instead.
         Parameters
         ----------
         database_id : str
@@ -889,7 +889,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_enum_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_enum_column` instead.
         Parameters
         ----------
         database_id : str
@@ -954,7 +954,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_float_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_float_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1019,7 +1019,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_float_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_float_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1084,7 +1084,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_integer_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_integer_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1149,7 +1149,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_integer_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_integer_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1214,7 +1214,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_ip_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_ip_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1273,7 +1273,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_ip_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_ip_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1332,7 +1332,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_relationship_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_relationship_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1397,7 +1397,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_string_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_string_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1465,7 +1465,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_string_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_string_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1527,7 +1527,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_url_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_url_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1586,7 +1586,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_url_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_url_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1644,7 +1644,7 @@ class Databases(Service):
         Get attribute by ID.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.get_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.get_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1689,7 +1689,7 @@ class Databases(Service):
         Deletes an attribute.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.delete_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.delete_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1736,7 +1736,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_relationship_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_relationship_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1788,7 +1788,7 @@ class Databases(Service):
         Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.list_rows` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.list_rows` instead.
         Parameters
         ----------
         database_id : str
@@ -1830,7 +1830,7 @@ class Databases(Service):
         Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_row` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_row` instead.
         Parameters
         ----------
         database_id : str
@@ -1885,7 +1885,7 @@ class Databases(Service):
         Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_rows` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_rows` instead.
         Parameters
         ----------
         database_id : str
@@ -1932,7 +1932,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.upsert_rows` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.upsert_rows` instead.
         Parameters
         ----------
         database_id : str
@@ -1978,7 +1978,7 @@ class Databases(Service):
         Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_rows` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_rows` instead.
         Parameters
         ----------
         database_id : str
@@ -2024,7 +2024,7 @@ class Databases(Service):
         Bulk delete documents using queries, if no queries are passed then all documents are deleted.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.delete_rows` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.delete_rows` instead.
         Parameters
         ----------
         database_id : str
@@ -2067,7 +2067,7 @@ class Databases(Service):
         Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.get_row` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.get_row` instead.
         Parameters
         ----------
         database_id : str
@@ -2115,7 +2115,7 @@ class Databases(Service):
         Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.upsert_row` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.upsert_row` instead.
         Parameters
         ----------
         database_id : str
@@ -2170,7 +2170,7 @@ class Databases(Service):
         Update a document by its unique ID. Using the patch method you can pass only specific fields that will get updated.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.update_row` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_row` instead.
         Parameters
         ----------
         database_id : str
@@ -2222,7 +2222,7 @@ class Databases(Service):
         Delete a document by its unique ID.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.delete_row` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.delete_row` instead.
         Parameters
         ----------
         database_id : str
@@ -2268,7 +2268,7 @@ class Databases(Service):
         Decrement a specific attribute of a document by a given value.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.decrement_row_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.decrement_row_column` instead.
         Parameters
         ----------
         database_id : str
@@ -2326,7 +2326,7 @@ class Databases(Service):
         Increment a specific attribute of a document by a given value.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.increment_row_column` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.increment_row_column` instead.
         Parameters
         ----------
         database_id : str
@@ -2384,7 +2384,7 @@ class Databases(Service):
         List indexes in the collection.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.list_indexes` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.list_indexes` instead.
         Parameters
         ----------
         database_id : str
@@ -2427,7 +2427,7 @@ class Databases(Service):
         Attributes can be `key`, `fulltext`, and `unique`.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.create_index` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_index` instead.
         Parameters
         ----------
         database_id : str
@@ -2491,7 +2491,7 @@ class Databases(Service):
         Get index by ID.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.get_index` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.get_index` instead.
         Parameters
         ----------
         database_id : str
@@ -2536,7 +2536,7 @@ class Databases(Service):
         Delete an index.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDb.delete_index` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.delete_index` instead.
         Parameters
         ----------
         database_id : str
