@@ -265,7 +265,7 @@ class Account(Service):
         Add an authenticator app to be used as an MFA factor. Verify the authenticator using the [verify authenticator](/docs/references/cloud/client-web/account#updateMfaAuthenticator) method.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `create_mfa_authenticator` instead.
+            This API has been deprecated since 1.8.0. Please use `account.create_mfa_authenticator` instead.
         Parameters
         ----------
         type : AuthenticatorType
@@ -331,7 +331,7 @@ class Account(Service):
         Verify an authenticator app after adding it using the [add authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator) method.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `update_mfa_authenticator` instead.
+            This API has been deprecated since 1.8.0. Please use `account.update_mfa_authenticator` instead.
         Parameters
         ----------
         type : AuthenticatorType
@@ -409,7 +409,7 @@ class Account(Service):
         Delete an authenticator for a user by ID.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `delete_mfa_authenticator` instead.
+            This API has been deprecated since 1.8.0. Please use `account.delete_mfa_authenticator` instead.
         Parameters
         ----------
         type : AuthenticatorType
@@ -475,7 +475,7 @@ class Account(Service):
         Begin the process of MFA verification after sign-in. Finish the flow with [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge) method.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `create_mfa_challenge` instead.
+            This API has been deprecated since 1.8.0. Please use `account.create_mfa_challenge` instead.
         Parameters
         ----------
         factor : AuthenticationFactor
@@ -541,7 +541,7 @@ class Account(Service):
         Complete the MFA challenge by providing the one-time password. Finish the process of MFA verification by providing the one-time password. To begin the flow, use [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `update_mfa_challenge` instead.
+            This API has been deprecated since 1.8.0. Please use `account.update_mfa_challenge` instead.
         Parameters
         ----------
         challenge_id : str

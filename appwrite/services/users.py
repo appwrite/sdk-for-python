@@ -783,7 +783,7 @@ class Users(Service):
         Enable or disable MFA on a user account.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `update_mfa` instead.
+            This API has been deprecated since 1.8.0. Please use `users.update_mfa` instead.
         Parameters
         ----------
         user_id : str
@@ -861,7 +861,7 @@ class Users(Service):
         Delete an authenticator app.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `delete_mfa_authenticator` instead.
+            This API has been deprecated since 1.8.0. Please use `users.delete_mfa_authenticator` instead.
         Parameters
         ----------
         user_id : str
@@ -939,7 +939,7 @@ class Users(Service):
         List the factors available on the account to be used as a MFA challange.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `list_mfa_factors` instead.
+            This API has been deprecated since 1.8.0. Please use `users.list_mfa_factors` instead.
         Parameters
         ----------
         user_id : str
@@ -1003,7 +1003,7 @@ class Users(Service):
         Get recovery codes that can be used as backup for MFA flow by User ID. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `get_mfa_recovery_codes` instead.
+            This API has been deprecated since 1.8.0. Please use `users.get_mfa_recovery_codes` instead.
         Parameters
         ----------
         user_id : str
@@ -1067,7 +1067,7 @@ class Users(Service):
         Regenerate recovery codes that can be used as backup for MFA flow by User ID. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `update_mfa_recovery_codes` instead.
+            This API has been deprecated since 1.8.0. Please use `users.update_mfa_recovery_codes` instead.
         Parameters
         ----------
         user_id : str
@@ -1133,7 +1133,7 @@ class Users(Service):
         Generate recovery codes used as backup for MFA flow for User ID. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method by client SDK.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `create_mfa_recovery_codes` instead.
+            This API has been deprecated since 1.8.0. Please use `users.create_mfa_recovery_codes` instead.
         Parameters
         ----------
         user_id : str

@@ -17,7 +17,7 @@ class TablesDB(Service):
         Parameters
         ----------
         queries : List[str]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
         search : str
             Search term to filter your list results. Max length: 256 chars.
         
@@ -196,7 +196,7 @@ class TablesDB(Service):
         database_id : str
             Database ID.
         queries : List[str]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, enabled, rowSecurity
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name, enabled, rowSecurity
         search : str
             Search term to filter your list results. Max length: 256 chars.
         
@@ -416,7 +416,7 @@ class TablesDB(Service):
         table_id : str
             Table ID.
         queries : List[str]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: key, type, size, required, array, status, error
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: key, type, size, required, array, status, error
         
         Returns
         -------
@@ -1352,7 +1352,7 @@ class TablesDB(Service):
         key : str
             Column Key.
         size : float
-            Attribute size for text attributes, in number of characters.
+            Column size for text columns, in number of characters.
         required : bool
             Is column required?
         default : str
@@ -1727,7 +1727,7 @@ class TablesDB(Service):
         table_id : str
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
         queries : List[str]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: key, type, status, attributes, error
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: key, type, status, attributes, error
         
         Returns
         -------

@@ -355,7 +355,7 @@ class Messaging(Service):
         Create a new SMS message.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `create_sms` instead.
+            This API has been deprecated since 1.8.0. Please use `messaging.create_sms` instead.
         Parameters
         ----------
         message_id : str
@@ -464,7 +464,7 @@ class Messaging(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `update_sms` instead.
+            This API has been deprecated since 1.8.0. Please use `messaging.update_sms` instead.
         Parameters
         ----------
         message_id : str
@@ -730,7 +730,7 @@ class Messaging(Service):
         Create a new Apple Push Notification service provider.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `create_apns_provider` instead.
+            This API has been deprecated since 1.8.0. Please use `messaging.create_apns_provider` instead.
         Parameters
         ----------
         provider_id : str
@@ -844,7 +844,7 @@ class Messaging(Service):
         Update a Apple Push Notification service provider by its unique ID.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `update_apns_provider` instead.
+            This API has been deprecated since 1.8.0. Please use `messaging.update_apns_provider` instead.
         Parameters
         ----------
         provider_id : str
@@ -952,7 +952,7 @@ class Messaging(Service):
         Create a new Firebase Cloud Messaging provider.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `create_fcm_provider` instead.
+            This API has been deprecated since 1.8.0. Please use `messaging.create_fcm_provider` instead.
         Parameters
         ----------
         provider_id : str
@@ -1042,7 +1042,7 @@ class Messaging(Service):
         Update a Firebase Cloud Messaging provider by its unique ID.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `update_fcm_provider` instead.
+            This API has been deprecated since 1.8.0. Please use `messaging.update_fcm_provider` instead.
         Parameters
         ----------
         provider_id : str
@@ -1453,7 +1453,7 @@ class Messaging(Service):
         Create a new SMTP provider.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `create_smtp_provider` instead.
+            This API has been deprecated since 1.8.0. Please use `messaging.create_smtp_provider` instead.
         Parameters
         ----------
         provider_id : str
@@ -1609,7 +1609,7 @@ class Messaging(Service):
         Update a SMTP provider by its unique ID.
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `update_smtp_provider` instead.
+            This API has been deprecated since 1.8.0. Please use `messaging.update_smtp_provider` instead.
         Parameters
         ----------
         provider_id : str
