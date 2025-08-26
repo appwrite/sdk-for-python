@@ -354,8 +354,6 @@ class Messaging(Service):
         """
         Create a new SMS message.
 
-        .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `messaging.create_sms` instead.
         Parameters
         ----------
         message_id : str
@@ -402,112 +400,6 @@ class Messaging(Service):
         api_params['scheduledAt'] = scheduled_at
 
         return self.client.call('post', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
-    def create_sms(self, message_id: str, content: str, topics: List[str] = None, users: List[str] = None, targets: List[str] = None, draft: bool = None, scheduled_at: str = None) -> Dict[str, Any]:
-        """
-        Create a new SMS message.
-
-        Parameters
-        ----------
-        message_id : str
-            Message ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        content : str
-            SMS Content.
-        topics : List[str]
-            List of Topic IDs.
-        users : List[str]
-            List of User IDs.
-        targets : List[str]
-            List of Targets IDs.
-        draft : bool
-            Is message a draft
-        scheduled_at : str
-            Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/messages/sms'
-        api_params = {}
-        if message_id is None:
-            raise AppwriteException('Missing required parameter: "message_id"')
-
-        if content is None:
-            raise AppwriteException('Missing required parameter: "content"')
-
-
-        api_params['messageId'] = message_id
-        api_params['content'] = content
-        api_params['topics'] = topics
-        api_params['users'] = users
-        api_params['targets'] = targets
-        api_params['draft'] = draft
-        api_params['scheduledAt'] = scheduled_at
-
-        return self.client.call('post', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
-    def update_sms(self, message_id: str, topics: List[str] = None, users: List[str] = None, targets: List[str] = None, content: str = None, draft: bool = None, scheduled_at: str = None) -> Dict[str, Any]:
-        """
-        Update an SMS message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-        
-
-        .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `messaging.update_sms` instead.
-        Parameters
-        ----------
-        message_id : str
-            Message ID.
-        topics : List[str]
-            List of Topic IDs.
-        users : List[str]
-            List of User IDs.
-        targets : List[str]
-            List of Targets IDs.
-        content : str
-            Email Content.
-        draft : bool
-            Is message a draft
-        scheduled_at : str
-            Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/messages/sms/{messageId}'
-        api_params = {}
-        if message_id is None:
-            raise AppwriteException('Missing required parameter: "message_id"')
-
-        api_path = api_path.replace('{messageId}', message_id)
-
-        api_params['topics'] = topics
-        api_params['users'] = users
-        api_params['targets'] = targets
-        api_params['content'] = content
-        api_params['draft'] = draft
-        api_params['scheduledAt'] = scheduled_at
-
-        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
@@ -729,8 +621,6 @@ class Messaging(Service):
         """
         Create a new Apple Push Notification service provider.
 
-        .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `messaging.create_apns_provider` instead.
         Parameters
         ----------
         provider_id : str
@@ -780,117 +670,6 @@ class Messaging(Service):
         api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
-    def create_apns_provider(self, provider_id: str, name: str, auth_key: str = None, auth_key_id: str = None, team_id: str = None, bundle_id: str = None, sandbox: bool = None, enabled: bool = None) -> Dict[str, Any]:
-        """
-        Create a new Apple Push Notification service provider.
-
-        Parameters
-        ----------
-        provider_id : str
-            Provider ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        name : str
-            Provider name.
-        auth_key : str
-            APNS authentication key.
-        auth_key_id : str
-            APNS authentication key ID.
-        team_id : str
-            APNS team ID.
-        bundle_id : str
-            APNS bundle ID.
-        sandbox : bool
-            Use APNS sandbox environment.
-        enabled : bool
-            Set as enabled.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/providers/apns'
-        api_params = {}
-        if provider_id is None:
-            raise AppwriteException('Missing required parameter: "provider_id"')
-
-        if name is None:
-            raise AppwriteException('Missing required parameter: "name"')
-
-
-        api_params['providerId'] = provider_id
-        api_params['name'] = name
-        api_params['authKey'] = auth_key
-        api_params['authKeyId'] = auth_key_id
-        api_params['teamId'] = team_id
-        api_params['bundleId'] = bundle_id
-        api_params['sandbox'] = sandbox
-        api_params['enabled'] = enabled
-
-        return self.client.call('post', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
-    def update_apns_provider(self, provider_id: str, name: str = None, enabled: bool = None, auth_key: str = None, auth_key_id: str = None, team_id: str = None, bundle_id: str = None, sandbox: bool = None) -> Dict[str, Any]:
-        """
-        Update a Apple Push Notification service provider by its unique ID.
-
-        .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `messaging.update_apns_provider` instead.
-        Parameters
-        ----------
-        provider_id : str
-            Provider ID.
-        name : str
-            Provider name.
-        enabled : bool
-            Set as enabled.
-        auth_key : str
-            APNS authentication key.
-        auth_key_id : str
-            APNS authentication key ID.
-        team_id : str
-            APNS team ID.
-        bundle_id : str
-            APNS bundle ID.
-        sandbox : bool
-            Use APNS sandbox environment.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/providers/apns/{providerId}'
-        api_params = {}
-        if provider_id is None:
-            raise AppwriteException('Missing required parameter: "provider_id"')
-
-        api_path = api_path.replace('{providerId}', provider_id)
-
-        api_params['name'] = name
-        api_params['enabled'] = enabled
-        api_params['authKey'] = auth_key
-        api_params['authKeyId'] = auth_key_id
-        api_params['teamId'] = team_id
-        api_params['bundleId'] = bundle_id
-        api_params['sandbox'] = sandbox
-
-        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
@@ -951,8 +730,6 @@ class Messaging(Service):
         """
         Create a new Firebase Cloud Messaging provider.
 
-        .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `messaging.create_fcm_provider` instead.
         Parameters
         ----------
         provider_id : str
@@ -990,93 +767,6 @@ class Messaging(Service):
         api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
-    def create_fcm_provider(self, provider_id: str, name: str, service_account_json: dict = None, enabled: bool = None) -> Dict[str, Any]:
-        """
-        Create a new Firebase Cloud Messaging provider.
-
-        Parameters
-        ----------
-        provider_id : str
-            Provider ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        name : str
-            Provider name.
-        service_account_json : dict
-            FCM service account JSON.
-        enabled : bool
-            Set as enabled.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/providers/fcm'
-        api_params = {}
-        if provider_id is None:
-            raise AppwriteException('Missing required parameter: "provider_id"')
-
-        if name is None:
-            raise AppwriteException('Missing required parameter: "name"')
-
-
-        api_params['providerId'] = provider_id
-        api_params['name'] = name
-        api_params['serviceAccountJSON'] = service_account_json
-        api_params['enabled'] = enabled
-
-        return self.client.call('post', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
-    def update_fcm_provider(self, provider_id: str, name: str = None, enabled: bool = None, service_account_json: dict = None) -> Dict[str, Any]:
-        """
-        Update a Firebase Cloud Messaging provider by its unique ID.
-
-        .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `messaging.update_fcm_provider` instead.
-        Parameters
-        ----------
-        provider_id : str
-            Provider ID.
-        name : str
-            Provider name.
-        enabled : bool
-            Set as enabled.
-        service_account_json : dict
-            FCM service account JSON.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/providers/fcm/{providerId}'
-        api_params = {}
-        if provider_id is None:
-            raise AppwriteException('Missing required parameter: "provider_id"')
-
-        api_path = api_path.replace('{providerId}', provider_id)
-
-        api_params['name'] = name
-        api_params['enabled'] = enabled
-        api_params['serviceAccountJSON'] = service_account_json
-
-        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
@@ -1452,8 +1142,6 @@ class Messaging(Service):
         """
         Create a new SMTP provider.
 
-        .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `messaging.create_smtp_provider` instead.
         Parameters
         ----------
         provider_id : str
@@ -1524,156 +1212,6 @@ class Messaging(Service):
         api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
-    def create_smtp_provider(self, provider_id: str, name: str, host: str, port: float = None, username: str = None, password: str = None, encryption: SmtpEncryption = None, auto_tls: bool = None, mailer: str = None, from_name: str = None, from_email: str = None, reply_to_name: str = None, reply_to_email: str = None, enabled: bool = None) -> Dict[str, Any]:
-        """
-        Create a new SMTP provider.
-
-        Parameters
-        ----------
-        provider_id : str
-            Provider ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        name : str
-            Provider name.
-        host : str
-            SMTP hosts. Either a single hostname or multiple semicolon-delimited hostnames. You can also specify a different port for each host such as `smtp1.example.com:25;smtp2.example.com`. You can also specify encryption type, for example: `tls://smtp1.example.com:587;ssl://smtp2.example.com:465"`. Hosts will be tried in order.
-        port : float
-            The default SMTP server port.
-        username : str
-            Authentication username.
-        password : str
-            Authentication password.
-        encryption : SmtpEncryption
-            Encryption type. Can be omitted, 'ssl', or 'tls'
-        auto_tls : bool
-            Enable SMTP AutoTLS feature.
-        mailer : str
-            The value to use for the X-Mailer header.
-        from_name : str
-            Sender Name.
-        from_email : str
-            Sender email address.
-        reply_to_name : str
-            Name set in the reply to field for the mail. Default value is sender name.
-        reply_to_email : str
-            Email set in the reply to field for the mail. Default value is sender email.
-        enabled : bool
-            Set as enabled.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/providers/smtp'
-        api_params = {}
-        if provider_id is None:
-            raise AppwriteException('Missing required parameter: "provider_id"')
-
-        if name is None:
-            raise AppwriteException('Missing required parameter: "name"')
-
-        if host is None:
-            raise AppwriteException('Missing required parameter: "host"')
-
-
-        api_params['providerId'] = provider_id
-        api_params['name'] = name
-        api_params['host'] = host
-        api_params['port'] = port
-        api_params['username'] = username
-        api_params['password'] = password
-        api_params['encryption'] = encryption
-        api_params['autoTLS'] = auto_tls
-        api_params['mailer'] = mailer
-        api_params['fromName'] = from_name
-        api_params['fromEmail'] = from_email
-        api_params['replyToName'] = reply_to_name
-        api_params['replyToEmail'] = reply_to_email
-        api_params['enabled'] = enabled
-
-        return self.client.call('post', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
-    def update_smtp_provider(self, provider_id: str, name: str = None, host: str = None, port: float = None, username: str = None, password: str = None, encryption: SmtpEncryption = None, auto_tls: bool = None, mailer: str = None, from_name: str = None, from_email: str = None, reply_to_name: str = None, reply_to_email: str = None, enabled: bool = None) -> Dict[str, Any]:
-        """
-        Update a SMTP provider by its unique ID.
-
-        .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `messaging.update_smtp_provider` instead.
-        Parameters
-        ----------
-        provider_id : str
-            Provider ID.
-        name : str
-            Provider name.
-        host : str
-            SMTP hosts. Either a single hostname or multiple semicolon-delimited hostnames. You can also specify a different port for each host such as `smtp1.example.com:25;smtp2.example.com`. You can also specify encryption type, for example: `tls://smtp1.example.com:587;ssl://smtp2.example.com:465"`. Hosts will be tried in order.
-        port : float
-            SMTP port.
-        username : str
-            Authentication username.
-        password : str
-            Authentication password.
-        encryption : SmtpEncryption
-            Encryption type. Can be 'ssl' or 'tls'
-        auto_tls : bool
-            Enable SMTP AutoTLS feature.
-        mailer : str
-            The value to use for the X-Mailer header.
-        from_name : str
-            Sender Name.
-        from_email : str
-            Sender email address.
-        reply_to_name : str
-            Name set in the Reply To field for the mail. Default value is Sender Name.
-        reply_to_email : str
-            Email set in the Reply To field for the mail. Default value is Sender Email.
-        enabled : bool
-            Set as enabled.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/providers/smtp/{providerId}'
-        api_params = {}
-        if provider_id is None:
-            raise AppwriteException('Missing required parameter: "provider_id"')
-
-        api_path = api_path.replace('{providerId}', provider_id)
-
-        api_params['name'] = name
-        api_params['host'] = host
-        api_params['port'] = port
-        api_params['username'] = username
-        api_params['password'] = password
-        api_params['encryption'] = encryption
-        api_params['autoTLS'] = auto_tls
-        api_params['mailer'] = mailer
-        api_params['fromName'] = from_name
-        api_params['fromEmail'] = from_email
-        api_params['replyToName'] = reply_to_name
-        api_params['replyToEmail'] = reply_to_email
-        api_params['enabled'] = enabled
-
-        return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
