@@ -17,7 +17,6 @@ class Sites(Service):
         """
         Get a list of all the project's sites. You can use the query params to filter your results.
 
-
         Parameters
         ----------
         queries : List[str]
@@ -48,7 +47,6 @@ class Sites(Service):
     def create(self, site_id: str, name: str, framework: Framework, build_runtime: BuildRuntime, enabled: bool = None, logging: bool = None, timeout: float = None, install_command: str = None, build_command: str = None, output_directory: str = None, adapter: Adapter = None, installation_id: str = None, fallback_file: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None) -> Dict[str, Any]:
         """
         Create a new site.
-
 
         Parameters
         ----------
@@ -184,7 +182,6 @@ class Sites(Service):
         """
         Get a site by its unique ID.
 
-
         Parameters
         ----------
         site_id : str
@@ -215,7 +212,6 @@ class Sites(Service):
     def update(self, site_id: str, name: str, framework: Framework, enabled: bool = None, logging: bool = None, timeout: float = None, install_command: str = None, build_command: str = None, output_directory: str = None, build_runtime: BuildRuntime = None, adapter: Adapter = None, fallback_file: str = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None) -> Dict[str, Any]:
         """
         Update site by its unique ID.
-
 
         Parameters
         ----------
@@ -306,7 +302,6 @@ class Sites(Service):
         """
         Delete a site by its unique ID.
 
-
         Parameters
         ----------
         site_id : str
@@ -338,7 +333,6 @@ class Sites(Service):
     def update_site_deployment(self, site_id: str, deployment_id: str) -> Dict[str, Any]:
         """
         Update the site active deployment. Use this endpoint to switch the code deployment that should be used when visitor opens your site.
-
 
         Parameters
         ----------
@@ -378,7 +372,6 @@ class Sites(Service):
         """
         Get a list of all the site's code deployments. You can use the query params to filter your results.
 
-
         Parameters
         ----------
         site_id : str
@@ -415,7 +408,6 @@ class Sites(Service):
     def create_deployment(self, site_id: str, code: InputFile, activate: bool, install_command: str = None, build_command: str = None, output_directory: str = None, on_progress = None) -> Dict[str, Any]:
         """
         Create a new site code deployment. Use this endpoint to upload a new version of your site code. To activate your newly uploaded code, you'll need to update the function's deployment to use your new deployment ID.
-
 
         Parameters
         ----------
@@ -477,7 +469,6 @@ class Sites(Service):
         """
         Create a new build for an existing site deployment. This endpoint allows you to rebuild a deployment with the updated site configuration, including its commands and output directory if they have been modified. The build process will be queued and executed asynchronously. The original deployment's code will be preserved and used for the new build.
 
-
         Parameters
         ----------
         site_id : str
@@ -517,7 +508,6 @@ class Sites(Service):
         Create a deployment based on a template.
         
         Use this endpoint with combination of [listTemplates](https://appwrite.io/docs/server/sites#listTemplates) to find the template details.
-
 
         Parameters
         ----------
@@ -580,7 +570,6 @@ class Sites(Service):
         
         This endpoint lets you create deployment from a branch, commit, or a tag.
 
-
         Parameters
         ----------
         site_id : str
@@ -628,7 +617,6 @@ class Sites(Service):
         """
         Get a site deployment by its unique ID.
 
-
         Parameters
         ----------
         site_id : str
@@ -665,7 +653,6 @@ class Sites(Service):
     def delete_deployment(self, site_id: str, deployment_id: str) -> Dict[str, Any]:
         """
         Delete a site deployment by its unique ID.
-
 
         Parameters
         ----------
@@ -704,7 +691,6 @@ class Sites(Service):
     def get_deployment_download(self, site_id: str, deployment_id: str, type: DeploymentDownloadType = None) -> bytes:
         """
         Get a site deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
-
 
         Parameters
         ----------
@@ -746,7 +732,6 @@ class Sites(Service):
         """
         Cancel an ongoing site deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn't started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status 'ready') or failed. The response includes the final build status and details.
 
-
         Parameters
         ----------
         site_id : str
@@ -785,7 +770,6 @@ class Sites(Service):
         """
         Get a list of all site logs. You can use the query params to filter your results.
 
-
         Parameters
         ----------
         site_id : str
@@ -819,7 +803,6 @@ class Sites(Service):
     def get_log(self, site_id: str, log_id: str) -> Dict[str, Any]:
         """
         Get a site request log by its unique ID.
-
 
         Parameters
         ----------
@@ -857,7 +840,6 @@ class Sites(Service):
     def delete_log(self, site_id: str, log_id: str) -> Dict[str, Any]:
         """
         Delete a site log by its unique ID.
-
 
         Parameters
         ----------
@@ -897,7 +879,6 @@ class Sites(Service):
         """
         Get a list of all variables of a specific site.
 
-
         Parameters
         ----------
         site_id : str
@@ -928,7 +909,6 @@ class Sites(Service):
     def create_variable(self, site_id: str, key: str, value: str, secret: bool = None) -> Dict[str, Any]:
         """
         Create a new site variable. These variables can be accessed during build and runtime (server-side rendering) as environment variables.
-
 
         Parameters
         ----------
@@ -977,7 +957,6 @@ class Sites(Service):
         """
         Get a variable by its unique ID.
 
-
         Parameters
         ----------
         site_id : str
@@ -1014,7 +993,6 @@ class Sites(Service):
     def update_variable(self, site_id: str, variable_id: str, key: str, value: str = None, secret: bool = None) -> Dict[str, Any]:
         """
         Update variable by its unique ID.
-
 
         Parameters
         ----------
@@ -1065,7 +1043,6 @@ class Sites(Service):
     def delete_variable(self, site_id: str, variable_id: str) -> Dict[str, Any]:
         """
         Delete a variable by its unique ID.
-
 
         Parameters
         ----------

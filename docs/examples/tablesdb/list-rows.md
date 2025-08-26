@@ -1,18 +1,15 @@
 from appwrite.client import Client
-from appwrite.services.databases import Databases
+from appwrite.services.tables_db import TablesDB
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
 client.set_project('<YOUR_PROJECT_ID>') # Your project ID
 client.set_session('') # The user session to authenticate with
 
-databases = Databases(client)
+tables_db = TablesDB(client)
 
-result = databases.decrement_document_attribute(
+result = tables_db.list_rows(
     database_id = '<DATABASE_ID>',
-    collection_id = '<COLLECTION_ID>',
-    document_id = '<DOCUMENT_ID>',
-    attribute = '',
-    value = None, # optional
-    min = None # optional
+    table_id = '<TABLE_ID>',
+    queries = [] # optional
 )
