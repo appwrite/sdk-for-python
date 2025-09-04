@@ -1275,6 +1275,333 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def create_line_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None) -> Dict[str, Any]:
+        """
+        Create a geometric line attribute.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : str
+            Default value for column when not provided, as JSON string. Cannot be set when column is required.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/line'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_line_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None, new_key: str = None) -> Dict[str, Any]:
+        """
+        Update a line column. Changing the `default` value will not update already existing documents.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : str
+            Default value for column when not provided, as JSON string. Cannot be set when column is required.
+        new_key : str
+            New Column Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/line/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_point_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None) -> Dict[str, Any]:
+        """
+        Create a geometric point attribute.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : str
+            Default value for column when not provided, as JSON string. Cannot be set when column is required.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/point'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_point_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None, new_key: str = None) -> Dict[str, Any]:
+        """
+        Update a point column. Changing the `default` value will not update already existing documents.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : str
+            Default value for column when not provided, as JSON string. Cannot be set when column is required.
+        new_key : str
+            New Column Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/point/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_polygon_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None) -> Dict[str, Any]:
+        """
+        Create a geometric polygon attribute.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : str
+            Default value for column when not provided, as JSON string. Cannot be set when column is required.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/polygon'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_polygon_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None, new_key: str = None) -> Dict[str, Any]:
+        """
+        Update a polygon column. Changing the `default` value will not update already existing documents.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : str
+            Default value for column when not provided, as JSON string. Cannot be set when column is required.
+        new_key : str
+            New Column Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/polygon/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def create_relationship_column(self, database_id: str, table_id: str, related_table_id: str, type: RelationshipType, two_way: bool = None, key: str = None, two_way_key: str = None, on_delete: RelationMutate = None) -> Dict[str, Any]:
         """
         Create relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).

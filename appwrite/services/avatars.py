@@ -62,7 +62,7 @@ class Avatars(Service):
         Parameters
         ----------
         code : CreditCard
-            Credit Card Code. Possible values: amex, argencard, cabal, cencosud, diners, discover, elo, hipercard, jcb, mastercard, naranja, targeta-shopping, union-china-pay, visa, mir, maestro, rupay.
+            Credit Card Code. Possible values: amex, argencard, cabal, cencosud, diners, discover, elo, hipercard, jcb, mastercard, naranja, targeta-shopping, unionpay, visa, mir, maestro, rupay.
         width : float
             Image width. Pass an integer between 0 to 2000. Defaults to 100.
         height : float

@@ -869,8 +869,8 @@ class Account(Service):
         """
         Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
 
-        .. deprecated::
-            This API has been deprecated.
+        .. deprecated::1.6.0
+            This API has been deprecated since 1.6.0. Please use `account.create_session` instead.
         Parameters
         ----------
         user_id : str
@@ -909,8 +909,8 @@ class Account(Service):
         """
         Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
 
-        .. deprecated::
-            This API has been deprecated.
+        .. deprecated::1.6.0
+            This API has been deprecated since 1.6.0. Please use `account.create_session` instead.
         Parameters
         ----------
         user_id : str

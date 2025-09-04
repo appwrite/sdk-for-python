@@ -812,7 +812,7 @@ class Functions(Service):
         path : str
             HTTP path of execution. Path can include query params. Default value is /
         method : ExecutionMethod
-            HTTP method of execution. Default value is GET.
+            HTTP method of execution. Default value is POST.
         headers : dict
             HTTP headers of execution. Defaults to empty.
         scheduled_at : str
