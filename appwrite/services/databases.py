@@ -1441,7 +1441,7 @@ class Databases(Service):
 
     def create_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str = None) -> Dict[str, Any]:
         """
-        Create a geometric 2d point attribute.
+        Create a geometric point attribute.
 
         .. deprecated::1.8.0
             This API has been deprecated since 1.8.0. Please use `tablesDB.create_point_column` instead.

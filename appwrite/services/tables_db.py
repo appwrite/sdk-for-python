@@ -1277,7 +1277,7 @@ class TablesDB(Service):
 
     def create_line_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None) -> Dict[str, Any]:
         """
-        Create a geometric line attribute.
+        Create a geometric line column.
 
         Parameters
         ----------
@@ -1330,7 +1330,7 @@ class TablesDB(Service):
 
     def update_line_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None, new_key: str = None) -> Dict[str, Any]:
         """
-        Update a line column. Changing the `default` value will not update already existing documents.
+        Update a line column. Changing the `default` value will not update already existing rows.
 
         Parameters
         ----------
@@ -1386,7 +1386,7 @@ class TablesDB(Service):
 
     def create_point_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None) -> Dict[str, Any]:
         """
-        Create a geometric point attribute.
+        Create a geometric point column.
 
         Parameters
         ----------
@@ -1439,7 +1439,7 @@ class TablesDB(Service):
 
     def update_point_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None, new_key: str = None) -> Dict[str, Any]:
         """
-        Update a point column. Changing the `default` value will not update already existing documents.
+        Update a point column. Changing the `default` value will not update already existing rows.
 
         Parameters
         ----------
@@ -1495,7 +1495,7 @@ class TablesDB(Service):
 
     def create_polygon_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None) -> Dict[str, Any]:
         """
-        Create a geometric polygon attribute.
+        Create a geometric polygon column.
 
         Parameters
         ----------
@@ -1548,7 +1548,7 @@ class TablesDB(Service):
 
     def update_polygon_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None, new_key: str = None) -> Dict[str, Any]:
         """
-        Update a polygon column. Changing the `default` value will not update already existing documents.
+        Update a polygon column. Changing the `default` value will not update already existing rows.
 
         Parameters
         ----------
