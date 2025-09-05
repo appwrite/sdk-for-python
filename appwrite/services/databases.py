@@ -1326,7 +1326,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_line_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str = None) -> Dict[str, Any]:
+    def create_line_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
         """
         Create a geometric line attribute.
 
@@ -1342,8 +1342,8 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
-            Default value for attribute when not provided, as JSON string. Cannot be set when attribute is required.
+        default : List[Any]
+            Default value for attribute when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when attribute is required.
         
         Returns
         -------
@@ -1381,7 +1381,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_line_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str = None, new_key: str = None) -> Dict[str, Any]:
+    def update_line_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
         """
         Update a line attribute. Changing the `default` value will not update already existing documents.
 
@@ -1397,8 +1397,8 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
-            Default value for attribute when not provided, as JSON string. Cannot be set when attribute is required.
+        default : List[Any]
+            Default value for attribute when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when attribute is required.
         new_key : str
             New attribute key.
         
@@ -1439,7 +1439,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str = None) -> Dict[str, Any]:
+    def create_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
         """
         Create a geometric point attribute.
 
@@ -1455,8 +1455,8 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
-            Default value for attribute when not provided, as JSON string. Cannot be set when attribute is required.
+        default : List[Any]
+            Default value for attribute when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when attribute is required.
         
         Returns
         -------
@@ -1494,7 +1494,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str = None, new_key: str = None) -> Dict[str, Any]:
+    def update_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
         """
         Update a point attribute. Changing the `default` value will not update already existing documents.
 
@@ -1510,8 +1510,8 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
-            Default value for attribute when not provided, as JSON string. Cannot be set when attribute is required.
+        default : List[Any]
+            Default value for attribute when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when attribute is required.
         new_key : str
             New attribute key.
         
@@ -1552,7 +1552,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_polygon_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str = None) -> Dict[str, Any]:
+    def create_polygon_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
         """
         Create a geometric polygon attribute.
 
@@ -1568,8 +1568,8 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
-            Default value for attribute when not provided, as JSON string. Cannot be set when attribute is required.
+        default : List[Any]
+            Default value for attribute when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when attribute is required.
         
         Returns
         -------
@@ -1607,7 +1607,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_polygon_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str = None, new_key: str = None) -> Dict[str, Any]:
+    def update_polygon_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
         """
         Update a polygon attribute. Changing the `default` value will not update already existing documents.
 
@@ -1623,8 +1623,8 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
-            Default value for attribute when not provided, as JSON string. Cannot be set when attribute is required.
+        default : List[Any]
+            Default value for attribute when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when attribute is required.
         new_key : str
             New attribute key.
         
