@@ -7,3 +7,4 @@ class ExecutionMethod(Enum):
     PATCH = "PATCH"
     DELETE = "DELETE"
     OPTIONS = "OPTIONS"
+    HEAD = "HEAD"

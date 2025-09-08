@@ -49,7 +49,7 @@ class Databases(Service):
         
 
         .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDB.create_database` instead.
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create` instead.
         Parameters
         ----------
         database_id : str
@@ -1301,6 +1301,345 @@ class Databases(Service):
         """
 
         api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/ip/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_line_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
+        """
+        Create a geometric line attribute.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_line_column` instead.
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : List[Any]
+            Default value for attribute when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when attribute is required.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/line'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_line_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
+        """
+        Update a line attribute. Changing the `default` value will not update already existing documents.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_line_column` instead.
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#createCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : List[Any]
+            Default value for attribute when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when attribute is required.
+        new_key : str
+            New attribute key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/line/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
+        """
+        Create a geometric point attribute.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_point_column` instead.
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : List[Any]
+            Default value for attribute when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when attribute is required.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/point'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
+        """
+        Update a point attribute. Changing the `default` value will not update already existing documents.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_point_column` instead.
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#createCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : List[Any]
+            Default value for attribute when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when attribute is required.
+        new_key : str
+            New attribute key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/point/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_polygon_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
+        """
+        Create a geometric polygon attribute.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_polygon_column` instead.
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : List[Any]
+            Default value for attribute when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when attribute is required.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/polygon'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_polygon_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
+        """
+        Update a polygon attribute. Changing the `default` value will not update already existing documents.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_polygon_column` instead.
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#createCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : List[Any]
+            Default value for attribute when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when attribute is required.
+        new_key : str
+            New attribute key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/polygon/{key}'
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')

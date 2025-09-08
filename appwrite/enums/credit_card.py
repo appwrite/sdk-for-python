@@ -13,7 +13,7 @@ class CreditCard(Enum):
     MASTERCARD = "mastercard"
     NARANJA = "naranja"
     TARJETA_SHOPPING = "targeta-shopping"
-    UNION_CHINA_PAY = "union-china-pay"
+    UNION_PAY = "unionpay"
     VISA = "visa"
     MIR = "mir"
     MAESTRO = "maestro"
