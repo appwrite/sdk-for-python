@@ -2337,7 +2337,7 @@ class TablesDB(Service):
         table_id : str
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreate). Make sure to define columns before creating rows.
         rows : List[dict]
-            Array of documents data as JSON objects.
+            Array of rows data as JSON objects.
         
         Returns
         -------
