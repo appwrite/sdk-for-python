@@ -23,6 +23,14 @@ from ..enums.image_gravity import ImageGravity
 from ..enums.image_format import ImageFormat
 from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
+from ..enums.attribute_status import AttributeStatus
+from ..enums.index_status import IndexStatus
+from ..enums.deployment_status import DeploymentStatus
+from ..enums.execution_trigger import ExecutionTrigger
+from ..enums.execution_status import ExecutionStatus
+from ..enums.health_antivirus_status import HealthAntivirusStatus
+from ..enums.health_check_status import HealthCheckStatus
+from ..enums.message_status import MessageStatus
 
 class ValueClassEncoder(json.JSONEncoder):
     def default(self, o):
@@ -96,6 +104,30 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, MessagingProviderType):
+            return o.value
+
+        if isinstance(o, AttributeStatus):
+            return o.value
+
+        if isinstance(o, IndexStatus):
+            return o.value
+
+        if isinstance(o, DeploymentStatus):
+            return o.value
+
+        if isinstance(o, ExecutionTrigger):
+            return o.value
+
+        if isinstance(o, ExecutionStatus):
+            return o.value
+
+        if isinstance(o, HealthAntivirusStatus):
+            return o.value
+
+        if isinstance(o, HealthCheckStatus):
+            return o.value
+
+        if isinstance(o, MessageStatus):
             return o.value
 
         return super().default(o)
