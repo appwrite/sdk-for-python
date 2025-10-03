@@ -23,7 +23,9 @@ from ..enums.image_gravity import ImageGravity
 from ..enums.image_format import ImageFormat
 from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
+from ..enums.database_type import DatabaseType
 from ..enums.attribute_status import AttributeStatus
+from ..enums.column_status import ColumnStatus
 from ..enums.index_status import IndexStatus
 from ..enums.deployment_status import DeploymentStatus
 from ..enums.execution_trigger import ExecutionTrigger
@@ -106,7 +108,13 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, MessagingProviderType):
             return o.value
 
+        if isinstance(o, DatabaseType):
+            return o.value
+
         if isinstance(o, AttributeStatus):
+            return o.value
+
+        if isinstance(o, ColumnStatus):
             return o.value
 
         if isinstance(o, IndexStatus):
