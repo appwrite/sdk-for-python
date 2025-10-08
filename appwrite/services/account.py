@@ -1275,7 +1275,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_verification(self, url: str) -> Dict[str, Any]:
+    def create_email_verification(self, url: str) -> Dict[str, Any]:
         """
         Use this endpoint to send a verification message to your user email address to confirm they are the valid owners of that address. Both the **userId** and **secret** arguments will be passed as query parameters to the URL you have provided to be attached to the verification email. The provided URL should redirect the user back to your app and allow you to complete the verification process by verifying both the **userId** and **secret** parameters. Learn more about how to [complete the verification process](https://appwrite.io/docs/references/cloud/client-web/account#updateVerification). The verification link sent to the user's email address is valid for 7 days.
         
@@ -1298,7 +1298,7 @@ class Account(Service):
             If API request fails
         """
 
-        api_path = '/account/verification'
+        api_path = '/account/verifications/email'
         api_params = {}
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
@@ -1310,7 +1310,44 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_verification(self, user_id: str, secret: str) -> Dict[str, Any]:
+    def create_verification(self, url: str) -> Dict[str, Any]:
+        """
+        Use this endpoint to send a verification message to your user email address to confirm they are the valid owners of that address. Both the **userId** and **secret** arguments will be passed as query parameters to the URL you have provided to be attached to the verification email. The provided URL should redirect the user back to your app and allow you to complete the verification process by verifying both the **userId** and **secret** parameters. Learn more about how to [complete the verification process](https://appwrite.io/docs/references/cloud/client-web/account#updateVerification). The verification link sent to the user's email address is valid for 7 days.
+        
+        Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md), the only valid redirect URLs are the ones from domains you have set when adding your platforms in the console interface.
+        
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `account.create_email_verification` instead.
+        Parameters
+        ----------
+        url : str
+            URL to redirect the user back to your app from the verification email. Only URLs from hostnames in your project platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/verifications/email'
+        api_params = {}
+        if url is None:
+            raise AppwriteException('Missing required parameter: "url"')
+
+
+        api_params['url'] = url
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_email_verification(self, user_id: str, secret: str) -> Dict[str, Any]:
         """
         Use this endpoint to complete the user email verification process. Use both the **userId** and **secret** parameters that were attached to your app URL to verify the user email ownership. If confirmed this route will return a 200 status code.
 
@@ -1332,7 +1369,47 @@ class Account(Service):
             If API request fails
         """
 
-        api_path = '/account/verification'
+        api_path = '/account/verifications/email'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if secret is None:
+            raise AppwriteException('Missing required parameter: "secret"')
+
+
+        api_params['userId'] = user_id
+        api_params['secret'] = secret
+
+        return self.client.call('put', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_verification(self, user_id: str, secret: str) -> Dict[str, Any]:
+        """
+        Use this endpoint to complete the user email verification process. Use both the **userId** and **secret** parameters that were attached to your app URL to verify the user email ownership. If confirmed this route will return a 200 status code.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `account.update_email_verification` instead.
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        secret : str
+            Valid verification token.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/verifications/email'
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -1363,7 +1440,7 @@ class Account(Service):
             If API request fails
         """
 
-        api_path = '/account/verification/phone'
+        api_path = '/account/verifications/phone'
         api_params = {}
 
         return self.client.call('post', api_path, {
@@ -1392,7 +1469,7 @@ class Account(Service):
             If API request fails
         """
 
-        api_path = '/account/verification/phone'
+        api_path = '/account/verifications/phone'
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
