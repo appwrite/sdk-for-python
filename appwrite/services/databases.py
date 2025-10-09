@@ -87,6 +87,199 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def list_transactions(self, queries: List[str] = None) -> Dict[str, Any]:
+        """
+        List transactions across all databases.
+
+        Parameters
+        ----------
+        queries : List[str]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/transactions'
+        api_params = {}
+
+        api_params['queries'] = queries
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
+    def create_transaction(self, ttl: float = None) -> Dict[str, Any]:
+        """
+        Create a new transaction.
+
+        Parameters
+        ----------
+        ttl : float
+            Seconds before the transaction expires.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/transactions'
+        api_params = {}
+
+        api_params['ttl'] = ttl
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_transaction(self, transaction_id: str) -> Dict[str, Any]:
+        """
+        Get a transaction by its unique ID.
+
+        Parameters
+        ----------
+        transaction_id : str
+            Transaction ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/transactions/{transactionId}'
+        api_params = {}
+        if transaction_id is None:
+            raise AppwriteException('Missing required parameter: "transaction_id"')
+
+        api_path = api_path.replace('{transactionId}', transaction_id)
+
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
+    def update_transaction(self, transaction_id: str, commit: bool = None, rollback: bool = None) -> Dict[str, Any]:
+        """
+        Update a transaction, to either commit or roll back its operations.
+
+        Parameters
+        ----------
+        transaction_id : str
+            Transaction ID.
+        commit : bool
+            Commit transaction?
+        rollback : bool
+            Rollback transaction?
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/transactions/{transactionId}'
+        api_params = {}
+        if transaction_id is None:
+            raise AppwriteException('Missing required parameter: "transaction_id"')
+
+        api_path = api_path.replace('{transactionId}', transaction_id)
+
+        api_params['commit'] = commit
+        api_params['rollback'] = rollback
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def delete_transaction(self, transaction_id: str) -> Dict[str, Any]:
+        """
+        Delete a transaction by its unique ID.
+
+        Parameters
+        ----------
+        transaction_id : str
+            Transaction ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/transactions/{transactionId}'
+        api_params = {}
+        if transaction_id is None:
+            raise AppwriteException('Missing required parameter: "transaction_id"')
+
+        api_path = api_path.replace('{transactionId}', transaction_id)
+
+
+        return self.client.call('delete', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_operations(self, transaction_id: str, operations: List[dict] = None) -> Dict[str, Any]:
+        """
+        Create multiple operations in a single transaction.
+
+        Parameters
+        ----------
+        transaction_id : str
+            Transaction ID.
+        operations : List[dict]
+            Array of staged operations.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/transactions/{transactionId}/operations'
+        api_params = {}
+        if transaction_id is None:
+            raise AppwriteException('Missing required parameter: "transaction_id"')
+
+        api_path = api_path.replace('{transactionId}', transaction_id)
+
+        api_params['operations'] = operations
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def get(self, database_id: str) -> Dict[str, Any]:
         """
         Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
@@ -2122,7 +2315,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_documents(self, database_id: str, collection_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def list_documents(self, database_id: str, collection_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
 
@@ -2136,6 +2329,8 @@ class Databases(Service):
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        transaction_id : str
+            Transaction ID to read uncommitted changes within the transaction.
         
         Returns
         -------
@@ -2160,11 +2355,12 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
 
         api_params['queries'] = queries
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: List[str] = None) -> Dict[str, Any]:
+    def create_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -2182,6 +2378,8 @@ class Databases(Service):
             Document data as JSON object.
         permissions : List[str]
             An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2214,12 +2412,13 @@ class Databases(Service):
         api_params['documentId'] = document_id
         api_params['data'] = data
         api_params['permissions'] = permissions
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_documents(self, database_id: str, collection_id: str, documents: List[dict]) -> Dict[str, Any]:
+    def create_documents(self, database_id: str, collection_id: str, documents: List[dict], transaction_id: str = None) -> Dict[str, Any]:
         """
         Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -2233,6 +2432,8 @@ class Databases(Service):
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection). Make sure to define attributes before creating documents.
         documents : List[dict]
             Array of documents data as JSON objects.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2260,12 +2461,13 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
 
         api_params['documents'] = documents
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def upsert_documents(self, database_id: str, collection_id: str, documents: List[dict]) -> Dict[str, Any]:
+    def upsert_documents(self, database_id: str, collection_id: str, documents: List[dict], transaction_id: str = None) -> Dict[str, Any]:
         """
         Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
         
@@ -2280,6 +2482,8 @@ class Databases(Service):
             Collection ID.
         documents : List[dict]
             Array of document data as JSON objects. May contain partial documents.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2307,12 +2511,13 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
 
         api_params['documents'] = documents
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_documents(self, database_id: str, collection_id: str, data: dict = None, queries: List[str] = None) -> Dict[str, Any]:
+    def update_documents(self, database_id: str, collection_id: str, data: dict = None, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
 
@@ -2328,6 +2533,8 @@ class Databases(Service):
             Document data as JSON object. Include only attribute and value pairs to be updated.
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2353,12 +2560,13 @@ class Databases(Service):
 
         api_params['data'] = data
         api_params['queries'] = queries
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_documents(self, database_id: str, collection_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def delete_documents(self, database_id: str, collection_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Bulk delete documents using queries, if no queries are passed then all documents are deleted.
 
@@ -2372,6 +2580,8 @@ class Databases(Service):
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2396,12 +2606,13 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
 
         api_params['queries'] = queries
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_document(self, database_id: str, collection_id: str, document_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def get_document(self, database_id: str, collection_id: str, document_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
 
@@ -2417,6 +2628,8 @@ class Databases(Service):
             Document ID.
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        transaction_id : str
+            Transaction ID to read uncommitted changes within the transaction.
         
         Returns
         -------
@@ -2445,11 +2658,12 @@ class Databases(Service):
         api_path = api_path.replace('{documentId}', document_id)
 
         api_params['queries'] = queries
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def upsert_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: List[str] = None) -> Dict[str, Any]:
+    def upsert_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -2467,6 +2681,8 @@ class Databases(Service):
             Document data as JSON object. Include all required attributes of the document to be created or updated.
         permissions : List[str]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2499,12 +2715,13 @@ class Databases(Service):
 
         api_params['data'] = data
         api_params['permissions'] = permissions
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_document(self, database_id: str, collection_id: str, document_id: str, data: dict = None, permissions: List[str] = None) -> Dict[str, Any]:
+    def update_document(self, database_id: str, collection_id: str, document_id: str, data: dict = None, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Update a document by its unique ID. Using the patch method you can pass only specific fields that will get updated.
 
@@ -2522,6 +2739,8 @@ class Databases(Service):
             Document data as JSON object. Include only attribute and value pairs to be updated.
         permissions : List[str]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2551,12 +2770,13 @@ class Databases(Service):
 
         api_params['data'] = data
         api_params['permissions'] = permissions
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_document(self, database_id: str, collection_id: str, document_id: str) -> Dict[str, Any]:
+    def delete_document(self, database_id: str, collection_id: str, document_id: str, transaction_id: str = None) -> Dict[str, Any]:
         """
         Delete a document by its unique ID.
 
@@ -2570,6 +2790,8 @@ class Databases(Service):
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
         document_id : str
             Document ID.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2597,12 +2819,13 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
         api_path = api_path.replace('{documentId}', document_id)
 
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def decrement_document_attribute(self, database_id: str, collection_id: str, document_id: str, attribute: str, value: float = None, min: float = None) -> Dict[str, Any]:
+    def decrement_document_attribute(self, database_id: str, collection_id: str, document_id: str, attribute: str, value: float = None, min: float = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Decrement a specific attribute of a document by a given value.
 
@@ -2622,6 +2845,8 @@ class Databases(Service):
             Value to increment the attribute by. The value must be a number.
         min : float
             Minimum value for the attribute. If the current value is lesser than this value, an exception will be thrown.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2655,12 +2880,13 @@ class Databases(Service):
 
         api_params['value'] = value
         api_params['min'] = min
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def increment_document_attribute(self, database_id: str, collection_id: str, document_id: str, attribute: str, value: float = None, max: float = None) -> Dict[str, Any]:
+    def increment_document_attribute(self, database_id: str, collection_id: str, document_id: str, attribute: str, value: float = None, max: float = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Increment a specific attribute of a document by a given value.
 
@@ -2680,6 +2906,8 @@ class Databases(Service):
             Value to increment the attribute by. The value must be a number.
         max : float
             Maximum value for the attribute. If the current value is greater than this value, an error will be thrown.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2713,6 +2941,7 @@ class Databases(Service):
 
         api_params['value'] = value
         api_params['max'] = max
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -2827,7 +3056,7 @@ class Databases(Service):
 
     def get_index(self, database_id: str, collection_id: str, key: str) -> Dict[str, Any]:
         """
-        Get index by ID.
+        Get an index by its unique ID.
 
         .. deprecated::1.8.0
             This API has been deprecated since 1.8.0. Please use `tablesDB.get_index` instead.

@@ -8,9 +8,6 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 tables_db = TablesDB(client)
 
-result = tables_db.create_rows(
-    database_id = '<DATABASE_ID>',
-    table_id = '<TABLE_ID>',
-    rows = [],
-    transaction_id = '<TRANSACTION_ID>' # optional
+result = tables_db.create_transaction(
+    ttl = 60 # optional
 )
