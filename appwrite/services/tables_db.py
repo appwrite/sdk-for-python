@@ -83,6 +83,199 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def list_transactions(self, queries: List[str] = None) -> Dict[str, Any]:
+        """
+        List transactions across all databases.
+
+        Parameters
+        ----------
+        queries : List[str]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/transactions'
+        api_params = {}
+
+        api_params['queries'] = queries
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
+    def create_transaction(self, ttl: float = None) -> Dict[str, Any]:
+        """
+        Create a new transaction.
+
+        Parameters
+        ----------
+        ttl : float
+            Seconds before the transaction expires.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/transactions'
+        api_params = {}
+
+        api_params['ttl'] = ttl
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def get_transaction(self, transaction_id: str) -> Dict[str, Any]:
+        """
+        Get a transaction by its unique ID.
+
+        Parameters
+        ----------
+        transaction_id : str
+            Transaction ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/transactions/{transactionId}'
+        api_params = {}
+        if transaction_id is None:
+            raise AppwriteException('Missing required parameter: "transaction_id"')
+
+        api_path = api_path.replace('{transactionId}', transaction_id)
+
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
+    def update_transaction(self, transaction_id: str, commit: bool = None, rollback: bool = None) -> Dict[str, Any]:
+        """
+        Update a transaction, to either commit or roll back its operations.
+
+        Parameters
+        ----------
+        transaction_id : str
+            Transaction ID.
+        commit : bool
+            Commit transaction?
+        rollback : bool
+            Rollback transaction?
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/transactions/{transactionId}'
+        api_params = {}
+        if transaction_id is None:
+            raise AppwriteException('Missing required parameter: "transaction_id"')
+
+        api_path = api_path.replace('{transactionId}', transaction_id)
+
+        api_params['commit'] = commit
+        api_params['rollback'] = rollback
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def delete_transaction(self, transaction_id: str) -> Dict[str, Any]:
+        """
+        Delete a transaction by its unique ID.
+
+        Parameters
+        ----------
+        transaction_id : str
+            Transaction ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/transactions/{transactionId}'
+        api_params = {}
+        if transaction_id is None:
+            raise AppwriteException('Missing required parameter: "transaction_id"')
+
+        api_path = api_path.replace('{transactionId}', transaction_id)
+
+
+        return self.client.call('delete', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_operations(self, transaction_id: str, operations: List[dict] = None) -> Dict[str, Any]:
+        """
+        Create multiple operations in a single transaction.
+
+        Parameters
+        ----------
+        transaction_id : str
+            Transaction ID.
+        operations : List[dict]
+            Array of staged operations.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/transactions/{transactionId}/operations'
+        api_params = {}
+        if transaction_id is None:
+            raise AppwriteException('Missing required parameter: "transaction_id"')
+
+        api_path = api_path.replace('{transactionId}', transaction_id)
+
+        api_params['operations'] = operations
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def get(self, database_id: str) -> Dict[str, Any]:
         """
         Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
@@ -2233,7 +2426,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_rows(self, database_id: str, table_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def list_rows(self, database_id: str, table_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Get a list of all the user's rows in a given table. You can use the query params to filter your results.
 
@@ -2245,6 +2438,8 @@ class TablesDB(Service):
             Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        transaction_id : str
+            Transaction ID to read uncommitted changes within the transaction.
         
         Returns
         -------
@@ -2269,11 +2464,12 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
 
         api_params['queries'] = queries
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_row(self, database_id: str, table_id: str, row_id: str, data: dict, permissions: List[str] = None) -> Dict[str, Any]:
+    def create_row(self, database_id: str, table_id: str, row_id: str, data: dict, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Create a new Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -2289,6 +2485,8 @@ class TablesDB(Service):
             Row data as JSON object.
         permissions : List[str]
             An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2321,12 +2519,13 @@ class TablesDB(Service):
         api_params['rowId'] = row_id
         api_params['data'] = data
         api_params['permissions'] = permissions
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_rows(self, database_id: str, table_id: str, rows: List[dict]) -> Dict[str, Any]:
+    def create_rows(self, database_id: str, table_id: str, rows: List[dict], transaction_id: str = None) -> Dict[str, Any]:
         """
         Create new Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -2338,6 +2537,8 @@ class TablesDB(Service):
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable). Make sure to define columns before creating rows.
         rows : List[dict]
             Array of rows data as JSON objects.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2365,12 +2566,13 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
 
         api_params['rows'] = rows
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def upsert_rows(self, database_id: str, table_id: str, rows: List[dict]) -> Dict[str, Any]:
+    def upsert_rows(self, database_id: str, table_id: str, rows: List[dict], transaction_id: str = None) -> Dict[str, Any]:
         """
         Create or update Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
         
@@ -2383,6 +2585,8 @@ class TablesDB(Service):
             Table ID.
         rows : List[dict]
             Array of row data as JSON objects. May contain partial rows.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2410,12 +2614,13 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
 
         api_params['rows'] = rows
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_rows(self, database_id: str, table_id: str, data: dict = None, queries: List[str] = None) -> Dict[str, Any]:
+    def update_rows(self, database_id: str, table_id: str, data: dict = None, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Update all rows that match your queries, if no queries are submitted then all rows are updated. You can pass only specific fields to be updated.
 
@@ -2429,6 +2634,8 @@ class TablesDB(Service):
             Row data as JSON object. Include only column and value pairs to be updated.
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2454,12 +2661,13 @@ class TablesDB(Service):
 
         api_params['data'] = data
         api_params['queries'] = queries
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_rows(self, database_id: str, table_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def delete_rows(self, database_id: str, table_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Bulk delete rows using queries, if no queries are passed then all rows are deleted.
 
@@ -2471,6 +2679,8 @@ class TablesDB(Service):
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2495,12 +2705,13 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
 
         api_params['queries'] = queries
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_row(self, database_id: str, table_id: str, row_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def get_row(self, database_id: str, table_id: str, row_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Get a row by its unique ID. This endpoint response returns a JSON object with the row data.
 
@@ -2514,6 +2725,8 @@ class TablesDB(Service):
             Row ID.
         queries : List[str]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        transaction_id : str
+            Transaction ID to read uncommitted changes within the transaction.
         
         Returns
         -------
@@ -2542,11 +2755,12 @@ class TablesDB(Service):
         api_path = api_path.replace('{rowId}', row_id)
 
         api_params['queries'] = queries
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def upsert_row(self, database_id: str, table_id: str, row_id: str, data: dict = None, permissions: List[str] = None) -> Dict[str, Any]:
+    def upsert_row(self, database_id: str, table_id: str, row_id: str, data: dict = None, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Create or update a Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -2562,6 +2776,8 @@ class TablesDB(Service):
             Row data as JSON object. Include all required columns of the row to be created or updated.
         permissions : List[str]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2591,12 +2807,13 @@ class TablesDB(Service):
 
         api_params['data'] = data
         api_params['permissions'] = permissions
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_row(self, database_id: str, table_id: str, row_id: str, data: dict = None, permissions: List[str] = None) -> Dict[str, Any]:
+    def update_row(self, database_id: str, table_id: str, row_id: str, data: dict = None, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Update a row by its unique ID. Using the patch method you can pass only specific fields that will get updated.
 
@@ -2612,6 +2829,8 @@ class TablesDB(Service):
             Row data as JSON object. Include only columns and value pairs to be updated.
         permissions : List[str]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2641,12 +2860,13 @@ class TablesDB(Service):
 
         api_params['data'] = data
         api_params['permissions'] = permissions
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_row(self, database_id: str, table_id: str, row_id: str) -> Dict[str, Any]:
+    def delete_row(self, database_id: str, table_id: str, row_id: str, transaction_id: str = None) -> Dict[str, Any]:
         """
         Delete a row by its unique ID.
 
@@ -2658,6 +2878,8 @@ class TablesDB(Service):
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
         row_id : str
             Row ID.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2685,12 +2907,13 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
         api_path = api_path.replace('{rowId}', row_id)
 
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def decrement_row_column(self, database_id: str, table_id: str, row_id: str, column: str, value: float = None, min: float = None) -> Dict[str, Any]:
+    def decrement_row_column(self, database_id: str, table_id: str, row_id: str, column: str, value: float = None, min: float = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Decrement a specific column of a row by a given value.
 
@@ -2708,6 +2931,8 @@ class TablesDB(Service):
             Value to increment the column by. The value must be a number.
         min : float
             Minimum value for the column. If the current value is lesser than this value, an exception will be thrown.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2741,12 +2966,13 @@ class TablesDB(Service):
 
         api_params['value'] = value
         api_params['min'] = min
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def increment_row_column(self, database_id: str, table_id: str, row_id: str, column: str, value: float = None, max: float = None) -> Dict[str, Any]:
+    def increment_row_column(self, database_id: str, table_id: str, row_id: str, column: str, value: float = None, max: float = None, transaction_id: str = None) -> Dict[str, Any]:
         """
         Increment a specific column of a row by a given value.
 
@@ -2764,6 +2990,8 @@ class TablesDB(Service):
             Value to increment the column by. The value must be a number.
         max : float
             Maximum value for the column. If the current value is greater than this value, an error will be thrown.
+        transaction_id : str
+            Transaction ID for staging the operation.
         
         Returns
         -------
@@ -2797,6 +3025,7 @@ class TablesDB(Service):
 
         api_params['value'] = value
         api_params['max'] = max
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
