@@ -1,6 +1,7 @@
 from ..service import Service
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from ..exception import AppwriteException
+from appwrite.utils.deprecated import deprecated
 from ..enums.relationship_type import RelationshipType;
 from ..enums.relation_mutate import RelationMutate;
 from ..enums.index_type import IndexType;
@@ -10,15 +11,15 @@ class TablesDB(Service):
     def __init__(self, client) -> None:
         super(TablesDB, self).__init__(client)
 
-    def list(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
 
         Parameters
         ----------
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -41,7 +42,7 @@ class TablesDB(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, database_id: str, name: str, enabled: bool = None) -> Dict[str, Any]:
+    def create(self, database_id: str, name: str, enabled: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a new Database.
         
@@ -52,7 +53,7 @@ class TablesDB(Service):
             Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         name : str
             Database name. Max length: 128 chars.
-        enabled : bool
+        enabled : Optional[bool]
             Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
         
         Returns
@@ -83,13 +84,13 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_transactions(self, queries: List[str] = None) -> Dict[str, Any]:
+    def list_transactions(self, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         List transactions across all databases.
 
         Parameters
         ----------
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
         
         Returns
@@ -111,13 +112,13 @@ class TablesDB(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_transaction(self, ttl: float = None) -> Dict[str, Any]:
+    def create_transaction(self, ttl: Optional[float] = None) -> Dict[str, Any]:
         """
         Create a new transaction.
 
         Parameters
         ----------
-        ttl : float
+        ttl : Optional[float]
             Seconds before the transaction expires.
         
         Returns
@@ -171,7 +172,7 @@ class TablesDB(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update_transaction(self, transaction_id: str, commit: bool = None, rollback: bool = None) -> Dict[str, Any]:
+    def update_transaction(self, transaction_id: str, commit: Optional[bool] = None, rollback: Optional[bool] = None) -> Dict[str, Any]:
         """
         Update a transaction, to either commit or roll back its operations.
 
@@ -179,9 +180,9 @@ class TablesDB(Service):
         ----------
         transaction_id : str
             Transaction ID.
-        commit : bool
+        commit : Optional[bool]
             Commit transaction?
-        rollback : bool
+        rollback : Optional[bool]
             Rollback transaction?
         
         Returns
@@ -241,7 +242,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_operations(self, transaction_id: str, operations: List[dict] = None) -> Dict[str, Any]:
+    def create_operations(self, transaction_id: str, operations: Optional[List[dict]] = None) -> Dict[str, Any]:
         """
         Create multiple operations in a single transaction.
 
@@ -249,7 +250,7 @@ class TablesDB(Service):
         ----------
         transaction_id : str
             Transaction ID.
-        operations : List[dict]
+        operations : Optional[List[dict]]
             Array of staged operations.
         
         Returns
@@ -307,7 +308,7 @@ class TablesDB(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update(self, database_id: str, name: str, enabled: bool = None) -> Dict[str, Any]:
+    def update(self, database_id: str, name: str, enabled: Optional[bool] = None) -> Dict[str, Any]:
         """
         Update a database by its unique ID.
 
@@ -317,7 +318,7 @@ class TablesDB(Service):
             Database ID.
         name : str
             Database name. Max length: 128 chars.
-        enabled : bool
+        enabled : Optional[bool]
             Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
         
         Returns
@@ -380,7 +381,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_tables(self, database_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def list_tables(self, database_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all tables that belong to the provided databaseId. You can use the search parameter to filter your results.
 
@@ -388,9 +389,9 @@ class TablesDB(Service):
         ----------
         database_id : str
             Database ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name, enabled, rowSecurity
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -417,7 +418,7 @@ class TablesDB(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_table(self, database_id: str, table_id: str, name: str, permissions: List[str] = None, row_security: bool = None, enabled: bool = None) -> Dict[str, Any]:
+    def create_table(self, database_id: str, table_id: str, name: str, permissions: Optional[List[str]] = None, row_security: Optional[bool] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a new Table. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -429,11 +430,11 @@ class TablesDB(Service):
             Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         name : str
             Table name. Max length: 128 chars.
-        permissions : List[str]
+        permissions : Optional[List[str]]
             An array of permissions strings. By default, no user is granted with any permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        row_security : bool
+        row_security : Optional[bool]
             Enables configuring permissions for individual rows. A user needs one of row or table level permissions to access a row. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        enabled : bool
+        enabled : Optional[bool]
             Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
         
         Returns
@@ -507,7 +508,7 @@ class TablesDB(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update_table(self, database_id: str, table_id: str, name: str, permissions: List[str] = None, row_security: bool = None, enabled: bool = None) -> Dict[str, Any]:
+    def update_table(self, database_id: str, table_id: str, name: str, permissions: Optional[List[str]] = None, row_security: Optional[bool] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
         """
         Update a table by its unique ID.
 
@@ -519,11 +520,11 @@ class TablesDB(Service):
             Table ID.
         name : str
             Table name. Max length: 128 chars.
-        permissions : List[str]
+        permissions : Optional[List[str]]
             An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        row_security : bool
+        row_security : Optional[bool]
             Enables configuring permissions for individual rows. A user needs one of row or table level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        enabled : bool
+        enabled : Optional[bool]
             Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
         
         Returns
@@ -598,7 +599,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_columns(self, database_id: str, table_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def list_columns(self, database_id: str, table_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         List columns in the table.
 
@@ -608,7 +609,7 @@ class TablesDB(Service):
             Database ID.
         table_id : str
             Table ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: key, type, size, required, array, status, error
         
         Returns
@@ -638,7 +639,7 @@ class TablesDB(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_boolean_column(self, database_id: str, table_id: str, key: str, required: bool, default: bool = None, array: bool = None) -> Dict[str, Any]:
+    def create_boolean_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[bool] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a boolean column.
         
@@ -653,9 +654,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : bool
+        default : Optional[bool]
             Default value for column when not provided. Cannot be set when column is required.
-        array : bool
+        array : Optional[bool]
             Is column an array?
         
         Returns
@@ -695,7 +696,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_boolean_column(self, database_id: str, table_id: str, key: str, required: bool, default: bool, new_key: str = None) -> Dict[str, Any]:
+    def update_boolean_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[bool], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a boolean column. Changing the `default` value will not update already existing rows.
 
@@ -709,9 +710,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : bool
+        default : Optional[bool]
             Default value for column when not provided. Cannot be set when column is required.
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -751,7 +752,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_datetime_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None, array: bool = None) -> Dict[str, Any]:
+    def create_datetime_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a date time column according to the ISO 8601 standard.
 
@@ -765,9 +766,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value for the column in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Cannot be set when column is required.
-        array : bool
+        array : Optional[bool]
             Is column an array?
         
         Returns
@@ -807,7 +808,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_datetime_column(self, database_id: str, table_id: str, key: str, required: bool, default: str, new_key: str = None) -> Dict[str, Any]:
+    def update_datetime_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a date time column. Changing the `default` value will not update already existing rows.
 
@@ -821,9 +822,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value for column when not provided. Cannot be set when column is required.
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -863,7 +864,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_email_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None, array: bool = None) -> Dict[str, Any]:
+    def create_email_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create an email column.
         
@@ -878,9 +879,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value for column when not provided. Cannot be set when column is required.
-        array : bool
+        array : Optional[bool]
             Is column an array?
         
         Returns
@@ -920,7 +921,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_email_column(self, database_id: str, table_id: str, key: str, required: bool, default: str, new_key: str = None) -> Dict[str, Any]:
+    def update_email_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update an email column. Changing the `default` value will not update already existing rows.
         
@@ -935,9 +936,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value for column when not provided. Cannot be set when column is required.
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -977,7 +978,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_enum_column(self, database_id: str, table_id: str, key: str, elements: List[str], required: bool, default: str = None, array: bool = None) -> Dict[str, Any]:
+    def create_enum_column(self, database_id: str, table_id: str, key: str, elements: List[str], required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create an enumeration column. The `elements` param acts as a white-list of accepted values for this column.
 
@@ -993,9 +994,9 @@ class TablesDB(Service):
             Array of enum values.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value for column when not provided. Cannot be set when column is required.
-        array : bool
+        array : Optional[bool]
             Is column an array?
         
         Returns
@@ -1039,7 +1040,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_enum_column(self, database_id: str, table_id: str, key: str, elements: List[str], required: bool, default: str, new_key: str = None) -> Dict[str, Any]:
+    def update_enum_column(self, database_id: str, table_id: str, key: str, elements: List[str], required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update an enum column. Changing the `default` value will not update already existing rows.
         
@@ -1056,9 +1057,9 @@ class TablesDB(Service):
             Updated list of enum values.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value for column when not provided. Cannot be set when column is required.
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -1102,7 +1103,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_float_column(self, database_id: str, table_id: str, key: str, required: bool, min: float = None, max: float = None, default: float = None, array: bool = None) -> Dict[str, Any]:
+    def create_float_column(self, database_id: str, table_id: str, key: str, required: bool, min: Optional[float] = None, max: Optional[float] = None, default: Optional[float] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a float column. Optionally, minimum and maximum values can be provided.
         
@@ -1117,13 +1118,13 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        min : float
+        min : Optional[float]
             Minimum value
-        max : float
+        max : Optional[float]
             Maximum value
-        default : float
+        default : Optional[float]
             Default value. Cannot be set when required.
-        array : bool
+        array : Optional[bool]
             Is column an array?
         
         Returns
@@ -1165,7 +1166,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_float_column(self, database_id: str, table_id: str, key: str, required: bool, default: float, min: float = None, max: float = None, new_key: str = None) -> Dict[str, Any]:
+    def update_float_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[float], min: Optional[float] = None, max: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a float column. Changing the `default` value will not update already existing rows.
         
@@ -1180,13 +1181,13 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : float
+        default : Optional[float]
             Default value. Cannot be set when required.
-        min : float
+        min : Optional[float]
             Minimum value
-        max : float
+        max : Optional[float]
             Maximum value
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -1228,7 +1229,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_integer_column(self, database_id: str, table_id: str, key: str, required: bool, min: float = None, max: float = None, default: float = None, array: bool = None) -> Dict[str, Any]:
+    def create_integer_column(self, database_id: str, table_id: str, key: str, required: bool, min: Optional[float] = None, max: Optional[float] = None, default: Optional[float] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create an integer column. Optionally, minimum and maximum values can be provided.
         
@@ -1243,13 +1244,13 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        min : float
+        min : Optional[float]
             Minimum value
-        max : float
+        max : Optional[float]
             Maximum value
-        default : float
+        default : Optional[float]
             Default value. Cannot be set when column is required.
-        array : bool
+        array : Optional[bool]
             Is column an array?
         
         Returns
@@ -1291,7 +1292,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_integer_column(self, database_id: str, table_id: str, key: str, required: bool, default: float, min: float = None, max: float = None, new_key: str = None) -> Dict[str, Any]:
+    def update_integer_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[float], min: Optional[float] = None, max: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update an integer column. Changing the `default` value will not update already existing rows.
         
@@ -1306,13 +1307,13 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : float
+        default : Optional[float]
             Default value. Cannot be set when column is required.
-        min : float
+        min : Optional[float]
             Minimum value
-        max : float
+        max : Optional[float]
             Maximum value
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -1354,7 +1355,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_ip_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None, array: bool = None) -> Dict[str, Any]:
+    def create_ip_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create IP address column.
         
@@ -1369,9 +1370,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value. Cannot be set when column is required.
-        array : bool
+        array : Optional[bool]
             Is column an array?
         
         Returns
@@ -1411,7 +1412,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_ip_column(self, database_id: str, table_id: str, key: str, required: bool, default: str, new_key: str = None) -> Dict[str, Any]:
+    def update_ip_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update an ip column. Changing the `default` value will not update already existing rows.
         
@@ -1426,9 +1427,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value. Cannot be set when column is required.
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -1468,7 +1469,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_line_column(self, database_id: str, table_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
+    def create_line_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None) -> Dict[str, Any]:
         """
         Create a geometric line column.
 
@@ -1482,7 +1483,7 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
         
         Returns
@@ -1521,7 +1522,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_line_column(self, database_id: str, table_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
+    def update_line_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a line column. Changing the `default` value will not update already existing rows.
 
@@ -1535,9 +1536,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -1577,7 +1578,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_point_column(self, database_id: str, table_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
+    def create_point_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None) -> Dict[str, Any]:
         """
         Create a geometric point column.
 
@@ -1591,7 +1592,7 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
         
         Returns
@@ -1630,7 +1631,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_point_column(self, database_id: str, table_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
+    def update_point_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a point column. Changing the `default` value will not update already existing rows.
 
@@ -1644,9 +1645,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -1686,7 +1687,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_polygon_column(self, database_id: str, table_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
+    def create_polygon_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None) -> Dict[str, Any]:
         """
         Create a geometric polygon column.
 
@@ -1700,7 +1701,7 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
         
         Returns
@@ -1739,7 +1740,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_polygon_column(self, database_id: str, table_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
+    def update_polygon_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a polygon column. Changing the `default` value will not update already existing rows.
 
@@ -1753,9 +1754,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -1795,7 +1796,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_relationship_column(self, database_id: str, table_id: str, related_table_id: str, type: RelationshipType, two_way: bool = None, key: str = None, two_way_key: str = None, on_delete: RelationMutate = None) -> Dict[str, Any]:
+    def create_relationship_column(self, database_id: str, table_id: str, related_table_id: str, type: RelationshipType, two_way: Optional[bool] = None, key: Optional[str] = None, two_way_key: Optional[str] = None, on_delete: Optional[RelationMutate] = None) -> Dict[str, Any]:
         """
         Create relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
         
@@ -1810,13 +1811,13 @@ class TablesDB(Service):
             Related Table ID.
         type : RelationshipType
             Relation type
-        two_way : bool
+        two_way : Optional[bool]
             Is Two Way?
-        key : str
+        key : Optional[str]
             Column Key.
-        two_way_key : str
+        two_way_key : Optional[str]
             Two Way Column Key.
-        on_delete : RelationMutate
+        on_delete : Optional[RelationMutate]
             Constraints option
         
         Returns
@@ -1858,7 +1859,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_string_column(self, database_id: str, table_id: str, key: str, size: float, required: bool, default: str = None, array: bool = None, encrypt: bool = None) -> Dict[str, Any]:
+    def create_string_column(self, database_id: str, table_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a string column.
         
@@ -1875,11 +1876,11 @@ class TablesDB(Service):
             Column size for text columns, in number of characters.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value for column when not provided. Cannot be set when column is required.
-        array : bool
+        array : Optional[bool]
             Is column an array?
-        encrypt : bool
+        encrypt : Optional[bool]
             Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
         
         Returns
@@ -1924,7 +1925,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_string_column(self, database_id: str, table_id: str, key: str, required: bool, default: str, size: float = None, new_key: str = None) -> Dict[str, Any]:
+    def update_string_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], size: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a string column. Changing the `default` value will not update already existing rows.
         
@@ -1939,11 +1940,11 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value for column when not provided. Cannot be set when column is required.
-        size : float
+        size : Optional[float]
             Maximum size of the string column.
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -1984,7 +1985,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_url_column(self, database_id: str, table_id: str, key: str, required: bool, default: str = None, array: bool = None) -> Dict[str, Any]:
+    def create_url_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a URL column.
         
@@ -1999,9 +2000,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value for column when not provided. Cannot be set when column is required.
-        array : bool
+        array : Optional[bool]
             Is column an array?
         
         Returns
@@ -2041,7 +2042,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_url_column(self, database_id: str, table_id: str, key: str, required: bool, default: str, new_key: str = None) -> Dict[str, Any]:
+    def update_url_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update an url column. Changing the `default` value will not update already existing rows.
         
@@ -2056,9 +2057,9 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : str
+        default : Optional[str]
             Default value for column when not provided. Cannot be set when column is required.
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -2185,7 +2186,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_relationship_column(self, database_id: str, table_id: str, key: str, on_delete: RelationMutate = None, new_key: str = None) -> Dict[str, Any]:
+    def update_relationship_column(self, database_id: str, table_id: str, key: str, on_delete: Optional[RelationMutate] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
         
@@ -2198,9 +2199,9 @@ class TablesDB(Service):
             Table ID.
         key : str
             Column Key.
-        on_delete : RelationMutate
+        on_delete : Optional[RelationMutate]
             Constraints option
-        new_key : str
+        new_key : Optional[str]
             New Column Key.
         
         Returns
@@ -2236,7 +2237,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_indexes(self, database_id: str, table_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def list_indexes(self, database_id: str, table_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         List indexes on the table.
 
@@ -2246,7 +2247,7 @@ class TablesDB(Service):
             Database ID.
         table_id : str
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: key, type, status, attributes, error
         
         Returns
@@ -2276,7 +2277,7 @@ class TablesDB(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_index(self, database_id: str, table_id: str, key: str, type: IndexType, columns: List[str], orders: List[str] = None, lengths: List[float] = None) -> Dict[str, Any]:
+    def create_index(self, database_id: str, table_id: str, key: str, type: IndexType, columns: List[str], orders: Optional[List[str]] = None, lengths: Optional[List[float]] = None) -> Dict[str, Any]:
         """
         Creates an index on the columns listed. Your index should include all the columns you will query in a single request.
         Type can be `key`, `fulltext`, or `unique`.
@@ -2293,9 +2294,9 @@ class TablesDB(Service):
             Index type.
         columns : List[str]
             Array of columns to index. Maximum of 100 columns are allowed, each 32 characters long.
-        orders : List[str]
+        orders : Optional[List[str]]
             Array of index orders. Maximum of 100 orders are allowed.
-        lengths : List[float]
+        lengths : Optional[List[float]]
             Length of index. Maximum of 100
         
         Returns
@@ -2426,7 +2427,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_rows(self, database_id: str, table_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    def list_rows(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all the user's rows in a given table. You can use the query params to filter your results.
 
@@ -2436,9 +2437,9 @@ class TablesDB(Service):
             Database ID.
         table_id : str
             Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID to read uncommitted changes within the transaction.
         
         Returns
@@ -2469,7 +2470,7 @@ class TablesDB(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_row(self, database_id: str, table_id: str, row_id: str, data: dict, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    def create_row(self, database_id: str, table_id: str, row_id: str, data: dict, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -2483,9 +2484,9 @@ class TablesDB(Service):
             Row ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         data : dict
             Row data as JSON object.
-        permissions : List[str]
+        permissions : Optional[List[str]]
             An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2525,7 +2526,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_rows(self, database_id: str, table_id: str, rows: List[dict], transaction_id: str = None) -> Dict[str, Any]:
+    def create_rows(self, database_id: str, table_id: str, rows: List[dict], transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Create new Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -2537,7 +2538,7 @@ class TablesDB(Service):
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable). Make sure to define columns before creating rows.
         rows : List[dict]
             Array of rows data as JSON objects.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2572,7 +2573,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def upsert_rows(self, database_id: str, table_id: str, rows: List[dict], transaction_id: str = None) -> Dict[str, Any]:
+    def upsert_rows(self, database_id: str, table_id: str, rows: List[dict], transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Create or update Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
         
@@ -2585,7 +2586,7 @@ class TablesDB(Service):
             Table ID.
         rows : List[dict]
             Array of row data as JSON objects. May contain partial rows.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2620,7 +2621,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_rows(self, database_id: str, table_id: str, data: dict = None, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    def update_rows(self, database_id: str, table_id: str, data: Optional[dict] = None, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Update all rows that match your queries, if no queries are submitted then all rows are updated. You can pass only specific fields to be updated.
 
@@ -2630,11 +2631,11 @@ class TablesDB(Service):
             Database ID.
         table_id : str
             Table ID.
-        data : dict
+        data : Optional[dict]
             Row data as JSON object. Include only column and value pairs to be updated.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2667,7 +2668,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_rows(self, database_id: str, table_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    def delete_rows(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Bulk delete rows using queries, if no queries are passed then all rows are deleted.
 
@@ -2677,9 +2678,9 @@ class TablesDB(Service):
             Database ID.
         table_id : str
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2711,7 +2712,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_row(self, database_id: str, table_id: str, row_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    def get_row(self, database_id: str, table_id: str, row_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a row by its unique ID. This endpoint response returns a JSON object with the row data.
 
@@ -2723,9 +2724,9 @@ class TablesDB(Service):
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
         row_id : str
             Row ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID to read uncommitted changes within the transaction.
         
         Returns
@@ -2760,7 +2761,7 @@ class TablesDB(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def upsert_row(self, database_id: str, table_id: str, row_id: str, data: dict = None, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    def upsert_row(self, database_id: str, table_id: str, row_id: str, data: Optional[dict] = None, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Create or update a Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -2772,11 +2773,11 @@ class TablesDB(Service):
             Table ID.
         row_id : str
             Row ID.
-        data : dict
+        data : Optional[dict]
             Row data as JSON object. Include all required columns of the row to be created or updated.
-        permissions : List[str]
+        permissions : Optional[List[str]]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2813,7 +2814,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_row(self, database_id: str, table_id: str, row_id: str, data: dict = None, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    def update_row(self, database_id: str, table_id: str, row_id: str, data: Optional[dict] = None, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a row by its unique ID. Using the patch method you can pass only specific fields that will get updated.
 
@@ -2825,11 +2826,11 @@ class TablesDB(Service):
             Table ID.
         row_id : str
             Row ID.
-        data : dict
+        data : Optional[dict]
             Row data as JSON object. Include only columns and value pairs to be updated.
-        permissions : List[str]
+        permissions : Optional[List[str]]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2866,7 +2867,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_row(self, database_id: str, table_id: str, row_id: str, transaction_id: str = None) -> Dict[str, Any]:
+    def delete_row(self, database_id: str, table_id: str, row_id: str, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Delete a row by its unique ID.
 
@@ -2878,7 +2879,7 @@ class TablesDB(Service):
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
         row_id : str
             Row ID.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2913,7 +2914,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def decrement_row_column(self, database_id: str, table_id: str, row_id: str, column: str, value: float = None, min: float = None, transaction_id: str = None) -> Dict[str, Any]:
+    def decrement_row_column(self, database_id: str, table_id: str, row_id: str, column: str, value: Optional[float] = None, min: Optional[float] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Decrement a specific column of a row by a given value.
 
@@ -2927,11 +2928,11 @@ class TablesDB(Service):
             Row ID.
         column : str
             Column key.
-        value : float
+        value : Optional[float]
             Value to increment the column by. The value must be a number.
-        min : float
+        min : Optional[float]
             Minimum value for the column. If the current value is lesser than this value, an exception will be thrown.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2972,7 +2973,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def increment_row_column(self, database_id: str, table_id: str, row_id: str, column: str, value: float = None, max: float = None, transaction_id: str = None) -> Dict[str, Any]:
+    def increment_row_column(self, database_id: str, table_id: str, row_id: str, column: str, value: Optional[float] = None, max: Optional[float] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Increment a specific column of a row by a given value.
 
@@ -2986,11 +2987,11 @@ class TablesDB(Service):
             Row ID.
         column : str
             Column key.
-        value : float
+        value : Optional[float]
             Value to increment the column by. The value must be a number.
-        max : float
+        max : Optional[float]
             Maximum value for the column. If the current value is greater than this value, an error will be thrown.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns

@@ -1,6 +1,7 @@
 from ..service import Service
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from ..exception import AppwriteException
+from appwrite.utils.deprecated import deprecated
 from ..enums.password_hash import PasswordHash;
 from ..enums.authenticator_type import AuthenticatorType;
 from ..enums.messaging_provider_type import MessagingProviderType;
@@ -10,15 +11,15 @@ class Users(Service):
     def __init__(self, client) -> None:
         super(Users, self).__init__(client)
 
-    def list(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all the project's users. You can use the query params to filter your results.
 
         Parameters
         ----------
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, email, phone, status, passwordUpdate, registration, emailVerification, phoneVerification, labels
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -41,7 +42,7 @@ class Users(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, user_id: str, email: str = None, phone: str = None, password: str = None, name: str = None) -> Dict[str, Any]:
+    def create(self, user_id: str, email: Optional[str] = None, phone: Optional[str] = None, password: Optional[str] = None, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new user.
 
@@ -49,13 +50,13 @@ class Users(Service):
         ----------
         user_id : str
             User ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        email : str
+        email : Optional[str]
             User email.
-        phone : str
+        phone : Optional[str]
             Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
-        password : str
+        password : Optional[str]
             Plain text user password. Must be at least 8 chars.
-        name : str
+        name : Optional[str]
             User name. Max length: 128 chars.
         
         Returns
@@ -85,7 +86,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_argon2_user(self, user_id: str, email: str, password: str, name: str = None) -> Dict[str, Any]:
+    def create_argon2_user(self, user_id: str, email: str, password: str, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new user. Password provided must be hashed with the [Argon2](https://en.wikipedia.org/wiki/Argon2) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -97,7 +98,7 @@ class Users(Service):
             User email.
         password : str
             User password hashed using Argon2.
-        name : str
+        name : Optional[str]
             User name. Max length: 128 chars.
         
         Returns
@@ -132,7 +133,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_bcrypt_user(self, user_id: str, email: str, password: str, name: str = None) -> Dict[str, Any]:
+    def create_bcrypt_user(self, user_id: str, email: str, password: str, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new user. Password provided must be hashed with the [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -144,7 +145,7 @@ class Users(Service):
             User email.
         password : str
             User password hashed using Bcrypt.
-        name : str
+        name : Optional[str]
             User name. Max length: 128 chars.
         
         Returns
@@ -179,15 +180,15 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_identities(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def list_identities(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get identities for all users.
 
         Parameters
         ----------
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, provider, providerUid, providerEmail, providerAccessTokenExpiry
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -242,7 +243,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_md5_user(self, user_id: str, email: str, password: str, name: str = None) -> Dict[str, Any]:
+    def create_md5_user(self, user_id: str, email: str, password: str, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new user. Password provided must be hashed with the [MD5](https://en.wikipedia.org/wiki/MD5) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -254,7 +255,7 @@ class Users(Service):
             User email.
         password : str
             User password hashed using MD5.
-        name : str
+        name : Optional[str]
             User name. Max length: 128 chars.
         
         Returns
@@ -289,7 +290,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_ph_pass_user(self, user_id: str, email: str, password: str, name: str = None) -> Dict[str, Any]:
+    def create_ph_pass_user(self, user_id: str, email: str, password: str, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new user. Password provided must be hashed with the [PHPass](https://www.openwall.com/phpass/) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -301,7 +302,7 @@ class Users(Service):
             User email.
         password : str
             User password hashed using PHPass.
-        name : str
+        name : Optional[str]
             User name. Max length: 128 chars.
         
         Returns
@@ -336,7 +337,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_scrypt_user(self, user_id: str, email: str, password: str, password_salt: str, password_cpu: float, password_memory: float, password_parallel: float, password_length: float, name: str = None) -> Dict[str, Any]:
+    def create_scrypt_user(self, user_id: str, email: str, password: str, password_salt: str, password_cpu: float, password_memory: float, password_parallel: float, password_length: float, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new user. Password provided must be hashed with the [Scrypt](https://github.com/Tarsnap/scrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -358,7 +359,7 @@ class Users(Service):
             Optional parallelization cost used to hash password.
         password_length : float
             Optional hash length used to hash password.
-        name : str
+        name : Optional[str]
             User name. Max length: 128 chars.
         
         Returns
@@ -413,7 +414,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_scrypt_modified_user(self, user_id: str, email: str, password: str, password_salt: str, password_salt_separator: str, password_signer_key: str, name: str = None) -> Dict[str, Any]:
+    def create_scrypt_modified_user(self, user_id: str, email: str, password: str, password_salt: str, password_salt_separator: str, password_signer_key: str, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new user. Password provided must be hashed with the [Scrypt Modified](https://gist.github.com/Meldiron/eecf84a0225eccb5a378d45bb27462cc) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -431,7 +432,7 @@ class Users(Service):
             Salt separator used to hash password.
         password_signer_key : str
             Signer key used to hash password.
-        name : str
+        name : Optional[str]
             User name. Max length: 128 chars.
         
         Returns
@@ -478,7 +479,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_sha_user(self, user_id: str, email: str, password: str, password_version: PasswordHash = None, name: str = None) -> Dict[str, Any]:
+    def create_sha_user(self, user_id: str, email: str, password: str, password_version: Optional[PasswordHash] = None, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new user. Password provided must be hashed with the [SHA](https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -490,9 +491,9 @@ class Users(Service):
             User email.
         password : str
             User password hashed using SHA.
-        password_version : PasswordHash
+        password_version : Optional[PasswordHash]
             Optional SHA version used to hash password. Allowed values are: 'sha1', 'sha224', 'sha256', 'sha384', 'sha512/224', 'sha512/256', 'sha512', 'sha3-224', 'sha3-256', 'sha3-384', 'sha3-512'
-        name : str
+        name : Optional[str]
             User name. Max length: 128 chars.
         
         Returns
@@ -629,7 +630,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_jwt(self, user_id: str, session_id: str = None, duration: float = None) -> Dict[str, Any]:
+    def create_jwt(self, user_id: str, session_id: Optional[str] = None, duration: Optional[float] = None) -> Dict[str, Any]:
         """
         Use this endpoint to create a JSON Web Token for user by its unique ID. You can use the resulting JWT to authenticate on behalf of the user. The JWT secret will become invalid if the session it uses gets deleted.
 
@@ -637,9 +638,9 @@ class Users(Service):
         ----------
         user_id : str
             User ID.
-        session_id : str
+        session_id : Optional[str]
             Session ID. Use the string 'recent' to use the most recent session. Defaults to the most recent session.
-        duration : float
+        duration : Optional[float]
             Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
         
         Returns
@@ -707,7 +708,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_logs(self, user_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def list_logs(self, user_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         Get the user activity logs list by its unique ID.
 
@@ -715,7 +716,7 @@ class Users(Service):
         ----------
         user_id : str
             User ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
         
         Returns
@@ -741,7 +742,7 @@ class Users(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def list_memberships(self, user_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def list_memberships(self, user_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get the user membership list by its unique ID.
 
@@ -749,9 +750,9 @@ class Users(Service):
         ----------
         user_id : str
             User ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, teamId, invited, joined, confirm, roles
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -1336,7 +1337,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_targets(self, user_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def list_targets(self, user_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         List the messaging targets that are associated with a user.
 
@@ -1344,7 +1345,7 @@ class Users(Service):
         ----------
         user_id : str
             User ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, providerId, identifier, providerType
         
         Returns
@@ -1370,7 +1371,7 @@ class Users(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_target(self, user_id: str, target_id: str, provider_type: MessagingProviderType, identifier: str, provider_id: str = None, name: str = None) -> Dict[str, Any]:
+    def create_target(self, user_id: str, target_id: str, provider_type: MessagingProviderType, identifier: str, provider_id: Optional[str] = None, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a messaging target.
 
@@ -1384,9 +1385,9 @@ class Users(Service):
             The target provider type. Can be one of the following: `email`, `sms` or `push`.
         identifier : str
             The target identifier (token, email, phone etc.)
-        provider_id : str
+        provider_id : Optional[str]
             Provider ID. Message will be sent to this target from the specified provider ID. If no provider ID is set the first setup provider will be used.
-        name : str
+        name : Optional[str]
             Target name. Max length: 128 chars. For example: My Awesome App Galaxy S23.
         
         Returns
@@ -1463,7 +1464,7 @@ class Users(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update_target(self, user_id: str, target_id: str, identifier: str = None, provider_id: str = None, name: str = None) -> Dict[str, Any]:
+    def update_target(self, user_id: str, target_id: str, identifier: Optional[str] = None, provider_id: Optional[str] = None, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a messaging target.
 
@@ -1473,11 +1474,11 @@ class Users(Service):
             User ID.
         target_id : str
             Target ID.
-        identifier : str
+        identifier : Optional[str]
             The target identifier (token, email, phone etc.)
-        provider_id : str
+        provider_id : Optional[str]
             Provider ID. Message will be sent to this target from the specified provider ID. If no provider ID is set the first setup provider will be used.
-        name : str
+        name : Optional[str]
             Target name. Max length: 128 chars. For example: My Awesome App Galaxy S23.
         
         Returns
@@ -1548,7 +1549,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_token(self, user_id: str, length: float = None, expire: float = None) -> Dict[str, Any]:
+    def create_token(self, user_id: str, length: Optional[float] = None, expire: Optional[float] = None) -> Dict[str, Any]:
         """
         Returns a token with a secret key for creating a session. Use the user ID and secret and submit a request to the [PUT /account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process.
         
@@ -1557,9 +1558,9 @@ class Users(Service):
         ----------
         user_id : str
             User ID.
-        length : float
+        length : Optional[float]
             Token length in characters. The default length is 6 characters
-        expire : float
+        expire : Optional[float]
             Token expiration period in seconds. The default expiration is 15 minutes.
         
         Returns

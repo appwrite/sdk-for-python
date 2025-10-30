@@ -15,11 +15,11 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : f'AppwritePythonSDK/13.4.1 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
+            'user-agent' : f'AppwritePythonSDK/13.4.2 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '13.4.1',
+            'x-sdk-version': '13.4.2',
             'X-Appwrite-Response-Format' : '1.8.0',
         }
 
@@ -78,8 +78,6 @@ class Client:
 
         if params is None:
             params = {}
-
-        params = {k: v for k, v in params.items() if v is not None}  # Remove None values from params dictionary
 
         data = {}
         files = {}

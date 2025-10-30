@@ -1,6 +1,7 @@
 from ..service import Service
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from ..exception import AppwriteException
+from appwrite.utils.deprecated import deprecated
 from ..enums.framework import Framework;
 from ..enums.build_runtime import BuildRuntime;
 from ..enums.adapter import Adapter;
@@ -13,15 +14,15 @@ class Sites(Service):
     def __init__(self, client) -> None:
         super(Sites, self).__init__(client)
 
-    def list(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all the project's sites. You can use the query params to filter your results.
 
         Parameters
         ----------
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, enabled, framework, deploymentId, buildCommand, installCommand, outputDirectory, installationId
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -44,7 +45,7 @@ class Sites(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, site_id: str, name: str, framework: Framework, build_runtime: BuildRuntime, enabled: bool = None, logging: bool = None, timeout: float = None, install_command: str = None, build_command: str = None, output_directory: str = None, adapter: Adapter = None, installation_id: str = None, fallback_file: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None) -> Dict[str, Any]:
+    def create(self, site_id: str, name: str, framework: Framework, build_runtime: BuildRuntime, enabled: Optional[bool] = None, logging: Optional[bool] = None, timeout: Optional[float] = None, install_command: Optional[str] = None, build_command: Optional[str] = None, output_directory: Optional[str] = None, adapter: Optional[Adapter] = None, installation_id: Optional[str] = None, fallback_file: Optional[str] = None, provider_repository_id: Optional[str] = None, provider_branch: Optional[str] = None, provider_silent_mode: Optional[bool] = None, provider_root_directory: Optional[str] = None, specification: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new site.
 
@@ -58,33 +59,33 @@ class Sites(Service):
             Sites framework.
         build_runtime : BuildRuntime
             Runtime to use during build step.
-        enabled : bool
+        enabled : Optional[bool]
             Is site enabled? When set to 'disabled', users cannot access the site but Server SDKs with and API key can still access the site. No data is lost when this is toggled.
-        logging : bool
+        logging : Optional[bool]
             When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
-        timeout : float
+        timeout : Optional[float]
             Maximum request time in seconds.
-        install_command : str
+        install_command : Optional[str]
             Install Command.
-        build_command : str
+        build_command : Optional[str]
             Build Command.
-        output_directory : str
+        output_directory : Optional[str]
             Output Directory for site.
-        adapter : Adapter
+        adapter : Optional[Adapter]
             Framework adapter defining rendering strategy. Allowed values are: static, ssr
-        installation_id : str
+        installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Control System) deployment.
-        fallback_file : str
+        fallback_file : Optional[str]
             Fallback file for single page application sites.
-        provider_repository_id : str
+        provider_repository_id : Optional[str]
             Repository ID of the repo linked to the site.
-        provider_branch : str
+        provider_branch : Optional[str]
             Production branch for the repo linked to the site.
-        provider_silent_mode : bool
+        provider_silent_mode : Optional[bool]
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
-        provider_root_directory : str
+        provider_root_directory : Optional[str]
             Path to site code in the linked repo.
-        specification : str
+        specification : Optional[str]
             Framework specification for the site and builds.
         
         Returns
@@ -209,7 +210,7 @@ class Sites(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update(self, site_id: str, name: str, framework: Framework, enabled: bool = None, logging: bool = None, timeout: float = None, install_command: str = None, build_command: str = None, output_directory: str = None, build_runtime: BuildRuntime = None, adapter: Adapter = None, fallback_file: str = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None) -> Dict[str, Any]:
+    def update(self, site_id: str, name: str, framework: Framework, enabled: Optional[bool] = None, logging: Optional[bool] = None, timeout: Optional[float] = None, install_command: Optional[str] = None, build_command: Optional[str] = None, output_directory: Optional[str] = None, build_runtime: Optional[BuildRuntime] = None, adapter: Optional[Adapter] = None, fallback_file: Optional[str] = None, installation_id: Optional[str] = None, provider_repository_id: Optional[str] = None, provider_branch: Optional[str] = None, provider_silent_mode: Optional[bool] = None, provider_root_directory: Optional[str] = None, specification: Optional[str] = None) -> Dict[str, Any]:
         """
         Update site by its unique ID.
 
@@ -221,35 +222,35 @@ class Sites(Service):
             Site name. Max length: 128 chars.
         framework : Framework
             Sites framework.
-        enabled : bool
+        enabled : Optional[bool]
             Is site enabled? When set to 'disabled', users cannot access the site but Server SDKs with and API key can still access the site. No data is lost when this is toggled.
-        logging : bool
+        logging : Optional[bool]
             When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
-        timeout : float
+        timeout : Optional[float]
             Maximum request time in seconds.
-        install_command : str
+        install_command : Optional[str]
             Install Command.
-        build_command : str
+        build_command : Optional[str]
             Build Command.
-        output_directory : str
+        output_directory : Optional[str]
             Output Directory for site.
-        build_runtime : BuildRuntime
+        build_runtime : Optional[BuildRuntime]
             Runtime to use during build step.
-        adapter : Adapter
+        adapter : Optional[Adapter]
             Framework adapter defining rendering strategy. Allowed values are: static, ssr
-        fallback_file : str
+        fallback_file : Optional[str]
             Fallback file for single page application sites.
-        installation_id : str
+        installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Control System) deployment.
-        provider_repository_id : str
+        provider_repository_id : Optional[str]
             Repository ID of the repo linked to the site.
-        provider_branch : str
+        provider_branch : Optional[str]
             Production branch for the repo linked to the site.
-        provider_silent_mode : bool
+        provider_silent_mode : Optional[bool]
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
-        provider_root_directory : str
+        provider_root_directory : Optional[str]
             Path to site code in the linked repo.
-        specification : str
+        specification : Optional[str]
             Framework specification for the site and builds.
         
         Returns
@@ -368,7 +369,7 @@ class Sites(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_deployments(self, site_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def list_deployments(self, site_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all the site's code deployments. You can use the query params to filter your results.
 
@@ -376,9 +377,9 @@ class Sites(Service):
         ----------
         site_id : str
             Site ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: buildSize, sourceSize, totalSize, buildDuration, status, activate, type
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -405,7 +406,7 @@ class Sites(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_deployment(self, site_id: str, code: InputFile, activate: bool, install_command: str = None, build_command: str = None, output_directory: str = None, on_progress = None) -> Dict[str, Any]:
+    def create_deployment(self, site_id: str, code: InputFile, activate: bool, install_command: Optional[str] = None, build_command: Optional[str] = None, output_directory: Optional[str] = None, on_progress = None) -> Dict[str, Any]:
         """
         Create a new site code deployment. Use this endpoint to upload a new version of your site code. To activate your newly uploaded code, you'll need to update the function's deployment to use your new deployment ID.
 
@@ -417,11 +418,11 @@ class Sites(Service):
             Gzip file with your code package. When used with the Appwrite CLI, pass the path to your code directory, and the CLI will automatically package your code. Use a path that is within the current directory.
         activate : bool
             Automatically activate the deployment when it is finished building.
-        install_command : str
+        install_command : Optional[str]
             Install Commands.
-        build_command : str
+        build_command : Optional[str]
             Build Commands.
-        output_directory : str
+        output_directory : Optional[str]
             Output Directory.
                 on_progress : callable, optional
             Optional callback for upload progress
@@ -503,7 +504,7 @@ class Sites(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_template_deployment(self, site_id: str, repository: str, owner: str, root_directory: str, version: str, activate: bool = None) -> Dict[str, Any]:
+    def create_template_deployment(self, site_id: str, repository: str, owner: str, root_directory: str, version: str, activate: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a deployment based on a template.
         
@@ -521,7 +522,7 @@ class Sites(Service):
             Path to site code in the template repo.
         version : str
             Version (tag) for the repo linked to the site template.
-        activate : bool
+        activate : Optional[bool]
             Automatically activate the deployment when it is finished building.
         
         Returns
@@ -564,7 +565,7 @@ class Sites(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_vcs_deployment(self, site_id: str, type: VCSDeploymentType, reference: str, activate: bool = None) -> Dict[str, Any]:
+    def create_vcs_deployment(self, site_id: str, type: VCSDeploymentType, reference: str, activate: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a deployment when a site is connected to VCS.
         
@@ -578,7 +579,7 @@ class Sites(Service):
             Type of reference passed. Allowed values are: branch, commit
         reference : str
             VCS reference to create deployment from. Depending on type this can be: branch name, commit hash
-        activate : bool
+        activate : Optional[bool]
             Automatically activate the deployment when it is finished building.
         
         Returns
@@ -688,7 +689,7 @@ class Sites(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_deployment_download(self, site_id: str, deployment_id: str, type: DeploymentDownloadType = None) -> bytes:
+    def get_deployment_download(self, site_id: str, deployment_id: str, type: Optional[DeploymentDownloadType] = None) -> bytes:
         """
         Get a site deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
 
@@ -698,7 +699,7 @@ class Sites(Service):
             Site ID.
         deployment_id : str
             Deployment ID.
-        type : DeploymentDownloadType
+        type : Optional[DeploymentDownloadType]
             Deployment file to download. Can be: "source", "output".
         
         Returns
@@ -766,7 +767,7 @@ class Sites(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_logs(self, site_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def list_logs(self, site_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         Get a list of all site logs. You can use the query params to filter your results.
 
@@ -774,7 +775,7 @@ class Sites(Service):
         ----------
         site_id : str
             Site ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: trigger, status, responseStatusCode, duration, requestMethod, requestPath, deploymentId
         
         Returns
@@ -906,7 +907,7 @@ class Sites(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_variable(self, site_id: str, key: str, value: str, secret: bool = None) -> Dict[str, Any]:
+    def create_variable(self, site_id: str, key: str, value: str, secret: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a new site variable. These variables can be accessed during build and runtime (server-side rendering) as environment variables.
 
@@ -918,7 +919,7 @@ class Sites(Service):
             Variable key. Max length: 255 chars.
         value : str
             Variable value. Max length: 8192 chars.
-        secret : bool
+        secret : Optional[bool]
             Secret variables can be updated or deleted, but only sites can read them during build and runtime.
         
         Returns
@@ -990,7 +991,7 @@ class Sites(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update_variable(self, site_id: str, variable_id: str, key: str, value: str = None, secret: bool = None) -> Dict[str, Any]:
+    def update_variable(self, site_id: str, variable_id: str, key: str, value: Optional[str] = None, secret: Optional[bool] = None) -> Dict[str, Any]:
         """
         Update variable by its unique ID.
 
@@ -1002,9 +1003,9 @@ class Sites(Service):
             Variable unique ID.
         key : str
             Variable key. Max length: 255 chars.
-        value : str
+        value : Optional[str]
             Variable value. Max length: 8192 chars.
-        secret : bool
+        secret : Optional[bool]
             Secret variables can be updated or deleted, but only sites can read them during build and runtime.
         
         Returns

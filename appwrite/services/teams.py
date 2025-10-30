@@ -1,21 +1,22 @@
 from ..service import Service
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from ..exception import AppwriteException
+from appwrite.utils.deprecated import deprecated
 
 class Teams(Service):
 
     def __init__(self, client) -> None:
         super(Teams, self).__init__(client)
 
-    def list(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
 
         Parameters
         ----------
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, total, billingPlan
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -38,7 +39,7 @@ class Teams(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, team_id: str, name: str, roles: List[str] = None) -> Dict[str, Any]:
+    def create(self, team_id: str, name: str, roles: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         Create a new team. The user who creates the team will automatically be assigned as the owner of the team. Only the users with the owner role can invite new members, add new owners and delete or update the team.
 
@@ -48,7 +49,7 @@ class Teams(Service):
             Team ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         name : str
             Team name. Max length: 128 chars.
-        roles : List[str]
+        roles : Optional[List[str]]
             Array of strings. Use this param to set the roles in the team for the user who created it. The default role is **owner**. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 32 characters long.
         
         Returns
@@ -180,7 +181,7 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_memberships(self, team_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def list_memberships(self, team_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Use this endpoint to list a team's members using the team's ID. All team members have read access to this endpoint. Hide sensitive attributes from the response by toggling membership privacy in the Console.
 
@@ -188,9 +189,9 @@ class Teams(Service):
         ----------
         team_id : str
             Team ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, teamId, invited, joined, confirm, roles
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -217,7 +218,7 @@ class Teams(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_membership(self, team_id: str, roles: List[str], email: str = None, user_id: str = None, phone: str = None, url: str = None, name: str = None) -> Dict[str, Any]:
+    def create_membership(self, team_id: str, roles: List[str], email: Optional[str] = None, user_id: Optional[str] = None, phone: Optional[str] = None, url: Optional[str] = None, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Invite a new member to join your team. Provide an ID for existing users, or invite unregistered users using an email or phone number. If initiated from a Client SDK, Appwrite will send an email or sms with a link to join the team to the invited user, and an account will be created for them if one doesn't exist. If initiated from a Server SDK, the new member will be added automatically to the team.
         
@@ -234,15 +235,15 @@ class Teams(Service):
             Team ID.
         roles : List[str]
             Array of strings. Use this param to set the user roles in the team. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 32 characters long.
-        email : str
+        email : Optional[str]
             Email of the new team member.
-        user_id : str
+        user_id : Optional[str]
             ID of the user to be added to a team.
-        phone : str
+        phone : Optional[str]
             Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
-        url : str
+        url : Optional[str]
             URL to redirect the user back to your app from the invitation email. This parameter is not required when an API key is supplied. Only URLs from hostnames in your project platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
-        name : str
+        name : Optional[str]
             Name of the new team member. Max length: 128 chars.
         
         Returns

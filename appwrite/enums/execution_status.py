@@ -5,3 +5,4 @@ class ExecutionStatus(Enum):
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
+    SCHEDULED = "scheduled"

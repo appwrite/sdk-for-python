@@ -1,6 +1,7 @@
 from ..service import Service
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from ..exception import AppwriteException
+from appwrite.utils.deprecated import deprecated
 from ..enums.runtime import Runtime;
 from ..input_file import InputFile
 from ..enums.vcs_deployment_type import VCSDeploymentType;
@@ -12,15 +13,15 @@ class Functions(Service):
     def __init__(self, client) -> None:
         super(Functions, self).__init__(client)
 
-    def list(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all the project's functions. You can use the query params to filter your results.
 
         Parameters
         ----------
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, enabled, runtime, deploymentId, schedule, scheduleNext, schedulePrevious, timeout, entrypoint, commands, installationId
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -43,7 +44,7 @@ class Functions(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, function_id: str, name: str, runtime: Runtime, execute: List[str] = None, events: List[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: List[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None) -> Dict[str, Any]:
+    def create(self, function_id: str, name: str, runtime: Runtime, execute: Optional[List[str]] = None, events: Optional[List[str]] = None, schedule: Optional[str] = None, timeout: Optional[float] = None, enabled: Optional[bool] = None, logging: Optional[bool] = None, entrypoint: Optional[str] = None, commands: Optional[str] = None, scopes: Optional[List[str]] = None, installation_id: Optional[str] = None, provider_repository_id: Optional[str] = None, provider_branch: Optional[str] = None, provider_silent_mode: Optional[bool] = None, provider_root_directory: Optional[str] = None, specification: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
 
@@ -55,35 +56,35 @@ class Functions(Service):
             Function name. Max length: 128 chars.
         runtime : Runtime
             Execution runtime.
-        execute : List[str]
+        execute : Optional[List[str]]
             An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
-        events : List[str]
+        events : Optional[List[str]]
             Events list. Maximum of 100 events are allowed.
-        schedule : str
+        schedule : Optional[str]
             Schedule CRON syntax.
-        timeout : float
+        timeout : Optional[float]
             Function maximum execution time in seconds.
-        enabled : bool
+        enabled : Optional[bool]
             Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
-        logging : bool
+        logging : Optional[bool]
             When disabled, executions will exclude logs and errors, and will be slightly faster.
-        entrypoint : str
+        entrypoint : Optional[str]
             Entrypoint File. This path is relative to the "providerRootDirectory".
-        commands : str
+        commands : Optional[str]
             Build Commands.
-        scopes : List[str]
+        scopes : Optional[List[str]]
             List of scopes allowed for API key auto-generated for every execution. Maximum of 100 scopes are allowed.
-        installation_id : str
+        installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Control System) deployment.
-        provider_repository_id : str
+        provider_repository_id : Optional[str]
             Repository ID of the repo linked to the function.
-        provider_branch : str
+        provider_branch : Optional[str]
             Production branch for the repo linked to the function.
-        provider_silent_mode : bool
+        provider_silent_mode : Optional[bool]
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
-        provider_root_directory : str
+        provider_root_directory : Optional[str]
             Path to function code in the linked repo.
-        specification : str
+        specification : Optional[str]
             Runtime specification for the function and builds.
         
         Returns
@@ -205,7 +206,7 @@ class Functions(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update(self, function_id: str, name: str, runtime: Runtime = None, execute: List[str] = None, events: List[str] = None, schedule: str = None, timeout: float = None, enabled: bool = None, logging: bool = None, entrypoint: str = None, commands: str = None, scopes: List[str] = None, installation_id: str = None, provider_repository_id: str = None, provider_branch: str = None, provider_silent_mode: bool = None, provider_root_directory: str = None, specification: str = None) -> Dict[str, Any]:
+    def update(self, function_id: str, name: str, runtime: Optional[Runtime] = None, execute: Optional[List[str]] = None, events: Optional[List[str]] = None, schedule: Optional[str] = None, timeout: Optional[float] = None, enabled: Optional[bool] = None, logging: Optional[bool] = None, entrypoint: Optional[str] = None, commands: Optional[str] = None, scopes: Optional[List[str]] = None, installation_id: Optional[str] = None, provider_repository_id: Optional[str] = None, provider_branch: Optional[str] = None, provider_silent_mode: Optional[bool] = None, provider_root_directory: Optional[str] = None, specification: Optional[str] = None) -> Dict[str, Any]:
         """
         Update function by its unique ID.
 
@@ -215,37 +216,37 @@ class Functions(Service):
             Function ID.
         name : str
             Function name. Max length: 128 chars.
-        runtime : Runtime
+        runtime : Optional[Runtime]
             Execution runtime.
-        execute : List[str]
+        execute : Optional[List[str]]
             An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
-        events : List[str]
+        events : Optional[List[str]]
             Events list. Maximum of 100 events are allowed.
-        schedule : str
+        schedule : Optional[str]
             Schedule CRON syntax.
-        timeout : float
+        timeout : Optional[float]
             Maximum execution time in seconds.
-        enabled : bool
+        enabled : Optional[bool]
             Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
-        logging : bool
+        logging : Optional[bool]
             When disabled, executions will exclude logs and errors, and will be slightly faster.
-        entrypoint : str
+        entrypoint : Optional[str]
             Entrypoint File. This path is relative to the "providerRootDirectory".
-        commands : str
+        commands : Optional[str]
             Build Commands.
-        scopes : List[str]
+        scopes : Optional[List[str]]
             List of scopes allowed for API Key auto-generated for every execution. Maximum of 100 scopes are allowed.
-        installation_id : str
+        installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Controle System) deployment.
-        provider_repository_id : str
+        provider_repository_id : Optional[str]
             Repository ID of the repo linked to the function
-        provider_branch : str
+        provider_branch : Optional[str]
             Production branch for the repo linked to the function
-        provider_silent_mode : bool
+        provider_silent_mode : Optional[bool]
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
-        provider_root_directory : str
+        provider_root_directory : Optional[str]
             Path to function code in the linked repo.
-        specification : str
+        specification : Optional[str]
             Runtime specification for the function and builds.
         
         Returns
@@ -361,7 +362,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_deployments(self, function_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    def list_deployments(self, function_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all the function's code deployments. You can use the query params to filter your results.
 
@@ -369,9 +370,9 @@ class Functions(Service):
         ----------
         function_id : str
             Function ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: buildSize, sourceSize, totalSize, buildDuration, status, activate, type
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -398,7 +399,7 @@ class Functions(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_deployment(self, function_id: str, code: InputFile, activate: bool, entrypoint: str = None, commands: str = None, on_progress = None) -> Dict[str, Any]:
+    def create_deployment(self, function_id: str, code: InputFile, activate: bool, entrypoint: Optional[str] = None, commands: Optional[str] = None, on_progress = None) -> Dict[str, Any]:
         """
         Create a new function code deployment. Use this endpoint to upload a new version of your code function. To execute your newly uploaded code, you'll need to update the function's deployment to use your new deployment UID.
         
@@ -414,9 +415,9 @@ class Functions(Service):
             Gzip file with your code package. When used with the Appwrite CLI, pass the path to your code directory, and the CLI will automatically package your code. Use a path that is within the current directory.
         activate : bool
             Automatically activate the deployment when it is finished building.
-        entrypoint : str
+        entrypoint : Optional[str]
             Entrypoint File.
-        commands : str
+        commands : Optional[str]
             Build Commands.
                 on_progress : callable, optional
             Optional callback for upload progress
@@ -459,7 +460,7 @@ class Functions(Service):
             'content-type': 'multipart/form-data',
         }, api_params, param_name, on_progress, upload_id)
 
-    def create_duplicate_deployment(self, function_id: str, deployment_id: str, build_id: str = None) -> Dict[str, Any]:
+    def create_duplicate_deployment(self, function_id: str, deployment_id: str, build_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new build for an existing function deployment. This endpoint allows you to rebuild a deployment with the updated function configuration, including its entrypoint and build commands if they have been modified. The build process will be queued and executed asynchronously. The original deployment's code will be preserved and used for the new build.
 
@@ -469,7 +470,7 @@ class Functions(Service):
             Function ID.
         deployment_id : str
             Deployment ID.
-        build_id : str
+        build_id : Optional[str]
             Build unique ID.
         
         Returns
@@ -500,7 +501,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_template_deployment(self, function_id: str, repository: str, owner: str, root_directory: str, version: str, activate: bool = None) -> Dict[str, Any]:
+    def create_template_deployment(self, function_id: str, repository: str, owner: str, root_directory: str, version: str, activate: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a deployment based on a template.
         
@@ -518,7 +519,7 @@ class Functions(Service):
             Path to function code in the template repo.
         version : str
             Version (tag) for the repo linked to the function template.
-        activate : bool
+        activate : Optional[bool]
             Automatically activate the deployment when it is finished building.
         
         Returns
@@ -561,7 +562,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_vcs_deployment(self, function_id: str, type: VCSDeploymentType, reference: str, activate: bool = None) -> Dict[str, Any]:
+    def create_vcs_deployment(self, function_id: str, type: VCSDeploymentType, reference: str, activate: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a deployment when a function is connected to VCS.
         
@@ -575,7 +576,7 @@ class Functions(Service):
             Type of reference passed. Allowed values are: branch, commit
         reference : str
             VCS reference to create deployment from. Depending on type this can be: branch name, commit hash
-        activate : bool
+        activate : Optional[bool]
             Automatically activate the deployment when it is finished building.
         
         Returns
@@ -685,7 +686,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_deployment_download(self, function_id: str, deployment_id: str, type: DeploymentDownloadType = None) -> bytes:
+    def get_deployment_download(self, function_id: str, deployment_id: str, type: Optional[DeploymentDownloadType] = None) -> bytes:
         """
         Get a function deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
 
@@ -695,7 +696,7 @@ class Functions(Service):
             Function ID.
         deployment_id : str
             Deployment ID.
-        type : DeploymentDownloadType
+        type : Optional[DeploymentDownloadType]
             Deployment file to download. Can be: "source", "output".
         
         Returns
@@ -763,7 +764,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_executions(self, function_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def list_executions(self, function_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         Get a list of all the current user function execution logs. You can use the query params to filter your results.
 
@@ -771,7 +772,7 @@ class Functions(Service):
         ----------
         function_id : str
             Function ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: trigger, status, responseStatusCode, duration, requestMethod, requestPath, deploymentId
         
         Returns
@@ -797,7 +798,7 @@ class Functions(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_execution(self, function_id: str, body: str = None, xasync: bool = None, path: str = None, method: ExecutionMethod = None, headers: dict = None, scheduled_at: str = None) -> Dict[str, Any]:
+    def create_execution(self, function_id: str, body: Optional[str] = None, xasync: Optional[bool] = None, path: Optional[str] = None, method: Optional[ExecutionMethod] = None, headers: Optional[dict] = None, scheduled_at: Optional[str] = None) -> Dict[str, Any]:
         """
         Trigger a function execution. The returned object will return you the current execution status. You can ping the `Get Execution` endpoint to get updates on the current execution status. Once this endpoint is called, your function execution process will start asynchronously.
 
@@ -805,17 +806,17 @@ class Functions(Service):
         ----------
         function_id : str
             Function ID.
-        body : str
+        body : Optional[str]
             HTTP body of execution. Default value is empty string.
-        xasync : bool
+        xasync : Optional[bool]
             Execute code in the background. Default value is false.
-        path : str
+        path : Optional[str]
             HTTP path of execution. Path can include query params. Default value is /
-        method : ExecutionMethod
+        method : Optional[ExecutionMethod]
             HTTP method of execution. Default value is POST.
-        headers : dict
+        headers : Optional[dict]
             HTTP headers of execution. Defaults to empty.
-        scheduled_at : str
+        scheduled_at : Optional[str]
             Scheduled execution time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future with precision in minutes.
         
         Returns
@@ -953,7 +954,7 @@ class Functions(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_variable(self, function_id: str, key: str, value: str, secret: bool = None) -> Dict[str, Any]:
+    def create_variable(self, function_id: str, key: str, value: str, secret: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a new function environment variable. These variables can be accessed in the function at runtime as environment variables.
 
@@ -965,7 +966,7 @@ class Functions(Service):
             Variable key. Max length: 255 chars.
         value : str
             Variable value. Max length: 8192 chars.
-        secret : bool
+        secret : Optional[bool]
             Secret variables can be updated or deleted, but only functions can read them during build and runtime.
         
         Returns
@@ -1037,7 +1038,7 @@ class Functions(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update_variable(self, function_id: str, variable_id: str, key: str, value: str = None, secret: bool = None) -> Dict[str, Any]:
+    def update_variable(self, function_id: str, variable_id: str, key: str, value: Optional[str] = None, secret: Optional[bool] = None) -> Dict[str, Any]:
         """
         Update variable by its unique ID.
 
@@ -1049,9 +1050,9 @@ class Functions(Service):
             Variable unique ID.
         key : str
             Variable key. Max length: 255 chars.
-        value : str
+        value : Optional[str]
             Variable value. Max length: 8192 chars.
-        secret : bool
+        secret : Optional[bool]
             Secret variables can be updated or deleted, but only functions can read them during build and runtime.
         
         Returns
