@@ -1,13 +1,14 @@
 from ..service import Service
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from ..exception import AppwriteException
+from appwrite.utils.deprecated import deprecated
 
 class Tokens(Service):
 
     def __init__(self, client) -> None:
         super(Tokens, self).__init__(client)
 
-    def list(self, bucket_id: str, file_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    def list(self, bucket_id: str, file_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         List all the tokens created for a specific file or bucket. You can use the query params to filter your results.
 
@@ -17,7 +18,7 @@ class Tokens(Service):
             Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
         file_id : str
             File unique ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: expire
         
         Returns
@@ -47,7 +48,7 @@ class Tokens(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_file_token(self, bucket_id: str, file_id: str, expire: str = None) -> Dict[str, Any]:
+    def create_file_token(self, bucket_id: str, file_id: str, expire: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new token. A token is linked to a file. Token can be passed as a request URL search parameter.
 
@@ -57,7 +58,7 @@ class Tokens(Service):
             Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
         file_id : str
             File unique ID.
-        expire : str
+        expire : Optional[str]
             Token expiry date
         
         Returns
@@ -119,7 +120,7 @@ class Tokens(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update(self, token_id: str, expire: str = None) -> Dict[str, Any]:
+    def update(self, token_id: str, expire: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a token by its unique ID. Use this endpoint to update a token's expiry date.
 
@@ -127,7 +128,7 @@ class Tokens(Service):
         ----------
         token_id : str
             Token unique ID.
-        expire : str
+        expire : Optional[str]
             File token expiry date
         
         Returns

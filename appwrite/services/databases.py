@@ -1,6 +1,7 @@
 from ..service import Service
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from ..exception import AppwriteException
+from appwrite.utils.deprecated import deprecated
 from ..enums.relationship_type import RelationshipType;
 from ..enums.relation_mutate import RelationMutate;
 from ..enums.index_type import IndexType;
@@ -10,7 +11,8 @@ class Databases(Service):
     def __init__(self, client) -> None:
         super(Databases, self).__init__(client)
 
-    def list(self, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list` instead.")
+    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
 
@@ -18,9 +20,9 @@ class Databases(Service):
             This API has been deprecated since 1.8.0. Please use `tablesDB.list` instead.
         Parameters
         ----------
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -43,7 +45,8 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, database_id: str, name: str, enabled: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create` instead.")
+    def create(self, database_id: str, name: str, enabled: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a new Database.
         
@@ -56,7 +59,7 @@ class Databases(Service):
             Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         name : str
             Database name. Max length: 128 chars.
-        enabled : bool
+        enabled : Optional[bool]
             Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
         
         Returns
@@ -87,13 +90,13 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_transactions(self, queries: List[str] = None) -> Dict[str, Any]:
+    def list_transactions(self, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         List transactions across all databases.
 
         Parameters
         ----------
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
         
         Returns
@@ -115,13 +118,13 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_transaction(self, ttl: float = None) -> Dict[str, Any]:
+    def create_transaction(self, ttl: Optional[float] = None) -> Dict[str, Any]:
         """
         Create a new transaction.
 
         Parameters
         ----------
-        ttl : float
+        ttl : Optional[float]
             Seconds before the transaction expires.
         
         Returns
@@ -175,7 +178,7 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update_transaction(self, transaction_id: str, commit: bool = None, rollback: bool = None) -> Dict[str, Any]:
+    def update_transaction(self, transaction_id: str, commit: Optional[bool] = None, rollback: Optional[bool] = None) -> Dict[str, Any]:
         """
         Update a transaction, to either commit or roll back its operations.
 
@@ -183,9 +186,9 @@ class Databases(Service):
         ----------
         transaction_id : str
             Transaction ID.
-        commit : bool
+        commit : Optional[bool]
             Commit transaction?
-        rollback : bool
+        rollback : Optional[bool]
             Rollback transaction?
         
         Returns
@@ -245,7 +248,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_operations(self, transaction_id: str, operations: List[dict] = None) -> Dict[str, Any]:
+    def create_operations(self, transaction_id: str, operations: Optional[List[dict]] = None) -> Dict[str, Any]:
         """
         Create multiple operations in a single transaction.
 
@@ -253,7 +256,7 @@ class Databases(Service):
         ----------
         transaction_id : str
             Transaction ID.
-        operations : List[dict]
+        operations : Optional[List[dict]]
             Array of staged operations.
         
         Returns
@@ -280,6 +283,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get` instead.")
     def get(self, database_id: str) -> Dict[str, Any]:
         """
         Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
@@ -313,7 +317,8 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update(self, database_id: str, name: str, enabled: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update` instead.")
+    def update(self, database_id: str, name: str, enabled: Optional[bool] = None) -> Dict[str, Any]:
         """
         Update a database by its unique ID.
 
@@ -325,7 +330,7 @@ class Databases(Service):
             Database ID.
         name : str
             Database name. Max length: 128 chars.
-        enabled : bool
+        enabled : Optional[bool]
             Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
         
         Returns
@@ -356,6 +361,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete` instead.")
     def delete(self, database_id: str) -> Dict[str, Any]:
         """
         Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
@@ -390,7 +396,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_collections(self, database_id: str, queries: List[str] = None, search: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_tables` instead.")
+    def list_collections(self, database_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all collections that belong to the provided databaseId. You can use the search parameter to filter your results.
 
@@ -400,9 +407,9 @@ class Databases(Service):
         ----------
         database_id : str
             Database ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, enabled, documentSecurity
-        search : str
+        search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         
         Returns
@@ -429,7 +436,8 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_collection(self, database_id: str, collection_id: str, name: str, permissions: List[str] = None, document_security: bool = None, enabled: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_table` instead.")
+    def create_collection(self, database_id: str, collection_id: str, name: str, permissions: Optional[List[str]] = None, document_security: Optional[bool] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -443,11 +451,11 @@ class Databases(Service):
             Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         name : str
             Collection name. Max length: 128 chars.
-        permissions : List[str]
+        permissions : Optional[List[str]]
             An array of permissions strings. By default, no user is granted with any permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        document_security : bool
+        document_security : Optional[bool]
             Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        enabled : bool
+        enabled : Optional[bool]
             Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
         
         Returns
@@ -484,6 +492,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get_table` instead.")
     def get_collection(self, database_id: str, collection_id: str) -> Dict[str, Any]:
         """
         Get a collection by its unique ID. This endpoint response returns a JSON object with the collection metadata.
@@ -523,7 +532,8 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update_collection(self, database_id: str, collection_id: str, name: str, permissions: List[str] = None, document_security: bool = None, enabled: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_table` instead.")
+    def update_collection(self, database_id: str, collection_id: str, name: str, permissions: Optional[List[str]] = None, document_security: Optional[bool] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
         """
         Update a collection by its unique ID.
 
@@ -537,11 +547,11 @@ class Databases(Service):
             Collection ID.
         name : str
             Collection name. Max length: 128 chars.
-        permissions : List[str]
+        permissions : Optional[List[str]]
             An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        document_security : bool
+        document_security : Optional[bool]
             Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        enabled : bool
+        enabled : Optional[bool]
             Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
         
         Returns
@@ -578,6 +588,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_table` instead.")
     def delete_collection(self, database_id: str, collection_id: str) -> Dict[str, Any]:
         """
         Delete a collection by its unique ID. Only users with write permissions have access to delete this resource.
@@ -618,7 +629,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_attributes(self, database_id: str, collection_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_columns` instead.")
+    def list_attributes(self, database_id: str, collection_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         List attributes in the collection.
 
@@ -630,7 +642,7 @@ class Databases(Service):
             Database ID.
         collection_id : str
             Collection ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: key, type, size, required, array, status, error
         
         Returns
@@ -660,7 +672,8 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_boolean_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: bool = None, array: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_boolean_column` instead.")
+    def create_boolean_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[bool] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a boolean attribute.
         
@@ -677,9 +690,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : bool
+        default : Optional[bool]
             Default value for attribute when not provided. Cannot be set when attribute is required.
-        array : bool
+        array : Optional[bool]
             Is attribute an array?
         
         Returns
@@ -719,7 +732,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_boolean_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: bool, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_boolean_column` instead.")
+    def update_boolean_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[bool], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a boolean attribute. Changing the `default` value will not update already existing documents.
 
@@ -735,9 +749,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : bool
+        default : Optional[bool]
             Default value for attribute when not provided. Cannot be set when attribute is required.
-        new_key : str
+        new_key : Optional[str]
             New attribute key.
         
         Returns
@@ -777,7 +791,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_datetime_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str = None, array: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_datetime_column` instead.")
+    def create_datetime_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a date time attribute according to the ISO 8601 standard.
 
@@ -793,9 +808,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value for the attribute in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Cannot be set when attribute is required.
-        array : bool
+        array : Optional[bool]
             Is attribute an array?
         
         Returns
@@ -835,7 +850,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_datetime_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_datetime_column` instead.")
+    def update_datetime_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a date time attribute. Changing the `default` value will not update already existing documents.
 
@@ -851,9 +867,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value for attribute when not provided. Cannot be set when attribute is required.
-        new_key : str
+        new_key : Optional[str]
             New attribute key.
         
         Returns
@@ -893,7 +909,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_email_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str = None, array: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_email_column` instead.")
+    def create_email_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create an email attribute.
         
@@ -910,9 +927,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value for attribute when not provided. Cannot be set when attribute is required.
-        array : bool
+        array : Optional[bool]
             Is attribute an array?
         
         Returns
@@ -952,7 +969,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_email_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_email_column` instead.")
+    def update_email_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update an email attribute. Changing the `default` value will not update already existing documents.
         
@@ -969,9 +987,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value for attribute when not provided. Cannot be set when attribute is required.
-        new_key : str
+        new_key : Optional[str]
             New Attribute Key.
         
         Returns
@@ -1011,7 +1029,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_enum_attribute(self, database_id: str, collection_id: str, key: str, elements: List[str], required: bool, default: str = None, array: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_enum_column` instead.")
+    def create_enum_attribute(self, database_id: str, collection_id: str, key: str, elements: List[str], required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create an enum attribute. The `elements` param acts as a white-list of accepted values for this attribute. 
         
@@ -1030,9 +1049,9 @@ class Databases(Service):
             Array of enum values.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value for attribute when not provided. Cannot be set when attribute is required.
-        array : bool
+        array : Optional[bool]
             Is attribute an array?
         
         Returns
@@ -1076,7 +1095,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_enum_attribute(self, database_id: str, collection_id: str, key: str, elements: List[str], required: bool, default: str, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_enum_column` instead.")
+    def update_enum_attribute(self, database_id: str, collection_id: str, key: str, elements: List[str], required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update an enum attribute. Changing the `default` value will not update already existing documents.
         
@@ -1095,9 +1115,9 @@ class Databases(Service):
             Updated list of enum values.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value for attribute when not provided. Cannot be set when attribute is required.
-        new_key : str
+        new_key : Optional[str]
             New Attribute Key.
         
         Returns
@@ -1141,7 +1161,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_float_attribute(self, database_id: str, collection_id: str, key: str, required: bool, min: float = None, max: float = None, default: float = None, array: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_float_column` instead.")
+    def create_float_attribute(self, database_id: str, collection_id: str, key: str, required: bool, min: Optional[float] = None, max: Optional[float] = None, default: Optional[float] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a float attribute. Optionally, minimum and maximum values can be provided.
         
@@ -1158,13 +1179,13 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        min : float
+        min : Optional[float]
             Minimum value.
-        max : float
+        max : Optional[float]
             Maximum value.
-        default : float
+        default : Optional[float]
             Default value. Cannot be set when required.
-        array : bool
+        array : Optional[bool]
             Is attribute an array?
         
         Returns
@@ -1206,7 +1227,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_float_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: float, min: float = None, max: float = None, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_float_column` instead.")
+    def update_float_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[float], min: Optional[float] = None, max: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a float attribute. Changing the `default` value will not update already existing documents.
         
@@ -1223,13 +1245,13 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : float
+        default : Optional[float]
             Default value. Cannot be set when required.
-        min : float
+        min : Optional[float]
             Minimum value.
-        max : float
+        max : Optional[float]
             Maximum value.
-        new_key : str
+        new_key : Optional[str]
             New Attribute Key.
         
         Returns
@@ -1271,7 +1293,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_integer_attribute(self, database_id: str, collection_id: str, key: str, required: bool, min: float = None, max: float = None, default: float = None, array: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_integer_column` instead.")
+    def create_integer_attribute(self, database_id: str, collection_id: str, key: str, required: bool, min: Optional[float] = None, max: Optional[float] = None, default: Optional[float] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create an integer attribute. Optionally, minimum and maximum values can be provided.
         
@@ -1288,13 +1311,13 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        min : float
+        min : Optional[float]
             Minimum value
-        max : float
+        max : Optional[float]
             Maximum value
-        default : float
+        default : Optional[float]
             Default value. Cannot be set when attribute is required.
-        array : bool
+        array : Optional[bool]
             Is attribute an array?
         
         Returns
@@ -1336,7 +1359,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_integer_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: float, min: float = None, max: float = None, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_integer_column` instead.")
+    def update_integer_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[float], min: Optional[float] = None, max: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update an integer attribute. Changing the `default` value will not update already existing documents.
         
@@ -1353,13 +1377,13 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : float
+        default : Optional[float]
             Default value. Cannot be set when attribute is required.
-        min : float
+        min : Optional[float]
             Minimum value
-        max : float
+        max : Optional[float]
             Maximum value
-        new_key : str
+        new_key : Optional[str]
             New Attribute Key.
         
         Returns
@@ -1401,7 +1425,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_ip_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str = None, array: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_ip_column` instead.")
+    def create_ip_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create IP address attribute.
         
@@ -1418,9 +1443,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value. Cannot be set when attribute is required.
-        array : bool
+        array : Optional[bool]
             Is attribute an array?
         
         Returns
@@ -1460,7 +1485,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_ip_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_ip_column` instead.")
+    def update_ip_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update an ip attribute. Changing the `default` value will not update already existing documents.
         
@@ -1477,9 +1503,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value. Cannot be set when attribute is required.
-        new_key : str
+        new_key : Optional[str]
             New Attribute Key.
         
         Returns
@@ -1519,7 +1545,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_line_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_line_column` instead.")
+    def create_line_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[List[Any]] = None) -> Dict[str, Any]:
         """
         Create a geometric line attribute.
 
@@ -1535,7 +1562,7 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for attribute when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when attribute is required.
         
         Returns
@@ -1574,7 +1601,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_line_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_line_column` instead.")
+    def update_line_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[List[Any]] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a line attribute. Changing the `default` value will not update already existing documents.
 
@@ -1590,9 +1618,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for attribute when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when attribute is required.
-        new_key : str
+        new_key : Optional[str]
             New attribute key.
         
         Returns
@@ -1632,7 +1660,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_point_column` instead.")
+    def create_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[List[Any]] = None) -> Dict[str, Any]:
         """
         Create a geometric point attribute.
 
@@ -1648,7 +1677,7 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for attribute when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when attribute is required.
         
         Returns
@@ -1687,7 +1716,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_point_column` instead.")
+    def update_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[List[Any]] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a point attribute. Changing the `default` value will not update already existing documents.
 
@@ -1703,9 +1733,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for attribute when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when attribute is required.
-        new_key : str
+        new_key : Optional[str]
             New attribute key.
         
         Returns
@@ -1745,7 +1775,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_polygon_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_polygon_column` instead.")
+    def create_polygon_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[List[Any]] = None) -> Dict[str, Any]:
         """
         Create a geometric polygon attribute.
 
@@ -1761,7 +1792,7 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for attribute when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when attribute is required.
         
         Returns
@@ -1800,7 +1831,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_polygon_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: List[Any] = None, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_polygon_column` instead.")
+    def update_polygon_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[List[Any]] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a polygon attribute. Changing the `default` value will not update already existing documents.
 
@@ -1816,9 +1848,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : List[Any]
+        default : Optional[List[Any]]
             Default value for attribute when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when attribute is required.
-        new_key : str
+        new_key : Optional[str]
             New attribute key.
         
         Returns
@@ -1858,7 +1890,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_relationship_attribute(self, database_id: str, collection_id: str, related_collection_id: str, type: RelationshipType, two_way: bool = None, key: str = None, two_way_key: str = None, on_delete: RelationMutate = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_relationship_column` instead.")
+    def create_relationship_attribute(self, database_id: str, collection_id: str, related_collection_id: str, type: RelationshipType, two_way: Optional[bool] = None, key: Optional[str] = None, two_way_key: Optional[str] = None, on_delete: Optional[RelationMutate] = None) -> Dict[str, Any]:
         """
         Create relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
         
@@ -1875,13 +1908,13 @@ class Databases(Service):
             Related Collection ID.
         type : RelationshipType
             Relation type
-        two_way : bool
+        two_way : Optional[bool]
             Is Two Way?
-        key : str
+        key : Optional[str]
             Attribute Key.
-        two_way_key : str
+        two_way_key : Optional[str]
             Two Way Attribute Key.
-        on_delete : RelationMutate
+        on_delete : Optional[RelationMutate]
             Constraints option
         
         Returns
@@ -1923,7 +1956,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_string_attribute(self, database_id: str, collection_id: str, key: str, size: float, required: bool, default: str = None, array: bool = None, encrypt: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_string_column` instead.")
+    def create_string_attribute(self, database_id: str, collection_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a string attribute.
         
@@ -1942,11 +1976,11 @@ class Databases(Service):
             Attribute size for text attributes, in number of characters.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value for attribute when not provided. Cannot be set when attribute is required.
-        array : bool
+        array : Optional[bool]
             Is attribute an array?
-        encrypt : bool
+        encrypt : Optional[bool]
             Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
         
         Returns
@@ -1991,7 +2025,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_string_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str, size: float = None, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_string_column` instead.")
+    def update_string_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str], size: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a string attribute. Changing the `default` value will not update already existing documents.
         
@@ -2008,11 +2043,11 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value for attribute when not provided. Cannot be set when attribute is required.
-        size : float
+        size : Optional[float]
             Maximum size of the string attribute.
-        new_key : str
+        new_key : Optional[str]
             New Attribute Key.
         
         Returns
@@ -2053,7 +2088,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_url_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str = None, array: bool = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_url_column` instead.")
+    def create_url_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a URL attribute.
         
@@ -2070,9 +2106,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value for attribute when not provided. Cannot be set when attribute is required.
-        array : bool
+        array : Optional[bool]
             Is attribute an array?
         
         Returns
@@ -2112,7 +2148,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_url_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: str, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_url_column` instead.")
+    def update_url_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update an url attribute. Changing the `default` value will not update already existing documents.
         
@@ -2129,9 +2166,9 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : str
+        default : Optional[str]
             Default value for attribute when not provided. Cannot be set when attribute is required.
-        new_key : str
+        new_key : Optional[str]
             New Attribute Key.
         
         Returns
@@ -2171,6 +2208,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get_column` instead.")
     def get_attribute(self, database_id: str, collection_id: str, key: str) -> Dict[str, Any]:
         """
         Get attribute by ID.
@@ -2216,6 +2254,7 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_column` instead.")
     def delete_attribute(self, database_id: str, collection_id: str, key: str) -> Dict[str, Any]:
         """
         Deletes an attribute.
@@ -2262,7 +2301,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_relationship_attribute(self, database_id: str, collection_id: str, key: str, on_delete: RelationMutate = None, new_key: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_relationship_column` instead.")
+    def update_relationship_attribute(self, database_id: str, collection_id: str, key: str, on_delete: Optional[RelationMutate] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
         
@@ -2277,9 +2317,9 @@ class Databases(Service):
             Collection ID.
         key : str
             Attribute Key.
-        on_delete : RelationMutate
+        on_delete : Optional[RelationMutate]
             Constraints option
-        new_key : str
+        new_key : Optional[str]
             New Attribute Key.
         
         Returns
@@ -2315,7 +2355,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_documents(self, database_id: str, collection_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_rows` instead.")
+    def list_documents(self, database_id: str, collection_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
 
@@ -2327,9 +2368,9 @@ class Databases(Service):
             Database ID.
         collection_id : str
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID to read uncommitted changes within the transaction.
         
         Returns
@@ -2360,7 +2401,8 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_row` instead.")
+    def create_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -2376,9 +2418,9 @@ class Databases(Service):
             Document ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         data : dict
             Document data as JSON object.
-        permissions : List[str]
+        permissions : Optional[List[str]]
             An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2418,7 +2460,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_documents(self, database_id: str, collection_id: str, documents: List[dict], transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_rows` instead.")
+    def create_documents(self, database_id: str, collection_id: str, documents: List[dict], transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -2432,7 +2475,7 @@ class Databases(Service):
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection). Make sure to define attributes before creating documents.
         documents : List[dict]
             Array of documents data as JSON objects.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2467,7 +2510,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def upsert_documents(self, database_id: str, collection_id: str, documents: List[dict], transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.upsert_rows` instead.")
+    def upsert_documents(self, database_id: str, collection_id: str, documents: List[dict], transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
         
@@ -2482,7 +2526,7 @@ class Databases(Service):
             Collection ID.
         documents : List[dict]
             Array of document data as JSON objects. May contain partial documents.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2517,7 +2561,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_documents(self, database_id: str, collection_id: str, data: dict = None, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_rows` instead.")
+    def update_documents(self, database_id: str, collection_id: str, data: Optional[dict] = None, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
 
@@ -2529,11 +2574,11 @@ class Databases(Service):
             Database ID.
         collection_id : str
             Collection ID.
-        data : dict
+        data : Optional[dict]
             Document data as JSON object. Include only attribute and value pairs to be updated.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2566,7 +2611,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_documents(self, database_id: str, collection_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_rows` instead.")
+    def delete_documents(self, database_id: str, collection_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Bulk delete documents using queries, if no queries are passed then all documents are deleted.
 
@@ -2578,9 +2624,9 @@ class Databases(Service):
             Database ID.
         collection_id : str
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2612,7 +2658,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def get_document(self, database_id: str, collection_id: str, document_id: str, queries: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get_row` instead.")
+    def get_document(self, database_id: str, collection_id: str, document_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
 
@@ -2626,9 +2673,9 @@ class Databases(Service):
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
         document_id : str
             Document ID.
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID to read uncommitted changes within the transaction.
         
         Returns
@@ -2663,7 +2710,8 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def upsert_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.upsert_row` instead.")
+    def upsert_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -2679,9 +2727,9 @@ class Databases(Service):
             Document ID.
         data : dict
             Document data as JSON object. Include all required attributes of the document to be created or updated.
-        permissions : List[str]
+        permissions : Optional[List[str]]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2721,7 +2769,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_document(self, database_id: str, collection_id: str, document_id: str, data: dict = None, permissions: List[str] = None, transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_row` instead.")
+    def update_document(self, database_id: str, collection_id: str, document_id: str, data: Optional[dict] = None, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a document by its unique ID. Using the patch method you can pass only specific fields that will get updated.
 
@@ -2735,11 +2784,11 @@ class Databases(Service):
             Collection ID.
         document_id : str
             Document ID.
-        data : dict
+        data : Optional[dict]
             Document data as JSON object. Include only attribute and value pairs to be updated.
-        permissions : List[str]
+        permissions : Optional[List[str]]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2776,7 +2825,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_document(self, database_id: str, collection_id: str, document_id: str, transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_row` instead.")
+    def delete_document(self, database_id: str, collection_id: str, document_id: str, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Delete a document by its unique ID.
 
@@ -2790,7 +2840,7 @@ class Databases(Service):
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
         document_id : str
             Document ID.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2825,7 +2875,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def decrement_document_attribute(self, database_id: str, collection_id: str, document_id: str, attribute: str, value: float = None, min: float = None, transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.decrement_row_column` instead.")
+    def decrement_document_attribute(self, database_id: str, collection_id: str, document_id: str, attribute: str, value: Optional[float] = None, min: Optional[float] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Decrement a specific attribute of a document by a given value.
 
@@ -2841,11 +2892,11 @@ class Databases(Service):
             Document ID.
         attribute : str
             Attribute key.
-        value : float
+        value : Optional[float]
             Value to increment the attribute by. The value must be a number.
-        min : float
+        min : Optional[float]
             Minimum value for the attribute. If the current value is lesser than this value, an exception will be thrown.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2886,7 +2937,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def increment_document_attribute(self, database_id: str, collection_id: str, document_id: str, attribute: str, value: float = None, max: float = None, transaction_id: str = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.increment_row_column` instead.")
+    def increment_document_attribute(self, database_id: str, collection_id: str, document_id: str, attribute: str, value: Optional[float] = None, max: Optional[float] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Increment a specific attribute of a document by a given value.
 
@@ -2902,11 +2954,11 @@ class Databases(Service):
             Document ID.
         attribute : str
             Attribute key.
-        value : float
+        value : Optional[float]
             Value to increment the attribute by. The value must be a number.
-        max : float
+        max : Optional[float]
             Maximum value for the attribute. If the current value is greater than this value, an error will be thrown.
-        transaction_id : str
+        transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
         Returns
@@ -2947,7 +2999,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_indexes(self, database_id: str, collection_id: str, queries: List[str] = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_indexes` instead.")
+    def list_indexes(self, database_id: str, collection_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         List indexes in the collection.
 
@@ -2959,7 +3012,7 @@ class Databases(Service):
             Database ID.
         collection_id : str
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: key, type, status, attributes, error
         
         Returns
@@ -2989,7 +3042,8 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_index(self, database_id: str, collection_id: str, key: str, type: IndexType, attributes: List[str], orders: List[str] = None, lengths: List[float] = None) -> Dict[str, Any]:
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_index` instead.")
+    def create_index(self, database_id: str, collection_id: str, key: str, type: IndexType, attributes: List[str], orders: Optional[List[str]] = None, lengths: Optional[List[float]] = None) -> Dict[str, Any]:
         """
         Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
         Attributes can be `key`, `fulltext`, and `unique`.
@@ -3008,9 +3062,9 @@ class Databases(Service):
             Index type.
         attributes : List[str]
             Array of attributes to index. Maximum of 100 attributes are allowed, each 32 characters long.
-        orders : List[str]
+        orders : Optional[List[str]]
             Array of index orders. Maximum of 100 orders are allowed.
-        lengths : List[float]
+        lengths : Optional[List[float]]
             Length of index. Maximum of 100
         
         Returns
@@ -3054,6 +3108,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get_index` instead.")
     def get_index(self, database_id: str, collection_id: str, key: str) -> Dict[str, Any]:
         """
         Get an index by its unique ID.
@@ -3099,6 +3154,7 @@ class Databases(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_index` instead.")
     def delete_index(self, database_id: str, collection_id: str, key: str) -> Dict[str, Any]:
         """
         Delete an index.

@@ -1,6 +1,7 @@
 from ..service import Service
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from ..exception import AppwriteException
+from appwrite.utils.deprecated import deprecated
 from ..enums.authenticator_type import AuthenticatorType;
 from ..enums.authentication_factor import AuthenticationFactor;
 from ..enums.o_auth_provider import OAuthProvider;
@@ -31,7 +32,7 @@ class Account(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, user_id: str, email: str, password: str, name: str = None) -> Dict[str, Any]:
+    def create(self, user_id: str, email: str, password: str, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Use this endpoint to allow a new user to register a new account in your project. After the user registration completes successfully, you can use the [/account/verfication](https://appwrite.io/docs/references/cloud/client-web/account#createVerification) route to start verifying the user email address. To allow the new user to login to their new account, you need to create a new [account session](https://appwrite.io/docs/references/cloud/client-web/account#createEmailSession).
 
@@ -43,7 +44,7 @@ class Account(Service):
             User email.
         password : str
             New user password. Must be between 8 and 256 chars.
-        name : str
+        name : Optional[str]
             User name. Max length: 128 chars.
         
         Returns
@@ -118,13 +119,13 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_identities(self, queries: List[str] = None) -> Dict[str, Any]:
+    def list_identities(self, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         Get the list of identities for the currently logged in user.
 
         Parameters
         ----------
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, provider, providerUid, providerEmail, providerAccessTokenExpiry
         
         Returns
@@ -200,13 +201,13 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_logs(self, queries: List[str] = None) -> Dict[str, Any]:
+    def list_logs(self, queries: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         Get the list of latest security activity logs for the currently logged in user. Each log returns user IP address, location and date and time of log.
 
         Parameters
         ----------
-        queries : List[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
         
         Returns
@@ -550,7 +551,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def update_password(self, password: str, old_password: str = None) -> Dict[str, Any]:
+    def update_password(self, password: str, old_password: Optional[str] = None) -> Dict[str, Any]:
         """
         Update currently logged in user password. For validation, user is required to pass in the new password, and the old password. For users created with OAuth, Team Invites and Magic URL, oldPassword is optional.
 
@@ -558,7 +559,7 @@ class Account(Service):
         ----------
         password : str
             New user password. Must be at least 8 chars.
-        old_password : str
+        old_password : Optional[str]
             Current user password. Must be at least 8 chars.
         
         Returns
@@ -865,6 +866,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.6.0. Please use `account.create_session` instead.")
     def update_magic_url_session(self, user_id: str, secret: str) -> Dict[str, Any]:
         """
         Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
@@ -905,6 +907,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.6.0. Please use `account.create_session` instead.")
     def update_phone_session(self, user_id: str, secret: str) -> Dict[str, Any]:
         """
         Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
@@ -1100,7 +1103,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_email_token(self, user_id: str, email: str, phrase: bool = None) -> Dict[str, Any]:
+    def create_email_token(self, user_id: str, email: str, phrase: Optional[bool] = None) -> Dict[str, Any]:
         """
         Sends the user an email with a secret key for creating a session. If the email address has never been used, a **new account is created** using the provided `userId`. Otherwise, if the email address is already attached to an account, the **user ID is ignored**. Then, the user will receive an email with the one-time password. Use the returned user ID and secret and submit a request to the [POST /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process. The secret sent to the user's email is valid for 15 minutes.
         
@@ -1113,7 +1116,7 @@ class Account(Service):
             User ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars. If the email address has never been used, a new account is created using the provided userId. Otherwise, if the email address is already attached to an account, the user ID is ignored.
         email : str
             User email.
-        phrase : bool
+        phrase : Optional[bool]
             Toggle for security phrase. If enabled, email will be send with a randomly generated phrase and the phrase will also be included in the response. Confirming phrases match increases the security of your authentication flow.
         
         Returns
@@ -1144,7 +1147,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_magic_url_token(self, user_id: str, email: str, url: str = None, phrase: bool = None) -> Dict[str, Any]:
+    def create_magic_url_token(self, user_id: str, email: str, url: Optional[str] = None, phrase: Optional[bool] = None) -> Dict[str, Any]:
         """
         Sends the user an email with a secret key for creating a session. If the provided user ID has not been registered, a new user will be created. When the user clicks the link in the email, the user is redirected back to the URL you provided with the secret key and userId values attached to the URL query string. Use the query string parameters to submit a request to the [POST /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process. The link sent to the user's email address is valid for 1 hour.
         
@@ -1157,9 +1160,9 @@ class Account(Service):
             Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars. If the email address has never been used, a new account is created using the provided userId. Otherwise, if the email address is already attached to an account, the user ID is ignored.
         email : str
             User email.
-        url : str
+        url : Optional[str]
             URL to redirect the user back to your app from the magic URL login. Only URLs from hostnames in your project platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
-        phrase : bool
+        phrase : Optional[bool]
             Toggle for security phrase. If enabled, email will be send with a randomly generated phrase and the phrase will also be included in the response. Confirming phrases match increases the security of your authentication flow.
         
         Returns
@@ -1191,7 +1194,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_o_auth2_token(self, provider: OAuthProvider, success: str = None, failure: str = None, scopes: List[str] = None) -> str:
+    def create_o_auth2_token(self, provider: OAuthProvider, success: Optional[str] = None, failure: Optional[str] = None, scopes: Optional[List[str]] = None) -> str:
         """
         Allow the user to login to their account using the OAuth2 provider of their choice. Each OAuth2 provider should be enabled from the Appwrite console first. Use the success and failure arguments to provide a redirect URL's back to your app when login is completed. 
         
@@ -1203,11 +1206,11 @@ class Account(Service):
         ----------
         provider : OAuthProvider
             OAuth2 Provider. Currently, supported providers are: amazon, apple, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, github, gitlab, google, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, yahoo, yammer, yandex, zoho, zoom.
-        success : str
+        success : Optional[str]
             URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
-        failure : str
+        failure : Optional[str]
             URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
-        scopes : List[str]
+        scopes : Optional[List[str]]
             A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
         
         Returns
@@ -1310,6 +1313,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `account.create_email_verification` instead.")
     def create_verification(self, url: str) -> Dict[str, Any]:
         """
         Use this endpoint to send a verification message to your user email address to confirm they are the valid owners of that address. Both the **userId** and **secret** arguments will be passed as query parameters to the URL you have provided to be attached to the verification email. The provided URL should redirect the user back to your app and allow you to complete the verification process by verifying both the **userId** and **secret** parameters. Learn more about how to [complete the verification process](https://appwrite.io/docs/references/cloud/client-web/account#updateVerification). The verification link sent to the user's email address is valid for 7 days.
@@ -1385,6 +1389,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `account.update_email_verification` instead.")
     def update_verification(self, user_id: str, secret: str) -> Dict[str, Any]:
         """
         Use this endpoint to complete the user email verification process. Use both the **userId** and **secret** parameters that were attached to your app URL to verify the user email ownership. If confirmed this route will return a 200 status code.

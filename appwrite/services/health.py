@@ -1,6 +1,7 @@
 from ..service import Service
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from ..exception import AppwriteException
+from appwrite.utils.deprecated import deprecated
 from ..enums.name import Name;
 
 class Health(Service):
@@ -71,13 +72,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_certificate(self, domain: str = None) -> Dict[str, Any]:
+    def get_certificate(self, domain: Optional[str] = None) -> Dict[str, Any]:
         """
         Get the SSL certificate for a domain
 
         Parameters
         ----------
-        domain : str
+        domain : Optional[str]
             string
         
         Returns
@@ -141,13 +142,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_builds(self, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_builds(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of builds that are waiting to be processed in the Appwrite internal queue server.
 
         Parameters
         ----------
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -169,13 +170,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_certificates(self, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_certificates(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of certificates that are waiting to be issued against [Letsencrypt](https://letsencrypt.org/) in the Appwrite internal queue server.
 
         Parameters
         ----------
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -197,15 +198,15 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_databases(self, name: str = None, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_databases(self, name: Optional[str] = None, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of database changes that are waiting to be processed in the Appwrite internal queue server.
 
         Parameters
         ----------
-        name : str
+        name : Optional[str]
             Queue name for which to check the queue size
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -228,13 +229,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_deletes(self, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_deletes(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of background destructive changes that are waiting to be processed in the Appwrite internal queue server.
 
         Parameters
         ----------
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -256,7 +257,7 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_failed_jobs(self, name: Name, threshold: float = None) -> Dict[str, Any]:
+    def get_failed_jobs(self, name: Name, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Returns the amount of failed jobs in a given queue.
         
@@ -265,7 +266,7 @@ class Health(Service):
         ----------
         name : Name
             The name of the queue
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -291,13 +292,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_functions(self, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_functions(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of function executions that are waiting to be processed in the Appwrite internal queue server.
 
         Parameters
         ----------
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -319,13 +320,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_logs(self, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_logs(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of logs that are waiting to be processed in the Appwrite internal queue server.
 
         Parameters
         ----------
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -347,13 +348,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_mails(self, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_mails(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of mails that are waiting to be processed in the Appwrite internal queue server.
 
         Parameters
         ----------
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -375,13 +376,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_messaging(self, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_messaging(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of messages that are waiting to be processed in the Appwrite internal queue server.
 
         Parameters
         ----------
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -403,13 +404,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_migrations(self, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_migrations(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of migrations that are waiting to be processed in the Appwrite internal queue server.
 
         Parameters
         ----------
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -431,13 +432,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_stats_resources(self, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_stats_resources(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of metrics that are waiting to be processed in the Appwrite stats resources queue.
 
         Parameters
         ----------
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -459,13 +460,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_usage(self, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_usage(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of metrics that are waiting to be processed in the Appwrite internal queue server.
 
         Parameters
         ----------
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
@@ -487,13 +488,13 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_queue_webhooks(self, threshold: float = None) -> Dict[str, Any]:
+    def get_queue_webhooks(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of webhooks that are waiting to be processed in the Appwrite internal queue server.
 
         Parameters
         ----------
-        threshold : float
+        threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
         
         Returns
