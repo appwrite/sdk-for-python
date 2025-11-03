@@ -14,7 +14,7 @@ class Sites(Service):
     def __init__(self, client) -> None:
         super(Sites, self).__init__(client)
 
-    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all the project's sites. You can use the query params to filter your results.
 
@@ -24,6 +24,8 @@ class Sites(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, enabled, framework, deploymentId, buildCommand, installCommand, outputDirectory, installationId
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -41,6 +43,7 @@ class Sites(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -369,7 +372,7 @@ class Sites(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_deployments(self, site_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list_deployments(self, site_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all the site's code deployments. You can use the query params to filter your results.
 
@@ -381,6 +384,8 @@ class Sites(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: buildSize, sourceSize, totalSize, buildDuration, status, activate, type
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -402,6 +407,7 @@ class Sites(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -767,7 +773,7 @@ class Sites(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_logs(self, site_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_logs(self, site_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all site logs. You can use the query params to filter your results.
 
@@ -777,6 +783,8 @@ class Sites(Service):
             Site ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: trigger, status, responseStatusCode, duration, requestMethod, requestPath, deploymentId
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -797,6 +805,7 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', site_id)
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)

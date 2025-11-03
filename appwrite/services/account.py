@@ -119,7 +119,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_identities(self, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_identities(self, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get the list of identities for the currently logged in user.
 
@@ -127,6 +127,8 @@ class Account(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, provider, providerUid, providerEmail, providerAccessTokenExpiry
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -143,6 +145,7 @@ class Account(Service):
         api_params = {}
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -201,7 +204,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_logs(self, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_logs(self, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get the list of latest security activity logs for the currently logged in user. Each log returns user IP address, location and date and time of log.
 
@@ -209,6 +212,8 @@ class Account(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -225,6 +230,7 @@ class Account(Service):
         api_params = {}
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
