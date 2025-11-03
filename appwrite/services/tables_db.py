@@ -11,7 +11,7 @@ class TablesDB(Service):
     def __init__(self, client) -> None:
         super(TablesDB, self).__init__(client)
 
-    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
 
@@ -21,6 +21,8 @@ class TablesDB(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -38,6 +40,7 @@ class TablesDB(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -381,7 +384,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_tables(self, database_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list_tables(self, database_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all tables that belong to the provided databaseId. You can use the search parameter to filter your results.
 
@@ -393,6 +396,8 @@ class TablesDB(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name, enabled, rowSecurity
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -414,6 +419,7 @@ class TablesDB(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -599,7 +605,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_columns(self, database_id: str, table_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_columns(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         List columns in the table.
 
@@ -611,6 +617,8 @@ class TablesDB(Service):
             Table ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: key, type, size, required, array, status, error
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -635,6 +643,7 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -2237,7 +2246,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_indexes(self, database_id: str, table_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_indexes(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         List indexes on the table.
 
@@ -2249,6 +2258,8 @@ class TablesDB(Service):
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: key, type, status, attributes, error
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -2273,6 +2284,7 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -2427,7 +2439,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_rows(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+    def list_rows(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all the user's rows in a given table. You can use the query params to filter your results.
 
@@ -2441,6 +2453,8 @@ class TablesDB(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         transaction_id : Optional[str]
             Transaction ID to read uncommitted changes within the transaction.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -2466,6 +2480,7 @@ class TablesDB(Service):
 
         api_params['queries'] = queries
         api_params['transactionId'] = transaction_id
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)

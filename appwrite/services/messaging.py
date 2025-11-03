@@ -10,7 +10,7 @@ class Messaging(Service):
     def __init__(self, client) -> None:
         super(Messaging, self).__init__(client)
 
-    def list_messages(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list_messages(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all messages from the current Appwrite project.
 
@@ -20,6 +20,8 @@ class Messaging(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: scheduledAt, deliveredAt, deliveredTotal, status, description, providerType
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -37,6 +39,7 @@ class Messaging(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -519,7 +522,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_message_logs(self, message_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_message_logs(self, message_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get the message activity logs listed by its unique ID.
 
@@ -529,6 +532,8 @@ class Messaging(Service):
             Message ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -549,11 +554,12 @@ class Messaging(Service):
         api_path = api_path.replace('{messageId}', message_id)
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def list_targets(self, message_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_targets(self, message_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of the targets associated with a message.
 
@@ -563,6 +569,8 @@ class Messaging(Service):
             Message ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, providerId, identifier, providerType
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -583,11 +591,12 @@ class Messaging(Service):
         api_path = api_path.replace('{messageId}', message_id)
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def list_providers(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list_providers(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all providers from the current Appwrite project.
 
@@ -597,6 +606,8 @@ class Messaging(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, provider, type, enabled
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -614,6 +625,7 @@ class Messaging(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -1848,7 +1860,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_provider_logs(self, provider_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_provider_logs(self, provider_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get the provider activity logs listed by its unique ID.
 
@@ -1858,6 +1870,8 @@ class Messaging(Service):
             Provider ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -1878,11 +1892,12 @@ class Messaging(Service):
         api_path = api_path.replace('{providerId}', provider_id)
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def list_subscriber_logs(self, subscriber_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_subscriber_logs(self, subscriber_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get the subscriber activity logs listed by its unique ID.
 
@@ -1892,6 +1907,8 @@ class Messaging(Service):
             Subscriber ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -1912,11 +1929,12 @@ class Messaging(Service):
         api_path = api_path.replace('{subscriberId}', subscriber_id)
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def list_topics(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list_topics(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all topics from the current Appwrite project.
 
@@ -1926,6 +1944,8 @@ class Messaging(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, description, emailTotal, smsTotal, pushTotal
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -1943,6 +1963,7 @@ class Messaging(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -2091,7 +2112,7 @@ class Messaging(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_topic_logs(self, topic_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_topic_logs(self, topic_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get the topic activity logs listed by its unique ID.
 
@@ -2101,6 +2122,8 @@ class Messaging(Service):
             Topic ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -2121,11 +2144,12 @@ class Messaging(Service):
         api_path = api_path.replace('{topicId}', topic_id)
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def list_subscribers(self, topic_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list_subscribers(self, topic_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all subscribers from the current Appwrite project.
 
@@ -2137,6 +2161,8 @@ class Messaging(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, provider, type, enabled
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -2158,6 +2184,7 @@ class Messaging(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)

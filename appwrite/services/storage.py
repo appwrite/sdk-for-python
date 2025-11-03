@@ -12,7 +12,7 @@ class Storage(Service):
     def __init__(self, client) -> None:
         super(Storage, self).__init__(client)
 
-    def list_buckets(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list_buckets(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all the storage buckets. You can use the query params to filter your results.
 
@@ -22,6 +22,8 @@ class Storage(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: enabled, name, fileSecurity, maximumFileSize, encryption, antivirus
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -39,6 +41,7 @@ class Storage(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -230,7 +233,7 @@ class Storage(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_files(self, bucket_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list_files(self, bucket_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all the user files. You can use the query params to filter your results.
 
@@ -242,6 +245,8 @@ class Storage(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, signature, mimeType, sizeOriginal, chunksTotal, chunksUploaded
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -263,6 +268,7 @@ class Storage(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)

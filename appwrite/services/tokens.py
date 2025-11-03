@@ -8,7 +8,7 @@ class Tokens(Service):
     def __init__(self, client) -> None:
         super(Tokens, self).__init__(client)
 
-    def list(self, bucket_id: str, file_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list(self, bucket_id: str, file_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         List all the tokens created for a specific file or bucket. You can use the query params to filter your results.
 
@@ -20,6 +20,8 @@ class Tokens(Service):
             File unique ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: expire
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -44,6 +46,7 @@ class Tokens(Service):
         api_path = api_path.replace('{fileId}', file_id)
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)

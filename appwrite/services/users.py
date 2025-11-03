@@ -11,7 +11,7 @@ class Users(Service):
     def __init__(self, client) -> None:
         super(Users, self).__init__(client)
 
-    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get a list of all the project's users. You can use the query params to filter your results.
 
@@ -21,6 +21,8 @@ class Users(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, email, phone, status, passwordUpdate, registration, emailVerification, phoneVerification, labels
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -38,6 +40,7 @@ class Users(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -180,7 +183,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_identities(self, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list_identities(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get identities for all users.
 
@@ -190,6 +193,8 @@ class Users(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, provider, providerUid, providerEmail, providerAccessTokenExpiry
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -207,6 +212,7 @@ class Users(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -708,7 +714,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_logs(self, user_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_logs(self, user_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get the user activity logs list by its unique ID.
 
@@ -718,6 +724,8 @@ class Users(Service):
             User ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -738,11 +746,12 @@ class Users(Service):
         api_path = api_path.replace('{userId}', user_id)
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def list_memberships(self, user_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None) -> Dict[str, Any]:
+    def list_memberships(self, user_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get the user membership list by its unique ID.
 
@@ -754,6 +763,8 @@ class Users(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, teamId, invited, joined, confirm, roles
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -775,6 +786,7 @@ class Users(Service):
 
         api_params['queries'] = queries
         api_params['search'] = search
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -1164,7 +1176,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_sessions(self, user_id: str) -> Dict[str, Any]:
+    def list_sessions(self, user_id: str, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         Get the user sessions list by its unique ID.
 
@@ -1172,6 +1184,8 @@ class Users(Service):
         ----------
         user_id : str
             User ID.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -1191,6 +1205,7 @@ class Users(Service):
 
         api_path = api_path.replace('{userId}', user_id)
 
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -1337,7 +1352,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_targets(self, user_id: str, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_targets(self, user_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
         """
         List the messaging targets that are associated with a user.
 
@@ -1347,6 +1362,8 @@ class Users(Service):
             User ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, providerId, identifier, providerType
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         
         Returns
         -------
@@ -1367,6 +1384,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', user_id)
 
         api_params['queries'] = queries
+        api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
