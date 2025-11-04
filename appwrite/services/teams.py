@@ -35,9 +35,12 @@ class Teams(Service):
         api_path = '/teams'
         api_params = {}
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -77,7 +80,8 @@ class Teams(Service):
 
         api_params['teamId'] = team_id
         api_params['name'] = name
-        api_params['roles'] = roles
+        if roles is not None:
+            api_params['roles'] = roles
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -217,9 +221,12 @@ class Teams(Service):
 
         api_path = api_path.replace('{teamId}', team_id)
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -273,12 +280,17 @@ class Teams(Service):
 
         api_path = api_path.replace('{teamId}', team_id)
 
-        api_params['email'] = email
-        api_params['userId'] = user_id
-        api_params['phone'] = phone
+        if email is not None:
+            api_params['email'] = email
+        if user_id is not None:
+            api_params['userId'] = user_id
+        if phone is not None:
+            api_params['phone'] = phone
         api_params['roles'] = roles
-        api_params['url'] = url
-        api_params['name'] = name
+        if url is not None:
+            api_params['url'] = url
+        if name is not None:
+            api_params['name'] = name
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',

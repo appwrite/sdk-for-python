@@ -38,9 +38,12 @@ class Users(Service):
         api_path = '/users'
         api_params = {}
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -80,10 +83,14 @@ class Users(Service):
 
 
         api_params['userId'] = user_id
-        api_params['email'] = email
-        api_params['phone'] = phone
-        api_params['password'] = password
-        api_params['name'] = name
+        if email is not None:
+            api_params['email'] = email
+        if phone is not None:
+            api_params['phone'] = phone
+        if password is not None:
+            api_params['password'] = password
+        if name is not None:
+            api_params['name'] = name
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -130,7 +137,8 @@ class Users(Service):
         api_params['userId'] = user_id
         api_params['email'] = email
         api_params['password'] = password
-        api_params['name'] = name
+        if name is not None:
+            api_params['name'] = name
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -177,7 +185,8 @@ class Users(Service):
         api_params['userId'] = user_id
         api_params['email'] = email
         api_params['password'] = password
-        api_params['name'] = name
+        if name is not None:
+            api_params['name'] = name
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -210,9 +219,12 @@ class Users(Service):
         api_path = '/users/identities'
         api_params = {}
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -290,7 +302,8 @@ class Users(Service):
         api_params['userId'] = user_id
         api_params['email'] = email
         api_params['password'] = password
-        api_params['name'] = name
+        if name is not None:
+            api_params['name'] = name
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -337,7 +350,8 @@ class Users(Service):
         api_params['userId'] = user_id
         api_params['email'] = email
         api_params['password'] = password
-        api_params['name'] = name
+        if name is not None:
+            api_params['name'] = name
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -414,7 +428,8 @@ class Users(Service):
         api_params['passwordMemory'] = password_memory
         api_params['passwordParallel'] = password_parallel
         api_params['passwordLength'] = password_length
-        api_params['name'] = name
+        if name is not None:
+            api_params['name'] = name
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -479,7 +494,8 @@ class Users(Service):
         api_params['passwordSalt'] = password_salt
         api_params['passwordSaltSeparator'] = password_salt_separator
         api_params['passwordSignerKey'] = password_signer_key
-        api_params['name'] = name
+        if name is not None:
+            api_params['name'] = name
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -528,8 +544,10 @@ class Users(Service):
         api_params['userId'] = user_id
         api_params['email'] = email
         api_params['password'] = password
-        api_params['passwordVersion'] = password_version
-        api_params['name'] = name
+        if password_version is not None:
+            api_params['passwordVersion'] = password_version
+        if name is not None:
+            api_params['name'] = name
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -667,8 +685,10 @@ class Users(Service):
 
         api_path = api_path.replace('{userId}', user_id)
 
-        api_params['sessionId'] = session_id
-        api_params['duration'] = duration
+        if session_id is not None:
+            api_params['sessionId'] = session_id
+        if duration is not None:
+            api_params['duration'] = duration
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -745,8 +765,10 @@ class Users(Service):
 
         api_path = api_path.replace('{userId}', user_id)
 
-        api_params['queries'] = queries
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -784,9 +806,12 @@ class Users(Service):
 
         api_path = api_path.replace('{userId}', user_id)
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -1205,7 +1230,8 @@ class Users(Service):
 
         api_path = api_path.replace('{userId}', user_id)
 
-        api_params['total'] = total
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -1383,8 +1409,10 @@ class Users(Service):
 
         api_path = api_path.replace('{userId}', user_id)
 
-        api_params['queries'] = queries
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -1438,8 +1466,10 @@ class Users(Service):
         api_params['targetId'] = target_id
         api_params['providerType'] = provider_type
         api_params['identifier'] = identifier
-        api_params['providerId'] = provider_id
-        api_params['name'] = name
+        if provider_id is not None:
+            api_params['providerId'] = provider_id
+        if name is not None:
+            api_params['name'] = name
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1521,9 +1551,12 @@ class Users(Service):
         api_path = api_path.replace('{userId}', user_id)
         api_path = api_path.replace('{targetId}', target_id)
 
-        api_params['identifier'] = identifier
-        api_params['providerId'] = provider_id
-        api_params['name'] = name
+        if identifier is not None:
+            api_params['identifier'] = identifier
+        if provider_id is not None:
+            api_params['providerId'] = provider_id
+        if name is not None:
+            api_params['name'] = name
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1599,8 +1632,10 @@ class Users(Service):
 
         api_path = api_path.replace('{userId}', user_id)
 
-        api_params['length'] = length
-        api_params['expire'] = expire
+        if length is not None:
+            api_params['length'] = length
+        if expire is not None:
+            api_params['expire'] = expire
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',

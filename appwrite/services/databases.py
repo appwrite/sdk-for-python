@@ -41,9 +41,12 @@ class Databases(Service):
         api_path = '/databases'
         api_params = {}
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -87,7 +90,8 @@ class Databases(Service):
 
         api_params['databaseId'] = database_id
         api_params['name'] = name
-        api_params['enabled'] = enabled
+        if enabled is not None:
+            api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -116,7 +120,8 @@ class Databases(Service):
         api_path = '/databases/transactions'
         api_params = {}
 
-        api_params['queries'] = queries
+        if queries is not None:
+            api_params['queries'] = queries
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -144,7 +149,8 @@ class Databases(Service):
         api_path = '/databases/transactions'
         api_params = {}
 
-        api_params['ttl'] = ttl
+        if ttl is not None:
+            api_params['ttl'] = ttl
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -212,8 +218,10 @@ class Databases(Service):
 
         api_path = api_path.replace('{transactionId}', transaction_id)
 
-        api_params['commit'] = commit
-        api_params['rollback'] = rollback
+        if commit is not None:
+            api_params['commit'] = commit
+        if rollback is not None:
+            api_params['rollback'] = rollback
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -280,7 +288,8 @@ class Databases(Service):
 
         api_path = api_path.replace('{transactionId}', transaction_id)
 
-        api_params['operations'] = operations
+        if operations is not None:
+            api_params['operations'] = operations
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -358,7 +367,8 @@ class Databases(Service):
         api_path = api_path.replace('{databaseId}', database_id)
 
         api_params['name'] = name
-        api_params['enabled'] = enabled
+        if enabled is not None:
+            api_params['enabled'] = enabled
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -435,9 +445,12 @@ class Databases(Service):
 
         api_path = api_path.replace('{databaseId}', database_id)
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -490,9 +503,12 @@ class Databases(Service):
 
         api_params['collectionId'] = collection_id
         api_params['name'] = name
-        api_params['permissions'] = permissions
-        api_params['documentSecurity'] = document_security
-        api_params['enabled'] = enabled
+        if permissions is not None:
+            api_params['permissions'] = permissions
+        if document_security is not None:
+            api_params['documentSecurity'] = document_security
+        if enabled is not None:
+            api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -586,9 +602,12 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
 
         api_params['name'] = name
-        api_params['permissions'] = permissions
-        api_params['documentSecurity'] = document_security
-        api_params['enabled'] = enabled
+        if permissions is not None:
+            api_params['permissions'] = permissions
+        if document_security is not None:
+            api_params['documentSecurity'] = document_security
+        if enabled is not None:
+            api_params['enabled'] = enabled
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -675,8 +694,10 @@ class Databases(Service):
         api_path = api_path.replace('{databaseId}', database_id)
         api_path = api_path.replace('{collectionId}', collection_id)
 
-        api_params['queries'] = queries
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -734,8 +755,10 @@ class Databases(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        api_params['default'] = default
-        api_params['array'] = array
+        if default is not None:
+            api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -794,7 +817,8 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        api_params['newKey'] = new_key
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -852,8 +876,10 @@ class Databases(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        api_params['default'] = default
-        api_params['array'] = array
+        if default is not None:
+            api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -912,7 +938,8 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        api_params['newKey'] = new_key
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -971,8 +998,10 @@ class Databases(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        api_params['default'] = default
-        api_params['array'] = array
+        if default is not None:
+            api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1032,7 +1061,8 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        api_params['newKey'] = new_key
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1097,8 +1127,10 @@ class Databases(Service):
         api_params['key'] = key
         api_params['elements'] = elements
         api_params['required'] = required
-        api_params['default'] = default
-        api_params['array'] = array
+        if default is not None:
+            api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1164,7 +1196,8 @@ class Databases(Service):
         api_params['elements'] = elements
         api_params['required'] = required
         api_params['default'] = default
-        api_params['newKey'] = new_key
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1227,10 +1260,14 @@ class Databases(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        api_params['min'] = min
-        api_params['max'] = max
-        api_params['default'] = default
-        api_params['array'] = array
+        if min is not None:
+            api_params['min'] = min
+        if max is not None:
+            api_params['max'] = max
+        if default is not None:
+            api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1293,10 +1330,13 @@ class Databases(Service):
         api_path = api_path.replace('{key}', key)
 
         api_params['required'] = required
-        api_params['min'] = min
-        api_params['max'] = max
+        if min is not None:
+            api_params['min'] = min
+        if max is not None:
+            api_params['max'] = max
         api_params['default'] = default
-        api_params['newKey'] = new_key
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1359,10 +1399,14 @@ class Databases(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        api_params['min'] = min
-        api_params['max'] = max
-        api_params['default'] = default
-        api_params['array'] = array
+        if min is not None:
+            api_params['min'] = min
+        if max is not None:
+            api_params['max'] = max
+        if default is not None:
+            api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1425,10 +1469,13 @@ class Databases(Service):
         api_path = api_path.replace('{key}', key)
 
         api_params['required'] = required
-        api_params['min'] = min
-        api_params['max'] = max
+        if min is not None:
+            api_params['min'] = min
+        if max is not None:
+            api_params['max'] = max
         api_params['default'] = default
-        api_params['newKey'] = new_key
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1487,8 +1534,10 @@ class Databases(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        api_params['default'] = default
-        api_params['array'] = array
+        if default is not None:
+            api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1548,7 +1597,8 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        api_params['newKey'] = new_key
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1663,7 +1713,8 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        api_params['newKey'] = new_key
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1778,7 +1829,8 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        api_params['newKey'] = new_key
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1893,7 +1945,8 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        api_params['newKey'] = new_key
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1956,10 +2009,14 @@ class Databases(Service):
 
         api_params['relatedCollectionId'] = related_collection_id
         api_params['type'] = type
-        api_params['twoWay'] = two_way
-        api_params['key'] = key
-        api_params['twoWayKey'] = two_way_key
-        api_params['onDelete'] = on_delete
+        if two_way is not None:
+            api_params['twoWay'] = two_way
+        if key is not None:
+            api_params['key'] = key
+        if two_way_key is not None:
+            api_params['twoWayKey'] = two_way_key
+        if on_delete is not None:
+            api_params['onDelete'] = on_delete
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -2026,9 +2083,12 @@ class Databases(Service):
         api_params['key'] = key
         api_params['size'] = size
         api_params['required'] = required
-        api_params['default'] = default
-        api_params['array'] = array
-        api_params['encrypt'] = encrypt
+        if default is not None:
+            api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
+        if encrypt is not None:
+            api_params['encrypt'] = encrypt
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -2090,8 +2150,10 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        api_params['size'] = size
-        api_params['newKey'] = new_key
+        if size is not None:
+            api_params['size'] = size
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -2150,8 +2212,10 @@ class Databases(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        api_params['default'] = default
-        api_params['array'] = array
+        if default is not None:
+            api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -2211,7 +2275,8 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        api_params['newKey'] = new_key
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -2357,8 +2422,10 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
         api_path = api_path.replace('{key}', key)
 
-        api_params['onDelete'] = on_delete
-        api_params['newKey'] = new_key
+        if on_delete is not None:
+            api_params['onDelete'] = on_delete
+        if new_key is not None:
+            api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -2406,9 +2473,12 @@ class Databases(Service):
         api_path = api_path.replace('{databaseId}', database_id)
         api_path = api_path.replace('{collectionId}', collection_id)
 
-        api_params['queries'] = queries
-        api_params['transactionId'] = transaction_id
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -2465,8 +2535,10 @@ class Databases(Service):
 
         api_params['documentId'] = document_id
         api_params['data'] = data
-        api_params['permissions'] = permissions
-        api_params['transactionId'] = transaction_id
+        if permissions is not None:
+            api_params['permissions'] = permissions
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -2516,7 +2588,8 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
 
         api_params['documents'] = documents
-        api_params['transactionId'] = transaction_id
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -2567,7 +2640,8 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
 
         api_params['documents'] = documents
-        api_params['transactionId'] = transaction_id
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -2615,9 +2689,12 @@ class Databases(Service):
         api_path = api_path.replace('{databaseId}', database_id)
         api_path = api_path.replace('{collectionId}', collection_id)
 
-        api_params['data'] = data
-        api_params['queries'] = queries
-        api_params['transactionId'] = transaction_id
+        if data is not None:
+            api_params['data'] = data
+        if queries is not None:
+            api_params['queries'] = queries
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -2663,8 +2740,10 @@ class Databases(Service):
         api_path = api_path.replace('{databaseId}', database_id)
         api_path = api_path.replace('{collectionId}', collection_id)
 
-        api_params['queries'] = queries
-        api_params['transactionId'] = transaction_id
+        if queries is not None:
+            api_params['queries'] = queries
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
@@ -2716,8 +2795,10 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
         api_path = api_path.replace('{documentId}', document_id)
 
-        api_params['queries'] = queries
-        api_params['transactionId'] = transaction_id
+        if queries is not None:
+            api_params['queries'] = queries
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -2774,8 +2855,10 @@ class Databases(Service):
         api_path = api_path.replace('{documentId}', document_id)
 
         api_params['data'] = data
-        api_params['permissions'] = permissions
-        api_params['transactionId'] = transaction_id
+        if permissions is not None:
+            api_params['permissions'] = permissions
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -2829,9 +2912,12 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
         api_path = api_path.replace('{documentId}', document_id)
 
-        api_params['data'] = data
-        api_params['permissions'] = permissions
-        api_params['transactionId'] = transaction_id
+        if data is not None:
+            api_params['data'] = data
+        if permissions is not None:
+            api_params['permissions'] = permissions
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -2881,7 +2967,8 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', collection_id)
         api_path = api_path.replace('{documentId}', document_id)
 
-        api_params['transactionId'] = transaction_id
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
@@ -2941,9 +3028,12 @@ class Databases(Service):
         api_path = api_path.replace('{documentId}', document_id)
         api_path = api_path.replace('{attribute}', attribute)
 
-        api_params['value'] = value
-        api_params['min'] = min
-        api_params['transactionId'] = transaction_id
+        if value is not None:
+            api_params['value'] = value
+        if min is not None:
+            api_params['min'] = min
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -3003,9 +3093,12 @@ class Databases(Service):
         api_path = api_path.replace('{documentId}', document_id)
         api_path = api_path.replace('{attribute}', attribute)
 
-        api_params['value'] = value
-        api_params['max'] = max
-        api_params['transactionId'] = transaction_id
+        if value is not None:
+            api_params['value'] = value
+        if max is not None:
+            api_params['max'] = max
+        if transaction_id is not None:
+            api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -3051,8 +3144,10 @@ class Databases(Service):
         api_path = api_path.replace('{databaseId}', database_id)
         api_path = api_path.replace('{collectionId}', collection_id)
 
-        api_params['queries'] = queries
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -3116,8 +3211,10 @@ class Databases(Service):
         api_params['key'] = key
         api_params['type'] = type
         api_params['attributes'] = attributes
-        api_params['orders'] = orders
-        api_params['lengths'] = lengths
+        if orders is not None:
+            api_params['orders'] = orders
+        if lengths is not None:
+            api_params['lengths'] = lengths
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',

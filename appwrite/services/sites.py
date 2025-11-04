@@ -41,9 +41,12 @@ class Sites(Service):
         api_path = '/sites'
         api_params = {}
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -120,21 +123,35 @@ class Sites(Service):
         api_params['siteId'] = site_id
         api_params['name'] = name
         api_params['framework'] = framework
-        api_params['enabled'] = enabled
-        api_params['logging'] = logging
-        api_params['timeout'] = timeout
-        api_params['installCommand'] = install_command
-        api_params['buildCommand'] = build_command
-        api_params['outputDirectory'] = output_directory
+        if enabled is not None:
+            api_params['enabled'] = enabled
+        if logging is not None:
+            api_params['logging'] = logging
+        if timeout is not None:
+            api_params['timeout'] = timeout
+        if install_command is not None:
+            api_params['installCommand'] = install_command
+        if build_command is not None:
+            api_params['buildCommand'] = build_command
+        if output_directory is not None:
+            api_params['outputDirectory'] = output_directory
         api_params['buildRuntime'] = build_runtime
-        api_params['adapter'] = adapter
-        api_params['installationId'] = installation_id
-        api_params['fallbackFile'] = fallback_file
-        api_params['providerRepositoryId'] = provider_repository_id
-        api_params['providerBranch'] = provider_branch
-        api_params['providerSilentMode'] = provider_silent_mode
-        api_params['providerRootDirectory'] = provider_root_directory
-        api_params['specification'] = specification
+        if adapter is not None:
+            api_params['adapter'] = adapter
+        if installation_id is not None:
+            api_params['installationId'] = installation_id
+        if fallback_file is not None:
+            api_params['fallbackFile'] = fallback_file
+        if provider_repository_id is not None:
+            api_params['providerRepositoryId'] = provider_repository_id
+        if provider_branch is not None:
+            api_params['providerBranch'] = provider_branch
+        if provider_silent_mode is not None:
+            api_params['providerSilentMode'] = provider_silent_mode
+        if provider_root_directory is not None:
+            api_params['providerRootDirectory'] = provider_root_directory
+        if specification is not None:
+            api_params['specification'] = specification
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -282,21 +299,36 @@ class Sites(Service):
 
         api_params['name'] = name
         api_params['framework'] = framework
-        api_params['enabled'] = enabled
-        api_params['logging'] = logging
-        api_params['timeout'] = timeout
-        api_params['installCommand'] = install_command
-        api_params['buildCommand'] = build_command
-        api_params['outputDirectory'] = output_directory
-        api_params['buildRuntime'] = build_runtime
-        api_params['adapter'] = adapter
-        api_params['fallbackFile'] = fallback_file
-        api_params['installationId'] = installation_id
-        api_params['providerRepositoryId'] = provider_repository_id
-        api_params['providerBranch'] = provider_branch
-        api_params['providerSilentMode'] = provider_silent_mode
-        api_params['providerRootDirectory'] = provider_root_directory
-        api_params['specification'] = specification
+        if enabled is not None:
+            api_params['enabled'] = enabled
+        if logging is not None:
+            api_params['logging'] = logging
+        if timeout is not None:
+            api_params['timeout'] = timeout
+        if install_command is not None:
+            api_params['installCommand'] = install_command
+        if build_command is not None:
+            api_params['buildCommand'] = build_command
+        if output_directory is not None:
+            api_params['outputDirectory'] = output_directory
+        if build_runtime is not None:
+            api_params['buildRuntime'] = build_runtime
+        if adapter is not None:
+            api_params['adapter'] = adapter
+        if fallback_file is not None:
+            api_params['fallbackFile'] = fallback_file
+        if installation_id is not None:
+            api_params['installationId'] = installation_id
+        if provider_repository_id is not None:
+            api_params['providerRepositoryId'] = provider_repository_id
+        if provider_branch is not None:
+            api_params['providerBranch'] = provider_branch
+        if provider_silent_mode is not None:
+            api_params['providerSilentMode'] = provider_silent_mode
+        if provider_root_directory is not None:
+            api_params['providerRootDirectory'] = provider_root_directory
+        if specification is not None:
+            api_params['specification'] = specification
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -405,9 +437,12 @@ class Sites(Service):
 
         api_path = api_path.replace('{siteId}', site_id)
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -457,10 +492,13 @@ class Sites(Service):
 
         api_path = api_path.replace('{siteId}', site_id)
 
-        api_params['installCommand'] = install_command
-        api_params['buildCommand'] = build_command
-        api_params['outputDirectory'] = output_directory
-        api_params['code'] = str(code).lower() if type(code) is bool else code
+        if install_command is not None:
+            api_params['installCommand'] = install_command
+        if build_command is not None:
+            api_params['buildCommand'] = build_command
+        if output_directory is not None:
+            api_params['outputDirectory'] = output_directory
+        api_params['code'] = code
         api_params['activate'] = str(activate).lower() if type(activate) is bool else activate
 
         param_name = 'code'
@@ -565,7 +603,8 @@ class Sites(Service):
         api_params['owner'] = owner
         api_params['rootDirectory'] = root_directory
         api_params['version'] = version
-        api_params['activate'] = activate
+        if activate is not None:
+            api_params['activate'] = activate
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -614,7 +653,8 @@ class Sites(Service):
 
         api_params['type'] = type
         api_params['reference'] = reference
-        api_params['activate'] = activate
+        if activate is not None:
+            api_params['activate'] = activate
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -730,7 +770,8 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', site_id)
         api_path = api_path.replace('{deploymentId}', deployment_id)
 
-        api_params['type'] = type
+        if type is not None:
+            api_params['type'] = type
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -804,8 +845,10 @@ class Sites(Service):
 
         api_path = api_path.replace('{siteId}', site_id)
 
-        api_params['queries'] = queries
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -957,7 +1000,8 @@ class Sites(Service):
 
         api_params['key'] = key
         api_params['value'] = value
-        api_params['secret'] = secret
+        if secret is not None:
+            api_params['secret'] = secret
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1043,8 +1087,10 @@ class Sites(Service):
         api_path = api_path.replace('{variableId}', variable_id)
 
         api_params['key'] = key
-        api_params['value'] = value
-        api_params['secret'] = secret
+        if value is not None:
+            api_params['value'] = value
+        if secret is not None:
+            api_params['secret'] = secret
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',

@@ -46,9 +46,12 @@ class Avatars(Service):
 
         api_path = api_path.replace('{code}', code)
 
-        api_params['width'] = width
-        api_params['height'] = height
-        api_params['quality'] = quality
+        if width is not None:
+            api_params['width'] = width
+        if height is not None:
+            api_params['height'] = height
+        if quality is not None:
+            api_params['quality'] = quality
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -89,9 +92,12 @@ class Avatars(Service):
 
         api_path = api_path.replace('{code}', code)
 
-        api_params['width'] = width
-        api_params['height'] = height
-        api_params['quality'] = quality
+        if width is not None:
+            api_params['width'] = width
+        if height is not None:
+            api_params['height'] = height
+        if quality is not None:
+            api_params['quality'] = quality
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -165,9 +171,12 @@ class Avatars(Service):
 
         api_path = api_path.replace('{code}', code)
 
-        api_params['width'] = width
-        api_params['height'] = height
-        api_params['quality'] = quality
+        if width is not None:
+            api_params['width'] = width
+        if height is not None:
+            api_params['height'] = height
+        if quality is not None:
+            api_params['quality'] = quality
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -207,8 +216,10 @@ class Avatars(Service):
 
 
         api_params['url'] = url
-        api_params['width'] = width
-        api_params['height'] = height
+        if width is not None:
+            api_params['width'] = width
+        if height is not None:
+            api_params['height'] = height
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -247,10 +258,14 @@ class Avatars(Service):
         api_path = '/avatars/initials'
         api_params = {}
 
-        api_params['name'] = name
-        api_params['width'] = width
-        api_params['height'] = height
-        api_params['background'] = background
+        if name is not None:
+            api_params['name'] = name
+        if width is not None:
+            api_params['width'] = width
+        if height is not None:
+            api_params['height'] = height
+        if background is not None:
+            api_params['background'] = background
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -289,9 +304,12 @@ class Avatars(Service):
 
 
         api_params['text'] = text
-        api_params['size'] = size
-        api_params['margin'] = margin
-        api_params['download'] = download
+        if size is not None:
+            api_params['size'] = size
+        if margin is not None:
+            api_params['margin'] = margin
+        if download is not None:
+            api_params['download'] = download
 
         return self.client.call('get', api_path, {
         }, api_params)

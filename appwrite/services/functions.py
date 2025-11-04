@@ -40,9 +40,12 @@ class Functions(Service):
         api_path = '/functions'
         api_params = {}
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -116,21 +119,36 @@ class Functions(Service):
         api_params['functionId'] = function_id
         api_params['name'] = name
         api_params['runtime'] = runtime
-        api_params['execute'] = execute
-        api_params['events'] = events
-        api_params['schedule'] = schedule
-        api_params['timeout'] = timeout
-        api_params['enabled'] = enabled
-        api_params['logging'] = logging
-        api_params['entrypoint'] = entrypoint
-        api_params['commands'] = commands
-        api_params['scopes'] = scopes
-        api_params['installationId'] = installation_id
-        api_params['providerRepositoryId'] = provider_repository_id
-        api_params['providerBranch'] = provider_branch
-        api_params['providerSilentMode'] = provider_silent_mode
-        api_params['providerRootDirectory'] = provider_root_directory
-        api_params['specification'] = specification
+        if execute is not None:
+            api_params['execute'] = execute
+        if events is not None:
+            api_params['events'] = events
+        if schedule is not None:
+            api_params['schedule'] = schedule
+        if timeout is not None:
+            api_params['timeout'] = timeout
+        if enabled is not None:
+            api_params['enabled'] = enabled
+        if logging is not None:
+            api_params['logging'] = logging
+        if entrypoint is not None:
+            api_params['entrypoint'] = entrypoint
+        if commands is not None:
+            api_params['commands'] = commands
+        if scopes is not None:
+            api_params['scopes'] = scopes
+        if installation_id is not None:
+            api_params['installationId'] = installation_id
+        if provider_repository_id is not None:
+            api_params['providerRepositoryId'] = provider_repository_id
+        if provider_branch is not None:
+            api_params['providerBranch'] = provider_branch
+        if provider_silent_mode is not None:
+            api_params['providerSilentMode'] = provider_silent_mode
+        if provider_root_directory is not None:
+            api_params['providerRootDirectory'] = provider_root_directory
+        if specification is not None:
+            api_params['specification'] = specification
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -274,22 +292,37 @@ class Functions(Service):
         api_path = api_path.replace('{functionId}', function_id)
 
         api_params['name'] = name
-        api_params['runtime'] = runtime
-        api_params['execute'] = execute
-        api_params['events'] = events
-        api_params['schedule'] = schedule
-        api_params['timeout'] = timeout
-        api_params['enabled'] = enabled
-        api_params['logging'] = logging
-        api_params['entrypoint'] = entrypoint
-        api_params['commands'] = commands
-        api_params['scopes'] = scopes
-        api_params['installationId'] = installation_id
+        if runtime is not None:
+            api_params['runtime'] = runtime
+        if execute is not None:
+            api_params['execute'] = execute
+        if events is not None:
+            api_params['events'] = events
+        if schedule is not None:
+            api_params['schedule'] = schedule
+        if timeout is not None:
+            api_params['timeout'] = timeout
+        if enabled is not None:
+            api_params['enabled'] = enabled
+        if logging is not None:
+            api_params['logging'] = logging
+        if entrypoint is not None:
+            api_params['entrypoint'] = entrypoint
+        if commands is not None:
+            api_params['commands'] = commands
+        if scopes is not None:
+            api_params['scopes'] = scopes
+        if installation_id is not None:
+            api_params['installationId'] = installation_id
         api_params['providerRepositoryId'] = provider_repository_id
-        api_params['providerBranch'] = provider_branch
-        api_params['providerSilentMode'] = provider_silent_mode
-        api_params['providerRootDirectory'] = provider_root_directory
-        api_params['specification'] = specification
+        if provider_branch is not None:
+            api_params['providerBranch'] = provider_branch
+        if provider_silent_mode is not None:
+            api_params['providerSilentMode'] = provider_silent_mode
+        if provider_root_directory is not None:
+            api_params['providerRootDirectory'] = provider_root_directory
+        if specification is not None:
+            api_params['specification'] = specification
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -398,9 +431,12 @@ class Functions(Service):
 
         api_path = api_path.replace('{functionId}', function_id)
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -452,9 +488,11 @@ class Functions(Service):
 
         api_path = api_path.replace('{functionId}', function_id)
 
-        api_params['entrypoint'] = entrypoint
-        api_params['commands'] = commands
-        api_params['code'] = str(code).lower() if type(code) is bool else code
+        if entrypoint is not None:
+            api_params['entrypoint'] = entrypoint
+        if commands is not None:
+            api_params['commands'] = commands
+        api_params['code'] = code
         api_params['activate'] = str(activate).lower() if type(activate) is bool else activate
 
         param_name = 'code'
@@ -501,7 +539,8 @@ class Functions(Service):
         api_path = api_path.replace('{functionId}', function_id)
 
         api_params['deploymentId'] = deployment_id
-        api_params['buildId'] = build_id
+        if build_id is not None:
+            api_params['buildId'] = build_id
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -562,7 +601,8 @@ class Functions(Service):
         api_params['owner'] = owner
         api_params['rootDirectory'] = root_directory
         api_params['version'] = version
-        api_params['activate'] = activate
+        if activate is not None:
+            api_params['activate'] = activate
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -611,7 +651,8 @@ class Functions(Service):
 
         api_params['type'] = type
         api_params['reference'] = reference
-        api_params['activate'] = activate
+        if activate is not None:
+            api_params['activate'] = activate
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -727,7 +768,8 @@ class Functions(Service):
         api_path = api_path.replace('{functionId}', function_id)
         api_path = api_path.replace('{deploymentId}', deployment_id)
 
-        api_params['type'] = type
+        if type is not None:
+            api_params['type'] = type
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -801,8 +843,10 @@ class Functions(Service):
 
         api_path = api_path.replace('{functionId}', function_id)
 
-        api_params['queries'] = queries
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -846,12 +890,18 @@ class Functions(Service):
 
         api_path = api_path.replace('{functionId}', function_id)
 
-        api_params['body'] = body
-        api_params['async'] = xasync
-        api_params['path'] = path
-        api_params['method'] = method
-        api_params['headers'] = headers
-        api_params['scheduledAt'] = scheduled_at
+        if body is not None:
+            api_params['body'] = body
+        if xasync is not None:
+            api_params['async'] = xasync
+        if path is not None:
+            api_params['path'] = path
+        if method is not None:
+            api_params['method'] = method
+        if headers is not None:
+            api_params['headers'] = headers
+        if scheduled_at is not None:
+            api_params['scheduledAt'] = scheduled_at
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1004,7 +1054,8 @@ class Functions(Service):
 
         api_params['key'] = key
         api_params['value'] = value
-        api_params['secret'] = secret
+        if secret is not None:
+            api_params['secret'] = secret
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1090,8 +1141,10 @@ class Functions(Service):
         api_path = api_path.replace('{variableId}', variable_id)
 
         api_params['key'] = key
-        api_params['value'] = value
-        api_params['secret'] = secret
+        if value is not None:
+            api_params['value'] = value
+        if secret is not None:
+            api_params['secret'] = secret
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
