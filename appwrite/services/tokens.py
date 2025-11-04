@@ -45,8 +45,10 @@ class Tokens(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
         api_path = api_path.replace('{fileId}', file_id)
 
-        api_params['queries'] = queries
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)

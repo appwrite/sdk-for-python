@@ -39,9 +39,12 @@ class Storage(Service):
         api_path = '/storage/buckets'
         api_params = {}
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -95,14 +98,22 @@ class Storage(Service):
 
         api_params['bucketId'] = bucket_id
         api_params['name'] = name
-        api_params['permissions'] = permissions
-        api_params['fileSecurity'] = file_security
-        api_params['enabled'] = enabled
-        api_params['maximumFileSize'] = maximum_file_size
-        api_params['allowedFileExtensions'] = allowed_file_extensions
-        api_params['compression'] = compression
-        api_params['encryption'] = encryption
-        api_params['antivirus'] = antivirus
+        if permissions is not None:
+            api_params['permissions'] = permissions
+        if file_security is not None:
+            api_params['fileSecurity'] = file_security
+        if enabled is not None:
+            api_params['enabled'] = enabled
+        if maximum_file_size is not None:
+            api_params['maximumFileSize'] = maximum_file_size
+        if allowed_file_extensions is not None:
+            api_params['allowedFileExtensions'] = allowed_file_extensions
+        if compression is not None:
+            api_params['compression'] = compression
+        if encryption is not None:
+            api_params['encryption'] = encryption
+        if antivirus is not None:
+            api_params['antivirus'] = antivirus
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -188,14 +199,22 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
 
         api_params['name'] = name
-        api_params['permissions'] = permissions
-        api_params['fileSecurity'] = file_security
-        api_params['enabled'] = enabled
-        api_params['maximumFileSize'] = maximum_file_size
-        api_params['allowedFileExtensions'] = allowed_file_extensions
-        api_params['compression'] = compression
-        api_params['encryption'] = encryption
-        api_params['antivirus'] = antivirus
+        if permissions is not None:
+            api_params['permissions'] = permissions
+        if file_security is not None:
+            api_params['fileSecurity'] = file_security
+        if enabled is not None:
+            api_params['enabled'] = enabled
+        if maximum_file_size is not None:
+            api_params['maximumFileSize'] = maximum_file_size
+        if allowed_file_extensions is not None:
+            api_params['allowedFileExtensions'] = allowed_file_extensions
+        if compression is not None:
+            api_params['compression'] = compression
+        if encryption is not None:
+            api_params['encryption'] = encryption
+        if antivirus is not None:
+            api_params['antivirus'] = antivirus
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -266,9 +285,12 @@ class Storage(Service):
 
         api_path = api_path.replace('{bucketId}', bucket_id)
 
-        api_params['queries'] = queries
-        api_params['search'] = search
-        api_params['total'] = total
+        if queries is not None:
+            api_params['queries'] = queries
+        if search is not None:
+            api_params['search'] = search
+        if total is not None:
+            api_params['total'] = total
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -322,8 +344,9 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
 
         api_params['fileId'] = file_id
-        api_params['file'] = str(file).lower() if type(file) is bool else file
-        api_params['permissions'] = permissions
+        api_params['file'] = file
+        if permissions is not None:
+            api_params['permissions'] = permissions
 
         param_name = 'file'
 
@@ -409,8 +432,10 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
         api_path = api_path.replace('{fileId}', file_id)
 
-        api_params['name'] = name
-        api_params['permissions'] = permissions
+        if name is not None:
+            api_params['name'] = name
+        if permissions is not None:
+            api_params['permissions'] = permissions
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -489,7 +514,8 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
         api_path = api_path.replace('{fileId}', file_id)
 
-        api_params['token'] = token
+        if token is not None:
+            api_params['token'] = token
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -551,18 +577,30 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
         api_path = api_path.replace('{fileId}', file_id)
 
-        api_params['width'] = width
-        api_params['height'] = height
-        api_params['gravity'] = gravity
-        api_params['quality'] = quality
-        api_params['borderWidth'] = border_width
-        api_params['borderColor'] = border_color
-        api_params['borderRadius'] = border_radius
-        api_params['opacity'] = opacity
-        api_params['rotation'] = rotation
-        api_params['background'] = background
-        api_params['output'] = output
-        api_params['token'] = token
+        if width is not None:
+            api_params['width'] = width
+        if height is not None:
+            api_params['height'] = height
+        if gravity is not None:
+            api_params['gravity'] = gravity
+        if quality is not None:
+            api_params['quality'] = quality
+        if border_width is not None:
+            api_params['borderWidth'] = border_width
+        if border_color is not None:
+            api_params['borderColor'] = border_color
+        if border_radius is not None:
+            api_params['borderRadius'] = border_radius
+        if opacity is not None:
+            api_params['opacity'] = opacity
+        if rotation is not None:
+            api_params['rotation'] = rotation
+        if background is not None:
+            api_params['background'] = background
+        if output is not None:
+            api_params['output'] = output
+        if token is not None:
+            api_params['token'] = token
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -602,7 +640,8 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
         api_path = api_path.replace('{fileId}', file_id)
 
-        api_params['token'] = token
+        if token is not None:
+            api_params['token'] = token
 
         return self.client.call('get', api_path, {
         }, api_params)

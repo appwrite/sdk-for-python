@@ -95,7 +95,8 @@ class Health(Service):
         api_path = '/health/certificate'
         api_params = {}
 
-        api_params['domain'] = domain
+        if domain is not None:
+            api_params['domain'] = domain
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -165,7 +166,8 @@ class Health(Service):
         api_path = '/health/queue/builds'
         api_params = {}
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -193,7 +195,8 @@ class Health(Service):
         api_path = '/health/queue/certificates'
         api_params = {}
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -223,8 +226,10 @@ class Health(Service):
         api_path = '/health/queue/databases'
         api_params = {}
 
-        api_params['name'] = name
-        api_params['threshold'] = threshold
+        if name is not None:
+            api_params['name'] = name
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -252,7 +257,8 @@ class Health(Service):
         api_path = '/health/queue/deletes'
         api_params = {}
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -287,7 +293,8 @@ class Health(Service):
 
         api_path = api_path.replace('{name}', name)
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -315,7 +322,8 @@ class Health(Service):
         api_path = '/health/queue/functions'
         api_params = {}
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -343,7 +351,8 @@ class Health(Service):
         api_path = '/health/queue/logs'
         api_params = {}
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -371,7 +380,8 @@ class Health(Service):
         api_path = '/health/queue/mails'
         api_params = {}
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -399,7 +409,8 @@ class Health(Service):
         api_path = '/health/queue/messaging'
         api_params = {}
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -427,7 +438,8 @@ class Health(Service):
         api_path = '/health/queue/migrations'
         api_params = {}
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -455,7 +467,8 @@ class Health(Service):
         api_path = '/health/queue/stats-resources'
         api_params = {}
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -483,7 +496,8 @@ class Health(Service):
         api_path = '/health/queue/stats-usage'
         api_params = {}
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
@@ -511,7 +525,8 @@ class Health(Service):
         api_path = '/health/queue/webhooks'
         api_params = {}
 
-        api_params['threshold'] = threshold
+        if threshold is not None:
+            api_params['threshold'] = threshold
 
         return self.client.call('get', api_path, {
         }, api_params)
