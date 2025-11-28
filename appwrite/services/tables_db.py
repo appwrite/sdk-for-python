@@ -482,8 +482,7 @@ class TablesDB(Service):
 
         api_params['tableId'] = table_id
         api_params['name'] = name
-        if permissions is not None:
-            api_params['permissions'] = permissions
+        api_params['permissions'] = permissions
         if row_security is not None:
             api_params['rowSecurity'] = row_security
         if enabled is not None:
@@ -545,7 +544,7 @@ class TablesDB(Service):
         permissions : Optional[List[str]]
             An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
         row_security : Optional[bool]
-            Enables configuring permissions for individual rows. A user needs one of row or table level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
+            Enables configuring permissions for individual rows. A user needs one of row or table-level permissions to access a row. [Learn more about permissions](https://appwrite.io/docs/permissions).
         enabled : Optional[bool]
             Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
         
@@ -575,8 +574,7 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
 
         api_params['name'] = name
-        if permissions is not None:
-            api_params['permissions'] = permissions
+        api_params['permissions'] = permissions
         if row_security is not None:
             api_params['rowSecurity'] = row_security
         if enabled is not None:
@@ -719,8 +717,7 @@ class TablesDB(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        if default is not None:
-            api_params['default'] = default
+        api_params['default'] = default
         if array is not None:
             api_params['array'] = array
 
@@ -778,8 +775,7 @@ class TablesDB(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -834,8 +830,7 @@ class TablesDB(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        if default is not None:
-            api_params['default'] = default
+        api_params['default'] = default
         if array is not None:
             api_params['array'] = array
 
@@ -893,8 +888,7 @@ class TablesDB(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -950,8 +944,7 @@ class TablesDB(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        if default is not None:
-            api_params['default'] = default
+        api_params['default'] = default
         if array is not None:
             api_params['array'] = array
 
@@ -1010,8 +1003,7 @@ class TablesDB(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1072,8 +1064,7 @@ class TablesDB(Service):
         api_params['key'] = key
         api_params['elements'] = elements
         api_params['required'] = required
-        if default is not None:
-            api_params['default'] = default
+        api_params['default'] = default
         if array is not None:
             api_params['array'] = array
 
@@ -1138,8 +1129,7 @@ class TablesDB(Service):
         api_params['elements'] = elements
         api_params['required'] = required
         api_params['default'] = default
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1199,12 +1189,9 @@ class TablesDB(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        if min is not None:
-            api_params['min'] = min
-        if max is not None:
-            api_params['max'] = max
-        if default is not None:
-            api_params['default'] = default
+        api_params['min'] = min
+        api_params['max'] = max
+        api_params['default'] = default
         if array is not None:
             api_params['array'] = array
 
@@ -1266,13 +1253,10 @@ class TablesDB(Service):
         api_path = api_path.replace('{key}', key)
 
         api_params['required'] = required
-        if min is not None:
-            api_params['min'] = min
-        if max is not None:
-            api_params['max'] = max
+        api_params['min'] = min
+        api_params['max'] = max
         api_params['default'] = default
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1332,12 +1316,9 @@ class TablesDB(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        if min is not None:
-            api_params['min'] = min
-        if max is not None:
-            api_params['max'] = max
-        if default is not None:
-            api_params['default'] = default
+        api_params['min'] = min
+        api_params['max'] = max
+        api_params['default'] = default
         if array is not None:
             api_params['array'] = array
 
@@ -1399,13 +1380,10 @@ class TablesDB(Service):
         api_path = api_path.replace('{key}', key)
 
         api_params['required'] = required
-        if min is not None:
-            api_params['min'] = min
-        if max is not None:
-            api_params['max'] = max
+        api_params['min'] = min
+        api_params['max'] = max
         api_params['default'] = default
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1461,8 +1439,7 @@ class TablesDB(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        if default is not None:
-            api_params['default'] = default
+        api_params['default'] = default
         if array is not None:
             api_params['array'] = array
 
@@ -1521,8 +1498,7 @@ class TablesDB(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1631,8 +1607,7 @@ class TablesDB(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1741,8 +1716,7 @@ class TablesDB(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1851,8 +1825,7 @@ class TablesDB(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1914,10 +1887,8 @@ class TablesDB(Service):
         api_params['type'] = type
         if two_way is not None:
             api_params['twoWay'] = two_way
-        if key is not None:
-            api_params['key'] = key
-        if two_way_key is not None:
-            api_params['twoWayKey'] = two_way_key
+        api_params['key'] = key
+        api_params['twoWayKey'] = two_way_key
         if on_delete is not None:
             api_params['onDelete'] = on_delete
 
@@ -1983,8 +1954,7 @@ class TablesDB(Service):
         api_params['key'] = key
         api_params['size'] = size
         api_params['required'] = required
-        if default is not None:
-            api_params['default'] = default
+        api_params['default'] = default
         if array is not None:
             api_params['array'] = array
         if encrypt is not None:
@@ -2047,10 +2017,8 @@ class TablesDB(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        if size is not None:
-            api_params['size'] = size
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['size'] = size
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -2106,8 +2074,7 @@ class TablesDB(Service):
 
         api_params['key'] = key
         api_params['required'] = required
-        if default is not None:
-            api_params['default'] = default
+        api_params['default'] = default
         if array is not None:
             api_params['array'] = array
 
@@ -2166,8 +2133,7 @@ class TablesDB(Service):
 
         api_params['required'] = required
         api_params['default'] = default
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -2304,10 +2270,8 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
         api_path = api_path.replace('{key}', key)
 
-        if on_delete is not None:
-            api_params['onDelete'] = on_delete
-        if new_key is not None:
-            api_params['newKey'] = new_key
+        api_params['onDelete'] = on_delete
+        api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -2608,10 +2572,8 @@ class TablesDB(Service):
 
         api_params['rowId'] = row_id
         api_params['data'] = data
-        if permissions is not None:
-            api_params['permissions'] = permissions
-        if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+        api_params['permissions'] = permissions
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -2658,8 +2620,7 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
 
         api_params['rows'] = rows
-        if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -2707,8 +2668,7 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
 
         api_params['rows'] = rows
-        if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -2757,8 +2717,7 @@ class TablesDB(Service):
             api_params['data'] = data
         if queries is not None:
             api_params['queries'] = queries
-        if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -2803,8 +2762,7 @@ class TablesDB(Service):
 
         if queries is not None:
             api_params['queries'] = queries
-        if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
@@ -2908,10 +2866,8 @@ class TablesDB(Service):
 
         if data is not None:
             api_params['data'] = data
-        if permissions is not None:
-            api_params['permissions'] = permissions
-        if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+        api_params['permissions'] = permissions
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -2964,10 +2920,8 @@ class TablesDB(Service):
 
         if data is not None:
             api_params['data'] = data
-        if permissions is not None:
-            api_params['permissions'] = permissions
-        if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+        api_params['permissions'] = permissions
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -3014,8 +2968,7 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', table_id)
         api_path = api_path.replace('{rowId}', row_id)
 
-        if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('delete', api_path, {
             'content-type': 'application/json',
@@ -3074,10 +3027,8 @@ class TablesDB(Service):
 
         if value is not None:
             api_params['value'] = value
-        if min is not None:
-            api_params['min'] = min
-        if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+        api_params['min'] = min
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -3136,10 +3087,8 @@ class TablesDB(Service):
 
         if value is not None:
             api_params['value'] = value
-        if max is not None:
-            api_params['max'] = max
-        if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+        api_params['max'] = max
+        api_params['transactionId'] = transaction_id
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',

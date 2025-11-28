@@ -120,8 +120,7 @@ class Messaging(Service):
             api_params['draft'] = draft
         if html is not None:
             api_params['html'] = html
-        if scheduled_at is not None:
-            api_params['scheduledAt'] = scheduled_at
+        api_params['scheduledAt'] = scheduled_at
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -177,28 +176,17 @@ class Messaging(Service):
 
         api_path = api_path.replace('{messageId}', message_id)
 
-        if topics is not None:
-            api_params['topics'] = topics
-        if users is not None:
-            api_params['users'] = users
-        if targets is not None:
-            api_params['targets'] = targets
-        if subject is not None:
-            api_params['subject'] = subject
-        if content is not None:
-            api_params['content'] = content
-        if draft is not None:
-            api_params['draft'] = draft
-        if html is not None:
-            api_params['html'] = html
-        if cc is not None:
-            api_params['cc'] = cc
-        if bcc is not None:
-            api_params['bcc'] = bcc
-        if scheduled_at is not None:
-            api_params['scheduledAt'] = scheduled_at
-        if attachments is not None:
-            api_params['attachments'] = attachments
+        api_params['topics'] = topics
+        api_params['users'] = users
+        api_params['targets'] = targets
+        api_params['subject'] = subject
+        api_params['content'] = content
+        api_params['draft'] = draft
+        api_params['html'] = html
+        api_params['cc'] = cc
+        api_params['bcc'] = bcc
+        api_params['scheduledAt'] = scheduled_at
+        api_params['attachments'] = attachments
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -277,8 +265,7 @@ class Messaging(Service):
             api_params['users'] = users
         if targets is not None:
             api_params['targets'] = targets
-        if data is not None:
-            api_params['data'] = data
+        api_params['data'] = data
         if action is not None:
             api_params['action'] = action
         if image is not None:
@@ -295,8 +282,7 @@ class Messaging(Service):
             api_params['badge'] = badge
         if draft is not None:
             api_params['draft'] = draft
-        if scheduled_at is not None:
-            api_params['scheduledAt'] = scheduled_at
+        api_params['scheduledAt'] = scheduled_at
         if content_available is not None:
             api_params['contentAvailable'] = content_available
         if critical is not None:
@@ -372,42 +358,24 @@ class Messaging(Service):
 
         api_path = api_path.replace('{messageId}', message_id)
 
-        if topics is not None:
-            api_params['topics'] = topics
-        if users is not None:
-            api_params['users'] = users
-        if targets is not None:
-            api_params['targets'] = targets
-        if title is not None:
-            api_params['title'] = title
-        if body is not None:
-            api_params['body'] = body
-        if data is not None:
-            api_params['data'] = data
-        if action is not None:
-            api_params['action'] = action
-        if image is not None:
-            api_params['image'] = image
-        if icon is not None:
-            api_params['icon'] = icon
-        if sound is not None:
-            api_params['sound'] = sound
-        if color is not None:
-            api_params['color'] = color
-        if tag is not None:
-            api_params['tag'] = tag
-        if badge is not None:
-            api_params['badge'] = badge
-        if draft is not None:
-            api_params['draft'] = draft
-        if scheduled_at is not None:
-            api_params['scheduledAt'] = scheduled_at
-        if content_available is not None:
-            api_params['contentAvailable'] = content_available
-        if critical is not None:
-            api_params['critical'] = critical
-        if priority is not None:
-            api_params['priority'] = priority
+        api_params['topics'] = topics
+        api_params['users'] = users
+        api_params['targets'] = targets
+        api_params['title'] = title
+        api_params['body'] = body
+        api_params['data'] = data
+        api_params['action'] = action
+        api_params['image'] = image
+        api_params['icon'] = icon
+        api_params['sound'] = sound
+        api_params['color'] = color
+        api_params['tag'] = tag
+        api_params['badge'] = badge
+        api_params['draft'] = draft
+        api_params['scheduledAt'] = scheduled_at
+        api_params['contentAvailable'] = content_available
+        api_params['critical'] = critical
+        api_params['priority'] = priority
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -464,8 +432,7 @@ class Messaging(Service):
             api_params['targets'] = targets
         if draft is not None:
             api_params['draft'] = draft
-        if scheduled_at is not None:
-            api_params['scheduledAt'] = scheduled_at
+        api_params['scheduledAt'] = scheduled_at
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -511,18 +478,12 @@ class Messaging(Service):
 
         api_path = api_path.replace('{messageId}', message_id)
 
-        if topics is not None:
-            api_params['topics'] = topics
-        if users is not None:
-            api_params['users'] = users
-        if targets is not None:
-            api_params['targets'] = targets
-        if content is not None:
-            api_params['content'] = content
-        if draft is not None:
-            api_params['draft'] = draft
-        if scheduled_at is not None:
-            api_params['scheduledAt'] = scheduled_at
+        api_params['topics'] = topics
+        api_params['users'] = users
+        api_params['targets'] = targets
+        api_params['content'] = content
+        api_params['draft'] = draft
+        api_params['scheduledAt'] = scheduled_at
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -762,8 +723,7 @@ class Messaging(Service):
             api_params['bundleId'] = bundle_id
         if sandbox is not None:
             api_params['sandbox'] = sandbox
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -812,8 +772,7 @@ class Messaging(Service):
 
         if name is not None:
             api_params['name'] = name
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
         if auth_key is not None:
             api_params['authKey'] = auth_key
         if auth_key_id is not None:
@@ -822,8 +781,7 @@ class Messaging(Service):
             api_params['teamId'] = team_id
         if bundle_id is not None:
             api_params['bundleId'] = bundle_id
-        if sandbox is not None:
-            api_params['sandbox'] = sandbox
+        api_params['sandbox'] = sandbox
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -866,10 +824,8 @@ class Messaging(Service):
 
         api_params['providerId'] = provider_id
         api_params['name'] = name
-        if service_account_json is not None:
-            api_params['serviceAccountJSON'] = service_account_json
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['serviceAccountJSON'] = service_account_json
+        api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -910,10 +866,8 @@ class Messaging(Service):
 
         if name is not None:
             api_params['name'] = name
-        if enabled is not None:
-            api_params['enabled'] = enabled
-        if service_account_json is not None:
-            api_params['serviceAccountJSON'] = service_account_json
+        api_params['enabled'] = enabled
+        api_params['serviceAccountJSON'] = service_account_json
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -972,8 +926,7 @@ class Messaging(Service):
             api_params['apiKey'] = api_key
         if domain is not None:
             api_params['domain'] = domain
-        if is_eu_region is not None:
-            api_params['isEuRegion'] = is_eu_region
+        api_params['isEuRegion'] = is_eu_region
         if from_name is not None:
             api_params['fromName'] = from_name
         if from_email is not None:
@@ -982,8 +935,7 @@ class Messaging(Service):
             api_params['replyToName'] = reply_to_name
         if reply_to_email is not None:
             api_params['replyToEmail'] = reply_to_email
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1040,10 +992,8 @@ class Messaging(Service):
             api_params['apiKey'] = api_key
         if domain is not None:
             api_params['domain'] = domain
-        if is_eu_region is not None:
-            api_params['isEuRegion'] = is_eu_region
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['isEuRegion'] = is_eu_region
+        api_params['enabled'] = enabled
         if from_name is not None:
             api_params['fromName'] = from_name
         if from_email is not None:
@@ -1104,8 +1054,7 @@ class Messaging(Service):
             api_params['senderId'] = sender_id
         if auth_key is not None:
             api_params['authKey'] = auth_key
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1150,8 +1099,7 @@ class Messaging(Service):
 
         if name is not None:
             api_params['name'] = name
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
         if template_id is not None:
             api_params['templateId'] = template_id
         if sender_id is not None:
@@ -1218,8 +1166,7 @@ class Messaging(Service):
             api_params['replyToName'] = reply_to_name
         if reply_to_email is not None:
             api_params['replyToEmail'] = reply_to_email
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1268,8 +1215,7 @@ class Messaging(Service):
 
         if name is not None:
             api_params['name'] = name
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
         if api_key is not None:
             api_params['apiKey'] = api_key
         if from_name is not None:
@@ -1340,8 +1286,7 @@ class Messaging(Service):
             api_params['replyToName'] = reply_to_name
         if reply_to_email is not None:
             api_params['replyToEmail'] = reply_to_email
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1390,8 +1335,7 @@ class Messaging(Service):
 
         if name is not None:
             api_params['name'] = name
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
         if api_key is not None:
             api_params['apiKey'] = api_key
         if from_name is not None:
@@ -1488,8 +1432,7 @@ class Messaging(Service):
             api_params['replyToName'] = reply_to_name
         if reply_to_email is not None:
             api_params['replyToEmail'] = reply_to_email
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1552,16 +1495,14 @@ class Messaging(Service):
             api_params['name'] = name
         if host is not None:
             api_params['host'] = host
-        if port is not None:
-            api_params['port'] = port
+        api_params['port'] = port
         if username is not None:
             api_params['username'] = username
         if password is not None:
             api_params['password'] = password
         if encryption is not None:
             api_params['encryption'] = encryption
-        if auto_tls is not None:
-            api_params['autoTLS'] = auto_tls
+        api_params['autoTLS'] = auto_tls
         if mailer is not None:
             api_params['mailer'] = mailer
         if from_name is not None:
@@ -1572,8 +1513,7 @@ class Messaging(Service):
             api_params['replyToName'] = reply_to_name
         if reply_to_email is not None:
             api_params['replyToEmail'] = reply_to_email
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',
@@ -1626,8 +1566,7 @@ class Messaging(Service):
             api_params['customerId'] = customer_id
         if api_key is not None:
             api_params['apiKey'] = api_key
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1672,8 +1611,7 @@ class Messaging(Service):
 
         if name is not None:
             api_params['name'] = name
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
         if customer_id is not None:
             api_params['customerId'] = customer_id
         if api_key is not None:
@@ -1732,8 +1670,7 @@ class Messaging(Service):
             api_params['username'] = username
         if api_key is not None:
             api_params['apiKey'] = api_key
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1778,8 +1715,7 @@ class Messaging(Service):
 
         if name is not None:
             api_params['name'] = name
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
         if username is not None:
             api_params['username'] = username
         if api_key is not None:
@@ -1838,8 +1774,7 @@ class Messaging(Service):
             api_params['accountSid'] = account_sid
         if auth_token is not None:
             api_params['authToken'] = auth_token
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1884,8 +1819,7 @@ class Messaging(Service):
 
         if name is not None:
             api_params['name'] = name
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
         if account_sid is not None:
             api_params['accountSid'] = account_sid
         if auth_token is not None:
@@ -1944,8 +1878,7 @@ class Messaging(Service):
             api_params['apiKey'] = api_key
         if api_secret is not None:
             api_params['apiSecret'] = api_secret
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1990,8 +1923,7 @@ class Messaging(Service):
 
         if name is not None:
             api_params['name'] = name
-        if enabled is not None:
-            api_params['enabled'] = enabled
+        api_params['enabled'] = enabled
         if api_key is not None:
             api_params['apiKey'] = api_key
         if api_secret is not None:
@@ -2288,10 +2220,8 @@ class Messaging(Service):
 
         api_path = api_path.replace('{topicId}', topic_id)
 
-        if name is not None:
-            api_params['name'] = name
-        if subscribe is not None:
-            api_params['subscribe'] = subscribe
+        api_params['name'] = name
+        api_params['subscribe'] = subscribe
 
         return self.client.call('patch', api_path, {
             'content-type': 'application/json',

@@ -83,10 +83,8 @@ class Users(Service):
 
 
         api_params['userId'] = user_id
-        if email is not None:
-            api_params['email'] = email
-        if phone is not None:
-            api_params['phone'] = phone
+        api_params['email'] = email
+        api_params['phone'] = phone
         if password is not None:
             api_params['password'] = password
         if name is not None:

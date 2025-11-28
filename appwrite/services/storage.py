@@ -19,7 +19,7 @@ class Storage(Service):
         Parameters
         ----------
         queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: enabled, name, fileSecurity, maximumFileSize, encryption, antivirus
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: enabled, name, fileSecurity, maximumFileSize, encryption, antivirus, transformations
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
@@ -49,7 +49,7 @@ class Storage(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_bucket(self, bucket_id: str, name: str, permissions: Optional[List[str]] = None, file_security: Optional[bool] = None, enabled: Optional[bool] = None, maximum_file_size: Optional[float] = None, allowed_file_extensions: Optional[List[str]] = None, compression: Optional[Compression] = None, encryption: Optional[bool] = None, antivirus: Optional[bool] = None) -> Dict[str, Any]:
+    def create_bucket(self, bucket_id: str, name: str, permissions: Optional[List[str]] = None, file_security: Optional[bool] = None, enabled: Optional[bool] = None, maximum_file_size: Optional[float] = None, allowed_file_extensions: Optional[List[str]] = None, compression: Optional[Compression] = None, encryption: Optional[bool] = None, antivirus: Optional[bool] = None, transformations: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a new storage bucket.
 
@@ -75,6 +75,8 @@ class Storage(Service):
             Is encryption enabled? For file size above 20MB encryption is skipped even if it's enabled
         antivirus : Optional[bool]
             Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
+        transformations : Optional[bool]
+            Are image transformations enabled?
         
         Returns
         -------
@@ -98,8 +100,7 @@ class Storage(Service):
 
         api_params['bucketId'] = bucket_id
         api_params['name'] = name
-        if permissions is not None:
-            api_params['permissions'] = permissions
+        api_params['permissions'] = permissions
         if file_security is not None:
             api_params['fileSecurity'] = file_security
         if enabled is not None:
@@ -114,6 +115,8 @@ class Storage(Service):
             api_params['encryption'] = encryption
         if antivirus is not None:
             api_params['antivirus'] = antivirus
+        if transformations is not None:
+            api_params['transformations'] = transformations
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -150,7 +153,7 @@ class Storage(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update_bucket(self, bucket_id: str, name: str, permissions: Optional[List[str]] = None, file_security: Optional[bool] = None, enabled: Optional[bool] = None, maximum_file_size: Optional[float] = None, allowed_file_extensions: Optional[List[str]] = None, compression: Optional[Compression] = None, encryption: Optional[bool] = None, antivirus: Optional[bool] = None) -> Dict[str, Any]:
+    def update_bucket(self, bucket_id: str, name: str, permissions: Optional[List[str]] = None, file_security: Optional[bool] = None, enabled: Optional[bool] = None, maximum_file_size: Optional[float] = None, allowed_file_extensions: Optional[List[str]] = None, compression: Optional[Compression] = None, encryption: Optional[bool] = None, antivirus: Optional[bool] = None, transformations: Optional[bool] = None) -> Dict[str, Any]:
         """
         Update a storage bucket by its unique ID.
 
@@ -176,6 +179,8 @@ class Storage(Service):
             Is encryption enabled? For file size above 20MB encryption is skipped even if it's enabled
         antivirus : Optional[bool]
             Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
+        transformations : Optional[bool]
+            Are image transformations enabled?
         
         Returns
         -------
@@ -199,8 +204,7 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
 
         api_params['name'] = name
-        if permissions is not None:
-            api_params['permissions'] = permissions
+        api_params['permissions'] = permissions
         if file_security is not None:
             api_params['fileSecurity'] = file_security
         if enabled is not None:
@@ -215,6 +219,8 @@ class Storage(Service):
             api_params['encryption'] = encryption
         if antivirus is not None:
             api_params['antivirus'] = antivirus
+        if transformations is not None:
+            api_params['transformations'] = transformations
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -432,10 +438,8 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
         api_path = api_path.replace('{fileId}', file_id)
 
-        if name is not None:
-            api_params['name'] = name
-        if permissions is not None:
-            api_params['permissions'] = permissions
+        api_params['name'] = name
+        api_params['permissions'] = permissions
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',

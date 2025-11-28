@@ -5,6 +5,9 @@ from appwrite.utils.deprecated import deprecated
 from ..enums.browser import Browser;
 from ..enums.credit_card import CreditCard;
 from ..enums.flag import Flag;
+from ..enums.theme import Theme;
+from ..enums.timezone import Timezone;
+from ..enums.output import Output;
 
 class Avatars(Service):
 
@@ -310,6 +313,117 @@ class Avatars(Service):
             api_params['margin'] = margin
         if download is not None:
             api_params['download'] = download
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
+    def get_screenshot(self, url: str, headers: Optional[dict] = None, viewport_width: Optional[float] = None, viewport_height: Optional[float] = None, scale: Optional[float] = None, theme: Optional[Theme] = None, user_agent: Optional[str] = None, fullpage: Optional[bool] = None, locale: Optional[str] = None, timezone: Optional[Timezone] = None, latitude: Optional[float] = None, longitude: Optional[float] = None, accuracy: Optional[float] = None, touch: Optional[bool] = None, permissions: Optional[List[str]] = None, sleep: Optional[float] = None, width: Optional[float] = None, height: Optional[float] = None, quality: Optional[float] = None, output: Optional[Output] = None) -> bytes:
+        """
+        Use this endpoint to capture a screenshot of any website URL. This endpoint uses a headless browser to render the webpage and capture it as an image.
+        
+        You can configure the browser viewport size, theme, user agent, geolocation, permissions, and more. Capture either just the viewport or the full page scroll.
+        
+        When width and height are specified, the image is resized accordingly. If both dimensions are 0, the API provides an image at original size. If dimensions are not specified, the default viewport size is 1280x720px.
+
+        Parameters
+        ----------
+        url : str
+            Website URL which you want to capture.
+        headers : Optional[dict]
+            HTTP headers to send with the browser request. Defaults to empty.
+        viewport_width : Optional[float]
+            Browser viewport width. Pass an integer between 1 to 1920. Defaults to 1280.
+        viewport_height : Optional[float]
+            Browser viewport height. Pass an integer between 1 to 1080. Defaults to 720.
+        scale : Optional[float]
+            Browser scale factor. Pass a number between 0.1 to 3. Defaults to 1.
+        theme : Optional[Theme]
+            Browser theme. Pass "light" or "dark". Defaults to "light".
+        user_agent : Optional[str]
+            Custom user agent string. Defaults to browser default.
+        fullpage : Optional[bool]
+            Capture full page scroll. Pass 0 for viewport only, or 1 for full page. Defaults to 0.
+        locale : Optional[str]
+            Browser locale (e.g., "en-US", "fr-FR"). Defaults to browser default.
+        timezone : Optional[Timezone]
+            IANA timezone identifier (e.g., "America/New_York", "Europe/London"). Defaults to browser default.
+        latitude : Optional[float]
+            Geolocation latitude. Pass a number between -90 to 90. Defaults to 0.
+        longitude : Optional[float]
+            Geolocation longitude. Pass a number between -180 to 180. Defaults to 0.
+        accuracy : Optional[float]
+            Geolocation accuracy in meters. Pass a number between 0 to 100000. Defaults to 0.
+        touch : Optional[bool]
+            Enable touch support. Pass 0 for no touch, or 1 for touch enabled. Defaults to 0.
+        permissions : Optional[List[str]]
+            Browser permissions to grant. Pass an array of permission names like ["geolocation", "camera", "microphone"]. Defaults to empty.
+        sleep : Optional[float]
+            Wait time in seconds before taking the screenshot. Pass an integer between 0 to 10. Defaults to 0.
+        width : Optional[float]
+            Output image width. Pass 0 to use original width, or an integer between 1 to 2000. Defaults to 0 (original width).
+        height : Optional[float]
+            Output image height. Pass 0 to use original height, or an integer between 1 to 2000. Defaults to 0 (original height).
+        quality : Optional[float]
+            Screenshot quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
+        output : Optional[Output]
+            Output format type (jpeg, jpg, png, gif and webp).
+        
+        Returns
+        -------
+        bytes
+            Response as bytes
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/avatars/screenshots'
+        api_params = {}
+        if url is None:
+            raise AppwriteException('Missing required parameter: "url"')
+
+
+        api_params['url'] = url
+        if headers is not None:
+            api_params['headers'] = headers
+        if viewport_width is not None:
+            api_params['viewportWidth'] = viewport_width
+        if viewport_height is not None:
+            api_params['viewportHeight'] = viewport_height
+        if scale is not None:
+            api_params['scale'] = scale
+        if theme is not None:
+            api_params['theme'] = theme
+        if user_agent is not None:
+            api_params['userAgent'] = user_agent
+        if fullpage is not None:
+            api_params['fullpage'] = fullpage
+        if locale is not None:
+            api_params['locale'] = locale
+        if timezone is not None:
+            api_params['timezone'] = timezone
+        if latitude is not None:
+            api_params['latitude'] = latitude
+        if longitude is not None:
+            api_params['longitude'] = longitude
+        if accuracy is not None:
+            api_params['accuracy'] = accuracy
+        if touch is not None:
+            api_params['touch'] = touch
+        if permissions is not None:
+            api_params['permissions'] = permissions
+        if sleep is not None:
+            api_params['sleep'] = sleep
+        if width is not None:
+            api_params['width'] = width
+        if height is not None:
+            api_params['height'] = height
+        if quality is not None:
+            api_params['quality'] = quality
+        if output is not None:
+            api_params['output'] = output
 
         return self.client.call('get', api_path, {
         }, api_params)

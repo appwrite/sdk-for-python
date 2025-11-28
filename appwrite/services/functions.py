@@ -4,7 +4,8 @@ from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..enums.runtime import Runtime;
 from ..input_file import InputFile
-from ..enums.vcs_deployment_type import VCSDeploymentType;
+from ..enums.template_reference_type import TemplateReferenceType;
+from ..enums.vcs_reference_type import VCSReferenceType;
 from ..enums.deployment_download_type import DeploymentDownloadType;
 from ..enums.execution_method import ExecutionMethod;
 
@@ -546,7 +547,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_template_deployment(self, function_id: str, repository: str, owner: str, root_directory: str, version: str, activate: Optional[bool] = None) -> Dict[str, Any]:
+    def create_template_deployment(self, function_id: str, repository: str, owner: str, root_directory: str, type: TemplateReferenceType, reference: str, activate: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a deployment based on a template.
         
@@ -562,8 +563,10 @@ class Functions(Service):
             The name of the owner of the template.
         root_directory : str
             Path to function code in the template repo.
-        version : str
-            Version (tag) for the repo linked to the function template.
+        type : TemplateReferenceType
+            Type for the reference provided. Can be commit, branch, or tag
+        reference : str
+            Reference value, can be a commit hash, branch name, or release tag
         activate : Optional[bool]
             Automatically activate the deployment when it is finished building.
         
@@ -592,15 +595,19 @@ class Functions(Service):
         if root_directory is None:
             raise AppwriteException('Missing required parameter: "root_directory"')
 
-        if version is None:
-            raise AppwriteException('Missing required parameter: "version"')
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        if reference is None:
+            raise AppwriteException('Missing required parameter: "reference"')
 
         api_path = api_path.replace('{functionId}', function_id)
 
         api_params['repository'] = repository
         api_params['owner'] = owner
         api_params['rootDirectory'] = root_directory
-        api_params['version'] = version
+        api_params['type'] = type
+        api_params['reference'] = reference
         if activate is not None:
             api_params['activate'] = activate
 
@@ -608,7 +615,7 @@ class Functions(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_vcs_deployment(self, function_id: str, type: VCSDeploymentType, reference: str, activate: Optional[bool] = None) -> Dict[str, Any]:
+    def create_vcs_deployment(self, function_id: str, type: VCSReferenceType, reference: str, activate: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a deployment when a function is connected to VCS.
         
@@ -618,7 +625,7 @@ class Functions(Service):
         ----------
         function_id : str
             Function ID.
-        type : VCSDeploymentType
+        type : VCSReferenceType
             Type of reference passed. Allowed values are: branch, commit
         reference : str
             VCS reference to create deployment from. Depending on type this can be: branch name, commit hash
@@ -900,8 +907,7 @@ class Functions(Service):
             api_params['method'] = method
         if headers is not None:
             api_params['headers'] = headers
-        if scheduled_at is not None:
-            api_params['scheduledAt'] = scheduled_at
+        api_params['scheduledAt'] = scheduled_at
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1141,10 +1147,8 @@ class Functions(Service):
         api_path = api_path.replace('{variableId}', variable_id)
 
         api_params['key'] = key
-        if value is not None:
-            api_params['value'] = value
-        if secret is not None:
-            api_params['secret'] = secret
+        api_params['value'] = value
+        api_params['secret'] = secret
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
