@@ -1,5 +1,9 @@
 # Change Log
 
+## 13.7.0
+
+* Add `get_screenshot` method to `Avatars` service
+
 ## 13.6.1
 
 * Fix passing of `None` to nullable parameters
