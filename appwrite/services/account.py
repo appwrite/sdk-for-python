@@ -394,7 +394,7 @@ class Account(Service):
             If API request fails
         """
 
-        api_path = '/account/mfa/challenge'
+        api_path = '/account/mfa/challenges'
         api_params = {}
         if factor is None:
             raise AppwriteException('Missing required parameter: "factor"')
@@ -428,7 +428,7 @@ class Account(Service):
             If API request fails
         """
 
-        api_path = '/account/mfa/challenge'
+        api_path = '/account/mfa/challenges'
         api_params = {}
         if challenge_id is None:
             raise AppwriteException('Missing required parameter: "challenge_id"')
