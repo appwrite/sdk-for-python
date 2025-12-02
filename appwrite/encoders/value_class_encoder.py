@@ -5,11 +5,15 @@ from ..enums.o_auth_provider import OAuthProvider
 from ..enums.browser import Browser
 from ..enums.credit_card import CreditCard
 from ..enums.flag import Flag
+from ..enums.theme import Theme
+from ..enums.timezone import Timezone
+from ..enums.output import Output
 from ..enums.relationship_type import RelationshipType
 from ..enums.relation_mutate import RelationMutate
 from ..enums.index_type import IndexType
 from ..enums.runtime import Runtime
-from ..enums.vcs_deployment_type import VCSDeploymentType
+from ..enums.template_reference_type import TemplateReferenceType
+from ..enums.vcs_reference_type import VCSReferenceType
 from ..enums.deployment_download_type import DeploymentDownloadType
 from ..enums.execution_method import ExecutionMethod
 from ..enums.name import Name
@@ -54,6 +58,15 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, Flag):
             return o.value
 
+        if isinstance(o, Theme):
+            return o.value
+
+        if isinstance(o, Timezone):
+            return o.value
+
+        if isinstance(o, Output):
+            return o.value
+
         if isinstance(o, RelationshipType):
             return o.value
 
@@ -66,7 +79,10 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, Runtime):
             return o.value
 
-        if isinstance(o, VCSDeploymentType):
+        if isinstance(o, TemplateReferenceType):
+            return o.value
+
+        if isinstance(o, VCSReferenceType):
             return o.value
 
         if isinstance(o, DeploymentDownloadType):

@@ -6,7 +6,8 @@ from ..enums.framework import Framework;
 from ..enums.build_runtime import BuildRuntime;
 from ..enums.adapter import Adapter;
 from ..input_file import InputFile
-from ..enums.vcs_deployment_type import VCSDeploymentType;
+from ..enums.template_reference_type import TemplateReferenceType;
+from ..enums.vcs_reference_type import VCSReferenceType;
 from ..enums.deployment_download_type import DeploymentDownloadType;
 
 class Sites(Service):
@@ -449,7 +450,7 @@ class Sites(Service):
 
     def create_deployment(self, site_id: str, code: InputFile, activate: bool, install_command: Optional[str] = None, build_command: Optional[str] = None, output_directory: Optional[str] = None, on_progress = None) -> Dict[str, Any]:
         """
-        Create a new site code deployment. Use this endpoint to upload a new version of your site code. To activate your newly uploaded code, you'll need to update the function's deployment to use your new deployment ID.
+        Create a new site code deployment. Use this endpoint to upload a new version of your site code. To activate your newly uploaded code, you'll need to update the site's deployment to use your new deployment ID.
 
         Parameters
         ----------
@@ -548,7 +549,7 @@ class Sites(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_template_deployment(self, site_id: str, repository: str, owner: str, root_directory: str, version: str, activate: Optional[bool] = None) -> Dict[str, Any]:
+    def create_template_deployment(self, site_id: str, repository: str, owner: str, root_directory: str, type: TemplateReferenceType, reference: str, activate: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a deployment based on a template.
         
@@ -564,8 +565,10 @@ class Sites(Service):
             The name of the owner of the template.
         root_directory : str
             Path to site code in the template repo.
-        version : str
-            Version (tag) for the repo linked to the site template.
+        type : TemplateReferenceType
+            Type for the reference provided. Can be commit, branch, or tag
+        reference : str
+            Reference value, can be a commit hash, branch name, or release tag
         activate : Optional[bool]
             Automatically activate the deployment when it is finished building.
         
@@ -594,15 +597,19 @@ class Sites(Service):
         if root_directory is None:
             raise AppwriteException('Missing required parameter: "root_directory"')
 
-        if version is None:
-            raise AppwriteException('Missing required parameter: "version"')
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+        if reference is None:
+            raise AppwriteException('Missing required parameter: "reference"')
 
         api_path = api_path.replace('{siteId}', site_id)
 
         api_params['repository'] = repository
         api_params['owner'] = owner
         api_params['rootDirectory'] = root_directory
-        api_params['version'] = version
+        api_params['type'] = type
+        api_params['reference'] = reference
         if activate is not None:
             api_params['activate'] = activate
 
@@ -610,7 +617,7 @@ class Sites(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_vcs_deployment(self, site_id: str, type: VCSDeploymentType, reference: str, activate: Optional[bool] = None) -> Dict[str, Any]:
+    def create_vcs_deployment(self, site_id: str, type: VCSReferenceType, reference: str, activate: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a deployment when a site is connected to VCS.
         
@@ -620,7 +627,7 @@ class Sites(Service):
         ----------
         site_id : str
             Site ID.
-        type : VCSDeploymentType
+        type : VCSReferenceType
             Type of reference passed. Allowed values are: branch, commit
         reference : str
             VCS reference to create deployment from. Depending on type this can be: branch name, commit hash
@@ -1087,10 +1094,8 @@ class Sites(Service):
         api_path = api_path.replace('{variableId}', variable_id)
 
         api_params['key'] = key
-        if value is not None:
-            api_params['value'] = value
-        if secret is not None:
-            api_params['secret'] = secret
+        api_params['value'] = value
+        api_params['secret'] = secret
 
         return self.client.call('put', api_path, {
             'content-type': 'application/json',
