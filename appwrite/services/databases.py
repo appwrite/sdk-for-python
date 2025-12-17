@@ -456,7 +456,7 @@ class Databases(Service):
         }, api_params)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_table` instead.")
-    def create_collection(self, database_id: str, collection_id: str, name: str, permissions: Optional[List[str]] = None, document_security: Optional[bool] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
+    def create_collection(self, database_id: str, collection_id: str, name: str, permissions: Optional[List[str]] = None, document_security: Optional[bool] = None, enabled: Optional[bool] = None, attributes: Optional[List[dict]] = None, indexes: Optional[List[dict]] = None) -> Dict[str, Any]:
         """
         Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -476,6 +476,10 @@ class Databases(Service):
             Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
         enabled : Optional[bool]
             Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+        attributes : Optional[List[dict]]
+            Array of attribute definitions to create. Each attribute should contain: key (string), type (string: string, integer, float, boolean, datetime, relationship), size (integer, required for string type), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.
+        indexes : Optional[List[dict]]
+            Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial), attributes (array of attribute keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
         
         Returns
         -------
@@ -508,6 +512,10 @@ class Databases(Service):
             api_params['documentSecurity'] = document_security
         if enabled is not None:
             api_params['enabled'] = enabled
+        if attributes is not None:
+            api_params['attributes'] = attributes
+        if indexes is not None:
+            api_params['indexes'] = indexes
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
