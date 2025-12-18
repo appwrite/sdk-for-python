@@ -437,7 +437,7 @@ class TablesDB(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_table(self, database_id: str, table_id: str, name: str, permissions: Optional[List[str]] = None, row_security: Optional[bool] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
+    def create_table(self, database_id: str, table_id: str, name: str, permissions: Optional[List[str]] = None, row_security: Optional[bool] = None, enabled: Optional[bool] = None, columns: Optional[List[dict]] = None, indexes: Optional[List[dict]] = None) -> Dict[str, Any]:
         """
         Create a new Table. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -455,6 +455,10 @@ class TablesDB(Service):
             Enables configuring permissions for individual rows. A user needs one of row or table level permissions to access a row. [Learn more about permissions](https://appwrite.io/docs/permissions).
         enabled : Optional[bool]
             Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
+        columns : Optional[List[dict]]
+            Array of column definitions to create. Each column should contain: key (string), type (string: string, integer, float, boolean, datetime, relationship), size (integer, required for string type), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.
+        indexes : Optional[List[dict]]
+            Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial), attributes (array of column keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
         
         Returns
         -------
@@ -487,6 +491,10 @@ class TablesDB(Service):
             api_params['rowSecurity'] = row_security
         if enabled is not None:
             api_params['enabled'] = enabled
+        if columns is not None:
+            api_params['columns'] = columns
+        if indexes is not None:
+            api_params['indexes'] = indexes
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
