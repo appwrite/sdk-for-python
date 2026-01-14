@@ -1,5 +1,9 @@
 # Change Log
 
+## 14.1.1
+
+* Update SDK as per latest server specs
+
 ## 13.6.1
 
 * Fix passing of `None` to nullable parameters
