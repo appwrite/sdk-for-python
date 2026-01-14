@@ -185,10 +185,15 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_jwt(self) -> Dict[str, Any]:
+    def create_jwt(self, duration: Optional[float] = None) -> Dict[str, Any]:
         """
         Use this endpoint to create a JSON Web Token. You can use the resulting JWT to authenticate on behalf of the current user when working with the Appwrite server-side API and SDKs. The JWT secret is valid for 15 minutes from its creation and will be invalid if the user will logout in that time frame.
 
+        Parameters
+        ----------
+        duration : Optional[float]
+            Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
+        
         Returns
         -------
         Dict[str, Any]
@@ -202,6 +207,9 @@ class Account(Service):
 
         api_path = '/account/jwts'
         api_params = {}
+
+        if duration is not None:
+            api_params['duration'] = duration
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1220,7 +1228,7 @@ class Account(Service):
         Parameters
         ----------
         provider : OAuthProvider
-            OAuth2 Provider. Currently, supported providers are: amazon, apple, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, github, gitlab, google, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, yahoo, yammer, yandex, zoho, zoom.
+            OAuth2 Provider. Currently, supported providers are: amazon, apple, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, github, gitlab, google, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, yahoo, yammer, yandex, zoho, zoom, githubImagine, googleImagine.
         success : Optional[str]
             URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
         failure : Optional[str]

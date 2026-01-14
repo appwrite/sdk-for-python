@@ -66,11 +66,11 @@ class Storage(Service):
         enabled : Optional[bool]
             Is bucket enabled? When set to 'disabled', users cannot access the files in this bucket but Server SDKs with and API key can still access the bucket. No files are lost when this is toggled.
         maximum_file_size : Optional[float]
-            Maximum file size allowed in bytes. Maximum allowed value is 30MB.
+            Maximum file size allowed in bytes. Maximum allowed value is 5GB.
         allowed_file_extensions : Optional[List[str]]
             Allowed file extensions. Maximum of 100 extensions are allowed, each 64 characters long.
         compression : Optional[Compression]
-            Compression algorithm choosen for compression. Can be one of none,  [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd), For file size above 20MB compression is skipped even if it's enabled
+            Compression algorithm chosen for compression. Can be one of none,  [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd), For file size above 20MB compression is skipped even if it's enabled
         encryption : Optional[bool]
             Is encryption enabled? For file size above 20MB encryption is skipped even if it's enabled
         antivirus : Optional[bool]
@@ -170,11 +170,11 @@ class Storage(Service):
         enabled : Optional[bool]
             Is bucket enabled? When set to 'disabled', users cannot access the files in this bucket but Server SDKs with and API key can still access the bucket. No files are lost when this is toggled.
         maximum_file_size : Optional[float]
-            Maximum file size allowed in bytes. Maximum allowed value is 30MB.
+            Maximum file size allowed in bytes. Maximum allowed value is 5GB.
         allowed_file_extensions : Optional[List[str]]
             Allowed file extensions. Maximum of 100 extensions are allowed, each 64 characters long.
         compression : Optional[Compression]
-            Compression algorithm choosen for compression. Can be one of none, [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd), For file size above 20MB compression is skipped even if it's enabled
+            Compression algorithm chosen for compression. Can be one of none, [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd), For file size above 20MB compression is skipped even if it's enabled
         encryption : Optional[bool]
             Is encryption enabled? For file size above 20MB encryption is skipped even if it's enabled
         antivirus : Optional[bool]
@@ -408,13 +408,13 @@ class Storage(Service):
         Parameters
         ----------
         bucket_id : str
-            Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
+            Bucket unique ID.
         file_id : str
-            File unique ID.
+            File ID.
         name : Optional[str]
-            Name of the file
+            File name.
         permissions : Optional[List[str]]
-            An array of permission string. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+            An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
         
         Returns
         -------
@@ -438,7 +438,8 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', bucket_id)
         api_path = api_path.replace('{fileId}', file_id)
 
-        api_params['name'] = name
+        if name is not None:
+            api_params['name'] = name
         api_params['permissions'] = permissions
 
         return self.client.call('put', api_path, {

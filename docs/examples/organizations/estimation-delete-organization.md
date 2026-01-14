@@ -1,13 +1,13 @@
 from appwrite.client import Client
-from appwrite.services.account import Account
+from appwrite.services.organizations import Organizations
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
 client.set_project('<YOUR_PROJECT_ID>') # Your project ID
 client.set_session('') # The user session to authenticate with
 
-account = Account(client)
+organizations = Organizations(client)
 
-result = account.create_jwt(
-    duration = 0 # optional
+result = organizations.estimation_delete_organization(
+    organization_id = '<ORGANIZATION_ID>'
 )

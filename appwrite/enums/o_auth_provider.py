@@ -41,3 +41,6 @@ class OAuthProvider(Enum):
     ZOHO = "zoho"
     ZOOM = "zoom"
     MOCK = "mock"
+    MOCK_UNVERIFIED = "mock-unverified"
+    GITHUBIMAGINE = "githubImagine"
+    GOOGLEIMAGINE = "googleImagine"

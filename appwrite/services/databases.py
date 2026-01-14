@@ -2770,7 +2770,7 @@ class Databases(Service):
         }, api_params)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.upsert_row` instead.")
-    def upsert_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+    def upsert_document(self, database_id: str, collection_id: str, document_id: str, data: Optional[dict] = None, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -2784,7 +2784,7 @@ class Databases(Service):
             Collection ID.
         document_id : str
             Document ID.
-        data : dict
+        data : Optional[dict]
             Document data as JSON object. Include all required attributes of the document to be created or updated.
         permissions : Optional[List[str]]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
@@ -2813,14 +2813,12 @@ class Databases(Service):
         if document_id is None:
             raise AppwriteException('Missing required parameter: "document_id"')
 
-        if data is None:
-            raise AppwriteException('Missing required parameter: "data"')
-
         api_path = api_path.replace('{databaseId}', database_id)
         api_path = api_path.replace('{collectionId}', collection_id)
         api_path = api_path.replace('{documentId}', document_id)
 
-        api_params['data'] = data
+        if data is not None:
+            api_params['data'] = data
         api_params['permissions'] = permissions
         api_params['transactionId'] = transaction_id
 
