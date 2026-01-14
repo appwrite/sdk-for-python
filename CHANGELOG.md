@@ -2,7 +2,11 @@
 
 ## 14.1.1
 
-* Update SDK as per latest server specs
+* Update SDK as per latest server specs, these include -
+    * Updates to Runtime enums
+    * `Output` is now renamed to `ImageFormat` - Note that this is a breaking change
+    * Introduces Backups module for managing Database backups
+    * Introduces Organization module
 
 ## 14.1.0
 
