@@ -1,5 +1,13 @@
 # Change Log
 
+## 14.1.1
+
+* Update SDK as per latest server specs, these include -
+    * Updates to Runtime enums
+    * `Output` is now renamed to `ImageFormat` - Note that this is a breaking change
+    * Introduces Backups module for managing Database backups
+    * Introduces Organization module
+
 ## 14.1.0
 
 * Added ability to create columns and indexes synchronously while creating a table
@@ -7,7 +15,8 @@
 ## 14.0.0
 
 * Rename `VCSDeploymentType` enum to `VCSReferenceType`
-* Change `create_template_deployment` method signature: replace `version` parameter with `type` (TemplateReferenceType) and `reference` parameters
+* Change `create_template_deployment` method signature: replace `version` parameter with `type` (TemplateReferenceType)
+  and `reference` parameters
 * Add `get_screenshot` method to `Avatars` service
 * Add `Theme`, `Timezone` and `Output` enums
 * Add support for dart39 and flutter335 runtimes

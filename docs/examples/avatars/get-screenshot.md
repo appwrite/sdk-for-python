@@ -2,7 +2,7 @@ from appwrite.client import Client
 from appwrite.services.avatars import Avatars
 from appwrite.enums import Theme
 from appwrite.enums import Timezone
-from appwrite.enums import Output
+from appwrite.enums import ImageFormat
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -34,5 +34,5 @@ result = avatars.get_screenshot(
     width = 800, # optional
     height = 600, # optional
     quality = 85, # optional
-    output = Output.JPG # optional
+    output = ImageFormat.JPG # optional
 )

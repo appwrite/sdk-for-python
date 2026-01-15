@@ -40,4 +40,3 @@ class OAuthProvider(Enum):
     YANDEX = "yandex"
     ZOHO = "zoho"
     ZOOM = "zoom"
-    MOCK = "mock"

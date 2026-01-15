@@ -7,7 +7,7 @@ from ..enums.credit_card import CreditCard
 from ..enums.flag import Flag
 from ..enums.theme import Theme
 from ..enums.timezone import Timezone
-from ..enums.output import Output
+from ..enums.image_format import ImageFormat
 from ..enums.relationship_type import RelationshipType
 from ..enums.relation_mutate import RelationMutate
 from ..enums.index_type import IndexType
@@ -24,7 +24,6 @@ from ..enums.build_runtime import BuildRuntime
 from ..enums.adapter import Adapter
 from ..enums.compression import Compression
 from ..enums.image_gravity import ImageGravity
-from ..enums.image_format import ImageFormat
 from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
 from ..enums.database_type import DatabaseType
@@ -64,7 +63,7 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, Timezone):
             return o.value
 
-        if isinstance(o, Output):
+        if isinstance(o, ImageFormat):
             return o.value
 
         if isinstance(o, RelationshipType):
@@ -113,9 +112,6 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, ImageGravity):
-            return o.value
-
-        if isinstance(o, ImageFormat):
             return o.value
 
         if isinstance(o, PasswordHash):
