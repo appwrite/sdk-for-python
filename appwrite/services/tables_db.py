@@ -1618,6 +1618,236 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def create_longtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        """
+        Create a longtext column.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : Optional[str]
+            Default value for column when not provided. Cannot be set when column is required.
+        array : Optional[bool]
+            Is column an array?
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/longtext'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_longtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Update a longtext column. Changing the `default` value will not update already existing rows.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : Optional[str]
+            Default value for column when not provided. Cannot be set when column is required.
+        new_key : Optional[str]
+            New Column Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/longtext/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_mediumtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        """
+        Create a mediumtext column.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : Optional[str]
+            Default value for column when not provided. Cannot be set when column is required.
+        array : Optional[bool]
+            Is column an array?
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/mediumtext'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mediumtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Update a mediumtext column. Changing the `default` value will not update already existing rows.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : Optional[str]
+            Default value for column when not provided. Cannot be set when column is required.
+        new_key : Optional[str]
+            New Column Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/mediumtext/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     def create_point_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None) -> Dict[str, Any]:
         """
         Create a geometric point column.
@@ -1901,11 +2131,14 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.9.0. Please use `tablesDB.create_text_column` instead.")
     def create_string_column(self, database_id: str, table_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a string column.
         
 
+        .. deprecated::1.9.0
+            This API has been deprecated since 1.9.0. Please use `tablesDB.create_text_column` instead.
         Parameters
         ----------
         database_id : str
@@ -1969,11 +2202,14 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_text_column` instead.")
     def update_string_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], size: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
         """
         Update a string column. Changing the `default` value will not update already existing rows.
         
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_text_column` instead.
         Parameters
         ----------
         database_id : str
@@ -2023,6 +2259,121 @@ class TablesDB(Service):
         api_params['required'] = required
         api_params['default'] = default
         api_params['size'] = size
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_text_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        """
+        Create a text column.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : Optional[str]
+            Default value for column when not provided. Cannot be set when column is required.
+        array : Optional[bool]
+            Is column an array?
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/text'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_text_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Update a text column. Changing the `default` value will not update already existing rows.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : Optional[str]
+            Default value for column when not provided. Cannot be set when column is required.
+        new_key : Optional[str]
+            New Column Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/text/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
         api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
@@ -2138,6 +2489,130 @@ class TablesDB(Service):
 
         api_params['required'] = required
         api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_varchar_column(self, database_id: str, table_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        """
+        Create a varchar column.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
+        key : str
+            Column Key.
+        size : float
+            Column size for varchar columns, in number of characters. Maximum size is 16381.
+        required : bool
+            Is column required?
+        default : Optional[str]
+            Default value for column when not provided. Cannot be set when column is required.
+        array : Optional[bool]
+            Is column an array?
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/varchar'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if size is None:
+            raise AppwriteException('Missing required parameter: "size"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+
+        api_params['key'] = key
+        api_params['size'] = size
+        api_params['required'] = required
+        api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_varchar_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], size: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Update a varchar column. Changing the `default` value will not update already existing rows.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : Optional[str]
+            Default value for column when not provided. Cannot be set when column is required.
+        size : Optional[float]
+            Maximum size of the varchar column.
+        new_key : Optional[str]
+            New Column Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/varchar/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['size'] = size
         api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {

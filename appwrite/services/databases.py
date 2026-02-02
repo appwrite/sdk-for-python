@@ -1700,6 +1700,236 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def create_longtext_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        """
+        Create a longtext attribute.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : Optional[str]
+            Default value for attribute when not provided. Cannot be set when attribute is required.
+        array : Optional[bool]
+            Is attribute an array?
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/longtext'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_longtext_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Update a longtext attribute. Changing the `default` value will not update already existing documents.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : Optional[str]
+            Default value for attribute when not provided. Cannot be set when attribute is required.
+        new_key : Optional[str]
+            New Attribute Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/longtext/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_mediumtext_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        """
+        Create a mediumtext attribute.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : Optional[str]
+            Default value for attribute when not provided. Cannot be set when attribute is required.
+        array : Optional[bool]
+            Is attribute an array?
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/mediumtext'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_mediumtext_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Update a mediumtext attribute. Changing the `default` value will not update already existing documents.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : Optional[str]
+            Default value for attribute when not provided. Cannot be set when attribute is required.
+        new_key : Optional[str]
+            New Attribute Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/mediumtext/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_point_column` instead.")
     def create_point_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[List[Any]] = None) -> Dict[str, Any]:
         """
@@ -2132,6 +2362,121 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    def create_text_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        """
+        Create a text attribute.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : Optional[str]
+            Default value for attribute when not provided. Cannot be set when attribute is required.
+        array : Optional[bool]
+            Is attribute an array?
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/text'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+
+        api_params['key'] = key
+        api_params['required'] = required
+        api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_text_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Update a text attribute. Changing the `default` value will not update already existing documents.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : Optional[str]
+            Default value for attribute when not provided. Cannot be set when attribute is required.
+        new_key : Optional[str]
+            New Attribute Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/text/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_url_column` instead.")
     def create_url_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
         """
@@ -2247,6 +2592,130 @@ class Databases(Service):
 
         api_params['required'] = required
         api_params['default'] = default
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def create_varchar_attribute(self, database_id: str, collection_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        """
+        Create a varchar attribute.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        key : str
+            Attribute Key.
+        size : float
+            Attribute size for varchar attributes, in number of characters. Maximum size is 16381.
+        required : bool
+            Is attribute required?
+        default : Optional[str]
+            Default value for attribute when not provided. Cannot be set when attribute is required.
+        array : Optional[bool]
+            Is attribute an array?
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/varchar'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if size is None:
+            raise AppwriteException('Missing required parameter: "size"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+
+        api_params['key'] = key
+        api_params['size'] = size
+        api_params['required'] = required
+        api_params['default'] = default
+        if array is not None:
+            api_params['array'] = array
+
+        return self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+    def update_varchar_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str], size: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Update a varchar attribute. Changing the `default` value will not update already existing documents.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : Optional[str]
+            Default value for attribute when not provided. Cannot be set when attribute is required.
+        size : Optional[float]
+            Maximum size of the varchar attribute.
+        new_key : Optional[str]
+            New Attribute Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/varchar/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+        api_path = api_path.replace('{key}', key)
+
+        api_params['required'] = required
+        api_params['default'] = default
+        api_params['size'] = size
         api_params['newKey'] = new_key
 
         return self.client.call('patch', api_path, {
