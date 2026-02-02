@@ -185,10 +185,15 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_jwt(self) -> Dict[str, Any]:
+    def create_jwt(self, duration: Optional[float] = None) -> Dict[str, Any]:
         """
         Use this endpoint to create a JSON Web Token. You can use the resulting JWT to authenticate on behalf of the current user when working with the Appwrite server-side API and SDKs. The JWT secret is valid for 15 minutes from its creation and will be invalid if the user will logout in that time frame.
 
+        Parameters
+        ----------
+        duration : Optional[float]
+            Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
+        
         Returns
         -------
         Dict[str, Any]
@@ -202,6 +207,9 @@ class Account(Service):
 
         api_path = '/account/jwts'
         api_params = {}
+
+        if duration is not None:
+            api_params['duration'] = duration
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',

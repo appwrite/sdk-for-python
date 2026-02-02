@@ -5,6 +5,7 @@ from appwrite.utils.deprecated import deprecated
 from ..enums.relationship_type import RelationshipType;
 from ..enums.relation_mutate import RelationMutate;
 from ..enums.index_type import IndexType;
+from ..enums.order_by import OrderBy;
 
 class Databases(Service):
 
@@ -330,7 +331,7 @@ class Databases(Service):
         }, api_params)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update` instead.")
-    def update(self, database_id: str, name: str, enabled: Optional[bool] = None) -> Dict[str, Any]:
+    def update(self, database_id: str, name: Optional[str] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
         """
         Update a database by its unique ID.
 
@@ -340,7 +341,7 @@ class Databases(Service):
         ----------
         database_id : str
             Database ID.
-        name : str
+        name : Optional[str]
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
@@ -361,12 +362,10 @@ class Databases(Service):
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
 
-        if name is None:
-            raise AppwriteException('Missing required parameter: "name"')
-
         api_path = api_path.replace('{databaseId}', database_id)
 
-        api_params['name'] = name
+        if name is not None:
+            api_params['name'] = name
         if enabled is not None:
             api_params['enabled'] = enabled
 
@@ -562,7 +561,7 @@ class Databases(Service):
         }, api_params)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_table` instead.")
-    def update_collection(self, database_id: str, collection_id: str, name: str, permissions: Optional[List[str]] = None, document_security: Optional[bool] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
+    def update_collection(self, database_id: str, collection_id: str, name: Optional[str] = None, permissions: Optional[List[str]] = None, document_security: Optional[bool] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
         """
         Update a collection by its unique ID.
 
@@ -574,7 +573,7 @@ class Databases(Service):
             Database ID.
         collection_id : str
             Collection ID.
-        name : str
+        name : Optional[str]
             Collection name. Max length: 128 chars.
         permissions : Optional[List[str]]
             An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
@@ -602,13 +601,11 @@ class Databases(Service):
         if collection_id is None:
             raise AppwriteException('Missing required parameter: "collection_id"')
 
-        if name is None:
-            raise AppwriteException('Missing required parameter: "name"')
-
         api_path = api_path.replace('{databaseId}', database_id)
         api_path = api_path.replace('{collectionId}', collection_id)
 
-        api_params['name'] = name
+        if name is not None:
+            api_params['name'] = name
         api_params['permissions'] = permissions
         if document_security is not None:
             api_params['documentSecurity'] = document_security
@@ -2770,7 +2767,7 @@ class Databases(Service):
         }, api_params)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.upsert_row` instead.")
-    def upsert_document(self, database_id: str, collection_id: str, document_id: str, data: dict, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+    def upsert_document(self, database_id: str, collection_id: str, document_id: str, data: Optional[dict] = None, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -2784,7 +2781,7 @@ class Databases(Service):
             Collection ID.
         document_id : str
             Document ID.
-        data : dict
+        data : Optional[dict]
             Document data as JSON object. Include all required attributes of the document to be created or updated.
         permissions : Optional[List[str]]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
@@ -2813,14 +2810,12 @@ class Databases(Service):
         if document_id is None:
             raise AppwriteException('Missing required parameter: "document_id"')
 
-        if data is None:
-            raise AppwriteException('Missing required parameter: "data"')
-
         api_path = api_path.replace('{databaseId}', database_id)
         api_path = api_path.replace('{collectionId}', collection_id)
         api_path = api_path.replace('{documentId}', document_id)
 
-        api_params['data'] = data
+        if data is not None:
+            api_params['data'] = data
         api_params['permissions'] = permissions
         api_params['transactionId'] = transaction_id
 
@@ -3110,7 +3105,7 @@ class Databases(Service):
         }, api_params)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_index` instead.")
-    def create_index(self, database_id: str, collection_id: str, key: str, type: IndexType, attributes: List[str], orders: Optional[List[str]] = None, lengths: Optional[List[float]] = None) -> Dict[str, Any]:
+    def create_index(self, database_id: str, collection_id: str, key: str, type: IndexType, attributes: List[str], orders: Optional[List[OrderBy]] = None, lengths: Optional[List[float]] = None) -> Dict[str, Any]:
         """
         Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
         Attributes can be `key`, `fulltext`, and `unique`.
@@ -3129,7 +3124,7 @@ class Databases(Service):
             Index type.
         attributes : List[str]
             Array of attributes to index. Maximum of 100 attributes are allowed, each 32 characters long.
-        orders : Optional[List[str]]
+        orders : Optional[List[OrderBy]]
             Array of index orders. Maximum of 100 orders are allowed.
         lengths : Optional[List[float]]
             Length of index. Maximum of 100

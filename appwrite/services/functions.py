@@ -3,6 +3,7 @@ from typing import List, Dict, Any, Optional
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..enums.runtime import Runtime;
+from ..enums.scopes import Scopes;
 from ..input_file import InputFile
 from ..enums.template_reference_type import TemplateReferenceType;
 from ..enums.vcs_reference_type import VCSReferenceType;
@@ -51,7 +52,7 @@ class Functions(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, function_id: str, name: str, runtime: Runtime, execute: Optional[List[str]] = None, events: Optional[List[str]] = None, schedule: Optional[str] = None, timeout: Optional[float] = None, enabled: Optional[bool] = None, logging: Optional[bool] = None, entrypoint: Optional[str] = None, commands: Optional[str] = None, scopes: Optional[List[str]] = None, installation_id: Optional[str] = None, provider_repository_id: Optional[str] = None, provider_branch: Optional[str] = None, provider_silent_mode: Optional[bool] = None, provider_root_directory: Optional[str] = None, specification: Optional[str] = None) -> Dict[str, Any]:
+    def create(self, function_id: str, name: str, runtime: Runtime, execute: Optional[List[str]] = None, events: Optional[List[str]] = None, schedule: Optional[str] = None, timeout: Optional[float] = None, enabled: Optional[bool] = None, logging: Optional[bool] = None, entrypoint: Optional[str] = None, commands: Optional[str] = None, scopes: Optional[List[Scopes]] = None, installation_id: Optional[str] = None, provider_repository_id: Optional[str] = None, provider_branch: Optional[str] = None, provider_silent_mode: Optional[bool] = None, provider_root_directory: Optional[str] = None, specification: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
 
@@ -79,7 +80,7 @@ class Functions(Service):
             Entrypoint File. This path is relative to the "providerRootDirectory".
         commands : Optional[str]
             Build Commands.
-        scopes : Optional[List[str]]
+        scopes : Optional[List[Scopes]]
             List of scopes allowed for API key auto-generated for every execution. Maximum of 100 scopes are allowed.
         installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Control System) deployment.
@@ -228,7 +229,7 @@ class Functions(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update(self, function_id: str, name: str, runtime: Optional[Runtime] = None, execute: Optional[List[str]] = None, events: Optional[List[str]] = None, schedule: Optional[str] = None, timeout: Optional[float] = None, enabled: Optional[bool] = None, logging: Optional[bool] = None, entrypoint: Optional[str] = None, commands: Optional[str] = None, scopes: Optional[List[str]] = None, installation_id: Optional[str] = None, provider_repository_id: Optional[str] = None, provider_branch: Optional[str] = None, provider_silent_mode: Optional[bool] = None, provider_root_directory: Optional[str] = None, specification: Optional[str] = None) -> Dict[str, Any]:
+    def update(self, function_id: str, name: str, runtime: Optional[Runtime] = None, execute: Optional[List[str]] = None, events: Optional[List[str]] = None, schedule: Optional[str] = None, timeout: Optional[float] = None, enabled: Optional[bool] = None, logging: Optional[bool] = None, entrypoint: Optional[str] = None, commands: Optional[str] = None, scopes: Optional[List[Scopes]] = None, installation_id: Optional[str] = None, provider_repository_id: Optional[str] = None, provider_branch: Optional[str] = None, provider_silent_mode: Optional[bool] = None, provider_root_directory: Optional[str] = None, specification: Optional[str] = None) -> Dict[str, Any]:
         """
         Update function by its unique ID.
 
@@ -256,7 +257,7 @@ class Functions(Service):
             Entrypoint File. This path is relative to the "providerRootDirectory".
         commands : Optional[str]
             Build Commands.
-        scopes : Optional[List[str]]
+        scopes : Optional[List[Scopes]]
             List of scopes allowed for API Key auto-generated for every execution. Maximum of 100 scopes are allowed.
         installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Controle System) deployment.

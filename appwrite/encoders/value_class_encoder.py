@@ -7,11 +7,14 @@ from ..enums.credit_card import CreditCard
 from ..enums.flag import Flag
 from ..enums.theme import Theme
 from ..enums.timezone import Timezone
-from ..enums.output import Output
+from ..enums.browser_permission import BrowserPermission
+from ..enums.image_format import ImageFormat
 from ..enums.relationship_type import RelationshipType
 from ..enums.relation_mutate import RelationMutate
 from ..enums.index_type import IndexType
+from ..enums.order_by import OrderBy
 from ..enums.runtime import Runtime
+from ..enums.scopes import Scopes
 from ..enums.template_reference_type import TemplateReferenceType
 from ..enums.vcs_reference_type import VCSReferenceType
 from ..enums.deployment_download_type import DeploymentDownloadType
@@ -24,7 +27,7 @@ from ..enums.build_runtime import BuildRuntime
 from ..enums.adapter import Adapter
 from ..enums.compression import Compression
 from ..enums.image_gravity import ImageGravity
-from ..enums.image_format import ImageFormat
+from ..enums.roles import Roles
 from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
 from ..enums.database_type import DatabaseType
@@ -64,7 +67,10 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, Timezone):
             return o.value
 
-        if isinstance(o, Output):
+        if isinstance(o, BrowserPermission):
+            return o.value
+
+        if isinstance(o, ImageFormat):
             return o.value
 
         if isinstance(o, RelationshipType):
@@ -76,7 +82,13 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, IndexType):
             return o.value
 
+        if isinstance(o, OrderBy):
+            return o.value
+
         if isinstance(o, Runtime):
+            return o.value
+
+        if isinstance(o, Scopes):
             return o.value
 
         if isinstance(o, TemplateReferenceType):
@@ -115,7 +127,7 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, ImageGravity):
             return o.value
 
-        if isinstance(o, ImageFormat):
+        if isinstance(o, Roles):
             return o.value
 
         if isinstance(o, PasswordHash):
