@@ -1,6 +1,5 @@
 import json
 
-
 # Inherit from dict to allow for easy serialization
 class Query():
     def __init__(self, method, attribute=None, values=None):
@@ -28,6 +27,20 @@ class Query():
         return str(Query("notEqual", attribute, value))
 
     @staticmethod
+    def regex(attribute, pattern):
+        """
+        Filter resources where attribute matches a regular expression pattern.
+
+        Args:
+            attribute: The attribute to filter on.
+            pattern: The regular expression pattern to match.
+
+        Returns:
+            The query string.
+        """
+        return str(Query("regex", attribute, pattern))
+
+    @staticmethod
     def less_than(attribute, value):
         return str(Query("lessThan", attribute, value))
 
@@ -50,6 +63,32 @@ class Query():
     @staticmethod
     def is_not_null(attribute):
         return str(Query("isNotNull", attribute, None))
+
+    @staticmethod
+    def exists(attributes):
+        """
+        Filter resources where the specified attributes exist.
+
+        Args:
+            attributes: The list of attributes that must exist.
+
+        Returns:
+            The query string.
+        """
+        return str(Query("exists", None, attributes))
+
+    @staticmethod
+    def not_exists(attributes):
+        """
+        Filter resources where the specified attributes do not exist.
+
+        Args:
+            attributes: The list of attributes that must not exist.
+
+        Returns:
+            The query string.
+        """
+        return str(Query("notExists", None, attributes))
 
     @staticmethod
     def between(attribute, start, end):
@@ -154,6 +193,20 @@ class Query():
     @staticmethod
     def and_queries(queries):
         return str(Query("and", None, [json.loads(query) for query in queries]))
+
+    @staticmethod
+    def elem_match(attribute, queries):
+        """
+        Filter array elements where at least one element matches all the specified queries.
+
+        Args:
+            attribute: The attribute containing the array to filter on.
+            queries: The list of query strings to match against array elements.
+
+        Returns:
+            The query string.
+        """
+        return str(Query("elemMatch", attribute, [json.loads(query) for query in queries]))
 
     @staticmethod
     def distance_equal(attribute, values, distance, meters=True):

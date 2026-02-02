@@ -5,4 +5,5 @@ class DeploymentStatus(Enum):
     PROCESSING = "processing"
     BUILDING = "building"
     READY = "ready"
+    CANCELED = "canceled"
     FAILED = "failed"

@@ -2,6 +2,7 @@ from ..service import Service
 from typing import List, Dict, Any, Optional
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from ..enums.roles import Roles;
 
 class Teams(Service):
 
@@ -231,7 +232,7 @@ class Teams(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_membership(self, team_id: str, roles: List[str], email: Optional[str] = None, user_id: Optional[str] = None, phone: Optional[str] = None, url: Optional[str] = None, name: Optional[str] = None) -> Dict[str, Any]:
+    def create_membership(self, team_id: str, roles: List[Roles], email: Optional[str] = None, user_id: Optional[str] = None, phone: Optional[str] = None, url: Optional[str] = None, name: Optional[str] = None) -> Dict[str, Any]:
         """
         Invite a new member to join your team. Provide an ID for existing users, or invite unregistered users using an email or phone number. If initiated from a Client SDK, Appwrite will send an email or sms with a link to join the team to the invited user, and an account will be created for them if one doesn't exist. If initiated from a Server SDK, the new member will be added automatically to the team.
         
@@ -246,7 +247,7 @@ class Teams(Service):
         ----------
         team_id : str
             Team ID.
-        roles : List[str]
+        roles : List[Roles]
             Array of strings. Use this param to set the user roles in the team. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 32 characters long.
         email : Optional[str]
             Email of the new team member.
@@ -333,7 +334,7 @@ class Teams(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def update_membership(self, team_id: str, membership_id: str, roles: List[str]) -> Dict[str, Any]:
+    def update_membership(self, team_id: str, membership_id: str, roles: List[Roles]) -> Dict[str, Any]:
         """
         Modify the roles of a team member. Only team members with the owner role have access to this endpoint. Learn more about [roles and permissions](https://appwrite.io/docs/permissions).
         
@@ -344,7 +345,7 @@ class Teams(Service):
             Team ID.
         membership_id : str
             Membership ID.
-        roles : List[str]
+        roles : List[Roles]
             An array of strings. Use this param to set the user's roles in the team. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 32 characters long.
         
         Returns

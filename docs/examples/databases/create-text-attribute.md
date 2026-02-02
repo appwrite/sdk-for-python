@@ -1,7 +1,5 @@
 from appwrite.client import Client
 from appwrite.services.databases import Databases
-from appwrite.enums import IndexType
-from appwrite.enums import OrderBy
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -10,12 +8,11 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 databases = Databases(client)
 
-result = databases.create_index(
+result = databases.create_text_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
     key = '',
-    type = IndexType.KEY,
-    attributes = [],
-    orders = [OrderBy.ASC], # optional
-    lengths = [] # optional
+    required = False,
+    default = '<DEFAULT>', # optional
+    array = False # optional
 )

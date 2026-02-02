@@ -7,7 +7,8 @@ from ..enums.credit_card import CreditCard;
 from ..enums.flag import Flag;
 from ..enums.theme import Theme;
 from ..enums.timezone import Timezone;
-from ..enums.output import Output;
+from ..enums.browser_permission import BrowserPermission;
+from ..enums.image_format import ImageFormat;
 
 class Avatars(Service):
 
@@ -317,7 +318,7 @@ class Avatars(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def get_screenshot(self, url: str, headers: Optional[dict] = None, viewport_width: Optional[float] = None, viewport_height: Optional[float] = None, scale: Optional[float] = None, theme: Optional[Theme] = None, user_agent: Optional[str] = None, fullpage: Optional[bool] = None, locale: Optional[str] = None, timezone: Optional[Timezone] = None, latitude: Optional[float] = None, longitude: Optional[float] = None, accuracy: Optional[float] = None, touch: Optional[bool] = None, permissions: Optional[List[str]] = None, sleep: Optional[float] = None, width: Optional[float] = None, height: Optional[float] = None, quality: Optional[float] = None, output: Optional[Output] = None) -> bytes:
+    def get_screenshot(self, url: str, headers: Optional[dict] = None, viewport_width: Optional[float] = None, viewport_height: Optional[float] = None, scale: Optional[float] = None, theme: Optional[Theme] = None, user_agent: Optional[str] = None, fullpage: Optional[bool] = None, locale: Optional[str] = None, timezone: Optional[Timezone] = None, latitude: Optional[float] = None, longitude: Optional[float] = None, accuracy: Optional[float] = None, touch: Optional[bool] = None, permissions: Optional[List[BrowserPermission]] = None, sleep: Optional[float] = None, width: Optional[float] = None, height: Optional[float] = None, quality: Optional[float] = None, output: Optional[ImageFormat] = None) -> bytes:
         """
         Use this endpoint to capture a screenshot of any website URL. This endpoint uses a headless browser to render the webpage and capture it as an image.
         
@@ -355,7 +356,7 @@ class Avatars(Service):
             Geolocation accuracy in meters. Pass a number between 0 to 100000. Defaults to 0.
         touch : Optional[bool]
             Enable touch support. Pass 0 for no touch, or 1 for touch enabled. Defaults to 0.
-        permissions : Optional[List[str]]
+        permissions : Optional[List[BrowserPermission]]
             Browser permissions to grant. Pass an array of permission names like ["geolocation", "camera", "microphone"]. Defaults to empty.
         sleep : Optional[float]
             Wait time in seconds before taking the screenshot. Pass an integer between 0 to 10. Defaults to 0.
@@ -365,7 +366,7 @@ class Avatars(Service):
             Output image height. Pass 0 to use original height, or an integer between 1 to 2000. Defaults to 0 (original height).
         quality : Optional[float]
             Screenshot quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
-        output : Optional[Output]
+        output : Optional[ImageFormat]
             Output format type (jpeg, jpg, png, gif and webp).
         
         Returns

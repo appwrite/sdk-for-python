@@ -11,5 +11,6 @@ class Name(Enum):
     V1_WEBHOOKS = "v1-webhooks"
     V1_CERTIFICATES = "v1-certificates"
     V1_BUILDS = "v1-builds"
+    V1_SCREENSHOTS = "v1-screenshots"
     V1_MESSAGING = "v1-messaging"
     V1_MIGRATIONS = "v1-migrations"

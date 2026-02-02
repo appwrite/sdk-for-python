@@ -143,6 +143,35 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
+    def get_queue_audits(self, threshold: Optional[float] = None) -> Dict[str, Any]:
+        """
+        Get the number of audit logs that are waiting to be processed in the Appwrite internal queue server.
+
+        Parameters
+        ----------
+        threshold : Optional[float]
+            Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/health/queue/audits'
+        api_params = {}
+
+        if threshold is not None:
+            api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
     def get_queue_builds(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of builds that are waiting to be processed in the Appwrite internal queue server.
