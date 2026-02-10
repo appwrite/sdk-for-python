@@ -1,5 +1,12 @@
 # Change Log
 
+## 15.0.1
+
+* Update SDK as per latest server specs, these include -
+    * Introduces Backups module for managing Database backups
+    * Introduces Organization module
+    * Introduce Account level keys, Backup Service & Models
+
 ## 13.6.1
 
 * Fix passing of `None` to nullable parameters
