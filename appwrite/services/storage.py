@@ -66,7 +66,7 @@ class Storage(Service):
         enabled : Optional[bool]
             Is bucket enabled? When set to 'disabled', users cannot access the files in this bucket but Server SDKs with and API key can still access the bucket. No files are lost when this is toggled.
         maximum_file_size : Optional[float]
-            Maximum file size allowed in bytes. Maximum allowed value is 30MB.
+            Maximum file size allowed in bytes. Maximum allowed value is 5GB.
         allowed_file_extensions : Optional[List[str]]
             Allowed file extensions. Maximum of 100 extensions are allowed, each 64 characters long.
         compression : Optional[Compression]
@@ -170,7 +170,7 @@ class Storage(Service):
         enabled : Optional[bool]
             Is bucket enabled? When set to 'disabled', users cannot access the files in this bucket but Server SDKs with and API key can still access the bucket. No files are lost when this is toggled.
         maximum_file_size : Optional[float]
-            Maximum file size allowed in bytes. Maximum allowed value is 30MB.
+            Maximum file size allowed in bytes. Maximum allowed value is 5GB.
         allowed_file_extensions : Optional[List[str]]
             Allowed file extensions. Maximum of 100 extensions are allowed, each 64 characters long.
         compression : Optional[Compression]

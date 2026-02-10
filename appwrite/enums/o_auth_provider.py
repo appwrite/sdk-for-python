@@ -40,3 +40,5 @@ class OAuthProvider(Enum):
     YANDEX = "yandex"
     ZOHO = "zoho"
     ZOOM = "zoom"
+    GITHUBIMAGINE = "githubImagine"
+    GOOGLEIMAGINE = "googleImagine"
