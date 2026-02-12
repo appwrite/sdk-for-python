@@ -4,6 +4,7 @@
 
 * Add `dart-3.10` and `flutter-3.38` to `BuildRuntime` and `Runtime` enums
 * Fix `Roles` enum removed from Teams service; `roles` parameter now accepts `list[str]`
+* Add support for the new `Backups` service
 
 ## 15.0.0
 
