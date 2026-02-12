@@ -1,5 +1,4 @@
 import json
-from ..enums.scopes import Scopes
 from ..enums.authenticator_type import AuthenticatorType
 from ..enums.authentication_factor import AuthenticationFactor
 from ..enums.o_auth_provider import OAuthProvider
@@ -16,6 +15,7 @@ from ..enums.relation_mutate import RelationMutate
 from ..enums.index_type import IndexType
 from ..enums.order_by import OrderBy
 from ..enums.runtime import Runtime
+from ..enums.scopes import Scopes
 from ..enums.template_reference_type import TemplateReferenceType
 from ..enums.vcs_reference_type import VCSReferenceType
 from ..enums.deployment_download_type import DeploymentDownloadType
@@ -43,9 +43,6 @@ from ..enums.message_status import MessageStatus
 
 class ValueClassEncoder(json.JSONEncoder):
     def default(self, o):
-        if isinstance(o, Scopes):
-            return o.value
-
         if isinstance(o, AuthenticatorType):
             return o.value
 
@@ -92,6 +89,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, Runtime):
+            return o.value
+
+        if isinstance(o, Scopes):
             return o.value
 
         if isinstance(o, TemplateReferenceType):
