@@ -172,6 +172,64 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
+    def get_queue_billing_project_aggregation(self, threshold: Optional[float] = None) -> Dict[str, Any]:
+        """
+        Get billing project aggregation queue.
+
+        Parameters
+        ----------
+        threshold : Optional[float]
+            Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/health/queue/billing-project-aggregation'
+        api_params = {}
+
+        if threshold is not None:
+            api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
+    def get_queue_billing_team_aggregation(self, threshold: Optional[float] = None) -> Dict[str, Any]:
+        """
+        Get billing team aggregation queue.
+
+        Parameters
+        ----------
+        threshold : Optional[float]
+            Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/health/queue/billing-team-aggregation'
+        api_params = {}
+
+        if threshold is not None:
+            api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
     def get_queue_builds(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of builds that are waiting to be processed in the Appwrite internal queue server.
@@ -193,6 +251,35 @@ class Health(Service):
         """
 
         api_path = '/health/queue/builds'
+        api_params = {}
+
+        if threshold is not None:
+            api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
+    def get_queue_priority_builds(self, threshold: Optional[float] = None) -> Dict[str, Any]:
+        """
+        Get the priority builds queue size.
+
+        Parameters
+        ----------
+        threshold : Optional[float]
+            Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 500.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/health/queue/builds-priority'
         api_params = {}
 
         if threshold is not None:
@@ -473,6 +560,35 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
+    def get_queue_region_manager(self, threshold: Optional[float] = None) -> Dict[str, Any]:
+        """
+        Get region manager queue.
+
+        Parameters
+        ----------
+        threshold : Optional[float]
+            Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 100.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/health/queue/region-manager'
+        api_params = {}
+
+        if threshold is not None:
+            api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
     def get_queue_stats_resources(self, threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Get the number of metrics that are waiting to be processed in the Appwrite stats resources queue.
@@ -523,6 +639,35 @@ class Health(Service):
         """
 
         api_path = '/health/queue/stats-usage'
+        api_params = {}
+
+        if threshold is not None:
+            api_params['threshold'] = threshold
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
+    def get_queue_threats(self, threshold: Optional[float] = None) -> Dict[str, Any]:
+        """
+        Get threats queue.
+
+        Parameters
+        ----------
+        threshold : Optional[float]
+            Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 100.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/health/queue/threats'
         api_params = {}
 
         if threshold is not None:

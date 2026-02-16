@@ -9,6 +9,7 @@ from ..enums.theme import Theme
 from ..enums.timezone import Timezone
 from ..enums.browser_permission import BrowserPermission
 from ..enums.image_format import ImageFormat
+from ..enums.backup_services import BackupServices
 from ..enums.relationship_type import RelationshipType
 from ..enums.relation_mutate import RelationMutate
 from ..enums.index_type import IndexType
@@ -27,7 +28,6 @@ from ..enums.build_runtime import BuildRuntime
 from ..enums.adapter import Adapter
 from ..enums.compression import Compression
 from ..enums.image_gravity import ImageGravity
-from ..enums.roles import Roles
 from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
 from ..enums.database_type import DatabaseType
@@ -71,6 +71,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, ImageFormat):
+            return o.value
+
+        if isinstance(o, BackupServices):
             return o.value
 
         if isinstance(o, RelationshipType):
@@ -125,9 +128,6 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, ImageGravity):
-            return o.value
-
-        if isinstance(o, Roles):
             return o.value
 
         if isinstance(o, PasswordHash):
