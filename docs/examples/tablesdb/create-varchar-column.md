@@ -16,6 +16,7 @@ result = tables_db.create_varchar_column(
     size = 1,
     required = False,
     default = '<DEFAULT>', # optional
-    array = False # optional
+    array = False, # optional
+    encrypt = False # optional
 )
 ```

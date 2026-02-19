@@ -1700,7 +1700,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_longtext_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+    def create_longtext_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a longtext attribute.
         
@@ -1719,6 +1719,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        encrypt : Optional[bool]
+            Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
         
         Returns
         -------
@@ -1753,6 +1755,8 @@ class Databases(Service):
         api_params['default'] = default
         if array is not None:
             api_params['array'] = array
+        if encrypt is not None:
+            api_params['encrypt'] = encrypt
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1815,7 +1819,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_mediumtext_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+    def create_mediumtext_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a mediumtext attribute.
         
@@ -1834,6 +1838,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        encrypt : Optional[bool]
+            Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
         
         Returns
         -------
@@ -1868,6 +1874,8 @@ class Databases(Service):
         api_params['default'] = default
         if array is not None:
             api_params['array'] = array
+        if encrypt is not None:
+            api_params['encrypt'] = encrypt
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -2362,7 +2370,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_text_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+    def create_text_attribute(self, database_id: str, collection_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a text attribute.
         
@@ -2381,6 +2389,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        encrypt : Optional[bool]
+            Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
         
         Returns
         -------
@@ -2415,6 +2425,8 @@ class Databases(Service):
         api_params['default'] = default
         if array is not None:
             api_params['array'] = array
+        if encrypt is not None:
+            api_params['encrypt'] = encrypt
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -2598,7 +2610,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_varchar_attribute(self, database_id: str, collection_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+    def create_varchar_attribute(self, database_id: str, collection_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a varchar attribute.
         
@@ -2619,6 +2631,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        encrypt : Optional[bool]
+            Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
         
         Returns
         -------
@@ -2657,6 +2671,8 @@ class Databases(Service):
         api_params['default'] = default
         if array is not None:
             api_params['array'] = array
+        if encrypt is not None:
+            api_params['encrypt'] = encrypt
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
