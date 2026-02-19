@@ -49,6 +49,8 @@ class Scopes(Enum):
     TARGETS_WRITE = "targets.write"
     RULES_READ = "rules.read"
     RULES_WRITE = "rules.write"
+    SCHEDULES_READ = "schedules.read"
+    SCHEDULES_WRITE = "schedules.write"
     MIGRATIONS_READ = "migrations.read"
     MIGRATIONS_WRITE = "migrations.write"
     VCS_READ = "vcs.read"
@@ -64,3 +66,4 @@ class Scopes(Enum):
     RESTORATIONS_WRITE = "restorations.write"
     DOMAINS_READ = "domains.read"
     DOMAINS_WRITE = "domains.write"
+    EVENTS_READ = "events.read"

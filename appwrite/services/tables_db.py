@@ -1618,7 +1618,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_longtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+    def create_longtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a longtext column.
         
@@ -1637,6 +1637,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        encrypt : Optional[bool]
+            Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
         
         Returns
         -------
@@ -1671,6 +1673,8 @@ class TablesDB(Service):
         api_params['default'] = default
         if array is not None:
             api_params['array'] = array
+        if encrypt is not None:
+            api_params['encrypt'] = encrypt
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -1733,7 +1737,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_mediumtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+    def create_mediumtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a mediumtext column.
         
@@ -1752,6 +1756,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        encrypt : Optional[bool]
+            Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
         
         Returns
         -------
@@ -1786,6 +1792,8 @@ class TablesDB(Service):
         api_params['default'] = default
         if array is not None:
             api_params['array'] = array
+        if encrypt is not None:
+            api_params['encrypt'] = encrypt
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -2265,7 +2273,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_text_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+    def create_text_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a text column.
         
@@ -2284,6 +2292,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        encrypt : Optional[bool]
+            Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
         
         Returns
         -------
@@ -2318,6 +2328,8 @@ class TablesDB(Service):
         api_params['default'] = default
         if array is not None:
             api_params['array'] = array
+        if encrypt is not None:
+            api_params['encrypt'] = encrypt
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -2495,7 +2507,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def create_varchar_column(self, database_id: str, table_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+    def create_varchar_column(self, database_id: str, table_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
         Create a varchar column.
         
@@ -2516,6 +2528,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        encrypt : Optional[bool]
+            Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
         
         Returns
         -------
@@ -2554,6 +2568,8 @@ class TablesDB(Service):
         api_params['default'] = default
         if array is not None:
             api_params['array'] = array
+        if encrypt is not None:
+            api_params['encrypt'] = encrypt
 
         return self.client.call('post', api_path, {
             'content-type': 'application/json',

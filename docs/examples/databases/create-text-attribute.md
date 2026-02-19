@@ -15,6 +15,7 @@ result = databases.create_text_attribute(
     key = '',
     required = False,
     default = '<DEFAULT>', # optional
-    array = False # optional
+    array = False, # optional
+    encrypt = False # optional
 )
 ```

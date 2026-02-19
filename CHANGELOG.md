@@ -1,5 +1,14 @@
 # Change Log
 
+## 15.2.0
+
+* Extended BuildRuntime and Runtime enums with new runtime versions (e.g., node-23/24/25, php-8.4, ruby-3.4/4.0, python-3.13/3.14, python-ml-3.13, deno-2.5/2.6, dotnet-10, java-25, swift-6.2, kotlin-2.3, bun-1.2/1.3, go-1.24/1.25/1.26).
+* Added new permission scopes: schedules.read, schedules.write, and events.read.
+* Added contains_any and contains_all filter helpers to the Query API (plus enhanced contains with docstrings).
+* Added optional encrypt parameter to all string attribute creation methods (e.g., longtext, mediumtext, text, varchar) in Databases to support encryption at rest.
+* Updated README to reflect Appwrite server compatibility version 1.8.x.
+* Backward-compatible enhancements: no breaking changes.
+
 ## 15.1.0
 
 * Add `dart-3.10` and `flutter-3.38` to `BuildRuntime` and `Runtime` enums
