@@ -247,7 +247,7 @@ class Teams(Service):
         team_id : str
             Team ID.
         roles : List[str]
-            Array of strings. Use this param to set the user roles in the team. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 32 characters long.
+            Array of strings. Use this param to set the user roles in the team. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 81 characters long.
         email : Optional[str]
             Email of the new team member.
         user_id : Optional[str]
@@ -345,7 +345,7 @@ class Teams(Service):
         membership_id : str
             Membership ID.
         roles : List[str]
-            An array of strings. Use this param to set the user's roles in the team. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 32 characters long.
+            An array of strings. Use this param to set the user's roles in the team. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 81 characters long.
         
         Returns
         -------

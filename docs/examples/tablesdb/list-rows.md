@@ -14,6 +14,7 @@ result = tables_db.list_rows(
     table_id = '<TABLE_ID>',
     queries = [], # optional
     transaction_id = '<TRANSACTION_ID>', # optional
-    total = False # optional
+    total = False, # optional
+    ttl = 0 # optional
 )
 ```
