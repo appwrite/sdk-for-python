@@ -2970,7 +2970,7 @@ class TablesDB(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    def list_rows(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+    def list_rows(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None, total: Optional[bool] = None, ttl: Optional[float] = None) -> Dict[str, Any]:
         """
         Get a list of all the user's rows in a given table. You can use the query params to filter your results.
 
@@ -2986,6 +2986,8 @@ class TablesDB(Service):
             Transaction ID to read uncommitted changes within the transaction.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
+        ttl : Optional[float]
+            TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
         
         Returns
         -------
@@ -3015,6 +3017,8 @@ class TablesDB(Service):
             api_params['transactionId'] = transaction_id
         if total is not None:
             api_params['total'] = total
+        if ttl is not None:
+            api_params['ttl'] = ttl
 
         return self.client.call('get', api_path, {
         }, api_params)

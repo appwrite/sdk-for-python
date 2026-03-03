@@ -448,7 +448,7 @@ class Sites(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
-    def create_deployment(self, site_id: str, code: InputFile, activate: bool, install_command: Optional[str] = None, build_command: Optional[str] = None, output_directory: Optional[str] = None, on_progress = None) -> Dict[str, Any]:
+    def create_deployment(self, site_id: str, code: InputFile, install_command: Optional[str] = None, build_command: Optional[str] = None, output_directory: Optional[str] = None, activate: Optional[bool] = None, on_progress = None) -> Dict[str, Any]:
         """
         Create a new site code deployment. Use this endpoint to upload a new version of your site code. To activate your newly uploaded code, you'll need to update the site's deployment to use your new deployment ID.
 
@@ -458,14 +458,14 @@ class Sites(Service):
             Site ID.
         code : InputFile
             Gzip file with your code package. When used with the Appwrite CLI, pass the path to your code directory, and the CLI will automatically package your code. Use a path that is within the current directory.
-        activate : bool
-            Automatically activate the deployment when it is finished building.
         install_command : Optional[str]
             Install Commands.
         build_command : Optional[str]
             Build Commands.
         output_directory : Optional[str]
             Output Directory.
+        activate : Optional[bool]
+            Automatically activate the deployment when it is finished building.
                 on_progress : callable, optional
             Optional callback for upload progress
         
@@ -488,9 +488,6 @@ class Sites(Service):
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
 
-        if activate is None:
-            raise AppwriteException('Missing required parameter: "activate"')
-
         api_path = api_path.replace('{siteId}', site_id)
 
         if install_command is not None:
@@ -500,7 +497,8 @@ class Sites(Service):
         if output_directory is not None:
             api_params['outputDirectory'] = output_directory
         api_params['code'] = code
-        api_params['activate'] = str(activate).lower() if type(activate) is bool else activate
+        if activate is not None:
+            api_params['activate'] = str(activate).lower() if type(activate) is bool else activate
 
         param_name = 'code'
 

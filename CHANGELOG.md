@@ -1,5 +1,13 @@
 # Change Log
 
+## 15.3.0
+
+* Added get_console_pausing health endpoint
+* Added ttl parameter to list_documents and list_rows for cached responses
+* Added optional activate parameter to Sites.create_deployment
+* Updated docs and examples to reflect TTL usage and activation
+* Updated query filtering docs in Messaging service
+
 ## 15.2.0
 
 * Extended BuildRuntime and Runtime enums with new runtime versions (e.g., node-23/24/25, php-8.4, ruby-3.4/4.0, python-3.13/3.14, python-ml-3.13, deno-2.5/2.6, dotnet-10, java-25, swift-6.2, kotlin-2.3, bun-1.2/1.3, go-1.24/1.25/1.26).

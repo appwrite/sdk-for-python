@@ -101,6 +101,40 @@ class Health(Service):
         return self.client.call('get', api_path, {
         }, api_params)
 
+    def get_console_pausing(self, threshold: Optional[float] = None, inactivity_days: Optional[float] = None) -> Dict[str, Any]:
+        """
+        Get console pausing health status. Monitors projects approaching the pause threshold to detect potential issues with console access tracking.
+        
+
+        Parameters
+        ----------
+        threshold : Optional[float]
+            Percentage threshold of projects approaching pause. When hit (equal or higher), endpoint returns server error. Default value is 10.
+        inactivity_days : Optional[float]
+            Number of days of inactivity before a project is paused. Should match the plan's projectInactivityDays setting. Default value is 7.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/health/console-pausing'
+        api_params = {}
+
+        if threshold is not None:
+            api_params['threshold'] = threshold
+        if inactivity_days is not None:
+            api_params['inactivityDays'] = inactivity_days
+
+        return self.client.call('get', api_path, {
+        }, api_params)
+
     def get_db(self) -> Dict[str, Any]:
         """
         Check the Appwrite database servers are up and connection is successful.

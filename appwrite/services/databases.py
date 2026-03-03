@@ -718,7 +718,7 @@ class Databases(Service):
         database_id : str
             Database ID.
         collection_id : str
-            Collection ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
         key : str
             Attribute Key.
         required : bool
@@ -2236,6 +2236,61 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_relationship_column` instead.")
+    def update_relationship_attribute(self, database_id: str, collection_id: str, key: str, on_delete: Optional[RelationMutate] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
+        
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_relationship_column` instead.
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID.
+        key : str
+            Attribute Key.
+        on_delete : Optional[RelationMutate]
+            Constraints option
+        new_key : Optional[str]
+            New Attribute Key.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/relationship/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{collectionId}', collection_id)
+        api_path = api_path.replace('{key}', key)
+
+        if on_delete is not None:
+            api_params['onDelete'] = on_delete
+        api_params['newKey'] = new_key
+
+        return self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_string_column` instead.")
     def create_string_attribute(self, database_id: str, collection_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
         """
@@ -2831,62 +2886,8 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_relationship_column` instead.")
-    def update_relationship_attribute(self, database_id: str, collection_id: str, key: str, on_delete: Optional[RelationMutate] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
-        
-
-        .. deprecated::1.8.0
-            This API has been deprecated since 1.8.0. Please use `tablesDB.update_relationship_column` instead.
-        Parameters
-        ----------
-        database_id : str
-            Database ID.
-        collection_id : str
-            Collection ID.
-        key : str
-            Attribute Key.
-        on_delete : Optional[RelationMutate]
-            Constraints option
-        new_key : Optional[str]
-            New Attribute Key.
-        
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}/relationship'
-        api_params = {}
-        if database_id is None:
-            raise AppwriteException('Missing required parameter: "database_id"')
-
-        if collection_id is None:
-            raise AppwriteException('Missing required parameter: "collection_id"')
-
-        if key is None:
-            raise AppwriteException('Missing required parameter: "key"')
-
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{collectionId}', collection_id)
-        api_path = api_path.replace('{key}', key)
-
-        api_params['onDelete'] = on_delete
-        api_params['newKey'] = new_key
-
-        return self.client.call('patch', api_path, {
-            'content-type': 'application/json',
-        }, api_params)
-
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_rows` instead.")
-    def list_documents(self, database_id: str, collection_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+    def list_documents(self, database_id: str, collection_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None, total: Optional[bool] = None, ttl: Optional[float] = None) -> Dict[str, Any]:
         """
         Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
 
@@ -2904,6 +2905,8 @@ class Databases(Service):
             Transaction ID to read uncommitted changes within the transaction.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
+        ttl : Optional[float]
+            TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
         
         Returns
         -------
@@ -2933,6 +2936,8 @@ class Databases(Service):
             api_params['transactionId'] = transaction_id
         if total is not None:
             api_params['total'] = total
+        if ttl is not None:
+            api_params['ttl'] = ttl
 
         return self.client.call('get', api_path, {
         }, api_params)
