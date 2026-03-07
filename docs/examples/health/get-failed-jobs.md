@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.health import Health
+from appwrite.models import HealthQueue
 from appwrite.enums import Name
 
 client = Client()
@@ -10,8 +11,10 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 health = Health(client)
 
-result = health.get_failed_jobs(
+result: HealthQueue = health.get_failed_jobs(
     name = Name.V1_DATABASE,
     threshold = None # optional
 )
+
+print(result.model_dump())
 ```

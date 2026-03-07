@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.backups import Backups
+from appwrite.models import BackupArchive
 from appwrite.enums import BackupServices
 
 client = Client()
@@ -10,8 +11,10 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 backups = Backups(client)
 
-result = backups.create_archive(
+result: BackupArchive = backups.create_archive(
     services = [BackupServices.DATABASES],
     resource_id = '<RESOURCE_ID>' # optional
 )
+
+print(result.model_dump())
 ```

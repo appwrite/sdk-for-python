@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.storage import Storage
+from appwrite.models import File
 from appwrite.permission import Permission
 from appwrite.role import Role
 
@@ -11,10 +12,12 @@ client.set_session('') # The user session to authenticate with
 
 storage = Storage(client)
 
-result = storage.update_file(
+result: File = storage.update_file(
     bucket_id = '<BUCKET_ID>',
     file_id = '<FILE_ID>',
     name = '<NAME>', # optional
     permissions = [Permission.read(Role.any())] # optional
 )
+
+print(result.model_dump())
 ```

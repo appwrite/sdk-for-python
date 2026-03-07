@@ -10,7 +10,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 sites = Sites(client)
 
-result = sites.get_deployment_download(
+result: bytes = sites.get_deployment_download(
     site_id = '<SITE_ID>',
     deployment_id = '<DEPLOYMENT_ID>',
     type = DeploymentDownloadType.SOURCE # optional

@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.messaging import Messaging
+from appwrite.models import Provider
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,7 +10,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 messaging = Messaging(client)
 
-result = messaging.create_telesign_provider(
+result: Provider = messaging.create_telesign_provider(
     provider_id = '<PROVIDER_ID>',
     name = '<NAME>',
     from = '+12065550100', # optional
@@ -17,4 +18,6 @@ result = messaging.create_telesign_provider(
     api_key = '<API_KEY>', # optional
     enabled = False # optional
 )
+
+print(result.model_dump())
 ```

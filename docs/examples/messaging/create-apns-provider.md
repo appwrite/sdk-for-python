@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.messaging import Messaging
+from appwrite.models import Provider
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,7 +10,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 messaging = Messaging(client)
 
-result = messaging.create_apns_provider(
+result: Provider = messaging.create_apns_provider(
     provider_id = '<PROVIDER_ID>',
     name = '<NAME>',
     auth_key = '<AUTH_KEY>', # optional
@@ -19,4 +20,6 @@ result = messaging.create_apns_provider(
     sandbox = False, # optional
     enabled = False # optional
 )
+
+print(result.model_dump())
 ```

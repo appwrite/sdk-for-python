@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.account import Account
+from appwrite.models import Token
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,8 +10,10 @@ client.set_session('') # The user session to authenticate with
 
 account = Account(client)
 
-result = account.update_email_verification(
+result: Token = account.update_email_verification(
     user_id = '<USER_ID>',
     secret = '<SECRET>'
 )
+
+print(result.model_dump())
 ```

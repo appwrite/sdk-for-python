@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.databases import Databases
+from appwrite.models import Database
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,9 +10,11 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 databases = Databases(client)
 
-result = databases.create(
+result: Database = databases.create(
     database_id = '<DATABASE_ID>',
     name = '<NAME>',
     enabled = False # optional
 )
+
+print(result.model_dump())
 ```

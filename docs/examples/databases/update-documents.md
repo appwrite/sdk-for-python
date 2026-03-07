@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.databases import Databases
+from appwrite.models import DocumentList
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,7 +10,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 databases = Databases(client)
 
-result = databases.update_documents(
+result: DocumentList = databases.update_documents(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
     data = {
@@ -22,4 +23,6 @@ result = databases.update_documents(
     queries = [], # optional
     transaction_id = '<TRANSACTION_ID>' # optional
 )
+
+print(result.model_dump())
 ```

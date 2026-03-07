@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.sites import Sites
+from appwrite.models import Deployment
 from appwrite.enums import TemplateReferenceType
 
 client = Client()
@@ -10,7 +11,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 sites = Sites(client)
 
-result = sites.create_template_deployment(
+result: Deployment = sites.create_template_deployment(
     site_id = '<SITE_ID>',
     repository = '<REPOSITORY>',
     owner = '<OWNER>',
@@ -19,4 +20,6 @@ result = sites.create_template_deployment(
     reference = '<REFERENCE>',
     activate = False # optional
 )
+
+print(result.model_dump())
 ```

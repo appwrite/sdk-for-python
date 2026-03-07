@@ -10,7 +10,7 @@ client.set_session('') # The user session to authenticate with
 
 avatars = Avatars(client)
 
-result = avatars.get_browser(
+result: bytes = avatars.get_browser(
     code = Browser.AVANT_BROWSER,
     width = 0, # optional
     height = 0, # optional

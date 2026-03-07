@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.messaging import Messaging
+from appwrite.models import Topic
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,9 +10,11 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 messaging = Messaging(client)
 
-result = messaging.create_topic(
+result: Topic = messaging.create_topic(
     topic_id = '<TOPIC_ID>',
     name = '<NAME>',
     subscribe = ["any"] # optional
 )
+
+print(result.model_dump())
 ```

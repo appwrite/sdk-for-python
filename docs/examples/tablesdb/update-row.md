@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.tables_db import TablesDB
+from appwrite.models import Row
 from appwrite.permission import Permission
 from appwrite.role import Role
 
@@ -11,7 +12,7 @@ client.set_session('') # The user session to authenticate with
 
 tables_db = TablesDB(client)
 
-result = tables_db.update_row(
+result: Row = tables_db.update_row(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
     row_id = '<ROW_ID>',
@@ -25,4 +26,6 @@ result = tables_db.update_row(
     permissions = [Permission.read(Role.any())], # optional
     transaction_id = '<TRANSACTION_ID>' # optional
 )
+
+print(result.model_dump())
 ```

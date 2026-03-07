@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.account import Account
+from appwrite.models import MfaType
 from appwrite.enums import AuthenticatorType
 
 client = Client()
@@ -10,7 +11,9 @@ client.set_session('') # The user session to authenticate with
 
 account = Account(client)
 
-result = account.create_mfa_authenticator(
+result: MfaType = account.create_mfa_authenticator(
     type = AuthenticatorType.TOTP
 )
+
+print(result.model_dump())
 ```

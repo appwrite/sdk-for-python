@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.messaging import Messaging
+from appwrite.models import LogList
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,9 +10,11 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 messaging = Messaging(client)
 
-result = messaging.list_provider_logs(
+result: LogList = messaging.list_provider_logs(
     provider_id = '<PROVIDER_ID>',
     queries = [], # optional
     total = False # optional
 )
+
+print(result.model_dump())
 ```

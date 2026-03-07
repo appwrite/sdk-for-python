@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.account import Account
+from appwrite.models import Token
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,9 +10,11 @@ client.set_session('') # The user session to authenticate with
 
 account = Account(client)
 
-result = account.create_email_token(
+result: Token = account.create_email_token(
     user_id = '<USER_ID>',
     email = 'email@example.com',
     phrase = False # optional
 )
+
+print(result.model_dump())
 ```

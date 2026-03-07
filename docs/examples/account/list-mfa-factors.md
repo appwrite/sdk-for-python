@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.account import Account
+from appwrite.models import MfaFactors
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,5 +10,7 @@ client.set_session('') # The user session to authenticate with
 
 account = Account(client)
 
-result = account.list_mfa_factors()
+result: MfaFactors = account.list_mfa_factors()
+
+print(result.model_dump())
 ```

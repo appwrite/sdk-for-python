@@ -11,6 +11,7 @@
 * Added `ValueClassEncoder` support for serializing `AppwriteModel` instances
 * Added `pyproject.toml` for modern Python packaging
 * Updated README with `uv add appwrite` installation example
+* Updated all doc examples to use typed response models (e.g., `result: TemplateFunctionList = functions.list_templates(...)`)
 
 ## 15.2.0
 

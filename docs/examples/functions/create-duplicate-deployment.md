@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.functions import Functions
+from appwrite.models import Deployment
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,9 +10,11 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 functions = Functions(client)
 
-result = functions.create_duplicate_deployment(
+result: Deployment = functions.create_duplicate_deployment(
     function_id = '<FUNCTION_ID>',
     deployment_id = '<DEPLOYMENT_ID>',
     build_id = '<BUILD_ID>' # optional
 )
+
+print(result.model_dump())
 ```

@@ -9,7 +9,7 @@ client.set_session('') # The user session to authenticate with
 
 avatars = Avatars(client)
 
-result = avatars.get_favicon(
+result: bytes = avatars.get_favicon(
     url = 'https://example.com'
 )
 ```

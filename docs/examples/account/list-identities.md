@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.account import Account
+from appwrite.models import IdentityList
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,8 +10,10 @@ client.set_session('') # The user session to authenticate with
 
 account = Account(client)
 
-result = account.list_identities(
+result: IdentityList = account.list_identities(
     queries = [], # optional
     total = False # optional
 )
+
+print(result.model_dump())
 ```

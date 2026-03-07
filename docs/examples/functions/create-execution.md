@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.functions import Functions
+from appwrite.models import Execution
 from appwrite.enums import ExecutionMethod
 
 client = Client()
@@ -10,7 +11,7 @@ client.set_session('') # The user session to authenticate with
 
 functions = Functions(client)
 
-result = functions.create_execution(
+result: Execution = functions.create_execution(
     function_id = '<FUNCTION_ID>',
     body = '<BODY>', # optional
     async = False, # optional
@@ -19,4 +20,6 @@ result = functions.create_execution(
     headers = {}, # optional
     scheduled_at = '<SCHEDULED_AT>' # optional
 )
+
+print(result.model_dump())
 ```

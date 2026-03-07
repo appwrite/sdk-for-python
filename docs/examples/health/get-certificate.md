@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.health import Health
+from appwrite.models import HealthCertificate
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,7 +10,9 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 health = Health(client)
 
-result = health.get_certificate(
+result: HealthCertificate = health.get_certificate(
     domain = '' # optional
 )
+
+print(result.model_dump())
 ```

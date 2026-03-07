@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.messaging import Messaging
+from appwrite.models import Message
 from appwrite.enums import MessagePriority
 
 client = Client()
@@ -10,7 +11,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 messaging = Messaging(client)
 
-result = messaging.update_push(
+result: Message = messaging.update_push(
     message_id = '<MESSAGE_ID>',
     topics = [], # optional
     users = [], # optional
@@ -31,4 +32,6 @@ result = messaging.update_push(
     critical = False, # optional
     priority = MessagePriority.NORMAL # optional
 )
+
+print(result.model_dump())
 ```

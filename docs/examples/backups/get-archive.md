@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.backups import Backups
+from appwrite.models import BackupArchive
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,7 +10,9 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 backups = Backups(client)
 
-result = backups.get_archive(
+result: BackupArchive = backups.get_archive(
     archive_id = '<ARCHIVE_ID>'
 )
+
+print(result.model_dump())
 ```

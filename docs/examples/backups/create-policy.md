@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.backups import Backups
+from appwrite.models import BackupPolicy
 from appwrite.enums import BackupServices
 
 client = Client()
@@ -10,7 +11,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 backups = Backups(client)
 
-result = backups.create_policy(
+result: BackupPolicy = backups.create_policy(
     policy_id = '<POLICY_ID>',
     services = [BackupServices.DATABASES],
     retention = 1,
@@ -19,4 +20,6 @@ result = backups.create_policy(
     resource_id = '<RESOURCE_ID>', # optional
     enabled = False # optional
 )
+
+print(result.model_dump())
 ```

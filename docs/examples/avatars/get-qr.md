@@ -9,7 +9,7 @@ client.set_session('') # The user session to authenticate with
 
 avatars = Avatars(client)
 
-result = avatars.get_qr(
+result: bytes = avatars.get_qr(
     text = '<TEXT>',
     size = 1, # optional
     margin = 0, # optional

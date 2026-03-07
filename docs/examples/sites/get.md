@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.sites import Sites
+from appwrite.models import Site
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,7 +10,9 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 sites = Sites(client)
 
-result = sites.get(
+result: Site = sites.get(
     site_id = '<SITE_ID>'
 )
+
+print(result.model_dump())
 ```

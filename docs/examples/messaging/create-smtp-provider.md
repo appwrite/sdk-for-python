@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.messaging import Messaging
+from appwrite.models import Provider
 from appwrite.enums import SmtpEncryption
 
 client = Client()
@@ -10,7 +11,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 messaging = Messaging(client)
 
-result = messaging.create_smtp_provider(
+result: Provider = messaging.create_smtp_provider(
     provider_id = '<PROVIDER_ID>',
     name = '<NAME>',
     host = '<HOST>',
@@ -26,4 +27,6 @@ result = messaging.create_smtp_provider(
     reply_to_email = 'email@example.com', # optional
     enabled = False # optional
 )
+
+print(result.model_dump())
 ```
