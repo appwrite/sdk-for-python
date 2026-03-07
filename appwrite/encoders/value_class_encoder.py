@@ -1,4 +1,5 @@
 import json
+from ..models.base_model import AppwriteModel
 from ..enums.authenticator_type import AuthenticatorType
 from ..enums.authentication_factor import AuthenticationFactor
 from ..enums.o_auth_provider import OAuthProvider
@@ -43,6 +44,9 @@ from ..enums.message_status import MessageStatus
 
 class ValueClassEncoder(json.JSONEncoder):
     def default(self, o):
+        if isinstance(o, AppwriteModel):
+            return o.to_dict()
+
         if isinstance(o, AuthenticatorType):
             return o.value
 

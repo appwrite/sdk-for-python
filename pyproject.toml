@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "appwrite"
+version = "15.3.0"
+description = "Appwrite is an open-source self-hosted backend server that abstracts and simplifies complex and repetitive development tasks behind a very simple REST API"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "BSD-3-Clause" }
+authors = [
+  { name = "Appwrite Team", email = "team@appwrite.io" }
+]
+maintainers = [
+  { name = "Appwrite Team", email = "team@appwrite.io" }
+]
+dependencies = [
+  "requests",
+  "pydantic>=2,<3",
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Environment :: Web Environment",
+  "Topic :: Software Development",
+  "License :: OSI Approved :: BSD License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+Homepage = "https://appwrite.io/support"
+Repository = "https://github.com/appwrite/sdk-for-python"
+
+[tool.setuptools.packages.find]
+include = ["appwrite*"]

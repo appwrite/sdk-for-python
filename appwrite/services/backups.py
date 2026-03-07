@@ -1,15 +1,23 @@
 from ..service import Service
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from ..models.backup_archive_list import BackupArchiveList;
 from ..enums.backup_services import BackupServices;
+from ..models.backup_archive import BackupArchive;
+from ..models.backup_policy_list import BackupPolicyList;
+from ..models.backup_policy import BackupPolicy;
+from ..models.backup_restoration import BackupRestoration;
+from ..models.backup_restoration_list import BackupRestorationList;
 
 class Backups(Service):
 
     def __init__(self, client) -> None:
         super(Backups, self).__init__(client)
 
-    def list_archives(self, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+    def list_archives(
+        self,
+        queries: Optional[List[str]] = None    ) -> BackupArchiveList:
         """
         List all archives for a project.
 
@@ -20,8 +28,8 @@ class Backups(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        BackupArchiveList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -33,12 +41,18 @@ class Backups(Service):
         api_params = {}
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_archive(self, services: List[BackupServices], resource_id: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=BackupArchiveList)
+
+
+    def create_archive(
+        self,
+        services: List[BackupServices],
+        resource_id: Optional[str] = None    ) -> BackupArchive:
         """
         Create a new archive asynchronously for a project.
 
@@ -51,8 +65,8 @@ class Backups(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        BackupArchive
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -66,14 +80,19 @@ class Backups(Service):
             raise AppwriteException('Missing required parameter: "services"')
 
 
-        api_params['services'] = services
-        api_params['resourceId'] = resource_id
+        api_params['services'] = self._normalize_value(services)
+        api_params['resourceId'] = self._normalize_value(resource_id)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_archive(self, archive_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=BackupArchive)
+
+
+    def get_archive(
+        self,
+        archive_id: str    ) -> BackupArchive:
         """
         Get a backup archive using it's ID.
 
@@ -84,8 +103,8 @@ class Backups(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        BackupArchive
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -98,13 +117,18 @@ class Backups(Service):
         if archive_id is None:
             raise AppwriteException('Missing required parameter: "archive_id"')
 
-        api_path = api_path.replace('{archiveId}', archive_id)
+        api_path = api_path.replace('{archiveId}', str(self._normalize_value(archive_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def delete_archive(self, archive_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=BackupArchive)
+
+
+    def delete_archive(
+        self,
+        archive_id: str    ) -> Dict[str, Any]:
         """
         Delete an existing archive for a project.
 
@@ -129,14 +153,19 @@ class Backups(Service):
         if archive_id is None:
             raise AppwriteException('Missing required parameter: "archive_id"')
 
-        api_path = api_path.replace('{archiveId}', archive_id)
+        api_path = api_path.replace('{archiveId}', str(self._normalize_value(archive_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_policies(self, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+        return response
+
+
+    def list_policies(
+        self,
+        queries: Optional[List[str]] = None    ) -> BackupPolicyList:
         """
         List all policies for a project.
 
@@ -147,8 +176,8 @@ class Backups(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        BackupPolicyList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -160,12 +189,23 @@ class Backups(Service):
         api_params = {}
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_policy(self, policy_id: str, services: List[BackupServices], retention: float, schedule: str, name: Optional[str] = None, resource_id: Optional[str] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=BackupPolicyList)
+
+
+    def create_policy(
+        self,
+        policy_id: str,
+        services: List[BackupServices],
+        retention: float,
+        schedule: str,
+        name: Optional[str] = None,
+        resource_id: Optional[str] = None,
+        enabled: Optional[bool] = None    ) -> BackupPolicy:
         """
         Create a new backup policy.
 
@@ -188,8 +228,8 @@ class Backups(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        BackupPolicy
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -212,21 +252,26 @@ class Backups(Service):
             raise AppwriteException('Missing required parameter: "schedule"')
 
 
-        api_params['policyId'] = policy_id
+        api_params['policyId'] = self._normalize_value(policy_id)
         if name is not None:
-            api_params['name'] = name
-        api_params['services'] = services
-        api_params['resourceId'] = resource_id
+            api_params['name'] = self._normalize_value(name)
+        api_params['services'] = self._normalize_value(services)
+        api_params['resourceId'] = self._normalize_value(resource_id)
         if enabled is not None:
-            api_params['enabled'] = enabled
-        api_params['retention'] = retention
-        api_params['schedule'] = schedule
+            api_params['enabled'] = self._normalize_value(enabled)
+        api_params['retention'] = self._normalize_value(retention)
+        api_params['schedule'] = self._normalize_value(schedule)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_policy(self, policy_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=BackupPolicy)
+
+
+    def get_policy(
+        self,
+        policy_id: str    ) -> BackupPolicy:
         """
         Get a backup policy using it's ID.
 
@@ -237,8 +282,8 @@ class Backups(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        BackupPolicy
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -251,13 +296,22 @@ class Backups(Service):
         if policy_id is None:
             raise AppwriteException('Missing required parameter: "policy_id"')
 
-        api_path = api_path.replace('{policyId}', policy_id)
+        api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_policy(self, policy_id: str, name: Optional[str] = None, retention: Optional[float] = None, schedule: Optional[str] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=BackupPolicy)
+
+
+    def update_policy(
+        self,
+        policy_id: str,
+        name: Optional[str] = None,
+        retention: Optional[float] = None,
+        schedule: Optional[str] = None,
+        enabled: Optional[bool] = None    ) -> BackupPolicy:
         """
         Update an existing policy using it's ID.
 
@@ -276,8 +330,8 @@ class Backups(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        BackupPolicy
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -290,19 +344,24 @@ class Backups(Service):
         if policy_id is None:
             raise AppwriteException('Missing required parameter: "policy_id"')
 
-        api_path = api_path.replace('{policyId}', policy_id)
+        api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
-        api_params['name'] = name
-        api_params['retention'] = retention
+        api_params['name'] = self._normalize_value(name)
+        api_params['retention'] = self._normalize_value(retention)
         if schedule is not None:
-            api_params['schedule'] = schedule
-        api_params['enabled'] = enabled
+            api_params['schedule'] = self._normalize_value(schedule)
+        api_params['enabled'] = self._normalize_value(enabled)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_policy(self, policy_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=BackupPolicy)
+
+
+    def delete_policy(
+        self,
+        policy_id: str    ) -> Dict[str, Any]:
         """
         Delete a policy using it's ID.
 
@@ -327,14 +386,22 @@ class Backups(Service):
         if policy_id is None:
             raise AppwriteException('Missing required parameter: "policy_id"')
 
-        api_path = api_path.replace('{policyId}', policy_id)
+        api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_restoration(self, archive_id: str, services: List[BackupServices], new_resource_id: Optional[str] = None, new_resource_name: Optional[str] = None) -> Dict[str, Any]:
+        return response
+
+
+    def create_restoration(
+        self,
+        archive_id: str,
+        services: List[BackupServices],
+        new_resource_id: Optional[str] = None,
+        new_resource_name: Optional[str] = None    ) -> BackupRestoration:
         """
         Create and trigger a new restoration for a backup on a project.
 
@@ -351,8 +418,8 @@ class Backups(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        BackupRestoration
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -369,18 +436,23 @@ class Backups(Service):
             raise AppwriteException('Missing required parameter: "services"')
 
 
-        api_params['archiveId'] = archive_id
-        api_params['services'] = services
+        api_params['archiveId'] = self._normalize_value(archive_id)
+        api_params['services'] = self._normalize_value(services)
         if new_resource_id is not None:
-            api_params['newResourceId'] = new_resource_id
+            api_params['newResourceId'] = self._normalize_value(new_resource_id)
         if new_resource_name is not None:
-            api_params['newResourceName'] = new_resource_name
+            api_params['newResourceName'] = self._normalize_value(new_resource_name)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_restorations(self, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=BackupRestoration)
+
+
+    def list_restorations(
+        self,
+        queries: Optional[List[str]] = None    ) -> BackupRestorationList:
         """
         List all backup restorations for a project.
 
@@ -391,8 +463,8 @@ class Backups(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        BackupRestorationList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -404,12 +476,17 @@ class Backups(Service):
         api_params = {}
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_restoration(self, restoration_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=BackupRestorationList)
+
+
+    def get_restoration(
+        self,
+        restoration_id: str    ) -> BackupRestoration:
         """
         Get the current status of a backup restoration.
 
@@ -420,8 +497,8 @@ class Backups(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        BackupRestoration
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -434,8 +511,11 @@ class Backups(Service):
         if restoration_id is None:
             raise AppwriteException('Missing required parameter: "restoration_id"')
 
-        api_path = api_path.replace('{restorationId}', restoration_id)
+        api_path = api_path.replace('{restorationId}', str(self._normalize_value(restoration_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
+
+        return self._parse_response(response, model=BackupRestoration)
+

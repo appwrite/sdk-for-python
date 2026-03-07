@@ -1,14 +1,18 @@
 from ..service import Service
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from ..models.activity_event_list import ActivityEventList;
+from ..models.activity_event import ActivityEvent;
 
 class Activities(Service):
 
     def __init__(self, client) -> None:
         super(Activities, self).__init__(client)
 
-    def list_events(self, queries: Optional[str] = None) -> Dict[str, Any]:
+    def list_events(
+        self,
+        queries: Optional[str] = None    ) -> ActivityEventList:
         """
         List all events for selected filters.
 
@@ -19,8 +23,8 @@ class Activities(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ActivityEventList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -32,12 +36,17 @@ class Activities(Service):
         api_params = {}
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_event(self, event_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=ActivityEventList)
+
+
+    def get_event(
+        self,
+        event_id: str    ) -> ActivityEvent:
         """
         Get event by ID.
         
@@ -49,8 +58,8 @@ class Activities(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ActivityEvent
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -63,8 +72,11 @@ class Activities(Service):
         if event_id is None:
             raise AppwriteException('Missing required parameter: "event_id"')
 
-        api_path = api_path.replace('{eventId}', event_id)
+        api_path = api_path.replace('{eventId}', str(self._normalize_value(event_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
+
+        return self._parse_response(response, model=ActivityEvent)
+

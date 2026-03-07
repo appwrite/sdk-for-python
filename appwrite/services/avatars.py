@@ -1,5 +1,5 @@
 from ..service import Service
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..enums.browser import Browser;
@@ -15,7 +15,12 @@ class Avatars(Service):
     def __init__(self, client) -> None:
         super(Avatars, self).__init__(client)
 
-    def get_browser(self, code: Browser, width: Optional[float] = None, height: Optional[float] = None, quality: Optional[float] = None) -> bytes:
+    def get_browser(
+        self,
+        code: Browser,
+        width: Optional[float] = None,
+        height: Optional[float] = None,
+        quality: Optional[float] = None    ) -> bytes:
         """
         You can use this endpoint to show different browser icons to your users. The code argument receives the browser code as it appears in your user [GET /account/sessions](https://appwrite.io/docs/references/cloud/client-web/account#getSessions) endpoint. Use width, height and quality arguments to change the output settings.
         
@@ -48,19 +53,27 @@ class Avatars(Service):
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
 
-        api_path = api_path.replace('{code}', code)
+        api_path = api_path.replace('{code}', str(self._normalize_value(code)))
 
         if width is not None:
-            api_params['width'] = width
+            api_params['width'] = self._normalize_value(width)
         if height is not None:
-            api_params['height'] = height
+            api_params['height'] = self._normalize_value(height)
         if quality is not None:
-            api_params['quality'] = quality
+            api_params['quality'] = self._normalize_value(quality)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_credit_card(self, code: CreditCard, width: Optional[float] = None, height: Optional[float] = None, quality: Optional[float] = None) -> bytes:
+        return response
+
+
+    def get_credit_card(
+        self,
+        code: CreditCard,
+        width: Optional[float] = None,
+        height: Optional[float] = None,
+        quality: Optional[float] = None    ) -> bytes:
         """
         The credit card endpoint will return you the icon of the credit card provider you need. Use width, height and quality arguments to change the output settings.
         
@@ -94,19 +107,24 @@ class Avatars(Service):
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
 
-        api_path = api_path.replace('{code}', code)
+        api_path = api_path.replace('{code}', str(self._normalize_value(code)))
 
         if width is not None:
-            api_params['width'] = width
+            api_params['width'] = self._normalize_value(width)
         if height is not None:
-            api_params['height'] = height
+            api_params['height'] = self._normalize_value(height)
         if quality is not None:
-            api_params['quality'] = quality
+            api_params['quality'] = self._normalize_value(quality)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_favicon(self, url: str) -> bytes:
+        return response
+
+
+    def get_favicon(
+        self,
+        url: str    ) -> bytes:
         """
         Use this endpoint to fetch the favorite icon (AKA favicon) of any remote website URL.
         
@@ -134,12 +152,20 @@ class Avatars(Service):
             raise AppwriteException('Missing required parameter: "url"')
 
 
-        api_params['url'] = url
+        api_params['url'] = self._normalize_value(url)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_flag(self, code: Flag, width: Optional[float] = None, height: Optional[float] = None, quality: Optional[float] = None) -> bytes:
+        return response
+
+
+    def get_flag(
+        self,
+        code: Flag,
+        width: Optional[float] = None,
+        height: Optional[float] = None,
+        quality: Optional[float] = None    ) -> bytes:
         """
         You can use this endpoint to show different country flags icons to your users. The code argument receives the 2 letter country code. Use width, height and quality arguments to change the output settings. Country codes follow the [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) standard.
         
@@ -173,19 +199,26 @@ class Avatars(Service):
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
 
-        api_path = api_path.replace('{code}', code)
+        api_path = api_path.replace('{code}', str(self._normalize_value(code)))
 
         if width is not None:
-            api_params['width'] = width
+            api_params['width'] = self._normalize_value(width)
         if height is not None:
-            api_params['height'] = height
+            api_params['height'] = self._normalize_value(height)
         if quality is not None:
-            api_params['quality'] = quality
+            api_params['quality'] = self._normalize_value(quality)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_image(self, url: str, width: Optional[float] = None, height: Optional[float] = None) -> bytes:
+        return response
+
+
+    def get_image(
+        self,
+        url: str,
+        width: Optional[float] = None,
+        height: Optional[float] = None    ) -> bytes:
         """
         Use this endpoint to fetch a remote image URL and crop it to any image size you want. This endpoint is very useful if you need to crop and display remote images in your app or in case you want to make sure a 3rd party image is properly served using a TLS protocol.
         
@@ -219,16 +252,24 @@ class Avatars(Service):
             raise AppwriteException('Missing required parameter: "url"')
 
 
-        api_params['url'] = url
+        api_params['url'] = self._normalize_value(url)
         if width is not None:
-            api_params['width'] = width
+            api_params['width'] = self._normalize_value(width)
         if height is not None:
-            api_params['height'] = height
+            api_params['height'] = self._normalize_value(height)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_initials(self, name: Optional[str] = None, width: Optional[float] = None, height: Optional[float] = None, background: Optional[str] = None) -> bytes:
+        return response
+
+
+    def get_initials(
+        self,
+        name: Optional[str] = None,
+        width: Optional[float] = None,
+        height: Optional[float] = None,
+        background: Optional[str] = None    ) -> bytes:
         """
         Use this endpoint to show your user initials avatar icon on your website or app. By default, this route will try to print your logged-in user name or email initials. You can also overwrite the user name if you pass the 'name' parameter. If no name is given and no user is logged, an empty avatar will be returned.
         
@@ -263,18 +304,26 @@ class Avatars(Service):
         api_params = {}
 
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
         if width is not None:
-            api_params['width'] = width
+            api_params['width'] = self._normalize_value(width)
         if height is not None:
-            api_params['height'] = height
+            api_params['height'] = self._normalize_value(height)
         if background is not None:
-            api_params['background'] = background
+            api_params['background'] = self._normalize_value(background)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_qr(self, text: str, size: Optional[float] = None, margin: Optional[float] = None, download: Optional[bool] = None) -> bytes:
+        return response
+
+
+    def get_qr(
+        self,
+        text: str,
+        size: Optional[float] = None,
+        margin: Optional[float] = None,
+        download: Optional[bool] = None    ) -> bytes:
         """
         Converts a given plain text to a QR code image. You can use the query parameters to change the size and style of the resulting image.
         
@@ -307,18 +356,42 @@ class Avatars(Service):
             raise AppwriteException('Missing required parameter: "text"')
 
 
-        api_params['text'] = text
+        api_params['text'] = self._normalize_value(text)
         if size is not None:
-            api_params['size'] = size
+            api_params['size'] = self._normalize_value(size)
         if margin is not None:
-            api_params['margin'] = margin
+            api_params['margin'] = self._normalize_value(margin)
         if download is not None:
-            api_params['download'] = download
+            api_params['download'] = self._normalize_value(download)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_screenshot(self, url: str, headers: Optional[dict] = None, viewport_width: Optional[float] = None, viewport_height: Optional[float] = None, scale: Optional[float] = None, theme: Optional[Theme] = None, user_agent: Optional[str] = None, fullpage: Optional[bool] = None, locale: Optional[str] = None, timezone: Optional[Timezone] = None, latitude: Optional[float] = None, longitude: Optional[float] = None, accuracy: Optional[float] = None, touch: Optional[bool] = None, permissions: Optional[List[BrowserPermission]] = None, sleep: Optional[float] = None, width: Optional[float] = None, height: Optional[float] = None, quality: Optional[float] = None, output: Optional[ImageFormat] = None) -> bytes:
+        return response
+
+
+    def get_screenshot(
+        self,
+        url: str,
+        headers: Optional[Dict[str, Any]] = None,
+        viewport_width: Optional[float] = None,
+        viewport_height: Optional[float] = None,
+        scale: Optional[float] = None,
+        theme: Optional[Theme] = None,
+        user_agent: Optional[str] = None,
+        fullpage: Optional[bool] = None,
+        locale: Optional[str] = None,
+        timezone: Optional[Timezone] = None,
+        latitude: Optional[float] = None,
+        longitude: Optional[float] = None,
+        accuracy: Optional[float] = None,
+        touch: Optional[bool] = None,
+        permissions: Optional[List[BrowserPermission]] = None,
+        sleep: Optional[float] = None,
+        width: Optional[float] = None,
+        height: Optional[float] = None,
+        quality: Optional[float] = None,
+        output: Optional[ImageFormat] = None    ) -> bytes:
         """
         Use this endpoint to capture a screenshot of any website URL. This endpoint uses a headless browser to render the webpage and capture it as an image.
         
@@ -330,7 +403,7 @@ class Avatars(Service):
         ----------
         url : str
             Website URL which you want to capture.
-        headers : Optional[dict]
+        headers : Optional[Dict[str, Any]]
             HTTP headers to send with the browser request. Defaults to empty.
         viewport_width : Optional[float]
             Browser viewport width. Pass an integer between 1 to 1920. Defaults to 1280.
@@ -386,45 +459,48 @@ class Avatars(Service):
             raise AppwriteException('Missing required parameter: "url"')
 
 
-        api_params['url'] = url
+        api_params['url'] = self._normalize_value(url)
         if headers is not None:
-            api_params['headers'] = headers
+            api_params['headers'] = self._normalize_value(headers)
         if viewport_width is not None:
-            api_params['viewportWidth'] = viewport_width
+            api_params['viewportWidth'] = self._normalize_value(viewport_width)
         if viewport_height is not None:
-            api_params['viewportHeight'] = viewport_height
+            api_params['viewportHeight'] = self._normalize_value(viewport_height)
         if scale is not None:
-            api_params['scale'] = scale
+            api_params['scale'] = self._normalize_value(scale)
         if theme is not None:
-            api_params['theme'] = theme
+            api_params['theme'] = self._normalize_value(theme)
         if user_agent is not None:
-            api_params['userAgent'] = user_agent
+            api_params['userAgent'] = self._normalize_value(user_agent)
         if fullpage is not None:
-            api_params['fullpage'] = fullpage
+            api_params['fullpage'] = self._normalize_value(fullpage)
         if locale is not None:
-            api_params['locale'] = locale
+            api_params['locale'] = self._normalize_value(locale)
         if timezone is not None:
-            api_params['timezone'] = timezone
+            api_params['timezone'] = self._normalize_value(timezone)
         if latitude is not None:
-            api_params['latitude'] = latitude
+            api_params['latitude'] = self._normalize_value(latitude)
         if longitude is not None:
-            api_params['longitude'] = longitude
+            api_params['longitude'] = self._normalize_value(longitude)
         if accuracy is not None:
-            api_params['accuracy'] = accuracy
+            api_params['accuracy'] = self._normalize_value(accuracy)
         if touch is not None:
-            api_params['touch'] = touch
+            api_params['touch'] = self._normalize_value(touch)
         if permissions is not None:
-            api_params['permissions'] = permissions
+            api_params['permissions'] = self._normalize_value(permissions)
         if sleep is not None:
-            api_params['sleep'] = sleep
+            api_params['sleep'] = self._normalize_value(sleep)
         if width is not None:
-            api_params['width'] = width
+            api_params['width'] = self._normalize_value(width)
         if height is not None:
-            api_params['height'] = height
+            api_params['height'] = self._normalize_value(height)
         if quality is not None:
-            api_params['quality'] = quality
+            api_params['quality'] = self._normalize_value(quality)
         if output is not None:
-            api_params['output'] = output
+            api_params['output'] = self._normalize_value(output)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
+
+        return response
+

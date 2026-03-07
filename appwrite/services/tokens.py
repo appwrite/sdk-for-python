@@ -1,14 +1,21 @@
 from ..service import Service
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from ..models.resource_token_list import ResourceTokenList;
+from ..models.resource_token import ResourceToken;
 
 class Tokens(Service):
 
     def __init__(self, client) -> None:
         super(Tokens, self).__init__(client)
 
-    def list(self, bucket_id: str, file_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+    def list(
+        self,
+        bucket_id: str,
+        file_id: str,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None    ) -> ResourceTokenList:
         """
         List all the tokens created for a specific file or bucket. You can use the query params to filter your results.
 
@@ -25,8 +32,8 @@ class Tokens(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ResourceTokenList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -42,18 +49,25 @@ class Tokens(Service):
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
-        api_path = api_path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_file_token(self, bucket_id: str, file_id: str, expire: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ResourceTokenList)
+
+
+    def create_file_token(
+        self,
+        bucket_id: str,
+        file_id: str,
+        expire: Optional[str] = None    ) -> ResourceToken:
         """
         Create a new token. A token is linked to a file. Token can be passed as a request URL search parameter.
 
@@ -68,8 +82,8 @@ class Tokens(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ResourceToken
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -85,16 +99,21 @@ class Tokens(Service):
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
-        api_path = api_path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
-        api_params['expire'] = expire
+        api_params['expire'] = self._normalize_value(expire)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get(self, token_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=ResourceToken)
+
+
+    def get(
+        self,
+        token_id: str    ) -> ResourceToken:
         """
         Get a token by its unique ID.
 
@@ -105,8 +124,8 @@ class Tokens(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ResourceToken
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -119,13 +138,19 @@ class Tokens(Service):
         if token_id is None:
             raise AppwriteException('Missing required parameter: "token_id"')
 
-        api_path = api_path.replace('{tokenId}', token_id)
+        api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update(self, token_id: str, expire: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ResourceToken)
+
+
+    def update(
+        self,
+        token_id: str,
+        expire: Optional[str] = None    ) -> ResourceToken:
         """
         Update a token by its unique ID. Use this endpoint to update a token's expiry date.
 
@@ -138,8 +163,8 @@ class Tokens(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ResourceToken
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -152,15 +177,20 @@ class Tokens(Service):
         if token_id is None:
             raise AppwriteException('Missing required parameter: "token_id"')
 
-        api_path = api_path.replace('{tokenId}', token_id)
+        api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
 
-        api_params['expire'] = expire
+        api_params['expire'] = self._normalize_value(expire)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete(self, token_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=ResourceToken)
+
+
+    def delete(
+        self,
+        token_id: str    ) -> Dict[str, Any]:
         """
         Delete a token by its unique ID.
 
@@ -185,9 +215,12 @@ class Tokens(Service):
         if token_id is None:
             raise AppwriteException('Missing required parameter: "token_id"')
 
-        api_path = api_path.replace('{tokenId}', token_id)
+        api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
+
+        return response
+

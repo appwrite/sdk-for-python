@@ -20,6 +20,12 @@ To install via [PyPI](https://pypi.org/):
 pip install appwrite
 ```
 
+Or with `uv`:
+
+```bash
+uv add appwrite
+```
+
 
 ## Getting Started
 

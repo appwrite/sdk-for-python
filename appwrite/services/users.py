@@ -1,17 +1,35 @@
 from ..service import Service
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from ..models.user_list import UserList;
+from ..models.user import User;
+from ..models.identity_list import IdentityList;
 from ..enums.password_hash import PasswordHash;
+from ..models.jwt import Jwt;
+from ..models.log_list import LogList;
+from ..models.membership_list import MembershipList;
 from ..enums.authenticator_type import AuthenticatorType;
+from ..models.mfa_factors import MfaFactors;
+from ..models.mfa_recovery_codes import MfaRecoveryCodes;
+from ..models.preferences import Preferences;
+from ..models.session_list import SessionList;
+from ..models.session import Session;
+from ..models.target_list import TargetList;
 from ..enums.messaging_provider_type import MessagingProviderType;
+from ..models.target import Target;
+from ..models.token import Token;
 
 class Users(Service):
 
     def __init__(self, client) -> None:
         super(Users, self).__init__(client)
 
-    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+    def list(
+        self,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None    ) -> UserList:
         """
         Get a list of all the project's users. You can use the query params to filter your results.
 
@@ -26,8 +44,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        UserList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -39,16 +57,25 @@ class Users(Service):
         api_params = {}
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if search is not None:
-            api_params['search'] = search
+            api_params['search'] = self._normalize_value(search)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, user_id: str, email: Optional[str] = None, phone: Optional[str] = None, password: Optional[str] = None, name: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=UserList)
+
+
+    def create(
+        self,
+        user_id: str,
+        email: Optional[str] = None,
+        phone: Optional[str] = None,
+        password: Optional[str] = None,
+        name: Optional[str] = None    ) -> User:
         """
         Create a new user.
 
@@ -67,8 +94,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -82,19 +109,27 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "user_id"')
 
 
-        api_params['userId'] = user_id
-        api_params['email'] = email
-        api_params['phone'] = phone
+        api_params['userId'] = self._normalize_value(user_id)
+        api_params['email'] = self._normalize_value(email)
+        api_params['phone'] = self._normalize_value(phone)
         if password is not None:
-            api_params['password'] = password
+            api_params['password'] = self._normalize_value(password)
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_argon2_user(self, user_id: str, email: str, password: str, name: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def create_argon2_user(
+        self,
+        user_id: str,
+        email: str,
+        password: str,
+        name: Optional[str] = None    ) -> User:
         """
         Create a new user. Password provided must be hashed with the [Argon2](https://en.wikipedia.org/wiki/Argon2) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -111,8 +146,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -132,17 +167,25 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "password"')
 
 
-        api_params['userId'] = user_id
-        api_params['email'] = email
-        api_params['password'] = password
+        api_params['userId'] = self._normalize_value(user_id)
+        api_params['email'] = self._normalize_value(email)
+        api_params['password'] = self._normalize_value(password)
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_bcrypt_user(self, user_id: str, email: str, password: str, name: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def create_bcrypt_user(
+        self,
+        user_id: str,
+        email: str,
+        password: str,
+        name: Optional[str] = None    ) -> User:
         """
         Create a new user. Password provided must be hashed with the [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -159,8 +202,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -180,17 +223,24 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "password"')
 
 
-        api_params['userId'] = user_id
-        api_params['email'] = email
-        api_params['password'] = password
+        api_params['userId'] = self._normalize_value(user_id)
+        api_params['email'] = self._normalize_value(email)
+        api_params['password'] = self._normalize_value(password)
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_identities(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def list_identities(
+        self,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None    ) -> IdentityList:
         """
         Get identities for all users.
 
@@ -205,8 +255,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        IdentityList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -218,16 +268,21 @@ class Users(Service):
         api_params = {}
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if search is not None:
-            api_params['search'] = search
+            api_params['search'] = self._normalize_value(search)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def delete_identity(self, identity_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=IdentityList)
+
+
+    def delete_identity(
+        self,
+        identity_id: str    ) -> Dict[str, Any]:
         """
         Delete an identity by its unique ID.
 
@@ -252,14 +307,22 @@ class Users(Service):
         if identity_id is None:
             raise AppwriteException('Missing required parameter: "identity_id"')
 
-        api_path = api_path.replace('{identityId}', identity_id)
+        api_path = api_path.replace('{identityId}', str(self._normalize_value(identity_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_md5_user(self, user_id: str, email: str, password: str, name: Optional[str] = None) -> Dict[str, Any]:
+        return response
+
+
+    def create_md5_user(
+        self,
+        user_id: str,
+        email: str,
+        password: str,
+        name: Optional[str] = None    ) -> User:
         """
         Create a new user. Password provided must be hashed with the [MD5](https://en.wikipedia.org/wiki/MD5) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -276,8 +339,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -297,17 +360,25 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "password"')
 
 
-        api_params['userId'] = user_id
-        api_params['email'] = email
-        api_params['password'] = password
+        api_params['userId'] = self._normalize_value(user_id)
+        api_params['email'] = self._normalize_value(email)
+        api_params['password'] = self._normalize_value(password)
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_ph_pass_user(self, user_id: str, email: str, password: str, name: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def create_ph_pass_user(
+        self,
+        user_id: str,
+        email: str,
+        password: str,
+        name: Optional[str] = None    ) -> User:
         """
         Create a new user. Password provided must be hashed with the [PHPass](https://www.openwall.com/phpass/) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -324,8 +395,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -345,17 +416,30 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "password"')
 
 
-        api_params['userId'] = user_id
-        api_params['email'] = email
-        api_params['password'] = password
+        api_params['userId'] = self._normalize_value(user_id)
+        api_params['email'] = self._normalize_value(email)
+        api_params['password'] = self._normalize_value(password)
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_scrypt_user(self, user_id: str, email: str, password: str, password_salt: str, password_cpu: float, password_memory: float, password_parallel: float, password_length: float, name: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def create_scrypt_user(
+        self,
+        user_id: str,
+        email: str,
+        password: str,
+        password_salt: str,
+        password_cpu: float,
+        password_memory: float,
+        password_parallel: float,
+        password_length: float,
+        name: Optional[str] = None    ) -> User:
         """
         Create a new user. Password provided must be hashed with the [Scrypt](https://github.com/Tarsnap/scrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -382,8 +466,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -418,22 +502,33 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "password_length"')
 
 
-        api_params['userId'] = user_id
-        api_params['email'] = email
-        api_params['password'] = password
-        api_params['passwordSalt'] = password_salt
-        api_params['passwordCpu'] = password_cpu
-        api_params['passwordMemory'] = password_memory
-        api_params['passwordParallel'] = password_parallel
-        api_params['passwordLength'] = password_length
+        api_params['userId'] = self._normalize_value(user_id)
+        api_params['email'] = self._normalize_value(email)
+        api_params['password'] = self._normalize_value(password)
+        api_params['passwordSalt'] = self._normalize_value(password_salt)
+        api_params['passwordCpu'] = self._normalize_value(password_cpu)
+        api_params['passwordMemory'] = self._normalize_value(password_memory)
+        api_params['passwordParallel'] = self._normalize_value(password_parallel)
+        api_params['passwordLength'] = self._normalize_value(password_length)
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_scrypt_modified_user(self, user_id: str, email: str, password: str, password_salt: str, password_salt_separator: str, password_signer_key: str, name: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def create_scrypt_modified_user(
+        self,
+        user_id: str,
+        email: str,
+        password: str,
+        password_salt: str,
+        password_salt_separator: str,
+        password_signer_key: str,
+        name: Optional[str] = None    ) -> User:
         """
         Create a new user. Password provided must be hashed with the [Scrypt Modified](https://gist.github.com/Meldiron/eecf84a0225eccb5a378d45bb27462cc) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -456,8 +551,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -486,20 +581,29 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "password_signer_key"')
 
 
-        api_params['userId'] = user_id
-        api_params['email'] = email
-        api_params['password'] = password
-        api_params['passwordSalt'] = password_salt
-        api_params['passwordSaltSeparator'] = password_salt_separator
-        api_params['passwordSignerKey'] = password_signer_key
+        api_params['userId'] = self._normalize_value(user_id)
+        api_params['email'] = self._normalize_value(email)
+        api_params['password'] = self._normalize_value(password)
+        api_params['passwordSalt'] = self._normalize_value(password_salt)
+        api_params['passwordSaltSeparator'] = self._normalize_value(password_salt_separator)
+        api_params['passwordSignerKey'] = self._normalize_value(password_signer_key)
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_sha_user(self, user_id: str, email: str, password: str, password_version: Optional[PasswordHash] = None, name: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def create_sha_user(
+        self,
+        user_id: str,
+        email: str,
+        password: str,
+        password_version: Optional[PasswordHash] = None,
+        name: Optional[str] = None    ) -> User:
         """
         Create a new user. Password provided must be hashed with the [SHA](https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -518,8 +622,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -539,19 +643,24 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "password"')
 
 
-        api_params['userId'] = user_id
-        api_params['email'] = email
-        api_params['password'] = password
+        api_params['userId'] = self._normalize_value(user_id)
+        api_params['email'] = self._normalize_value(email)
+        api_params['password'] = self._normalize_value(password)
         if password_version is not None:
-            api_params['passwordVersion'] = password_version
+            api_params['passwordVersion'] = self._normalize_value(password_version)
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get(self, user_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def get(
+        self,
+        user_id: str    ) -> User:
         """
         Get a user by its unique ID.
 
@@ -562,8 +671,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -576,13 +685,18 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def delete(self, user_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def delete(
+        self,
+        user_id: str    ) -> Dict[str, Any]:
         """
         Delete a user by its unique ID, thereby releasing it's ID. Since ID is released and can be reused, all user-related resources like documents or storage files should be deleted before user deletion. If you want to keep ID reserved, use the [updateStatus](https://appwrite.io/docs/server/users#usersUpdateStatus) endpoint instead.
 
@@ -607,14 +721,20 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_email(self, user_id: str, email: str) -> Dict[str, Any]:
+        return response
+
+
+    def update_email(
+        self,
+        user_id: str,
+        email: str    ) -> User:
         """
         Update the user email by its unique ID.
 
@@ -627,8 +747,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -644,15 +764,22 @@ class Users(Service):
         if email is None:
             raise AppwriteException('Missing required parameter: "email"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        api_params['email'] = email
+        api_params['email'] = self._normalize_value(email)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_jwt(self, user_id: str, session_id: Optional[str] = None, duration: Optional[float] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def create_jwt(
+        self,
+        user_id: str,
+        session_id: Optional[str] = None,
+        duration: Optional[float] = None    ) -> Jwt:
         """
         Use this endpoint to create a JSON Web Token for user by its unique ID. You can use the resulting JWT to authenticate on behalf of the user. The JWT secret will become invalid if the session it uses gets deleted.
 
@@ -667,8 +794,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Jwt
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -681,18 +808,24 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
         if session_id is not None:
-            api_params['sessionId'] = session_id
+            api_params['sessionId'] = self._normalize_value(session_id)
         if duration is not None:
-            api_params['duration'] = duration
+            api_params['duration'] = self._normalize_value(duration)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_labels(self, user_id: str, labels: List[str]) -> Dict[str, Any]:
+        return self._parse_response(response, model=Jwt)
+
+
+    def update_labels(
+        self,
+        user_id: str,
+        labels: List[str]    ) -> User:
         """
         Update the user labels by its unique ID. 
         
@@ -707,8 +840,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -724,15 +857,22 @@ class Users(Service):
         if labels is None:
             raise AppwriteException('Missing required parameter: "labels"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        api_params['labels'] = labels
+        api_params['labels'] = self._normalize_value(labels)
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_logs(self, user_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def list_logs(
+        self,
+        user_id: str,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None    ) -> LogList:
         """
         Get the user activity logs list by its unique ID.
 
@@ -747,8 +887,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        LogList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -761,17 +901,25 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def list_memberships(self, user_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=LogList)
+
+
+    def list_memberships(
+        self,
+        user_id: str,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None    ) -> MembershipList:
         """
         Get the user membership list by its unique ID.
 
@@ -788,8 +936,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        MembershipList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -802,19 +950,25 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if search is not None:
-            api_params['search'] = search
+            api_params['search'] = self._normalize_value(search)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_mfa(self, user_id: str, mfa: bool) -> Dict[str, Any]:
+        return self._parse_response(response, model=MembershipList)
+
+
+    def update_mfa(
+        self,
+        user_id: str,
+        mfa: bool    ) -> User:
         """
         Enable or disable MFA on a user account.
 
@@ -827,8 +981,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -844,15 +998,21 @@ class Users(Service):
         if mfa is None:
             raise AppwriteException('Missing required parameter: "mfa"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        api_params['mfa'] = mfa
+        api_params['mfa'] = self._normalize_value(mfa)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_mfa_authenticator(self, user_id: str, type: AuthenticatorType) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def delete_mfa_authenticator(
+        self,
+        user_id: str,
+        type: AuthenticatorType    ) -> Dict[str, Any]:
         """
         Delete an authenticator app.
 
@@ -882,15 +1042,20 @@ class Users(Service):
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
 
-        api_path = api_path.replace('{userId}', user_id)
-        api_path = api_path.replace('{type}', type)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
+        api_path = api_path.replace('{type}', str(self._normalize_value(type)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_mfa_factors(self, user_id: str) -> Dict[str, Any]:
+        return response
+
+
+    def list_mfa_factors(
+        self,
+        user_id: str    ) -> MfaFactors:
         """
         List the factors available on the account to be used as a MFA challange.
 
@@ -901,8 +1066,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        MfaFactors
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -915,13 +1080,18 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_mfa_recovery_codes(self, user_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=MfaFactors)
+
+
+    def get_mfa_recovery_codes(
+        self,
+        user_id: str    ) -> MfaRecoveryCodes:
         """
         Get recovery codes that can be used as backup for MFA flow by User ID. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
 
@@ -932,8 +1102,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        MfaRecoveryCodes
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -946,13 +1116,18 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_mfa_recovery_codes(self, user_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=MfaRecoveryCodes)
+
+
+    def update_mfa_recovery_codes(
+        self,
+        user_id: str    ) -> MfaRecoveryCodes:
         """
         Regenerate recovery codes that can be used as backup for MFA flow by User ID. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
 
@@ -963,8 +1138,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        MfaRecoveryCodes
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -977,14 +1152,19 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_mfa_recovery_codes(self, user_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=MfaRecoveryCodes)
+
+
+    def create_mfa_recovery_codes(
+        self,
+        user_id: str    ) -> MfaRecoveryCodes:
         """
         Generate recovery codes used as backup for MFA flow for User ID. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method by client SDK.
 
@@ -995,8 +1175,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        MfaRecoveryCodes
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1009,14 +1189,20 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_name(self, user_id: str, name: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=MfaRecoveryCodes)
+
+
+    def update_name(
+        self,
+        user_id: str,
+        name: str    ) -> User:
         """
         Update the user name by its unique ID.
 
@@ -1029,8 +1215,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1046,15 +1232,21 @@ class Users(Service):
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        api_params['name'] = name
+        api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_password(self, user_id: str, password: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def update_password(
+        self,
+        user_id: str,
+        password: str    ) -> User:
         """
         Update the user password by its unique ID.
 
@@ -1067,8 +1259,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1084,15 +1276,21 @@ class Users(Service):
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        api_params['password'] = password
+        api_params['password'] = self._normalize_value(password)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_phone(self, user_id: str, number: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def update_phone(
+        self,
+        user_id: str,
+        number: str    ) -> User:
         """
         Update the user phone by its unique ID.
 
@@ -1105,8 +1303,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1122,15 +1320,20 @@ class Users(Service):
         if number is None:
             raise AppwriteException('Missing required parameter: "number"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        api_params['number'] = number
+        api_params['number'] = self._normalize_value(number)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_prefs(self, user_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def get_prefs(
+        self,
+        user_id: str    ) -> Preferences:
         """
         Get the user preferences by its unique ID.
 
@@ -1141,8 +1344,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Preferences
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1155,13 +1358,19 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_prefs(self, user_id: str, prefs: dict) -> Dict[str, Any]:
+        return self._parse_response(response, model=Preferences)
+
+
+    def update_prefs(
+        self,
+        user_id: str,
+        prefs: Dict[str, Any]    ) -> Preferences:
         """
         Update the user preferences by its unique ID. The object you pass is stored as is, and replaces any previous value. The maximum allowed prefs size is 64kB and throws error if exceeded.
 
@@ -1169,13 +1378,13 @@ class Users(Service):
         ----------
         user_id : str
             User ID.
-        prefs : dict
+        prefs : Dict[str, Any]
             Prefs key-value JSON object.
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Preferences
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1191,15 +1400,21 @@ class Users(Service):
         if prefs is None:
             raise AppwriteException('Missing required parameter: "prefs"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        api_params['prefs'] = prefs
+        api_params['prefs'] = self._normalize_value(prefs)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_sessions(self, user_id: str, total: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Preferences)
+
+
+    def list_sessions(
+        self,
+        user_id: str,
+        total: Optional[bool] = None    ) -> SessionList:
         """
         Get the user sessions list by its unique ID.
 
@@ -1212,8 +1427,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        SessionList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1226,15 +1441,20 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_session(self, user_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=SessionList)
+
+
+    def create_session(
+        self,
+        user_id: str    ) -> Session:
         """
         Creates a session for a user. Returns an immediately usable session object.
         
@@ -1247,8 +1467,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Session
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1261,14 +1481,19 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_sessions(self, user_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Session)
+
+
+    def delete_sessions(
+        self,
+        user_id: str    ) -> Dict[str, Any]:
         """
         Delete all user's sessions by using the user's unique ID.
 
@@ -1293,14 +1518,20 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_session(self, user_id: str, session_id: str) -> Dict[str, Any]:
+        return response
+
+
+    def delete_session(
+        self,
+        user_id: str,
+        session_id: str    ) -> Dict[str, Any]:
         """
         Delete a user sessions by its unique ID.
 
@@ -1330,15 +1561,21 @@ class Users(Service):
         if session_id is None:
             raise AppwriteException('Missing required parameter: "session_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
-        api_path = api_path.replace('{sessionId}', session_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
+        api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_status(self, user_id: str, status: bool) -> Dict[str, Any]:
+        return response
+
+
+    def update_status(
+        self,
+        user_id: str,
+        status: bool    ) -> User:
         """
         Update the user status by its unique ID. Use this endpoint as an alternative to deleting a user if you want to keep user's ID reserved.
 
@@ -1351,8 +1588,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1368,15 +1605,22 @@ class Users(Service):
         if status is None:
             raise AppwriteException('Missing required parameter: "status"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        api_params['status'] = status
+        api_params['status'] = self._normalize_value(status)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_targets(self, user_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def list_targets(
+        self,
+        user_id: str,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None    ) -> TargetList:
         """
         List the messaging targets that are associated with a user.
 
@@ -1391,8 +1635,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        TargetList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1405,17 +1649,27 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_target(self, user_id: str, target_id: str, provider_type: MessagingProviderType, identifier: str, provider_id: Optional[str] = None, name: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=TargetList)
+
+
+    def create_target(
+        self,
+        user_id: str,
+        target_id: str,
+        provider_type: MessagingProviderType,
+        identifier: str,
+        provider_id: Optional[str] = None,
+        name: Optional[str] = None    ) -> Target:
         """
         Create a messaging target.
 
@@ -1436,8 +1690,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Target
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1459,21 +1713,27 @@ class Users(Service):
         if identifier is None:
             raise AppwriteException('Missing required parameter: "identifier"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        api_params['targetId'] = target_id
-        api_params['providerType'] = provider_type
-        api_params['identifier'] = identifier
+        api_params['targetId'] = self._normalize_value(target_id)
+        api_params['providerType'] = self._normalize_value(provider_type)
+        api_params['identifier'] = self._normalize_value(identifier)
         if provider_id is not None:
-            api_params['providerId'] = provider_id
+            api_params['providerId'] = self._normalize_value(provider_id)
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_target(self, user_id: str, target_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Target)
+
+
+    def get_target(
+        self,
+        user_id: str,
+        target_id: str    ) -> Target:
         """
         Get a user's push notification target by ID.
 
@@ -1486,8 +1746,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Target
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1503,14 +1763,23 @@ class Users(Service):
         if target_id is None:
             raise AppwriteException('Missing required parameter: "target_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
-        api_path = api_path.replace('{targetId}', target_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
+        api_path = api_path.replace('{targetId}', str(self._normalize_value(target_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_target(self, user_id: str, target_id: str, identifier: Optional[str] = None, provider_id: Optional[str] = None, name: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Target)
+
+
+    def update_target(
+        self,
+        user_id: str,
+        target_id: str,
+        identifier: Optional[str] = None,
+        provider_id: Optional[str] = None,
+        name: Optional[str] = None    ) -> Target:
         """
         Update a messaging target.
 
@@ -1529,8 +1798,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Target
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1546,21 +1815,27 @@ class Users(Service):
         if target_id is None:
             raise AppwriteException('Missing required parameter: "target_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
-        api_path = api_path.replace('{targetId}', target_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
+        api_path = api_path.replace('{targetId}', str(self._normalize_value(target_id)))
 
         if identifier is not None:
-            api_params['identifier'] = identifier
+            api_params['identifier'] = self._normalize_value(identifier)
         if provider_id is not None:
-            api_params['providerId'] = provider_id
+            api_params['providerId'] = self._normalize_value(provider_id)
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_target(self, user_id: str, target_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Target)
+
+
+    def delete_target(
+        self,
+        user_id: str,
+        target_id: str    ) -> Dict[str, Any]:
         """
         Delete a messaging target.
 
@@ -1590,15 +1865,22 @@ class Users(Service):
         if target_id is None:
             raise AppwriteException('Missing required parameter: "target_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
-        api_path = api_path.replace('{targetId}', target_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
+        api_path = api_path.replace('{targetId}', str(self._normalize_value(target_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_token(self, user_id: str, length: Optional[float] = None, expire: Optional[float] = None) -> Dict[str, Any]:
+        return response
+
+
+    def create_token(
+        self,
+        user_id: str,
+        length: Optional[float] = None,
+        expire: Optional[float] = None    ) -> Token:
         """
         Returns a token with a secret key for creating a session. Use the user ID and secret and submit a request to the [PUT /account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process.
         
@@ -1614,8 +1896,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Token
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1628,18 +1910,24 @@ class Users(Service):
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
         if length is not None:
-            api_params['length'] = length
+            api_params['length'] = self._normalize_value(length)
         if expire is not None:
-            api_params['expire'] = expire
+            api_params['expire'] = self._normalize_value(expire)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_email_verification(self, user_id: str, email_verification: bool) -> Dict[str, Any]:
+        return self._parse_response(response, model=Token)
+
+
+    def update_email_verification(
+        self,
+        user_id: str,
+        email_verification: bool    ) -> User:
         """
         Update the user email verification status by its unique ID.
 
@@ -1652,8 +1940,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1669,15 +1957,21 @@ class Users(Service):
         if email_verification is None:
             raise AppwriteException('Missing required parameter: "email_verification"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        api_params['emailVerification'] = email_verification
+        api_params['emailVerification'] = self._normalize_value(email_verification)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_phone_verification(self, user_id: str, phone_verification: bool) -> Dict[str, Any]:
+        return self._parse_response(response, model=User)
+
+
+    def update_phone_verification(
+        self,
+        user_id: str,
+        phone_verification: bool    ) -> User:
         """
         Update the user phone verification status by its unique ID.
 
@@ -1690,8 +1984,8 @@ class Users(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        User
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1707,10 +2001,13 @@ class Users(Service):
         if phone_verification is None:
             raise AppwriteException('Missing required parameter: "phone_verification"')
 
-        api_path = api_path.replace('{userId}', user_id)
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        api_params['phoneVerification'] = phone_verification
+        api_params['phoneVerification'] = self._normalize_value(phone_verification)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
+
+        return self._parse_response(response, model=User)
+

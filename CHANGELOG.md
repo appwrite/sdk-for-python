@@ -2,11 +2,8 @@
 
 ## 15.3.0
 
-* Added get_console_pausing health endpoint
-* Added ttl parameter to list_documents and list_rows for cached responses
-* Added optional activate parameter to Sites.create_deployment
-* Updated docs and examples to reflect TTL usage and activation
-* Updated query filtering docs in Messaging service
+* Added `ActivityEvent` and `ActivityEventList` models to the public API
+* Updated README with `uv add appwrite` example
 
 ## 15.2.0
 
