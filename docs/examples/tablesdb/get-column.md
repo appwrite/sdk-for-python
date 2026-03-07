@@ -11,6 +11,7 @@ from appwrite.models import ColumnIp
 from appwrite.models import ColumnDatetime
 from appwrite.models import ColumnRelationship
 from appwrite.models import ColumnString
+from typing import Union
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint

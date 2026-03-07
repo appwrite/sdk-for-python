@@ -11,6 +11,7 @@ from appwrite.models import AttributeIp
 from appwrite.models import AttributeDatetime
 from appwrite.models import AttributeRelationship
 from appwrite.models import AttributeString
+from typing import Union
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
