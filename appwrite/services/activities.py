@@ -12,7 +12,8 @@ class Activities(Service):
 
     def list_events(
         self,
-        queries: Optional[str] = None    ) -> ActivityEventList:
+        queries: Optional[str] = None
+    ) -> ActivityEventList:
         """
         List all events for selected filters.
 
@@ -23,7 +24,8 @@ class Activities(Service):
         
         Returns
         -------
-        ActivityEventList            API response as a typed Pydantic model
+        ActivityEventList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -45,7 +47,8 @@ class Activities(Service):
 
     def get_event(
         self,
-        event_id: str    ) -> ActivityEvent:
+        event_id: str
+    ) -> ActivityEvent:
         """
         Get event by ID.
         
@@ -57,7 +60,8 @@ class Activities(Service):
         
         Returns
         -------
-        ActivityEvent            API response as a typed Pydantic model
+        ActivityEvent
+            API response as a typed Pydantic model
         
         Raises
         ------

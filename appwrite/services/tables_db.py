@@ -46,7 +46,8 @@ class TablesDB(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> DatabaseList:
+        total: Optional[bool] = None
+    ) -> DatabaseList:
         """
         Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
 
@@ -61,7 +62,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        DatabaseList            API response as a typed Pydantic model
+        DatabaseList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -89,7 +91,8 @@ class TablesDB(Service):
         self,
         database_id: str,
         name: str,
-        enabled: Optional[bool] = None    ) -> Database:
+        enabled: Optional[bool] = None
+    ) -> Database:
         """
         Create a new Database.
         
@@ -105,7 +108,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Database            API response as a typed Pydantic model
+        Database
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -136,7 +140,8 @@ class TablesDB(Service):
 
     def list_transactions(
         self,
-        queries: Optional[List[str]] = None    ) -> TransactionList:
+        queries: Optional[List[str]] = None
+    ) -> TransactionList:
         """
         List transactions across all databases.
 
@@ -147,7 +152,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        TransactionList            API response as a typed Pydantic model
+        TransactionList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -169,7 +175,8 @@ class TablesDB(Service):
 
     def create_transaction(
         self,
-        ttl: Optional[float] = None    ) -> Transaction:
+        ttl: Optional[float] = None
+    ) -> Transaction:
         """
         Create a new transaction.
 
@@ -180,7 +187,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Transaction            API response as a typed Pydantic model
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -203,7 +211,8 @@ class TablesDB(Service):
 
     def get_transaction(
         self,
-        transaction_id: str    ) -> Transaction:
+        transaction_id: str
+    ) -> Transaction:
         """
         Get a transaction by its unique ID.
 
@@ -214,7 +223,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Transaction            API response as a typed Pydantic model
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -240,7 +250,8 @@ class TablesDB(Service):
         self,
         transaction_id: str,
         commit: Optional[bool] = None,
-        rollback: Optional[bool] = None    ) -> Transaction:
+        rollback: Optional[bool] = None
+    ) -> Transaction:
         """
         Update a transaction, to either commit or roll back its operations.
 
@@ -255,7 +266,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Transaction            API response as a typed Pydantic model
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -284,7 +296,8 @@ class TablesDB(Service):
 
     def delete_transaction(
         self,
-        transaction_id: str    ) -> Dict[str, Any]:
+        transaction_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a transaction by its unique ID.
 
@@ -322,7 +335,8 @@ class TablesDB(Service):
     def create_operations(
         self,
         transaction_id: str,
-        operations: Optional[List[Dict[str, Any]]] = None    ) -> Transaction:
+        operations: Optional[List[Dict[str, Any]]] = None
+    ) -> Transaction:
         """
         Create multiple operations in a single transaction.
 
@@ -335,7 +349,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Transaction            API response as a typed Pydantic model
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -362,7 +377,8 @@ class TablesDB(Service):
 
     def get(
         self,
-        database_id: str    ) -> Database:
+        database_id: str
+    ) -> Database:
         """
         Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
 
@@ -373,7 +389,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Database            API response as a typed Pydantic model
+        Database
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -399,7 +416,8 @@ class TablesDB(Service):
         self,
         database_id: str,
         name: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Database:
+        enabled: Optional[bool] = None
+    ) -> Database:
         """
         Update a database by its unique ID.
 
@@ -414,7 +432,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Database            API response as a typed Pydantic model
+        Database
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -443,7 +462,8 @@ class TablesDB(Service):
 
     def delete(
         self,
-        database_id: str    ) -> Dict[str, Any]:
+        database_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
 
@@ -483,7 +503,8 @@ class TablesDB(Service):
         database_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> TableList:
+        total: Optional[bool] = None
+    ) -> TableList:
         """
         Get a list of all tables that belong to the provided databaseId. You can use the search parameter to filter your results.
 
@@ -500,7 +521,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        TableList            API response as a typed Pydantic model
+        TableList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -537,7 +559,8 @@ class TablesDB(Service):
         row_security: Optional[bool] = None,
         enabled: Optional[bool] = None,
         columns: Optional[List[Dict[str, Any]]] = None,
-        indexes: Optional[List[Dict[str, Any]]] = None    ) -> Table:
+        indexes: Optional[List[Dict[str, Any]]] = None
+    ) -> Table:
         """
         Create a new Table. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -562,7 +585,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Table            API response as a typed Pydantic model
+        Table
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -605,7 +629,8 @@ class TablesDB(Service):
     def get_table(
         self,
         database_id: str,
-        table_id: str    ) -> Table:
+        table_id: str
+    ) -> Table:
         """
         Get a table by its unique ID. This endpoint response returns a JSON object with the table metadata.
 
@@ -618,7 +643,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Table            API response as a typed Pydantic model
+        Table
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -651,7 +677,8 @@ class TablesDB(Service):
         name: Optional[str] = None,
         permissions: Optional[List[str]] = None,
         row_security: Optional[bool] = None,
-        enabled: Optional[bool] = None    ) -> Table:
+        enabled: Optional[bool] = None
+    ) -> Table:
         """
         Update a table by its unique ID.
 
@@ -672,7 +699,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Table            API response as a typed Pydantic model
+        Table
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -709,7 +737,8 @@ class TablesDB(Service):
     def delete_table(
         self,
         database_id: str,
-        table_id: str    ) -> Dict[str, Any]:
+        table_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a table by its unique ID. Only users with write permissions have access to delete this resource.
 
@@ -755,7 +784,8 @@ class TablesDB(Service):
         database_id: str,
         table_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> ColumnList:
+        total: Optional[bool] = None
+    ) -> ColumnList:
         """
         List columns in the table.
 
@@ -772,7 +802,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnList            API response as a typed Pydantic model
+        ColumnList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -809,7 +840,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[bool] = None,
-        array: Optional[bool] = None    ) -> ColumnBoolean:
+        array: Optional[bool] = None
+    ) -> ColumnBoolean:
         """
         Create a boolean column.
         
@@ -831,7 +863,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnBoolean            API response as a typed Pydantic model
+        ColumnBoolean
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -876,7 +909,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[bool],
-        new_key: Optional[str] = None    ) -> ColumnBoolean:
+        new_key: Optional[str] = None
+    ) -> ColumnBoolean:
         """
         Update a boolean column. Changing the `default` value will not update already existing rows.
 
@@ -897,7 +931,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnBoolean            API response as a typed Pydantic model
+        ColumnBoolean
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -941,7 +976,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None    ) -> ColumnDatetime:
+        array: Optional[bool] = None
+    ) -> ColumnDatetime:
         """
         Create a date time column according to the ISO 8601 standard.
 
@@ -962,7 +998,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnDatetime            API response as a typed Pydantic model
+        ColumnDatetime
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1007,7 +1044,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> ColumnDatetime:
+        new_key: Optional[str] = None
+    ) -> ColumnDatetime:
         """
         Update a date time column. Changing the `default` value will not update already existing rows.
 
@@ -1028,7 +1066,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnDatetime            API response as a typed Pydantic model
+        ColumnDatetime
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1072,7 +1111,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None    ) -> ColumnEmail:
+        array: Optional[bool] = None
+    ) -> ColumnEmail:
         """
         Create an email column.
         
@@ -1094,7 +1134,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnEmail            API response as a typed Pydantic model
+        ColumnEmail
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1139,7 +1180,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> ColumnEmail:
+        new_key: Optional[str] = None
+    ) -> ColumnEmail:
         """
         Update an email column. Changing the `default` value will not update already existing rows.
         
@@ -1161,7 +1203,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnEmail            API response as a typed Pydantic model
+        ColumnEmail
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1206,7 +1249,8 @@ class TablesDB(Service):
         elements: List[str],
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None    ) -> ColumnEnum:
+        array: Optional[bool] = None
+    ) -> ColumnEnum:
         """
         Create an enumeration column. The `elements` param acts as a white-list of accepted values for this column.
 
@@ -1229,7 +1273,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnEnum            API response as a typed Pydantic model
+        ColumnEnum
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1279,7 +1324,8 @@ class TablesDB(Service):
         elements: List[str],
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> ColumnEnum:
+        new_key: Optional[str] = None
+    ) -> ColumnEnum:
         """
         Update an enum column. Changing the `default` value will not update already existing rows.
         
@@ -1303,7 +1349,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnEnum            API response as a typed Pydantic model
+        ColumnEnum
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1353,7 +1400,8 @@ class TablesDB(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         default: Optional[float] = None,
-        array: Optional[bool] = None    ) -> ColumnFloat:
+        array: Optional[bool] = None
+    ) -> ColumnFloat:
         """
         Create a float column. Optionally, minimum and maximum values can be provided.
         
@@ -1379,7 +1427,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnFloat            API response as a typed Pydantic model
+        ColumnFloat
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1428,7 +1477,8 @@ class TablesDB(Service):
         default: Optional[float],
         min: Optional[float] = None,
         max: Optional[float] = None,
-        new_key: Optional[str] = None    ) -> ColumnFloat:
+        new_key: Optional[str] = None
+    ) -> ColumnFloat:
         """
         Update a float column. Changing the `default` value will not update already existing rows.
         
@@ -1454,7 +1504,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnFloat            API response as a typed Pydantic model
+        ColumnFloat
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1502,7 +1553,8 @@ class TablesDB(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         default: Optional[float] = None,
-        array: Optional[bool] = None    ) -> ColumnInteger:
+        array: Optional[bool] = None
+    ) -> ColumnInteger:
         """
         Create an integer column. Optionally, minimum and maximum values can be provided.
         
@@ -1528,7 +1580,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnInteger            API response as a typed Pydantic model
+        ColumnInteger
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1577,7 +1630,8 @@ class TablesDB(Service):
         default: Optional[float],
         min: Optional[float] = None,
         max: Optional[float] = None,
-        new_key: Optional[str] = None    ) -> ColumnInteger:
+        new_key: Optional[str] = None
+    ) -> ColumnInteger:
         """
         Update an integer column. Changing the `default` value will not update already existing rows.
         
@@ -1603,7 +1657,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnInteger            API response as a typed Pydantic model
+        ColumnInteger
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1649,7 +1704,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None    ) -> ColumnIp:
+        array: Optional[bool] = None
+    ) -> ColumnIp:
         """
         Create IP address column.
         
@@ -1671,7 +1727,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnIp            API response as a typed Pydantic model
+        ColumnIp
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1716,7 +1773,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> ColumnIp:
+        new_key: Optional[str] = None
+    ) -> ColumnIp:
         """
         Update an ip column. Changing the `default` value will not update already existing rows.
         
@@ -1738,7 +1796,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnIp            API response as a typed Pydantic model
+        ColumnIp
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1781,7 +1840,8 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None    ) -> ColumnLine:
+        default: Optional[List[Any]] = None
+    ) -> ColumnLine:
         """
         Create a geometric line column.
 
@@ -1800,7 +1860,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnLine            API response as a typed Pydantic model
+        ColumnLine
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1843,7 +1904,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[List[Any]] = None,
-        new_key: Optional[str] = None    ) -> ColumnLine:
+        new_key: Optional[str] = None
+    ) -> ColumnLine:
         """
         Update a line column. Changing the `default` value will not update already existing rows.
 
@@ -1864,7 +1926,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnLine            API response as a typed Pydantic model
+        ColumnLine
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1909,7 +1972,8 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None    ) -> ColumnLongtext:
+        encrypt: Optional[bool] = None
+    ) -> ColumnLongtext:
         """
         Create a longtext column.
         
@@ -1933,7 +1997,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnLongtext            API response as a typed Pydantic model
+        ColumnLongtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1980,7 +2045,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> ColumnLongtext:
+        new_key: Optional[str] = None
+    ) -> ColumnLongtext:
         """
         Update a longtext column. Changing the `default` value will not update already existing rows.
         
@@ -2002,7 +2068,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnLongtext            API response as a typed Pydantic model
+        ColumnLongtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2047,7 +2114,8 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None    ) -> ColumnMediumtext:
+        encrypt: Optional[bool] = None
+    ) -> ColumnMediumtext:
         """
         Create a mediumtext column.
         
@@ -2071,7 +2139,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnMediumtext            API response as a typed Pydantic model
+        ColumnMediumtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2118,7 +2187,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> ColumnMediumtext:
+        new_key: Optional[str] = None
+    ) -> ColumnMediumtext:
         """
         Update a mediumtext column. Changing the `default` value will not update already existing rows.
         
@@ -2140,7 +2210,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnMediumtext            API response as a typed Pydantic model
+        ColumnMediumtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2183,7 +2254,8 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None    ) -> ColumnPoint:
+        default: Optional[List[Any]] = None
+    ) -> ColumnPoint:
         """
         Create a geometric point column.
 
@@ -2202,7 +2274,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnPoint            API response as a typed Pydantic model
+        ColumnPoint
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2245,7 +2318,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[List[Any]] = None,
-        new_key: Optional[str] = None    ) -> ColumnPoint:
+        new_key: Optional[str] = None
+    ) -> ColumnPoint:
         """
         Update a point column. Changing the `default` value will not update already existing rows.
 
@@ -2266,7 +2340,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnPoint            API response as a typed Pydantic model
+        ColumnPoint
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2309,7 +2384,8 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None    ) -> ColumnPolygon:
+        default: Optional[List[Any]] = None
+    ) -> ColumnPolygon:
         """
         Create a geometric polygon column.
 
@@ -2328,7 +2404,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnPolygon            API response as a typed Pydantic model
+        ColumnPolygon
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2371,7 +2448,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[List[Any]] = None,
-        new_key: Optional[str] = None    ) -> ColumnPolygon:
+        new_key: Optional[str] = None
+    ) -> ColumnPolygon:
         """
         Update a polygon column. Changing the `default` value will not update already existing rows.
 
@@ -2392,7 +2470,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnPolygon            API response as a typed Pydantic model
+        ColumnPolygon
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2438,7 +2517,8 @@ class TablesDB(Service):
         two_way: Optional[bool] = None,
         key: Optional[str] = None,
         two_way_key: Optional[str] = None,
-        on_delete: Optional[RelationMutate] = None    ) -> ColumnRelationship:
+        on_delete: Optional[RelationMutate] = None
+    ) -> ColumnRelationship:
         """
         Create relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
         
@@ -2464,7 +2544,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnRelationship            API response as a typed Pydantic model
+        ColumnRelationship
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2515,7 +2596,8 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None    ) -> ColumnString:
+        encrypt: Optional[bool] = None
+    ) -> ColumnString:
         """
         Create a string column.
         
@@ -2543,7 +2625,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnString            API response as a typed Pydantic model
+        ColumnString
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2596,7 +2679,8 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         size: Optional[float] = None,
-        new_key: Optional[str] = None    ) -> ColumnString:
+        new_key: Optional[str] = None
+    ) -> ColumnString:
         """
         Update a string column. Changing the `default` value will not update already existing rows.
         
@@ -2622,7 +2706,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnString            API response as a typed Pydantic model
+        ColumnString
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2668,7 +2753,8 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None    ) -> ColumnText:
+        encrypt: Optional[bool] = None
+    ) -> ColumnText:
         """
         Create a text column.
         
@@ -2692,7 +2778,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnText            API response as a typed Pydantic model
+        ColumnText
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2739,7 +2826,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> ColumnText:
+        new_key: Optional[str] = None
+    ) -> ColumnText:
         """
         Update a text column. Changing the `default` value will not update already existing rows.
         
@@ -2761,7 +2849,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnText            API response as a typed Pydantic model
+        ColumnText
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2805,7 +2894,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None    ) -> ColumnUrl:
+        array: Optional[bool] = None
+    ) -> ColumnUrl:
         """
         Create a URL column.
         
@@ -2827,7 +2917,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnUrl            API response as a typed Pydantic model
+        ColumnUrl
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2872,7 +2963,8 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> ColumnUrl:
+        new_key: Optional[str] = None
+    ) -> ColumnUrl:
         """
         Update an url column. Changing the `default` value will not update already existing rows.
         
@@ -2894,7 +2986,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnUrl            API response as a typed Pydantic model
+        ColumnUrl
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2940,7 +3033,8 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None    ) -> ColumnVarchar:
+        encrypt: Optional[bool] = None
+    ) -> ColumnVarchar:
         """
         Create a varchar column.
         
@@ -2966,7 +3060,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnVarchar            API response as a typed Pydantic model
+        ColumnVarchar
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3018,7 +3113,8 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         size: Optional[float] = None,
-        new_key: Optional[str] = None    ) -> ColumnVarchar:
+        new_key: Optional[str] = None
+    ) -> ColumnVarchar:
         """
         Update a varchar column. Changing the `default` value will not update already existing rows.
         
@@ -3042,7 +3138,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnVarchar            API response as a typed Pydantic model
+        ColumnVarchar
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3084,7 +3181,8 @@ class TablesDB(Service):
         self,
         database_id: str,
         table_id: str,
-        key: str    ) -> Union[ColumnBoolean, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnString]:
+        key: str
+    ) -> Union[ColumnBoolean, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnString]:
         """
         Get column by ID.
 
@@ -3134,7 +3232,8 @@ class TablesDB(Service):
         self,
         database_id: str,
         table_id: str,
-        key: str    ) -> Dict[str, Any]:
+        key: str
+    ) -> Dict[str, Any]:
         """
         Deletes a column.
 
@@ -3187,7 +3286,8 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         on_delete: Optional[RelationMutate] = None,
-        new_key: Optional[str] = None    ) -> ColumnRelationship:
+        new_key: Optional[str] = None
+    ) -> ColumnRelationship:
         """
         Update relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
         
@@ -3207,7 +3307,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnRelationship            API response as a typed Pydantic model
+        ColumnRelationship
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3245,7 +3346,8 @@ class TablesDB(Service):
         database_id: str,
         table_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> ColumnIndexList:
+        total: Optional[bool] = None
+    ) -> ColumnIndexList:
         """
         List indexes on the table.
 
@@ -3262,7 +3364,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnIndexList            API response as a typed Pydantic model
+        ColumnIndexList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3300,7 +3403,8 @@ class TablesDB(Service):
         type: IndexType,
         columns: List[str],
         orders: Optional[List[OrderBy]] = None,
-        lengths: Optional[List[float]] = None    ) -> ColumnIndex:
+        lengths: Optional[List[float]] = None
+    ) -> ColumnIndex:
         """
         Creates an index on the columns listed. Your index should include all the columns you will query in a single request.
         Type can be `key`, `fulltext`, or `unique`.
@@ -3324,7 +3428,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnIndex            API response as a typed Pydantic model
+        ColumnIndex
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3371,7 +3476,8 @@ class TablesDB(Service):
         self,
         database_id: str,
         table_id: str,
-        key: str    ) -> ColumnIndex:
+        key: str
+    ) -> ColumnIndex:
         """
         Get index by ID.
 
@@ -3386,7 +3492,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        ColumnIndex            API response as a typed Pydantic model
+        ColumnIndex
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3420,7 +3527,8 @@ class TablesDB(Service):
         self,
         database_id: str,
         table_id: str,
-        key: str    ) -> Dict[str, Any]:
+        key: str
+    ) -> Dict[str, Any]:
         """
         Delete an index.
 
@@ -3475,7 +3583,8 @@ class TablesDB(Service):
         transaction_id: Optional[str] = None,
         total: Optional[bool] = None,
         ttl: Optional[float] = None,
-        model_type: Type[T] = dict    ) -> RowList[T]:
+        model_type: Type[T] = dict
+    ) -> RowList[T]:
         """
         Get a list of all the user's rows in a given table. You can use the query params to filter your results.
 
@@ -3499,7 +3608,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        RowList[T]            API response as a typed Pydantic model
+        RowList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3541,7 +3651,8 @@ class TablesDB(Service):
         data: Dict[str, Any],
         permissions: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Row[T]:
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Create a new Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -3565,7 +3676,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Row[T]            API response as a typed Pydantic model
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3608,7 +3720,8 @@ class TablesDB(Service):
         table_id: str,
         rows: List[Dict[str, Any]],
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> RowList[T]:
+        model_type: Type[T] = dict
+    ) -> RowList[T]:
         """
         Create new Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -3628,7 +3741,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        RowList[T]            API response as a typed Pydantic model
+        RowList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3666,7 +3780,8 @@ class TablesDB(Service):
         table_id: str,
         rows: List[Dict[str, Any]],
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> RowList[T]:
+        model_type: Type[T] = dict
+    ) -> RowList[T]:
         """
         Create or update Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
         
@@ -3687,7 +3802,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        RowList[T]            API response as a typed Pydantic model
+        RowList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3726,7 +3842,8 @@ class TablesDB(Service):
         data: Optional[Dict[str, Any]] = None,
         queries: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> RowList[T]:
+        model_type: Type[T] = dict
+    ) -> RowList[T]:
         """
         Update all rows that match your queries, if no queries are submitted then all rows are updated. You can pass only specific fields to be updated.
 
@@ -3748,7 +3865,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        RowList[T]            API response as a typed Pydantic model
+        RowList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3786,7 +3904,8 @@ class TablesDB(Service):
         table_id: str,
         queries: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> RowList[T]:
+        model_type: Type[T] = dict
+    ) -> RowList[T]:
         """
         Bulk delete rows using queries, if no queries are passed then all rows are deleted.
 
@@ -3806,7 +3925,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        RowList[T]            API response as a typed Pydantic model
+        RowList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3843,7 +3963,8 @@ class TablesDB(Service):
         row_id: str,
         queries: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Row[T]:
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Get a row by its unique ID. This endpoint response returns a JSON object with the row data.
 
@@ -3865,7 +3986,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Row[T]            API response as a typed Pydantic model
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3907,7 +4029,8 @@ class TablesDB(Service):
         data: Optional[Dict[str, Any]] = None,
         permissions: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Row[T]:
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Create or update a Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -3931,7 +4054,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Row[T]            API response as a typed Pydantic model
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3974,7 +4098,8 @@ class TablesDB(Service):
         data: Optional[Dict[str, Any]] = None,
         permissions: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Row[T]:
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Update a row by its unique ID. Using the patch method you can pass only specific fields that will get updated.
 
@@ -3998,7 +4123,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Row[T]            API response as a typed Pydantic model
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -4038,7 +4164,8 @@ class TablesDB(Service):
         database_id: str,
         table_id: str,
         row_id: str,
-        transaction_id: Optional[str] = None    ) -> Dict[str, Any]:
+        transaction_id: Optional[str] = None
+    ) -> Dict[str, Any]:
         """
         Delete a row by its unique ID.
 
@@ -4097,7 +4224,8 @@ class TablesDB(Service):
         value: Optional[float] = None,
         min: Optional[float] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Row[T]:
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Decrement a specific column of a row by a given value.
 
@@ -4123,7 +4251,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Row[T]            API response as a typed Pydantic model
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -4171,7 +4300,8 @@ class TablesDB(Service):
         value: Optional[float] = None,
         max: Optional[float] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Row[T]:
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Increment a specific column of a row by a given value.
 
@@ -4197,7 +4327,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Row[T]            API response as a typed Pydantic model
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------

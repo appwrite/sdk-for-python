@@ -29,7 +29,8 @@ class Sites(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> SiteList:
+        total: Optional[bool] = None
+    ) -> SiteList:
         """
         Get a list of all the project's sites. You can use the query params to filter your results.
 
@@ -44,7 +45,8 @@ class Sites(Service):
         
         Returns
         -------
-        SiteList            API response as a typed Pydantic model
+        SiteList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -87,7 +89,8 @@ class Sites(Service):
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
-        specification: Optional[str] = None    ) -> Site:
+        specification: Optional[str] = None
+    ) -> Site:
         """
         Create a new site.
 
@@ -132,7 +135,8 @@ class Sites(Service):
         
         Returns
         -------
-        Site            API response as a typed Pydantic model
+        Site
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -196,13 +200,15 @@ class Sites(Service):
 
 
     def list_frameworks(
-        self    ) -> FrameworkList:
+        self
+    ) -> FrameworkList:
         """
         Get a list of all frameworks that are currently available on the server instance.
 
         Returns
         -------
-        FrameworkList            API response as a typed Pydantic model
+        FrameworkList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -220,13 +226,15 @@ class Sites(Service):
 
 
     def list_specifications(
-        self    ) -> SpecificationList:
+        self
+    ) -> SpecificationList:
         """
         List allowed site specifications for this instance.
 
         Returns
         -------
-        SpecificationList            API response as a typed Pydantic model
+        SpecificationList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -245,7 +253,8 @@ class Sites(Service):
 
     def get(
         self,
-        site_id: str    ) -> Site:
+        site_id: str
+    ) -> Site:
         """
         Get a site by its unique ID.
 
@@ -256,7 +265,8 @@ class Sites(Service):
         
         Returns
         -------
-        Site            API response as a typed Pydantic model
+        Site
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -297,7 +307,8 @@ class Sites(Service):
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
-        specification: Optional[str] = None    ) -> Site:
+        specification: Optional[str] = None
+    ) -> Site:
         """
         Update site by its unique ID.
 
@@ -342,7 +353,8 @@ class Sites(Service):
         
         Returns
         -------
-        Site            API response as a typed Pydantic model
+        Site
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -405,7 +417,8 @@ class Sites(Service):
 
     def delete(
         self,
-        site_id: str    ) -> Dict[str, Any]:
+        site_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a site by its unique ID.
 
@@ -443,7 +456,8 @@ class Sites(Service):
     def update_site_deployment(
         self,
         site_id: str,
-        deployment_id: str    ) -> Site:
+        deployment_id: str
+    ) -> Site:
         """
         Update the site active deployment. Use this endpoint to switch the code deployment that should be used when visitor opens your site.
 
@@ -456,7 +470,8 @@ class Sites(Service):
         
         Returns
         -------
-        Site            API response as a typed Pydantic model
+        Site
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -488,7 +503,8 @@ class Sites(Service):
         site_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> DeploymentList:
+        total: Optional[bool] = None
+    ) -> DeploymentList:
         """
         Get a list of all the site's code deployments. You can use the query params to filter your results.
 
@@ -505,7 +521,8 @@ class Sites(Service):
         
         Returns
         -------
-        DeploymentList            API response as a typed Pydantic model
+        DeploymentList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -541,7 +558,8 @@ class Sites(Service):
         build_command: Optional[str] = None,
         output_directory: Optional[str] = None,
         activate: Optional[bool] = None,
-        on_progress = None    ) -> Deployment:
+        on_progress = None
+    ) -> Deployment:
         """
         Create a new site code deployment. Use this endpoint to upload a new version of your site code. To activate your newly uploaded code, you'll need to update the site's deployment to use your new deployment ID.
 
@@ -564,7 +582,8 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -607,7 +626,8 @@ class Sites(Service):
     def create_duplicate_deployment(
         self,
         site_id: str,
-        deployment_id: str    ) -> Deployment:
+        deployment_id: str
+    ) -> Deployment:
         """
         Create a new build for an existing site deployment. This endpoint allows you to rebuild a deployment with the updated site configuration, including its commands and output directory if they have been modified. The build process will be queued and executed asynchronously. The original deployment's code will be preserved and used for the new build.
 
@@ -620,7 +640,8 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -655,7 +676,8 @@ class Sites(Service):
         root_directory: str,
         type: TemplateReferenceType,
         reference: str,
-        activate: Optional[bool] = None    ) -> Deployment:
+        activate: Optional[bool] = None
+    ) -> Deployment:
         """
         Create a deployment based on a template.
         
@@ -680,7 +702,8 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -730,7 +753,8 @@ class Sites(Service):
         site_id: str,
         type: VCSReferenceType,
         reference: str,
-        activate: Optional[bool] = None    ) -> Deployment:
+        activate: Optional[bool] = None
+    ) -> Deployment:
         """
         Create a deployment when a site is connected to VCS.
         
@@ -749,7 +773,8 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -785,7 +810,8 @@ class Sites(Service):
     def get_deployment(
         self,
         site_id: str,
-        deployment_id: str    ) -> Deployment:
+        deployment_id: str
+    ) -> Deployment:
         """
         Get a site deployment by its unique ID.
 
@@ -798,7 +824,8 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -827,7 +854,8 @@ class Sites(Service):
     def delete_deployment(
         self,
         site_id: str,
-        deployment_id: str    ) -> Dict[str, Any]:
+        deployment_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a site deployment by its unique ID.
 
@@ -872,7 +900,8 @@ class Sites(Service):
         self,
         site_id: str,
         deployment_id: str,
-        type: Optional[DeploymentDownloadType] = None    ) -> bytes:
+        type: Optional[DeploymentDownloadType] = None
+    ) -> bytes:
         """
         Get a site deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
 
@@ -919,7 +948,8 @@ class Sites(Service):
     def update_deployment_status(
         self,
         site_id: str,
-        deployment_id: str    ) -> Deployment:
+        deployment_id: str
+    ) -> Deployment:
         """
         Cancel an ongoing site deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn't started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status 'ready') or failed. The response includes the final build status and details.
 
@@ -932,7 +962,8 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -963,7 +994,8 @@ class Sites(Service):
         self,
         site_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> ExecutionList:
+        total: Optional[bool] = None
+    ) -> ExecutionList:
         """
         Get a list of all site logs. You can use the query params to filter your results.
 
@@ -978,7 +1010,8 @@ class Sites(Service):
         
         Returns
         -------
-        ExecutionList            API response as a typed Pydantic model
+        ExecutionList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1007,7 +1040,8 @@ class Sites(Service):
     def get_log(
         self,
         site_id: str,
-        log_id: str    ) -> Execution:
+        log_id: str
+    ) -> Execution:
         """
         Get a site request log by its unique ID.
 
@@ -1020,7 +1054,8 @@ class Sites(Service):
         
         Returns
         -------
-        Execution            API response as a typed Pydantic model
+        Execution
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1049,7 +1084,8 @@ class Sites(Service):
     def delete_log(
         self,
         site_id: str,
-        log_id: str    ) -> Dict[str, Any]:
+        log_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a site log by its unique ID.
 
@@ -1092,7 +1128,8 @@ class Sites(Service):
 
     def list_variables(
         self,
-        site_id: str    ) -> VariableList:
+        site_id: str
+    ) -> VariableList:
         """
         Get a list of all variables of a specific site.
 
@@ -1103,7 +1140,8 @@ class Sites(Service):
         
         Returns
         -------
-        VariableList            API response as a typed Pydantic model
+        VariableList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1130,7 +1168,8 @@ class Sites(Service):
         site_id: str,
         key: str,
         value: str,
-        secret: Optional[bool] = None    ) -> Variable:
+        secret: Optional[bool] = None
+    ) -> Variable:
         """
         Create a new site variable. These variables can be accessed during build and runtime (server-side rendering) as environment variables.
 
@@ -1147,7 +1186,8 @@ class Sites(Service):
         
         Returns
         -------
-        Variable            API response as a typed Pydantic model
+        Variable
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1183,7 +1223,8 @@ class Sites(Service):
     def get_variable(
         self,
         site_id: str,
-        variable_id: str    ) -> Variable:
+        variable_id: str
+    ) -> Variable:
         """
         Get a variable by its unique ID.
 
@@ -1196,7 +1237,8 @@ class Sites(Service):
         
         Returns
         -------
-        Variable            API response as a typed Pydantic model
+        Variable
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1228,7 +1270,8 @@ class Sites(Service):
         variable_id: str,
         key: str,
         value: Optional[str] = None,
-        secret: Optional[bool] = None    ) -> Variable:
+        secret: Optional[bool] = None
+    ) -> Variable:
         """
         Update variable by its unique ID.
 
@@ -1247,7 +1290,8 @@ class Sites(Service):
         
         Returns
         -------
-        Variable            API response as a typed Pydantic model
+        Variable
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1283,7 +1327,8 @@ class Sites(Service):
     def delete_variable(
         self,
         site_id: str,
-        variable_id: str    ) -> Dict[str, Any]:
+        variable_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a variable by its unique ID.
 

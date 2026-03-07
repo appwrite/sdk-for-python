@@ -10,7 +10,8 @@ class Graphql(Service):
 
     def query(
         self,
-        query: Dict[str, Any]    ) -> Dict[str, Any]:
+        query: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """
         Execute a GraphQL mutation.
 
@@ -48,7 +49,8 @@ class Graphql(Service):
 
     def mutation(
         self,
-        query: Dict[str, Any]    ) -> Dict[str, Any]:
+        query: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """
         Execute a GraphQL mutation.
 

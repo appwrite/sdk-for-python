@@ -20,7 +20,8 @@ class Avatars(Service):
         code: Browser,
         width: Optional[float] = None,
         height: Optional[float] = None,
-        quality: Optional[float] = None    ) -> bytes:
+        quality: Optional[float] = None
+    ) -> bytes:
         """
         You can use this endpoint to show different browser icons to your users. The code argument receives the browser code as it appears in your user [GET /account/sessions](https://appwrite.io/docs/references/cloud/client-web/account#getSessions) endpoint. Use width, height and quality arguments to change the output settings.
         
@@ -73,7 +74,8 @@ class Avatars(Service):
         code: CreditCard,
         width: Optional[float] = None,
         height: Optional[float] = None,
-        quality: Optional[float] = None    ) -> bytes:
+        quality: Optional[float] = None
+    ) -> bytes:
         """
         The credit card endpoint will return you the icon of the credit card provider you need. Use width, height and quality arguments to change the output settings.
         
@@ -124,7 +126,8 @@ class Avatars(Service):
 
     def get_favicon(
         self,
-        url: str    ) -> bytes:
+        url: str
+    ) -> bytes:
         """
         Use this endpoint to fetch the favorite icon (AKA favicon) of any remote website URL.
         
@@ -165,7 +168,8 @@ class Avatars(Service):
         code: Flag,
         width: Optional[float] = None,
         height: Optional[float] = None,
-        quality: Optional[float] = None    ) -> bytes:
+        quality: Optional[float] = None
+    ) -> bytes:
         """
         You can use this endpoint to show different country flags icons to your users. The code argument receives the 2 letter country code. Use width, height and quality arguments to change the output settings. Country codes follow the [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) standard.
         
@@ -218,7 +222,8 @@ class Avatars(Service):
         self,
         url: str,
         width: Optional[float] = None,
-        height: Optional[float] = None    ) -> bytes:
+        height: Optional[float] = None
+    ) -> bytes:
         """
         Use this endpoint to fetch a remote image URL and crop it to any image size you want. This endpoint is very useful if you need to crop and display remote images in your app or in case you want to make sure a 3rd party image is properly served using a TLS protocol.
         
@@ -269,7 +274,8 @@ class Avatars(Service):
         name: Optional[str] = None,
         width: Optional[float] = None,
         height: Optional[float] = None,
-        background: Optional[str] = None    ) -> bytes:
+        background: Optional[str] = None
+    ) -> bytes:
         """
         Use this endpoint to show your user initials avatar icon on your website or app. By default, this route will try to print your logged-in user name or email initials. You can also overwrite the user name if you pass the 'name' parameter. If no name is given and no user is logged, an empty avatar will be returned.
         
@@ -323,7 +329,8 @@ class Avatars(Service):
         text: str,
         size: Optional[float] = None,
         margin: Optional[float] = None,
-        download: Optional[bool] = None    ) -> bytes:
+        download: Optional[bool] = None
+    ) -> bytes:
         """
         Converts a given plain text to a QR code image. You can use the query parameters to change the size and style of the resulting image.
         
@@ -391,7 +398,8 @@ class Avatars(Service):
         width: Optional[float] = None,
         height: Optional[float] = None,
         quality: Optional[float] = None,
-        output: Optional[ImageFormat] = None    ) -> bytes:
+        output: Optional[ImageFormat] = None
+    ) -> bytes:
         """
         Use this endpoint to capture a screenshot of any website URL. This endpoint uses a headless browser to render the webpage and capture it as an image.
         

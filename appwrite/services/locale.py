@@ -16,7 +16,8 @@ class Locale(Service):
         super(Locale, self).__init__(client)
 
     def get(
-        self    ) -> LocaleModel:
+        self
+    ) -> LocaleModel:
         """
         Get the current user location based on IP. Returns an object with user country code, country name, continent name, continent code, ip address and suggested currency. You can use the locale header to get the data in a supported language.
         
@@ -24,7 +25,8 @@ class Locale(Service):
 
         Returns
         -------
-        LocaleModel            API response as a typed Pydantic model
+        LocaleModel
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -42,13 +44,15 @@ class Locale(Service):
 
 
     def list_codes(
-        self    ) -> LocaleCodeList:
+        self
+    ) -> LocaleCodeList:
         """
         List of all locale codes in [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes).
 
         Returns
         -------
-        LocaleCodeList            API response as a typed Pydantic model
+        LocaleCodeList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -66,13 +70,15 @@ class Locale(Service):
 
 
     def list_continents(
-        self    ) -> ContinentList:
+        self
+    ) -> ContinentList:
         """
         List of all continents. You can use the locale header to get the data in a supported language.
 
         Returns
         -------
-        ContinentList            API response as a typed Pydantic model
+        ContinentList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -90,13 +96,15 @@ class Locale(Service):
 
 
     def list_countries(
-        self    ) -> CountryList:
+        self
+    ) -> CountryList:
         """
         List of all countries. You can use the locale header to get the data in a supported language.
 
         Returns
         -------
-        CountryList            API response as a typed Pydantic model
+        CountryList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -114,13 +122,15 @@ class Locale(Service):
 
 
     def list_countries_eu(
-        self    ) -> CountryList:
+        self
+    ) -> CountryList:
         """
         List of all countries that are currently members of the EU. You can use the locale header to get the data in a supported language.
 
         Returns
         -------
-        CountryList            API response as a typed Pydantic model
+        CountryList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -138,13 +148,15 @@ class Locale(Service):
 
 
     def list_countries_phones(
-        self    ) -> PhoneList:
+        self
+    ) -> PhoneList:
         """
         List of all countries phone codes. You can use the locale header to get the data in a supported language.
 
         Returns
         -------
-        PhoneList            API response as a typed Pydantic model
+        PhoneList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -162,13 +174,15 @@ class Locale(Service):
 
 
     def list_currencies(
-        self    ) -> CurrencyList:
+        self
+    ) -> CurrencyList:
         """
         List of all currencies, including currency symbol, name, plural, and decimal digits for all major and minor currencies. You can use the locale header to get the data in a supported language.
 
         Returns
         -------
-        CurrencyList            API response as a typed Pydantic model
+        CurrencyList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -186,13 +200,15 @@ class Locale(Service):
 
 
     def list_languages(
-        self    ) -> LanguageList:
+        self
+    ) -> LanguageList:
         """
         List of all languages classified by ISO 639-1 including 2-letter code, name in English, and name in the respective language.
 
         Returns
         -------
-        LanguageList            API response as a typed Pydantic model
+        LanguageList
+            API response as a typed Pydantic model
         
         Raises
         ------

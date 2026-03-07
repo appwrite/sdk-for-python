@@ -32,7 +32,8 @@ class Users(Service):
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
         total: Optional[bool] = None,
-        model_type: Type[T] = dict    ) -> UserList[T]:
+        model_type: Type[T] = dict
+    ) -> UserList[T]:
         """
         Get a list of all the project's users. You can use the query params to filter your results.
 
@@ -50,7 +51,8 @@ class Users(Service):
         
         Returns
         -------
-        UserList[T]            API response as a typed Pydantic model
+        UserList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -81,7 +83,8 @@ class Users(Service):
         phone: Optional[str] = None,
         password: Optional[str] = None,
         name: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Create a new user.
 
@@ -103,7 +106,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -138,7 +142,8 @@ class Users(Service):
         email: str,
         password: str,
         name: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [Argon2](https://en.wikipedia.org/wiki/Argon2) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -158,7 +163,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -197,7 +203,8 @@ class Users(Service):
         email: str,
         password: str,
         name: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -217,7 +224,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -254,7 +262,8 @@ class Users(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> IdentityList:
+        total: Optional[bool] = None
+    ) -> IdentityList:
         """
         Get identities for all users.
 
@@ -269,7 +278,8 @@ class Users(Service):
         
         Returns
         -------
-        IdentityList            API response as a typed Pydantic model
+        IdentityList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -295,7 +305,8 @@ class Users(Service):
 
     def delete_identity(
         self,
-        identity_id: str    ) -> Dict[str, Any]:
+        identity_id: str
+    ) -> Dict[str, Any]:
         """
         Delete an identity by its unique ID.
 
@@ -336,7 +347,8 @@ class Users(Service):
         email: str,
         password: str,
         name: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [MD5](https://en.wikipedia.org/wiki/MD5) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -356,7 +368,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -395,7 +408,8 @@ class Users(Service):
         email: str,
         password: str,
         name: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [PHPass](https://www.openwall.com/phpass/) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -415,7 +429,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -459,7 +474,8 @@ class Users(Service):
         password_parallel: float,
         password_length: float,
         name: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [Scrypt](https://github.com/Tarsnap/scrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -489,7 +505,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -551,7 +568,8 @@ class Users(Service):
         password_salt_separator: str,
         password_signer_key: str,
         name: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [Scrypt Modified](https://gist.github.com/Meldiron/eecf84a0225eccb5a378d45bb27462cc) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -577,7 +595,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -629,7 +648,8 @@ class Users(Service):
         password: str,
         password_version: Optional[PasswordHash] = None,
         name: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [SHA](https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -651,7 +671,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -689,7 +710,8 @@ class Users(Service):
     def get(
         self,
         user_id: str,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Get a user by its unique ID.
 
@@ -703,7 +725,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -727,7 +750,8 @@ class Users(Service):
 
     def delete(
         self,
-        user_id: str    ) -> Dict[str, Any]:
+        user_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a user by its unique ID, thereby releasing it's ID. Since ID is released and can be reused, all user-related resources like documents or storage files should be deleted before user deletion. If you want to keep ID reserved, use the [updateStatus](https://appwrite.io/docs/server/users#usersUpdateStatus) endpoint instead.
 
@@ -766,7 +790,8 @@ class Users(Service):
         self,
         user_id: str,
         email: str,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Update the user email by its unique ID.
 
@@ -782,7 +807,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -813,7 +839,8 @@ class Users(Service):
         self,
         user_id: str,
         session_id: Optional[str] = None,
-        duration: Optional[float] = None    ) -> Jwt:
+        duration: Optional[float] = None
+    ) -> Jwt:
         """
         Use this endpoint to create a JSON Web Token for user by its unique ID. You can use the resulting JWT to authenticate on behalf of the user. The JWT secret will become invalid if the session it uses gets deleted.
 
@@ -828,7 +855,8 @@ class Users(Service):
         
         Returns
         -------
-        Jwt            API response as a typed Pydantic model
+        Jwt
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -859,7 +887,8 @@ class Users(Service):
         self,
         user_id: str,
         labels: List[str],
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Update the user labels by its unique ID. 
         
@@ -877,7 +906,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -908,7 +938,8 @@ class Users(Service):
         self,
         user_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> LogList:
+        total: Optional[bool] = None
+    ) -> LogList:
         """
         Get the user activity logs list by its unique ID.
 
@@ -923,7 +954,8 @@ class Users(Service):
         
         Returns
         -------
-        LogList            API response as a typed Pydantic model
+        LogList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -954,7 +986,8 @@ class Users(Service):
         user_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> MembershipList:
+        total: Optional[bool] = None
+    ) -> MembershipList:
         """
         Get the user membership list by its unique ID.
 
@@ -971,7 +1004,8 @@ class Users(Service):
         
         Returns
         -------
-        MembershipList            API response as a typed Pydantic model
+        MembershipList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1003,7 +1037,8 @@ class Users(Service):
         self,
         user_id: str,
         mfa: bool,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Enable or disable MFA on a user account.
 
@@ -1019,7 +1054,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1049,7 +1085,8 @@ class Users(Service):
     def delete_mfa_authenticator(
         self,
         user_id: str,
-        type: AuthenticatorType    ) -> Dict[str, Any]:
+        type: AuthenticatorType
+    ) -> Dict[str, Any]:
         """
         Delete an authenticator app.
 
@@ -1092,7 +1129,8 @@ class Users(Service):
 
     def list_mfa_factors(
         self,
-        user_id: str    ) -> MfaFactors:
+        user_id: str
+    ) -> MfaFactors:
         """
         List the factors available on the account to be used as a MFA challange.
 
@@ -1103,7 +1141,8 @@ class Users(Service):
         
         Returns
         -------
-        MfaFactors            API response as a typed Pydantic model
+        MfaFactors
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1127,7 +1166,8 @@ class Users(Service):
 
     def get_mfa_recovery_codes(
         self,
-        user_id: str    ) -> MfaRecoveryCodes:
+        user_id: str
+    ) -> MfaRecoveryCodes:
         """
         Get recovery codes that can be used as backup for MFA flow by User ID. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
 
@@ -1138,7 +1178,8 @@ class Users(Service):
         
         Returns
         -------
-        MfaRecoveryCodes            API response as a typed Pydantic model
+        MfaRecoveryCodes
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1162,7 +1203,8 @@ class Users(Service):
 
     def update_mfa_recovery_codes(
         self,
-        user_id: str    ) -> MfaRecoveryCodes:
+        user_id: str
+    ) -> MfaRecoveryCodes:
         """
         Regenerate recovery codes that can be used as backup for MFA flow by User ID. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
 
@@ -1173,7 +1215,8 @@ class Users(Service):
         
         Returns
         -------
-        MfaRecoveryCodes            API response as a typed Pydantic model
+        MfaRecoveryCodes
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1198,7 +1241,8 @@ class Users(Service):
 
     def create_mfa_recovery_codes(
         self,
-        user_id: str    ) -> MfaRecoveryCodes:
+        user_id: str
+    ) -> MfaRecoveryCodes:
         """
         Generate recovery codes used as backup for MFA flow for User ID. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method by client SDK.
 
@@ -1209,7 +1253,8 @@ class Users(Service):
         
         Returns
         -------
-        MfaRecoveryCodes            API response as a typed Pydantic model
+        MfaRecoveryCodes
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1236,7 +1281,8 @@ class Users(Service):
         self,
         user_id: str,
         name: str,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Update the user name by its unique ID.
 
@@ -1252,7 +1298,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1283,7 +1330,8 @@ class Users(Service):
         self,
         user_id: str,
         password: str,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Update the user password by its unique ID.
 
@@ -1299,7 +1347,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1330,7 +1379,8 @@ class Users(Service):
         self,
         user_id: str,
         number: str,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Update the user phone by its unique ID.
 
@@ -1346,7 +1396,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1376,7 +1427,8 @@ class Users(Service):
     def get_prefs(
         self,
         user_id: str,
-        model_type: Type[T] = dict    ) -> Preferences[T]:
+        model_type: Type[T] = dict
+    ) -> Preferences[T]:
         """
         Get the user preferences by its unique ID.
 
@@ -1390,7 +1442,8 @@ class Users(Service):
         
         Returns
         -------
-        Preferences[T]            API response as a typed Pydantic model
+        Preferences[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1416,7 +1469,8 @@ class Users(Service):
         self,
         user_id: str,
         prefs: Dict[str, Any],
-        model_type: Type[T] = dict    ) -> Preferences[T]:
+        model_type: Type[T] = dict
+    ) -> Preferences[T]:
         """
         Update the user preferences by its unique ID. The object you pass is stored as is, and replaces any previous value. The maximum allowed prefs size is 64kB and throws error if exceeded.
 
@@ -1432,7 +1486,8 @@ class Users(Service):
         
         Returns
         -------
-        Preferences[T]            API response as a typed Pydantic model
+        Preferences[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1462,7 +1517,8 @@ class Users(Service):
     def list_sessions(
         self,
         user_id: str,
-        total: Optional[bool] = None    ) -> SessionList:
+        total: Optional[bool] = None
+    ) -> SessionList:
         """
         Get the user sessions list by its unique ID.
 
@@ -1475,7 +1531,8 @@ class Users(Service):
         
         Returns
         -------
-        SessionList            API response as a typed Pydantic model
+        SessionList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1501,7 +1558,8 @@ class Users(Service):
 
     def create_session(
         self,
-        user_id: str    ) -> Session:
+        user_id: str
+    ) -> Session:
         """
         Creates a session for a user. Returns an immediately usable session object.
         
@@ -1514,7 +1572,8 @@ class Users(Service):
         
         Returns
         -------
-        Session            API response as a typed Pydantic model
+        Session
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1539,7 +1598,8 @@ class Users(Service):
 
     def delete_sessions(
         self,
-        user_id: str    ) -> Dict[str, Any]:
+        user_id: str
+    ) -> Dict[str, Any]:
         """
         Delete all user's sessions by using the user's unique ID.
 
@@ -1577,7 +1637,8 @@ class Users(Service):
     def delete_session(
         self,
         user_id: str,
-        session_id: str    ) -> Dict[str, Any]:
+        session_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a user sessions by its unique ID.
 
@@ -1622,7 +1683,8 @@ class Users(Service):
         self,
         user_id: str,
         status: bool,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Update the user status by its unique ID. Use this endpoint as an alternative to deleting a user if you want to keep user's ID reserved.
 
@@ -1638,7 +1700,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1669,7 +1732,8 @@ class Users(Service):
         self,
         user_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> TargetList:
+        total: Optional[bool] = None
+    ) -> TargetList:
         """
         List the messaging targets that are associated with a user.
 
@@ -1684,7 +1748,8 @@ class Users(Service):
         
         Returns
         -------
-        TargetList            API response as a typed Pydantic model
+        TargetList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1717,7 +1782,8 @@ class Users(Service):
         provider_type: MessagingProviderType,
         identifier: str,
         provider_id: Optional[str] = None,
-        name: Optional[str] = None    ) -> Target:
+        name: Optional[str] = None
+    ) -> Target:
         """
         Create a messaging target.
 
@@ -1738,7 +1804,8 @@ class Users(Service):
         
         Returns
         -------
-        Target            API response as a typed Pydantic model
+        Target
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1780,7 +1847,8 @@ class Users(Service):
     def get_target(
         self,
         user_id: str,
-        target_id: str    ) -> Target:
+        target_id: str
+    ) -> Target:
         """
         Get a user's push notification target by ID.
 
@@ -1793,7 +1861,8 @@ class Users(Service):
         
         Returns
         -------
-        Target            API response as a typed Pydantic model
+        Target
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1825,7 +1894,8 @@ class Users(Service):
         target_id: str,
         identifier: Optional[str] = None,
         provider_id: Optional[str] = None,
-        name: Optional[str] = None    ) -> Target:
+        name: Optional[str] = None
+    ) -> Target:
         """
         Update a messaging target.
 
@@ -1844,7 +1914,8 @@ class Users(Service):
         
         Returns
         -------
-        Target            API response as a typed Pydantic model
+        Target
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1880,7 +1951,8 @@ class Users(Service):
     def delete_target(
         self,
         user_id: str,
-        target_id: str    ) -> Dict[str, Any]:
+        target_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a messaging target.
 
@@ -1925,7 +1997,8 @@ class Users(Service):
         self,
         user_id: str,
         length: Optional[float] = None,
-        expire: Optional[float] = None    ) -> Token:
+        expire: Optional[float] = None
+    ) -> Token:
         """
         Returns a token with a secret key for creating a session. Use the user ID and secret and submit a request to the [PUT /account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process.
         
@@ -1941,7 +2014,8 @@ class Users(Service):
         
         Returns
         -------
-        Token            API response as a typed Pydantic model
+        Token
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1972,7 +2046,8 @@ class Users(Service):
         self,
         user_id: str,
         email_verification: bool,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Update the user email verification status by its unique ID.
 
@@ -1988,7 +2063,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2019,7 +2095,8 @@ class Users(Service):
         self,
         user_id: str,
         phone_verification: bool,
-        model_type: Type[T] = dict    ) -> User[T]:
+        model_type: Type[T] = dict
+    ) -> User[T]:
         """
         Update the user phone verification status by its unique ID.
 
@@ -2035,7 +2112,8 @@ class Users(Service):
         
         Returns
         -------
-        User[T]            API response as a typed Pydantic model
+        User[T]
+            API response as a typed Pydantic model
         
         Raises
         ------

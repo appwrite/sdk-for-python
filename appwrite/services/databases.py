@@ -47,7 +47,8 @@ class Databases(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> DatabaseList:
+        total: Optional[bool] = None
+    ) -> DatabaseList:
         """
         Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
 
@@ -64,7 +65,8 @@ class Databases(Service):
         
         Returns
         -------
-        DatabaseList            API response as a typed Pydantic model
+        DatabaseList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -93,7 +95,8 @@ class Databases(Service):
         self,
         database_id: str,
         name: str,
-        enabled: Optional[bool] = None    ) -> Database:
+        enabled: Optional[bool] = None
+    ) -> Database:
         """
         Create a new Database.
         
@@ -111,7 +114,8 @@ class Databases(Service):
         
         Returns
         -------
-        Database            API response as a typed Pydantic model
+        Database
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -142,7 +146,8 @@ class Databases(Service):
 
     def list_transactions(
         self,
-        queries: Optional[List[str]] = None    ) -> TransactionList:
+        queries: Optional[List[str]] = None
+    ) -> TransactionList:
         """
         List transactions across all databases.
 
@@ -153,7 +158,8 @@ class Databases(Service):
         
         Returns
         -------
-        TransactionList            API response as a typed Pydantic model
+        TransactionList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -175,7 +181,8 @@ class Databases(Service):
 
     def create_transaction(
         self,
-        ttl: Optional[float] = None    ) -> Transaction:
+        ttl: Optional[float] = None
+    ) -> Transaction:
         """
         Create a new transaction.
 
@@ -186,7 +193,8 @@ class Databases(Service):
         
         Returns
         -------
-        Transaction            API response as a typed Pydantic model
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -209,7 +217,8 @@ class Databases(Service):
 
     def get_transaction(
         self,
-        transaction_id: str    ) -> Transaction:
+        transaction_id: str
+    ) -> Transaction:
         """
         Get a transaction by its unique ID.
 
@@ -220,7 +229,8 @@ class Databases(Service):
         
         Returns
         -------
-        Transaction            API response as a typed Pydantic model
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -246,7 +256,8 @@ class Databases(Service):
         self,
         transaction_id: str,
         commit: Optional[bool] = None,
-        rollback: Optional[bool] = None    ) -> Transaction:
+        rollback: Optional[bool] = None
+    ) -> Transaction:
         """
         Update a transaction, to either commit or roll back its operations.
 
@@ -261,7 +272,8 @@ class Databases(Service):
         
         Returns
         -------
-        Transaction            API response as a typed Pydantic model
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -290,7 +302,8 @@ class Databases(Service):
 
     def delete_transaction(
         self,
-        transaction_id: str    ) -> Dict[str, Any]:
+        transaction_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a transaction by its unique ID.
 
@@ -328,7 +341,8 @@ class Databases(Service):
     def create_operations(
         self,
         transaction_id: str,
-        operations: Optional[List[Dict[str, Any]]] = None    ) -> Transaction:
+        operations: Optional[List[Dict[str, Any]]] = None
+    ) -> Transaction:
         """
         Create multiple operations in a single transaction.
 
@@ -341,7 +355,8 @@ class Databases(Service):
         
         Returns
         -------
-        Transaction            API response as a typed Pydantic model
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -369,7 +384,8 @@ class Databases(Service):
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get` instead.")
     def get(
         self,
-        database_id: str    ) -> Database:
+        database_id: str
+    ) -> Database:
         """
         Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
 
@@ -382,7 +398,8 @@ class Databases(Service):
         
         Returns
         -------
-        Database            API response as a typed Pydantic model
+        Database
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -409,7 +426,8 @@ class Databases(Service):
         self,
         database_id: str,
         name: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Database:
+        enabled: Optional[bool] = None
+    ) -> Database:
         """
         Update a database by its unique ID.
 
@@ -426,7 +444,8 @@ class Databases(Service):
         
         Returns
         -------
-        Database            API response as a typed Pydantic model
+        Database
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -456,7 +475,8 @@ class Databases(Service):
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete` instead.")
     def delete(
         self,
-        database_id: str    ) -> Dict[str, Any]:
+        database_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
 
@@ -499,7 +519,8 @@ class Databases(Service):
         database_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> CollectionList:
+        total: Optional[bool] = None
+    ) -> CollectionList:
         """
         Get a list of all collections that belong to the provided databaseId. You can use the search parameter to filter your results.
 
@@ -518,7 +539,8 @@ class Databases(Service):
         
         Returns
         -------
-        CollectionList            API response as a typed Pydantic model
+        CollectionList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -556,7 +578,8 @@ class Databases(Service):
         document_security: Optional[bool] = None,
         enabled: Optional[bool] = None,
         attributes: Optional[List[Dict[str, Any]]] = None,
-        indexes: Optional[List[Dict[str, Any]]] = None    ) -> Collection:
+        indexes: Optional[List[Dict[str, Any]]] = None
+    ) -> Collection:
         """
         Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -583,7 +606,8 @@ class Databases(Service):
         
         Returns
         -------
-        Collection            API response as a typed Pydantic model
+        Collection
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -627,7 +651,8 @@ class Databases(Service):
     def get_collection(
         self,
         database_id: str,
-        collection_id: str    ) -> Collection:
+        collection_id: str
+    ) -> Collection:
         """
         Get a collection by its unique ID. This endpoint response returns a JSON object with the collection metadata.
 
@@ -642,7 +667,8 @@ class Databases(Service):
         
         Returns
         -------
-        Collection            API response as a typed Pydantic model
+        Collection
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -676,7 +702,8 @@ class Databases(Service):
         name: Optional[str] = None,
         permissions: Optional[List[str]] = None,
         document_security: Optional[bool] = None,
-        enabled: Optional[bool] = None    ) -> Collection:
+        enabled: Optional[bool] = None
+    ) -> Collection:
         """
         Update a collection by its unique ID.
 
@@ -699,7 +726,8 @@ class Databases(Service):
         
         Returns
         -------
-        Collection            API response as a typed Pydantic model
+        Collection
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -737,7 +765,8 @@ class Databases(Service):
     def delete_collection(
         self,
         database_id: str,
-        collection_id: str    ) -> Dict[str, Any]:
+        collection_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a collection by its unique ID. Only users with write permissions have access to delete this resource.
 
@@ -786,7 +815,8 @@ class Databases(Service):
         database_id: str,
         collection_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> AttributeList:
+        total: Optional[bool] = None
+    ) -> AttributeList:
         """
         List attributes in the collection.
 
@@ -805,7 +835,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeList            API response as a typed Pydantic model
+        AttributeList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -843,7 +874,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[bool] = None,
-        array: Optional[bool] = None    ) -> AttributeBoolean:
+        array: Optional[bool] = None
+    ) -> AttributeBoolean:
         """
         Create a boolean attribute.
         
@@ -867,7 +899,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeBoolean            API response as a typed Pydantic model
+        AttributeBoolean
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -913,7 +946,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[bool],
-        new_key: Optional[str] = None    ) -> AttributeBoolean:
+        new_key: Optional[str] = None
+    ) -> AttributeBoolean:
         """
         Update a boolean attribute. Changing the `default` value will not update already existing documents.
 
@@ -936,7 +970,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeBoolean            API response as a typed Pydantic model
+        AttributeBoolean
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -981,7 +1016,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None    ) -> AttributeDatetime:
+        array: Optional[bool] = None
+    ) -> AttributeDatetime:
         """
         Create a date time attribute according to the ISO 8601 standard.
 
@@ -1004,7 +1040,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeDatetime            API response as a typed Pydantic model
+        AttributeDatetime
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1050,7 +1087,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> AttributeDatetime:
+        new_key: Optional[str] = None
+    ) -> AttributeDatetime:
         """
         Update a date time attribute. Changing the `default` value will not update already existing documents.
 
@@ -1073,7 +1111,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeDatetime            API response as a typed Pydantic model
+        AttributeDatetime
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1118,7 +1157,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None    ) -> AttributeEmail:
+        array: Optional[bool] = None
+    ) -> AttributeEmail:
         """
         Create an email attribute.
         
@@ -1142,7 +1182,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeEmail            API response as a typed Pydantic model
+        AttributeEmail
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1188,7 +1229,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> AttributeEmail:
+        new_key: Optional[str] = None
+    ) -> AttributeEmail:
         """
         Update an email attribute. Changing the `default` value will not update already existing documents.
         
@@ -1212,7 +1254,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeEmail            API response as a typed Pydantic model
+        AttributeEmail
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1258,7 +1301,8 @@ class Databases(Service):
         elements: List[str],
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None    ) -> AttributeEnum:
+        array: Optional[bool] = None
+    ) -> AttributeEnum:
         """
         Create an enum attribute. The `elements` param acts as a white-list of accepted values for this attribute. 
         
@@ -1284,7 +1328,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeEnum            API response as a typed Pydantic model
+        AttributeEnum
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1335,7 +1380,8 @@ class Databases(Service):
         elements: List[str],
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> AttributeEnum:
+        new_key: Optional[str] = None
+    ) -> AttributeEnum:
         """
         Update an enum attribute. Changing the `default` value will not update already existing documents.
         
@@ -1361,7 +1407,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeEnum            API response as a typed Pydantic model
+        AttributeEnum
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1412,7 +1459,8 @@ class Databases(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         default: Optional[float] = None,
-        array: Optional[bool] = None    ) -> AttributeFloat:
+        array: Optional[bool] = None
+    ) -> AttributeFloat:
         """
         Create a float attribute. Optionally, minimum and maximum values can be provided.
         
@@ -1440,7 +1488,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeFloat            API response as a typed Pydantic model
+        AttributeFloat
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1490,7 +1539,8 @@ class Databases(Service):
         default: Optional[float],
         min: Optional[float] = None,
         max: Optional[float] = None,
-        new_key: Optional[str] = None    ) -> AttributeFloat:
+        new_key: Optional[str] = None
+    ) -> AttributeFloat:
         """
         Update a float attribute. Changing the `default` value will not update already existing documents.
         
@@ -1518,7 +1568,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeFloat            API response as a typed Pydantic model
+        AttributeFloat
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1567,7 +1618,8 @@ class Databases(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         default: Optional[float] = None,
-        array: Optional[bool] = None    ) -> AttributeInteger:
+        array: Optional[bool] = None
+    ) -> AttributeInteger:
         """
         Create an integer attribute. Optionally, minimum and maximum values can be provided.
         
@@ -1595,7 +1647,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeInteger            API response as a typed Pydantic model
+        AttributeInteger
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1645,7 +1698,8 @@ class Databases(Service):
         default: Optional[float],
         min: Optional[float] = None,
         max: Optional[float] = None,
-        new_key: Optional[str] = None    ) -> AttributeInteger:
+        new_key: Optional[str] = None
+    ) -> AttributeInteger:
         """
         Update an integer attribute. Changing the `default` value will not update already existing documents.
         
@@ -1673,7 +1727,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeInteger            API response as a typed Pydantic model
+        AttributeInteger
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1720,7 +1775,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None    ) -> AttributeIp:
+        array: Optional[bool] = None
+    ) -> AttributeIp:
         """
         Create IP address attribute.
         
@@ -1744,7 +1800,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeIp            API response as a typed Pydantic model
+        AttributeIp
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1790,7 +1847,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> AttributeIp:
+        new_key: Optional[str] = None
+    ) -> AttributeIp:
         """
         Update an ip attribute. Changing the `default` value will not update already existing documents.
         
@@ -1814,7 +1872,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeIp            API response as a typed Pydantic model
+        AttributeIp
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1858,7 +1917,8 @@ class Databases(Service):
         collection_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None    ) -> AttributeLine:
+        default: Optional[List[Any]] = None
+    ) -> AttributeLine:
         """
         Create a geometric line attribute.
 
@@ -1879,7 +1939,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeLine            API response as a typed Pydantic model
+        AttributeLine
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1923,7 +1984,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[List[Any]] = None,
-        new_key: Optional[str] = None    ) -> AttributeLine:
+        new_key: Optional[str] = None
+    ) -> AttributeLine:
         """
         Update a line attribute. Changing the `default` value will not update already existing documents.
 
@@ -1946,7 +2008,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeLine            API response as a typed Pydantic model
+        AttributeLine
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1991,7 +2054,8 @@ class Databases(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None    ) -> AttributeLongtext:
+        encrypt: Optional[bool] = None
+    ) -> AttributeLongtext:
         """
         Create a longtext attribute.
         
@@ -2015,7 +2079,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeLongtext            API response as a typed Pydantic model
+        AttributeLongtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2062,7 +2127,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> AttributeLongtext:
+        new_key: Optional[str] = None
+    ) -> AttributeLongtext:
         """
         Update a longtext attribute. Changing the `default` value will not update already existing documents.
         
@@ -2084,7 +2150,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeLongtext            API response as a typed Pydantic model
+        AttributeLongtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2129,7 +2196,8 @@ class Databases(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None    ) -> AttributeMediumtext:
+        encrypt: Optional[bool] = None
+    ) -> AttributeMediumtext:
         """
         Create a mediumtext attribute.
         
@@ -2153,7 +2221,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeMediumtext            API response as a typed Pydantic model
+        AttributeMediumtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2200,7 +2269,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> AttributeMediumtext:
+        new_key: Optional[str] = None
+    ) -> AttributeMediumtext:
         """
         Update a mediumtext attribute. Changing the `default` value will not update already existing documents.
         
@@ -2222,7 +2292,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeMediumtext            API response as a typed Pydantic model
+        AttributeMediumtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2266,7 +2337,8 @@ class Databases(Service):
         collection_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None    ) -> AttributePoint:
+        default: Optional[List[Any]] = None
+    ) -> AttributePoint:
         """
         Create a geometric point attribute.
 
@@ -2287,7 +2359,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributePoint            API response as a typed Pydantic model
+        AttributePoint
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2331,7 +2404,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[List[Any]] = None,
-        new_key: Optional[str] = None    ) -> AttributePoint:
+        new_key: Optional[str] = None
+    ) -> AttributePoint:
         """
         Update a point attribute. Changing the `default` value will not update already existing documents.
 
@@ -2354,7 +2428,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributePoint            API response as a typed Pydantic model
+        AttributePoint
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2398,7 +2473,8 @@ class Databases(Service):
         collection_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None    ) -> AttributePolygon:
+        default: Optional[List[Any]] = None
+    ) -> AttributePolygon:
         """
         Create a geometric polygon attribute.
 
@@ -2419,7 +2495,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributePolygon            API response as a typed Pydantic model
+        AttributePolygon
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2463,7 +2540,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[List[Any]] = None,
-        new_key: Optional[str] = None    ) -> AttributePolygon:
+        new_key: Optional[str] = None
+    ) -> AttributePolygon:
         """
         Update a polygon attribute. Changing the `default` value will not update already existing documents.
 
@@ -2486,7 +2564,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributePolygon            API response as a typed Pydantic model
+        AttributePolygon
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2533,7 +2612,8 @@ class Databases(Service):
         two_way: Optional[bool] = None,
         key: Optional[str] = None,
         two_way_key: Optional[str] = None,
-        on_delete: Optional[RelationMutate] = None    ) -> AttributeRelationship:
+        on_delete: Optional[RelationMutate] = None
+    ) -> AttributeRelationship:
         """
         Create relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
         
@@ -2561,7 +2641,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeRelationship            API response as a typed Pydantic model
+        AttributeRelationship
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2609,7 +2690,8 @@ class Databases(Service):
         collection_id: str,
         key: str,
         on_delete: Optional[RelationMutate] = None,
-        new_key: Optional[str] = None    ) -> AttributeRelationship:
+        new_key: Optional[str] = None
+    ) -> AttributeRelationship:
         """
         Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
         
@@ -2631,7 +2713,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeRelationship            API response as a typed Pydantic model
+        AttributeRelationship
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2675,7 +2758,8 @@ class Databases(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None    ) -> AttributeString:
+        encrypt: Optional[bool] = None
+    ) -> AttributeString:
         """
         Create a string attribute.
         
@@ -2703,7 +2787,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeString            API response as a typed Pydantic model
+        AttributeString
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2756,7 +2841,8 @@ class Databases(Service):
         required: bool,
         default: Optional[str],
         size: Optional[float] = None,
-        new_key: Optional[str] = None    ) -> AttributeString:
+        new_key: Optional[str] = None
+    ) -> AttributeString:
         """
         Update a string attribute. Changing the `default` value will not update already existing documents.
         
@@ -2782,7 +2868,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeString            API response as a typed Pydantic model
+        AttributeString
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2828,7 +2915,8 @@ class Databases(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None    ) -> AttributeText:
+        encrypt: Optional[bool] = None
+    ) -> AttributeText:
         """
         Create a text attribute.
         
@@ -2852,7 +2940,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeText            API response as a typed Pydantic model
+        AttributeText
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2899,7 +2988,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> AttributeText:
+        new_key: Optional[str] = None
+    ) -> AttributeText:
         """
         Update a text attribute. Changing the `default` value will not update already existing documents.
         
@@ -2921,7 +3011,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeText            API response as a typed Pydantic model
+        AttributeText
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2966,7 +3057,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None    ) -> AttributeUrl:
+        array: Optional[bool] = None
+    ) -> AttributeUrl:
         """
         Create a URL attribute.
         
@@ -2990,7 +3082,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeUrl            API response as a typed Pydantic model
+        AttributeUrl
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3036,7 +3129,8 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None    ) -> AttributeUrl:
+        new_key: Optional[str] = None
+    ) -> AttributeUrl:
         """
         Update an url attribute. Changing the `default` value will not update already existing documents.
         
@@ -3060,7 +3154,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeUrl            API response as a typed Pydantic model
+        AttributeUrl
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3106,7 +3201,8 @@ class Databases(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None    ) -> AttributeVarchar:
+        encrypt: Optional[bool] = None
+    ) -> AttributeVarchar:
         """
         Create a varchar attribute.
         
@@ -3132,7 +3228,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeVarchar            API response as a typed Pydantic model
+        AttributeVarchar
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3184,7 +3281,8 @@ class Databases(Service):
         required: bool,
         default: Optional[str],
         size: Optional[float] = None,
-        new_key: Optional[str] = None    ) -> AttributeVarchar:
+        new_key: Optional[str] = None
+    ) -> AttributeVarchar:
         """
         Update a varchar attribute. Changing the `default` value will not update already existing documents.
         
@@ -3208,7 +3306,8 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeVarchar            API response as a typed Pydantic model
+        AttributeVarchar
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3251,7 +3350,8 @@ class Databases(Service):
         self,
         database_id: str,
         collection_id: str,
-        key: str    ) -> Union[AttributeBoolean, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributeString]:
+        key: str
+    ) -> Union[AttributeBoolean, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributeString]:
         """
         Get attribute by ID.
 
@@ -3304,7 +3404,8 @@ class Databases(Service):
         self,
         database_id: str,
         collection_id: str,
-        key: str    ) -> Dict[str, Any]:
+        key: str
+    ) -> Dict[str, Any]:
         """
         Deletes an attribute.
 
@@ -3362,7 +3463,8 @@ class Databases(Service):
         transaction_id: Optional[str] = None,
         total: Optional[bool] = None,
         ttl: Optional[float] = None,
-        model_type: Type[T] = dict    ) -> DocumentList[T]:
+        model_type: Type[T] = dict
+    ) -> DocumentList[T]:
         """
         Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
 
@@ -3388,7 +3490,8 @@ class Databases(Service):
         
         Returns
         -------
-        DocumentList[T]            API response as a typed Pydantic model
+        DocumentList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3431,7 +3534,8 @@ class Databases(Service):
         data: Dict[str, Any],
         permissions: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Document[T]:
+        model_type: Type[T] = dict
+    ) -> Document[T]:
         """
         Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -3457,7 +3561,8 @@ class Databases(Service):
         
         Returns
         -------
-        Document[T]            API response as a typed Pydantic model
+        Document[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3501,7 +3606,8 @@ class Databases(Service):
         collection_id: str,
         documents: List[Dict[str, Any]],
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> DocumentList[T]:
+        model_type: Type[T] = dict
+    ) -> DocumentList[T]:
         """
         Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -3523,7 +3629,8 @@ class Databases(Service):
         
         Returns
         -------
-        DocumentList[T]            API response as a typed Pydantic model
+        DocumentList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3562,7 +3669,8 @@ class Databases(Service):
         collection_id: str,
         documents: List[Dict[str, Any]],
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> DocumentList[T]:
+        model_type: Type[T] = dict
+    ) -> DocumentList[T]:
         """
         Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
         
@@ -3585,7 +3693,8 @@ class Databases(Service):
         
         Returns
         -------
-        DocumentList[T]            API response as a typed Pydantic model
+        DocumentList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3625,7 +3734,8 @@ class Databases(Service):
         data: Optional[Dict[str, Any]] = None,
         queries: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> DocumentList[T]:
+        model_type: Type[T] = dict
+    ) -> DocumentList[T]:
         """
         Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
 
@@ -3649,7 +3759,8 @@ class Databases(Service):
         
         Returns
         -------
-        DocumentList[T]            API response as a typed Pydantic model
+        DocumentList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3688,7 +3799,8 @@ class Databases(Service):
         collection_id: str,
         queries: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> DocumentList[T]:
+        model_type: Type[T] = dict
+    ) -> DocumentList[T]:
         """
         Bulk delete documents using queries, if no queries are passed then all documents are deleted.
 
@@ -3710,7 +3822,8 @@ class Databases(Service):
         
         Returns
         -------
-        DocumentList[T]            API response as a typed Pydantic model
+        DocumentList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3748,7 +3861,8 @@ class Databases(Service):
         document_id: str,
         queries: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Document[T]:
+        model_type: Type[T] = dict
+    ) -> Document[T]:
         """
         Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
 
@@ -3772,7 +3886,8 @@ class Databases(Service):
         
         Returns
         -------
-        Document[T]            API response as a typed Pydantic model
+        Document[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3815,7 +3930,8 @@ class Databases(Service):
         data: Optional[Dict[str, Any]] = None,
         permissions: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Document[T]:
+        model_type: Type[T] = dict
+    ) -> Document[T]:
         """
         Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -3841,7 +3957,8 @@ class Databases(Service):
         
         Returns
         -------
-        Document[T]            API response as a typed Pydantic model
+        Document[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3885,7 +4002,8 @@ class Databases(Service):
         data: Optional[Dict[str, Any]] = None,
         permissions: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Document[T]:
+        model_type: Type[T] = dict
+    ) -> Document[T]:
         """
         Update a document by its unique ID. Using the patch method you can pass only specific fields that will get updated.
 
@@ -3911,7 +4029,8 @@ class Databases(Service):
         
         Returns
         -------
-        Document[T]            API response as a typed Pydantic model
+        Document[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3952,7 +4071,8 @@ class Databases(Service):
         database_id: str,
         collection_id: str,
         document_id: str,
-        transaction_id: Optional[str] = None    ) -> Dict[str, Any]:
+        transaction_id: Optional[str] = None
+    ) -> Dict[str, Any]:
         """
         Delete a document by its unique ID.
 
@@ -4014,7 +4134,8 @@ class Databases(Service):
         value: Optional[float] = None,
         min: Optional[float] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Document[T]:
+        model_type: Type[T] = dict
+    ) -> Document[T]:
         """
         Decrement a specific attribute of a document by a given value.
 
@@ -4042,7 +4163,8 @@ class Databases(Service):
         
         Returns
         -------
-        Document[T]            API response as a typed Pydantic model
+        Document[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -4091,7 +4213,8 @@ class Databases(Service):
         value: Optional[float] = None,
         max: Optional[float] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict    ) -> Document[T]:
+        model_type: Type[T] = dict
+    ) -> Document[T]:
         """
         Increment a specific attribute of a document by a given value.
 
@@ -4119,7 +4242,8 @@ class Databases(Service):
         
         Returns
         -------
-        Document[T]            API response as a typed Pydantic model
+        Document[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -4164,7 +4288,8 @@ class Databases(Service):
         database_id: str,
         collection_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> IndexList:
+        total: Optional[bool] = None
+    ) -> IndexList:
         """
         List indexes in the collection.
 
@@ -4183,7 +4308,8 @@ class Databases(Service):
         
         Returns
         -------
-        IndexList            API response as a typed Pydantic model
+        IndexList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -4222,7 +4348,8 @@ class Databases(Service):
         type: IndexType,
         attributes: List[str],
         orders: Optional[List[OrderBy]] = None,
-        lengths: Optional[List[float]] = None    ) -> Index:
+        lengths: Optional[List[float]] = None
+    ) -> Index:
         """
         Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
         Attributes can be `key`, `fulltext`, and `unique`.
@@ -4248,7 +4375,8 @@ class Databases(Service):
         
         Returns
         -------
-        Index            API response as a typed Pydantic model
+        Index
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -4296,7 +4424,8 @@ class Databases(Service):
         self,
         database_id: str,
         collection_id: str,
-        key: str    ) -> Index:
+        key: str
+    ) -> Index:
         """
         Get an index by its unique ID.
 
@@ -4313,7 +4442,8 @@ class Databases(Service):
         
         Returns
         -------
-        Index            API response as a typed Pydantic model
+        Index
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -4348,7 +4478,8 @@ class Databases(Service):
         self,
         database_id: str,
         collection_id: str,
-        key: str    ) -> Dict[str, Any]:
+        key: str
+    ) -> Dict[str, Any]:
         """
         Delete an index.
 

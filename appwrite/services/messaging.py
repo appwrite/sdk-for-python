@@ -24,7 +24,8 @@ class Messaging(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> MessageList:
+        total: Optional[bool] = None
+    ) -> MessageList:
         """
         Get a list of all messages from the current Appwrite project.
 
@@ -39,7 +40,8 @@ class Messaging(Service):
         
         Returns
         -------
-        MessageList            API response as a typed Pydantic model
+        MessageList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -76,7 +78,8 @@ class Messaging(Service):
         attachments: Optional[List[str]] = None,
         draft: Optional[bool] = None,
         html: Optional[bool] = None,
-        scheduled_at: Optional[str] = None    ) -> Message:
+        scheduled_at: Optional[str] = None
+    ) -> Message:
         """
         Create a new email message.
 
@@ -109,7 +112,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Message            API response as a typed Pydantic model
+        Message
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -170,7 +174,8 @@ class Messaging(Service):
         cc: Optional[List[str]] = None,
         bcc: Optional[List[str]] = None,
         scheduled_at: Optional[str] = None,
-        attachments: Optional[List[str]] = None    ) -> Message:
+        attachments: Optional[List[str]] = None
+    ) -> Message:
         """
         Update an email message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
         
@@ -204,7 +209,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Message            API response as a typed Pydantic model
+        Message
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -258,7 +264,8 @@ class Messaging(Service):
         scheduled_at: Optional[str] = None,
         content_available: Optional[bool] = None,
         critical: Optional[bool] = None,
-        priority: Optional[MessagePriority] = None    ) -> Message:
+        priority: Optional[MessagePriority] = None
+    ) -> Message:
         """
         Create a new push notification.
 
@@ -305,7 +312,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Message            API response as a typed Pydantic model
+        Message
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -382,7 +390,8 @@ class Messaging(Service):
         scheduled_at: Optional[str] = None,
         content_available: Optional[bool] = None,
         critical: Optional[bool] = None,
-        priority: Optional[MessagePriority] = None    ) -> Message:
+        priority: Optional[MessagePriority] = None
+    ) -> Message:
         """
         Update a push notification by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
         
@@ -430,7 +439,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Message            API response as a typed Pydantic model
+        Message
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -479,7 +489,8 @@ class Messaging(Service):
         users: Optional[List[str]] = None,
         targets: Optional[List[str]] = None,
         draft: Optional[bool] = None,
-        scheduled_at: Optional[str] = None    ) -> Message:
+        scheduled_at: Optional[str] = None
+    ) -> Message:
         """
         Create a new SMS message.
 
@@ -502,7 +513,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Message            API response as a typed Pydantic model
+        Message
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -546,7 +558,8 @@ class Messaging(Service):
         targets: Optional[List[str]] = None,
         content: Optional[str] = None,
         draft: Optional[bool] = None,
-        scheduled_at: Optional[str] = None    ) -> Message:
+        scheduled_at: Optional[str] = None
+    ) -> Message:
         """
         Update an SMS message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
         
@@ -570,7 +583,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Message            API response as a typed Pydantic model
+        Message
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -601,7 +615,8 @@ class Messaging(Service):
 
     def get_message(
         self,
-        message_id: str    ) -> Message:
+        message_id: str
+    ) -> Message:
         """
         Get a message by its unique ID.
         
@@ -613,7 +628,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Message            API response as a typed Pydantic model
+        Message
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -637,7 +653,8 @@ class Messaging(Service):
 
     def delete(
         self,
-        message_id: str    ) -> Dict[str, Any]:
+        message_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a message. If the message is not a draft or scheduled, but has been sent, this will not recall the message.
 
@@ -676,7 +693,8 @@ class Messaging(Service):
         self,
         message_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> LogList:
+        total: Optional[bool] = None
+    ) -> LogList:
         """
         Get the message activity logs listed by its unique ID.
 
@@ -691,7 +709,8 @@ class Messaging(Service):
         
         Returns
         -------
-        LogList            API response as a typed Pydantic model
+        LogList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -721,7 +740,8 @@ class Messaging(Service):
         self,
         message_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> TargetList:
+        total: Optional[bool] = None
+    ) -> TargetList:
         """
         Get a list of the targets associated with a message.
 
@@ -736,7 +756,8 @@ class Messaging(Service):
         
         Returns
         -------
-        TargetList            API response as a typed Pydantic model
+        TargetList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -766,7 +787,8 @@ class Messaging(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> ProviderList:
+        total: Optional[bool] = None
+    ) -> ProviderList:
         """
         Get a list of all providers from the current Appwrite project.
 
@@ -781,7 +803,8 @@ class Messaging(Service):
         
         Returns
         -------
-        ProviderList            API response as a typed Pydantic model
+        ProviderList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -814,7 +837,8 @@ class Messaging(Service):
         team_id: Optional[str] = None,
         bundle_id: Optional[str] = None,
         sandbox: Optional[bool] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Create a new Apple Push Notification service provider.
 
@@ -839,7 +863,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -886,7 +911,8 @@ class Messaging(Service):
         auth_key_id: Optional[str] = None,
         team_id: Optional[str] = None,
         bundle_id: Optional[str] = None,
-        sandbox: Optional[bool] = None    ) -> Provider:
+        sandbox: Optional[bool] = None
+    ) -> Provider:
         """
         Update a Apple Push Notification service provider by its unique ID.
 
@@ -911,7 +937,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -951,7 +978,8 @@ class Messaging(Service):
         provider_id: str,
         name: str,
         service_account_json: Optional[Dict[str, Any]] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Create a new Firebase Cloud Messaging provider.
 
@@ -968,7 +996,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1002,7 +1031,8 @@ class Messaging(Service):
         provider_id: str,
         name: Optional[str] = None,
         enabled: Optional[bool] = None,
-        service_account_json: Optional[Dict[str, Any]] = None    ) -> Provider:
+        service_account_json: Optional[Dict[str, Any]] = None
+    ) -> Provider:
         """
         Update a Firebase Cloud Messaging provider by its unique ID.
 
@@ -1019,7 +1049,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1057,7 +1088,8 @@ class Messaging(Service):
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Create a new Mailgun provider.
 
@@ -1086,7 +1118,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1138,7 +1171,8 @@ class Messaging(Service):
         from_name: Optional[str] = None,
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
-        reply_to_email: Optional[str] = None    ) -> Provider:
+        reply_to_email: Optional[str] = None
+    ) -> Provider:
         """
         Update a Mailgun provider by its unique ID.
 
@@ -1167,7 +1201,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1213,7 +1248,8 @@ class Messaging(Service):
         template_id: Optional[str] = None,
         sender_id: Optional[str] = None,
         auth_key: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Create a new MSG91 provider.
 
@@ -1234,7 +1270,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1275,7 +1312,8 @@ class Messaging(Service):
         enabled: Optional[bool] = None,
         template_id: Optional[str] = None,
         sender_id: Optional[str] = None,
-        auth_key: Optional[str] = None    ) -> Provider:
+        auth_key: Optional[str] = None
+    ) -> Provider:
         """
         Update a MSG91 provider by its unique ID.
 
@@ -1296,7 +1334,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1337,7 +1376,8 @@ class Messaging(Service):
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Create a new Resend provider.
 
@@ -1362,7 +1402,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1409,7 +1450,8 @@ class Messaging(Service):
         from_name: Optional[str] = None,
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
-        reply_to_email: Optional[str] = None    ) -> Provider:
+        reply_to_email: Optional[str] = None
+    ) -> Provider:
         """
         Update a Resend provider by its unique ID.
 
@@ -1434,7 +1476,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1479,7 +1522,8 @@ class Messaging(Service):
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Create a new Sendgrid provider.
 
@@ -1504,7 +1548,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1551,7 +1596,8 @@ class Messaging(Service):
         from_name: Optional[str] = None,
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
-        reply_to_email: Optional[str] = None    ) -> Provider:
+        reply_to_email: Optional[str] = None
+    ) -> Provider:
         """
         Update a Sendgrid provider by its unique ID.
 
@@ -1576,7 +1622,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1627,7 +1674,8 @@ class Messaging(Service):
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Create a new SMTP provider.
 
@@ -1664,7 +1712,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1731,7 +1780,8 @@ class Messaging(Service):
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Update a SMTP provider by its unique ID.
 
@@ -1768,7 +1818,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1821,7 +1872,8 @@ class Messaging(Service):
         xfrom: Optional[str] = None,
         customer_id: Optional[str] = None,
         api_key: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Create a new Telesign provider.
 
@@ -1842,7 +1894,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1883,7 +1936,8 @@ class Messaging(Service):
         enabled: Optional[bool] = None,
         customer_id: Optional[str] = None,
         api_key: Optional[str] = None,
-        xfrom: Optional[str] = None    ) -> Provider:
+        xfrom: Optional[str] = None
+    ) -> Provider:
         """
         Update a Telesign provider by its unique ID.
 
@@ -1904,7 +1958,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1943,7 +1998,8 @@ class Messaging(Service):
         xfrom: Optional[str] = None,
         username: Optional[str] = None,
         api_key: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Create a new Textmagic provider.
 
@@ -1964,7 +2020,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2005,7 +2062,8 @@ class Messaging(Service):
         enabled: Optional[bool] = None,
         username: Optional[str] = None,
         api_key: Optional[str] = None,
-        xfrom: Optional[str] = None    ) -> Provider:
+        xfrom: Optional[str] = None
+    ) -> Provider:
         """
         Update a Textmagic provider by its unique ID.
 
@@ -2026,7 +2084,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2065,7 +2124,8 @@ class Messaging(Service):
         xfrom: Optional[str] = None,
         account_sid: Optional[str] = None,
         auth_token: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Create a new Twilio provider.
 
@@ -2086,7 +2146,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2127,7 +2188,8 @@ class Messaging(Service):
         enabled: Optional[bool] = None,
         account_sid: Optional[str] = None,
         auth_token: Optional[str] = None,
-        xfrom: Optional[str] = None    ) -> Provider:
+        xfrom: Optional[str] = None
+    ) -> Provider:
         """
         Update a Twilio provider by its unique ID.
 
@@ -2148,7 +2210,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2187,7 +2250,8 @@ class Messaging(Service):
         xfrom: Optional[str] = None,
         api_key: Optional[str] = None,
         api_secret: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> Provider:
+        enabled: Optional[bool] = None
+    ) -> Provider:
         """
         Create a new Vonage provider.
 
@@ -2208,7 +2272,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2249,7 +2314,8 @@ class Messaging(Service):
         enabled: Optional[bool] = None,
         api_key: Optional[str] = None,
         api_secret: Optional[str] = None,
-        xfrom: Optional[str] = None    ) -> Provider:
+        xfrom: Optional[str] = None
+    ) -> Provider:
         """
         Update a Vonage provider by its unique ID.
 
@@ -2270,7 +2336,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2304,7 +2371,8 @@ class Messaging(Service):
 
     def get_provider(
         self,
-        provider_id: str    ) -> Provider:
+        provider_id: str
+    ) -> Provider:
         """
         Get a provider by its unique ID.
         
@@ -2316,7 +2384,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider            API response as a typed Pydantic model
+        Provider
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2340,7 +2409,8 @@ class Messaging(Service):
 
     def delete_provider(
         self,
-        provider_id: str    ) -> Dict[str, Any]:
+        provider_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a provider by its unique ID.
 
@@ -2379,7 +2449,8 @@ class Messaging(Service):
         self,
         provider_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> LogList:
+        total: Optional[bool] = None
+    ) -> LogList:
         """
         Get the provider activity logs listed by its unique ID.
 
@@ -2394,7 +2465,8 @@ class Messaging(Service):
         
         Returns
         -------
-        LogList            API response as a typed Pydantic model
+        LogList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2424,7 +2496,8 @@ class Messaging(Service):
         self,
         subscriber_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> LogList:
+        total: Optional[bool] = None
+    ) -> LogList:
         """
         Get the subscriber activity logs listed by its unique ID.
 
@@ -2439,7 +2512,8 @@ class Messaging(Service):
         
         Returns
         -------
-        LogList            API response as a typed Pydantic model
+        LogList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2469,7 +2543,8 @@ class Messaging(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> TopicList:
+        total: Optional[bool] = None
+    ) -> TopicList:
         """
         Get a list of all topics from the current Appwrite project.
 
@@ -2484,7 +2559,8 @@ class Messaging(Service):
         
         Returns
         -------
-        TopicList            API response as a typed Pydantic model
+        TopicList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2512,7 +2588,8 @@ class Messaging(Service):
         self,
         topic_id: str,
         name: str,
-        subscribe: Optional[List[str]] = None    ) -> Topic:
+        subscribe: Optional[List[str]] = None
+    ) -> Topic:
         """
         Create a new topic.
 
@@ -2527,7 +2604,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Topic            API response as a typed Pydantic model
+        Topic
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2558,7 +2636,8 @@ class Messaging(Service):
 
     def get_topic(
         self,
-        topic_id: str    ) -> Topic:
+        topic_id: str
+    ) -> Topic:
         """
         Get a topic by its unique ID.
         
@@ -2570,7 +2649,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Topic            API response as a typed Pydantic model
+        Topic
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2596,7 +2676,8 @@ class Messaging(Service):
         self,
         topic_id: str,
         name: Optional[str] = None,
-        subscribe: Optional[List[str]] = None    ) -> Topic:
+        subscribe: Optional[List[str]] = None
+    ) -> Topic:
         """
         Update a topic by its unique ID.
         
@@ -2612,7 +2693,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Topic            API response as a typed Pydantic model
+        Topic
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2639,7 +2721,8 @@ class Messaging(Service):
 
     def delete_topic(
         self,
-        topic_id: str    ) -> Dict[str, Any]:
+        topic_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a topic by its unique ID.
 
@@ -2678,7 +2761,8 @@ class Messaging(Service):
         self,
         topic_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> LogList:
+        total: Optional[bool] = None
+    ) -> LogList:
         """
         Get the topic activity logs listed by its unique ID.
 
@@ -2693,7 +2777,8 @@ class Messaging(Service):
         
         Returns
         -------
-        LogList            API response as a typed Pydantic model
+        LogList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2724,7 +2809,8 @@ class Messaging(Service):
         topic_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> SubscriberList:
+        total: Optional[bool] = None
+    ) -> SubscriberList:
         """
         Get a list of all subscribers from the current Appwrite project.
 
@@ -2741,7 +2827,8 @@ class Messaging(Service):
         
         Returns
         -------
-        SubscriberList            API response as a typed Pydantic model
+        SubscriberList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2773,7 +2860,8 @@ class Messaging(Service):
         self,
         topic_id: str,
         subscriber_id: str,
-        target_id: str    ) -> Subscriber:
+        target_id: str
+    ) -> Subscriber:
         """
         Create a new subscriber.
 
@@ -2788,7 +2876,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Subscriber            API response as a typed Pydantic model
+        Subscriber
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2822,7 +2911,8 @@ class Messaging(Service):
     def get_subscriber(
         self,
         topic_id: str,
-        subscriber_id: str    ) -> Subscriber:
+        subscriber_id: str
+    ) -> Subscriber:
         """
         Get a subscriber by its unique ID.
         
@@ -2836,7 +2926,8 @@ class Messaging(Service):
         
         Returns
         -------
-        Subscriber            API response as a typed Pydantic model
+        Subscriber
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2865,7 +2956,8 @@ class Messaging(Service):
     def delete_subscriber(
         self,
         topic_id: str,
-        subscriber_id: str    ) -> Dict[str, Any]:
+        subscriber_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a subscriber by its unique ID.
 

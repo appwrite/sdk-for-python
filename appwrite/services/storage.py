@@ -20,7 +20,8 @@ class Storage(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> BucketList:
+        total: Optional[bool] = None
+    ) -> BucketList:
         """
         Get a list of all the storage buckets. You can use the query params to filter your results.
 
@@ -35,7 +36,8 @@ class Storage(Service):
         
         Returns
         -------
-        BucketList            API response as a typed Pydantic model
+        BucketList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -71,7 +73,8 @@ class Storage(Service):
         compression: Optional[Compression] = None,
         encryption: Optional[bool] = None,
         antivirus: Optional[bool] = None,
-        transformations: Optional[bool] = None    ) -> Bucket:
+        transformations: Optional[bool] = None
+    ) -> Bucket:
         """
         Create a new storage bucket.
 
@@ -102,7 +105,8 @@ class Storage(Service):
         
         Returns
         -------
-        Bucket            API response as a typed Pydantic model
+        Bucket
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -148,7 +152,8 @@ class Storage(Service):
 
     def get_bucket(
         self,
-        bucket_id: str    ) -> Bucket:
+        bucket_id: str
+    ) -> Bucket:
         """
         Get a storage bucket by its unique ID. This endpoint response returns a JSON object with the storage bucket metadata.
 
@@ -159,7 +164,8 @@ class Storage(Service):
         
         Returns
         -------
-        Bucket            API response as a typed Pydantic model
+        Bucket
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -193,7 +199,8 @@ class Storage(Service):
         compression: Optional[Compression] = None,
         encryption: Optional[bool] = None,
         antivirus: Optional[bool] = None,
-        transformations: Optional[bool] = None    ) -> Bucket:
+        transformations: Optional[bool] = None
+    ) -> Bucket:
         """
         Update a storage bucket by its unique ID.
 
@@ -224,7 +231,8 @@ class Storage(Service):
         
         Returns
         -------
-        Bucket            API response as a typed Pydantic model
+        Bucket
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -270,7 +278,8 @@ class Storage(Service):
 
     def delete_bucket(
         self,
-        bucket_id: str    ) -> Dict[str, Any]:
+        bucket_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a storage bucket by its unique ID.
 
@@ -310,7 +319,8 @@ class Storage(Service):
         bucket_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> FileList:
+        total: Optional[bool] = None
+    ) -> FileList:
         """
         Get a list of all the user files. You can use the query params to filter your results.
 
@@ -327,7 +337,8 @@ class Storage(Service):
         
         Returns
         -------
-        FileList            API response as a typed Pydantic model
+        FileList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -361,7 +372,8 @@ class Storage(Service):
         file_id: str,
         file: InputFile,
         permissions: Optional[List[str]] = None,
-        on_progress = None    ) -> File:
+        on_progress = None
+    ) -> File:
         """
         Create a new file. Before using this route, you should create a new bucket resource using either a [server integration](https://appwrite.io/docs/server/storage#storageCreateBucket) API or directly from your Appwrite console.
         
@@ -387,7 +399,8 @@ class Storage(Service):
         
         Returns
         -------
-        File            API response as a typed Pydantic model
+        File
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -429,7 +442,8 @@ class Storage(Service):
     def get_file(
         self,
         bucket_id: str,
-        file_id: str    ) -> File:
+        file_id: str
+    ) -> File:
         """
         Get a file by its unique ID. This endpoint response returns a JSON object with the file metadata.
 
@@ -442,7 +456,8 @@ class Storage(Service):
         
         Returns
         -------
-        File            API response as a typed Pydantic model
+        File
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -473,7 +488,8 @@ class Storage(Service):
         bucket_id: str,
         file_id: str,
         name: Optional[str] = None,
-        permissions: Optional[List[str]] = None    ) -> File:
+        permissions: Optional[List[str]] = None
+    ) -> File:
         """
         Update a file by its unique ID. Only users with write permissions have access to update this resource.
 
@@ -490,7 +506,8 @@ class Storage(Service):
         
         Returns
         -------
-        File            API response as a typed Pydantic model
+        File
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -523,7 +540,8 @@ class Storage(Service):
     def delete_file(
         self,
         bucket_id: str,
-        file_id: str    ) -> Dict[str, Any]:
+        file_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a file by its unique ID. Only users with write permissions have access to delete this resource.
 
@@ -568,7 +586,8 @@ class Storage(Service):
         self,
         bucket_id: str,
         file_id: str,
-        token: Optional[str] = None    ) -> bytes:
+        token: Optional[str] = None
+    ) -> bytes:
         """
         Get a file content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
 
@@ -627,7 +646,8 @@ class Storage(Service):
         rotation: Optional[float] = None,
         background: Optional[str] = None,
         output: Optional[ImageFormat] = None,
-        token: Optional[str] = None    ) -> bytes:
+        token: Optional[str] = None
+    ) -> bytes:
         """
         Get a file preview image. Currently, this method supports preview for image files (jpg, png, and gif), other supported formats, like pdf, docs, slides, and spreadsheets, will return the file icon image. You can also pass query string arguments for cutting and resizing your preview image. Preview is supported only for image files smaller than 10MB.
 
@@ -719,7 +739,8 @@ class Storage(Service):
         self,
         bucket_id: str,
         file_id: str,
-        token: Optional[str] = None    ) -> bytes:
+        token: Optional[str] = None
+    ) -> bytes:
         """
         Get a file content by its unique ID. This endpoint is similar to the download method but returns with no  'Content-Disposition: attachment' header.
 

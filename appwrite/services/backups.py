@@ -17,7 +17,8 @@ class Backups(Service):
 
     def list_archives(
         self,
-        queries: Optional[List[str]] = None    ) -> BackupArchiveList:
+        queries: Optional[List[str]] = None
+    ) -> BackupArchiveList:
         """
         List all archives for a project.
 
@@ -28,7 +29,8 @@ class Backups(Service):
         
         Returns
         -------
-        BackupArchiveList            API response as a typed Pydantic model
+        BackupArchiveList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -51,7 +53,8 @@ class Backups(Service):
     def create_archive(
         self,
         services: List[BackupServices],
-        resource_id: Optional[str] = None    ) -> BackupArchive:
+        resource_id: Optional[str] = None
+    ) -> BackupArchive:
         """
         Create a new archive asynchronously for a project.
 
@@ -64,7 +67,8 @@ class Backups(Service):
         
         Returns
         -------
-        BackupArchive            API response as a typed Pydantic model
+        BackupArchive
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -90,7 +94,8 @@ class Backups(Service):
 
     def get_archive(
         self,
-        archive_id: str    ) -> BackupArchive:
+        archive_id: str
+    ) -> BackupArchive:
         """
         Get a backup archive using it's ID.
 
@@ -101,7 +106,8 @@ class Backups(Service):
         
         Returns
         -------
-        BackupArchive            API response as a typed Pydantic model
+        BackupArchive
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -125,7 +131,8 @@ class Backups(Service):
 
     def delete_archive(
         self,
-        archive_id: str    ) -> Dict[str, Any]:
+        archive_id: str
+    ) -> Dict[str, Any]:
         """
         Delete an existing archive for a project.
 
@@ -162,7 +169,8 @@ class Backups(Service):
 
     def list_policies(
         self,
-        queries: Optional[List[str]] = None    ) -> BackupPolicyList:
+        queries: Optional[List[str]] = None
+    ) -> BackupPolicyList:
         """
         List all policies for a project.
 
@@ -173,7 +181,8 @@ class Backups(Service):
         
         Returns
         -------
-        BackupPolicyList            API response as a typed Pydantic model
+        BackupPolicyList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -201,7 +210,8 @@ class Backups(Service):
         schedule: str,
         name: Optional[str] = None,
         resource_id: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> BackupPolicy:
+        enabled: Optional[bool] = None
+    ) -> BackupPolicy:
         """
         Create a new backup policy.
 
@@ -224,7 +234,8 @@ class Backups(Service):
         
         Returns
         -------
-        BackupPolicy            API response as a typed Pydantic model
+        BackupPolicy
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -266,7 +277,8 @@ class Backups(Service):
 
     def get_policy(
         self,
-        policy_id: str    ) -> BackupPolicy:
+        policy_id: str
+    ) -> BackupPolicy:
         """
         Get a backup policy using it's ID.
 
@@ -277,7 +289,8 @@ class Backups(Service):
         
         Returns
         -------
-        BackupPolicy            API response as a typed Pydantic model
+        BackupPolicy
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -305,7 +318,8 @@ class Backups(Service):
         name: Optional[str] = None,
         retention: Optional[float] = None,
         schedule: Optional[str] = None,
-        enabled: Optional[bool] = None    ) -> BackupPolicy:
+        enabled: Optional[bool] = None
+    ) -> BackupPolicy:
         """
         Update an existing policy using it's ID.
 
@@ -324,7 +338,8 @@ class Backups(Service):
         
         Returns
         -------
-        BackupPolicy            API response as a typed Pydantic model
+        BackupPolicy
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -354,7 +369,8 @@ class Backups(Service):
 
     def delete_policy(
         self,
-        policy_id: str    ) -> Dict[str, Any]:
+        policy_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a policy using it's ID.
 
@@ -394,7 +410,8 @@ class Backups(Service):
         archive_id: str,
         services: List[BackupServices],
         new_resource_id: Optional[str] = None,
-        new_resource_name: Optional[str] = None    ) -> BackupRestoration:
+        new_resource_name: Optional[str] = None
+    ) -> BackupRestoration:
         """
         Create and trigger a new restoration for a backup on a project.
 
@@ -411,7 +428,8 @@ class Backups(Service):
         
         Returns
         -------
-        BackupRestoration            API response as a typed Pydantic model
+        BackupRestoration
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -444,7 +462,8 @@ class Backups(Service):
 
     def list_restorations(
         self,
-        queries: Optional[List[str]] = None    ) -> BackupRestorationList:
+        queries: Optional[List[str]] = None
+    ) -> BackupRestorationList:
         """
         List all backup restorations for a project.
 
@@ -455,7 +474,8 @@ class Backups(Service):
         
         Returns
         -------
-        BackupRestorationList            API response as a typed Pydantic model
+        BackupRestorationList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -477,7 +497,8 @@ class Backups(Service):
 
     def get_restoration(
         self,
-        restoration_id: str    ) -> BackupRestoration:
+        restoration_id: str
+    ) -> BackupRestoration:
         """
         Get the current status of a backup restoration.
 
@@ -488,7 +509,8 @@ class Backups(Service):
         
         Returns
         -------
-        BackupRestoration            API response as a typed Pydantic model
+        BackupRestoration
+            API response as a typed Pydantic model
         
         Raises
         ------

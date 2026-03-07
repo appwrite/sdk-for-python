@@ -15,7 +15,8 @@ class Tokens(Service):
         bucket_id: str,
         file_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> ResourceTokenList:
+        total: Optional[bool] = None
+    ) -> ResourceTokenList:
         """
         List all the tokens created for a specific file or bucket. You can use the query params to filter your results.
 
@@ -32,7 +33,8 @@ class Tokens(Service):
         
         Returns
         -------
-        ResourceTokenList            API response as a typed Pydantic model
+        ResourceTokenList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -66,7 +68,8 @@ class Tokens(Service):
         self,
         bucket_id: str,
         file_id: str,
-        expire: Optional[str] = None    ) -> ResourceToken:
+        expire: Optional[str] = None
+    ) -> ResourceToken:
         """
         Create a new token. A token is linked to a file. Token can be passed as a request URL search parameter.
 
@@ -81,7 +84,8 @@ class Tokens(Service):
         
         Returns
         -------
-        ResourceToken            API response as a typed Pydantic model
+        ResourceToken
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -111,7 +115,8 @@ class Tokens(Service):
 
     def get(
         self,
-        token_id: str    ) -> ResourceToken:
+        token_id: str
+    ) -> ResourceToken:
         """
         Get a token by its unique ID.
 
@@ -122,7 +127,8 @@ class Tokens(Service):
         
         Returns
         -------
-        ResourceToken            API response as a typed Pydantic model
+        ResourceToken
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -147,7 +153,8 @@ class Tokens(Service):
     def update(
         self,
         token_id: str,
-        expire: Optional[str] = None    ) -> ResourceToken:
+        expire: Optional[str] = None
+    ) -> ResourceToken:
         """
         Update a token by its unique ID. Use this endpoint to update a token's expiry date.
 
@@ -160,7 +167,8 @@ class Tokens(Service):
         
         Returns
         -------
-        ResourceToken            API response as a typed Pydantic model
+        ResourceToken
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -186,7 +194,8 @@ class Tokens(Service):
 
     def delete(
         self,
-        token_id: str    ) -> Dict[str, Any]:
+        token_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a token by its unique ID.
 

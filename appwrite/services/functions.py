@@ -29,7 +29,8 @@ class Functions(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> FunctionList:
+        total: Optional[bool] = None
+    ) -> FunctionList:
         """
         Get a list of all the project's functions. You can use the query params to filter your results.
 
@@ -44,7 +45,8 @@ class Functions(Service):
         
         Returns
         -------
-        FunctionList            API response as a typed Pydantic model
+        FunctionList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -87,7 +89,8 @@ class Functions(Service):
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
-        specification: Optional[str] = None    ) -> Function:
+        specification: Optional[str] = None
+    ) -> Function:
         """
         Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
 
@@ -132,7 +135,8 @@ class Functions(Service):
         
         Returns
         -------
-        Function            API response as a typed Pydantic model
+        Function
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -194,13 +198,15 @@ class Functions(Service):
 
 
     def list_runtimes(
-        self    ) -> RuntimeList:
+        self
+    ) -> RuntimeList:
         """
         Get a list of all runtimes that are currently active on your instance.
 
         Returns
         -------
-        RuntimeList            API response as a typed Pydantic model
+        RuntimeList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -218,13 +224,15 @@ class Functions(Service):
 
 
     def list_specifications(
-        self    ) -> SpecificationList:
+        self
+    ) -> SpecificationList:
         """
         List allowed function specifications for this instance.
 
         Returns
         -------
-        SpecificationList            API response as a typed Pydantic model
+        SpecificationList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -243,7 +251,8 @@ class Functions(Service):
 
     def get(
         self,
-        function_id: str    ) -> Function:
+        function_id: str
+    ) -> Function:
         """
         Get a function by its unique ID.
 
@@ -254,7 +263,8 @@ class Functions(Service):
         
         Returns
         -------
-        Function            API response as a typed Pydantic model
+        Function
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -295,7 +305,8 @@ class Functions(Service):
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
-        specification: Optional[str] = None    ) -> Function:
+        specification: Optional[str] = None
+    ) -> Function:
         """
         Update function by its unique ID.
 
@@ -340,7 +351,8 @@ class Functions(Service):
         
         Returns
         -------
-        Function            API response as a typed Pydantic model
+        Function
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -400,7 +412,8 @@ class Functions(Service):
 
     def delete(
         self,
-        function_id: str    ) -> Dict[str, Any]:
+        function_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a function by its unique ID.
 
@@ -438,7 +451,8 @@ class Functions(Service):
     def update_function_deployment(
         self,
         function_id: str,
-        deployment_id: str    ) -> Function:
+        deployment_id: str
+    ) -> Function:
         """
         Update the function active deployment. Use this endpoint to switch the code deployment that should be used when visitor opens your function.
 
@@ -451,7 +465,8 @@ class Functions(Service):
         
         Returns
         -------
-        Function            API response as a typed Pydantic model
+        Function
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -483,7 +498,8 @@ class Functions(Service):
         function_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> DeploymentList:
+        total: Optional[bool] = None
+    ) -> DeploymentList:
         """
         Get a list of all the function's code deployments. You can use the query params to filter your results.
 
@@ -500,7 +516,8 @@ class Functions(Service):
         
         Returns
         -------
-        DeploymentList            API response as a typed Pydantic model
+        DeploymentList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -535,7 +552,8 @@ class Functions(Service):
         activate: bool,
         entrypoint: Optional[str] = None,
         commands: Optional[str] = None,
-        on_progress = None    ) -> Deployment:
+        on_progress = None
+    ) -> Deployment:
         """
         Create a new function code deployment. Use this endpoint to upload a new version of your code function. To execute your newly uploaded code, you'll need to update the function's deployment to use your new deployment UID.
         
@@ -560,7 +578,8 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -604,7 +623,8 @@ class Functions(Service):
         self,
         function_id: str,
         deployment_id: str,
-        build_id: Optional[str] = None    ) -> Deployment:
+        build_id: Optional[str] = None
+    ) -> Deployment:
         """
         Create a new build for an existing function deployment. This endpoint allows you to rebuild a deployment with the updated function configuration, including its entrypoint and build commands if they have been modified. The build process will be queued and executed asynchronously. The original deployment's code will be preserved and used for the new build.
 
@@ -619,7 +639,8 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -656,7 +677,8 @@ class Functions(Service):
         root_directory: str,
         type: TemplateReferenceType,
         reference: str,
-        activate: Optional[bool] = None    ) -> Deployment:
+        activate: Optional[bool] = None
+    ) -> Deployment:
         """
         Create a deployment based on a template.
         
@@ -681,7 +703,8 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -731,7 +754,8 @@ class Functions(Service):
         function_id: str,
         type: VCSReferenceType,
         reference: str,
-        activate: Optional[bool] = None    ) -> Deployment:
+        activate: Optional[bool] = None
+    ) -> Deployment:
         """
         Create a deployment when a function is connected to VCS.
         
@@ -750,7 +774,8 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -786,7 +811,8 @@ class Functions(Service):
     def get_deployment(
         self,
         function_id: str,
-        deployment_id: str    ) -> Deployment:
+        deployment_id: str
+    ) -> Deployment:
         """
         Get a function deployment by its unique ID.
 
@@ -799,7 +825,8 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -828,7 +855,8 @@ class Functions(Service):
     def delete_deployment(
         self,
         function_id: str,
-        deployment_id: str    ) -> Dict[str, Any]:
+        deployment_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a code deployment by its unique ID.
 
@@ -873,7 +901,8 @@ class Functions(Service):
         self,
         function_id: str,
         deployment_id: str,
-        type: Optional[DeploymentDownloadType] = None    ) -> bytes:
+        type: Optional[DeploymentDownloadType] = None
+    ) -> bytes:
         """
         Get a function deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
 
@@ -920,7 +949,8 @@ class Functions(Service):
     def update_deployment_status(
         self,
         function_id: str,
-        deployment_id: str    ) -> Deployment:
+        deployment_id: str
+    ) -> Deployment:
         """
         Cancel an ongoing function deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn't started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status 'ready') or failed. The response includes the final build status and details.
 
@@ -933,7 +963,8 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment            API response as a typed Pydantic model
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -964,7 +995,8 @@ class Functions(Service):
         self,
         function_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None    ) -> ExecutionList:
+        total: Optional[bool] = None
+    ) -> ExecutionList:
         """
         Get a list of all the current user function execution logs. You can use the query params to filter your results.
 
@@ -979,7 +1011,8 @@ class Functions(Service):
         
         Returns
         -------
-        ExecutionList            API response as a typed Pydantic model
+        ExecutionList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1013,7 +1046,8 @@ class Functions(Service):
         path: Optional[str] = None,
         method: Optional[ExecutionMethod] = None,
         headers: Optional[Dict[str, Any]] = None,
-        scheduled_at: Optional[str] = None    ) -> Execution:
+        scheduled_at: Optional[str] = None
+    ) -> Execution:
         """
         Trigger a function execution. The returned object will return you the current execution status. You can ping the `Get Execution` endpoint to get updates on the current execution status. Once this endpoint is called, your function execution process will start asynchronously.
 
@@ -1036,7 +1070,8 @@ class Functions(Service):
         
         Returns
         -------
-        Execution            API response as a typed Pydantic model
+        Execution
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1073,7 +1108,8 @@ class Functions(Service):
     def get_execution(
         self,
         function_id: str,
-        execution_id: str    ) -> Execution:
+        execution_id: str
+    ) -> Execution:
         """
         Get a function execution log by its unique ID.
 
@@ -1086,7 +1122,8 @@ class Functions(Service):
         
         Returns
         -------
-        Execution            API response as a typed Pydantic model
+        Execution
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1115,7 +1152,8 @@ class Functions(Service):
     def delete_execution(
         self,
         function_id: str,
-        execution_id: str    ) -> Dict[str, Any]:
+        execution_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a function execution by its unique ID.
 
@@ -1158,7 +1196,8 @@ class Functions(Service):
 
     def list_variables(
         self,
-        function_id: str    ) -> VariableList:
+        function_id: str
+    ) -> VariableList:
         """
         Get a list of all variables of a specific function.
 
@@ -1169,7 +1208,8 @@ class Functions(Service):
         
         Returns
         -------
-        VariableList            API response as a typed Pydantic model
+        VariableList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1196,7 +1236,8 @@ class Functions(Service):
         function_id: str,
         key: str,
         value: str,
-        secret: Optional[bool] = None    ) -> Variable:
+        secret: Optional[bool] = None
+    ) -> Variable:
         """
         Create a new function environment variable. These variables can be accessed in the function at runtime as environment variables.
 
@@ -1213,7 +1254,8 @@ class Functions(Service):
         
         Returns
         -------
-        Variable            API response as a typed Pydantic model
+        Variable
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1249,7 +1291,8 @@ class Functions(Service):
     def get_variable(
         self,
         function_id: str,
-        variable_id: str    ) -> Variable:
+        variable_id: str
+    ) -> Variable:
         """
         Get a variable by its unique ID.
 
@@ -1262,7 +1305,8 @@ class Functions(Service):
         
         Returns
         -------
-        Variable            API response as a typed Pydantic model
+        Variable
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1294,7 +1338,8 @@ class Functions(Service):
         variable_id: str,
         key: str,
         value: Optional[str] = None,
-        secret: Optional[bool] = None    ) -> Variable:
+        secret: Optional[bool] = None
+    ) -> Variable:
         """
         Update variable by its unique ID.
 
@@ -1313,7 +1358,8 @@ class Functions(Service):
         
         Returns
         -------
-        Variable            API response as a typed Pydantic model
+        Variable
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1349,7 +1395,8 @@ class Functions(Service):
     def delete_variable(
         self,
         function_id: str,
-        variable_id: str    ) -> Dict[str, Any]:
+        variable_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a variable by its unique ID.
 

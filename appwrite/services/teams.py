@@ -20,7 +20,8 @@ class Teams(Service):
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
         total: Optional[bool] = None,
-        model_type: Type[T] = dict    ) -> TeamList[T]:
+        model_type: Type[T] = dict
+    ) -> TeamList[T]:
         """
         Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
 
@@ -38,7 +39,8 @@ class Teams(Service):
         
         Returns
         -------
-        TeamList[T]            API response as a typed Pydantic model
+        TeamList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -67,7 +69,8 @@ class Teams(Service):
         team_id: str,
         name: str,
         roles: Optional[List[str]] = None,
-        model_type: Type[T] = dict    ) -> Team[T]:
+        model_type: Type[T] = dict
+    ) -> Team[T]:
         """
         Create a new team. The user who creates the team will automatically be assigned as the owner of the team. Only the users with the owner role can invite new members, add new owners and delete or update the team.
 
@@ -85,7 +88,8 @@ class Teams(Service):
         
         Returns
         -------
-        Team[T]            API response as a typed Pydantic model
+        Team[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -117,7 +121,8 @@ class Teams(Service):
     def get(
         self,
         team_id: str,
-        model_type: Type[T] = dict    ) -> Team[T]:
+        model_type: Type[T] = dict
+    ) -> Team[T]:
         """
         Get a team by its ID. All team members have read access for this resource.
 
@@ -131,7 +136,8 @@ class Teams(Service):
         
         Returns
         -------
-        Team[T]            API response as a typed Pydantic model
+        Team[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -157,7 +163,8 @@ class Teams(Service):
         self,
         team_id: str,
         name: str,
-        model_type: Type[T] = dict    ) -> Team[T]:
+        model_type: Type[T] = dict
+    ) -> Team[T]:
         """
         Update the team's name by its unique ID.
 
@@ -173,7 +180,8 @@ class Teams(Service):
         
         Returns
         -------
-        Team[T]            API response as a typed Pydantic model
+        Team[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -202,7 +210,8 @@ class Teams(Service):
 
     def delete(
         self,
-        team_id: str    ) -> Dict[str, Any]:
+        team_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a team using its ID. Only team members with the owner role can delete the team.
 
@@ -242,7 +251,8 @@ class Teams(Service):
         team_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> MembershipList:
+        total: Optional[bool] = None
+    ) -> MembershipList:
         """
         Use this endpoint to list a team's members using the team's ID. All team members have read access to this endpoint. Hide sensitive attributes from the response by toggling membership privacy in the Console.
 
@@ -259,7 +269,8 @@ class Teams(Service):
         
         Returns
         -------
-        MembershipList            API response as a typed Pydantic model
+        MembershipList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -295,7 +306,8 @@ class Teams(Service):
         user_id: Optional[str] = None,
         phone: Optional[str] = None,
         url: Optional[str] = None,
-        name: Optional[str] = None    ) -> Membership:
+        name: Optional[str] = None
+    ) -> Membership:
         """
         Invite a new member to join your team. Provide an ID for existing users, or invite unregistered users using an email or phone number. If initiated from a Client SDK, Appwrite will send an email or sms with a link to join the team to the invited user, and an account will be created for them if one doesn't exist. If initiated from a Server SDK, the new member will be added automatically to the team.
         
@@ -325,7 +337,8 @@ class Teams(Service):
         
         Returns
         -------
-        Membership            API response as a typed Pydantic model
+        Membership
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -365,7 +378,8 @@ class Teams(Service):
     def get_membership(
         self,
         team_id: str,
-        membership_id: str    ) -> Membership:
+        membership_id: str
+    ) -> Membership:
         """
         Get a team member by the membership unique id. All team members have read access for this resource. Hide sensitive attributes from the response by toggling membership privacy in the Console.
 
@@ -378,7 +392,8 @@ class Teams(Service):
         
         Returns
         -------
-        Membership            API response as a typed Pydantic model
+        Membership
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -408,7 +423,8 @@ class Teams(Service):
         self,
         team_id: str,
         membership_id: str,
-        roles: List[str]    ) -> Membership:
+        roles: List[str]
+    ) -> Membership:
         """
         Modify the roles of a team member. Only team members with the owner role have access to this endpoint. Learn more about [roles and permissions](https://appwrite.io/docs/permissions).
         
@@ -424,7 +440,8 @@ class Teams(Service):
         
         Returns
         -------
-        Membership            API response as a typed Pydantic model
+        Membership
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -458,7 +475,8 @@ class Teams(Service):
     def delete_membership(
         self,
         team_id: str,
-        membership_id: str    ) -> Dict[str, Any]:
+        membership_id: str
+    ) -> Dict[str, Any]:
         """
         This endpoint allows a user to leave a team or for a team owner to delete the membership of any other team member. You can also use this endpoint to delete a user membership even if it is not accepted.
 
@@ -504,7 +522,8 @@ class Teams(Service):
         team_id: str,
         membership_id: str,
         user_id: str,
-        secret: str    ) -> Membership:
+        secret: str
+    ) -> Membership:
         """
         Use this endpoint to allow a user to accept an invitation to join a team after being redirected back to your app from the invitation email received by the user.
         
@@ -524,7 +543,8 @@ class Teams(Service):
         
         Returns
         -------
-        Membership            API response as a typed Pydantic model
+        Membership
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -562,7 +582,8 @@ class Teams(Service):
     def get_prefs(
         self,
         team_id: str,
-        model_type: Type[T] = dict    ) -> Preferences[T]:
+        model_type: Type[T] = dict
+    ) -> Preferences[T]:
         """
         Get the team's shared preferences by its unique ID. If a preference doesn't need to be shared by all team members, prefer storing them in [user preferences](https://appwrite.io/docs/references/cloud/client-web/account#getPrefs).
 
@@ -576,7 +597,8 @@ class Teams(Service):
         
         Returns
         -------
-        Preferences[T]            API response as a typed Pydantic model
+        Preferences[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -602,7 +624,8 @@ class Teams(Service):
         self,
         team_id: str,
         prefs: Dict[str, Any],
-        model_type: Type[T] = dict    ) -> Preferences[T]:
+        model_type: Type[T] = dict
+    ) -> Preferences[T]:
         """
         Update the team's preferences by its unique ID. The object you pass is stored as is and replaces any previous value. The maximum allowed prefs size is 64kB and throws an error if exceeded.
 
@@ -618,7 +641,8 @@ class Teams(Service):
         
         Returns
         -------
-        Preferences[T]            API response as a typed Pydantic model
+        Preferences[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
