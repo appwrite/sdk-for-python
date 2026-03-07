@@ -22,8 +22,7 @@ class Health(Service):
 
         Returns
         -------
-        HealthStatus
-            API response as a typed Pydantic model
+        HealthStatus            API response as a typed Pydantic model
         
         Raises
         ------
@@ -47,8 +46,7 @@ class Health(Service):
 
         Returns
         -------
-        HealthAntivirus
-            API response as a typed Pydantic model
+        HealthAntivirus            API response as a typed Pydantic model
         
         Raises
         ------
@@ -72,8 +70,7 @@ class Health(Service):
 
         Returns
         -------
-        HealthStatusList
-            API response as a typed Pydantic model
+        HealthStatusList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -103,8 +100,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthCertificate
-            API response as a typed Pydantic model
+        HealthCertificate            API response as a typed Pydantic model
         
         Raises
         ------
@@ -141,8 +137,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthStatus
-            API response as a typed Pydantic model
+        HealthStatus            API response as a typed Pydantic model
         
         Raises
         ------
@@ -171,8 +166,7 @@ class Health(Service):
 
         Returns
         -------
-        HealthStatusList
-            API response as a typed Pydantic model
+        HealthStatusList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -196,8 +190,7 @@ class Health(Service):
 
         Returns
         -------
-        HealthStatusList
-            API response as a typed Pydantic model
+        HealthStatusList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -227,8 +220,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -261,8 +253,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -295,8 +286,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -329,8 +319,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -363,8 +352,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -397,8 +385,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -434,8 +421,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -470,8 +456,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -508,8 +493,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -546,8 +530,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -580,8 +563,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -614,8 +596,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -648,8 +629,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -682,8 +662,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -716,8 +695,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -750,8 +728,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -784,8 +761,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -818,8 +794,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -852,8 +827,7 @@ class Health(Service):
         
         Returns
         -------
-        HealthQueue
-            API response as a typed Pydantic model
+        HealthQueue            API response as a typed Pydantic model
         
         Raises
         ------
@@ -880,8 +854,7 @@ class Health(Service):
 
         Returns
         -------
-        HealthStatus
-            API response as a typed Pydantic model
+        HealthStatus            API response as a typed Pydantic model
         
         Raises
         ------
@@ -905,8 +878,7 @@ class Health(Service):
 
         Returns
         -------
-        HealthStatus
-            API response as a typed Pydantic model
+        HealthStatus            API response as a typed Pydantic model
         
         Raises
         ------
@@ -930,8 +902,7 @@ class Health(Service):
 
         Returns
         -------
-        HealthTime
-            API response as a typed Pydantic model
+        HealthTime            API response as a typed Pydantic model
         
         Raises
         ------

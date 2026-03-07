@@ -28,8 +28,7 @@ class Backups(Service):
         
         Returns
         -------
-        BackupArchiveList
-            API response as a typed Pydantic model
+        BackupArchiveList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -65,8 +64,7 @@ class Backups(Service):
         
         Returns
         -------
-        BackupArchive
-            API response as a typed Pydantic model
+        BackupArchive            API response as a typed Pydantic model
         
         Raises
         ------
@@ -103,8 +101,7 @@ class Backups(Service):
         
         Returns
         -------
-        BackupArchive
-            API response as a typed Pydantic model
+        BackupArchive            API response as a typed Pydantic model
         
         Raises
         ------
@@ -176,8 +173,7 @@ class Backups(Service):
         
         Returns
         -------
-        BackupPolicyList
-            API response as a typed Pydantic model
+        BackupPolicyList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -228,8 +224,7 @@ class Backups(Service):
         
         Returns
         -------
-        BackupPolicy
-            API response as a typed Pydantic model
+        BackupPolicy            API response as a typed Pydantic model
         
         Raises
         ------
@@ -282,8 +277,7 @@ class Backups(Service):
         
         Returns
         -------
-        BackupPolicy
-            API response as a typed Pydantic model
+        BackupPolicy            API response as a typed Pydantic model
         
         Raises
         ------
@@ -330,8 +324,7 @@ class Backups(Service):
         
         Returns
         -------
-        BackupPolicy
-            API response as a typed Pydantic model
+        BackupPolicy            API response as a typed Pydantic model
         
         Raises
         ------
@@ -418,8 +411,7 @@ class Backups(Service):
         
         Returns
         -------
-        BackupRestoration
-            API response as a typed Pydantic model
+        BackupRestoration            API response as a typed Pydantic model
         
         Raises
         ------
@@ -463,8 +455,7 @@ class Backups(Service):
         
         Returns
         -------
-        BackupRestorationList
-            API response as a typed Pydantic model
+        BackupRestorationList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -497,8 +488,7 @@ class Backups(Service):
         
         Returns
         -------
-        BackupRestoration
-            API response as a typed Pydantic model
+        BackupRestoration            API response as a typed Pydantic model
         
         Raises
         ------

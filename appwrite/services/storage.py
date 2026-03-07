@@ -35,8 +35,7 @@ class Storage(Service):
         
         Returns
         -------
-        BucketList
-            API response as a typed Pydantic model
+        BucketList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -103,8 +102,7 @@ class Storage(Service):
         
         Returns
         -------
-        Bucket
-            API response as a typed Pydantic model
+        Bucket            API response as a typed Pydantic model
         
         Raises
         ------
@@ -161,8 +159,7 @@ class Storage(Service):
         
         Returns
         -------
-        Bucket
-            API response as a typed Pydantic model
+        Bucket            API response as a typed Pydantic model
         
         Raises
         ------
@@ -227,8 +224,7 @@ class Storage(Service):
         
         Returns
         -------
-        Bucket
-            API response as a typed Pydantic model
+        Bucket            API response as a typed Pydantic model
         
         Raises
         ------
@@ -331,8 +327,7 @@ class Storage(Service):
         
         Returns
         -------
-        FileList
-            API response as a typed Pydantic model
+        FileList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -392,8 +387,7 @@ class Storage(Service):
         
         Returns
         -------
-        File
-            API response as a typed Pydantic model
+        File            API response as a typed Pydantic model
         
         Raises
         ------
@@ -448,8 +442,7 @@ class Storage(Service):
         
         Returns
         -------
-        File
-            API response as a typed Pydantic model
+        File            API response as a typed Pydantic model
         
         Raises
         ------
@@ -497,8 +490,7 @@ class Storage(Service):
         
         Returns
         -------
-        File
-            API response as a typed Pydantic model
+        File            API response as a typed Pydantic model
         
         Raises
         ------

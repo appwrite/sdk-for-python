@@ -1,6 +1,5 @@
-from typing import Any, Dict, List, Optional, Union
-
-from pydantic import Field
+from typing import Any, Dict, List, Optional, Union, cast, Generic, TypeVar, Type
+from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 from .algo_argon2 import AlgoArgon2
@@ -13,7 +12,9 @@ from .algo_md5 import AlgoMd5
 from .preferences import Preferences
 from .target import Target
 
-class User(AppwriteModel):
+T = TypeVar('T')
+
+class User(AppwriteModel, Generic[T]):
     """
     User
 
@@ -51,7 +52,7 @@ class User(AppwriteModel):
         Phone verification status.
     mfa : bool
         Multi factor authentication status.
-    prefs : Preferences
+    prefs : Preferences[T]
         User preferences as a key-value object
     targets : List[Target]
         A user-owned message receiver. A single user may have multiple e.g. emails, phones, and a browser. Each target is registered with a single provider.
@@ -74,6 +75,16 @@ class User(AppwriteModel):
     emailverification: bool = Field(..., alias='emailVerification')
     phoneverification: bool = Field(..., alias='phoneVerification')
     mfa: bool = Field(..., alias='mfa')
-    prefs: Preferences = Field(..., alias='prefs')
+    prefs: Preferences[T] = Field(..., alias='prefs')
     targets: List[Target] = Field(..., alias='targets')
     accessedat: str = Field(..., alias='accessedAt')
+
+    @classmethod
+    def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'User[T]':
+        """Create User instance with typed data."""
+        instance = cls.model_validate(data)
+        if 'prefs' in data and data['prefs'] is not None:
+            instance.prefs = Preferences.with_data(
+                data['prefs'], model_type
+            )
+        return instance

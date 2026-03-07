@@ -23,8 +23,7 @@ class Activities(Service):
         
         Returns
         -------
-        ActivityEventList
-            API response as a typed Pydantic model
+        ActivityEventList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -58,8 +57,7 @@ class Activities(Service):
         
         Returns
         -------
-        ActivityEvent
-            API response as a typed Pydantic model
+        ActivityEvent            API response as a typed Pydantic model
         
         Raises
         ------

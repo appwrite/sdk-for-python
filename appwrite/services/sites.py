@@ -44,8 +44,7 @@ class Sites(Service):
         
         Returns
         -------
-        SiteList
-            API response as a typed Pydantic model
+        SiteList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -133,8 +132,7 @@ class Sites(Service):
         
         Returns
         -------
-        Site
-            API response as a typed Pydantic model
+        Site            API response as a typed Pydantic model
         
         Raises
         ------
@@ -204,8 +202,7 @@ class Sites(Service):
 
         Returns
         -------
-        FrameworkList
-            API response as a typed Pydantic model
+        FrameworkList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -229,8 +226,7 @@ class Sites(Service):
 
         Returns
         -------
-        SpecificationList
-            API response as a typed Pydantic model
+        SpecificationList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -260,8 +256,7 @@ class Sites(Service):
         
         Returns
         -------
-        Site
-            API response as a typed Pydantic model
+        Site            API response as a typed Pydantic model
         
         Raises
         ------
@@ -347,8 +342,7 @@ class Sites(Service):
         
         Returns
         -------
-        Site
-            API response as a typed Pydantic model
+        Site            API response as a typed Pydantic model
         
         Raises
         ------
@@ -462,8 +456,7 @@ class Sites(Service):
         
         Returns
         -------
-        Site
-            API response as a typed Pydantic model
+        Site            API response as a typed Pydantic model
         
         Raises
         ------
@@ -512,8 +505,7 @@ class Sites(Service):
         
         Returns
         -------
-        DeploymentList
-            API response as a typed Pydantic model
+        DeploymentList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -572,8 +564,7 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -629,8 +620,7 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -690,8 +680,7 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -760,8 +749,7 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -810,8 +798,7 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -945,8 +932,7 @@ class Sites(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -992,8 +978,7 @@ class Sites(Service):
         
         Returns
         -------
-        ExecutionList
-            API response as a typed Pydantic model
+        ExecutionList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1035,8 +1020,7 @@ class Sites(Service):
         
         Returns
         -------
-        Execution
-            API response as a typed Pydantic model
+        Execution            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1119,8 +1103,7 @@ class Sites(Service):
         
         Returns
         -------
-        VariableList
-            API response as a typed Pydantic model
+        VariableList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1164,8 +1147,7 @@ class Sites(Service):
         
         Returns
         -------
-        Variable
-            API response as a typed Pydantic model
+        Variable            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1214,8 +1196,7 @@ class Sites(Service):
         
         Returns
         -------
-        Variable
-            API response as a typed Pydantic model
+        Variable            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1266,8 +1247,7 @@ class Sites(Service):
         
         Returns
         -------
-        Variable
-            API response as a typed Pydantic model
+        Variable            API response as a typed Pydantic model
         
         Raises
         ------

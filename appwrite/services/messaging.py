@@ -39,8 +39,7 @@ class Messaging(Service):
         
         Returns
         -------
-        MessageList
-            API response as a typed Pydantic model
+        MessageList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -110,8 +109,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Message
-            API response as a typed Pydantic model
+        Message            API response as a typed Pydantic model
         
         Raises
         ------
@@ -206,8 +204,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Message
-            API response as a typed Pydantic model
+        Message            API response as a typed Pydantic model
         
         Raises
         ------
@@ -308,8 +305,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Message
-            API response as a typed Pydantic model
+        Message            API response as a typed Pydantic model
         
         Raises
         ------
@@ -434,8 +430,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Message
-            API response as a typed Pydantic model
+        Message            API response as a typed Pydantic model
         
         Raises
         ------
@@ -507,8 +502,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Message
-            API response as a typed Pydantic model
+        Message            API response as a typed Pydantic model
         
         Raises
         ------
@@ -576,8 +570,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Message
-            API response as a typed Pydantic model
+        Message            API response as a typed Pydantic model
         
         Raises
         ------
@@ -620,8 +613,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Message
-            API response as a typed Pydantic model
+        Message            API response as a typed Pydantic model
         
         Raises
         ------
@@ -699,8 +691,7 @@ class Messaging(Service):
         
         Returns
         -------
-        LogList
-            API response as a typed Pydantic model
+        LogList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -745,8 +736,7 @@ class Messaging(Service):
         
         Returns
         -------
-        TargetList
-            API response as a typed Pydantic model
+        TargetList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -791,8 +781,7 @@ class Messaging(Service):
         
         Returns
         -------
-        ProviderList
-            API response as a typed Pydantic model
+        ProviderList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -850,8 +839,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -923,8 +911,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -981,8 +968,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1033,8 +1019,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1101,8 +1086,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1183,8 +1167,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1251,8 +1234,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1314,8 +1296,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1381,8 +1362,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1454,8 +1434,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1525,8 +1504,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1598,8 +1576,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1687,8 +1664,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1792,8 +1768,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1867,8 +1842,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1930,8 +1904,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1991,8 +1964,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2054,8 +2026,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2115,8 +2086,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2178,8 +2148,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2239,8 +2208,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2302,8 +2270,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2349,8 +2316,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Provider
-            API response as a typed Pydantic model
+        Provider            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2428,8 +2394,7 @@ class Messaging(Service):
         
         Returns
         -------
-        LogList
-            API response as a typed Pydantic model
+        LogList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2474,8 +2439,7 @@ class Messaging(Service):
         
         Returns
         -------
-        LogList
-            API response as a typed Pydantic model
+        LogList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2520,8 +2484,7 @@ class Messaging(Service):
         
         Returns
         -------
-        TopicList
-            API response as a typed Pydantic model
+        TopicList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2564,8 +2527,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Topic
-            API response as a typed Pydantic model
+        Topic            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2608,8 +2570,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Topic
-            API response as a typed Pydantic model
+        Topic            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2651,8 +2612,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Topic
-            API response as a typed Pydantic model
+        Topic            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2733,8 +2693,7 @@ class Messaging(Service):
         
         Returns
         -------
-        LogList
-            API response as a typed Pydantic model
+        LogList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2782,8 +2741,7 @@ class Messaging(Service):
         
         Returns
         -------
-        SubscriberList
-            API response as a typed Pydantic model
+        SubscriberList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2830,8 +2788,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Subscriber
-            API response as a typed Pydantic model
+        Subscriber            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2879,8 +2836,7 @@ class Messaging(Service):
         
         Returns
         -------
-        Subscriber
-            API response as a typed Pydantic model
+        Subscriber            API response as a typed Pydantic model
         
         Raises
         ------

@@ -1,5 +1,5 @@
 from ..service import Service
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..models.database_list import DatabaseList;
@@ -35,6 +35,8 @@ from ..enums.index_type import IndexType;
 from ..enums.order_by import OrderBy;
 from ..models.index import Index;
 
+T = TypeVar('T')
+
 class Databases(Service):
 
     def __init__(self, client) -> None:
@@ -62,8 +64,7 @@ class Databases(Service):
         
         Returns
         -------
-        DatabaseList
-            API response as a typed Pydantic model
+        DatabaseList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -110,8 +111,7 @@ class Databases(Service):
         
         Returns
         -------
-        Database
-            API response as a typed Pydantic model
+        Database            API response as a typed Pydantic model
         
         Raises
         ------
@@ -153,8 +153,7 @@ class Databases(Service):
         
         Returns
         -------
-        TransactionList
-            API response as a typed Pydantic model
+        TransactionList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -187,8 +186,7 @@ class Databases(Service):
         
         Returns
         -------
-        Transaction
-            API response as a typed Pydantic model
+        Transaction            API response as a typed Pydantic model
         
         Raises
         ------
@@ -222,8 +220,7 @@ class Databases(Service):
         
         Returns
         -------
-        Transaction
-            API response as a typed Pydantic model
+        Transaction            API response as a typed Pydantic model
         
         Raises
         ------
@@ -264,8 +261,7 @@ class Databases(Service):
         
         Returns
         -------
-        Transaction
-            API response as a typed Pydantic model
+        Transaction            API response as a typed Pydantic model
         
         Raises
         ------
@@ -345,8 +341,7 @@ class Databases(Service):
         
         Returns
         -------
-        Transaction
-            API response as a typed Pydantic model
+        Transaction            API response as a typed Pydantic model
         
         Raises
         ------
@@ -387,8 +382,7 @@ class Databases(Service):
         
         Returns
         -------
-        Database
-            API response as a typed Pydantic model
+        Database            API response as a typed Pydantic model
         
         Raises
         ------
@@ -432,8 +426,7 @@ class Databases(Service):
         
         Returns
         -------
-        Database
-            API response as a typed Pydantic model
+        Database            API response as a typed Pydantic model
         
         Raises
         ------
@@ -525,8 +518,7 @@ class Databases(Service):
         
         Returns
         -------
-        CollectionList
-            API response as a typed Pydantic model
+        CollectionList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -591,8 +583,7 @@ class Databases(Service):
         
         Returns
         -------
-        Collection
-            API response as a typed Pydantic model
+        Collection            API response as a typed Pydantic model
         
         Raises
         ------
@@ -651,8 +642,7 @@ class Databases(Service):
         
         Returns
         -------
-        Collection
-            API response as a typed Pydantic model
+        Collection            API response as a typed Pydantic model
         
         Raises
         ------
@@ -709,8 +699,7 @@ class Databases(Service):
         
         Returns
         -------
-        Collection
-            API response as a typed Pydantic model
+        Collection            API response as a typed Pydantic model
         
         Raises
         ------
@@ -816,8 +805,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeList
-            API response as a typed Pydantic model
+        AttributeList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -879,8 +867,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeBoolean
-            API response as a typed Pydantic model
+        AttributeBoolean            API response as a typed Pydantic model
         
         Raises
         ------
@@ -949,8 +936,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeBoolean
-            API response as a typed Pydantic model
+        AttributeBoolean            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1018,8 +1004,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeDatetime
-            API response as a typed Pydantic model
+        AttributeDatetime            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1088,8 +1073,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeDatetime
-            API response as a typed Pydantic model
+        AttributeDatetime            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1158,8 +1142,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeEmail
-            API response as a typed Pydantic model
+        AttributeEmail            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1229,8 +1212,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeEmail
-            API response as a typed Pydantic model
+        AttributeEmail            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1302,8 +1284,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeEnum
-            API response as a typed Pydantic model
+        AttributeEnum            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1380,8 +1361,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeEnum
-            API response as a typed Pydantic model
+        AttributeEnum            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1460,8 +1440,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeFloat
-            API response as a typed Pydantic model
+        AttributeFloat            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1539,8 +1518,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeFloat
-            API response as a typed Pydantic model
+        AttributeFloat            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1617,8 +1595,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeInteger
-            API response as a typed Pydantic model
+        AttributeInteger            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1696,8 +1673,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeInteger
-            API response as a typed Pydantic model
+        AttributeInteger            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1768,8 +1744,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeIp
-            API response as a typed Pydantic model
+        AttributeIp            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1839,8 +1814,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeIp
-            API response as a typed Pydantic model
+        AttributeIp            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1905,8 +1879,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeLine
-            API response as a typed Pydantic model
+        AttributeLine            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1973,8 +1946,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeLine
-            API response as a typed Pydantic model
+        AttributeLine            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2043,8 +2015,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeLongtext
-            API response as a typed Pydantic model
+        AttributeLongtext            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2113,8 +2084,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeLongtext
-            API response as a typed Pydantic model
+        AttributeLongtext            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2183,8 +2153,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeMediumtext
-            API response as a typed Pydantic model
+        AttributeMediumtext            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2253,8 +2222,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeMediumtext
-            API response as a typed Pydantic model
+        AttributeMediumtext            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2319,8 +2287,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributePoint
-            API response as a typed Pydantic model
+        AttributePoint            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2387,8 +2354,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributePoint
-            API response as a typed Pydantic model
+        AttributePoint            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2453,8 +2419,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributePolygon
-            API response as a typed Pydantic model
+        AttributePolygon            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2521,8 +2486,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributePolygon
-            API response as a typed Pydantic model
+        AttributePolygon            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2597,8 +2561,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeRelationship
-            API response as a typed Pydantic model
+        AttributeRelationship            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2668,8 +2631,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeRelationship
-            API response as a typed Pydantic model
+        AttributeRelationship            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2741,8 +2703,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeString
-            API response as a typed Pydantic model
+        AttributeString            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2821,8 +2782,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeString
-            API response as a typed Pydantic model
+        AttributeString            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2892,8 +2852,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeText
-            API response as a typed Pydantic model
+        AttributeText            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2962,8 +2921,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeText
-            API response as a typed Pydantic model
+        AttributeText            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3032,8 +2990,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeUrl
-            API response as a typed Pydantic model
+        AttributeUrl            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3103,8 +3060,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeUrl
-            API response as a typed Pydantic model
+        AttributeUrl            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3176,8 +3132,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeVarchar
-            API response as a typed Pydantic model
+        AttributeVarchar            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3253,8 +3208,7 @@ class Databases(Service):
         
         Returns
         -------
-        AttributeVarchar
-            API response as a typed Pydantic model
+        AttributeVarchar            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3407,7 +3361,8 @@ class Databases(Service):
         queries: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
         total: Optional[bool] = None,
-        ttl: Optional[float] = None    ) -> DocumentList:
+        ttl: Optional[float] = None,
+        model_type: Type[T] = dict    ) -> DocumentList[T]:
         """
         Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
 
@@ -3428,10 +3383,12 @@ class Databases(Service):
         ttl : Optional[float]
             TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        DocumentList
-            API response as a typed Pydantic model
+        DocumentList[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3462,7 +3419,7 @@ class Databases(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return self._parse_response(response, model=DocumentList)
+        return DocumentList.with_data(response, model_type)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_row` instead.")
@@ -3473,7 +3430,8 @@ class Databases(Service):
         document_id: str,
         data: Dict[str, Any],
         permissions: Optional[List[str]] = None,
-        transaction_id: Optional[str] = None    ) -> Document:
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> Document[T]:
         """
         Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -3494,10 +3452,12 @@ class Databases(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Document
-            API response as a typed Pydantic model
+        Document[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3531,7 +3491,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=Document)
+        return Document.with_data(response, model_type)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_rows` instead.")
@@ -3540,7 +3500,8 @@ class Databases(Service):
         database_id: str,
         collection_id: str,
         documents: List[Dict[str, Any]],
-        transaction_id: Optional[str] = None    ) -> DocumentList:
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> DocumentList[T]:
         """
         Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -3557,10 +3518,12 @@ class Databases(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        DocumentList
-            API response as a typed Pydantic model
+        DocumentList[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3589,7 +3552,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=DocumentList)
+        return DocumentList.with_data(response, model_type)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.upsert_rows` instead.")
@@ -3598,7 +3561,8 @@ class Databases(Service):
         database_id: str,
         collection_id: str,
         documents: List[Dict[str, Any]],
-        transaction_id: Optional[str] = None    ) -> DocumentList:
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> DocumentList[T]:
         """
         Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
         
@@ -3616,10 +3580,12 @@ class Databases(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        DocumentList
-            API response as a typed Pydantic model
+        DocumentList[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3648,7 +3614,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=DocumentList)
+        return DocumentList.with_data(response, model_type)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_rows` instead.")
@@ -3658,7 +3624,8 @@ class Databases(Service):
         collection_id: str,
         data: Optional[Dict[str, Any]] = None,
         queries: Optional[List[str]] = None,
-        transaction_id: Optional[str] = None    ) -> DocumentList:
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> DocumentList[T]:
         """
         Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
 
@@ -3677,10 +3644,12 @@ class Databases(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        DocumentList
-            API response as a typed Pydantic model
+        DocumentList[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3709,7 +3678,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=DocumentList)
+        return DocumentList.with_data(response, model_type)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_rows` instead.")
@@ -3718,7 +3687,8 @@ class Databases(Service):
         database_id: str,
         collection_id: str,
         queries: Optional[List[str]] = None,
-        transaction_id: Optional[str] = None    ) -> DocumentList:
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> DocumentList[T]:
         """
         Bulk delete documents using queries, if no queries are passed then all documents are deleted.
 
@@ -3735,10 +3705,12 @@ class Databases(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        DocumentList
-            API response as a typed Pydantic model
+        DocumentList[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3765,7 +3737,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=DocumentList)
+        return DocumentList.with_data(response, model_type)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get_row` instead.")
@@ -3775,7 +3747,8 @@ class Databases(Service):
         collection_id: str,
         document_id: str,
         queries: Optional[List[str]] = None,
-        transaction_id: Optional[str] = None    ) -> Document:
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> Document[T]:
         """
         Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
 
@@ -3794,10 +3767,12 @@ class Databases(Service):
         transaction_id : Optional[str]
             Transaction ID to read uncommitted changes within the transaction.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Document
-            API response as a typed Pydantic model
+        Document[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3828,7 +3803,7 @@ class Databases(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return self._parse_response(response, model=Document)
+        return Document.with_data(response, model_type)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.upsert_row` instead.")
@@ -3839,7 +3814,8 @@ class Databases(Service):
         document_id: str,
         data: Optional[Dict[str, Any]] = None,
         permissions: Optional[List[str]] = None,
-        transaction_id: Optional[str] = None    ) -> Document:
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> Document[T]:
         """
         Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
@@ -3860,10 +3836,12 @@ class Databases(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Document
-            API response as a typed Pydantic model
+        Document[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3895,7 +3873,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=Document)
+        return Document.with_data(response, model_type)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_row` instead.")
@@ -3906,7 +3884,8 @@ class Databases(Service):
         document_id: str,
         data: Optional[Dict[str, Any]] = None,
         permissions: Optional[List[str]] = None,
-        transaction_id: Optional[str] = None    ) -> Document:
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> Document[T]:
         """
         Update a document by its unique ID. Using the patch method you can pass only specific fields that will get updated.
 
@@ -3927,10 +3906,12 @@ class Databases(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Document
-            API response as a typed Pydantic model
+        Document[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3962,7 +3943,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=Document)
+        return Document.with_data(response, model_type)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_row` instead.")
@@ -4032,7 +4013,8 @@ class Databases(Service):
         attribute: str,
         value: Optional[float] = None,
         min: Optional[float] = None,
-        transaction_id: Optional[str] = None    ) -> Document:
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> Document[T]:
         """
         Decrement a specific attribute of a document by a given value.
 
@@ -4055,10 +4037,12 @@ class Databases(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Document
-            API response as a typed Pydantic model
+        Document[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -4094,7 +4078,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=Document)
+        return Document.with_data(response, model_type)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.increment_row_column` instead.")
@@ -4106,7 +4090,8 @@ class Databases(Service):
         attribute: str,
         value: Optional[float] = None,
         max: Optional[float] = None,
-        transaction_id: Optional[str] = None    ) -> Document:
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> Document[T]:
         """
         Increment a specific attribute of a document by a given value.
 
@@ -4129,10 +4114,12 @@ class Databases(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Document
-            API response as a typed Pydantic model
+        Document[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -4168,7 +4155,7 @@ class Databases(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=Document)
+        return Document.with_data(response, model_type)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_indexes` instead.")
@@ -4196,8 +4183,7 @@ class Databases(Service):
         
         Returns
         -------
-        IndexList
-            API response as a typed Pydantic model
+        IndexList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -4262,8 +4248,7 @@ class Databases(Service):
         
         Returns
         -------
-        Index
-            API response as a typed Pydantic model
+        Index            API response as a typed Pydantic model
         
         Raises
         ------
@@ -4328,8 +4313,7 @@ class Databases(Service):
         
         Returns
         -------
-        Index
-            API response as a typed Pydantic model
+        Index            API response as a typed Pydantic model
         
         Raises
         ------

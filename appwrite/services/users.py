@@ -1,5 +1,5 @@
 from ..service import Service
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..models.user_list import UserList;
@@ -20,6 +20,8 @@ from ..enums.messaging_provider_type import MessagingProviderType;
 from ..models.target import Target;
 from ..models.token import Token;
 
+T = TypeVar('T')
+
 class Users(Service):
 
     def __init__(self, client) -> None:
@@ -29,7 +31,8 @@ class Users(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> UserList:
+        total: Optional[bool] = None,
+        model_type: Type[T] = dict    ) -> UserList[T]:
         """
         Get a list of all the project's users. You can use the query params to filter your results.
 
@@ -42,10 +45,12 @@ class Users(Service):
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        UserList
-            API response as a typed Pydantic model
+        UserList[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -66,7 +71,7 @@ class Users(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return self._parse_response(response, model=UserList)
+        return UserList.with_data(response, model_type)
 
 
     def create(
@@ -75,7 +80,8 @@ class Users(Service):
         email: Optional[str] = None,
         phone: Optional[str] = None,
         password: Optional[str] = None,
-        name: Optional[str] = None    ) -> User:
+        name: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Create a new user.
 
@@ -92,10 +98,12 @@ class Users(Service):
         name : Optional[str]
             User name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -121,7 +129,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def create_argon2_user(
@@ -129,7 +137,8 @@ class Users(Service):
         user_id: str,
         email: str,
         password: str,
-        name: Optional[str] = None    ) -> User:
+        name: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [Argon2](https://en.wikipedia.org/wiki/Argon2) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -144,10 +153,12 @@ class Users(Service):
         name : Optional[str]
             User name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -177,7 +188,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def create_bcrypt_user(
@@ -185,7 +196,8 @@ class Users(Service):
         user_id: str,
         email: str,
         password: str,
-        name: Optional[str] = None    ) -> User:
+        name: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -200,10 +212,12 @@ class Users(Service):
         name : Optional[str]
             User name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -233,7 +247,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def list_identities(
@@ -255,8 +269,7 @@ class Users(Service):
         
         Returns
         -------
-        IdentityList
-            API response as a typed Pydantic model
+        IdentityList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -322,7 +335,8 @@ class Users(Service):
         user_id: str,
         email: str,
         password: str,
-        name: Optional[str] = None    ) -> User:
+        name: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [MD5](https://en.wikipedia.org/wiki/MD5) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -337,10 +351,12 @@ class Users(Service):
         name : Optional[str]
             User name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -370,7 +386,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def create_ph_pass_user(
@@ -378,7 +394,8 @@ class Users(Service):
         user_id: str,
         email: str,
         password: str,
-        name: Optional[str] = None    ) -> User:
+        name: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [PHPass](https://www.openwall.com/phpass/) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -393,10 +410,12 @@ class Users(Service):
         name : Optional[str]
             User name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -426,7 +445,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def create_scrypt_user(
@@ -439,7 +458,8 @@ class Users(Service):
         password_memory: float,
         password_parallel: float,
         password_length: float,
-        name: Optional[str] = None    ) -> User:
+        name: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [Scrypt](https://github.com/Tarsnap/scrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -464,10 +484,12 @@ class Users(Service):
         name : Optional[str]
             User name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -517,7 +539,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def create_scrypt_modified_user(
@@ -528,7 +550,8 @@ class Users(Service):
         password_salt: str,
         password_salt_separator: str,
         password_signer_key: str,
-        name: Optional[str] = None    ) -> User:
+        name: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [Scrypt Modified](https://gist.github.com/Meldiron/eecf84a0225eccb5a378d45bb27462cc) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -549,10 +572,12 @@ class Users(Service):
         name : Optional[str]
             User name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -594,7 +619,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def create_sha_user(
@@ -603,7 +628,8 @@ class Users(Service):
         email: str,
         password: str,
         password_version: Optional[PasswordHash] = None,
-        name: Optional[str] = None    ) -> User:
+        name: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Create a new user. Password provided must be hashed with the [SHA](https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
 
@@ -620,10 +646,12 @@ class Users(Service):
         name : Optional[str]
             User name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -655,12 +683,13 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def get(
         self,
-        user_id: str    ) -> User:
+        user_id: str,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Get a user by its unique ID.
 
@@ -669,10 +698,12 @@ class Users(Service):
         user_id : str
             User ID.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -691,7 +722,7 @@ class Users(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def delete(
@@ -734,7 +765,8 @@ class Users(Service):
     def update_email(
         self,
         user_id: str,
-        email: str    ) -> User:
+        email: str,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update the user email by its unique ID.
 
@@ -745,10 +777,12 @@ class Users(Service):
         email : str
             User email.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -772,7 +806,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def create_jwt(
@@ -794,8 +828,7 @@ class Users(Service):
         
         Returns
         -------
-        Jwt
-            API response as a typed Pydantic model
+        Jwt            API response as a typed Pydantic model
         
         Raises
         ------
@@ -825,7 +858,8 @@ class Users(Service):
     def update_labels(
         self,
         user_id: str,
-        labels: List[str]    ) -> User:
+        labels: List[str],
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update the user labels by its unique ID. 
         
@@ -838,10 +872,12 @@ class Users(Service):
         labels : List[str]
             Array of user labels. Replaces the previous labels. Maximum of 1000 labels are allowed, each up to 36 alphanumeric characters long.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -865,7 +901,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def list_logs(
@@ -887,8 +923,7 @@ class Users(Service):
         
         Returns
         -------
-        LogList
-            API response as a typed Pydantic model
+        LogList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -936,8 +971,7 @@ class Users(Service):
         
         Returns
         -------
-        MembershipList
-            API response as a typed Pydantic model
+        MembershipList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -968,7 +1002,8 @@ class Users(Service):
     def update_mfa(
         self,
         user_id: str,
-        mfa: bool    ) -> User:
+        mfa: bool,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Enable or disable MFA on a user account.
 
@@ -979,10 +1014,12 @@ class Users(Service):
         mfa : bool
             Enable or disable MFA.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1006,7 +1043,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def delete_mfa_authenticator(
@@ -1066,8 +1103,7 @@ class Users(Service):
         
         Returns
         -------
-        MfaFactors
-            API response as a typed Pydantic model
+        MfaFactors            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1102,8 +1138,7 @@ class Users(Service):
         
         Returns
         -------
-        MfaRecoveryCodes
-            API response as a typed Pydantic model
+        MfaRecoveryCodes            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1138,8 +1173,7 @@ class Users(Service):
         
         Returns
         -------
-        MfaRecoveryCodes
-            API response as a typed Pydantic model
+        MfaRecoveryCodes            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1175,8 +1209,7 @@ class Users(Service):
         
         Returns
         -------
-        MfaRecoveryCodes
-            API response as a typed Pydantic model
+        MfaRecoveryCodes            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1202,7 +1235,8 @@ class Users(Service):
     def update_name(
         self,
         user_id: str,
-        name: str    ) -> User:
+        name: str,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update the user name by its unique ID.
 
@@ -1213,10 +1247,12 @@ class Users(Service):
         name : str
             User name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1240,13 +1276,14 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def update_password(
         self,
         user_id: str,
-        password: str    ) -> User:
+        password: str,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update the user password by its unique ID.
 
@@ -1257,10 +1294,12 @@ class Users(Service):
         password : str
             New user password. Must be at least 8 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1284,13 +1323,14 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def update_phone(
         self,
         user_id: str,
-        number: str    ) -> User:
+        number: str,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update the user phone by its unique ID.
 
@@ -1301,10 +1341,12 @@ class Users(Service):
         number : str
             User phone number.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1328,12 +1370,13 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def get_prefs(
         self,
-        user_id: str    ) -> Preferences:
+        user_id: str,
+        model_type: Type[T] = dict    ) -> Preferences[T]:
         """
         Get the user preferences by its unique ID.
 
@@ -1342,10 +1385,12 @@ class Users(Service):
         user_id : str
             User ID.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Preferences
-            API response as a typed Pydantic model
+        Preferences[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1364,13 +1409,14 @@ class Users(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return self._parse_response(response, model=Preferences)
+        return Preferences.with_data(response, model_type)
 
 
     def update_prefs(
         self,
         user_id: str,
-        prefs: Dict[str, Any]    ) -> Preferences:
+        prefs: Dict[str, Any],
+        model_type: Type[T] = dict    ) -> Preferences[T]:
         """
         Update the user preferences by its unique ID. The object you pass is stored as is, and replaces any previous value. The maximum allowed prefs size is 64kB and throws error if exceeded.
 
@@ -1381,10 +1427,12 @@ class Users(Service):
         prefs : Dict[str, Any]
             Prefs key-value JSON object.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Preferences
-            API response as a typed Pydantic model
+        Preferences[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1408,7 +1456,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=Preferences)
+        return Preferences.with_data(response, model_type)
 
 
     def list_sessions(
@@ -1427,8 +1475,7 @@ class Users(Service):
         
         Returns
         -------
-        SessionList
-            API response as a typed Pydantic model
+        SessionList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1467,8 +1514,7 @@ class Users(Service):
         
         Returns
         -------
-        Session
-            API response as a typed Pydantic model
+        Session            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1575,7 +1621,8 @@ class Users(Service):
     def update_status(
         self,
         user_id: str,
-        status: bool    ) -> User:
+        status: bool,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update the user status by its unique ID. Use this endpoint as an alternative to deleting a user if you want to keep user's ID reserved.
 
@@ -1586,10 +1633,12 @@ class Users(Service):
         status : bool
             User Status. To activate the user pass `true` and to block the user pass `false`.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1613,7 +1662,7 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def list_targets(
@@ -1635,8 +1684,7 @@ class Users(Service):
         
         Returns
         -------
-        TargetList
-            API response as a typed Pydantic model
+        TargetList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1690,8 +1738,7 @@ class Users(Service):
         
         Returns
         -------
-        Target
-            API response as a typed Pydantic model
+        Target            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1746,8 +1793,7 @@ class Users(Service):
         
         Returns
         -------
-        Target
-            API response as a typed Pydantic model
+        Target            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1798,8 +1844,7 @@ class Users(Service):
         
         Returns
         -------
-        Target
-            API response as a typed Pydantic model
+        Target            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1896,8 +1941,7 @@ class Users(Service):
         
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1927,7 +1971,8 @@ class Users(Service):
     def update_email_verification(
         self,
         user_id: str,
-        email_verification: bool    ) -> User:
+        email_verification: bool,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update the user email verification status by its unique ID.
 
@@ -1938,10 +1983,12 @@ class Users(Service):
         email_verification : bool
             User email verification status.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1965,13 +2012,14 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def update_phone_verification(
         self,
         user_id: str,
-        phone_verification: bool    ) -> User:
+        phone_verification: bool,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update the user phone verification status by its unique ID.
 
@@ -1982,10 +2030,12 @@ class Users(Service):
         phone_verification : bool
             User phone verification status.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2009,5 +2059,5 @@ class Users(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 

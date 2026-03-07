@@ -44,8 +44,7 @@ class Functions(Service):
         
         Returns
         -------
-        FunctionList
-            API response as a typed Pydantic model
+        FunctionList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -133,8 +132,7 @@ class Functions(Service):
         
         Returns
         -------
-        Function
-            API response as a typed Pydantic model
+        Function            API response as a typed Pydantic model
         
         Raises
         ------
@@ -202,8 +200,7 @@ class Functions(Service):
 
         Returns
         -------
-        RuntimeList
-            API response as a typed Pydantic model
+        RuntimeList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -227,8 +224,7 @@ class Functions(Service):
 
         Returns
         -------
-        SpecificationList
-            API response as a typed Pydantic model
+        SpecificationList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -258,8 +254,7 @@ class Functions(Service):
         
         Returns
         -------
-        Function
-            API response as a typed Pydantic model
+        Function            API response as a typed Pydantic model
         
         Raises
         ------
@@ -345,8 +340,7 @@ class Functions(Service):
         
         Returns
         -------
-        Function
-            API response as a typed Pydantic model
+        Function            API response as a typed Pydantic model
         
         Raises
         ------
@@ -457,8 +451,7 @@ class Functions(Service):
         
         Returns
         -------
-        Function
-            API response as a typed Pydantic model
+        Function            API response as a typed Pydantic model
         
         Raises
         ------
@@ -507,8 +500,7 @@ class Functions(Service):
         
         Returns
         -------
-        DeploymentList
-            API response as a typed Pydantic model
+        DeploymentList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -568,8 +560,7 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -628,8 +619,7 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -691,8 +681,7 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -761,8 +750,7 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -811,8 +799,7 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -946,8 +933,7 @@ class Functions(Service):
         
         Returns
         -------
-        Deployment
-            API response as a typed Pydantic model
+        Deployment            API response as a typed Pydantic model
         
         Raises
         ------
@@ -993,8 +979,7 @@ class Functions(Service):
         
         Returns
         -------
-        ExecutionList
-            API response as a typed Pydantic model
+        ExecutionList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1051,8 +1036,7 @@ class Functions(Service):
         
         Returns
         -------
-        Execution
-            API response as a typed Pydantic model
+        Execution            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1102,8 +1086,7 @@ class Functions(Service):
         
         Returns
         -------
-        Execution
-            API response as a typed Pydantic model
+        Execution            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1186,8 +1169,7 @@ class Functions(Service):
         
         Returns
         -------
-        VariableList
-            API response as a typed Pydantic model
+        VariableList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1231,8 +1213,7 @@ class Functions(Service):
         
         Returns
         -------
-        Variable
-            API response as a typed Pydantic model
+        Variable            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1281,8 +1262,7 @@ class Functions(Service):
         
         Returns
         -------
-        Variable
-            API response as a typed Pydantic model
+        Variable            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1333,8 +1313,7 @@ class Functions(Service):
         
         Returns
         -------
-        Variable
-            API response as a typed Pydantic model
+        Variable            API response as a typed Pydantic model
         
         Raises
         ------

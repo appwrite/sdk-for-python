@@ -1,5 +1,5 @@
 from ..service import Service
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..models.team_list import TeamList;
@@ -7,6 +7,8 @@ from ..models.team import Team;
 from ..models.membership_list import MembershipList;
 from ..models.membership import Membership;
 from ..models.preferences import Preferences;
+
+T = TypeVar('T')
 
 class Teams(Service):
 
@@ -17,7 +19,8 @@ class Teams(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None    ) -> TeamList:
+        total: Optional[bool] = None,
+        model_type: Type[T] = dict    ) -> TeamList[T]:
         """
         Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
 
@@ -30,10 +33,12 @@ class Teams(Service):
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        TeamList
-            API response as a typed Pydantic model
+        TeamList[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -54,14 +59,15 @@ class Teams(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return self._parse_response(response, model=TeamList)
+        return TeamList.with_data(response, model_type)
 
 
     def create(
         self,
         team_id: str,
         name: str,
-        roles: Optional[List[str]] = None    ) -> Team:
+        roles: Optional[List[str]] = None,
+        model_type: Type[T] = dict    ) -> Team[T]:
         """
         Create a new team. The user who creates the team will automatically be assigned as the owner of the team. Only the users with the owner role can invite new members, add new owners and delete or update the team.
 
@@ -74,10 +80,12 @@ class Teams(Service):
         roles : Optional[List[str]]
             Array of strings. Use this param to set the roles in the team for the user who created it. The default role is **owner**. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 32 characters long.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Team
-            API response as a typed Pydantic model
+        Team[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -103,12 +111,13 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=Team)
+        return Team.with_data(response, model_type)
 
 
     def get(
         self,
-        team_id: str    ) -> Team:
+        team_id: str,
+        model_type: Type[T] = dict    ) -> Team[T]:
         """
         Get a team by its ID. All team members have read access for this resource.
 
@@ -117,10 +126,12 @@ class Teams(Service):
         team_id : str
             Team ID.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Team
-            API response as a typed Pydantic model
+        Team[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -139,13 +150,14 @@ class Teams(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return self._parse_response(response, model=Team)
+        return Team.with_data(response, model_type)
 
 
     def update_name(
         self,
         team_id: str,
-        name: str    ) -> Team:
+        name: str,
+        model_type: Type[T] = dict    ) -> Team[T]:
         """
         Update the team's name by its unique ID.
 
@@ -156,10 +168,12 @@ class Teams(Service):
         name : str
             New team name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Team
-            API response as a typed Pydantic model
+        Team[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -183,7 +197,7 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=Team)
+        return Team.with_data(response, model_type)
 
 
     def delete(
@@ -245,8 +259,7 @@ class Teams(Service):
         
         Returns
         -------
-        MembershipList
-            API response as a typed Pydantic model
+        MembershipList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -312,8 +325,7 @@ class Teams(Service):
         
         Returns
         -------
-        Membership
-            API response as a typed Pydantic model
+        Membership            API response as a typed Pydantic model
         
         Raises
         ------
@@ -366,8 +378,7 @@ class Teams(Service):
         
         Returns
         -------
-        Membership
-            API response as a typed Pydantic model
+        Membership            API response as a typed Pydantic model
         
         Raises
         ------
@@ -413,8 +424,7 @@ class Teams(Service):
         
         Returns
         -------
-        Membership
-            API response as a typed Pydantic model
+        Membership            API response as a typed Pydantic model
         
         Raises
         ------
@@ -514,8 +524,7 @@ class Teams(Service):
         
         Returns
         -------
-        Membership
-            API response as a typed Pydantic model
+        Membership            API response as a typed Pydantic model
         
         Raises
         ------
@@ -552,7 +561,8 @@ class Teams(Service):
 
     def get_prefs(
         self,
-        team_id: str    ) -> Preferences:
+        team_id: str,
+        model_type: Type[T] = dict    ) -> Preferences[T]:
         """
         Get the team's shared preferences by its unique ID. If a preference doesn't need to be shared by all team members, prefer storing them in [user preferences](https://appwrite.io/docs/references/cloud/client-web/account#getPrefs).
 
@@ -561,10 +571,12 @@ class Teams(Service):
         team_id : str
             Team ID.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Preferences
-            API response as a typed Pydantic model
+        Preferences[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -583,13 +595,14 @@ class Teams(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return self._parse_response(response, model=Preferences)
+        return Preferences.with_data(response, model_type)
 
 
     def update_prefs(
         self,
         team_id: str,
-        prefs: Dict[str, Any]    ) -> Preferences:
+        prefs: Dict[str, Any],
+        model_type: Type[T] = dict    ) -> Preferences[T]:
         """
         Update the team's preferences by its unique ID. The object you pass is stored as is and replaces any previous value. The maximum allowed prefs size is 64kB and throws an error if exceeded.
 
@@ -600,10 +613,12 @@ class Teams(Service):
         prefs : Dict[str, Any]
             Prefs key-value JSON object.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Preferences
-            API response as a typed Pydantic model
+        Preferences[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -627,5 +642,5 @@ class Teams(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=Preferences)
+        return Preferences.with_data(response, model_type)
 

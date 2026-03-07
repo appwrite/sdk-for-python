@@ -24,8 +24,7 @@ class Locale(Service):
 
         Returns
         -------
-        Locale
-            API response as a typed Pydantic model
+        LocaleModel            API response as a typed Pydantic model
         
         Raises
         ------
@@ -49,8 +48,7 @@ class Locale(Service):
 
         Returns
         -------
-        LocaleCodeList
-            API response as a typed Pydantic model
+        LocaleCodeList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -74,8 +72,7 @@ class Locale(Service):
 
         Returns
         -------
-        ContinentList
-            API response as a typed Pydantic model
+        ContinentList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -99,8 +96,7 @@ class Locale(Service):
 
         Returns
         -------
-        CountryList
-            API response as a typed Pydantic model
+        CountryList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -124,8 +120,7 @@ class Locale(Service):
 
         Returns
         -------
-        CountryList
-            API response as a typed Pydantic model
+        CountryList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -149,8 +144,7 @@ class Locale(Service):
 
         Returns
         -------
-        PhoneList
-            API response as a typed Pydantic model
+        PhoneList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -174,8 +168,7 @@ class Locale(Service):
 
         Returns
         -------
-        CurrencyList
-            API response as a typed Pydantic model
+        CurrencyList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -199,8 +192,7 @@ class Locale(Service):
 
         Returns
         -------
-        LanguageList
-            API response as a typed Pydantic model
+        LanguageList            API response as a typed Pydantic model
         
         Raises
         ------

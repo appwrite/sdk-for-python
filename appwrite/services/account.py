@@ -1,5 +1,5 @@
 from ..service import Service
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..models.user import User;
@@ -18,20 +18,28 @@ from ..models.token import Token;
 from ..models.session_list import SessionList;
 from ..enums.o_auth_provider import OAuthProvider;
 
+T = TypeVar('T')
+
 class Account(Service):
 
     def __init__(self, client) -> None:
         super(Account, self).__init__(client)
 
     def get(
-        self    ) -> User:
+        self,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Get the currently logged in user.
 
+        Parameters
+        ----------
+        
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -45,7 +53,7 @@ class Account(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def create(
@@ -53,7 +61,8 @@ class Account(Service):
         user_id: str,
         email: str,
         password: str,
-        name: Optional[str] = None    ) -> User:
+        name: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Use this endpoint to allow a new user to register a new account in your project. After the user registration completes successfully, you can use the [/account/verfication](https://appwrite.io/docs/references/cloud/client-web/account#createVerification) route to start verifying the user email address. To allow the new user to login to their new account, you need to create a new [account session](https://appwrite.io/docs/references/cloud/client-web/account#createEmailSession).
 
@@ -68,10 +77,12 @@ class Account(Service):
         name : Optional[str]
             User name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -101,13 +112,14 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def update_email(
         self,
         email: str,
-        password: str    ) -> User:
+        password: str,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update currently logged in user account email address. After changing user address, the user confirmation status will get reset. A new confirmation email is not sent automatically however you can use the send confirmation email endpoint again to send the confirmation email. For security measures, user password is required to complete this request.
         This endpoint can also be used to convert an anonymous account to a normal one, by passing an email address and a new password.
@@ -120,10 +132,12 @@ class Account(Service):
         password : str
             User password. Must be at least 8 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -147,7 +161,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def list_identities(
@@ -166,8 +180,7 @@ class Account(Service):
         
         Returns
         -------
-        IdentityList
-            API response as a typed Pydantic model
+        IdentityList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -239,8 +252,7 @@ class Account(Service):
         
         Returns
         -------
-        Jwt
-            API response as a typed Pydantic model
+        Jwt            API response as a typed Pydantic model
         
         Raises
         ------
@@ -277,8 +289,7 @@ class Account(Service):
         
         Returns
         -------
-        LogList
-            API response as a typed Pydantic model
+        LogList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -302,7 +313,8 @@ class Account(Service):
 
     def update_mfa(
         self,
-        mfa: bool    ) -> User:
+        mfa: bool,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Enable or disable MFA on an account.
 
@@ -311,10 +323,12 @@ class Account(Service):
         mfa : bool
             Enable or disable MFA.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -334,7 +348,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def create_mfa_authenticator(
@@ -350,8 +364,7 @@ class Account(Service):
         
         Returns
         -------
-        MfaType
-            API response as a typed Pydantic model
+        MfaType            API response as a typed Pydantic model
         
         Raises
         ------
@@ -377,7 +390,8 @@ class Account(Service):
     def update_mfa_authenticator(
         self,
         type: AuthenticatorType,
-        otp: str    ) -> User:
+        otp: str,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Verify an authenticator app after adding it using the [add authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator) method.
 
@@ -388,10 +402,12 @@ class Account(Service):
         otp : str
             Valid verification token.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -415,7 +431,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def delete_mfa_authenticator(
@@ -468,8 +484,7 @@ class Account(Service):
         
         Returns
         -------
-        MfaChallenge
-            API response as a typed Pydantic model
+        MfaChallenge            API response as a typed Pydantic model
         
         Raises
         ------
@@ -508,8 +523,7 @@ class Account(Service):
         
         Returns
         -------
-        Session
-            API response as a typed Pydantic model
+        Session            API response as a typed Pydantic model
         
         Raises
         ------
@@ -543,8 +557,7 @@ class Account(Service):
 
         Returns
         -------
-        MfaFactors
-            API response as a typed Pydantic model
+        MfaFactors            API response as a typed Pydantic model
         
         Raises
         ------
@@ -568,8 +581,7 @@ class Account(Service):
 
         Returns
         -------
-        MfaRecoveryCodes
-            API response as a typed Pydantic model
+        MfaRecoveryCodes            API response as a typed Pydantic model
         
         Raises
         ------
@@ -593,8 +605,7 @@ class Account(Service):
 
         Returns
         -------
-        MfaRecoveryCodes
-            API response as a typed Pydantic model
+        MfaRecoveryCodes            API response as a typed Pydantic model
         
         Raises
         ------
@@ -619,8 +630,7 @@ class Account(Service):
 
         Returns
         -------
-        MfaRecoveryCodes
-            API response as a typed Pydantic model
+        MfaRecoveryCodes            API response as a typed Pydantic model
         
         Raises
         ------
@@ -640,7 +650,8 @@ class Account(Service):
 
     def update_name(
         self,
-        name: str    ) -> User:
+        name: str,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update currently logged in user account name.
 
@@ -649,10 +660,12 @@ class Account(Service):
         name : str
             User name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -672,13 +685,14 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def update_password(
         self,
         password: str,
-        old_password: Optional[str] = None    ) -> User:
+        old_password: Optional[str] = None,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update currently logged in user password. For validation, user is required to pass in the new password, and the old password. For users created with OAuth, Team Invites and Magic URL, oldPassword is optional.
 
@@ -689,10 +703,12 @@ class Account(Service):
         old_password : Optional[str]
             Current user password. Must be at least 8 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -714,13 +730,14 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def update_phone(
         self,
         phone: str,
-        password: str    ) -> User:
+        password: str,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update the currently logged in user's phone number. After updating the phone number, the phone verification status will be reset. A confirmation SMS is not sent automatically, however you can use the [POST /account/verification/phone](https://appwrite.io/docs/references/cloud/client-web/account#createPhoneVerification) endpoint to send a confirmation SMS.
 
@@ -731,10 +748,12 @@ class Account(Service):
         password : str
             User password. Must be at least 8 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -758,18 +777,24 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def get_prefs(
-        self    ) -> Preferences:
+        self,
+        model_type: Type[T] = dict    ) -> Preferences[T]:
         """
         Get the preferences as a key-value object for the currently logged in user.
 
+        Parameters
+        ----------
+        
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Preferences
-            API response as a typed Pydantic model
+        Preferences[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -783,12 +808,13 @@ class Account(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return self._parse_response(response, model=Preferences)
+        return Preferences.with_data(response, model_type)
 
 
     def update_prefs(
         self,
-        prefs: Dict[str, Any]    ) -> User:
+        prefs: Dict[str, Any],
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Update currently logged in user account preferences. The object you pass is stored as is, and replaces any previous value. The maximum allowed prefs size is 64kB and throws error if exceeded.
 
@@ -797,10 +823,12 @@ class Account(Service):
         prefs : Dict[str, Any]
             Prefs key-value JSON object.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -820,7 +848,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def create_recovery(
@@ -839,8 +867,7 @@ class Account(Service):
         
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------
@@ -888,8 +915,7 @@ class Account(Service):
         
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------
@@ -927,8 +953,7 @@ class Account(Service):
 
         Returns
         -------
-        SessionList
-            API response as a typed Pydantic model
+        SessionList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -978,8 +1003,7 @@ class Account(Service):
 
         Returns
         -------
-        Session
-            API response as a typed Pydantic model
+        Session            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1015,8 +1039,7 @@ class Account(Service):
         
         Returns
         -------
-        Session
-            API response as a typed Pydantic model
+        Session            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1062,8 +1085,7 @@ class Account(Service):
         
         Returns
         -------
-        Session
-            API response as a typed Pydantic model
+        Session            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1109,8 +1131,7 @@ class Account(Service):
         
         Returns
         -------
-        Session
-            API response as a typed Pydantic model
+        Session            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1153,8 +1174,7 @@ class Account(Service):
         
         Returns
         -------
-        Session
-            API response as a typed Pydantic model
+        Session            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1194,8 +1214,7 @@ class Account(Service):
         
         Returns
         -------
-        Session
-            API response as a typed Pydantic model
+        Session            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1230,8 +1249,7 @@ class Account(Service):
         
         Returns
         -------
-        Session
-            API response as a typed Pydantic model
+        Session            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1292,14 +1310,20 @@ class Account(Service):
 
 
     def update_status(
-        self    ) -> User:
+        self,
+        model_type: Type[T] = dict    ) -> User[T]:
         """
         Block the currently logged in user account. Behind the scene, the user record is not deleted but permanently blocked from any access. To completely delete a user, use the Users API instead.
 
+        Parameters
+        ----------
+        
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        User
-            API response as a typed Pydantic model
+        User[T]            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1314,7 +1338,7 @@ class Account(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return self._parse_response(response, model=User)
+        return User.with_data(response, model_type)
 
 
     def create_email_token(
@@ -1339,8 +1363,7 @@ class Account(Service):
         
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1394,8 +1417,7 @@ class Account(Service):
         
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1499,8 +1521,7 @@ class Account(Service):
         
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1543,8 +1564,7 @@ class Account(Service):
         
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1586,8 +1606,7 @@ class Account(Service):
         
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1626,8 +1645,7 @@ class Account(Service):
         
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1673,8 +1691,7 @@ class Account(Service):
         
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1708,8 +1725,7 @@ class Account(Service):
 
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1743,8 +1759,7 @@ class Account(Service):
         
         Returns
         -------
-        Token
-            API response as a typed Pydantic model
+        Token            API response as a typed Pydantic model
         
         Raises
         ------

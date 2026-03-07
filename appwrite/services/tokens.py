@@ -32,8 +32,7 @@ class Tokens(Service):
         
         Returns
         -------
-        ResourceTokenList
-            API response as a typed Pydantic model
+        ResourceTokenList            API response as a typed Pydantic model
         
         Raises
         ------
@@ -82,8 +81,7 @@ class Tokens(Service):
         
         Returns
         -------
-        ResourceToken
-            API response as a typed Pydantic model
+        ResourceToken            API response as a typed Pydantic model
         
         Raises
         ------
@@ -124,8 +122,7 @@ class Tokens(Service):
         
         Returns
         -------
-        ResourceToken
-            API response as a typed Pydantic model
+        ResourceToken            API response as a typed Pydantic model
         
         Raises
         ------
@@ -163,8 +160,7 @@ class Tokens(Service):
         
         Returns
         -------
-        ResourceToken
-            API response as a typed Pydantic model
+        ResourceToken            API response as a typed Pydantic model
         
         Raises
         ------
