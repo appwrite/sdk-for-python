@@ -1,9 +1,16 @@
 # Change Log
 
-## 15.3.0
+## 16.0.0
 
-* Added `ActivityEvent` and `ActivityEventList` models to the public API
-* Updated README with `uv add appwrite` example
+* Breaking change: All service methods now return typed Pydantic models instead of `Dict[str, Any]`
+* Breaking change: Added `pydantic>=2,<3` as a required dependency
+* Breaking change: Minimum Python version raised from 3.5 to 3.9
+* Added `AppwriteModel` base class (Pydantic `BaseModel`) for all response models with `from_dict()` and `to_dict()` helpers
+* Added 130+ typed model classes under `appwrite/models/` (e.g., `Database`, `Collection`, `Document`, `User`, `Session`, `File`, `Bucket`, etc.)
+* Added `ActivityEvent` and `ActivityEventList` models and `Activities` service
+* Added `ValueClassEncoder` support for serializing `AppwriteModel` instances
+* Added `pyproject.toml` for modern Python packaging
+* Updated README with `uv add appwrite` installation example
 
 ## 15.2.0
 
