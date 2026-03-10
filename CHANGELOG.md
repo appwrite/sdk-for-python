@@ -1,6 +1,6 @@
 # Change Log
 
-## 16.0.0
+## 16.0.0rc1
 
 * Breaking change: All service methods now return typed Pydantic models instead of `Dict[str, Any]`
 * Breaking change: Models with dynamic fields (e.g., `Row`, `Document`) now store user-defined data in a typed `.data` property instead of direct attribute access
