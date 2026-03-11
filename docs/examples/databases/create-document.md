@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.databases import Databases
+from appwrite.models import Document
 from appwrite.permission import Permission
 from appwrite.role import Role
 
@@ -11,7 +12,7 @@ client.set_session('') # The user session to authenticate with
 
 databases = Databases(client)
 
-result = databases.create_document(
+result: Document = databases.create_document(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
     document_id = '<DOCUMENT_ID>',
@@ -25,4 +26,6 @@ result = databases.create_document(
     permissions = [Permission.read(Role.any())], # optional
     transaction_id = '<TRANSACTION_ID>' # optional
 )
+
+print(result.model_dump())
 ```

@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.storage import Storage
+from appwrite.models import Bucket
 from appwrite.enums import Compression
 from appwrite.permission import Permission
 from appwrite.role import Role
@@ -12,7 +13,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 storage = Storage(client)
 
-result = storage.create_bucket(
+result: Bucket = storage.create_bucket(
     bucket_id = '<BUCKET_ID>',
     name = '<NAME>',
     permissions = [Permission.read(Role.any())], # optional
@@ -25,4 +26,6 @@ result = storage.create_bucket(
     antivirus = False, # optional
     transformations = False # optional
 )
+
+print(result.model_dump())
 ```

@@ -1,9 +1,13 @@
 from ..service import Service
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from ..models.bucket_list import BucketList;
 from ..enums.compression import Compression;
+from ..models.bucket import Bucket;
+from ..models.file_list import FileList;
 from ..input_file import InputFile
+from ..models.file import File;
 from ..enums.image_gravity import ImageGravity;
 from ..enums.image_format import ImageFormat;
 
@@ -12,7 +16,12 @@ class Storage(Service):
     def __init__(self, client) -> None:
         super(Storage, self).__init__(client)
 
-    def list_buckets(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+    def list_buckets(
+        self,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None
+    ) -> BucketList:
         """
         Get a list of all the storage buckets. You can use the query params to filter your results.
 
@@ -27,8 +36,8 @@ class Storage(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        BucketList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -40,16 +49,32 @@ class Storage(Service):
         api_params = {}
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if search is not None:
-            api_params['search'] = search
+            api_params['search'] = self._normalize_value(search)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_bucket(self, bucket_id: str, name: str, permissions: Optional[List[str]] = None, file_security: Optional[bool] = None, enabled: Optional[bool] = None, maximum_file_size: Optional[float] = None, allowed_file_extensions: Optional[List[str]] = None, compression: Optional[Compression] = None, encryption: Optional[bool] = None, antivirus: Optional[bool] = None, transformations: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=BucketList)
+
+
+    def create_bucket(
+        self,
+        bucket_id: str,
+        name: str,
+        permissions: Optional[List[str]] = None,
+        file_security: Optional[bool] = None,
+        enabled: Optional[bool] = None,
+        maximum_file_size: Optional[float] = None,
+        allowed_file_extensions: Optional[List[str]] = None,
+        compression: Optional[Compression] = None,
+        encryption: Optional[bool] = None,
+        antivirus: Optional[bool] = None,
+        transformations: Optional[bool] = None
+    ) -> Bucket:
         """
         Create a new storage bucket.
 
@@ -80,8 +105,8 @@ class Storage(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Bucket
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -98,31 +123,37 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "name"')
 
 
-        api_params['bucketId'] = bucket_id
-        api_params['name'] = name
-        api_params['permissions'] = permissions
+        api_params['bucketId'] = self._normalize_value(bucket_id)
+        api_params['name'] = self._normalize_value(name)
+        api_params['permissions'] = self._normalize_value(permissions)
         if file_security is not None:
-            api_params['fileSecurity'] = file_security
+            api_params['fileSecurity'] = self._normalize_value(file_security)
         if enabled is not None:
-            api_params['enabled'] = enabled
+            api_params['enabled'] = self._normalize_value(enabled)
         if maximum_file_size is not None:
-            api_params['maximumFileSize'] = maximum_file_size
+            api_params['maximumFileSize'] = self._normalize_value(maximum_file_size)
         if allowed_file_extensions is not None:
-            api_params['allowedFileExtensions'] = allowed_file_extensions
+            api_params['allowedFileExtensions'] = self._normalize_value(allowed_file_extensions)
         if compression is not None:
-            api_params['compression'] = compression
+            api_params['compression'] = self._normalize_value(compression)
         if encryption is not None:
-            api_params['encryption'] = encryption
+            api_params['encryption'] = self._normalize_value(encryption)
         if antivirus is not None:
-            api_params['antivirus'] = antivirus
+            api_params['antivirus'] = self._normalize_value(antivirus)
         if transformations is not None:
-            api_params['transformations'] = transformations
+            api_params['transformations'] = self._normalize_value(transformations)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_bucket(self, bucket_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Bucket)
+
+
+    def get_bucket(
+        self,
+        bucket_id: str
+    ) -> Bucket:
         """
         Get a storage bucket by its unique ID. This endpoint response returns a JSON object with the storage bucket metadata.
 
@@ -133,8 +164,8 @@ class Storage(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Bucket
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -147,13 +178,29 @@ class Storage(Service):
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_bucket(self, bucket_id: str, name: str, permissions: Optional[List[str]] = None, file_security: Optional[bool] = None, enabled: Optional[bool] = None, maximum_file_size: Optional[float] = None, allowed_file_extensions: Optional[List[str]] = None, compression: Optional[Compression] = None, encryption: Optional[bool] = None, antivirus: Optional[bool] = None, transformations: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Bucket)
+
+
+    def update_bucket(
+        self,
+        bucket_id: str,
+        name: str,
+        permissions: Optional[List[str]] = None,
+        file_security: Optional[bool] = None,
+        enabled: Optional[bool] = None,
+        maximum_file_size: Optional[float] = None,
+        allowed_file_extensions: Optional[List[str]] = None,
+        compression: Optional[Compression] = None,
+        encryption: Optional[bool] = None,
+        antivirus: Optional[bool] = None,
+        transformations: Optional[bool] = None
+    ) -> Bucket:
         """
         Update a storage bucket by its unique ID.
 
@@ -184,8 +231,8 @@ class Storage(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Bucket
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -201,32 +248,38 @@ class Storage(Service):
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
-        api_params['name'] = name
-        api_params['permissions'] = permissions
+        api_params['name'] = self._normalize_value(name)
+        api_params['permissions'] = self._normalize_value(permissions)
         if file_security is not None:
-            api_params['fileSecurity'] = file_security
+            api_params['fileSecurity'] = self._normalize_value(file_security)
         if enabled is not None:
-            api_params['enabled'] = enabled
+            api_params['enabled'] = self._normalize_value(enabled)
         if maximum_file_size is not None:
-            api_params['maximumFileSize'] = maximum_file_size
+            api_params['maximumFileSize'] = self._normalize_value(maximum_file_size)
         if allowed_file_extensions is not None:
-            api_params['allowedFileExtensions'] = allowed_file_extensions
+            api_params['allowedFileExtensions'] = self._normalize_value(allowed_file_extensions)
         if compression is not None:
-            api_params['compression'] = compression
+            api_params['compression'] = self._normalize_value(compression)
         if encryption is not None:
-            api_params['encryption'] = encryption
+            api_params['encryption'] = self._normalize_value(encryption)
         if antivirus is not None:
-            api_params['antivirus'] = antivirus
+            api_params['antivirus'] = self._normalize_value(antivirus)
         if transformations is not None:
-            api_params['transformations'] = transformations
+            api_params['transformations'] = self._normalize_value(transformations)
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_bucket(self, bucket_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Bucket)
+
+
+    def delete_bucket(
+        self,
+        bucket_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a storage bucket by its unique ID.
 
@@ -251,14 +304,23 @@ class Storage(Service):
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_files(self, bucket_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+        return response
+
+
+    def list_files(
+        self,
+        bucket_id: str,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None
+    ) -> FileList:
         """
         Get a list of all the user files. You can use the query params to filter your results.
 
@@ -275,8 +337,8 @@ class Storage(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        FileList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -289,19 +351,29 @@ class Storage(Service):
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if search is not None:
-            api_params['search'] = search
+            api_params['search'] = self._normalize_value(search)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_file(self, bucket_id: str, file_id: str, file: InputFile, permissions: Optional[List[str]] = None, on_progress = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=FileList)
+
+
+    def create_file(
+        self,
+        bucket_id: str,
+        file_id: str,
+        file: InputFile,
+        permissions: Optional[List[str]] = None,
+        on_progress = None
+    ) -> File:
         """
         Create a new file. Before using this route, you should create a new bucket resource using either a [server integration](https://appwrite.io/docs/server/storage#storageCreateBucket) API or directly from your Appwrite console.
         
@@ -327,8 +399,8 @@ class Storage(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        File
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -347,12 +419,12 @@ class Storage(Service):
         if file is None:
             raise AppwriteException('Missing required parameter: "file"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
-        api_params['fileId'] = file_id
-        api_params['file'] = file
+        api_params['fileId'] = self._normalize_value(file_id)
+        api_params['file'] = self._normalize_value(file)
         if permissions is not None:
-            api_params['permissions'] = permissions
+            api_params['permissions'] = self._normalize_value(permissions)
 
         param_name = 'file'
 
@@ -360,11 +432,18 @@ class Storage(Service):
         upload_id = ''
         upload_id = file_id
 
-        return self.client.chunked_upload(api_path, {
+        response = self.client.chunked_upload(api_path, {
             'content-type': 'multipart/form-data',
         }, api_params, param_name, on_progress, upload_id)
 
-    def get_file(self, bucket_id: str, file_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=File)
+
+
+    def get_file(
+        self,
+        bucket_id: str,
+        file_id: str
+    ) -> File:
         """
         Get a file by its unique ID. This endpoint response returns a JSON object with the file metadata.
 
@@ -377,8 +456,8 @@ class Storage(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        File
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -394,14 +473,23 @@ class Storage(Service):
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
-        api_path = api_path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_file(self, bucket_id: str, file_id: str, name: Optional[str] = None, permissions: Optional[List[str]] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=File)
+
+
+    def update_file(
+        self,
+        bucket_id: str,
+        file_id: str,
+        name: Optional[str] = None,
+        permissions: Optional[List[str]] = None
+    ) -> File:
         """
         Update a file by its unique ID. Only users with write permissions have access to update this resource.
 
@@ -418,8 +506,8 @@ class Storage(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        File
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -435,18 +523,25 @@ class Storage(Service):
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
-        api_path = api_path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
         if name is not None:
-            api_params['name'] = name
-        api_params['permissions'] = permissions
+            api_params['name'] = self._normalize_value(name)
+        api_params['permissions'] = self._normalize_value(permissions)
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_file(self, bucket_id: str, file_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=File)
+
+
+    def delete_file(
+        self,
+        bucket_id: str,
+        file_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a file by its unique ID. Only users with write permissions have access to delete this resource.
 
@@ -476,15 +571,23 @@ class Storage(Service):
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
-        api_path = api_path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_file_download(self, bucket_id: str, file_id: str, token: Optional[str] = None) -> bytes:
+        return response
+
+
+    def get_file_download(
+        self,
+        bucket_id: str,
+        file_id: str,
+        token: Optional[str] = None
+    ) -> bytes:
         """
         Get a file content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
 
@@ -516,16 +619,35 @@ class Storage(Service):
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
-        api_path = api_path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
         if token is not None:
-            api_params['token'] = token
+            api_params['token'] = self._normalize_value(token)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_file_preview(self, bucket_id: str, file_id: str, width: Optional[float] = None, height: Optional[float] = None, gravity: Optional[ImageGravity] = None, quality: Optional[float] = None, border_width: Optional[float] = None, border_color: Optional[str] = None, border_radius: Optional[float] = None, opacity: Optional[float] = None, rotation: Optional[float] = None, background: Optional[str] = None, output: Optional[ImageFormat] = None, token: Optional[str] = None) -> bytes:
+        return response
+
+
+    def get_file_preview(
+        self,
+        bucket_id: str,
+        file_id: str,
+        width: Optional[float] = None,
+        height: Optional[float] = None,
+        gravity: Optional[ImageGravity] = None,
+        quality: Optional[float] = None,
+        border_width: Optional[float] = None,
+        border_color: Optional[str] = None,
+        border_radius: Optional[float] = None,
+        opacity: Optional[float] = None,
+        rotation: Optional[float] = None,
+        background: Optional[str] = None,
+        output: Optional[ImageFormat] = None,
+        token: Optional[str] = None
+    ) -> bytes:
         """
         Get a file preview image. Currently, this method supports preview for image files (jpg, png, and gif), other supported formats, like pdf, docs, slides, and spreadsheets, will return the file icon image. You can also pass query string arguments for cutting and resizing your preview image. Preview is supported only for image files smaller than 10MB.
 
@@ -579,38 +701,46 @@ class Storage(Service):
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
-        api_path = api_path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
         if width is not None:
-            api_params['width'] = width
+            api_params['width'] = self._normalize_value(width)
         if height is not None:
-            api_params['height'] = height
+            api_params['height'] = self._normalize_value(height)
         if gravity is not None:
-            api_params['gravity'] = gravity
+            api_params['gravity'] = self._normalize_value(gravity)
         if quality is not None:
-            api_params['quality'] = quality
+            api_params['quality'] = self._normalize_value(quality)
         if border_width is not None:
-            api_params['borderWidth'] = border_width
+            api_params['borderWidth'] = self._normalize_value(border_width)
         if border_color is not None:
-            api_params['borderColor'] = border_color
+            api_params['borderColor'] = self._normalize_value(border_color)
         if border_radius is not None:
-            api_params['borderRadius'] = border_radius
+            api_params['borderRadius'] = self._normalize_value(border_radius)
         if opacity is not None:
-            api_params['opacity'] = opacity
+            api_params['opacity'] = self._normalize_value(opacity)
         if rotation is not None:
-            api_params['rotation'] = rotation
+            api_params['rotation'] = self._normalize_value(rotation)
         if background is not None:
-            api_params['background'] = background
+            api_params['background'] = self._normalize_value(background)
         if output is not None:
-            api_params['output'] = output
+            api_params['output'] = self._normalize_value(output)
         if token is not None:
-            api_params['token'] = token
+            api_params['token'] = self._normalize_value(token)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get_file_view(self, bucket_id: str, file_id: str, token: Optional[str] = None) -> bytes:
+        return response
+
+
+    def get_file_view(
+        self,
+        bucket_id: str,
+        file_id: str,
+        token: Optional[str] = None
+    ) -> bytes:
         """
         Get a file content by its unique ID. This endpoint is similar to the download method but returns with no  'Content-Disposition: attachment' header.
 
@@ -642,11 +772,14 @@ class Storage(Service):
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
 
-        api_path = api_path.replace('{bucketId}', bucket_id)
-        api_path = api_path.replace('{fileId}', file_id)
+        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
         if token is not None:
-            api_params['token'] = token
+            api_params['token'] = self._normalize_value(token)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
+
+        return response
+

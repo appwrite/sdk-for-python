@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.functions import Functions
+from appwrite.models import Function
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,8 +10,10 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 functions = Functions(client)
 
-result = functions.update_function_deployment(
+result: Function = functions.update_function_deployment(
     function_id = '<FUNCTION_ID>',
     deployment_id = '<DEPLOYMENT_ID>'
 )
+
+print(result.model_dump())
 ```

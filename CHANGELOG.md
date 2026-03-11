@@ -1,5 +1,17 @@
 # Change Log
 
+## 16.0.0rc1
+
+* Breaking change: All service methods now return typed Pydantic models instead of `Dict[str, Any]`
+* Breaking change: Models with dynamic fields (e.g., `Row`, `Document`) now store user-defined data in a typed `.data` property instead of direct attribute access
+* Breaking change: Added `pydantic>=2,<3` as a required dependency
+* Breaking change: Minimum Python version raised from 3.5 to 3.9
+* Added `AppwriteModel` base class (Pydantic `BaseModel`) for all response models with `from_dict()` and `to_dict()` helpers
+* Added 130+ typed model classes under `appwrite/models/` (e.g., `Database`, `Collection`, `Document`, `User`, `Session`, `File`, `Bucket`, etc.)
+* Added Generic[T] support for models with dynamic fields (e.g., `Row`, `Document`) - pass `model_type=YourModel` to methods like `get_row()` or `list_rows()` for type-safe access to user-defined data via `result.data.field_name`
+* Updated README with `uv add appwrite` installation example
+* Updated all doc examples to use typed response models (e.g., `result: TemplateFunctionList = functions.list_templates(...)`)
+
 ## 15.3.0
 
 * Added get_console_pausing health endpoint

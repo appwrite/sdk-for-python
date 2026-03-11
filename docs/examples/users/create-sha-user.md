@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.users import Users
+from appwrite.models import User
 from appwrite.enums import PasswordHash
 
 client = Client()
@@ -10,11 +11,13 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 users = Users(client)
 
-result = users.create_sha_user(
+result: User = users.create_sha_user(
     user_id = '<USER_ID>',
     email = 'email@example.com',
     password = 'password',
     password_version = PasswordHash.SHA1, # optional
     name = '<NAME>' # optional
 )
+
+print(result.model_dump())
 ```

@@ -10,7 +10,7 @@ client.set_session('') # The user session to authenticate with
 
 avatars = Avatars(client)
 
-result = avatars.get_flag(
+result: bytes = avatars.get_flag(
     code = Flag.AFGHANISTAN,
     width = 0, # optional
     height = 0, # optional

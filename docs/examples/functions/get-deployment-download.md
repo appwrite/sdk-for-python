@@ -10,7 +10,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 functions = Functions(client)
 
-result = functions.get_deployment_download(
+result: bytes = functions.get_deployment_download(
     function_id = '<FUNCTION_ID>',
     deployment_id = '<DEPLOYMENT_ID>',
     type = DeploymentDownloadType.SOURCE # optional

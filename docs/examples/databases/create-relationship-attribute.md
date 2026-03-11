@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.databases import Databases
+from appwrite.models import AttributeRelationship
 from appwrite.enums import RelationshipType
 from appwrite.enums import RelationMutate
 
@@ -11,7 +12,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 databases = Databases(client)
 
-result = databases.create_relationship_attribute(
+result: AttributeRelationship = databases.create_relationship_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
     related_collection_id = '<RELATED_COLLECTION_ID>',
@@ -21,4 +22,6 @@ result = databases.create_relationship_attribute(
     two_way_key = '', # optional
     on_delete = RelationMutate.CASCADE # optional
 )
+
+print(result.model_dump())
 ```

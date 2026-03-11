@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.health import Health
+from appwrite.models import HealthStatus
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,5 +10,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 health = Health(client)
 
-result = health.get_storage_local()
+result: HealthStatus = health.get_storage_local()
+
+print(result.model_dump())
 ```

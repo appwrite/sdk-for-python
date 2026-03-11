@@ -1,21 +1,36 @@
 from ..service import Service
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from ..models.function_list import FunctionList;
 from ..enums.runtime import Runtime;
 from ..enums.scopes import Scopes;
+from ..models.function import Function;
+from ..models.runtime_list import RuntimeList;
+from ..models.specification_list import SpecificationList;
+from ..models.deployment_list import DeploymentList;
 from ..input_file import InputFile
+from ..models.deployment import Deployment;
 from ..enums.template_reference_type import TemplateReferenceType;
 from ..enums.vcs_reference_type import VCSReferenceType;
 from ..enums.deployment_download_type import DeploymentDownloadType;
+from ..models.execution_list import ExecutionList;
 from ..enums.execution_method import ExecutionMethod;
+from ..models.execution import Execution;
+from ..models.variable_list import VariableList;
+from ..models.variable import Variable;
 
 class Functions(Service):
 
     def __init__(self, client) -> None:
         super(Functions, self).__init__(client)
 
-    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+    def list(
+        self,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None
+    ) -> FunctionList:
         """
         Get a list of all the project's functions. You can use the query params to filter your results.
 
@@ -30,8 +45,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        FunctionList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -43,16 +58,39 @@ class Functions(Service):
         api_params = {}
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if search is not None:
-            api_params['search'] = search
+            api_params['search'] = self._normalize_value(search)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, function_id: str, name: str, runtime: Runtime, execute: Optional[List[str]] = None, events: Optional[List[str]] = None, schedule: Optional[str] = None, timeout: Optional[float] = None, enabled: Optional[bool] = None, logging: Optional[bool] = None, entrypoint: Optional[str] = None, commands: Optional[str] = None, scopes: Optional[List[Scopes]] = None, installation_id: Optional[str] = None, provider_repository_id: Optional[str] = None, provider_branch: Optional[str] = None, provider_silent_mode: Optional[bool] = None, provider_root_directory: Optional[str] = None, specification: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=FunctionList)
+
+
+    def create(
+        self,
+        function_id: str,
+        name: str,
+        runtime: Runtime,
+        execute: Optional[List[str]] = None,
+        events: Optional[List[str]] = None,
+        schedule: Optional[str] = None,
+        timeout: Optional[float] = None,
+        enabled: Optional[bool] = None,
+        logging: Optional[bool] = None,
+        entrypoint: Optional[str] = None,
+        commands: Optional[str] = None,
+        scopes: Optional[List[Scopes]] = None,
+        installation_id: Optional[str] = None,
+        provider_repository_id: Optional[str] = None,
+        provider_branch: Optional[str] = None,
+        provider_silent_mode: Optional[bool] = None,
+        provider_root_directory: Optional[str] = None,
+        specification: Optional[str] = None
+    ) -> Function:
         """
         Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
 
@@ -97,8 +135,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Function
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -118,52 +156,57 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "runtime"')
 
 
-        api_params['functionId'] = function_id
-        api_params['name'] = name
-        api_params['runtime'] = runtime
+        api_params['functionId'] = self._normalize_value(function_id)
+        api_params['name'] = self._normalize_value(name)
+        api_params['runtime'] = self._normalize_value(runtime)
         if execute is not None:
-            api_params['execute'] = execute
+            api_params['execute'] = self._normalize_value(execute)
         if events is not None:
-            api_params['events'] = events
+            api_params['events'] = self._normalize_value(events)
         if schedule is not None:
-            api_params['schedule'] = schedule
+            api_params['schedule'] = self._normalize_value(schedule)
         if timeout is not None:
-            api_params['timeout'] = timeout
+            api_params['timeout'] = self._normalize_value(timeout)
         if enabled is not None:
-            api_params['enabled'] = enabled
+            api_params['enabled'] = self._normalize_value(enabled)
         if logging is not None:
-            api_params['logging'] = logging
+            api_params['logging'] = self._normalize_value(logging)
         if entrypoint is not None:
-            api_params['entrypoint'] = entrypoint
+            api_params['entrypoint'] = self._normalize_value(entrypoint)
         if commands is not None:
-            api_params['commands'] = commands
+            api_params['commands'] = self._normalize_value(commands)
         if scopes is not None:
-            api_params['scopes'] = scopes
+            api_params['scopes'] = self._normalize_value(scopes)
         if installation_id is not None:
-            api_params['installationId'] = installation_id
+            api_params['installationId'] = self._normalize_value(installation_id)
         if provider_repository_id is not None:
-            api_params['providerRepositoryId'] = provider_repository_id
+            api_params['providerRepositoryId'] = self._normalize_value(provider_repository_id)
         if provider_branch is not None:
-            api_params['providerBranch'] = provider_branch
+            api_params['providerBranch'] = self._normalize_value(provider_branch)
         if provider_silent_mode is not None:
-            api_params['providerSilentMode'] = provider_silent_mode
+            api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
-            api_params['providerRootDirectory'] = provider_root_directory
+            api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
         if specification is not None:
-            api_params['specification'] = specification
+            api_params['specification'] = self._normalize_value(specification)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_runtimes(self) -> Dict[str, Any]:
+        return self._parse_response(response, model=Function)
+
+
+    def list_runtimes(
+        self
+    ) -> RuntimeList:
         """
         Get a list of all runtimes that are currently active on your instance.
 
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        RuntimeList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -174,17 +217,22 @@ class Functions(Service):
         api_path = '/functions/runtimes'
         api_params = {}
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def list_specifications(self) -> Dict[str, Any]:
+        return self._parse_response(response, model=RuntimeList)
+
+
+    def list_specifications(
+        self
+    ) -> SpecificationList:
         """
         List allowed function specifications for this instance.
 
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        SpecificationList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -195,10 +243,16 @@ class Functions(Service):
         api_path = '/functions/specifications'
         api_params = {}
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def get(self, function_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=SpecificationList)
+
+
+    def get(
+        self,
+        function_id: str
+    ) -> Function:
         """
         Get a function by its unique ID.
 
@@ -209,8 +263,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Function
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -223,13 +277,36 @@ class Functions(Service):
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update(self, function_id: str, name: str, runtime: Optional[Runtime] = None, execute: Optional[List[str]] = None, events: Optional[List[str]] = None, schedule: Optional[str] = None, timeout: Optional[float] = None, enabled: Optional[bool] = None, logging: Optional[bool] = None, entrypoint: Optional[str] = None, commands: Optional[str] = None, scopes: Optional[List[Scopes]] = None, installation_id: Optional[str] = None, provider_repository_id: Optional[str] = None, provider_branch: Optional[str] = None, provider_silent_mode: Optional[bool] = None, provider_root_directory: Optional[str] = None, specification: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Function)
+
+
+    def update(
+        self,
+        function_id: str,
+        name: str,
+        runtime: Optional[Runtime] = None,
+        execute: Optional[List[str]] = None,
+        events: Optional[List[str]] = None,
+        schedule: Optional[str] = None,
+        timeout: Optional[float] = None,
+        enabled: Optional[bool] = None,
+        logging: Optional[bool] = None,
+        entrypoint: Optional[str] = None,
+        commands: Optional[str] = None,
+        scopes: Optional[List[Scopes]] = None,
+        installation_id: Optional[str] = None,
+        provider_repository_id: Optional[str] = None,
+        provider_branch: Optional[str] = None,
+        provider_silent_mode: Optional[bool] = None,
+        provider_root_directory: Optional[str] = None,
+        specification: Optional[str] = None
+    ) -> Function:
         """
         Update function by its unique ID.
 
@@ -274,8 +351,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Function
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -291,46 +368,52 @@ class Functions(Service):
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
-        api_params['name'] = name
+        api_params['name'] = self._normalize_value(name)
         if runtime is not None:
-            api_params['runtime'] = runtime
+            api_params['runtime'] = self._normalize_value(runtime)
         if execute is not None:
-            api_params['execute'] = execute
+            api_params['execute'] = self._normalize_value(execute)
         if events is not None:
-            api_params['events'] = events
+            api_params['events'] = self._normalize_value(events)
         if schedule is not None:
-            api_params['schedule'] = schedule
+            api_params['schedule'] = self._normalize_value(schedule)
         if timeout is not None:
-            api_params['timeout'] = timeout
+            api_params['timeout'] = self._normalize_value(timeout)
         if enabled is not None:
-            api_params['enabled'] = enabled
+            api_params['enabled'] = self._normalize_value(enabled)
         if logging is not None:
-            api_params['logging'] = logging
+            api_params['logging'] = self._normalize_value(logging)
         if entrypoint is not None:
-            api_params['entrypoint'] = entrypoint
+            api_params['entrypoint'] = self._normalize_value(entrypoint)
         if commands is not None:
-            api_params['commands'] = commands
+            api_params['commands'] = self._normalize_value(commands)
         if scopes is not None:
-            api_params['scopes'] = scopes
+            api_params['scopes'] = self._normalize_value(scopes)
         if installation_id is not None:
-            api_params['installationId'] = installation_id
-        api_params['providerRepositoryId'] = provider_repository_id
+            api_params['installationId'] = self._normalize_value(installation_id)
+        api_params['providerRepositoryId'] = self._normalize_value(provider_repository_id)
         if provider_branch is not None:
-            api_params['providerBranch'] = provider_branch
+            api_params['providerBranch'] = self._normalize_value(provider_branch)
         if provider_silent_mode is not None:
-            api_params['providerSilentMode'] = provider_silent_mode
+            api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
-            api_params['providerRootDirectory'] = provider_root_directory
+            api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
         if specification is not None:
-            api_params['specification'] = specification
+            api_params['specification'] = self._normalize_value(specification)
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete(self, function_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Function)
+
+
+    def delete(
+        self,
+        function_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a function by its unique ID.
 
@@ -355,14 +438,21 @@ class Functions(Service):
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_function_deployment(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
+        return response
+
+
+    def update_function_deployment(
+        self,
+        function_id: str,
+        deployment_id: str
+    ) -> Function:
         """
         Update the function active deployment. Use this endpoint to switch the code deployment that should be used when visitor opens your function.
 
@@ -375,8 +465,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Function
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -392,15 +482,24 @@ class Functions(Service):
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
-        api_params['deploymentId'] = deployment_id
+        api_params['deploymentId'] = self._normalize_value(deployment_id)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_deployments(self, function_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Function)
+
+
+    def list_deployments(
+        self,
+        function_id: str,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None
+    ) -> DeploymentList:
         """
         Get a list of all the function's code deployments. You can use the query params to filter your results.
 
@@ -417,8 +516,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        DeploymentList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -431,19 +530,30 @@ class Functions(Service):
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if search is not None:
-            api_params['search'] = search
+            api_params['search'] = self._normalize_value(search)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_deployment(self, function_id: str, code: InputFile, activate: bool, entrypoint: Optional[str] = None, commands: Optional[str] = None, on_progress = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=DeploymentList)
+
+
+    def create_deployment(
+        self,
+        function_id: str,
+        code: InputFile,
+        activate: bool,
+        entrypoint: Optional[str] = None,
+        commands: Optional[str] = None,
+        on_progress = None
+    ) -> Deployment:
         """
         Create a new function code deployment. Use this endpoint to upload a new version of your code function. To execute your newly uploaded code, you'll need to update the function's deployment to use your new deployment UID.
         
@@ -468,8 +578,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -488,25 +598,33 @@ class Functions(Service):
         if activate is None:
             raise AppwriteException('Missing required parameter: "activate"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
         if entrypoint is not None:
-            api_params['entrypoint'] = entrypoint
+            api_params['entrypoint'] = self._normalize_value(entrypoint)
         if commands is not None:
-            api_params['commands'] = commands
-        api_params['code'] = code
-        api_params['activate'] = str(activate).lower() if type(activate) is bool else activate
+            api_params['commands'] = self._normalize_value(commands)
+        api_params['code'] = self._normalize_value(code)
+        api_params['activate'] = self._normalize_value(str(activate).lower() if type(activate) is bool else activate)
 
         param_name = 'code'
 
 
         upload_id = ''
 
-        return self.client.chunked_upload(api_path, {
+        response = self.client.chunked_upload(api_path, {
             'content-type': 'multipart/form-data',
         }, api_params, param_name, on_progress, upload_id)
 
-    def create_duplicate_deployment(self, function_id: str, deployment_id: str, build_id: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Deployment)
+
+
+    def create_duplicate_deployment(
+        self,
+        function_id: str,
+        deployment_id: str,
+        build_id: Optional[str] = None
+    ) -> Deployment:
         """
         Create a new build for an existing function deployment. This endpoint allows you to rebuild a deployment with the updated function configuration, including its entrypoint and build commands if they have been modified. The build process will be queued and executed asynchronously. The original deployment's code will be preserved and used for the new build.
 
@@ -521,8 +639,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -538,17 +656,29 @@ class Functions(Service):
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
-        api_params['deploymentId'] = deployment_id
+        api_params['deploymentId'] = self._normalize_value(deployment_id)
         if build_id is not None:
-            api_params['buildId'] = build_id
+            api_params['buildId'] = self._normalize_value(build_id)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_template_deployment(self, function_id: str, repository: str, owner: str, root_directory: str, type: TemplateReferenceType, reference: str, activate: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Deployment)
+
+
+    def create_template_deployment(
+        self,
+        function_id: str,
+        repository: str,
+        owner: str,
+        root_directory: str,
+        type: TemplateReferenceType,
+        reference: str,
+        activate: Optional[bool] = None
+    ) -> Deployment:
         """
         Create a deployment based on a template.
         
@@ -573,8 +703,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -602,21 +732,30 @@ class Functions(Service):
         if reference is None:
             raise AppwriteException('Missing required parameter: "reference"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
-        api_params['repository'] = repository
-        api_params['owner'] = owner
-        api_params['rootDirectory'] = root_directory
-        api_params['type'] = type
-        api_params['reference'] = reference
+        api_params['repository'] = self._normalize_value(repository)
+        api_params['owner'] = self._normalize_value(owner)
+        api_params['rootDirectory'] = self._normalize_value(root_directory)
+        api_params['type'] = self._normalize_value(type)
+        api_params['reference'] = self._normalize_value(reference)
         if activate is not None:
-            api_params['activate'] = activate
+            api_params['activate'] = self._normalize_value(activate)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_vcs_deployment(self, function_id: str, type: VCSReferenceType, reference: str, activate: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Deployment)
+
+
+    def create_vcs_deployment(
+        self,
+        function_id: str,
+        type: VCSReferenceType,
+        reference: str,
+        activate: Optional[bool] = None
+    ) -> Deployment:
         """
         Create a deployment when a function is connected to VCS.
         
@@ -635,8 +774,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -655,18 +794,25 @@ class Functions(Service):
         if reference is None:
             raise AppwriteException('Missing required parameter: "reference"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
-        api_params['type'] = type
-        api_params['reference'] = reference
+        api_params['type'] = self._normalize_value(type)
+        api_params['reference'] = self._normalize_value(reference)
         if activate is not None:
-            api_params['activate'] = activate
+            api_params['activate'] = self._normalize_value(activate)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_deployment(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Deployment)
+
+
+    def get_deployment(
+        self,
+        function_id: str,
+        deployment_id: str
+    ) -> Deployment:
         """
         Get a function deployment by its unique ID.
 
@@ -679,8 +825,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -696,14 +842,21 @@ class Functions(Service):
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{deploymentId}', deployment_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def delete_deployment(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Deployment)
+
+
+    def delete_deployment(
+        self,
+        function_id: str,
+        deployment_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a code deployment by its unique ID.
 
@@ -733,15 +886,23 @@ class Functions(Service):
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{deploymentId}', deployment_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_deployment_download(self, function_id: str, deployment_id: str, type: Optional[DeploymentDownloadType] = None) -> bytes:
+        return response
+
+
+    def get_deployment_download(
+        self,
+        function_id: str,
+        deployment_id: str,
+        type: Optional[DeploymentDownloadType] = None
+    ) -> bytes:
         """
         Get a function deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
 
@@ -773,16 +934,23 @@ class Functions(Service):
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{deploymentId}', deployment_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
 
         if type is not None:
-            api_params['type'] = type
+            api_params['type'] = self._normalize_value(type)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_deployment_status(self, function_id: str, deployment_id: str) -> Dict[str, Any]:
+        return response
+
+
+    def update_deployment_status(
+        self,
+        function_id: str,
+        deployment_id: str
+    ) -> Deployment:
         """
         Cancel an ongoing function deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn't started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status 'ready') or failed. The response includes the final build status and details.
 
@@ -795,8 +963,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Deployment
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -812,15 +980,23 @@ class Functions(Service):
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{deploymentId}', deployment_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
 
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_executions(self, function_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Deployment)
+
+
+    def list_executions(
+        self,
+        function_id: str,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None
+    ) -> ExecutionList:
         """
         Get a list of all the current user function execution logs. You can use the query params to filter your results.
 
@@ -835,8 +1011,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ExecutionList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -849,17 +1025,29 @@ class Functions(Service):
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_execution(self, function_id: str, body: Optional[str] = None, xasync: Optional[bool] = None, path: Optional[str] = None, method: Optional[ExecutionMethod] = None, headers: Optional[dict] = None, scheduled_at: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ExecutionList)
+
+
+    def create_execution(
+        self,
+        function_id: str,
+        body: Optional[str] = None,
+        xasync: Optional[bool] = None,
+        path: Optional[str] = None,
+        method: Optional[ExecutionMethod] = None,
+        headers: Optional[Dict[str, Any]] = None,
+        scheduled_at: Optional[str] = None
+    ) -> Execution:
         """
         Trigger a function execution. The returned object will return you the current execution status. You can ping the `Get Execution` endpoint to get updates on the current execution status. Once this endpoint is called, your function execution process will start asynchronously.
 
@@ -875,15 +1063,15 @@ class Functions(Service):
             HTTP path of execution. Path can include query params. Default value is /
         method : Optional[ExecutionMethod]
             HTTP method of execution. Default value is POST.
-        headers : Optional[dict]
+        headers : Optional[Dict[str, Any]]
             HTTP headers of execution. Defaults to empty.
         scheduled_at : Optional[str]
             Scheduled execution time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future with precision in minutes.
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Execution
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -896,25 +1084,32 @@ class Functions(Service):
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
         if body is not None:
-            api_params['body'] = body
+            api_params['body'] = self._normalize_value(body)
         if xasync is not None:
-            api_params['async'] = xasync
+            api_params['async'] = self._normalize_value(xasync)
         if path is not None:
-            api_params['path'] = path
+            api_params['path'] = self._normalize_value(path)
         if method is not None:
-            api_params['method'] = method
+            api_params['method'] = self._normalize_value(method)
         if headers is not None:
-            api_params['headers'] = headers
-        api_params['scheduledAt'] = scheduled_at
+            api_params['headers'] = self._normalize_value(headers)
+        api_params['scheduledAt'] = self._normalize_value(scheduled_at)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_execution(self, function_id: str, execution_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Execution)
+
+
+    def get_execution(
+        self,
+        function_id: str,
+        execution_id: str
+    ) -> Execution:
         """
         Get a function execution log by its unique ID.
 
@@ -927,8 +1122,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Execution
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -944,14 +1139,21 @@ class Functions(Service):
         if execution_id is None:
             raise AppwriteException('Missing required parameter: "execution_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{executionId}', execution_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{executionId}', str(self._normalize_value(execution_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def delete_execution(self, function_id: str, execution_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Execution)
+
+
+    def delete_execution(
+        self,
+        function_id: str,
+        execution_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a function execution by its unique ID.
 
@@ -981,15 +1183,21 @@ class Functions(Service):
         if execution_id is None:
             raise AppwriteException('Missing required parameter: "execution_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{executionId}', execution_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{executionId}', str(self._normalize_value(execution_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_variables(self, function_id: str) -> Dict[str, Any]:
+        return response
+
+
+    def list_variables(
+        self,
+        function_id: str
+    ) -> VariableList:
         """
         Get a list of all variables of a specific function.
 
@@ -1000,8 +1208,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        VariableList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1014,13 +1222,22 @@ class Functions(Service):
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_variable(self, function_id: str, key: str, value: str, secret: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=VariableList)
+
+
+    def create_variable(
+        self,
+        function_id: str,
+        key: str,
+        value: str,
+        secret: Optional[bool] = None
+    ) -> Variable:
         """
         Create a new function environment variable. These variables can be accessed in the function at runtime as environment variables.
 
@@ -1037,8 +1254,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Variable
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1057,18 +1274,25 @@ class Functions(Service):
         if value is None:
             raise AppwriteException('Missing required parameter: "value"')
 
-        api_path = api_path.replace('{functionId}', function_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
 
-        api_params['key'] = key
-        api_params['value'] = value
+        api_params['key'] = self._normalize_value(key)
+        api_params['value'] = self._normalize_value(value)
         if secret is not None:
-            api_params['secret'] = secret
+            api_params['secret'] = self._normalize_value(secret)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_variable(self, function_id: str, variable_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Variable)
+
+
+    def get_variable(
+        self,
+        function_id: str,
+        variable_id: str
+    ) -> Variable:
         """
         Get a variable by its unique ID.
 
@@ -1081,8 +1305,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Variable
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1098,14 +1322,24 @@ class Functions(Service):
         if variable_id is None:
             raise AppwriteException('Missing required parameter: "variable_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{variableId}', variable_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_variable(self, function_id: str, variable_id: str, key: str, value: Optional[str] = None, secret: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Variable)
+
+
+    def update_variable(
+        self,
+        function_id: str,
+        variable_id: str,
+        key: str,
+        value: Optional[str] = None,
+        secret: Optional[bool] = None
+    ) -> Variable:
         """
         Update variable by its unique ID.
 
@@ -1124,8 +1358,8 @@ class Functions(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Variable
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1144,18 +1378,25 @@ class Functions(Service):
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
 
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{variableId}', variable_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
-        api_params['key'] = key
-        api_params['value'] = value
-        api_params['secret'] = secret
+        api_params['key'] = self._normalize_value(key)
+        api_params['value'] = self._normalize_value(value)
+        api_params['secret'] = self._normalize_value(secret)
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_variable(self, function_id: str, variable_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Variable)
+
+
+    def delete_variable(
+        self,
+        function_id: str,
+        variable_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a variable by its unique ID.
 
@@ -1185,10 +1426,13 @@ class Functions(Service):
         if variable_id is None:
             raise AppwriteException('Missing required parameter: "variable_id"')
 
-        api_path = api_path.replace('{functionId}', function_id)
-        api_path = api_path.replace('{variableId}', variable_id)
+        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
+
+        return response
+

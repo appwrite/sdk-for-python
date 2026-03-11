@@ -1,18 +1,53 @@
 from ..service import Service
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from ..models.database_list import DatabaseList;
+from ..models.database import Database;
+from ..models.transaction_list import TransactionList;
+from ..models.transaction import Transaction;
+from ..models.table_list import TableList;
+from ..models.table import Table;
+from ..models.column_list import ColumnList;
+from ..models.column_boolean import ColumnBoolean;
+from ..models.column_datetime import ColumnDatetime;
+from ..models.column_email import ColumnEmail;
+from ..models.column_enum import ColumnEnum;
+from ..models.column_float import ColumnFloat;
+from ..models.column_integer import ColumnInteger;
+from ..models.column_ip import ColumnIp;
+from ..models.column_line import ColumnLine;
+from ..models.column_longtext import ColumnLongtext;
+from ..models.column_mediumtext import ColumnMediumtext;
+from ..models.column_point import ColumnPoint;
+from ..models.column_polygon import ColumnPolygon;
 from ..enums.relationship_type import RelationshipType;
 from ..enums.relation_mutate import RelationMutate;
+from ..models.column_relationship import ColumnRelationship;
+from ..models.column_string import ColumnString;
+from ..models.column_text import ColumnText;
+from ..models.column_url import ColumnUrl;
+from ..models.column_varchar import ColumnVarchar;
+from ..models.column_index_list import ColumnIndexList;
 from ..enums.index_type import IndexType;
 from ..enums.order_by import OrderBy;
+from ..models.column_index import ColumnIndex;
+from ..models.row_list import RowList;
+from ..models.row import Row;
+
+T = TypeVar('T')
 
 class TablesDB(Service):
 
     def __init__(self, client) -> None:
         super(TablesDB, self).__init__(client)
 
-    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+    def list(
+        self,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None
+    ) -> DatabaseList:
         """
         Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
 
@@ -27,8 +62,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        DatabaseList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -40,16 +75,24 @@ class TablesDB(Service):
         api_params = {}
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if search is not None:
-            api_params['search'] = search
+            api_params['search'] = self._normalize_value(search)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, database_id: str, name: str, enabled: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=DatabaseList)
+
+
+    def create(
+        self,
+        database_id: str,
+        name: str,
+        enabled: Optional[bool] = None
+    ) -> Database:
         """
         Create a new Database.
         
@@ -65,8 +108,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Database
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -83,16 +126,22 @@ class TablesDB(Service):
             raise AppwriteException('Missing required parameter: "name"')
 
 
-        api_params['databaseId'] = database_id
-        api_params['name'] = name
+        api_params['databaseId'] = self._normalize_value(database_id)
+        api_params['name'] = self._normalize_value(name)
         if enabled is not None:
-            api_params['enabled'] = enabled
+            api_params['enabled'] = self._normalize_value(enabled)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_transactions(self, queries: Optional[List[str]] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Database)
+
+
+    def list_transactions(
+        self,
+        queries: Optional[List[str]] = None
+    ) -> TransactionList:
         """
         List transactions across all databases.
 
@@ -103,8 +152,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        TransactionList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -116,12 +165,18 @@ class TablesDB(Service):
         api_params = {}
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_transaction(self, ttl: Optional[float] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=TransactionList)
+
+
+    def create_transaction(
+        self,
+        ttl: Optional[float] = None
+    ) -> Transaction:
         """
         Create a new transaction.
 
@@ -132,8 +187,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -145,13 +200,19 @@ class TablesDB(Service):
         api_params = {}
 
         if ttl is not None:
-            api_params['ttl'] = ttl
+            api_params['ttl'] = self._normalize_value(ttl)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_transaction(self, transaction_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Transaction)
+
+
+    def get_transaction(
+        self,
+        transaction_id: str
+    ) -> Transaction:
         """
         Get a transaction by its unique ID.
 
@@ -162,8 +223,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -176,13 +237,21 @@ class TablesDB(Service):
         if transaction_id is None:
             raise AppwriteException('Missing required parameter: "transaction_id"')
 
-        api_path = api_path.replace('{transactionId}', transaction_id)
+        api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_transaction(self, transaction_id: str, commit: Optional[bool] = None, rollback: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Transaction)
+
+
+    def update_transaction(
+        self,
+        transaction_id: str,
+        commit: Optional[bool] = None,
+        rollback: Optional[bool] = None
+    ) -> Transaction:
         """
         Update a transaction, to either commit or roll back its operations.
 
@@ -197,8 +266,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -211,18 +280,24 @@ class TablesDB(Service):
         if transaction_id is None:
             raise AppwriteException('Missing required parameter: "transaction_id"')
 
-        api_path = api_path.replace('{transactionId}', transaction_id)
+        api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
         if commit is not None:
-            api_params['commit'] = commit
+            api_params['commit'] = self._normalize_value(commit)
         if rollback is not None:
-            api_params['rollback'] = rollback
+            api_params['rollback'] = self._normalize_value(rollback)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_transaction(self, transaction_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Transaction)
+
+
+    def delete_transaction(
+        self,
+        transaction_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a transaction by its unique ID.
 
@@ -247,14 +322,21 @@ class TablesDB(Service):
         if transaction_id is None:
             raise AppwriteException('Missing required parameter: "transaction_id"')
 
-        api_path = api_path.replace('{transactionId}', transaction_id)
+        api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_operations(self, transaction_id: str, operations: Optional[List[dict]] = None) -> Dict[str, Any]:
+        return response
+
+
+    def create_operations(
+        self,
+        transaction_id: str,
+        operations: Optional[List[Dict[str, Any]]] = None
+    ) -> Transaction:
         """
         Create multiple operations in a single transaction.
 
@@ -262,13 +344,13 @@ class TablesDB(Service):
         ----------
         transaction_id : str
             Transaction ID.
-        operations : Optional[List[dict]]
+        operations : Optional[List[Dict[str, Any]]]
             Array of staged operations.
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Transaction
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -281,16 +363,22 @@ class TablesDB(Service):
         if transaction_id is None:
             raise AppwriteException('Missing required parameter: "transaction_id"')
 
-        api_path = api_path.replace('{transactionId}', transaction_id)
+        api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
         if operations is not None:
-            api_params['operations'] = operations
+            api_params['operations'] = self._normalize_value(operations)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get(self, database_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Transaction)
+
+
+    def get(
+        self,
+        database_id: str
+    ) -> Database:
         """
         Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
 
@@ -301,8 +389,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Database
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -315,13 +403,21 @@ class TablesDB(Service):
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update(self, database_id: str, name: Optional[str] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Database)
+
+
+    def update(
+        self,
+        database_id: str,
+        name: Optional[str] = None,
+        enabled: Optional[bool] = None
+    ) -> Database:
         """
         Update a database by its unique ID.
 
@@ -336,8 +432,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Database
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -350,18 +446,24 @@ class TablesDB(Service):
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
         if enabled is not None:
-            api_params['enabled'] = enabled
+            api_params['enabled'] = self._normalize_value(enabled)
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete(self, database_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Database)
+
+
+    def delete(
+        self,
+        database_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
 
@@ -386,14 +488,23 @@ class TablesDB(Service):
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_tables(self, database_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+        return response
+
+
+    def list_tables(
+        self,
+        database_id: str,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None
+    ) -> TableList:
         """
         Get a list of all tables that belong to the provided databaseId. You can use the search parameter to filter your results.
 
@@ -410,8 +521,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        TableList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -424,19 +535,32 @@ class TablesDB(Service):
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if search is not None:
-            api_params['search'] = search
+            api_params['search'] = self._normalize_value(search)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_table(self, database_id: str, table_id: str, name: str, permissions: Optional[List[str]] = None, row_security: Optional[bool] = None, enabled: Optional[bool] = None, columns: Optional[List[dict]] = None, indexes: Optional[List[dict]] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=TableList)
+
+
+    def create_table(
+        self,
+        database_id: str,
+        table_id: str,
+        name: str,
+        permissions: Optional[List[str]] = None,
+        row_security: Optional[bool] = None,
+        enabled: Optional[bool] = None,
+        columns: Optional[List[Dict[str, Any]]] = None,
+        indexes: Optional[List[Dict[str, Any]]] = None
+    ) -> Table:
         """
         Create a new Table. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -454,15 +578,15 @@ class TablesDB(Service):
             Enables configuring permissions for individual rows. A user needs one of row or table level permissions to access a row. [Learn more about permissions](https://appwrite.io/docs/permissions).
         enabled : Optional[bool]
             Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
-        columns : Optional[List[dict]]
+        columns : Optional[List[Dict[str, Any]]]
             Array of column definitions to create. Each column should contain: key (string), type (string: string, integer, float, boolean, datetime, relationship), size (integer, required for string type), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.
-        indexes : Optional[List[dict]]
+        indexes : Optional[List[Dict[str, Any]]]
             Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial), attributes (array of column keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Table
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -481,25 +605,32 @@ class TablesDB(Service):
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        api_params['tableId'] = table_id
-        api_params['name'] = name
-        api_params['permissions'] = permissions
+        api_params['tableId'] = self._normalize_value(table_id)
+        api_params['name'] = self._normalize_value(name)
+        api_params['permissions'] = self._normalize_value(permissions)
         if row_security is not None:
-            api_params['rowSecurity'] = row_security
+            api_params['rowSecurity'] = self._normalize_value(row_security)
         if enabled is not None:
-            api_params['enabled'] = enabled
+            api_params['enabled'] = self._normalize_value(enabled)
         if columns is not None:
-            api_params['columns'] = columns
+            api_params['columns'] = self._normalize_value(columns)
         if indexes is not None:
-            api_params['indexes'] = indexes
+            api_params['indexes'] = self._normalize_value(indexes)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_table(self, database_id: str, table_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Table)
+
+
+    def get_table(
+        self,
+        database_id: str,
+        table_id: str
+    ) -> Table:
         """
         Get a table by its unique ID. This endpoint response returns a JSON object with the table metadata.
 
@@ -512,8 +643,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Table
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -529,14 +660,25 @@ class TablesDB(Service):
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_table(self, database_id: str, table_id: str, name: Optional[str] = None, permissions: Optional[List[str]] = None, row_security: Optional[bool] = None, enabled: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=Table)
+
+
+    def update_table(
+        self,
+        database_id: str,
+        table_id: str,
+        name: Optional[str] = None,
+        permissions: Optional[List[str]] = None,
+        row_security: Optional[bool] = None,
+        enabled: Optional[bool] = None
+    ) -> Table:
         """
         Update a table by its unique ID.
 
@@ -557,8 +699,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Table
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -574,22 +716,29 @@ class TablesDB(Service):
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
         if name is not None:
-            api_params['name'] = name
-        api_params['permissions'] = permissions
+            api_params['name'] = self._normalize_value(name)
+        api_params['permissions'] = self._normalize_value(permissions)
         if row_security is not None:
-            api_params['rowSecurity'] = row_security
+            api_params['rowSecurity'] = self._normalize_value(row_security)
         if enabled is not None:
-            api_params['enabled'] = enabled
+            api_params['enabled'] = self._normalize_value(enabled)
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_table(self, database_id: str, table_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Table)
+
+
+    def delete_table(
+        self,
+        database_id: str,
+        table_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a table by its unique ID. Only users with write permissions have access to delete this resource.
 
@@ -619,15 +768,24 @@ class TablesDB(Service):
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_columns(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+        return response
+
+
+    def list_columns(
+        self,
+        database_id: str,
+        table_id: str,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None
+    ) -> ColumnList:
         """
         List columns in the table.
 
@@ -644,8 +802,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -661,18 +819,29 @@ class TablesDB(Service):
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_boolean_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[bool] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnList)
+
+
+    def create_boolean_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[bool] = None,
+        array: Optional[bool] = None
+    ) -> ColumnBoolean:
         """
         Create a boolean column.
         
@@ -694,8 +863,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnBoolean
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -717,20 +886,31 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_boolean_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[bool], new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnBoolean)
+
+
+    def update_boolean_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[bool],
+        new_key: Optional[str] = None
+    ) -> ColumnBoolean:
         """
         Update a boolean column. Changing the `default` value will not update already existing rows.
 
@@ -751,8 +931,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnBoolean
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -774,19 +954,30 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_datetime_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnBoolean)
+
+
+    def create_datetime_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str] = None,
+        array: Optional[bool] = None
+    ) -> ColumnDatetime:
         """
         Create a date time column according to the ISO 8601 standard.
 
@@ -807,8 +998,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnDatetime
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -830,20 +1021,31 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_datetime_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnDatetime)
+
+
+    def update_datetime_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str],
+        new_key: Optional[str] = None
+    ) -> ColumnDatetime:
         """
         Update a date time column. Changing the `default` value will not update already existing rows.
 
@@ -864,8 +1066,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnDatetime
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -887,19 +1089,30 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_email_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnDatetime)
+
+
+    def create_email_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str] = None,
+        array: Optional[bool] = None
+    ) -> ColumnEmail:
         """
         Create an email column.
         
@@ -921,8 +1134,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnEmail
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -944,20 +1157,31 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_email_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnEmail)
+
+
+    def update_email_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str],
+        new_key: Optional[str] = None
+    ) -> ColumnEmail:
         """
         Update an email column. Changing the `default` value will not update already existing rows.
         
@@ -979,8 +1203,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnEmail
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1002,19 +1226,31 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_enum_column(self, database_id: str, table_id: str, key: str, elements: List[str], required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnEmail)
+
+
+    def create_enum_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        elements: List[str],
+        required: bool,
+        default: Optional[str] = None,
+        array: Optional[bool] = None
+    ) -> ColumnEnum:
         """
         Create an enumeration column. The `elements` param acts as a white-list of accepted values for this column.
 
@@ -1037,8 +1273,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnEnum
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1063,21 +1299,33 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['elements'] = elements
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['elements'] = self._normalize_value(elements)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_enum_column(self, database_id: str, table_id: str, key: str, elements: List[str], required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnEnum)
+
+
+    def update_enum_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        elements: List[str],
+        required: bool,
+        default: Optional[str],
+        new_key: Optional[str] = None
+    ) -> ColumnEnum:
         """
         Update an enum column. Changing the `default` value will not update already existing rows.
         
@@ -1101,8 +1349,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnEnum
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1127,20 +1375,33 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['elements'] = elements
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['elements'] = self._normalize_value(elements)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_float_column(self, database_id: str, table_id: str, key: str, required: bool, min: Optional[float] = None, max: Optional[float] = None, default: Optional[float] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnEnum)
+
+
+    def create_float_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        min: Optional[float] = None,
+        max: Optional[float] = None,
+        default: Optional[float] = None,
+        array: Optional[bool] = None
+    ) -> ColumnFloat:
         """
         Create a float column. Optionally, minimum and maximum values can be provided.
         
@@ -1166,8 +1427,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnFloat
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1189,22 +1450,35 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['min'] = min
-        api_params['max'] = max
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['min'] = self._normalize_value(min)
+        api_params['max'] = self._normalize_value(max)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_float_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[float], min: Optional[float] = None, max: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnFloat)
+
+
+    def update_float_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[float],
+        min: Optional[float] = None,
+        max: Optional[float] = None,
+        new_key: Optional[str] = None
+    ) -> ColumnFloat:
         """
         Update a float column. Changing the `default` value will not update already existing rows.
         
@@ -1230,8 +1504,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnFloat
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1253,21 +1527,34 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['min'] = min
-        api_params['max'] = max
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['min'] = self._normalize_value(min)
+        api_params['max'] = self._normalize_value(max)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_integer_column(self, database_id: str, table_id: str, key: str, required: bool, min: Optional[float] = None, max: Optional[float] = None, default: Optional[float] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnFloat)
+
+
+    def create_integer_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        min: Optional[float] = None,
+        max: Optional[float] = None,
+        default: Optional[float] = None,
+        array: Optional[bool] = None
+    ) -> ColumnInteger:
         """
         Create an integer column. Optionally, minimum and maximum values can be provided.
         
@@ -1293,8 +1580,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnInteger
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1316,22 +1603,35 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['min'] = min
-        api_params['max'] = max
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['min'] = self._normalize_value(min)
+        api_params['max'] = self._normalize_value(max)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_integer_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[float], min: Optional[float] = None, max: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnInteger)
+
+
+    def update_integer_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[float],
+        min: Optional[float] = None,
+        max: Optional[float] = None,
+        new_key: Optional[str] = None
+    ) -> ColumnInteger:
         """
         Update an integer column. Changing the `default` value will not update already existing rows.
         
@@ -1357,8 +1657,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnInteger
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1380,21 +1680,32 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['min'] = min
-        api_params['max'] = max
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['min'] = self._normalize_value(min)
+        api_params['max'] = self._normalize_value(max)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_ip_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnInteger)
+
+
+    def create_ip_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str] = None,
+        array: Optional[bool] = None
+    ) -> ColumnIp:
         """
         Create IP address column.
         
@@ -1416,8 +1727,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnIp
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1439,20 +1750,31 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_ip_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnIp)
+
+
+    def update_ip_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str],
+        new_key: Optional[str] = None
+    ) -> ColumnIp:
         """
         Update an ip column. Changing the `default` value will not update already existing rows.
         
@@ -1474,8 +1796,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnIp
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1497,19 +1819,29 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_line_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnIp)
+
+
+    def create_line_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[List[Any]] = None
+    ) -> ColumnLine:
         """
         Create a geometric line column.
 
@@ -1528,8 +1860,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnLine
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1551,18 +1883,29 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_line_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnLine)
+
+
+    def update_line_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[List[Any]] = None,
+        new_key: Optional[str] = None
+    ) -> ColumnLine:
         """
         Update a line column. Changing the `default` value will not update already existing rows.
 
@@ -1583,8 +1926,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnLine
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1606,19 +1949,31 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_longtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnLine)
+
+
+    def create_longtext_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str] = None,
+        array: Optional[bool] = None,
+        encrypt: Optional[bool] = None
+    ) -> ColumnLongtext:
         """
         Create a longtext column.
         
@@ -1642,8 +1997,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnLongtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1665,22 +2020,33 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
-            api_params['encrypt'] = encrypt
+            api_params['encrypt'] = self._normalize_value(encrypt)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_longtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnLongtext)
+
+
+    def update_longtext_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str],
+        new_key: Optional[str] = None
+    ) -> ColumnLongtext:
         """
         Update a longtext column. Changing the `default` value will not update already existing rows.
         
@@ -1702,8 +2068,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnLongtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1725,19 +2091,31 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_mediumtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnLongtext)
+
+
+    def create_mediumtext_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str] = None,
+        array: Optional[bool] = None,
+        encrypt: Optional[bool] = None
+    ) -> ColumnMediumtext:
         """
         Create a mediumtext column.
         
@@ -1761,8 +2139,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnMediumtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1784,22 +2162,33 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
-            api_params['encrypt'] = encrypt
+            api_params['encrypt'] = self._normalize_value(encrypt)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_mediumtext_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnMediumtext)
+
+
+    def update_mediumtext_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str],
+        new_key: Optional[str] = None
+    ) -> ColumnMediumtext:
         """
         Update a mediumtext column. Changing the `default` value will not update already existing rows.
         
@@ -1821,8 +2210,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnMediumtext
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1844,19 +2233,29 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_point_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnMediumtext)
+
+
+    def create_point_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[List[Any]] = None
+    ) -> ColumnPoint:
         """
         Create a geometric point column.
 
@@ -1875,8 +2274,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnPoint
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1898,18 +2297,29 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_point_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnPoint)
+
+
+    def update_point_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[List[Any]] = None,
+        new_key: Optional[str] = None
+    ) -> ColumnPoint:
         """
         Update a point column. Changing the `default` value will not update already existing rows.
 
@@ -1930,8 +2340,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnPoint
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -1953,19 +2363,29 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_polygon_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnPoint)
+
+
+    def create_polygon_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[List[Any]] = None
+    ) -> ColumnPolygon:
         """
         Create a geometric polygon column.
 
@@ -1984,8 +2404,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnPolygon
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2007,18 +2427,29 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_polygon_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[List[Any]] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnPolygon)
+
+
+    def update_polygon_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[List[Any]] = None,
+        new_key: Optional[str] = None
+    ) -> ColumnPolygon:
         """
         Update a polygon column. Changing the `default` value will not update already existing rows.
 
@@ -2039,8 +2470,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnPolygon
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2062,19 +2493,32 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_relationship_column(self, database_id: str, table_id: str, related_table_id: str, type: RelationshipType, two_way: Optional[bool] = None, key: Optional[str] = None, two_way_key: Optional[str] = None, on_delete: Optional[RelationMutate] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnPolygon)
+
+
+    def create_relationship_column(
+        self,
+        database_id: str,
+        table_id: str,
+        related_table_id: str,
+        type: RelationshipType,
+        two_way: Optional[bool] = None,
+        key: Optional[str] = None,
+        two_way_key: Optional[str] = None,
+        on_delete: Optional[RelationMutate] = None
+    ) -> ColumnRelationship:
         """
         Create relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
         
@@ -2100,8 +2544,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnRelationship
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2123,24 +2567,37 @@ class TablesDB(Service):
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['relatedTableId'] = related_table_id
-        api_params['type'] = type
+        api_params['relatedTableId'] = self._normalize_value(related_table_id)
+        api_params['type'] = self._normalize_value(type)
         if two_way is not None:
-            api_params['twoWay'] = two_way
-        api_params['key'] = key
-        api_params['twoWayKey'] = two_way_key
+            api_params['twoWay'] = self._normalize_value(two_way)
+        api_params['key'] = self._normalize_value(key)
+        api_params['twoWayKey'] = self._normalize_value(two_way_key)
         if on_delete is not None:
-            api_params['onDelete'] = on_delete
+            api_params['onDelete'] = self._normalize_value(on_delete)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
+        return self._parse_response(response, model=ColumnRelationship)
+
+
     @deprecated("This API has been deprecated since 1.9.0. Please use `tablesDB.create_text_column` instead.")
-    def create_string_column(self, database_id: str, table_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
+    def create_string_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        size: float,
+        required: bool,
+        default: Optional[str] = None,
+        array: Optional[bool] = None,
+        encrypt: Optional[bool] = None
+    ) -> ColumnString:
         """
         Create a string column.
         
@@ -2168,8 +2625,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnString
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2194,24 +2651,36 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['size'] = size
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['size'] = self._normalize_value(size)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
-            api_params['encrypt'] = encrypt
+            api_params['encrypt'] = self._normalize_value(encrypt)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
+        return self._parse_response(response, model=ColumnString)
+
+
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_text_column` instead.")
-    def update_string_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], size: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
+    def update_string_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str],
+        size: Optional[float] = None,
+        new_key: Optional[str] = None
+    ) -> ColumnString:
         """
         Update a string column. Changing the `default` value will not update already existing rows.
         
@@ -2237,8 +2706,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnString
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2260,20 +2729,32 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['size'] = size
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['size'] = self._normalize_value(size)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_text_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnString)
+
+
+    def create_text_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str] = None,
+        array: Optional[bool] = None,
+        encrypt: Optional[bool] = None
+    ) -> ColumnText:
         """
         Create a text column.
         
@@ -2297,8 +2778,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnText
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2320,22 +2801,33 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
-            api_params['encrypt'] = encrypt
+            api_params['encrypt'] = self._normalize_value(encrypt)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_text_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnText)
+
+
+    def update_text_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str],
+        new_key: Optional[str] = None
+    ) -> ColumnText:
         """
         Update a text column. Changing the `default` value will not update already existing rows.
         
@@ -2357,8 +2849,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnText
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2380,19 +2872,30 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_url_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str] = None, array: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnText)
+
+
+    def create_url_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str] = None,
+        array: Optional[bool] = None
+    ) -> ColumnUrl:
         """
         Create a URL column.
         
@@ -2414,8 +2917,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnUrl
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2437,20 +2940,31 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_url_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnUrl)
+
+
+    def update_url_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str],
+        new_key: Optional[str] = None
+    ) -> ColumnUrl:
         """
         Update an url column. Changing the `default` value will not update already existing rows.
         
@@ -2472,8 +2986,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnUrl
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2495,19 +3009,32 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_varchar_column(self, database_id: str, table_id: str, key: str, size: float, required: bool, default: Optional[str] = None, array: Optional[bool] = None, encrypt: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnUrl)
+
+
+    def create_varchar_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        size: float,
+        required: bool,
+        default: Optional[str] = None,
+        array: Optional[bool] = None,
+        encrypt: Optional[bool] = None
+    ) -> ColumnVarchar:
         """
         Create a varchar column.
         
@@ -2533,8 +3060,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnVarchar
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2559,23 +3086,35 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['size'] = size
-        api_params['required'] = required
-        api_params['default'] = default
+        api_params['key'] = self._normalize_value(key)
+        api_params['size'] = self._normalize_value(size)
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
         if array is not None:
-            api_params['array'] = array
+            api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
-            api_params['encrypt'] = encrypt
+            api_params['encrypt'] = self._normalize_value(encrypt)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_varchar_column(self, database_id: str, table_id: str, key: str, required: bool, default: Optional[str], size: Optional[float] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnVarchar)
+
+
+    def update_varchar_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[str],
+        size: Optional[float] = None,
+        new_key: Optional[str] = None
+    ) -> ColumnVarchar:
         """
         Update a varchar column. Changing the `default` value will not update already existing rows.
         
@@ -2599,8 +3138,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnVarchar
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2622,20 +3161,28 @@ class TablesDB(Service):
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['required'] = required
-        api_params['default'] = default
-        api_params['size'] = size
-        api_params['newKey'] = new_key
+        api_params['required'] = self._normalize_value(required)
+        api_params['default'] = self._normalize_value(default)
+        api_params['size'] = self._normalize_value(size)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_column(self, database_id: str, table_id: str, key: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnVarchar)
+
+
+    def get_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str
+    ) -> Union[ColumnBoolean, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnString]:
         """
         Get column by ID.
 
@@ -2650,8 +3197,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Union[ColumnBoolean, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnString]
+            API response as one of the typed response models
         
         Raises
         ------
@@ -2670,15 +3217,23 @@ class TablesDB(Service):
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def delete_column(self, database_id: str, table_id: str, key: str) -> Dict[str, Any]:
+        return self._parse_response(response, union_models=(ColumnBoolean, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnString, ))
+
+
+    def delete_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str
+    ) -> Dict[str, Any]:
         """
         Deletes a column.
 
@@ -2713,16 +3268,26 @@ class TablesDB(Service):
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_relationship_column(self, database_id: str, table_id: str, key: str, on_delete: Optional[RelationMutate] = None, new_key: Optional[str] = None) -> Dict[str, Any]:
+        return response
+
+
+    def update_relationship_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        on_delete: Optional[RelationMutate] = None,
+        new_key: Optional[str] = None
+    ) -> ColumnRelationship:
         """
         Update relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
         
@@ -2742,8 +3307,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnRelationship
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2762,18 +3327,27 @@ class TablesDB(Service):
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['onDelete'] = on_delete
-        api_params['newKey'] = new_key
+        api_params['onDelete'] = self._normalize_value(on_delete)
+        api_params['newKey'] = self._normalize_value(new_key)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_indexes(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnRelationship)
+
+
+    def list_indexes(
+        self,
+        database_id: str,
+        table_id: str,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None
+    ) -> ColumnIndexList:
         """
         List indexes on the table.
 
@@ -2790,8 +3364,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnIndexList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2807,18 +3381,30 @@ class TablesDB(Service):
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_index(self, database_id: str, table_id: str, key: str, type: IndexType, columns: List[str], orders: Optional[List[OrderBy]] = None, lengths: Optional[List[float]] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnIndexList)
+
+
+    def create_index(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        type: IndexType,
+        columns: List[str],
+        orders: Optional[List[OrderBy]] = None,
+        lengths: Optional[List[float]] = None
+    ) -> ColumnIndex:
         """
         Creates an index on the columns listed. Your index should include all the columns you will query in a single request.
         Type can be `key`, `fulltext`, or `unique`.
@@ -2842,8 +3428,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnIndex
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2868,22 +3454,30 @@ class TablesDB(Service):
         if columns is None:
             raise AppwriteException('Missing required parameter: "columns"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['key'] = key
-        api_params['type'] = type
-        api_params['columns'] = columns
+        api_params['key'] = self._normalize_value(key)
+        api_params['type'] = self._normalize_value(type)
+        api_params['columns'] = self._normalize_value(columns)
         if orders is not None:
-            api_params['orders'] = orders
+            api_params['orders'] = self._normalize_value(orders)
         if lengths is not None:
-            api_params['lengths'] = lengths
+            api_params['lengths'] = self._normalize_value(lengths)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_index(self, database_id: str, table_id: str, key: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnIndex)
+
+
+    def get_index(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str
+    ) -> ColumnIndex:
         """
         Get index by ID.
 
@@ -2898,8 +3492,8 @@ class TablesDB(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        ColumnIndex
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -2918,15 +3512,23 @@ class TablesDB(Service):
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def delete_index(self, database_id: str, table_id: str, key: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=ColumnIndex)
+
+
+    def delete_index(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str
+    ) -> Dict[str, Any]:
         """
         Delete an index.
 
@@ -2961,16 +3563,28 @@ class TablesDB(Service):
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{key}', key)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_rows(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None, total: Optional[bool] = None, ttl: Optional[float] = None) -> Dict[str, Any]:
+        return response
+
+
+    def list_rows(
+        self,
+        database_id: str,
+        table_id: str,
+        queries: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
+        total: Optional[bool] = None,
+        ttl: Optional[float] = None,
+        model_type: Type[T] = dict
+    ) -> RowList[T]:
         """
         Get a list of all the user's rows in a given table. You can use the query params to filter your results.
 
@@ -2989,10 +3603,13 @@ class TablesDB(Service):
         ttl : Optional[float]
             TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        RowList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3008,22 +3625,34 @@ class TablesDB(Service):
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+            api_params['transactionId'] = self._normalize_value(transaction_id)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
         if ttl is not None:
-            api_params['ttl'] = ttl
+            api_params['ttl'] = self._normalize_value(ttl)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_row(self, database_id: str, table_id: str, row_id: str, data: dict, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+        return RowList.with_data(response, model_type)
+
+
+    def create_row(
+        self,
+        database_id: str,
+        table_id: str,
+        row_id: str,
+        data: Dict[str, Any],
+        permissions: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Create a new Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -3035,17 +3664,20 @@ class TablesDB(Service):
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable). Make sure to define columns before creating rows.
         row_id : str
             Row ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        data : dict
+        data : Dict[str, Any]
             Row data as JSON object.
         permissions : Optional[List[str]]
             An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3067,19 +3699,29 @@ class TablesDB(Service):
         if data is None:
             raise AppwriteException('Missing required parameter: "data"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['rowId'] = row_id
-        api_params['data'] = data
-        api_params['permissions'] = permissions
-        api_params['transactionId'] = transaction_id
+        api_params['rowId'] = self._normalize_value(row_id)
+        api_params['data'] = self._normalize_value(data)
+        api_params['permissions'] = self._normalize_value(permissions)
+        api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def create_rows(self, database_id: str, table_id: str, rows: List[dict], transaction_id: Optional[str] = None) -> Dict[str, Any]:
+        return Row.with_data(response, model_type)
+
+
+    def create_rows(
+        self,
+        database_id: str,
+        table_id: str,
+        rows: List[Dict[str, Any]],
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict
+    ) -> RowList[T]:
         """
         Create new Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -3089,15 +3731,18 @@ class TablesDB(Service):
             Database ID.
         table_id : str
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable). Make sure to define columns before creating rows.
-        rows : List[dict]
+        rows : List[Dict[str, Any]]
             Array of rows data as JSON objects.
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        RowList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3116,17 +3761,27 @@ class TablesDB(Service):
         if rows is None:
             raise AppwriteException('Missing required parameter: "rows"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['rows'] = rows
-        api_params['transactionId'] = transaction_id
+        api_params['rows'] = self._normalize_value(rows)
+        api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def upsert_rows(self, database_id: str, table_id: str, rows: List[dict], transaction_id: Optional[str] = None) -> Dict[str, Any]:
+        return RowList.with_data(response, model_type)
+
+
+    def upsert_rows(
+        self,
+        database_id: str,
+        table_id: str,
+        rows: List[Dict[str, Any]],
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict
+    ) -> RowList[T]:
         """
         Create or update Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
         
@@ -3137,15 +3792,18 @@ class TablesDB(Service):
             Database ID.
         table_id : str
             Table ID.
-        rows : List[dict]
+        rows : List[Dict[str, Any]]
             Array of row data as JSON objects. May contain partial rows.
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        RowList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3164,17 +3822,28 @@ class TablesDB(Service):
         if rows is None:
             raise AppwriteException('Missing required parameter: "rows"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-        api_params['rows'] = rows
-        api_params['transactionId'] = transaction_id
+        api_params['rows'] = self._normalize_value(rows)
+        api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_rows(self, database_id: str, table_id: str, data: Optional[dict] = None, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+        return RowList.with_data(response, model_type)
+
+
+    def update_rows(
+        self,
+        database_id: str,
+        table_id: str,
+        data: Optional[Dict[str, Any]] = None,
+        queries: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict
+    ) -> RowList[T]:
         """
         Update all rows that match your queries, if no queries are submitted then all rows are updated. You can pass only specific fields to be updated.
 
@@ -3184,17 +3853,20 @@ class TablesDB(Service):
             Database ID.
         table_id : str
             Table ID.
-        data : Optional[dict]
+        data : Optional[Dict[str, Any]]
             Row data as JSON object. Include only column and value pairs to be updated.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        RowList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3210,20 +3882,30 @@ class TablesDB(Service):
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
         if data is not None:
-            api_params['data'] = data
+            api_params['data'] = self._normalize_value(data)
         if queries is not None:
-            api_params['queries'] = queries
-        api_params['transactionId'] = transaction_id
+            api_params['queries'] = self._normalize_value(queries)
+        api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_rows(self, database_id: str, table_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+        return RowList.with_data(response, model_type)
+
+
+    def delete_rows(
+        self,
+        database_id: str,
+        table_id: str,
+        queries: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict
+    ) -> RowList[T]:
         """
         Bulk delete rows using queries, if no queries are passed then all rows are deleted.
 
@@ -3238,10 +3920,13 @@ class TablesDB(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        RowList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3257,18 +3942,29 @@ class TablesDB(Service):
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
-        api_params['transactionId'] = transaction_id
+            api_params['queries'] = self._normalize_value(queries)
+        api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_row(self, database_id: str, table_id: str, row_id: str, queries: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+        return RowList.with_data(response, model_type)
+
+
+    def get_row(
+        self,
+        database_id: str,
+        table_id: str,
+        row_id: str,
+        queries: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Get a row by its unique ID. This endpoint response returns a JSON object with the row data.
 
@@ -3285,10 +3981,13 @@ class TablesDB(Service):
         transaction_id : Optional[str]
             Transaction ID to read uncommitted changes within the transaction.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3307,19 +4006,31 @@ class TablesDB(Service):
         if row_id is None:
             raise AppwriteException('Missing required parameter: "row_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{rowId}', row_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if transaction_id is not None:
-            api_params['transactionId'] = transaction_id
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def upsert_row(self, database_id: str, table_id: str, row_id: str, data: Optional[dict] = None, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+        return Row.with_data(response, model_type)
+
+
+    def upsert_row(
+        self,
+        database_id: str,
+        table_id: str,
+        row_id: str,
+        data: Optional[Dict[str, Any]] = None,
+        permissions: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Create or update a Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
 
@@ -3331,17 +4042,20 @@ class TablesDB(Service):
             Table ID.
         row_id : str
             Row ID.
-        data : Optional[dict]
+        data : Optional[Dict[str, Any]]
             Row data as JSON object. Include all required columns of the row to be created or updated.
         permissions : Optional[List[str]]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3360,20 +4074,32 @@ class TablesDB(Service):
         if row_id is None:
             raise AppwriteException('Missing required parameter: "row_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{rowId}', row_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
 
         if data is not None:
-            api_params['data'] = data
-        api_params['permissions'] = permissions
-        api_params['transactionId'] = transaction_id
+            api_params['data'] = self._normalize_value(data)
+        api_params['permissions'] = self._normalize_value(permissions)
+        api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_row(self, database_id: str, table_id: str, row_id: str, data: Optional[dict] = None, permissions: Optional[List[str]] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+        return Row.with_data(response, model_type)
+
+
+    def update_row(
+        self,
+        database_id: str,
+        table_id: str,
+        row_id: str,
+        data: Optional[Dict[str, Any]] = None,
+        permissions: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Update a row by its unique ID. Using the patch method you can pass only specific fields that will get updated.
 
@@ -3385,17 +4111,20 @@ class TablesDB(Service):
             Table ID.
         row_id : str
             Row ID.
-        data : Optional[dict]
+        data : Optional[Dict[str, Any]]
             Row data as JSON object. Include only columns and value pairs to be updated.
         permissions : Optional[List[str]]
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3414,20 +4143,29 @@ class TablesDB(Service):
         if row_id is None:
             raise AppwriteException('Missing required parameter: "row_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{rowId}', row_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
 
         if data is not None:
-            api_params['data'] = data
-        api_params['permissions'] = permissions
-        api_params['transactionId'] = transaction_id
+            api_params['data'] = self._normalize_value(data)
+        api_params['permissions'] = self._normalize_value(permissions)
+        api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_row(self, database_id: str, table_id: str, row_id: str, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+        return Row.with_data(response, model_type)
+
+
+    def delete_row(
+        self,
+        database_id: str,
+        table_id: str,
+        row_id: str,
+        transaction_id: Optional[str] = None
+    ) -> Dict[str, Any]:
         """
         Delete a row by its unique ID.
 
@@ -3464,17 +4202,30 @@ class TablesDB(Service):
         if row_id is None:
             raise AppwriteException('Missing required parameter: "row_id"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{rowId}', row_id)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
 
-        api_params['transactionId'] = transaction_id
+        api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def decrement_row_column(self, database_id: str, table_id: str, row_id: str, column: str, value: Optional[float] = None, min: Optional[float] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+        return response
+
+
+    def decrement_row_column(
+        self,
+        database_id: str,
+        table_id: str,
+        row_id: str,
+        column: str,
+        value: Optional[float] = None,
+        min: Optional[float] = None,
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Decrement a specific column of a row by a given value.
 
@@ -3495,10 +4246,13 @@ class TablesDB(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3520,21 +4274,34 @@ class TablesDB(Service):
         if column is None:
             raise AppwriteException('Missing required parameter: "column"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{rowId}', row_id)
-        api_path = api_path.replace('{column}', column)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
+        api_path = api_path.replace('{column}', str(self._normalize_value(column)))
 
         if value is not None:
-            api_params['value'] = value
-        api_params['min'] = min
-        api_params['transactionId'] = transaction_id
+            api_params['value'] = self._normalize_value(value)
+        api_params['min'] = self._normalize_value(min)
+        api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def increment_row_column(self, database_id: str, table_id: str, row_id: str, column: str, value: Optional[float] = None, max: Optional[float] = None, transaction_id: Optional[str] = None) -> Dict[str, Any]:
+        return Row.with_data(response, model_type)
+
+
+    def increment_row_column(
+        self,
+        database_id: str,
+        table_id: str,
+        row_id: str,
+        column: str,
+        value: Optional[float] = None,
+        max: Optional[float] = None,
+        transaction_id: Optional[str] = None,
+        model_type: Type[T] = dict
+    ) -> Row[T]:
         """
         Increment a specific column of a row by a given value.
 
@@ -3555,10 +4322,13 @@ class TablesDB(Service):
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Row[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -3580,16 +4350,19 @@ class TablesDB(Service):
         if column is None:
             raise AppwriteException('Missing required parameter: "column"')
 
-        api_path = api_path.replace('{databaseId}', database_id)
-        api_path = api_path.replace('{tableId}', table_id)
-        api_path = api_path.replace('{rowId}', row_id)
-        api_path = api_path.replace('{column}', column)
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
+        api_path = api_path.replace('{column}', str(self._normalize_value(column)))
 
         if value is not None:
-            api_params['value'] = value
-        api_params['max'] = max
-        api_params['transactionId'] = transaction_id
+            api_params['value'] = self._normalize_value(value)
+        api_params['max'] = self._normalize_value(max)
+        api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
+
+        return Row.with_data(response, model_type)
+

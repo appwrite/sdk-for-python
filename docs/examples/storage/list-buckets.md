@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.storage import Storage
+from appwrite.models import BucketList
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,9 +10,11 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 storage = Storage(client)
 
-result = storage.list_buckets(
+result: BucketList = storage.list_buckets(
     queries = [], # optional
     search = '<SEARCH>', # optional
     total = False # optional
 )
+
+print(result.model_dump())
 ```

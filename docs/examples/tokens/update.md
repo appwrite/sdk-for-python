@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.tokens import Tokens
+from appwrite.models import ResourceToken
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,8 +10,10 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 tokens = Tokens(client)
 
-result = tokens.update(
+result: ResourceToken = tokens.update(
     token_id = '<TOKEN_ID>',
     expire = '' # optional
 )
+
+print(result.model_dump())
 ```

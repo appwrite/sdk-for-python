@@ -1,14 +1,27 @@
 from ..service import Service
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from ..models.team_list import TeamList;
+from ..models.team import Team;
+from ..models.membership_list import MembershipList;
+from ..models.membership import Membership;
+from ..models.preferences import Preferences;
+
+T = TypeVar('T')
 
 class Teams(Service):
 
     def __init__(self, client) -> None:
         super(Teams, self).__init__(client)
 
-    def list(self, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+    def list(
+        self,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None,
+        model_type: Type[T] = dict
+    ) -> TeamList[T]:
         """
         Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
 
@@ -21,10 +34,13 @@ class Teams(Service):
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        TeamList[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -36,16 +52,25 @@ class Teams(Service):
         api_params = {}
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if search is not None:
-            api_params['search'] = search
+            api_params['search'] = self._normalize_value(search)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create(self, team_id: str, name: str, roles: Optional[List[str]] = None) -> Dict[str, Any]:
+        return TeamList.with_data(response, model_type)
+
+
+    def create(
+        self,
+        team_id: str,
+        name: str,
+        roles: Optional[List[str]] = None,
+        model_type: Type[T] = dict
+    ) -> Team[T]:
         """
         Create a new team. The user who creates the team will automatically be assigned as the owner of the team. Only the users with the owner role can invite new members, add new owners and delete or update the team.
 
@@ -58,10 +83,13 @@ class Teams(Service):
         roles : Optional[List[str]]
             Array of strings. Use this param to set the roles in the team for the user who created it. The default role is **owner**. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 32 characters long.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Team[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -78,16 +106,23 @@ class Teams(Service):
             raise AppwriteException('Missing required parameter: "name"')
 
 
-        api_params['teamId'] = team_id
-        api_params['name'] = name
+        api_params['teamId'] = self._normalize_value(team_id)
+        api_params['name'] = self._normalize_value(name)
         if roles is not None:
-            api_params['roles'] = roles
+            api_params['roles'] = self._normalize_value(roles)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get(self, team_id: str) -> Dict[str, Any]:
+        return Team.with_data(response, model_type)
+
+
+    def get(
+        self,
+        team_id: str,
+        model_type: Type[T] = dict
+    ) -> Team[T]:
         """
         Get a team by its ID. All team members have read access for this resource.
 
@@ -96,10 +131,13 @@ class Teams(Service):
         team_id : str
             Team ID.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Team[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -112,13 +150,21 @@ class Teams(Service):
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
-        api_path = api_path.replace('{teamId}', team_id)
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_name(self, team_id: str, name: str) -> Dict[str, Any]:
+        return Team.with_data(response, model_type)
+
+
+    def update_name(
+        self,
+        team_id: str,
+        name: str,
+        model_type: Type[T] = dict
+    ) -> Team[T]:
         """
         Update the team's name by its unique ID.
 
@@ -129,10 +175,13 @@ class Teams(Service):
         name : str
             New team name. Max length: 128 chars.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Team[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -148,15 +197,21 @@ class Teams(Service):
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
 
-        api_path = api_path.replace('{teamId}', team_id)
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
 
-        api_params['name'] = name
+        api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete(self, team_id: str) -> Dict[str, Any]:
+        return Team.with_data(response, model_type)
+
+
+    def delete(
+        self,
+        team_id: str
+    ) -> Dict[str, Any]:
         """
         Delete a team using its ID. Only team members with the owner role can delete the team.
 
@@ -181,14 +236,23 @@ class Teams(Service):
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
-        api_path = api_path.replace('{teamId}', team_id)
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def list_memberships(self, team_id: str, queries: Optional[List[str]] = None, search: Optional[str] = None, total: Optional[bool] = None) -> Dict[str, Any]:
+        return response
+
+
+    def list_memberships(
+        self,
+        team_id: str,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None
+    ) -> MembershipList:
         """
         Use this endpoint to list a team's members using the team's ID. All team members have read access to this endpoint. Hide sensitive attributes from the response by toggling membership privacy in the Console.
 
@@ -205,8 +269,8 @@ class Teams(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        MembershipList
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -219,19 +283,31 @@ class Teams(Service):
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
-        api_path = api_path.replace('{teamId}', team_id)
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
 
         if queries is not None:
-            api_params['queries'] = queries
+            api_params['queries'] = self._normalize_value(queries)
         if search is not None:
-            api_params['search'] = search
+            api_params['search'] = self._normalize_value(search)
         if total is not None:
-            api_params['total'] = total
+            api_params['total'] = self._normalize_value(total)
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def create_membership(self, team_id: str, roles: List[str], email: Optional[str] = None, user_id: Optional[str] = None, phone: Optional[str] = None, url: Optional[str] = None, name: Optional[str] = None) -> Dict[str, Any]:
+        return self._parse_response(response, model=MembershipList)
+
+
+    def create_membership(
+        self,
+        team_id: str,
+        roles: List[str],
+        email: Optional[str] = None,
+        user_id: Optional[str] = None,
+        phone: Optional[str] = None,
+        url: Optional[str] = None,
+        name: Optional[str] = None
+    ) -> Membership:
         """
         Invite a new member to join your team. Provide an ID for existing users, or invite unregistered users using an email or phone number. If initiated from a Client SDK, Appwrite will send an email or sms with a link to join the team to the invited user, and an account will be created for them if one doesn't exist. If initiated from a Server SDK, the new member will be added automatically to the team.
         
@@ -261,8 +337,8 @@ class Teams(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Membership
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -278,25 +354,32 @@ class Teams(Service):
         if roles is None:
             raise AppwriteException('Missing required parameter: "roles"')
 
-        api_path = api_path.replace('{teamId}', team_id)
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
 
         if email is not None:
-            api_params['email'] = email
+            api_params['email'] = self._normalize_value(email)
         if user_id is not None:
-            api_params['userId'] = user_id
+            api_params['userId'] = self._normalize_value(user_id)
         if phone is not None:
-            api_params['phone'] = phone
-        api_params['roles'] = roles
+            api_params['phone'] = self._normalize_value(phone)
+        api_params['roles'] = self._normalize_value(roles)
         if url is not None:
-            api_params['url'] = url
+            api_params['url'] = self._normalize_value(url)
         if name is not None:
-            api_params['name'] = name
+            api_params['name'] = self._normalize_value(name)
 
-        return self.client.call('post', api_path, {
+        response = self.client.call('post', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_membership(self, team_id: str, membership_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Membership)
+
+
+    def get_membership(
+        self,
+        team_id: str,
+        membership_id: str
+    ) -> Membership:
         """
         Get a team member by the membership unique id. All team members have read access for this resource. Hide sensitive attributes from the response by toggling membership privacy in the Console.
 
@@ -309,8 +392,8 @@ class Teams(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Membership
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -326,14 +409,22 @@ class Teams(Service):
         if membership_id is None:
             raise AppwriteException('Missing required parameter: "membership_id"')
 
-        api_path = api_path.replace('{teamId}', team_id)
-        api_path = api_path.replace('{membershipId}', membership_id)
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
+        api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_membership(self, team_id: str, membership_id: str, roles: List[str]) -> Dict[str, Any]:
+        return self._parse_response(response, model=Membership)
+
+
+    def update_membership(
+        self,
+        team_id: str,
+        membership_id: str,
+        roles: List[str]
+    ) -> Membership:
         """
         Modify the roles of a team member. Only team members with the owner role have access to this endpoint. Learn more about [roles and permissions](https://appwrite.io/docs/permissions).
         
@@ -349,8 +440,8 @@ class Teams(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Membership
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -369,16 +460,23 @@ class Teams(Service):
         if roles is None:
             raise AppwriteException('Missing required parameter: "roles"')
 
-        api_path = api_path.replace('{teamId}', team_id)
-        api_path = api_path.replace('{membershipId}', membership_id)
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
+        api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
 
-        api_params['roles'] = roles
+        api_params['roles'] = self._normalize_value(roles)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def delete_membership(self, team_id: str, membership_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Membership)
+
+
+    def delete_membership(
+        self,
+        team_id: str,
+        membership_id: str
+    ) -> Dict[str, Any]:
         """
         This endpoint allows a user to leave a team or for a team owner to delete the membership of any other team member. You can also use this endpoint to delete a user membership even if it is not accepted.
 
@@ -408,15 +506,24 @@ class Teams(Service):
         if membership_id is None:
             raise AppwriteException('Missing required parameter: "membership_id"')
 
-        api_path = api_path.replace('{teamId}', team_id)
-        api_path = api_path.replace('{membershipId}', membership_id)
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
+        api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
 
 
-        return self.client.call('delete', api_path, {
+        response = self.client.call('delete', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def update_membership_status(self, team_id: str, membership_id: str, user_id: str, secret: str) -> Dict[str, Any]:
+        return response
+
+
+    def update_membership_status(
+        self,
+        team_id: str,
+        membership_id: str,
+        user_id: str,
+        secret: str
+    ) -> Membership:
         """
         Use this endpoint to allow a user to accept an invitation to join a team after being redirected back to your app from the invitation email received by the user.
         
@@ -436,8 +543,8 @@ class Teams(Service):
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Membership
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -459,17 +566,24 @@ class Teams(Service):
         if secret is None:
             raise AppwriteException('Missing required parameter: "secret"')
 
-        api_path = api_path.replace('{teamId}', team_id)
-        api_path = api_path.replace('{membershipId}', membership_id)
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
+        api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
 
-        api_params['userId'] = user_id
-        api_params['secret'] = secret
+        api_params['userId'] = self._normalize_value(user_id)
+        api_params['secret'] = self._normalize_value(secret)
 
-        return self.client.call('patch', api_path, {
+        response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
         }, api_params)
 
-    def get_prefs(self, team_id: str) -> Dict[str, Any]:
+        return self._parse_response(response, model=Membership)
+
+
+    def get_prefs(
+        self,
+        team_id: str,
+        model_type: Type[T] = dict
+    ) -> Preferences[T]:
         """
         Get the team's shared preferences by its unique ID. If a preference doesn't need to be shared by all team members, prefer storing them in [user preferences](https://appwrite.io/docs/references/cloud/client-web/account#getPrefs).
 
@@ -478,10 +592,13 @@ class Teams(Service):
         team_id : str
             Team ID.
         
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Preferences[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -494,13 +611,21 @@ class Teams(Service):
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
 
-        api_path = api_path.replace('{teamId}', team_id)
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
 
 
-        return self.client.call('get', api_path, {
+        response = self.client.call('get', api_path, {
         }, api_params)
 
-    def update_prefs(self, team_id: str, prefs: dict) -> Dict[str, Any]:
+        return Preferences.with_data(response, model_type)
+
+
+    def update_prefs(
+        self,
+        team_id: str,
+        prefs: Dict[str, Any],
+        model_type: Type[T] = dict
+    ) -> Preferences[T]:
         """
         Update the team's preferences by its unique ID. The object you pass is stored as is and replaces any previous value. The maximum allowed prefs size is 64kB and throws an error if exceeded.
 
@@ -508,13 +633,16 @@ class Teams(Service):
         ----------
         team_id : str
             Team ID.
-        prefs : dict
+        prefs : Dict[str, Any]
             Prefs key-value JSON object.
+        
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
         
         Returns
         -------
-        Dict[str, Any]
-            API response as a dictionary
+        Preferences[T]
+            API response as a typed Pydantic model
         
         Raises
         ------
@@ -530,10 +658,13 @@ class Teams(Service):
         if prefs is None:
             raise AppwriteException('Missing required parameter: "prefs"')
 
-        api_path = api_path.replace('{teamId}', team_id)
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
 
-        api_params['prefs'] = prefs
+        api_params['prefs'] = self._normalize_value(prefs)
 
-        return self.client.call('put', api_path, {
+        response = self.client.call('put', api_path, {
             'content-type': 'application/json',
         }, api_params)
+
+        return Preferences.with_data(response, model_type)
+

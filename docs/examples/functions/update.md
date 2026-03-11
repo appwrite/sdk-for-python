@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.functions import Functions
+from appwrite.models import Function
 from appwrite.enums import Runtime
 from appwrite.enums import Scopes
 
@@ -11,7 +12,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 functions = Functions(client)
 
-result = functions.update(
+result: Function = functions.update(
     function_id = '<FUNCTION_ID>',
     name = '<NAME>',
     runtime = Runtime.NODE_14_5, # optional
@@ -31,4 +32,6 @@ result = functions.update(
     provider_root_directory = '<PROVIDER_ROOT_DIRECTORY>', # optional
     specification = '' # optional
 )
+
+print(result.model_dump())
 ```

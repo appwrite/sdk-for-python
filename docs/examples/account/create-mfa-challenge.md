@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.account import Account
+from appwrite.models import MfaChallenge
 from appwrite.enums import AuthenticationFactor
 
 client = Client()
@@ -10,7 +11,9 @@ client.set_session('') # The user session to authenticate with
 
 account = Account(client)
 
-result = account.create_mfa_challenge(
+result: MfaChallenge = account.create_mfa_challenge(
     factor = AuthenticationFactor.EMAIL
 )
+
+print(result.model_dump())
 ```

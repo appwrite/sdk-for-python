@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.sites import Sites
+from appwrite.models import Site
 from appwrite.enums import Framework
 from appwrite.enums import BuildRuntime
 from appwrite.enums import Adapter
@@ -12,7 +13,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 sites = Sites(client)
 
-result = sites.create(
+result: Site = sites.create(
     site_id = '<SITE_ID>',
     name = '<NAME>',
     framework = Framework.ANALOG,
@@ -32,4 +33,6 @@ result = sites.create(
     provider_root_directory = '<PROVIDER_ROOT_DIRECTORY>', # optional
     specification = '' # optional
 )
+
+print(result.model_dump())
 ```

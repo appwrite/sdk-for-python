@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.tables_db import TablesDB
+from appwrite.models import Table
 from appwrite.permission import Permission
 from appwrite.role import Role
 
@@ -11,7 +12,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 tables_db = TablesDB(client)
 
-result = tables_db.create_table(
+result: Table = tables_db.create_table(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
     name = '<NAME>',
@@ -21,4 +22,6 @@ result = tables_db.create_table(
     columns = [], # optional
     indexes = [] # optional
 )
+
+print(result.model_dump())
 ```

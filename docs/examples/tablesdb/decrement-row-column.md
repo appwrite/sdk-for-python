@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.tables_db import TablesDB
+from appwrite.models import Row
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,7 +10,7 @@ client.set_session('') # The user session to authenticate with
 
 tables_db = TablesDB(client)
 
-result = tables_db.decrement_row_column(
+result: Row = tables_db.decrement_row_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
     row_id = '<ROW_ID>',
@@ -18,4 +19,6 @@ result = tables_db.decrement_row_column(
     min = None, # optional
     transaction_id = '<TRANSACTION_ID>' # optional
 )
+
+print(result.model_dump())
 ```

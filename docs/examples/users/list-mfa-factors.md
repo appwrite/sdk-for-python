@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.users import Users
+from appwrite.models import MfaFactors
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,7 +10,9 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 users = Users(client)
 
-result = users.list_mfa_factors(
+result: MfaFactors = users.list_mfa_factors(
     user_id = '<USER_ID>'
 )
+
+print(result.model_dump())
 ```

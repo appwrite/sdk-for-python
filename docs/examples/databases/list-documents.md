@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.databases import Databases
+from appwrite.models import DocumentList
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,7 +10,7 @@ client.set_session('') # The user session to authenticate with
 
 databases = Databases(client)
 
-result = databases.list_documents(
+result: DocumentList = databases.list_documents(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
     queries = [], # optional
@@ -17,4 +18,6 @@ result = databases.list_documents(
     total = False, # optional
     ttl = 0 # optional
 )
+
+print(result.model_dump())
 ```

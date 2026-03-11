@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.tables_db import TablesDB
+from appwrite.models import ColumnIndex
 from appwrite.enums import IndexType
 from appwrite.enums import OrderBy
 
@@ -11,7 +12,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 tables_db = TablesDB(client)
 
-result = tables_db.create_index(
+result: ColumnIndex = tables_db.create_index(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
     key = '',
@@ -20,4 +21,6 @@ result = tables_db.create_index(
     orders = [OrderBy.ASC], # optional
     lengths = [] # optional
 )
+
+print(result.model_dump())
 ```

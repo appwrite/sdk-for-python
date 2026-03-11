@@ -1,6 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.teams import Teams
+from appwrite.models import Membership
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -9,7 +10,7 @@ client.set_session('') # The user session to authenticate with
 
 teams = Teams(client)
 
-result = teams.create_membership(
+result: Membership = teams.create_membership(
     team_id = '<TEAM_ID>',
     roles = [],
     email = 'email@example.com', # optional
@@ -18,4 +19,6 @@ result = teams.create_membership(
     url = 'https://example.com', # optional
     name = '<NAME>' # optional
 )
+
+print(result.model_dump())
 ```
