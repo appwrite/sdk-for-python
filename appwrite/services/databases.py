@@ -31,7 +31,7 @@ from ..models.attribute_varchar import AttributeVarchar;
 from ..models.document_list import DocumentList;
 from ..models.document import Document;
 from ..models.index_list import IndexList;
-from ..enums.index_type import IndexType;
+from ..enums.databases_index_type import DatabasesIndexType;
 from ..enums.order_by import OrderBy;
 from ..models.index import Index;
 
@@ -4345,7 +4345,7 @@ class Databases(Service):
         database_id: str,
         collection_id: str,
         key: str,
-        type: IndexType,
+        type: DatabasesIndexType,
         attributes: List[str],
         orders: Optional[List[OrderBy]] = None,
         lengths: Optional[List[float]] = None
@@ -4364,7 +4364,7 @@ class Databases(Service):
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
         key : str
             Index Key.
-        type : IndexType
+        type : DatabasesIndexType
             Index type.
         attributes : List[str]
             Array of attributes to index. Maximum of 100 attributes are allowed, each 32 characters long.

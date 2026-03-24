@@ -12,11 +12,11 @@ class Log(AppwriteModel):
     event : str
         Event name.
     userid : str
-        User ID.
+        User ID of the actor recorded for this log. During impersonation, this is the original impersonator, not the impersonated target user.
     useremail : str
-        User Email.
+        User email of the actor recorded for this log. During impersonation, this is the original impersonator.
     username : str
-        User Name.
+        User name of the actor recorded for this log. During impersonation, this is the original impersonator.
     mode : str
         API mode when event triggered.
     ip : str

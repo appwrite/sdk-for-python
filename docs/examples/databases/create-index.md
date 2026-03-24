@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.databases import Databases
 from appwrite.models import Index
-from appwrite.enums import IndexType
+from appwrite.enums import DatabasesIndexType
 from appwrite.enums import OrderBy
 
 client = Client()
@@ -16,7 +16,7 @@ result: Index = databases.create_index(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
     key = '',
-    type = IndexType.KEY,
+    type = DatabasesIndexType.KEY,
     attributes = [],
     orders = [OrderBy.ASC], # optional
     lengths = [] # optional

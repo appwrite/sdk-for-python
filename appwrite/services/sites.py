@@ -81,6 +81,7 @@ class Sites(Service):
         timeout: Optional[float] = None,
         install_command: Optional[str] = None,
         build_command: Optional[str] = None,
+        start_command: Optional[str] = None,
         output_directory: Optional[str] = None,
         adapter: Optional[Adapter] = None,
         installation_id: Optional[str] = None,
@@ -89,7 +90,9 @@ class Sites(Service):
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
-        specification: Optional[str] = None
+        build_specification: Optional[str] = None,
+        runtime_specification: Optional[str] = None,
+        deployment_retention: Optional[float] = None
     ) -> Site:
         """
         Create a new site.
@@ -114,6 +117,8 @@ class Sites(Service):
             Install Command.
         build_command : Optional[str]
             Build Command.
+        start_command : Optional[str]
+            Custom start command. Leave empty to use default.
         output_directory : Optional[str]
             Output Directory for site.
         adapter : Optional[Adapter]
@@ -130,8 +135,12 @@ class Sites(Service):
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
         provider_root_directory : Optional[str]
             Path to site code in the linked repo.
-        specification : Optional[str]
-            Framework specification for the site and builds.
+        build_specification : Optional[str]
+            Build specification for the site deployments.
+        runtime_specification : Optional[str]
+            Runtime specification for the SSR executions.
+        deployment_retention : Optional[float]
+            Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
         
         Returns
         -------
@@ -172,6 +181,8 @@ class Sites(Service):
             api_params['installCommand'] = self._normalize_value(install_command)
         if build_command is not None:
             api_params['buildCommand'] = self._normalize_value(build_command)
+        if start_command is not None:
+            api_params['startCommand'] = self._normalize_value(start_command)
         if output_directory is not None:
             api_params['outputDirectory'] = self._normalize_value(output_directory)
         api_params['buildRuntime'] = self._normalize_value(build_runtime)
@@ -189,8 +200,12 @@ class Sites(Service):
             api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
             api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
-        if specification is not None:
-            api_params['specification'] = self._normalize_value(specification)
+        if build_specification is not None:
+            api_params['buildSpecification'] = self._normalize_value(build_specification)
+        if runtime_specification is not None:
+            api_params['runtimeSpecification'] = self._normalize_value(runtime_specification)
+        if deployment_retention is not None:
+            api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
 
         response = self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -298,6 +313,7 @@ class Sites(Service):
         timeout: Optional[float] = None,
         install_command: Optional[str] = None,
         build_command: Optional[str] = None,
+        start_command: Optional[str] = None,
         output_directory: Optional[str] = None,
         build_runtime: Optional[BuildRuntime] = None,
         adapter: Optional[Adapter] = None,
@@ -307,7 +323,9 @@ class Sites(Service):
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
-        specification: Optional[str] = None
+        build_specification: Optional[str] = None,
+        runtime_specification: Optional[str] = None,
+        deployment_retention: Optional[float] = None
     ) -> Site:
         """
         Update site by its unique ID.
@@ -330,6 +348,8 @@ class Sites(Service):
             Install Command.
         build_command : Optional[str]
             Build Command.
+        start_command : Optional[str]
+            Custom start command. Leave empty to use default.
         output_directory : Optional[str]
             Output Directory for site.
         build_runtime : Optional[BuildRuntime]
@@ -348,8 +368,12 @@ class Sites(Service):
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
         provider_root_directory : Optional[str]
             Path to site code in the linked repo.
-        specification : Optional[str]
-            Framework specification for the site and builds.
+        build_specification : Optional[str]
+            Build specification for the site deployments.
+        runtime_specification : Optional[str]
+            Runtime specification for the SSR executions.
+        deployment_retention : Optional[float]
+            Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
         
         Returns
         -------
@@ -387,6 +411,8 @@ class Sites(Service):
             api_params['installCommand'] = self._normalize_value(install_command)
         if build_command is not None:
             api_params['buildCommand'] = self._normalize_value(build_command)
+        if start_command is not None:
+            api_params['startCommand'] = self._normalize_value(start_command)
         if output_directory is not None:
             api_params['outputDirectory'] = self._normalize_value(output_directory)
         if build_runtime is not None:
@@ -405,8 +431,12 @@ class Sites(Service):
             api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
             api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
-        if specification is not None:
-            api_params['specification'] = self._normalize_value(specification)
+        if build_specification is not None:
+            api_params['buildSpecification'] = self._normalize_value(build_specification)
+        if runtime_specification is not None:
+            api_params['runtimeSpecification'] = self._normalize_value(runtime_specification)
+        if deployment_retention is not None:
+            api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
 
         response = self.client.call('put', api_path, {
             'content-type': 'application/json',

@@ -1,6 +1,6 @@
 from enum import Enum
 
-class IndexType(Enum):
+class DocumentsDBIndexType(Enum):
     KEY = "key"
     FULLTEXT = "fulltext"
     UNIQUE = "unique"

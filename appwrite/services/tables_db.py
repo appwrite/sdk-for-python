@@ -29,7 +29,7 @@ from ..models.column_text import ColumnText;
 from ..models.column_url import ColumnUrl;
 from ..models.column_varchar import ColumnVarchar;
 from ..models.column_index_list import ColumnIndexList;
-from ..enums.index_type import IndexType;
+from ..enums.tables_db_index_type import TablesDBIndexType;
 from ..enums.order_by import OrderBy;
 from ..models.column_index import ColumnIndex;
 from ..models.row_list import RowList;
@@ -3400,7 +3400,7 @@ class TablesDB(Service):
         database_id: str,
         table_id: str,
         key: str,
-        type: IndexType,
+        type: TablesDBIndexType,
         columns: List[str],
         orders: Optional[List[OrderBy]] = None,
         lengths: Optional[List[float]] = None
@@ -3417,7 +3417,7 @@ class TablesDB(Service):
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
         key : str
             Index Key.
-        type : IndexType
+        type : TablesDBIndexType
             Index type.
         columns : List[str]
             Array of columns to index. Maximum of 100 columns are allowed, each 32 characters long.

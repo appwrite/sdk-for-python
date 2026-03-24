@@ -89,7 +89,9 @@ class Functions(Service):
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
-        specification: Optional[str] = None
+        build_specification: Optional[str] = None,
+        runtime_specification: Optional[str] = None,
+        deployment_retention: Optional[float] = None
     ) -> Function:
         """
         Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
@@ -130,8 +132,12 @@ class Functions(Service):
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
         provider_root_directory : Optional[str]
             Path to function code in the linked repo.
-        specification : Optional[str]
-            Runtime specification for the function and builds.
+        build_specification : Optional[str]
+            Build specification for the function deployments.
+        runtime_specification : Optional[str]
+            Runtime specification for the function executions.
+        deployment_retention : Optional[float]
+            Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
         
         Returns
         -------
@@ -187,8 +193,12 @@ class Functions(Service):
             api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
             api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
-        if specification is not None:
-            api_params['specification'] = self._normalize_value(specification)
+        if build_specification is not None:
+            api_params['buildSpecification'] = self._normalize_value(build_specification)
+        if runtime_specification is not None:
+            api_params['runtimeSpecification'] = self._normalize_value(runtime_specification)
+        if deployment_retention is not None:
+            api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
 
         response = self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -305,7 +315,9 @@ class Functions(Service):
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
-        specification: Optional[str] = None
+        build_specification: Optional[str] = None,
+        runtime_specification: Optional[str] = None,
+        deployment_retention: Optional[float] = None
     ) -> Function:
         """
         Update function by its unique ID.
@@ -346,8 +358,12 @@ class Functions(Service):
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
         provider_root_directory : Optional[str]
             Path to function code in the linked repo.
-        specification : Optional[str]
-            Runtime specification for the function and builds.
+        build_specification : Optional[str]
+            Build specification for the function deployments.
+        runtime_specification : Optional[str]
+            Runtime specification for the function executions.
+        deployment_retention : Optional[float]
+            Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
         
         Returns
         -------
@@ -400,8 +416,12 @@ class Functions(Service):
             api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
             api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
-        if specification is not None:
-            api_params['specification'] = self._normalize_value(specification)
+        if build_specification is not None:
+            api_params['buildSpecification'] = self._normalize_value(build_specification)
+        if runtime_specification is not None:
+            api_params['runtimeSpecification'] = self._normalize_value(runtime_specification)
+        if deployment_retention is not None:
+            api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
 
         response = self.client.call('put', api_path, {
             'content-type': 'application/json',

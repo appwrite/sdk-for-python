@@ -13,8 +13,9 @@ from ..enums.image_format import ImageFormat
 from ..enums.backup_services import BackupServices
 from ..enums.relationship_type import RelationshipType
 from ..enums.relation_mutate import RelationMutate
-from ..enums.index_type import IndexType
+from ..enums.databases_index_type import DatabasesIndexType
 from ..enums.order_by import OrderBy
+from ..enums.documents_db_index_type import DocumentsDBIndexType
 from ..enums.runtime import Runtime
 from ..enums.scopes import Scopes
 from ..enums.template_reference_type import TemplateReferenceType
@@ -29,8 +30,11 @@ from ..enums.build_runtime import BuildRuntime
 from ..enums.adapter import Adapter
 from ..enums.compression import Compression
 from ..enums.image_gravity import ImageGravity
+from ..enums.tables_db_index_type import TablesDBIndexType
 from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
+from ..enums.model import Model
+from ..enums.vectors_db_index_type import VectorsDBIndexType
 from ..enums.database_type import DatabaseType
 from ..enums.attribute_status import AttributeStatus
 from ..enums.column_status import ColumnStatus
@@ -86,10 +90,13 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, RelationMutate):
             return o.value
 
-        if isinstance(o, IndexType):
+        if isinstance(o, DatabasesIndexType):
             return o.value
 
         if isinstance(o, OrderBy):
+            return o.value
+
+        if isinstance(o, DocumentsDBIndexType):
             return o.value
 
         if isinstance(o, Runtime):
@@ -134,10 +141,19 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, ImageGravity):
             return o.value
 
+        if isinstance(o, TablesDBIndexType):
+            return o.value
+
         if isinstance(o, PasswordHash):
             return o.value
 
         if isinstance(o, MessagingProviderType):
+            return o.value
+
+        if isinstance(o, Model):
+            return o.value
+
+        if isinstance(o, VectorsDBIndexType):
             return o.value
 
         if isinstance(o, DatabaseType):

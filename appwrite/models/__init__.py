@@ -21,6 +21,7 @@ from .framework_list import FrameworkList
 from .runtime_list import RuntimeList
 from .deployment_list import DeploymentList
 from .execution_list import ExecutionList
+from .webhook_list import WebhookList
 from .country_list import CountryList
 from .continent_list import ContinentList
 from .language_list import LanguageList
@@ -36,7 +37,10 @@ from .subscriber_list import SubscriberList
 from .target_list import TargetList
 from .transaction_list import TransactionList
 from .specification_list import SpecificationList
+from .vectorsdb_collection_list import VectorsdbCollectionList
+from .embedding_list import EmbeddingList
 from .database import Database
+from .embedding import Embedding
 from .collection import Collection
 from .attribute_list import AttributeList
 from .attribute_string import AttributeString
@@ -56,6 +60,9 @@ from .attribute_varchar import AttributeVarchar
 from .attribute_text import AttributeText
 from .attribute_mediumtext import AttributeMediumtext
 from .attribute_longtext import AttributeLongtext
+from .vectorsdb_collection import VectorsdbCollection
+from .attribute_object import AttributeObject
+from .attribute_vector import AttributeVector
 from .table import Table
 from .column_list import ColumnList
 from .column_string import ColumnString
@@ -107,6 +114,7 @@ from .framework import Framework
 from .framework_adapter import FrameworkAdapter
 from .deployment import Deployment
 from .execution import Execution
+from .webhook import Webhook
 from .variable import Variable
 from .country import Country
 from .continent import Continent
@@ -163,6 +171,7 @@ __all__ = [
     'RuntimeList',
     'DeploymentList',
     'ExecutionList',
+    'WebhookList',
     'CountryList',
     'ContinentList',
     'LanguageList',
@@ -178,7 +187,10 @@ __all__ = [
     'TargetList',
     'TransactionList',
     'SpecificationList',
+    'VectorsdbCollectionList',
+    'EmbeddingList',
     'Database',
+    'Embedding',
     'Collection',
     'AttributeList',
     'AttributeString',
@@ -198,6 +210,9 @@ __all__ = [
     'AttributeText',
     'AttributeMediumtext',
     'AttributeLongtext',
+    'VectorsdbCollection',
+    'AttributeObject',
+    'AttributeVector',
     'Table',
     'ColumnList',
     'ColumnString',
@@ -249,6 +264,7 @@ __all__ = [
     'FrameworkAdapter',
     'Deployment',
     'Execution',
+    'Webhook',
     'Variable',
     'Country',
     'Continent',

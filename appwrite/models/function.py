@@ -28,6 +28,8 @@ class Function(AppwriteModel):
         When disabled, executions will exclude logs and errors, and will be slightly faster.
     runtime : str
         Function execution and build runtime.
+    deploymentretention : float
+        How many days to keep the non-active deployments before they will be automatically deleted.
     deploymentid : str
         Function&#039;s active deployment ID.
     deploymentcreatedat : str
@@ -64,8 +66,10 @@ class Function(AppwriteModel):
         Path to function in VCS (Version Control System) repository
     providersilentmode : bool
         Is VCS (Version Control System) connection is in silent mode? When in silence mode, no comments will be posted on the repository pull or merge requests
-    specification : str
-        Machine specification for builds and executions.
+    buildspecification : str
+        Machine specification for deployment builds.
+    runtimespecification : str
+        Machine specification for executions.
     """
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
@@ -76,6 +80,7 @@ class Function(AppwriteModel):
     live: bool = Field(..., alias='live')
     logging: bool = Field(..., alias='logging')
     runtime: str = Field(..., alias='runtime')
+    deploymentretention: float = Field(..., alias='deploymentRetention')
     deploymentid: str = Field(..., alias='deploymentId')
     deploymentcreatedat: str = Field(..., alias='deploymentCreatedAt')
     latestdeploymentid: str = Field(..., alias='latestDeploymentId')
@@ -94,4 +99,5 @@ class Function(AppwriteModel):
     providerbranch: str = Field(..., alias='providerBranch')
     providerrootdirectory: str = Field(..., alias='providerRootDirectory')
     providersilentmode: bool = Field(..., alias='providerSilentMode')
-    specification: str = Field(..., alias='specification')
+    buildspecification: str = Field(..., alias='buildSpecification')
+    runtimespecification: str = Field(..., alias='runtimeSpecification')
