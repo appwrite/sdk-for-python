@@ -15,7 +15,6 @@ from ..enums.relationship_type import RelationshipType
 from ..enums.relation_mutate import RelationMutate
 from ..enums.databases_index_type import DatabasesIndexType
 from ..enums.order_by import OrderBy
-from ..enums.documents_db_index_type import DocumentsDBIndexType
 from ..enums.runtime import Runtime
 from ..enums.scopes import Scopes
 from ..enums.template_reference_type import TemplateReferenceType
@@ -33,18 +32,16 @@ from ..enums.image_gravity import ImageGravity
 from ..enums.tables_db_index_type import TablesDBIndexType
 from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
-from ..enums.model import Model
-from ..enums.vectors_db_index_type import VectorsDBIndexType
 from ..enums.database_type import DatabaseType
 from ..enums.attribute_status import AttributeStatus
-from ..enums.column_status import ColumnStatus
 from ..enums.index_status import IndexStatus
 from ..enums.deployment_status import DeploymentStatus
 from ..enums.execution_trigger import ExecutionTrigger
 from ..enums.execution_status import ExecutionStatus
-from ..enums.health_antivirus_status import HealthAntivirusStatus
 from ..enums.health_check_status import HealthCheckStatus
+from ..enums.health_antivirus_status import HealthAntivirusStatus
 from ..enums.message_status import MessageStatus
+from ..enums.column_status import ColumnStatus
 
 class ValueClassEncoder(json.JSONEncoder):
     def default(self, o):
@@ -94,9 +91,6 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, OrderBy):
-            return o.value
-
-        if isinstance(o, DocumentsDBIndexType):
             return o.value
 
         if isinstance(o, Runtime):
@@ -150,19 +144,10 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, MessagingProviderType):
             return o.value
 
-        if isinstance(o, Model):
-            return o.value
-
-        if isinstance(o, VectorsDBIndexType):
-            return o.value
-
         if isinstance(o, DatabaseType):
             return o.value
 
         if isinstance(o, AttributeStatus):
-            return o.value
-
-        if isinstance(o, ColumnStatus):
             return o.value
 
         if isinstance(o, IndexStatus):
@@ -177,13 +162,16 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, ExecutionStatus):
             return o.value
 
-        if isinstance(o, HealthAntivirusStatus):
-            return o.value
-
         if isinstance(o, HealthCheckStatus):
             return o.value
 
+        if isinstance(o, HealthAntivirusStatus):
+            return o.value
+
         if isinstance(o, MessageStatus):
+            return o.value
+
+        if isinstance(o, ColumnStatus):
             return o.value
 
         return super().default(o)
