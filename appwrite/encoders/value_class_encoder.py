@@ -34,14 +34,14 @@ from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
 from ..enums.database_type import DatabaseType
 from ..enums.attribute_status import AttributeStatus
+from ..enums.column_status import ColumnStatus
 from ..enums.index_status import IndexStatus
 from ..enums.deployment_status import DeploymentStatus
 from ..enums.execution_trigger import ExecutionTrigger
 from ..enums.execution_status import ExecutionStatus
-from ..enums.health_check_status import HealthCheckStatus
 from ..enums.health_antivirus_status import HealthAntivirusStatus
+from ..enums.health_check_status import HealthCheckStatus
 from ..enums.message_status import MessageStatus
-from ..enums.column_status import ColumnStatus
 
 class ValueClassEncoder(json.JSONEncoder):
     def default(self, o):
@@ -150,6 +150,9 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, AttributeStatus):
             return o.value
 
+        if isinstance(o, ColumnStatus):
+            return o.value
+
         if isinstance(o, IndexStatus):
             return o.value
 
@@ -162,16 +165,13 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, ExecutionStatus):
             return o.value
 
-        if isinstance(o, HealthCheckStatus):
-            return o.value
-
         if isinstance(o, HealthAntivirusStatus):
             return o.value
 
-        if isinstance(o, MessageStatus):
+        if isinstance(o, HealthCheckStatus):
             return o.value
 
-        if isinstance(o, ColumnStatus):
+        if isinstance(o, MessageStatus):
             return o.value
 
         return super().default(o)
