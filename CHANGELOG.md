@@ -1,5 +1,9 @@
 # Change Log
 
+## 17.0.0
+
+* [BREAKING] Changed `$sequence` type from `int` to `string` for rows and documents
+
 ## 16.0.0
 
 * Breaking change: All service methods now return typed Pydantic models instead of `Dict[str, Any]`
