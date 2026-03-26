@@ -13,7 +13,7 @@ from ..enums.image_format import ImageFormat
 from ..enums.backup_services import BackupServices
 from ..enums.relationship_type import RelationshipType
 from ..enums.relation_mutate import RelationMutate
-from ..enums.index_type import IndexType
+from ..enums.databases_index_type import DatabasesIndexType
 from ..enums.order_by import OrderBy
 from ..enums.runtime import Runtime
 from ..enums.scopes import Scopes
@@ -29,6 +29,7 @@ from ..enums.build_runtime import BuildRuntime
 from ..enums.adapter import Adapter
 from ..enums.compression import Compression
 from ..enums.image_gravity import ImageGravity
+from ..enums.tables_db_index_type import TablesDBIndexType
 from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
 from ..enums.database_type import DatabaseType
@@ -86,7 +87,7 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, RelationMutate):
             return o.value
 
-        if isinstance(o, IndexType):
+        if isinstance(o, DatabasesIndexType):
             return o.value
 
         if isinstance(o, OrderBy):
@@ -132,6 +133,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, ImageGravity):
+            return o.value
+
+        if isinstance(o, TablesDBIndexType):
             return o.value
 
         if isinstance(o, PasswordHash):

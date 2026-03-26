@@ -30,7 +30,9 @@ result: Function = functions.update(
     provider_branch = '<PROVIDER_BRANCH>', # optional
     provider_silent_mode = False, # optional
     provider_root_directory = '<PROVIDER_ROOT_DIRECTORY>', # optional
-    specification = '' # optional
+    build_specification = '', # optional
+    runtime_specification = '', # optional
+    deployment_retention = 0 # optional
 )
 
 print(result.model_dump())

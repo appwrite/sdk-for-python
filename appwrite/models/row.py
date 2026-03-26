@@ -13,7 +13,7 @@ class Row(AppwriteModel, Generic[T]):
     ----------
     id : str
         Row ID.
-    sequence : float
+    sequence : str
         Row sequence ID.
     tableid : str
         Table ID.
@@ -27,7 +27,7 @@ class Row(AppwriteModel, Generic[T]):
         Row permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
     """
     id: str = Field(..., alias='$id')
-    sequence: float = Field(..., alias='$sequence')
+    sequence: str = Field(..., alias='$sequence')
     tableid: str = Field(..., alias='$tableId')
     databaseid: str = Field(..., alias='$databaseId')
     createdat: str = Field(..., alias='$createdAt')

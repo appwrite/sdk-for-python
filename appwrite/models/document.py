@@ -13,7 +13,7 @@ class Document(AppwriteModel, Generic[T]):
     ----------
     id : str
         Document ID.
-    sequence : float
+    sequence : str
         Document sequence ID.
     collectionid : str
         Collection ID.
@@ -27,7 +27,7 @@ class Document(AppwriteModel, Generic[T]):
         Document permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
     """
     id: str = Field(..., alias='$id')
-    sequence: float = Field(..., alias='$sequence')
+    sequence: str = Field(..., alias='$sequence')
     collectionid: str = Field(..., alias='$collectionId')
     databaseid: str = Field(..., alias='$databaseId')
     createdat: str = Field(..., alias='$createdAt')

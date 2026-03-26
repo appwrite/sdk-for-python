@@ -26,6 +26,8 @@ class Site(AppwriteModel):
         When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
     framework : str
         Site framework.
+    deploymentretention : float
+        How many days to keep the non-active deployments before they will be automatically deleted.
     deploymentid : str
         Site&#039;s active deployment ID.
     deploymentcreatedat : str
@@ -48,6 +50,8 @@ class Site(AppwriteModel):
         The install command used to install the site dependencies.
     buildcommand : str
         The build command used to build the site.
+    startcommand : str
+        Custom command to use when starting site runtime.
     outputdirectory : str
         The directory where the site build output is located.
     installationid : str
@@ -60,8 +64,10 @@ class Site(AppwriteModel):
         Path to site in VCS (Version Control System) repository
     providersilentmode : bool
         Is VCS (Version Control System) connection is in silent mode? When in silence mode, no comments will be posted on the repository pull or merge requests
-    specification : str
-        Machine specification for builds and executions.
+    buildspecification : str
+        Machine specification for deployment builds.
+    runtimespecification : str
+        Machine specification for SSR executions.
     buildruntime : str
         Site build runtime.
     adapter : str
@@ -77,6 +83,7 @@ class Site(AppwriteModel):
     live: bool = Field(..., alias='live')
     logging: bool = Field(..., alias='logging')
     framework: str = Field(..., alias='framework')
+    deploymentretention: float = Field(..., alias='deploymentRetention')
     deploymentid: str = Field(..., alias='deploymentId')
     deploymentcreatedat: str = Field(..., alias='deploymentCreatedAt')
     deploymentscreenshotlight: str = Field(..., alias='deploymentScreenshotLight')
@@ -88,13 +95,15 @@ class Site(AppwriteModel):
     timeout: float = Field(..., alias='timeout')
     installcommand: str = Field(..., alias='installCommand')
     buildcommand: str = Field(..., alias='buildCommand')
+    startcommand: str = Field(..., alias='startCommand')
     outputdirectory: str = Field(..., alias='outputDirectory')
     installationid: str = Field(..., alias='installationId')
     providerrepositoryid: str = Field(..., alias='providerRepositoryId')
     providerbranch: str = Field(..., alias='providerBranch')
     providerrootdirectory: str = Field(..., alias='providerRootDirectory')
     providersilentmode: bool = Field(..., alias='providerSilentMode')
-    specification: str = Field(..., alias='specification')
+    buildspecification: str = Field(..., alias='buildSpecification')
+    runtimespecification: str = Field(..., alias='runtimeSpecification')
     buildruntime: str = Field(..., alias='buildRuntime')
     adapter: str = Field(..., alias='adapter')
     fallbackfile: str = Field(..., alias='fallbackFile')

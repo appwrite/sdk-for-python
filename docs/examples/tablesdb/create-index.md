@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.tables_db import TablesDB
 from appwrite.models import ColumnIndex
-from appwrite.enums import IndexType
+from appwrite.enums import TablesDBIndexType
 from appwrite.enums import OrderBy
 
 client = Client()
@@ -16,7 +16,7 @@ result: ColumnIndex = tables_db.create_index(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
     key = '',
-    type = IndexType.KEY,
+    type = TablesDBIndexType.KEY,
     columns = [],
     orders = [OrderBy.ASC], # optional
     lengths = [] # optional

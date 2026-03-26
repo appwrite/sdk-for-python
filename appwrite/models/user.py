@@ -58,6 +58,10 @@ class User(AppwriteModel, Generic[T]):
         A user-owned message receiver. A single user may have multiple e.g. emails, phones, and a browser. Each target is registered with a single provider.
     accessedat : str
         Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+    impersonator : Optional[bool]
+        Whether the user can impersonate other users.
+    impersonatoruserid : Optional[str]
+        ID of the original actor performing the impersonation. Present only when the current request is impersonating another user. Internal audit logs attribute the action to this user, while the impersonated target is recorded only in internal audit payload data.
     """
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
@@ -78,6 +82,8 @@ class User(AppwriteModel, Generic[T]):
     prefs: Preferences[T] = Field(..., alias='prefs')
     targets: List[Target] = Field(..., alias='targets')
     accessedat: str = Field(..., alias='accessedAt')
+    impersonator: Optional[bool] = Field(default=None, alias='impersonator')
+    impersonatoruserid: Optional[str] = Field(default=None, alias='impersonatorUserId')
 
     @classmethod
     def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'User[T]':

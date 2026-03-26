@@ -40,7 +40,7 @@ class Users(Service):
         Parameters
         ----------
         queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, email, phone, status, passwordUpdate, registration, emailVerification, phoneVerification, labels
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, email, phone, status, passwordUpdate, registration, emailVerification, phoneVerification, labels, impersonator
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
@@ -827,6 +827,56 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
         api_params['email'] = self._normalize_value(email)
+
+        response = self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+        return User.with_data(response, model_type)
+
+
+    def update_impersonator(
+        self,
+        user_id: str,
+        impersonator: bool,
+        model_type: Type[T] = dict
+    ) -> User[T]:
+        """
+        Enable or disable whether a user can impersonate other users. When impersonation headers are used, the request runs as the target user for API behavior, while internal audit logs still attribute the action to the original impersonator and store the impersonated target details only in internal audit payload data.
+        
+
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        impersonator : bool
+            Whether the user can impersonate other users. When true, the user can browse project users to choose a target and can pass impersonation headers to act as that user. Internal audit logs still attribute impersonated actions to the original impersonator and store the target user details only in internal audit payload data.
+        
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
+        Returns
+        -------
+        User[T]
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/impersonator'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if impersonator is None:
+            raise AppwriteException('Missing required parameter: "impersonator"')
+
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
+
+        api_params['impersonator'] = self._normalize_value(impersonator)
 
         response = self.client.call('patch', api_path, {
             'content-type': 'application/json',
