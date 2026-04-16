@@ -24,6 +24,8 @@ from ..enums.execution_method import ExecutionMethod
 from ..enums.name import Name
 from ..enums.message_priority import MessagePriority
 from ..enums.smtp_encryption import SmtpEncryption
+from ..enums.protocol_id import ProtocolId
+from ..enums.service_id import ServiceId
 from ..enums.framework import Framework
 from ..enums.build_runtime import BuildRuntime
 from ..enums.adapter import Adapter
@@ -39,6 +41,7 @@ from ..enums.index_status import IndexStatus
 from ..enums.deployment_status import DeploymentStatus
 from ..enums.execution_trigger import ExecutionTrigger
 from ..enums.execution_status import ExecutionStatus
+from ..enums.platform_type import PlatformType
 from ..enums.health_antivirus_status import HealthAntivirusStatus
 from ..enums.health_check_status import HealthCheckStatus
 from ..enums.message_status import MessageStatus
@@ -120,6 +123,12 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, SmtpEncryption):
             return o.value
 
+        if isinstance(o, ProtocolId):
+            return o.value
+
+        if isinstance(o, ServiceId):
+            return o.value
+
         if isinstance(o, Framework):
             return o.value
 
@@ -163,6 +172,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, ExecutionStatus):
+            return o.value
+
+        if isinstance(o, PlatformType):
             return o.value
 
         if isinstance(o, HealthAntivirusStatus):

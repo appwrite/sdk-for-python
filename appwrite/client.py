@@ -15,12 +15,12 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : f'AppwritePythonSDK/17.0.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
+            'user-agent' : f'AppwritePythonSDK/18.0.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '17.0.0',
-            'X-Appwrite-Response-Format' : '1.9.0',
+            'x-sdk-version': '18.0.0',
+            'X-Appwrite-Response-Format' : '1.9.1',
         }
 
     def set_self_signed(self, status=True):
@@ -37,6 +37,9 @@ class Client:
     def add_header(self, key, value):
         self._global_headers[key.lower()] = value
         return self
+
+    def get_headers(self):
+        return dict(self._global_headers)
 
     def set_project(self, value):
         """Your project ID"""

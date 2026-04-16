@@ -21,7 +21,7 @@ class Webhooks(Service):
         Parameters
         ----------
         queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, url, httpUser, security, events, enabled, logs, attempts
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, url, authUsername, tls, events, enabled, logs, attempts
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
         
@@ -57,9 +57,10 @@ class Webhooks(Service):
         name: str,
         events: List[str],
         enabled: Optional[bool] = None,
-        security: Optional[bool] = None,
-        http_user: Optional[str] = None,
-        http_pass: Optional[str] = None
+        tls: Optional[bool] = None,
+        auth_username: Optional[str] = None,
+        auth_password: Optional[str] = None,
+        secret: Optional[str] = None
     ) -> Webhook:
         """
         Create a new webhook. Use this endpoint to configure a URL that will receive events from Appwrite when specific events occur.
@@ -76,12 +77,14 @@ class Webhooks(Service):
             Events list. Maximum of 100 events are allowed.
         enabled : Optional[bool]
             Enable or disable a webhook.
-        security : Optional[bool]
+        tls : Optional[bool]
             Certificate verification, false for disabled or true for enabled.
-        http_user : Optional[str]
+        auth_username : Optional[str]
             Webhook HTTP user. Max length: 256 chars.
-        http_pass : Optional[str]
+        auth_password : Optional[str]
             Webhook HTTP password. Max length: 256 chars.
+        secret : Optional[str]
+            Webhook secret key. If not provided, a new key will be generated automatically. Key must be at least 8 characters long, and at max 256 characters.
         
         Returns
         -------
@@ -115,12 +118,13 @@ class Webhooks(Service):
         api_params['events'] = self._normalize_value(events)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
-        if security is not None:
-            api_params['security'] = self._normalize_value(security)
-        if http_user is not None:
-            api_params['httpUser'] = self._normalize_value(http_user)
-        if http_pass is not None:
-            api_params['httpPass'] = self._normalize_value(http_pass)
+        if tls is not None:
+            api_params['tls'] = self._normalize_value(tls)
+        if auth_username is not None:
+            api_params['authUsername'] = self._normalize_value(auth_username)
+        if auth_password is not None:
+            api_params['authPassword'] = self._normalize_value(auth_password)
+        api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -173,9 +177,9 @@ class Webhooks(Service):
         url: str,
         events: List[str],
         enabled: Optional[bool] = None,
-        security: Optional[bool] = None,
-        http_user: Optional[str] = None,
-        http_pass: Optional[str] = None
+        tls: Optional[bool] = None,
+        auth_username: Optional[str] = None,
+        auth_password: Optional[str] = None
     ) -> Webhook:
         """
         Update a webhook by its unique ID. Use this endpoint to update the URL, events, or status of an existing webhook.
@@ -192,11 +196,11 @@ class Webhooks(Service):
             Events list. Maximum of 100 events are allowed.
         enabled : Optional[bool]
             Enable or disable a webhook.
-        security : Optional[bool]
+        tls : Optional[bool]
             Certificate verification, false for disabled or true for enabled.
-        http_user : Optional[str]
+        auth_username : Optional[str]
             Webhook HTTP user. Max length: 256 chars.
-        http_pass : Optional[str]
+        auth_password : Optional[str]
             Webhook HTTP password. Max length: 256 chars.
         
         Returns
@@ -231,12 +235,12 @@ class Webhooks(Service):
         api_params['events'] = self._normalize_value(events)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
-        if security is not None:
-            api_params['security'] = self._normalize_value(security)
-        if http_user is not None:
-            api_params['httpUser'] = self._normalize_value(http_user)
-        if http_pass is not None:
-            api_params['httpPass'] = self._normalize_value(http_pass)
+        if tls is not None:
+            api_params['tls'] = self._normalize_value(tls)
+        if auth_username is not None:
+            api_params['authUsername'] = self._normalize_value(auth_username)
+        if auth_password is not None:
+            api_params['authPassword'] = self._normalize_value(auth_password)
 
         response = self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -283,17 +287,20 @@ class Webhooks(Service):
         return response
 
 
-    def update_signature(
+    def update_secret(
         self,
-        webhook_id: str
+        webhook_id: str,
+        secret: Optional[str] = None
     ) -> Webhook:
         """
-        Update the webhook signature key. This endpoint can be used to regenerate the signature key used to sign and validate payload deliveries for a specific webhook.
+        Update the webhook signing key. This endpoint can be used to regenerate the signing key used to sign and validate payload deliveries for a specific webhook.
 
         Parameters
         ----------
         webhook_id : str
             Webhook ID.
+        secret : Optional[str]
+            Webhook secret key. If not provided, a new key will be generated automatically. Key must be at least 8 characters long, and at max 256 characters.
         
         Returns
         -------
@@ -306,13 +313,14 @@ class Webhooks(Service):
             If API request fails
         """
 
-        api_path = '/webhooks/{webhookId}/signature'
+        api_path = '/webhooks/{webhookId}/secret'
         api_params = {}
         if webhook_id is None:
             raise AppwriteException('Missing required parameter: "webhook_id"')
 
         api_path = api_path.replace('{webhookId}', str(self._normalize_value(webhook_id)))
 
+        api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('patch', api_path, {
             'content-type': 'application/json',

@@ -227,6 +227,7 @@ class Health(Service):
     ) -> HealthQueue:
         """
         Get the number of audit logs that are waiting to be processed in the Appwrite internal queue server.
+        
 
         Parameters
         ----------

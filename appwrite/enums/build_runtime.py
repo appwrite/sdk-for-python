@@ -49,6 +49,7 @@ class BuildRuntime(Enum):
     DART_3_8 = "dart-3.8"
     DART_3_9 = "dart-3.9"
     DART_3_10 = "dart-3.10"
+    DART_3_11 = "dart-3.11"
     DOTNET_6_0 = "dotnet-6.0"
     DOTNET_7_0 = "dotnet-7.0"
     DOTNET_8_0 = "dotnet-8.0"
@@ -87,3 +88,4 @@ class BuildRuntime(Enum):
     FLUTTER_3_32 = "flutter-3.32"
     FLUTTER_3_35 = "flutter-3.35"
     FLUTTER_3_38 = "flutter-3.38"
+    FLUTTER_3_41 = "flutter-3.41"
