@@ -3400,8 +3400,40 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
         }, api_params)
+        if not isinstance(response, dict):
+            raise AppwriteException('Expected object response when hydrating a response model')
 
-        return self._parse_response(response, model=AttributeBoolean)
+        if response.get('type') == 'string' and response.get('format') == 'email':
+            return self._parse_response(response, model=AttributeEmail)
+
+        if response.get('type') == 'string' and response.get('format') == 'enum':
+            return self._parse_response(response, model=AttributeEnum)
+
+        if response.get('type') == 'string' and response.get('format') == 'url':
+            return self._parse_response(response, model=AttributeUrl)
+
+        if response.get('type') == 'string' and response.get('format') == 'ip':
+            return self._parse_response(response, model=AttributeIp)
+
+        if response.get('type') == 'boolean':
+            return self._parse_response(response, model=AttributeBoolean)
+
+        if response.get('type') == 'integer':
+            return self._parse_response(response, model=AttributeInteger)
+
+        if response.get('type') == 'double':
+            return self._parse_response(response, model=AttributeFloat)
+
+        if response.get('type') == 'datetime':
+            return self._parse_response(response, model=AttributeDatetime)
+
+        if response.get('type') == 'relationship':
+            return self._parse_response(response, model=AttributeRelationship)
+
+        if response.get('type') == 'string':
+            return self._parse_response(response, model=AttributeString)
+
+        raise AppwriteException('Unable to match response to any known model')
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_column` instead.")

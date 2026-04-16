@@ -3229,8 +3229,40 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
         }, api_params)
+        if not isinstance(response, dict):
+            raise AppwriteException('Expected object response when hydrating a response model')
 
-        return self._parse_response(response, model=ColumnBoolean)
+        if response.get('type') == 'string' and response.get('format') == 'email':
+            return self._parse_response(response, model=ColumnEmail)
+
+        if response.get('type') == 'string' and response.get('format') == 'enum':
+            return self._parse_response(response, model=ColumnEnum)
+
+        if response.get('type') == 'string' and response.get('format') == 'url':
+            return self._parse_response(response, model=ColumnUrl)
+
+        if response.get('type') == 'string' and response.get('format') == 'ip':
+            return self._parse_response(response, model=ColumnIp)
+
+        if response.get('type') == 'boolean':
+            return self._parse_response(response, model=ColumnBoolean)
+
+        if response.get('type') == 'integer':
+            return self._parse_response(response, model=ColumnInteger)
+
+        if response.get('type') == 'double':
+            return self._parse_response(response, model=ColumnFloat)
+
+        if response.get('type') == 'datetime':
+            return self._parse_response(response, model=ColumnDatetime)
+
+        if response.get('type') == 'relationship':
+            return self._parse_response(response, model=ColumnRelationship)
+
+        if response.get('type') == 'string':
+            return self._parse_response(response, model=ColumnString)
+
+        raise AppwriteException('Unable to match response to any known model')
 
 
     def delete_column(

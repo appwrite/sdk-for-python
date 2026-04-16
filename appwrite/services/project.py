@@ -880,8 +880,25 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
         }, api_params)
+        if not isinstance(response, dict):
+            raise AppwriteException('Expected object response when hydrating a response model')
 
-        return self._parse_response(response, model=PlatformWeb)
+        if response.get('type') == 'web':
+            return self._parse_response(response, model=PlatformWeb)
+
+        if response.get('type') == 'apple':
+            return self._parse_response(response, model=PlatformApple)
+
+        if response.get('type') == 'android':
+            return self._parse_response(response, model=PlatformAndroid)
+
+        if response.get('type') == 'windows':
+            return self._parse_response(response, model=PlatformWindows)
+
+        if response.get('type') == 'linux':
+            return self._parse_response(response, model=PlatformLinux)
+
+        raise AppwriteException('Unable to match response to any known model')
 
 
     def delete_platform(
