@@ -21,14 +21,14 @@ class Webhook(AppwriteModel):
         Webhook URL endpoint.
     events : List[Any]
         Webhook trigger events.
-    security : bool
-        Indicated if SSL / TLS Certificate verification is enabled.
-    httpuser : str
+    tls : bool
+        Indicates if SSL / TLS certificate verification is enabled.
+    authusername : str
         HTTP basic authentication username.
-    httppass : str
+    authpassword : str
         HTTP basic authentication password.
-    signaturekey : str
-        Signature key which can be used to validated incoming
+    secret : str
+        Signature key which can be used to validate incoming webhook payloads. Only returned on creation and secret rotation.
     enabled : bool
         Indicates if this webhook is enabled.
     logs : str
@@ -42,10 +42,10 @@ class Webhook(AppwriteModel):
     name: str = Field(..., alias='name')
     url: str = Field(..., alias='url')
     events: List[Any] = Field(..., alias='events')
-    security: bool = Field(..., alias='security')
-    httpuser: str = Field(..., alias='httpUser')
-    httppass: str = Field(..., alias='httpPass')
-    signaturekey: str = Field(..., alias='signatureKey')
+    tls: bool = Field(..., alias='tls')
+    authusername: str = Field(..., alias='authUsername')
+    authpassword: str = Field(..., alias='authPassword')
+    secret: str = Field(..., alias='secret')
     enabled: bool = Field(..., alias='enabled')
     logs: str = Field(..., alias='logs')
     attempts: float = Field(..., alias='attempts')

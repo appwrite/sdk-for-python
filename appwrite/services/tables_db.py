@@ -677,7 +677,8 @@ class TablesDB(Service):
         name: Optional[str] = None,
         permissions: Optional[List[str]] = None,
         row_security: Optional[bool] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
+        purge: Optional[bool] = None
     ) -> Table:
         """
         Update a table by its unique ID.
@@ -696,6 +697,8 @@ class TablesDB(Service):
             Enables configuring permissions for individual rows. A user needs one of row or table-level permissions to access a row. [Learn more about permissions](https://appwrite.io/docs/permissions).
         enabled : Optional[bool]
             Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
+        purge : Optional[bool]
+            When true, purge all cached list responses for this table as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
         
         Returns
         -------
@@ -726,6 +729,8 @@ class TablesDB(Service):
             api_params['rowSecurity'] = self._normalize_value(row_security)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if purge is not None:
+            api_params['purge'] = self._normalize_value(purge)
 
         response = self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -3224,8 +3229,40 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
         }, api_params)
+        if not isinstance(response, dict):
+            raise AppwriteException('Expected object response when hydrating a response model')
 
-        return self._parse_response(response, union_models=(ColumnBoolean, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnString, ))
+        if response.get('type') == 'string' and response.get('format') == 'email':
+            return self._parse_response(response, model=ColumnEmail)
+
+        if response.get('type') == 'string' and response.get('format') == 'enum':
+            return self._parse_response(response, model=ColumnEnum)
+
+        if response.get('type') == 'string' and response.get('format') == 'url':
+            return self._parse_response(response, model=ColumnUrl)
+
+        if response.get('type') == 'string' and response.get('format') == 'ip':
+            return self._parse_response(response, model=ColumnIp)
+
+        if response.get('type') == 'boolean':
+            return self._parse_response(response, model=ColumnBoolean)
+
+        if response.get('type') == 'integer':
+            return self._parse_response(response, model=ColumnInteger)
+
+        if response.get('type') == 'double':
+            return self._parse_response(response, model=ColumnFloat)
+
+        if response.get('type') == 'datetime':
+            return self._parse_response(response, model=ColumnDatetime)
+
+        if response.get('type') == 'relationship':
+            return self._parse_response(response, model=ColumnRelationship)
+
+        if response.get('type') == 'string':
+            return self._parse_response(response, model=ColumnString)
+
+        raise AppwriteException('Unable to match response to any known model')
 
 
     def delete_column(
@@ -3601,7 +3638,7 @@ class TablesDB(Service):
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
         ttl : Optional[float]
-            TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
+            TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
         
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.

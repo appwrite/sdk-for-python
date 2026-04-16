@@ -15,7 +15,7 @@ result: AttributeDatetime = databases.update_datetime_attribute(
     collection_id = '<COLLECTION_ID>',
     key = '',
     required = False,
-    default = '',
+    default = '2020-10-15T06:38:00.000+00:00',
     new_key = '' # optional
 )
 

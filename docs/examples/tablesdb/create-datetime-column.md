@@ -15,7 +15,7 @@ result: ColumnDatetime = tables_db.create_datetime_column(
     table_id = '<TABLE_ID>',
     key = '',
     required = False,
-    default = '', # optional
+    default = '2020-10-15T06:38:00.000+00:00', # optional
     array = False # optional
 )
 

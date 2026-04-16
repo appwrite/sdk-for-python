@@ -19,6 +19,8 @@ class Log(AppwriteModel):
         User name of the actor recorded for this log. During impersonation, this is the original impersonator.
     mode : str
         API mode when event triggered.
+    usertype : str
+        User type who triggered the audit log. Possible values: user, admin, guest, keyProject, keyAccount, keyOrganization.
     ip : str
         IP session in use when the session was created.
     time : str
@@ -57,6 +59,7 @@ class Log(AppwriteModel):
     useremail: str = Field(..., alias='userEmail')
     username: str = Field(..., alias='userName')
     mode: str = Field(..., alias='mode')
+    usertype: str = Field(..., alias='userType')
     ip: str = Field(..., alias='ip')
     time: str = Field(..., alias='time')
     oscode: str = Field(..., alias='osCode')

@@ -18,7 +18,8 @@ result: Table = tables_db.update_table(
     name = '<NAME>', # optional
     permissions = [Permission.read(Role.any())], # optional
     row_security = False, # optional
-    enabled = False # optional
+    enabled = False, # optional
+    purge = False # optional
 )
 
 print(result.model_dump())

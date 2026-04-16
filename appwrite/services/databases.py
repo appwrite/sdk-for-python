@@ -702,7 +702,8 @@ class Databases(Service):
         name: Optional[str] = None,
         permissions: Optional[List[str]] = None,
         document_security: Optional[bool] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
+        purge: Optional[bool] = None
     ) -> Collection:
         """
         Update a collection by its unique ID.
@@ -723,6 +724,8 @@ class Databases(Service):
             Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
         enabled : Optional[bool]
             Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+        purge : Optional[bool]
+            When true, purge all cached list responses for this collection as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
         
         Returns
         -------
@@ -753,6 +756,8 @@ class Databases(Service):
             api_params['documentSecurity'] = self._normalize_value(document_security)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if purge is not None:
+            api_params['purge'] = self._normalize_value(purge)
 
         response = self.client.call('put', api_path, {
             'content-type': 'application/json',
@@ -3395,8 +3400,40 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
         }, api_params)
+        if not isinstance(response, dict):
+            raise AppwriteException('Expected object response when hydrating a response model')
 
-        return self._parse_response(response, union_models=(AttributeBoolean, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributeString, ))
+        if response.get('type') == 'string' and response.get('format') == 'email':
+            return self._parse_response(response, model=AttributeEmail)
+
+        if response.get('type') == 'string' and response.get('format') == 'enum':
+            return self._parse_response(response, model=AttributeEnum)
+
+        if response.get('type') == 'string' and response.get('format') == 'url':
+            return self._parse_response(response, model=AttributeUrl)
+
+        if response.get('type') == 'string' and response.get('format') == 'ip':
+            return self._parse_response(response, model=AttributeIp)
+
+        if response.get('type') == 'boolean':
+            return self._parse_response(response, model=AttributeBoolean)
+
+        if response.get('type') == 'integer':
+            return self._parse_response(response, model=AttributeInteger)
+
+        if response.get('type') == 'double':
+            return self._parse_response(response, model=AttributeFloat)
+
+        if response.get('type') == 'datetime':
+            return self._parse_response(response, model=AttributeDatetime)
+
+        if response.get('type') == 'relationship':
+            return self._parse_response(response, model=AttributeRelationship)
+
+        if response.get('type') == 'string':
+            return self._parse_response(response, model=AttributeString)
+
+        raise AppwriteException('Unable to match response to any known model')
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_column` instead.")
@@ -3483,7 +3520,7 @@ class Databases(Service):
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
         ttl : Optional[float]
-            TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
+            TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
         
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
