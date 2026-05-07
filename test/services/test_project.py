@@ -810,7 +810,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "770000000000dv",
-    "primaryClientSecret": "your-linkedin-client-secret\/HtlYw=="
+    "primaryClientSecret": "your-linkedin-client-secret"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
