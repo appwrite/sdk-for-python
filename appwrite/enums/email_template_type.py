@@ -1,0 +1,10 @@
+from enum import Enum
+
+class EmailTemplateType(Enum):
+    VERIFICATION = "verification"
+    MAGICSESSION = "magicSession"
+    RECOVERY = "recovery"
+    INVITATION = "invitation"
+    MFACHALLENGE = "mfaChallenge"
+    SESSIONALERT = "sessionAlert"
+    OTPSESSION = "otpSession"

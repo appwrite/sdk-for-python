@@ -12,6 +12,7 @@ functions = Functions(client)
 
 result: Variable = functions.create_variable(
     function_id = '<FUNCTION_ID>',
+    variable_id = '<VARIABLE_ID>',
     key = '<KEY>',
     value = '<VALUE>',
     secret = False # optional

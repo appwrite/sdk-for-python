@@ -11,7 +11,9 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 sites = Sites(client)
 
 result: VariableList = sites.list_variables(
-    site_id = '<SITE_ID>'
+    site_id = '<SITE_ID>',
+    queries = [], # optional
+    total = False # optional
 )
 
 print(result.model_dump())

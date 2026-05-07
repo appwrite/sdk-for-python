@@ -21,6 +21,8 @@ class Membership(AppwriteModel):
         User name. Hide this attribute by toggling membership privacy in the Console.
     useremail : str
         User email address. Hide this attribute by toggling membership privacy in the Console.
+    userphone : str
+        User phone number. Hide this attribute by toggling membership privacy in the Console.
     teamid : str
         Team ID.
     teamname : str
@@ -42,6 +44,7 @@ class Membership(AppwriteModel):
     userid: str = Field(..., alias='userId')
     username: str = Field(..., alias='userName')
     useremail: str = Field(..., alias='userEmail')
+    userphone: str = Field(..., alias='userPhone')
     teamid: str = Field(..., alias='teamId')
     teamname: str = Field(..., alias='teamName')
     invited: str = Field(..., alias='invited')

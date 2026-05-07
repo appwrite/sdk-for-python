@@ -16,7 +16,7 @@ class AuthProvider(AppwriteModel):
     appid : str
         OAuth 2.0 application ID.
     secret : str
-        OAuth 2.0 application secret. Might be JSON string if provider requires extra configuration.
+        OAuth 2.0 application secret. Might be JSON string if provider requires extra configuration. This property is write-only and always returned empty.
     enabled : bool
         Auth Provider is active and can be used to create session.
     """

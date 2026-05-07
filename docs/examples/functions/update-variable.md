@@ -13,7 +13,7 @@ functions = Functions(client)
 result: Variable = functions.update_variable(
     function_id = '<FUNCTION_ID>',
     variable_id = '<VARIABLE_ID>',
-    key = '<KEY>',
+    key = '<KEY>', # optional
     value = '<VALUE>', # optional
     secret = False # optional
 )
