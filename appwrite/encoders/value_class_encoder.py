@@ -25,7 +25,7 @@ from ..enums.name import Name
 from ..enums.message_priority import MessagePriority
 from ..enums.smtp_encryption import SmtpEncryption
 from ..enums.auth_method import AuthMethod
-from ..enums.project_policy_id import ProjectPolicyId
+from ..enums.project_policy import ProjectPolicy
 from ..enums.protocol_id import ProtocolId
 from ..enums.service_id import ServiceId
 from ..enums.secure import Secure
@@ -135,7 +135,7 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, AuthMethod):
             return o.value
 
-        if isinstance(o, ProjectPolicyId):
+        if isinstance(o, ProjectPolicy):
             return o.value
 
         if isinstance(o, ProtocolId):

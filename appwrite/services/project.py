@@ -59,7 +59,7 @@ from ..models.platform_linux import PlatformLinux;
 from ..models.platform_web import PlatformWeb;
 from ..models.platform_windows import PlatformWindows;
 from ..models.policy_list import PolicyList;
-from ..enums.project_policy_id import ProjectPolicyId;
+from ..enums.project_policy import ProjectPolicy;
 from ..models.policy_password_dictionary import PolicyPasswordDictionary;
 from ..models.policy_password_history import PolicyPasswordHistory;
 from ..models.policy_password_personal_data import PolicyPasswordPersonalData;
@@ -3787,14 +3787,14 @@ class Project(Service):
 
     def get_policy(
         self,
-        policy_id: ProjectPolicyId
+        policy_id: ProjectPolicy
     ) -> Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy]:
         """
         Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
 
         Parameters
         ----------
-        policy_id : ProjectPolicyId
+        policy_id : ProjectPolicy
             Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy.
         
         Returns
