@@ -14,7 +14,7 @@ project = Project(client)
 result: Key = project.update_key(
     key_id = '<KEY_ID>',
     name = '<NAME>',
-    scopes = [Scopes.SESSIONS_WRITE],
+    scopes = [Scopes.PROJECT_READ],
     expire = '2020-10-15T06:38:00.000+00:00' # optional
 )
 

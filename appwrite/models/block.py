@@ -19,9 +19,24 @@ class Block(AppwriteModel):
         Reason for the block. Can be null if no reason was provided.
     expiredat : Optional[str]
         Block expiration date in ISO 8601 format. Can be null if the block does not expire.
+    projectname : str
+        Name of the project this block applies to.
+    region : str
+        Region of the project this block applies to.
+    organizationname : str
+        Name of the organization that owns the project.
+    organizationid : str
+        ID of the organization that owns the project.
+    billingplan : str
+        Billing plan of the organization that owns the project.
     """
     createdat: str = Field(..., alias='$createdAt')
     resourcetype: str = Field(..., alias='resourceType')
     resourceid: str = Field(..., alias='resourceId')
     reason: Optional[str] = Field(default=None, alias='reason')
     expiredat: Optional[str] = Field(default=None, alias='expiredAt')
+    projectname: str = Field(..., alias='projectName')
+    region: str = Field(..., alias='region')
+    organizationname: str = Field(..., alias='organizationName')
+    organizationid: str = Field(..., alias='organizationId')
+    billingplan: str = Field(..., alias='billingPlan')

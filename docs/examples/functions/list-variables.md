@@ -11,7 +11,9 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 functions = Functions(client)
 
 result: VariableList = functions.list_variables(
-    function_id = '<FUNCTION_ID>'
+    function_id = '<FUNCTION_ID>',
+    queries = [], # optional
+    total = False # optional
 )
 
 print(result.model_dump())

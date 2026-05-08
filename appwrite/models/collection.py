@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 from .attribute_boolean import AttributeBoolean
+from .attribute_bigint import AttributeBigint
 from .attribute_integer import AttributeInteger
 from .attribute_float import AttributeFloat
 from .attribute_email import AttributeEmail
@@ -43,7 +44,7 @@ class Collection(AppwriteModel):
         Collection enabled. Can be &#039;enabled&#039; or &#039;disabled&#039;. When disabled, the collection is inaccessible to users, but remains accessible to Server SDKs using API keys.
     documentsecurity : bool
         Whether document-level permissions are enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
-    attributes : List[Union[AttributeBoolean, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributePoint, AttributeLine, AttributePolygon, AttributeVarchar, AttributeText, AttributeMediumtext, AttributeLongtext, AttributeString]]
+    attributes : List[Union[AttributeBoolean, AttributeBigint, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributePoint, AttributeLine, AttributePolygon, AttributeVarchar, AttributeText, AttributeMediumtext, AttributeLongtext, AttributeString]]
         Collection attributes.
     indexes : List[Index]
         Collection indexes.
@@ -60,7 +61,7 @@ class Collection(AppwriteModel):
     name: str = Field(..., alias='name')
     enabled: bool = Field(..., alias='enabled')
     documentsecurity: bool = Field(..., alias='documentSecurity')
-    attributes: List[Union[AttributeBoolean, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributePoint, AttributeLine, AttributePolygon, AttributeVarchar, AttributeText, AttributeMediumtext, AttributeLongtext, AttributeString]] = Field(..., alias='attributes')
+    attributes: List[Union[AttributeBoolean, AttributeBigint, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributePoint, AttributeLine, AttributePolygon, AttributeVarchar, AttributeText, AttributeMediumtext, AttributeLongtext, AttributeString]] = Field(..., alias='attributes')
     indexes: List[Index] = Field(..., alias='indexes')
     bytesmax: float = Field(..., alias='bytesMax')
     bytesused: float = Field(..., alias='bytesUsed')

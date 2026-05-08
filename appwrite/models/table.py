@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 from .column_boolean import ColumnBoolean
+from .column_bigint import ColumnBigint
 from .column_integer import ColumnInteger
 from .column_float import ColumnFloat
 from .column_email import ColumnEmail
@@ -43,7 +44,7 @@ class Table(AppwriteModel):
         Table enabled. Can be &#039;enabled&#039; or &#039;disabled&#039;. When disabled, the table is inaccessible to users, but remains accessible to Server SDKs using API keys.
     rowsecurity : bool
         Whether row-level permissions are enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
-    columns : List[Union[ColumnBoolean, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnPoint, ColumnLine, ColumnPolygon, ColumnVarchar, ColumnText, ColumnMediumtext, ColumnLongtext, ColumnString]]
+    columns : List[Union[ColumnBoolean, ColumnBigint, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnPoint, ColumnLine, ColumnPolygon, ColumnVarchar, ColumnText, ColumnMediumtext, ColumnLongtext, ColumnString]]
         Table columns.
     indexes : List[ColumnIndex]
         Table indexes.
@@ -60,7 +61,7 @@ class Table(AppwriteModel):
     name: str = Field(..., alias='name')
     enabled: bool = Field(..., alias='enabled')
     rowsecurity: bool = Field(..., alias='rowSecurity')
-    columns: List[Union[ColumnBoolean, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnPoint, ColumnLine, ColumnPolygon, ColumnVarchar, ColumnText, ColumnMediumtext, ColumnLongtext, ColumnString]] = Field(..., alias='columns')
+    columns: List[Union[ColumnBoolean, ColumnBigint, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnPoint, ColumnLine, ColumnPolygon, ColumnVarchar, ColumnText, ColumnMediumtext, ColumnLongtext, ColumnString]] = Field(..., alias='columns')
     indexes: List[ColumnIndex] = Field(..., alias='indexes')
     bytesmax: float = Field(..., alias='bytesMax')
     bytesused: float = Field(..., alias='bytesUsed')

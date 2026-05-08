@@ -24,8 +24,15 @@ from ..enums.execution_method import ExecutionMethod
 from ..enums.name import Name
 from ..enums.message_priority import MessagePriority
 from ..enums.smtp_encryption import SmtpEncryption
+from ..enums.auth_method import AuthMethod
+from ..enums.project_policy import ProjectPolicy
 from ..enums.protocol_id import ProtocolId
 from ..enums.service_id import ServiceId
+from ..enums.secure import Secure
+from ..enums.email_template_type import EmailTemplateType
+from ..enums.email_template_locale import EmailTemplateLocale
+from ..enums.status_code import StatusCode
+from ..enums.proxy_resource_type import ProxyResourceType
 from ..enums.framework import Framework
 from ..enums.build_runtime import BuildRuntime
 from ..enums.adapter import Adapter
@@ -44,6 +51,8 @@ from ..enums.execution_status import ExecutionStatus
 from ..enums.platform_type import PlatformType
 from ..enums.health_antivirus_status import HealthAntivirusStatus
 from ..enums.health_check_status import HealthCheckStatus
+from ..enums.proxy_rule_deployment_resource_type import ProxyRuleDeploymentResourceType
+from ..enums.proxy_rule_status import ProxyRuleStatus
 from ..enums.message_status import MessageStatus
 
 class ValueClassEncoder(json.JSONEncoder):
@@ -123,10 +132,31 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, SmtpEncryption):
             return o.value
 
+        if isinstance(o, AuthMethod):
+            return o.value
+
+        if isinstance(o, ProjectPolicy):
+            return o.value
+
         if isinstance(o, ProtocolId):
             return o.value
 
         if isinstance(o, ServiceId):
+            return o.value
+
+        if isinstance(o, Secure):
+            return o.value
+
+        if isinstance(o, EmailTemplateType):
+            return o.value
+
+        if isinstance(o, EmailTemplateLocale):
+            return o.value
+
+        if isinstance(o, StatusCode):
+            return o.value
+
+        if isinstance(o, ProxyResourceType):
             return o.value
 
         if isinstance(o, Framework):
@@ -181,6 +211,12 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, HealthCheckStatus):
+            return o.value
+
+        if isinstance(o, ProxyRuleDeploymentResourceType):
+            return o.value
+
+        if isinstance(o, ProxyRuleStatus):
             return o.value
 
         if isinstance(o, MessageStatus):

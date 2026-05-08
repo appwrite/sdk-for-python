@@ -9,6 +9,7 @@ from ..models.transaction import Transaction;
 from ..models.collection_list import CollectionList;
 from ..models.collection import Collection;
 from ..models.attribute_list import AttributeList;
+from ..models.attribute_bigint import AttributeBigint;
 from ..models.attribute_boolean import AttributeBoolean;
 from ..models.attribute_datetime import AttributeDatetime;
 from ..models.attribute_email import AttributeEmail;
@@ -869,6 +870,165 @@ class Databases(Service):
         }, api_params)
 
         return self._parse_response(response, model=AttributeList)
+
+
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_big_int_column` instead.")
+    def create_big_int_attribute(
+        self,
+        database_id: str,
+        collection_id: str,
+        key: str,
+        required: bool,
+        min: Optional[float] = None,
+        max: Optional[float] = None,
+        default: Optional[float] = None,
+        array: Optional[bool] = None
+    ) -> AttributeBigint:
+        """
+        Create a bigint attribute. Optionally, minimum and maximum values can be provided.
+        
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_big_int_column` instead.
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID.
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        min : Optional[float]
+            Minimum value
+        max : Optional[float]
+            Maximum value
+        default : Optional[float]
+            Default value. Cannot be set when attribute is required.
+        array : Optional[bool]
+            Is attribute an array?
+        
+        Returns
+        -------
+        AttributeBigint
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/bigint'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
+
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['min'] = self._normalize_value(min)
+        api_params['max'] = self._normalize_value(max)
+        api_params['default'] = self._normalize_value(default)
+        if array is not None:
+            api_params['array'] = self._normalize_value(array)
+
+        response = self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=AttributeBigint)
+
+
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_big_int_column` instead.")
+    def update_big_int_attribute(
+        self,
+        database_id: str,
+        collection_id: str,
+        key: str,
+        required: bool,
+        default: Optional[float],
+        min: Optional[float] = None,
+        max: Optional[float] = None,
+        new_key: Optional[str] = None
+    ) -> AttributeBigint:
+        """
+        Update a bigint attribute. Changing the `default` value will not update already existing documents.
+        
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_big_int_column` instead.
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID.
+        key : str
+            Attribute Key.
+        required : bool
+            Is attribute required?
+        default : Optional[float]
+            Default value. Cannot be set when attribute is required.
+        min : Optional[float]
+            Minimum value
+        max : Optional[float]
+            Maximum value
+        new_key : Optional[str]
+            New Attribute Key.
+        
+        Returns
+        -------
+        AttributeBigint
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/attributes/bigint/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if collection_id is None:
+            raise AppwriteException('Missing required parameter: "collection_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
+
+        api_params['required'] = self._normalize_value(required)
+        api_params['min'] = self._normalize_value(min)
+        api_params['max'] = self._normalize_value(max)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
+
+        response = self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=AttributeBigint)
 
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_boolean_column` instead.")
