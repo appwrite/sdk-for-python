@@ -24,9 +24,8 @@ from ..enums.execution_method import ExecutionMethod
 from ..enums.name import Name
 from ..enums.message_priority import MessagePriority
 from ..enums.smtp_encryption import SmtpEncryption
-from ..enums.method_id import MethodId
-from ..enums.provider_id import ProviderId
-from ..enums.policy_id import PolicyId
+from ..enums.auth_method import AuthMethod
+from ..enums.project_policy import ProjectPolicy
 from ..enums.protocol_id import ProtocolId
 from ..enums.service_id import ServiceId
 from ..enums.secure import Secure
@@ -133,13 +132,10 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, SmtpEncryption):
             return o.value
 
-        if isinstance(o, MethodId):
+        if isinstance(o, AuthMethod):
             return o.value
 
-        if isinstance(o, ProviderId):
-            return o.value
-
-        if isinstance(o, PolicyId):
+        if isinstance(o, ProjectPolicy):
             return o.value
 
         if isinstance(o, ProtocolId):

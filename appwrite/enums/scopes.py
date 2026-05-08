@@ -79,8 +79,6 @@ class Scopes(Enum):
     SCHEDULES_WRITE = "schedules.write"
     VCS_READ = "vcs.read"
     VCS_WRITE = "vcs.write"
-    PRESENCES_READ = "presences.read"
-    PRESENCES_WRITE = "presences.write"
     BACKUPS_POLICIES_READ = "backups.policies.read"
     BACKUPS_POLICIES_WRITE = "backups.policies.write"
     ARCHIVES_READ = "archives.read"
