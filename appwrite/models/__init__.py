@@ -1,6 +1,7 @@
 from .base_model import AppwriteModel
 from .row_list import RowList
 from .document_list import DocumentList
+from .presence_list import PresenceList
 from .table_list import TableList
 from .collection_list import CollectionList
 from .database_list import DatabaseList
@@ -87,6 +88,7 @@ from .index import Index
 from .column_index import ColumnIndex
 from .row import Row
 from .document import Document
+from .presence import Presence
 from .log import Log
 from .user import User
 from .algo_md5 import AlgoMd5
@@ -218,6 +220,7 @@ __all__ = [
     'AppwriteModel',
     'RowList',
     'DocumentList',
+    'PresenceList',
     'TableList',
     'CollectionList',
     'DatabaseList',
@@ -304,6 +307,7 @@ __all__ = [
     'ColumnIndex',
     'Row',
     'Document',
+    'Presence',
     'Log',
     'User',
     'AlgoMd5',

@@ -1,6 +1,6 @@
 from enum import Enum
 
-class OAuthProvider(Enum):
+class ProviderId(Enum):
     AMAZON = "amazon"
     APPLE = "apple"
     AUTH0 = "auth0"
@@ -44,3 +44,7 @@ class OAuthProvider(Enum):
     YANDEX = "yandex"
     ZOHO = "zoho"
     ZOOM = "zoom"
+    MOCK = "mock"
+    MOCK_UNVERIFIED = "mock-unverified"
+    GITHUBIMAGINE = "githubImagine"
+    GOOGLEIMAGINE = "googleImagine"

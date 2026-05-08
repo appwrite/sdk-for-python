@@ -2,7 +2,7 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..enums.auth_method import AuthMethod;
+from ..enums.method_id import MethodId;
 from ..models.project import Project as ProjectModel;
 from ..models.key_list import KeyList;
 from ..enums.scopes import Scopes;
@@ -11,7 +11,7 @@ from ..models.ephemeral_key import EphemeralKey;
 from ..models.mock_number_list import MockNumberList;
 from ..models.mock_number import MockNumber;
 from ..models.o_auth2_provider_list import OAuth2ProviderList;
-from ..enums.o_auth_provider import OAuthProvider;
+from ..enums.provider_id import ProviderId;
 from ..models.o_auth2_github import OAuth2Github;
 from ..models.o_auth2_discord import OAuth2Discord;
 from ..models.o_auth2_figma import OAuth2Figma;
@@ -59,7 +59,7 @@ from ..models.platform_linux import PlatformLinux;
 from ..models.platform_web import PlatformWeb;
 from ..models.platform_windows import PlatformWindows;
 from ..models.policy_list import PolicyList;
-from ..enums.project_policy import ProjectPolicy;
+from ..enums.policy_id import PolicyId;
 from ..models.policy_password_dictionary import PolicyPasswordDictionary;
 from ..models.policy_password_history import PolicyPasswordHistory;
 from ..models.policy_password_personal_data import PolicyPasswordPersonalData;
@@ -113,7 +113,7 @@ class Project(Service):
 
     def update_auth_method(
         self,
-        method_id: AuthMethod,
+        method_id: MethodId,
         enabled: bool
     ) -> ProjectModel:
         """
@@ -121,7 +121,7 @@ class Project(Service):
 
         Parameters
         ----------
-        method_id : AuthMethod
+        method_id : MethodId
             Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone
         enabled : bool
             Auth method status.
@@ -717,14 +717,14 @@ class Project(Service):
 
     def get_o_auth2_provider(
         self,
-        provider_id: OAuthProvider
+        provider_id: ProviderId
     ) -> Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft]:
         """
         Get a single OAuth2 provider configuration. Credential fields (client secret, p8 file, key/team IDs) are write-only and always returned empty.
 
         Parameters
         ----------
-        provider_id : OAuthProvider
+        provider_id : ProviderId
             OAuth2 provider key. For example: github, google, apple.
         
         Returns
@@ -3787,14 +3787,14 @@ class Project(Service):
 
     def get_policy(
         self,
-        policy_id: ProjectPolicy
+        policy_id: PolicyId
     ) -> Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy]:
         """
         Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
 
         Parameters
         ----------
-        policy_id : ProjectPolicy
+        policy_id : PolicyId
             Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy.
         
         Returns
