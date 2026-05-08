@@ -81,6 +81,7 @@ class Runtime(Enum):
     GO_1_24 = "go-1.24"
     GO_1_25 = "go-1.25"
     GO_1_26 = "go-1.26"
+    RUST_1_83 = "rust-1.83"
     STATIC_1 = "static-1"
     FLUTTER_3_24 = "flutter-3.24"
     FLUTTER_3_27 = "flutter-3.27"

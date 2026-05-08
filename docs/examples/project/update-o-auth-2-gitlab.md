@@ -1,8 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.project import Project
-from appwrite.models import Project as ProjectModel
-from appwrite.enums import ProtocolId
+from appwrite.models import OAuth2Gitlab
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -11,9 +10,11 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 project = Project(client)
 
-result: ProjectModel = project.update_protocol_status(
-    protocol_id = ProtocolId.REST,
-    enabled = False
+result: OAuth2Gitlab = project.update_o_auth2_gitlab(
+    application_id = '<APPLICATION_ID>', # optional
+    secret = '<SECRET>', # optional
+    endpoint = 'https://example.com', # optional
+    enabled = False # optional
 )
 
 print(result.model_dump())
