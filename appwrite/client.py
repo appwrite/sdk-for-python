@@ -15,12 +15,12 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : f'AppwritePythonSDK/18.0.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
+            'user-agent' : f'AppwritePythonSDK/18.1.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '18.0.0',
-            'X-Appwrite-Response-Format' : '1.9.1',
+            'x-sdk-version': '18.1.0',
+            'X-Appwrite-Response-Format' : '1.9.4',
         }
 
     def set_self_signed(self, status=True):
@@ -73,6 +73,18 @@ class Client:
         """The user agent string of the client that made the request"""
 
         self._global_headers['x-forwarded-user-agent'] = value
+        return self
+
+    def set_dev_key(self, value):
+        """Your secret dev API key"""
+
+        self._global_headers['x-appwrite-dev-key'] = value
+        return self
+
+    def set_cookie(self, value):
+        """The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes."""
+
+        self._global_headers['cookie'] = value
         return self
 
     def set_impersonate_user_id(self, value):

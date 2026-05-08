@@ -9,6 +9,7 @@ from ..models.transaction import Transaction;
 from ..models.table_list import TableList;
 from ..models.table import Table;
 from ..models.column_list import ColumnList;
+from ..models.column_bigint import ColumnBigint;
 from ..models.column_boolean import ColumnBoolean;
 from ..models.column_datetime import ColumnDatetime;
 from ..models.column_email import ColumnEmail;
@@ -836,6 +837,159 @@ class TablesDB(Service):
         }, api_params)
 
         return self._parse_response(response, model=ColumnList)
+
+
+    def create_big_int_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        min: Optional[float] = None,
+        max: Optional[float] = None,
+        default: Optional[float] = None,
+        array: Optional[bool] = None
+    ) -> ColumnBigint:
+        """
+        Create a bigint column. Optionally, minimum and maximum values can be provided.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID.
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        min : Optional[float]
+            Minimum value
+        max : Optional[float]
+            Maximum value
+        default : Optional[float]
+            Default value. Cannot be set when column is required.
+        array : Optional[bool]
+            Is column an array?
+        
+        Returns
+        -------
+        ColumnBigint
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/bigint'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+
+        api_params['key'] = self._normalize_value(key)
+        api_params['required'] = self._normalize_value(required)
+        api_params['min'] = self._normalize_value(min)
+        api_params['max'] = self._normalize_value(max)
+        api_params['default'] = self._normalize_value(default)
+        if array is not None:
+            api_params['array'] = self._normalize_value(array)
+
+        response = self.client.call('post', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=ColumnBigint)
+
+
+    def update_big_int_column(
+        self,
+        database_id: str,
+        table_id: str,
+        key: str,
+        required: bool,
+        default: Optional[float],
+        min: Optional[float] = None,
+        max: Optional[float] = None,
+        new_key: Optional[str] = None
+    ) -> ColumnBigint:
+        """
+        Update a bigint column. Changing the `default` value will not update already existing rows.
+        
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID.
+        key : str
+            Column Key.
+        required : bool
+            Is column required?
+        default : Optional[float]
+            Default value. Cannot be set when column is required.
+        min : Optional[float]
+            Minimum value
+        max : Optional[float]
+            Maximum value
+        new_key : Optional[str]
+            New Column Key.
+        
+        Returns
+        -------
+        ColumnBigint
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/columns/bigint/{key}'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        if table_id is None:
+            raise AppwriteException('Missing required parameter: "table_id"')
+
+        if key is None:
+            raise AppwriteException('Missing required parameter: "key"')
+
+        if required is None:
+            raise AppwriteException('Missing required parameter: "required"')
+
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        api_path = api_path.replace('{key}', str(self._normalize_value(key)))
+
+        api_params['required'] = self._normalize_value(required)
+        api_params['min'] = self._normalize_value(min)
+        api_params['max'] = self._normalize_value(max)
+        api_params['default'] = self._normalize_value(default)
+        api_params['newKey'] = self._normalize_value(new_key)
+
+        response = self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=ColumnBigint)
 
 
     def create_boolean_column(

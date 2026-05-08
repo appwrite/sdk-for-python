@@ -77,6 +77,10 @@ class Project(AppwriteModel):
         Whether or not to show user emails in the teams membership response.
     authmembershipsmfa : bool
         Whether or not to show user MFA status in the teams membership response.
+    authmembershipsuserid : bool
+        Whether or not to show user IDs in the teams membership response.
+    authmembershipsuserphone : bool
+        Whether or not to show user phone numbers in the teams membership response.
     authinvalidatesessions : bool
         Whether or not all existing sessions should be invalidated on password change
     oauthproviders : List[AuthProvider]
@@ -95,7 +99,9 @@ class Project(AppwriteModel):
         SMTP sender name
     smtpsenderemail : str
         SMTP sender email
-    smtpreplyto : str
+    smtpreplytoname : str
+        SMTP reply to name
+    smtpreplytoemail : str
         SMTP reply to email
     smtphost : str
         SMTP server host name
@@ -104,7 +110,7 @@ class Project(AppwriteModel):
     smtpusername : str
         SMTP server username
     smtppassword : str
-        SMTP server password
+        SMTP server password. This property is write-only and always returned empty.
     smtpsecure : str
         SMTP server secure protocol
     pingcount : float
@@ -206,6 +212,8 @@ class Project(AppwriteModel):
     authmembershipsusername: bool = Field(..., alias='authMembershipsUserName')
     authmembershipsuseremail: bool = Field(..., alias='authMembershipsUserEmail')
     authmembershipsmfa: bool = Field(..., alias='authMembershipsMfa')
+    authmembershipsuserid: bool = Field(..., alias='authMembershipsUserId')
+    authmembershipsuserphone: bool = Field(..., alias='authMembershipsUserPhone')
     authinvalidatesessions: bool = Field(..., alias='authInvalidateSessions')
     oauthproviders: List[AuthProvider] = Field(..., alias='oAuthProviders')
     platforms: List[Union[PlatformWeb, PlatformApple, PlatformAndroid, PlatformWindows, PlatformLinux]] = Field(..., alias='platforms')
@@ -215,7 +223,8 @@ class Project(AppwriteModel):
     smtpenabled: bool = Field(..., alias='smtpEnabled')
     smtpsendername: str = Field(..., alias='smtpSenderName')
     smtpsenderemail: str = Field(..., alias='smtpSenderEmail')
-    smtpreplyto: str = Field(..., alias='smtpReplyTo')
+    smtpreplytoname: str = Field(..., alias='smtpReplyToName')
+    smtpreplytoemail: str = Field(..., alias='smtpReplyToEmail')
     smtphost: str = Field(..., alias='smtpHost')
     smtpport: float = Field(..., alias='smtpPort')
     smtpusername: str = Field(..., alias='smtpUsername')

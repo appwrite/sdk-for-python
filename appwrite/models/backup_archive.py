@@ -20,7 +20,7 @@ class BackupArchive(AppwriteModel):
     size : float
         Archive size in bytes.
     status : str
-        The status of the archive creation. Possible values: pending, processing, uploading, completed, failed.
+        The status of the archive creation. Possible values: pending, processing, uploading, completed, failed, skipped.
     startedat : str
         The backup start time.
     migrationid : str
