@@ -2,10 +2,10 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..enums.auth_method import AuthMethod;
 from ..models.project import Project as ProjectModel;
+from ..enums.project_auth_method_id import ProjectAuthMethodId;
 from ..models.key_list import KeyList;
-from ..enums.scopes import Scopes;
+from ..enums.project_key_scopes import ProjectKeyScopes;
 from ..models.key import Key;
 from ..models.ephemeral_key import EphemeralKey;
 from ..models.mock_number_list import MockNumberList;
@@ -29,6 +29,7 @@ from ..models.o_auth2_figma import OAuth2Figma;
 from ..models.o_auth2_fusion_auth import OAuth2FusionAuth;
 from ..models.o_auth2_github import OAuth2Github;
 from ..models.o_auth2_gitlab import OAuth2Gitlab;
+from ..enums.project_o_auth2_google_prompt import ProjectOAuth2GooglePrompt;
 from ..models.o_auth2_google import OAuth2Google;
 from ..models.o_auth2_keycloak import OAuth2Keycloak;
 from ..models.o_auth2_kick import OAuth2Kick;
@@ -51,7 +52,7 @@ from ..models.o_auth2_yahoo import OAuth2Yahoo;
 from ..models.o_auth2_yandex import OAuth2Yandex;
 from ..models.o_auth2_zoho import OAuth2Zoho;
 from ..models.o_auth2_zoom import OAuth2Zoom;
-from ..enums.o_auth_provider import OAuthProvider;
+from ..enums.project_o_auth_provider_id import ProjectOAuthProviderId;
 from ..models.platform_list import PlatformList;
 from ..models.platform_android import PlatformAndroid;
 from ..models.platform_apple import PlatformApple;
@@ -59,7 +60,7 @@ from ..models.platform_linux import PlatformLinux;
 from ..models.platform_web import PlatformWeb;
 from ..models.platform_windows import PlatformWindows;
 from ..models.policy_list import PolicyList;
-from ..enums.project_policy import ProjectPolicy;
+from ..enums.project_policy_id import ProjectPolicyId;
 from ..models.policy_password_dictionary import PolicyPasswordDictionary;
 from ..models.policy_password_history import PolicyPasswordHistory;
 from ..models.policy_password_personal_data import PolicyPasswordPersonalData;
@@ -69,12 +70,12 @@ from ..models.policy_session_invalidation import PolicySessionInvalidation;
 from ..models.policy_session_limit import PolicySessionLimit;
 from ..models.policy_user_limit import PolicyUserLimit;
 from ..models.policy_membership_privacy import PolicyMembershipPrivacy;
-from ..enums.protocol_id import ProtocolId;
-from ..enums.service_id import ServiceId;
-from ..enums.secure import Secure;
+from ..enums.project_protocol_id import ProjectProtocolId;
+from ..enums.project_service_id import ProjectServiceId;
+from ..enums.project_smtp_secure import ProjectSMTPSecure;
 from ..models.email_template_list import EmailTemplateList;
-from ..enums.email_template_type import EmailTemplateType;
-from ..enums.email_template_locale import EmailTemplateLocale;
+from ..enums.project_email_template_id import ProjectEmailTemplateId;
+from ..enums.project_email_template_locale import ProjectEmailTemplateLocale;
 from ..models.email_template import EmailTemplate;
 from ..models.variable_list import VariableList;
 from ..models.variable import Variable;
@@ -83,6 +84,32 @@ class Project(Service):
 
     def __init__(self, client) -> None:
         super(Project, self).__init__(client)
+
+    def get(
+        self
+    ) -> ProjectModel:
+        """
+        Get a project.
+
+        Returns
+        -------
+        ProjectModel
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project'
+        api_params = {}
+
+        response = self.client.call('get', api_path, {
+        }, api_params)
+
+        return self._parse_response(response, model=ProjectModel)
+
 
     def delete(
         self
@@ -113,7 +140,7 @@ class Project(Service):
 
     def update_auth_method(
         self,
-        method_id: AuthMethod,
+        method_id: ProjectAuthMethodId,
         enabled: bool
     ) -> ProjectModel:
         """
@@ -121,7 +148,7 @@ class Project(Service):
 
         Parameters
         ----------
-        method_id : AuthMethod
+        method_id : ProjectAuthMethodId
             Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone
         enabled : bool
             Auth method status.
@@ -200,7 +227,7 @@ class Project(Service):
         self,
         key_id: str,
         name: str,
-        scopes: List[Scopes],
+        scopes: List[ProjectKeyScopes],
         expire: Optional[str] = None
     ) -> Key:
         """
@@ -214,7 +241,7 @@ class Project(Service):
             Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         name : str
             Key name. Max length: 128 chars.
-        scopes : List[Scopes]
+        scopes : List[ProjectKeyScopes]
             Key scopes list. Maximum of 100 scopes are allowed.
         expire : Optional[str]
             Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
@@ -256,7 +283,7 @@ class Project(Service):
 
     def create_ephemeral_key(
         self,
-        scopes: List[Scopes],
+        scopes: List[ProjectKeyScopes],
         duration: float
     ) -> EphemeralKey:
         """
@@ -266,7 +293,7 @@ class Project(Service):
 
         Parameters
         ----------
-        scopes : List[Scopes]
+        scopes : List[ProjectKeyScopes]
             Key scopes list. Maximum of 100 scopes are allowed.
         duration : float
             Time in seconds before ephemeral key expires. Maximum duration is 3600 seconds.
@@ -342,7 +369,7 @@ class Project(Service):
         self,
         key_id: str,
         name: str,
-        scopes: List[Scopes],
+        scopes: List[ProjectKeyScopes],
         expire: Optional[str] = None
     ) -> Key:
         """
@@ -354,7 +381,7 @@ class Project(Service):
             Key ID.
         name : str
             Key name. Max length: 128 chars.
-        scopes : List[Scopes]
+        scopes : List[ProjectKeyScopes]
             Key scopes list. Maximum of 100 scopes are allowed.
         expire : Optional[str]
             Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
@@ -729,7 +756,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Amazon OAuth2 app. For example: amzn1.application-oa2-client.87400c00000000000000000000063d5b2
         client_secret : Optional[str]
-            'Client Secret' of Amazon OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Amazon OAuth2 app. For example: 79ffe4000000000000000000000000000000000000000000000000000002de55
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -824,7 +851,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Auth0 OAuth2 app. For example: OaOkIA000000000000000000005KLSYq
         client_secret : Optional[str]
-            'Client Secret' of Auth0 OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Auth0 OAuth2 app. For example: zXz0000-00000000000000000000000000000-00000000000000000000PJafnF
         endpoint : Optional[str]
             Domain of Auth0 instance. For example: example.us.auth0.com
         enabled : Optional[bool]
@@ -871,7 +898,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Authentik OAuth2 app. For example: dTKOPa0000000000000000000000000000e7G8hv
         client_secret : Optional[str]
-            'Client Secret' of Authentik OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Authentik OAuth2 app. For example: ntQadq000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000Hp5WK
         endpoint : Optional[str]
             Domain of Authentik instance. For example: example.authentik.com
         enabled : Optional[bool]
@@ -917,7 +944,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Autodesk OAuth2 app. For example: 5zw90v00000000000000000000kVYXN7
         client_secret : Optional[str]
-            'Client Secret' of Autodesk OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Autodesk OAuth2 app. For example: 7I000000000000MW
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -960,7 +987,7 @@ class Project(Service):
         key : Optional[str]
             'Key' of Bitbucket OAuth2 app. For example: Knt70000000000ByRc
         secret : Optional[str]
-            'Secret' of Bitbucket OAuth2 app. For example: <CLIENT_SECRET>
+            'Secret' of Bitbucket OAuth2 app. For example: NMfLZJ00000000000000000000TLQdDx
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1003,7 +1030,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Bitly OAuth2 app. For example: d95151000000000000000000000000000067af9b
         client_secret : Optional[str]
-            'Client Secret' of Bitly OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Bitly OAuth2 app. For example: a13e250000000000000000000000000000d73095
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1046,7 +1073,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Box OAuth2 app. For example: deglcs00000000000000000000x2og6y
         client_secret : Optional[str]
-            'Client Secret' of Box OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Box OAuth2 app. For example: OKM1f100000000000000000000eshEif
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1089,7 +1116,7 @@ class Project(Service):
         api_key : Optional[str]
             'API Key' of Dailymotion OAuth2 app. For example: 07a9000000000000067f
         api_secret : Optional[str]
-            'API Secret' of Dailymotion OAuth2 app. For example: <CLIENT_SECRET>
+            'API Secret' of Dailymotion OAuth2 app. For example: a399a90000000000000000000000000000d90639
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1132,7 +1159,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Discord OAuth2 app. For example: 950722000000343754
         client_secret : Optional[str]
-            'Client Secret' of Discord OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Discord OAuth2 app. For example: YmPXnM000000000000000000002zFg5D
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1175,7 +1202,7 @@ class Project(Service):
         public_key : Optional[str]
             'Public Key, also known as API Key' of Disqus OAuth2 app. For example: cgegH70000000000000000000000000000000000000000000000000000Hr1nYX
         secret_key : Optional[str]
-            'Secret Key, also known as API Secret' of Disqus OAuth2 app. For example: <CLIENT_SECRET>
+            'Secret Key, also known as API Secret' of Disqus OAuth2 app. For example: W7Bykj00000000000000000000000000000000000000000000000000003o43w9
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1218,7 +1245,7 @@ class Project(Service):
         app_key : Optional[str]
             'App Key' of Dropbox OAuth2 app. For example: jl000000000009t
         app_secret : Optional[str]
-            'App Secret' of Dropbox OAuth2 app. For example: <CLIENT_SECRET>
+            'App Secret' of Dropbox OAuth2 app. For example: g200000000000vw
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1261,7 +1288,7 @@ class Project(Service):
         key_string : Optional[str]
             'Keystring' of Etsy OAuth2 app. For example: nsgzxh0000000000008j85a2
         shared_secret : Optional[str]
-            'Shared Secret' of Etsy OAuth2 app. For example: <CLIENT_SECRET>
+            'Shared Secret' of Etsy OAuth2 app. For example: tp000000ru
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1304,7 +1331,7 @@ class Project(Service):
         app_id : Optional[str]
             'App ID' of Facebook OAuth2 app. For example: 260600000007694
         app_secret : Optional[str]
-            'App Secret' of Facebook OAuth2 app. For example: <CLIENT_SECRET>
+            'App Secret' of Facebook OAuth2 app. For example: 2d0b2800000000000000000000d38af4
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1347,7 +1374,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Figma OAuth2 app. For example: byay5H0000000000VtiI40
         client_secret : Optional[str]
-            'Client Secret' of Figma OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Figma OAuth2 app. For example: yEpOYn0000000000000000004iIsU5
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1391,7 +1418,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of FusionAuth OAuth2 app. For example: b2222c00-0000-0000-0000-000000862097
         client_secret : Optional[str]
-            'Client Secret' of FusionAuth OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of FusionAuth OAuth2 app. For example: Jx4s0C0000000000000000000000000000000wGqLsc
         endpoint : Optional[str]
             Domain of FusionAuth instance. For example: example.fusionauth.io
         enabled : Optional[bool]
@@ -1437,7 +1464,7 @@ class Project(Service):
         client_id : Optional[str]
             'OAuth2 app Client ID, or App ID' of GitHub OAuth2 app. For example: e4d87900000000540733. Example of wrong value: 370006
         client_secret : Optional[str]
-            'Client Secret' of GitHub OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of GitHub OAuth2 app. For example: 5e07c00000000000000000000000000000198bcc
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1481,7 +1508,7 @@ class Project(Service):
         application_id : Optional[str]
             'Application ID' of Gitlab OAuth2 app. For example: d41ffe0000000000000000000000000000000000000000000000000000d5e252
         secret : Optional[str]
-            'Secret' of Gitlab OAuth2 app. For example: <CLIENT_SECRET>
+            'Secret' of Gitlab OAuth2 app. For example: gloas-838cfa0000000000000000000000000000000000000000000000000000ecbb38
         endpoint : Optional[str]
             Endpoint URL of self-hosted GitLab instance. For example: https://gitlab.com
         enabled : Optional[bool]
@@ -1517,6 +1544,7 @@ class Project(Service):
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
+        prompt: Optional[List[ProjectOAuth2GooglePrompt]] = None,
         enabled: Optional[bool] = None
     ) -> OAuth2Google:
         """
@@ -1527,7 +1555,9 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
         client_secret : Optional[str]
-            'Client Secret' of Google OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Google OAuth2 app. For example: example-google-client-secret
+        prompt : Optional[List[ProjectOAuth2GooglePrompt]]
+            Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1547,6 +1577,7 @@ class Project(Service):
 
         api_params['clientId'] = self._normalize_value(client_id)
         api_params['clientSecret'] = self._normalize_value(client_secret)
+        api_params['prompt'] = self._normalize_value(prompt)
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
@@ -1572,7 +1603,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Keycloak OAuth2 app. For example: appwrite-o0000000st-app
         client_secret : Optional[str]
-            'Client Secret' of Keycloak OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Keycloak OAuth2 app. For example: jdjrJd00000000000000000000HUsaZO
         endpoint : Optional[str]
             Domain of Keycloak instance. For example: keycloak.example.com
         realm_name : Optional[str]
@@ -1621,7 +1652,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Kick OAuth2 app. For example: 01KQ7C00000000000001MFHS32
         client_secret : Optional[str]
-            'Client Secret' of Kick OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Kick OAuth2 app. For example: 34ac5600000000000000000000000000000000000000000000000000e830c8b
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1664,7 +1695,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Linkedin OAuth2 app. For example: 770000000000dv
         primary_client_secret : Optional[str]
-            'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: <CLIENT_SECRET>
+            'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: example-linkedin-client-secret
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1708,7 +1739,7 @@ class Project(Service):
         application_id : Optional[str]
             'Entra ID Application ID, also known as Client ID' of Microsoft OAuth2 app. For example: 00001111-aaaa-2222-bbbb-3333cccc4444
         application_secret : Optional[str]
-            'Entra ID Application Secret, also known as Client Secret' of Microsoft OAuth2 app. For example: <CLIENT_SECRET>
+            'Entra ID Application Secret, also known as Client Secret' of Microsoft OAuth2 app. For example: A1bC2dE3fH4iJ5kL6mN7oP8qR9sT0u
         tenant : Optional[str]
             Microsoft Entra ID tenant identifier. Use 'common', 'organizations', 'consumers' or a specific tenant ID. For example: common
         enabled : Optional[bool]
@@ -1754,7 +1785,7 @@ class Project(Service):
         oauth_client_id : Optional[str]
             'OAuth Client ID' of Notion OAuth2 app. For example: 341d8700-0000-0000-0000-000000446ee3
         oauth_client_secret : Optional[str]
-            'OAuth Client Secret' of Notion OAuth2 app. For example: <CLIENT_SECRET>
+            'OAuth Client Secret' of Notion OAuth2 app. For example: secret_dLUr4b000000000000000000000000000000lFHAa9
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1801,7 +1832,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Oidc OAuth2 app. For example: qibI2x0000000000000000000000000006L2YFoG
         client_secret : Optional[str]
-            'Client Secret' of Oidc OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Oidc OAuth2 app. For example: Ah68ed000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003qpcHV
         well_known_url : Optional[str]
             OpenID Connect well-known configuration URL. When provided, authorization, token, and user info endpoints can be discovered automatically. For example: https://myoauth.com/.well-known/openid-configuration
         authorization_url : Optional[str]
@@ -1858,7 +1889,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Okta OAuth2 app. For example: 0oa00000000000000698
         client_secret : Optional[str]
-            'Client Secret' of Okta OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Okta OAuth2 app. For example: Kiq0000000000000000000000000000000000000-00000000000H2L5-3SJ-vRV
         domain : Optional[str]
             Okta company domain. Required when enabling the provider. For example: trial-6400025.okta.com. Example of wrong value: trial-6400025-admin.okta.com, or https://trial-6400025.okta.com/
         authorization_server_id : Optional[str]
@@ -1907,7 +1938,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Paypal OAuth2 app. For example: AdhIEG7-000000000000-0000000000000000000000000000000-0000000000000000000000-2pyB
         secret_key : Optional[str]
-            'Secret Key 1 or Secret Key 2' of Paypal OAuth2 app. For example: <CLIENT_SECRET>
+            'Secret Key 1 or Secret Key 2' of Paypal OAuth2 app. For example: EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1950,7 +1981,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of PaypalSandbox OAuth2 app. For example: AdhIEG7-000000000000-0000000000000000000000000000000-0000000000000000000000-2pyB
         secret_key : Optional[str]
-            'Secret Key 1 or Secret Key 2' of PaypalSandbox OAuth2 app. For example: <CLIENT_SECRET>
+            'Secret Key 1 or Secret Key 2' of PaypalSandbox OAuth2 app. For example: EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1993,7 +2024,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Podio OAuth2 app. For example: appwrite-o0000000st-app
         client_secret : Optional[str]
-            'Client Secret' of Podio OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Podio OAuth2 app. For example: Rn247T0000000000000000000000000000000000000000000000000000W2zWTN
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2036,7 +2067,7 @@ class Project(Service):
         customer_key : Optional[str]
             'Consumer Key' of Salesforce OAuth2 app. For example: 3MVG9I0000000000000000000000000000000000000000000000000000000000000000000000000C5Aejq
         customer_secret : Optional[str]
-            'Consumer Secret' of Salesforce OAuth2 app. For example: <CLIENT_SECRET>
+            'Consumer Secret' of Salesforce OAuth2 app. For example: 3w000000000000e2
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2079,7 +2110,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Slack OAuth2 app. For example: 23000000089.15000000000023
         client_secret : Optional[str]
-            'Client Secret' of Slack OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Slack OAuth2 app. For example: 81656000000000000000000000f3d2fd
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2122,7 +2153,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Spotify OAuth2 app. For example: 6ec271000000000000000000009beace
         client_secret : Optional[str]
-            'Client Secret' of Spotify OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Spotify OAuth2 app. For example: db068a000000000000000000008b5b9f
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2165,7 +2196,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Stripe OAuth2 app. For example: ca_UKibXX0000000000000000000006byvR
         api_secret_key : Optional[str]
-            'API Secret Key' of Stripe OAuth2 app. For example: <CLIENT_SECRET>
+            'API Secret Key' of Stripe OAuth2 app. For example: sk_51SfOd000000000000000000000000000000000000000000000000000000000000000000000000000000000000000QGWYfp
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2208,7 +2239,7 @@ class Project(Service):
         oauth2_client_id : Optional[str]
             'OAuth2 Client ID' of Tradeshift OAuth2 app. For example: appwrite-tes00000.0000000000est-app
         oauth2_client_secret : Optional[str]
-            'OAuth2 Client Secret' of Tradeshift OAuth2 app. For example: <CLIENT_SECRET>
+            'OAuth2 Client Secret' of Tradeshift OAuth2 app. For example: 7cb52700-0000-0000-0000-000000ca5b83
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2251,7 +2282,7 @@ class Project(Service):
         oauth2_client_id : Optional[str]
             'OAuth2 Client ID' of Tradeshift Sandbox OAuth2 app. For example: appwrite-tes00000.0000000000est-app
         oauth2_client_secret : Optional[str]
-            'OAuth2 Client Secret' of Tradeshift Sandbox OAuth2 app. For example: <CLIENT_SECRET>
+            'OAuth2 Client Secret' of Tradeshift Sandbox OAuth2 app. For example: 7cb52700-0000-0000-0000-000000ca5b83
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2294,7 +2325,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Twitch OAuth2 app. For example: vvi0in000000000000000000ikmt9p
         client_secret : Optional[str]
-            'Client Secret' of Twitch OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Twitch OAuth2 app. For example: pmapue000000000000000000zylw3v
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2337,7 +2368,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of WordPress OAuth2 app. For example: 130005
         client_secret : Optional[str]
-            'Client Secret' of WordPress OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of WordPress OAuth2 app. For example: PlBfJS0000000000000000000000000000000000000000000000000000EdUZJk
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2380,7 +2411,7 @@ class Project(Service):
         customer_key : Optional[str]
             'Customer Key' of X OAuth2 app. For example: slzZV0000000000000NFLaWT
         secret_key : Optional[str]
-            'Secret Key' of X OAuth2 app. For example: <CLIENT_SECRET>
+            'Secret Key' of X OAuth2 app. For example: tkEPkp00000000000000000000000000000000000000FTxbI9
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2423,7 +2454,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID, also known as Customer Key' of Yahoo OAuth2 app. For example: dj0yJm000000000000000000000000000000000000000000000000000000000000000000000000000000000000Z4PWRm
         client_secret : Optional[str]
-            'Client Secret, also known as Customer Secret' of Yahoo OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret, also known as Customer Secret' of Yahoo OAuth2 app. For example: cf978f0000000000000000000000000000c5e2e9
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2466,7 +2497,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Yandex OAuth2 app. For example: 6a8a6a0000000000000000000091483c
         client_secret : Optional[str]
-            'Client Secret' of Yandex OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Yandex OAuth2 app. For example: bbf98500000000000000000000c75a63
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2509,7 +2540,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Zoho OAuth2 app. For example: 1000.83C178000000000000000000RPNX0B
         client_secret : Optional[str]
-            'Client Secret' of Zoho OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Zoho OAuth2 app. For example: fb5cac000000000000000000000000000000a68f6e
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2552,7 +2583,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Zoom OAuth2 app. For example: QMAC00000000000000w0AQ
         client_secret : Optional[str]
-            'Client Secret' of Zoom OAuth2 app. For example: <CLIENT_SECRET>
+            'Client Secret' of Zoom OAuth2 app. For example: GAWsG4000000000000000000007U01ON
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2583,14 +2614,14 @@ class Project(Service):
 
     def get_o_auth2_provider(
         self,
-        provider_id: OAuthProvider
+        provider_id: ProjectOAuthProviderId
     ) -> Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft]:
         """
         Get a single OAuth2 provider configuration. Credential fields (client secret, p8 file, key/team IDs) are write-only and always returned empty.
 
         Parameters
         ----------
-        provider_id : OAuthProvider
+        provider_id : ProjectOAuthProviderId
             OAuth2 provider key. For example: github, google, apple.
         
         Returns
@@ -3432,6 +3463,120 @@ class Project(Service):
         return self._parse_response(response, model=PolicyList)
 
 
+    def update_deny_aliased_email_policy(
+        self,
+        enabled: bool
+    ) -> ProjectModel:
+        """
+        Configures if aliased emails such as subaddresses and emails with suffixes are denied during new users sign-ups and email updates.
+
+        Parameters
+        ----------
+        enabled : bool
+            Set whether or not to block aliased emails during signup and email updates.
+        
+        Returns
+        -------
+        ProjectModel
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/policies/deny-aliased-email'
+        api_params = {}
+        if enabled is None:
+            raise AppwriteException('Missing required parameter: "enabled"')
+
+
+        api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=ProjectModel)
+
+
+    def update_deny_disposable_email_policy(
+        self,
+        enabled: bool
+    ) -> ProjectModel:
+        """
+        Configures if disposable emails from known temporary domains are denied during new users sign-ups and email updates.
+
+        Parameters
+        ----------
+        enabled : bool
+            Set whether or not to block disposable email addresses during signup and email updates.
+        
+        Returns
+        -------
+        ProjectModel
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/policies/deny-disposable-email'
+        api_params = {}
+        if enabled is None:
+            raise AppwriteException('Missing required parameter: "enabled"')
+
+
+        api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=ProjectModel)
+
+
+    def update_deny_free_email_policy(
+        self,
+        enabled: bool
+    ) -> ProjectModel:
+        """
+        Configures if emails from free providers such as Gmail or Yahoo are denied during new users sign-ups and email updates.
+
+        Parameters
+        ----------
+        enabled : bool
+            Set whether or not to block free email addresses during signup and email updates.
+        
+        Returns
+        -------
+        ProjectModel
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/policies/deny-free-email'
+        api_params = {}
+        if enabled is None:
+            raise AppwriteException('Missing required parameter: "enabled"')
+
+
+        api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call('patch', api_path, {
+            'content-type': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=ProjectModel)
+
+
     def update_membership_privacy_policy(
         self,
         user_id: Optional[bool] = None,
@@ -3787,14 +3932,14 @@ class Project(Service):
 
     def get_policy(
         self,
-        policy_id: ProjectPolicy
+        policy_id: ProjectPolicyId
     ) -> Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy]:
         """
         Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
 
         Parameters
         ----------
-        policy_id : ProjectPolicy
+        policy_id : ProjectPolicyId
             Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy.
         
         Returns
@@ -3853,7 +3998,7 @@ class Project(Service):
 
     def update_protocol(
         self,
-        protocol_id: ProtocolId,
+        protocol_id: ProjectProtocolId,
         enabled: bool
     ) -> ProjectModel:
         """
@@ -3861,7 +4006,7 @@ class Project(Service):
 
         Parameters
         ----------
-        protocol_id : ProtocolId
+        protocol_id : ProjectProtocolId
             Protocol name. Can be one of: rest, graphql, websocket
         enabled : bool
             Protocol status.
@@ -3898,7 +4043,7 @@ class Project(Service):
 
     def update_service(
         self,
-        service_id: ServiceId,
+        service_id: ProjectServiceId,
         enabled: bool
     ) -> ProjectModel:
         """
@@ -3906,8 +4051,8 @@ class Project(Service):
 
         Parameters
         ----------
-        service_id : ServiceId
-            Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging
+        service_id : ProjectServiceId
+            Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging, advisor
         enabled : bool
             Service status.
         
@@ -3951,7 +4096,7 @@ class Project(Service):
         sender_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
-        secure: Optional[Secure] = None,
+        secure: Optional[ProjectSMTPSecure] = None,
         enabled: Optional[bool] = None
     ) -> ProjectModel:
         """
@@ -3975,7 +4120,7 @@ class Project(Service):
             Email used when user replies to the email.
         reply_to_name : Optional[str]
             Name used when user replies to the email.
-        secure : Optional[Secure]
+        secure : Optional[ProjectSMTPSecure]
             Configures if communication with SMTP server is encrypted. Allowed values are: tls, ssl. Leave empty for no encryption.
         enabled : Optional[bool]
             Enable or disable custom SMTP. Custom SMTP is useful for branding purposes, but also allows use of custom email templates.
@@ -4092,8 +4237,8 @@ class Project(Service):
 
     def update_email_template(
         self,
-        template_id: EmailTemplateType,
-        locale: Optional[EmailTemplateLocale] = None,
+        template_id: ProjectEmailTemplateId,
+        locale: Optional[ProjectEmailTemplateLocale] = None,
         subject: Optional[str] = None,
         message: Optional[str] = None,
         sender_name: Optional[str] = None,
@@ -4106,9 +4251,9 @@ class Project(Service):
 
         Parameters
         ----------
-        template_id : EmailTemplateType
+        template_id : ProjectEmailTemplateId
             Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
-        locale : Optional[EmailTemplateLocale]
+        locale : Optional[ProjectEmailTemplateLocale]
             Custom email template locale. If left empty, the fallback locale (en) will be used.
         subject : Optional[str]
             Subject of the email template. Can be up to 255 characters.
@@ -4159,17 +4304,17 @@ class Project(Service):
 
     def get_email_template(
         self,
-        template_id: EmailTemplateType,
-        locale: Optional[EmailTemplateLocale] = None
+        template_id: ProjectEmailTemplateId,
+        locale: Optional[ProjectEmailTemplateLocale] = None
     ) -> EmailTemplate:
         """
         Get a custom email template for the specified locale and type. This endpoint returns the template content, subject, and other configuration details.
 
         Parameters
         ----------
-        template_id : EmailTemplateType
+        template_id : ProjectEmailTemplateId
             Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
-        locale : Optional[EmailTemplateLocale]
+        locale : Optional[ProjectEmailTemplateLocale]
             Custom email template locale. If left empty, the fallback locale (en) will be used.
         
         Returns

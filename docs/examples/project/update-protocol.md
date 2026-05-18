@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.project import Project
 from appwrite.models import Project as ProjectModel
-from appwrite.enums import ProtocolId
+from appwrite.enums import ProjectProtocolId
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -12,7 +12,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 project = Project(client)
 
 result: ProjectModel = project.update_protocol(
-    protocol_id = ProtocolId.REST,
+    protocol_id = ProjectProtocolId.REST,
     enabled = False
 )
 

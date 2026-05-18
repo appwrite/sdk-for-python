@@ -1,6 +1,6 @@
 from enum import Enum
 
-class EmailTemplateLocale(Enum):
+class ProjectEmailTemplateLocale(Enum):
     AF = "af"
     AR_AE = "ar-ae"
     AR_BH = "ar-bh"

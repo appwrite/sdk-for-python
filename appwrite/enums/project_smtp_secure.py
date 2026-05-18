@@ -1,5 +1,5 @@
 from enum import Enum
 
-class Secure(Enum):
+class ProjectSMTPSecure(Enum):
     TLS = "tls"
     SSL = "ssl"

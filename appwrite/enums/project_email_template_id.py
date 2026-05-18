@@ -1,6 +1,6 @@
 from enum import Enum
 
-class EmailTemplateType(Enum):
+class ProjectEmailTemplateId(Enum):
     VERIFICATION = "verification"
     MAGICSESSION = "magicSession"
     RECOVERY = "recovery"

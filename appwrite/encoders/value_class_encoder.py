@@ -24,13 +24,16 @@ from ..enums.execution_method import ExecutionMethod
 from ..enums.name import Name
 from ..enums.message_priority import MessagePriority
 from ..enums.smtp_encryption import SmtpEncryption
-from ..enums.auth_method import AuthMethod
-from ..enums.project_policy import ProjectPolicy
-from ..enums.protocol_id import ProtocolId
-from ..enums.service_id import ServiceId
-from ..enums.secure import Secure
-from ..enums.email_template_type import EmailTemplateType
-from ..enums.email_template_locale import EmailTemplateLocale
+from ..enums.project_auth_method_id import ProjectAuthMethodId
+from ..enums.project_key_scopes import ProjectKeyScopes
+from ..enums.project_o_auth2_google_prompt import ProjectOAuth2GooglePrompt
+from ..enums.project_o_auth_provider_id import ProjectOAuthProviderId
+from ..enums.project_policy_id import ProjectPolicyId
+from ..enums.project_protocol_id import ProjectProtocolId
+from ..enums.project_service_id import ProjectServiceId
+from ..enums.project_smtp_secure import ProjectSMTPSecure
+from ..enums.project_email_template_id import ProjectEmailTemplateId
+from ..enums.project_email_template_locale import ProjectEmailTemplateLocale
 from ..enums.status_code import StatusCode
 from ..enums.proxy_resource_type import ProxyResourceType
 from ..enums.framework import Framework
@@ -48,6 +51,7 @@ from ..enums.index_status import IndexStatus
 from ..enums.deployment_status import DeploymentStatus
 from ..enums.execution_trigger import ExecutionTrigger
 from ..enums.execution_status import ExecutionStatus
+from ..enums.o_auth2_google_prompt import OAuth2GooglePrompt
 from ..enums.platform_type import PlatformType
 from ..enums.health_antivirus_status import HealthAntivirusStatus
 from ..enums.health_check_status import HealthCheckStatus
@@ -132,25 +136,34 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, SmtpEncryption):
             return o.value
 
-        if isinstance(o, AuthMethod):
+        if isinstance(o, ProjectAuthMethodId):
             return o.value
 
-        if isinstance(o, ProjectPolicy):
+        if isinstance(o, ProjectKeyScopes):
             return o.value
 
-        if isinstance(o, ProtocolId):
+        if isinstance(o, ProjectOAuth2GooglePrompt):
             return o.value
 
-        if isinstance(o, ServiceId):
+        if isinstance(o, ProjectOAuthProviderId):
             return o.value
 
-        if isinstance(o, Secure):
+        if isinstance(o, ProjectPolicyId):
             return o.value
 
-        if isinstance(o, EmailTemplateType):
+        if isinstance(o, ProjectProtocolId):
             return o.value
 
-        if isinstance(o, EmailTemplateLocale):
+        if isinstance(o, ProjectServiceId):
+            return o.value
+
+        if isinstance(o, ProjectSMTPSecure):
+            return o.value
+
+        if isinstance(o, ProjectEmailTemplateId):
+            return o.value
+
+        if isinstance(o, ProjectEmailTemplateLocale):
             return o.value
 
         if isinstance(o, StatusCode):
@@ -202,6 +215,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, ExecutionStatus):
+            return o.value
+
+        if isinstance(o, OAuth2GooglePrompt):
             return o.value
 
         if isinstance(o, PlatformType):
