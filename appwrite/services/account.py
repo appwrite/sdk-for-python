@@ -2,21 +2,21 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.user import User;
-from ..models.identity_list import IdentityList;
-from ..models.jwt import Jwt;
-from ..models.log_list import LogList;
-from ..enums.authenticator_type import AuthenticatorType;
-from ..models.mfa_type import MfaType;
-from ..enums.authentication_factor import AuthenticationFactor;
-from ..models.mfa_challenge import MfaChallenge;
-from ..models.session import Session;
-from ..models.mfa_factors import MfaFactors;
-from ..models.mfa_recovery_codes import MfaRecoveryCodes;
-from ..models.preferences import Preferences;
-from ..models.token import Token;
-from ..models.session_list import SessionList;
-from ..enums.o_auth_provider import OAuthProvider;
+from ..models.user import User
+from ..models.identity_list import IdentityList
+from ..models.jwt import Jwt
+from ..models.log_list import LogList
+from ..enums.authenticator_type import AuthenticatorType
+from ..models.mfa_type import MfaType
+from ..enums.authentication_factor import AuthenticationFactor
+from ..models.mfa_challenge import MfaChallenge
+from ..models.session import Session
+from ..models.mfa_factors import MfaFactors
+from ..models.mfa_recovery_codes import MfaRecoveryCodes
+from ..models.preferences import Preferences
+from ..models.token import Token
+from ..models.session_list import SessionList
+from ..enums.o_auth_provider import OAuthProvider
 
 T = TypeVar('T')
 

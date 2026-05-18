@@ -2,8 +2,8 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.webhook_list import WebhookList;
-from ..models.webhook import Webhook;
+from ..models.webhook_list import WebhookList
+from ..models.webhook import Webhook
 
 class Webhooks(Service):
 

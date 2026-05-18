@@ -2,8 +2,8 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.usage_event_list import UsageEventList;
-from ..models.usage_gauge_list import UsageGaugeList;
+from ..models.usage_event_list import UsageEventList
+from ..models.usage_gauge_list import UsageGaugeList
 
 class Usage(Service):
 

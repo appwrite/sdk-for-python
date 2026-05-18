@@ -2,8 +2,8 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.presence_list import PresenceList;
-from ..models.presence import Presence;
+from ..models.presence_list import PresenceList
+from ..models.presence import Presence
 
 T = TypeVar('T')
 

@@ -2,8 +2,8 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.activity_event_list import ActivityEventList;
-from ..models.activity_event import ActivityEvent;
+from ..models.activity_event_list import ActivityEventList
+from ..models.activity_event import ActivityEvent
 
 class Activities(Service):
 

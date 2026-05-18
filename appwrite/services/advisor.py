@@ -2,10 +2,10 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.report_list import ReportList;
-from ..models.report import Report;
-from ..models.insight_list import InsightList;
-from ..models.insight import Insight;
+from ..models.report_list import ReportList
+from ..models.report import Report
+from ..models.insight_list import InsightList
+from ..models.insight import Insight
 
 class Advisor(Service):
 

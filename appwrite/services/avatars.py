@@ -2,13 +2,13 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..enums.browser import Browser;
-from ..enums.credit_card import CreditCard;
-from ..enums.flag import Flag;
-from ..enums.theme import Theme;
-from ..enums.timezone import Timezone;
-from ..enums.browser_permission import BrowserPermission;
-from ..enums.image_format import ImageFormat;
+from ..enums.browser import Browser
+from ..enums.credit_card import CreditCard
+from ..enums.flag import Flag
+from ..enums.theme import Theme
+from ..enums.timezone import Timezone
+from ..enums.browser_permission import BrowserPermission
+from ..enums.image_format import ImageFormat
 
 class Avatars(Service):
 

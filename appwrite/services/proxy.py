@@ -2,10 +2,10 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.proxy_rule_list import ProxyRuleList;
-from ..models.proxy_rule import ProxyRule;
-from ..enums.status_code import StatusCode;
-from ..enums.proxy_resource_type import ProxyResourceType;
+from ..models.proxy_rule_list import ProxyRuleList
+from ..models.proxy_rule import ProxyRule
+from ..enums.status_code import StatusCode
+from ..enums.proxy_resource_type import ProxyResourceType
 
 class Proxy(Service):
 

@@ -2,11 +2,11 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.team_list import TeamList;
-from ..models.team import Team;
-from ..models.membership_list import MembershipList;
-from ..models.membership import Membership;
-from ..models.preferences import Preferences;
+from ..models.team_list import TeamList
+from ..models.team import Team
+from ..models.membership_list import MembershipList
+from ..models.membership import Membership
+from ..models.preferences import Preferences
 
 T = TypeVar('T')
 

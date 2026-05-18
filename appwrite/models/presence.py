@@ -40,8 +40,12 @@ class Presence(AppwriteModel, Generic[T]):
     @classmethod
     def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'Presence[T]':
         """Create Presence instance with typed data."""
-        internal_fields = {k: v for k, v in data.items() if k.startswith('$')}
-        user_data = {k: v for k, v in data.items() if not k.startswith('$')}
+        internal_aliases = {'$id', '$createdAt', '$updatedAt', '$permissions', 'userId', 'status', 'source', 'expiresAt'}
+        internal_fields = {k: v for k, v in data.items() if k in internal_aliases}
+        user_data = {k: v for k, v in data.items() if k not in internal_aliases and k != 'metadata'}
+        nested = data.get('metadata')
+        if isinstance(nested, dict):
+            user_data = {**nested, **user_data}
         instance = cls.model_validate(internal_fields)
         instance._metadata = model_type(**user_data) if model_type is not dict else user_data
         return instance

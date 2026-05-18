@@ -2,8 +2,8 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.resource_token_list import ResourceTokenList;
-from ..models.resource_token import ResourceToken;
+from ..models.resource_token_list import ResourceTokenList
+from ..models.resource_token import ResourceToken
 
 class Tokens(Service):
 
