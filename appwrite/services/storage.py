@@ -2,14 +2,14 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.bucket_list import BucketList;
-from ..enums.compression import Compression;
-from ..models.bucket import Bucket;
-from ..models.file_list import FileList;
+from ..models.bucket_list import BucketList
+from ..enums.compression import Compression
+from ..models.bucket import Bucket
+from ..models.file_list import FileList
 from ..input_file import InputFile
-from ..models.file import File;
-from ..enums.image_gravity import ImageGravity;
-from ..enums.image_format import ImageFormat;
+from ..models.file import File
+from ..enums.image_gravity import ImageGravity
+from ..enums.image_format import ImageFormat
 
 class Storage(Service):
 

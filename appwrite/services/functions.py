@@ -2,23 +2,23 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.function_list import FunctionList;
-from ..enums.runtime import Runtime;
-from ..enums.scopes import Scopes;
-from ..models.function import Function;
-from ..models.runtime_list import RuntimeList;
-from ..models.specification_list import SpecificationList;
-from ..models.deployment_list import DeploymentList;
+from ..models.function_list import FunctionList
+from ..enums.runtime import Runtime
+from ..enums.scopes import Scopes
+from ..models.function import Function
+from ..models.runtime_list import RuntimeList
+from ..models.specification_list import SpecificationList
+from ..models.deployment_list import DeploymentList
 from ..input_file import InputFile
-from ..models.deployment import Deployment;
-from ..enums.template_reference_type import TemplateReferenceType;
-from ..enums.vcs_reference_type import VCSReferenceType;
-from ..enums.deployment_download_type import DeploymentDownloadType;
-from ..models.execution_list import ExecutionList;
-from ..enums.execution_method import ExecutionMethod;
-from ..models.execution import Execution;
-from ..models.variable_list import VariableList;
-from ..models.variable import Variable;
+from ..models.deployment import Deployment
+from ..enums.template_reference_type import TemplateReferenceType
+from ..enums.vcs_reference_type import VCSReferenceType
+from ..enums.deployment_download_type import DeploymentDownloadType
+from ..models.execution_list import ExecutionList
+from ..enums.execution_method import ExecutionMethod
+from ..models.execution import Execution
+from ..models.variable_list import VariableList
+from ..models.variable import Variable
 
 class Functions(Service):
 

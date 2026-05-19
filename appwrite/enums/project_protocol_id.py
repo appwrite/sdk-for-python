@@ -1,6 +1,6 @@
 from enum import Enum
 
-class ProtocolId(Enum):
+class ProjectProtocolId(Enum):
     REST = "rest"
     GRAPHQL = "graphql"
     WEBSOCKET = "websocket"

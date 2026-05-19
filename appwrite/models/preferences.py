@@ -14,9 +14,8 @@ class Preferences(AppwriteModel, Generic[T]):
     @classmethod
     def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'Preferences[T]':
         """Create Preferences instance with typed data."""
-        internal_fields = {k: v for k, v in data.items() if k.startswith('$')}
-        user_data = {k: v for k, v in data.items() if not k.startswith('$')}
-        instance = cls.model_validate(internal_fields)
+        user_data = dict(data)
+        instance = cls.model_validate({})
         instance._data = model_type(**user_data) if model_type is not dict else user_data
         return instance
 

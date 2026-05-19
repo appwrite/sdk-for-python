@@ -2,13 +2,13 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.backup_archive_list import BackupArchiveList;
-from ..enums.backup_services import BackupServices;
-from ..models.backup_archive import BackupArchive;
-from ..models.backup_policy_list import BackupPolicyList;
-from ..models.backup_policy import BackupPolicy;
-from ..models.backup_restoration import BackupRestoration;
-from ..models.backup_restoration_list import BackupRestorationList;
+from ..models.backup_archive_list import BackupArchiveList
+from ..enums.backup_services import BackupServices
+from ..models.backup_archive import BackupArchive
+from ..models.backup_policy_list import BackupPolicyList
+from ..models.backup_policy import BackupPolicy
+from ..models.backup_restoration import BackupRestoration
+from ..models.backup_restoration_list import BackupRestorationList
 
 class Backups(Service):
 

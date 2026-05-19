@@ -2,18 +2,18 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.message_list import MessageList;
-from ..models.message import Message;
-from ..enums.message_priority import MessagePriority;
-from ..models.log_list import LogList;
-from ..models.target_list import TargetList;
-from ..models.provider_list import ProviderList;
-from ..models.provider import Provider;
-from ..enums.smtp_encryption import SmtpEncryption;
-from ..models.topic_list import TopicList;
-from ..models.topic import Topic;
-from ..models.subscriber_list import SubscriberList;
-from ..models.subscriber import Subscriber;
+from ..models.message_list import MessageList
+from ..models.message import Message
+from ..enums.message_priority import MessagePriority
+from ..models.log_list import LogList
+from ..models.target_list import TargetList
+from ..models.provider_list import ProviderList
+from ..models.provider import Provider
+from ..enums.smtp_encryption import SmtpEncryption
+from ..models.topic_list import TopicList
+from ..models.topic import Topic
+from ..models.subscriber_list import SubscriberList
+from ..models.subscriber import Subscriber
 
 class Messaging(Service):
 

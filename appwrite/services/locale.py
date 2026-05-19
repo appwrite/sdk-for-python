@@ -2,13 +2,13 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.locale import Locale as LocaleModel;
-from ..models.locale_code_list import LocaleCodeList;
-from ..models.continent_list import ContinentList;
-from ..models.country_list import CountryList;
-from ..models.phone_list import PhoneList;
-from ..models.currency_list import CurrencyList;
-from ..models.language_list import LanguageList;
+from ..models.locale import Locale as LocaleModel
+from ..models.locale_code_list import LocaleCodeList
+from ..models.continent_list import ContinentList
+from ..models.country_list import CountryList
+from ..models.phone_list import PhoneList
+from ..models.currency_list import CurrencyList
+from ..models.language_list import LanguageList
 
 class Locale(Service):
 

@@ -37,8 +37,12 @@ class Document(AppwriteModel, Generic[T]):
     @classmethod
     def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'Document[T]':
         """Create Document instance with typed data."""
-        internal_fields = {k: v for k, v in data.items() if k.startswith('$')}
-        user_data = {k: v for k, v in data.items() if not k.startswith('$')}
+        internal_aliases = {'$id', '$sequence', '$collectionId', '$databaseId', '$createdAt', '$updatedAt', '$permissions'}
+        internal_fields = {k: v for k, v in data.items() if k in internal_aliases}
+        user_data = {k: v for k, v in data.items() if k not in internal_aliases and k != 'data'}
+        nested = data.get('data')
+        if isinstance(nested, dict):
+            user_data = {**nested, **user_data}
         instance = cls.model_validate(internal_fields)
         instance._data = model_type(**user_data) if model_type is not dict else user_data
         return instance

@@ -1,6 +1,6 @@
 from enum import Enum
 
-class ServiceId(Enum):
+class ProjectServiceId(Enum):
     ACCOUNT = "account"
     AVATARS = "avatars"
     DATABASES = "databases"
@@ -18,3 +18,4 @@ class ServiceId(Enum):
     GRAPHQL = "graphql"
     MIGRATIONS = "migrations"
     MESSAGING = "messaging"
+    ADVISOR = "advisor"

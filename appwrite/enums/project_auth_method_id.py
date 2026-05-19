@@ -1,6 +1,6 @@
 from enum import Enum
 
-class AuthMethod(Enum):
+class ProjectAuthMethodId(Enum):
     EMAIL_PASSWORD = "email-password"
     MAGIC_URL = "magic-url"
     EMAIL_OTP = "email-otp"

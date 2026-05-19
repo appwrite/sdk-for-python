@@ -2,23 +2,23 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.user_list import UserList;
-from ..models.user import User;
-from ..models.identity_list import IdentityList;
-from ..enums.password_hash import PasswordHash;
-from ..models.jwt import Jwt;
-from ..models.log_list import LogList;
-from ..models.membership_list import MembershipList;
-from ..enums.authenticator_type import AuthenticatorType;
-from ..models.mfa_factors import MfaFactors;
-from ..models.mfa_recovery_codes import MfaRecoveryCodes;
-from ..models.preferences import Preferences;
-from ..models.session_list import SessionList;
-from ..models.session import Session;
-from ..models.target_list import TargetList;
-from ..enums.messaging_provider_type import MessagingProviderType;
-from ..models.target import Target;
-from ..models.token import Token;
+from ..models.user_list import UserList
+from ..models.user import User
+from ..models.identity_list import IdentityList
+from ..enums.password_hash import PasswordHash
+from ..models.jwt import Jwt
+from ..models.log_list import LogList
+from ..models.membership_list import MembershipList
+from ..enums.authenticator_type import AuthenticatorType
+from ..models.mfa_factors import MfaFactors
+from ..models.mfa_recovery_codes import MfaRecoveryCodes
+from ..models.preferences import Preferences
+from ..models.session_list import SessionList
+from ..models.session import Session
+from ..models.target_list import TargetList
+from ..enums.messaging_provider_type import MessagingProviderType
+from ..models.target import Target
+from ..models.token import Token
 
 T = TypeVar('T')
 

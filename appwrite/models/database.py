@@ -3,8 +3,8 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 from ..enums.database_type import DatabaseType
-from .index import Index
-from .collection import Collection
+from .backup_policy import BackupPolicy
+from .backup_archive import BackupArchive
 
 class Database(AppwriteModel):
     """
@@ -24,9 +24,9 @@ class Database(AppwriteModel):
         If database is enabled. Can be &#039;enabled&#039; or &#039;disabled&#039;. When disabled, the database is inaccessible to users, but remains accessible to Server SDKs using API keys.
     type : DatabaseType
         Database type.
-    policies : List[Index]
+    policies : List[BackupPolicy]
         Database backup policies.
-    archives : List[Collection]
+    archives : List[BackupArchive]
         Database backup archives.
     """
     id: str = Field(..., alias='$id')
@@ -35,5 +35,5 @@ class Database(AppwriteModel):
     updatedat: str = Field(..., alias='$updatedAt')
     enabled: bool = Field(..., alias='enabled')
     type: DatabaseType = Field(..., alias='type')
-    policies: List[Index] = Field(..., alias='policies')
-    archives: List[Collection] = Field(..., alias='archives')
+    policies: List[BackupPolicy] = Field(..., alias='policies')
+    archives: List[BackupArchive] = Field(..., alias='archives')

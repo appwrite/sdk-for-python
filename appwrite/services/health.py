@@ -2,13 +2,13 @@ from ..service import Service
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
-from ..models.health_status import HealthStatus;
-from ..models.health_antivirus import HealthAntivirus;
-from ..models.health_status_list import HealthStatusList;
-from ..models.health_certificate import HealthCertificate;
-from ..models.health_queue import HealthQueue;
-from ..enums.name import Name;
-from ..models.health_time import HealthTime;
+from ..models.health_status import HealthStatus
+from ..models.health_antivirus import HealthAntivirus
+from ..models.health_status_list import HealthStatusList
+from ..models.health_certificate import HealthCertificate
+from ..models.health_queue import HealthQueue
+from ..enums.name import Name
+from ..models.health_time import HealthTime
 
 class Health(Service):
 

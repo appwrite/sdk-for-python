@@ -1,6 +1,7 @@
 from .base_model import AppwriteModel
 from .row_list import RowList
 from .document_list import DocumentList
+from .presence_list import PresenceList
 from .table_list import TableList
 from .collection_list import CollectionList
 from .database_list import DatabaseList
@@ -42,6 +43,8 @@ from .subscriber_list import SubscriberList
 from .target_list import TargetList
 from .transaction_list import TransactionList
 from .specification_list import SpecificationList
+from .insight_list import InsightList
+from .report_list import ReportList
 from .database import Database
 from .collection import Collection
 from .attribute_list import AttributeList
@@ -87,6 +90,7 @@ from .index import Index
 from .column_index import ColumnIndex
 from .row import Row
 from .document import Document
+from .presence import Presence
 from .log import Log
 from .user import User
 from .algo_md5 import AlgoMd5
@@ -116,6 +120,9 @@ from .framework_adapter import FrameworkAdapter
 from .deployment import Deployment
 from .execution import Execution
 from .project import Project
+from .project_auth_method import ProjectAuthMethod
+from .project_service import ProjectService
+from .project_protocol import ProjectProtocol
 from .webhook import Webhook
 from .key import Key
 from .ephemeral_key import EphemeralKey
@@ -171,7 +178,6 @@ from .policy_session_invalidation import PolicySessionInvalidation
 from .policy_session_limit import PolicySessionLimit
 from .policy_user_limit import PolicyUserLimit
 from .policy_membership_privacy import PolicyMembershipPrivacy
-from .auth_provider import AuthProvider
 from .platform_web import PlatformWeb
 from .platform_apple import PlatformApple
 from .platform_android import PlatformAndroid
@@ -203,12 +209,19 @@ from .topic import Topic
 from .transaction import Transaction
 from .subscriber import Subscriber
 from .target import Target
+from .insight import Insight
+from .insight_cta import InsightCTA
+from .report import Report
 from .activity_event import ActivityEvent
 from .backup_archive import BackupArchive
 from .billing_limits import BillingLimits
 from .block import Block
 from .backup_policy import BackupPolicy
 from .backup_restoration import BackupRestoration
+from .usage_event import UsageEvent
+from .usage_event_list import UsageEventList
+from .usage_gauge import UsageGauge
+from .usage_gauge_list import UsageGaugeList
 from .activity_event_list import ActivityEventList
 from .backup_archive_list import BackupArchiveList
 from .backup_policy_list import BackupPolicyList
@@ -218,6 +231,7 @@ __all__ = [
     'AppwriteModel',
     'RowList',
     'DocumentList',
+    'PresenceList',
     'TableList',
     'CollectionList',
     'DatabaseList',
@@ -259,6 +273,8 @@ __all__ = [
     'TargetList',
     'TransactionList',
     'SpecificationList',
+    'InsightList',
+    'ReportList',
     'Database',
     'Collection',
     'AttributeList',
@@ -304,6 +320,7 @@ __all__ = [
     'ColumnIndex',
     'Row',
     'Document',
+    'Presence',
     'Log',
     'User',
     'AlgoMd5',
@@ -333,6 +350,9 @@ __all__ = [
     'Deployment',
     'Execution',
     'Project',
+    'ProjectAuthMethod',
+    'ProjectService',
+    'ProjectProtocol',
     'Webhook',
     'Key',
     'EphemeralKey',
@@ -388,7 +408,6 @@ __all__ = [
     'PolicySessionLimit',
     'PolicyUserLimit',
     'PolicyMembershipPrivacy',
-    'AuthProvider',
     'PlatformWeb',
     'PlatformApple',
     'PlatformAndroid',
@@ -420,12 +439,19 @@ __all__ = [
     'Transaction',
     'Subscriber',
     'Target',
+    'Insight',
+    'InsightCTA',
+    'Report',
     'ActivityEvent',
     'BackupArchive',
     'BillingLimits',
     'Block',
     'BackupPolicy',
     'BackupRestoration',
+    'UsageEvent',
+    'UsageEventList',
+    'UsageGauge',
+    'UsageGaugeList',
     'ActivityEventList',
     'BackupArchiveList',
     'BackupPolicyList',
