@@ -63,7 +63,7 @@ class Project(AppwriteModel):
         List of protocols.
     region : str
         Project region
-    billinglimits : BillingLimits
+    billinglimits : Optional[BillingLimits]
         Billing limits reached
     blocks : List[Block]
         Project blocks information
@@ -94,6 +94,6 @@ class Project(AppwriteModel):
     services: List[ProjectService] = Field(..., alias='services')
     protocols: List[ProjectProtocol] = Field(..., alias='protocols')
     region: str = Field(..., alias='region')
-    billinglimits: BillingLimits = Field(..., alias='billingLimits')
+    billinglimits: Optional[BillingLimits] = Field(default=None, alias='billingLimits')
     blocks: List[Block] = Field(..., alias='blocks')
     consoleaccessedat: str = Field(..., alias='consoleAccessedAt')

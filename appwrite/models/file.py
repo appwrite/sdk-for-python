@@ -27,6 +27,8 @@ class File(AppwriteModel):
         File mime type.
     sizeoriginal : float
         File original size in bytes.
+    sizeactual : float
+        File actual stored size in bytes after compression and/or encryption.
     chunkstotal : float
         Total number of chunks available
     chunksuploaded : float
@@ -45,6 +47,7 @@ class File(AppwriteModel):
     signature: str = Field(..., alias='signature')
     mimetype: str = Field(..., alias='mimeType')
     sizeoriginal: float = Field(..., alias='sizeOriginal')
+    sizeactual: float = Field(..., alias='sizeActual')
     chunkstotal: float = Field(..., alias='chunksTotal')
     chunksuploaded: float = Field(..., alias='chunksUploaded')
     encryption: bool = Field(..., alias='encryption')

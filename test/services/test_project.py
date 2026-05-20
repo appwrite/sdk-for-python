@@ -40,16 +40,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -99,16 +89,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -268,16 +248,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1384,16 +1354,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1433,16 +1393,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1482,16 +1432,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1531,16 +1471,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1579,16 +1509,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1628,16 +1548,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1677,16 +1587,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1726,16 +1626,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1775,16 +1665,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1824,16 +1704,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1873,16 +1743,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1922,16 +1782,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -1986,16 +1836,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -2036,16 +1876,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
@@ -2086,16 +1916,6 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "region": "fra",
-    "billingLimits": {
-        "bandwidth": 5.0,
-        "storage": 150.0,
-        "users": 200000.0,
-        "executions": 750000.0,
-        "GBHours": 100.0,
-        "imageTransformations": 100.0,
-        "authPhone": 10.0,
-        "budgetLimit": 100.0
-    },
     "blocks": [],
     "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
