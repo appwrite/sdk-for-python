@@ -9,28 +9,28 @@ class BillingLimits(AppwriteModel):
 
     Attributes
     ----------
-    bandwidth : float
+    bandwidth : Optional[float]
         Bandwidth limit
-    storage : float
+    storage : Optional[float]
         Storage limit
-    users : float
+    users : Optional[float]
         Users limit
-    executions : float
+    executions : Optional[float]
         Executions limit
-    gbhours : float
+    gbhours : Optional[float]
         GBHours limit
-    imagetransformations : float
+    imagetransformations : Optional[float]
         Image transformations limit
-    authphone : float
+    authphone : Optional[float]
         Auth phone limit
-    budgetlimit : float
+    budgetlimit : Optional[float]
         Budget limit percentage
     """
-    bandwidth: float = Field(..., alias='bandwidth')
-    storage: float = Field(..., alias='storage')
-    users: float = Field(..., alias='users')
-    executions: float = Field(..., alias='executions')
-    gbhours: float = Field(..., alias='GBHours')
-    imagetransformations: float = Field(..., alias='imageTransformations')
-    authphone: float = Field(..., alias='authPhone')
-    budgetlimit: float = Field(..., alias='budgetLimit')
+    bandwidth: Optional[float] = Field(default=None, alias='bandwidth')
+    storage: Optional[float] = Field(default=None, alias='storage')
+    users: Optional[float] = Field(default=None, alias='users')
+    executions: Optional[float] = Field(default=None, alias='executions')
+    gbhours: Optional[float] = Field(default=None, alias='GBHours')
+    imagetransformations: Optional[float] = Field(default=None, alias='imageTransformations')
+    authphone: Optional[float] = Field(default=None, alias='authPhone')
+    budgetlimit: Optional[float] = Field(default=None, alias='budgetLimit')

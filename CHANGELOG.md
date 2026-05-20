@@ -1,5 +1,13 @@
 # Change Log
 
+## 19.1.0
+
+* Added `DENO_1_21`, `DENO_1_24`, and `DENO_1_35` runtime options
+* Added `sizeactual` field to `File` model for compressed file size
+* Updated `BillingLimits` model fields to be optional
+* Updated `Project` model `billinglimits` field to be optional
+* Updated authentication examples in advisor documentation
+
 ## 19.0.0
 
 * Breaking: Renamed `AuthMethod` enum to `ProjectAuthMethodId`
