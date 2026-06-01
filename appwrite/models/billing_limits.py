@@ -5,7 +5,7 @@ from .base_model import AppwriteModel
 
 class BillingLimits(AppwriteModel):
     """
-    BillingLimits
+    Limits
 
     Attributes
     ----------

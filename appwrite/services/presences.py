@@ -1,11 +1,9 @@
 from ..service import Service
-from typing import Any, Dict, List, Optional, Union, Type, TypeVar
+from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..models.presence_list import PresenceList
 from ..models.presence import Presence
-
-T = TypeVar('T')
 
 class Presences(Service):
 
@@ -16,9 +14,8 @@ class Presences(Service):
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
-        ttl: Optional[float] = None,
-        model_type: Type[T] = dict
-    ) -> PresenceList[T]:
+        ttl: Optional[float] = None
+    ) -> PresenceList:
         """
         List presence logs. Expired entries are filtered out automatically.
         
@@ -32,12 +29,9 @@ class Presences(Service):
         ttl : Optional[float]
             TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
         
-        model_type : Type[T], optional
-            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
         Returns
         -------
-        PresenceList[T]
+        PresenceList
             API response as a typed Pydantic model
         
         Raises
@@ -59,14 +53,13 @@ class Presences(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return PresenceList.with_data(response, model_type)
+        return self._parse_response(response, model=PresenceList)
 
 
     def get(
         self,
-        presence_id: str,
-        model_type: Type[T] = dict
-    ) -> Presence[T]:
+        presence_id: str
+    ) -> Presence:
         """
         Get a presence log by its unique ID. Entries whose `expiresAt` is in the past are treated as not found.
         
@@ -76,12 +69,9 @@ class Presences(Service):
         presence_id : str
             Presence unique ID.
         
-        model_type : Type[T], optional
-            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
         Returns
         -------
-        Presence[T]
+        Presence
             API response as a typed Pydantic model
         
         Raises
@@ -101,7 +91,7 @@ class Presences(Service):
         response = self.client.call('get', api_path, {
         }, api_params)
 
-        return Presence.with_data(response, model_type)
+        return self._parse_response(response, model=Presence)
 
 
     def upsert(
@@ -111,9 +101,8 @@ class Presences(Service):
         status: str,
         permissions: Optional[List[str]] = None,
         expires_at: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None,
-        model_type: Type[T] = dict
-    ) -> Presence[T]:
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> Presence:
         """
         Create or update a presence log by its user ID.
         
@@ -133,12 +122,9 @@ class Presences(Service):
         metadata : Optional[Dict[str, Any]]
             Presence metadata object.
         
-        model_type : Type[T], optional
-            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
         Returns
         -------
-        Presence[T]
+        Presence
             API response as a typed Pydantic model
         
         Raises
@@ -173,10 +159,10 @@ class Presences(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return Presence.with_data(response, model_type)
+        return self._parse_response(response, model=Presence)
 
 
-    def update_presence(
+    def update(
         self,
         presence_id: str,
         user_id: str,
@@ -184,9 +170,8 @@ class Presences(Service):
         expires_at: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
         permissions: Optional[List[str]] = None,
-        purge: Optional[bool] = None,
-        model_type: Type[T] = dict
-    ) -> Presence[T]:
+        purge: Optional[bool] = None
+    ) -> Presence:
         """
         Update a presence log by its unique ID. Using the patch method you can pass only specific fields that will get updated.
         
@@ -208,12 +193,9 @@ class Presences(Service):
         purge : Optional[bool]
             When true, purge cached responses used by list presences endpoint.
         
-        model_type : Type[T], optional
-            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
         Returns
         -------
-        Presence[T]
+        Presence
             API response as a typed Pydantic model
         
         Raises
@@ -248,7 +230,7 @@ class Presences(Service):
             'content-type': 'application/json',
         }, api_params)
 
-        return Presence.with_data(response, model_type)
+        return self._parse_response(response, model=Presence)
 
 
     def delete(

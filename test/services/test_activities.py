@@ -31,10 +31,10 @@ class ActivitiesServiceTest(unittest.TestCase):
     def test_get_event(self, m):
         data = {
     "$id": "5e5ea5c16897e",
-    "userType": "user",
-    "userId": "610fc2f985ee0",
-    "userEmail": "john@appwrite.io",
-    "userName": "John Doe",
+    "actorType": "user",
+    "actorId": "610fc2f985ee0",
+    "actorEmail": "john@appwrite.io",
+    "actorName": "John Doe",
     "resourceParent": "database\/ID",
     "resourceType": "collection",
     "resourceId": "610fc2f985ee0",

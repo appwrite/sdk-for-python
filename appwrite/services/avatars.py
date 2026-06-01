@@ -5,7 +5,7 @@ from appwrite.utils.deprecated import deprecated
 from ..enums.browser import Browser
 from ..enums.credit_card import CreditCard
 from ..enums.flag import Flag
-from ..enums.theme import Theme
+from ..enums.browser_theme import BrowserTheme
 from ..enums.timezone import Timezone
 from ..enums.browser_permission import BrowserPermission
 from ..enums.image_format import ImageFormat
@@ -384,7 +384,7 @@ class Avatars(Service):
         viewport_width: Optional[float] = None,
         viewport_height: Optional[float] = None,
         scale: Optional[float] = None,
-        theme: Optional[Theme] = None,
+        theme: Optional[BrowserTheme] = None,
         user_agent: Optional[str] = None,
         fullpage: Optional[bool] = None,
         locale: Optional[str] = None,
@@ -419,7 +419,7 @@ class Avatars(Service):
             Browser viewport height. Pass an integer between 1 to 1080. Defaults to 720.
         scale : Optional[float]
             Browser scale factor. Pass a number between 0.1 to 3. Defaults to 1.
-        theme : Optional[Theme]
+        theme : Optional[BrowserTheme]
             Browser theme. Pass "light" or "dark". Defaults to "light".
         user_agent : Optional[str]
             Custom user agent string. Defaults to browser default.

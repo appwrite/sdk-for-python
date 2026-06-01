@@ -64,6 +64,10 @@ class Site(AppwriteModel):
         Path to site in VCS (Version Control System) repository
     providersilentmode : bool
         Is VCS (Version Control System) connection is in silent mode? When in silence mode, no comments will be posted on the repository pull or merge requests
+    providerbranches : List[Any]
+        List of branch name patterns that trigger automatic deployments. Supports glob wildcards. Empty list deploys on all branches.
+    providerpaths : List[Any]
+        List of file path patterns that trigger automatic deployments. Supports glob wildcards. Empty list deploys on all file changes.
     buildspecification : str
         Machine specification for deployment builds.
     runtimespecification : str
@@ -102,6 +106,8 @@ class Site(AppwriteModel):
     providerbranch: str = Field(..., alias='providerBranch')
     providerrootdirectory: str = Field(..., alias='providerRootDirectory')
     providersilentmode: bool = Field(..., alias='providerSilentMode')
+    providerbranches: List[Any] = Field(..., alias='providerBranches')
+    providerpaths: List[Any] = Field(..., alias='providerPaths')
     buildspecification: str = Field(..., alias='buildSpecification')
     runtimespecification: str = Field(..., alias='runtimeSpecification')
     buildruntime: str = Field(..., alias='buildRuntime')

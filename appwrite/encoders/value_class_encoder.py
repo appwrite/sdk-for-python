@@ -6,7 +6,7 @@ from ..enums.o_auth_provider import OAuthProvider
 from ..enums.browser import Browser
 from ..enums.credit_card import CreditCard
 from ..enums.flag import Flag
-from ..enums.theme import Theme
+from ..enums.browser_theme import BrowserTheme
 from ..enums.timezone import Timezone
 from ..enums.browser_permission import BrowserPermission
 from ..enums.image_format import ImageFormat
@@ -16,16 +16,17 @@ from ..enums.relation_mutate import RelationMutate
 from ..enums.databases_index_type import DatabasesIndexType
 from ..enums.order_by import OrderBy
 from ..enums.runtime import Runtime
-from ..enums.scopes import Scopes
+from ..enums.project_key_scopes import ProjectKeyScopes
 from ..enums.template_reference_type import TemplateReferenceType
 from ..enums.vcs_reference_type import VCSReferenceType
 from ..enums.deployment_download_type import DeploymentDownloadType
 from ..enums.execution_method import ExecutionMethod
-from ..enums.name import Name
+from ..enums.health_queue_name import HealthQueueName
 from ..enums.message_priority import MessagePriority
 from ..enums.smtp_encryption import SmtpEncryption
+from ..enums.organization_key_scopes import OrganizationKeyScopes
+from ..enums.region import Region
 from ..enums.project_auth_method_id import ProjectAuthMethodId
-from ..enums.project_key_scopes import ProjectKeyScopes
 from ..enums.project_o_auth2_google_prompt import ProjectOAuth2GooglePrompt
 from ..enums.project_o_auth_provider_id import ProjectOAuthProviderId
 from ..enums.project_policy_id import ProjectPolicyId
@@ -82,7 +83,7 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, Flag):
             return o.value
 
-        if isinstance(o, Theme):
+        if isinstance(o, BrowserTheme):
             return o.value
 
         if isinstance(o, Timezone):
@@ -112,7 +113,7 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, Runtime):
             return o.value
 
-        if isinstance(o, Scopes):
+        if isinstance(o, ProjectKeyScopes):
             return o.value
 
         if isinstance(o, TemplateReferenceType):
@@ -127,7 +128,7 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, ExecutionMethod):
             return o.value
 
-        if isinstance(o, Name):
+        if isinstance(o, HealthQueueName):
             return o.value
 
         if isinstance(o, MessagePriority):
@@ -136,10 +137,13 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, SmtpEncryption):
             return o.value
 
-        if isinstance(o, ProjectAuthMethodId):
+        if isinstance(o, OrganizationKeyScopes):
             return o.value
 
-        if isinstance(o, ProjectKeyScopes):
+        if isinstance(o, Region):
+            return o.value
+
+        if isinstance(o, ProjectAuthMethodId):
             return o.value
 
         if isinstance(o, ProjectOAuth2GooglePrompt):

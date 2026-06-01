@@ -90,6 +90,8 @@ class Sites(Service):
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
+        provider_branches: Optional[List[str]] = None,
+        provider_paths: Optional[List[str]] = None,
         build_specification: Optional[str] = None,
         runtime_specification: Optional[str] = None,
         deployment_retention: Optional[float] = None
@@ -135,6 +137,10 @@ class Sites(Service):
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
         provider_root_directory : Optional[str]
             Path to site code in the linked repo.
+        provider_branches : Optional[List[str]]
+            List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+        provider_paths : Optional[List[str]]
+            List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
         build_specification : Optional[str]
             Build specification for the site deployments.
         runtime_specification : Optional[str]
@@ -200,6 +206,10 @@ class Sites(Service):
             api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
             api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
+        if provider_branches is not None:
+            api_params['providerBranches'] = self._normalize_value(provider_branches)
+        if provider_paths is not None:
+            api_params['providerPaths'] = self._normalize_value(provider_paths)
         if build_specification is not None:
             api_params['buildSpecification'] = self._normalize_value(build_specification)
         if runtime_specification is not None:
@@ -323,6 +333,8 @@ class Sites(Service):
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
+        provider_branches: Optional[List[str]] = None,
+        provider_paths: Optional[List[str]] = None,
         build_specification: Optional[str] = None,
         runtime_specification: Optional[str] = None,
         deployment_retention: Optional[float] = None
@@ -368,6 +380,10 @@ class Sites(Service):
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
         provider_root_directory : Optional[str]
             Path to site code in the linked repo.
+        provider_branches : Optional[List[str]]
+            List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+        provider_paths : Optional[List[str]]
+            List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
         build_specification : Optional[str]
             Build specification for the site deployments.
         runtime_specification : Optional[str]
@@ -431,6 +447,8 @@ class Sites(Service):
             api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
             api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
+        api_params['providerBranches'] = self._normalize_value(provider_branches)
+        api_params['providerPaths'] = self._normalize_value(provider_paths)
         if build_specification is not None:
             api_params['buildSpecification'] = self._normalize_value(build_specification)
         if runtime_specification is not None:

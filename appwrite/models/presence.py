@@ -1,11 +1,9 @@
-from typing import Any, Dict, List, Optional, Union, cast, Generic, TypeVar, Type
+from typing import Any, Dict, List, Optional, Union, cast
 from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
-T = TypeVar('T')
-
-class Presence(AppwriteModel, Generic[T]):
+class Presence(AppwriteModel):
     """
     Presence
 
@@ -27,6 +25,8 @@ class Presence(AppwriteModel, Generic[T]):
         Presence source.
     expiresat : Optional[str]
         Presence expiry date in ISO 8601 format.
+    metadata : Optional[Dict[str, Any]]
+        Presence metadata.
     """
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
@@ -36,37 +36,4 @@ class Presence(AppwriteModel, Generic[T]):
     status: Optional[str] = Field(default=None, alias='status')
     source: str = Field(..., alias='source')
     expiresat: Optional[str] = Field(default=None, alias='expiresAt')
-
-    @classmethod
-    def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'Presence[T]':
-        """Create Presence instance with typed data."""
-        internal_aliases = {'$id', '$createdAt', '$updatedAt', '$permissions', 'userId', 'status', 'source', 'expiresAt'}
-        internal_fields = {k: v for k, v in data.items() if k in internal_aliases}
-        user_data = {k: v for k, v in data.items() if k not in internal_aliases and k != 'metadata'}
-        nested = data.get('metadata')
-        if isinstance(nested, dict):
-            user_data = {**nested, **user_data}
-        instance = cls.model_validate(internal_fields)
-        instance._metadata = model_type(**user_data) if model_type is not dict else user_data
-        return instance
-
-    _metadata: Any = PrivateAttr(default_factory=dict)
-
-    @property
-    def metadata(self) -> T:
-        return cast(T, self._metadata)
-
-    @metadata.setter
-    def metadata(self, value: T) -> None:
-        object.__setattr__(self, '_metadata', value)
-
-    def to_dict(self) -> Dict[str, Any]:
-        result = super().to_dict()
-        if hasattr(self, '_metadata'):
-            if isinstance(self._metadata, dict):
-                result['metadata'] = self._metadata
-            elif hasattr(self._metadata, 'model_dump'):
-                result['metadata'] = self._metadata.model_dump(mode='json')
-            else:
-                result['metadata'] = self._metadata
-        return result
+    metadata: Optional[Dict[str, Any]] = Field(default=None, alias='metadata')

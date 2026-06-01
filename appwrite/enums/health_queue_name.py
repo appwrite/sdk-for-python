@@ -1,6 +1,6 @@
 from enum import Enum
 
-class Name(Enum):
+class HealthQueueName(Enum):
     V1_DATABASE = "v1-database"
     V1_DELETES = "v1-deletes"
     V1_AUDITS = "v1-audits"

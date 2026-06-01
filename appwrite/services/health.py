@@ -7,7 +7,7 @@ from ..models.health_antivirus import HealthAntivirus
 from ..models.health_status_list import HealthStatusList
 from ..models.health_certificate import HealthCertificate
 from ..models.health_queue import HealthQueue
-from ..enums.name import Name
+from ..enums.health_queue_name import HealthQueueName
 from ..models.health_time import HealthTime
 
 class Health(Service):
@@ -404,7 +404,7 @@ class Health(Service):
 
     def get_failed_jobs(
         self,
-        name: Name,
+        name: HealthQueueName,
         threshold: Optional[float] = None
     ) -> HealthQueue:
         """
@@ -413,7 +413,7 @@ class Health(Service):
 
         Parameters
         ----------
-        name : Name
+        name : HealthQueueName
             The name of the queue
         threshold : Optional[float]
             Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.

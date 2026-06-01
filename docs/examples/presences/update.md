@@ -12,7 +12,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 presences = Presences(client)
 
-result: Presence = presences.update_presence(
+result: Presence = presences.update(
     presence_id = '<PRESENCE_ID>',
     user_id = '<USER_ID>',
     status = '<STATUS>', # optional
