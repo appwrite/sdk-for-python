@@ -58,6 +58,8 @@ class FunctionsServiceTest(unittest.TestCase):
     "providerBranch": "main",
     "providerRootDirectory": "functions\/helloWorld",
     "providerSilentMode": True,
+    "providerBranches": [],
+    "providerPaths": [],
     "buildSpecification": "s-1vcpu-512mb",
     "runtimeSpecification": "s-1vcpu-512mb"
 }
@@ -131,6 +133,8 @@ class FunctionsServiceTest(unittest.TestCase):
     "providerBranch": "main",
     "providerRootDirectory": "functions\/helloWorld",
     "providerSilentMode": True,
+    "providerBranches": [],
+    "providerPaths": [],
     "buildSpecification": "s-1vcpu-512mb",
     "runtimeSpecification": "s-1vcpu-512mb"
 }
@@ -174,6 +178,8 @@ class FunctionsServiceTest(unittest.TestCase):
     "providerBranch": "main",
     "providerRootDirectory": "functions\/helloWorld",
     "providerSilentMode": True,
+    "providerBranches": [],
+    "providerPaths": [],
     "buildSpecification": "s-1vcpu-512mb",
     "runtimeSpecification": "s-1vcpu-512mb"
 }
@@ -230,6 +236,8 @@ class FunctionsServiceTest(unittest.TestCase):
     "providerBranch": "main",
     "providerRootDirectory": "functions\/helloWorld",
     "providerSilentMode": True,
+    "providerBranches": [],
+    "providerPaths": [],
     "buildSpecification": "s-1vcpu-512mb",
     "runtimeSpecification": "s-1vcpu-512mb"
 }

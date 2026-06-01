@@ -4,7 +4,7 @@ from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..models.function_list import FunctionList
 from ..enums.runtime import Runtime
-from ..enums.scopes import Scopes
+from ..enums.project_key_scopes import ProjectKeyScopes
 from ..models.function import Function
 from ..models.runtime_list import RuntimeList
 from ..models.specification_list import SpecificationList
@@ -83,12 +83,14 @@ class Functions(Service):
         logging: Optional[bool] = None,
         entrypoint: Optional[str] = None,
         commands: Optional[str] = None,
-        scopes: Optional[List[Scopes]] = None,
+        scopes: Optional[List[ProjectKeyScopes]] = None,
         installation_id: Optional[str] = None,
         provider_repository_id: Optional[str] = None,
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
+        provider_branches: Optional[List[str]] = None,
+        provider_paths: Optional[List[str]] = None,
         build_specification: Optional[str] = None,
         runtime_specification: Optional[str] = None,
         deployment_retention: Optional[float] = None
@@ -120,7 +122,7 @@ class Functions(Service):
             Entrypoint File. This path is relative to the "providerRootDirectory".
         commands : Optional[str]
             Build Commands.
-        scopes : Optional[List[Scopes]]
+        scopes : Optional[List[ProjectKeyScopes]]
             List of scopes allowed for API key auto-generated for every execution. Maximum of 100 scopes are allowed.
         installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Control System) deployment.
@@ -132,6 +134,10 @@ class Functions(Service):
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
         provider_root_directory : Optional[str]
             Path to function code in the linked repo.
+        provider_branches : Optional[List[str]]
+            List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+        provider_paths : Optional[List[str]]
+            List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
         build_specification : Optional[str]
             Build specification for the function deployments.
         runtime_specification : Optional[str]
@@ -193,6 +199,10 @@ class Functions(Service):
             api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
             api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
+        if provider_branches is not None:
+            api_params['providerBranches'] = self._normalize_value(provider_branches)
+        if provider_paths is not None:
+            api_params['providerPaths'] = self._normalize_value(provider_paths)
         if build_specification is not None:
             api_params['buildSpecification'] = self._normalize_value(build_specification)
         if runtime_specification is not None:
@@ -309,12 +319,14 @@ class Functions(Service):
         logging: Optional[bool] = None,
         entrypoint: Optional[str] = None,
         commands: Optional[str] = None,
-        scopes: Optional[List[Scopes]] = None,
+        scopes: Optional[List[ProjectKeyScopes]] = None,
         installation_id: Optional[str] = None,
         provider_repository_id: Optional[str] = None,
         provider_branch: Optional[str] = None,
         provider_silent_mode: Optional[bool] = None,
         provider_root_directory: Optional[str] = None,
+        provider_branches: Optional[List[str]] = None,
+        provider_paths: Optional[List[str]] = None,
         build_specification: Optional[str] = None,
         runtime_specification: Optional[str] = None,
         deployment_retention: Optional[float] = None
@@ -346,7 +358,7 @@ class Functions(Service):
             Entrypoint File. This path is relative to the "providerRootDirectory".
         commands : Optional[str]
             Build Commands.
-        scopes : Optional[List[Scopes]]
+        scopes : Optional[List[ProjectKeyScopes]]
             List of scopes allowed for API Key auto-generated for every execution. Maximum of 100 scopes are allowed.
         installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Controle System) deployment.
@@ -358,6 +370,10 @@ class Functions(Service):
             Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
         provider_root_directory : Optional[str]
             Path to function code in the linked repo.
+        provider_branches : Optional[List[str]]
+            List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+        provider_paths : Optional[List[str]]
+            List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
         build_specification : Optional[str]
             Build specification for the function deployments.
         runtime_specification : Optional[str]
@@ -416,6 +432,8 @@ class Functions(Service):
             api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
             api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
+        api_params['providerBranches'] = self._normalize_value(provider_branches)
+        api_params['providerPaths'] = self._normalize_value(provider_paths)
         if build_specification is not None:
             api_params['buildSpecification'] = self._normalize_value(build_specification)
         if runtime_specification is not None:

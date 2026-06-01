@@ -11,14 +11,14 @@ class ActivityEvent(AppwriteModel):
     ----------
     id : str
         Event ID.
-    usertype : str
-        User type.
-    userid : str
-        User ID.
-    useremail : str
-        User Email.
-    username : str
-        User Name.
+    actortype : str
+        Actor type.
+    actorid : str
+        Actor ID.
+    actoremail : str
+        Actor Email.
+    actorname : str
+        Actor Name.
     resourceparent : str
         Resource parent.
     resourcetype : str
@@ -75,10 +75,10 @@ class ActivityEvent(AppwriteModel):
         Country name.
     """
     id: str = Field(..., alias='$id')
-    usertype: str = Field(..., alias='userType')
-    userid: str = Field(..., alias='userId')
-    useremail: str = Field(..., alias='userEmail')
-    username: str = Field(..., alias='userName')
+    actortype: str = Field(..., alias='actorType')
+    actorid: str = Field(..., alias='actorId')
+    actoremail: str = Field(..., alias='actorEmail')
+    actorname: str = Field(..., alias='actorName')
     resourceparent: str = Field(..., alias='resourceParent')
     resourcetype: str = Field(..., alias='resourceType')
     resourceid: str = Field(..., alias='resourceId')

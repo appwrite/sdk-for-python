@@ -68,7 +68,7 @@ class PresencesServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
-    def test_update_presence(self, m):
+    def test_update(self, m):
         data = {
     "$id": "5e5ea5c16897e",
     "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -80,7 +80,7 @@ class PresencesServiceTest(unittest.TestCase):
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
 
-        response = self.presences.update_presence(
+        response = self.presences.update(
             '<PRESENCE_ID>',
             '<USER_ID>',
         )

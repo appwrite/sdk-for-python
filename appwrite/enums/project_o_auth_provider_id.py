@@ -44,5 +44,3 @@ class ProjectOAuthProviderId(Enum):
     YANDEX = "yandex"
     ZOHO = "zoho"
     ZOOM = "zoom"
-    GITHUBIMAGINE = "githubImagine"
-    GOOGLEIMAGINE = "googleImagine"
