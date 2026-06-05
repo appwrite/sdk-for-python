@@ -43,6 +43,20 @@ class HealthServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_get_audits_db(self, m):
+        data = {
+    "total": 5.0,
+    "statuses": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.health.get_audits_db(
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_get_cache(self, m):
         data = {
     "total": 5.0,

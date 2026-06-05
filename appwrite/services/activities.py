@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -40,6 +41,7 @@ class Activities(Service):
             api_params['queries'] = self._normalize_value(queries)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=ActivityEventList)
@@ -78,6 +80,7 @@ class Activities(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=ActivityEvent)

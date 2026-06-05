@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -65,6 +66,7 @@ class Sites(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=SiteList)
@@ -218,6 +220,7 @@ class Sites(Service):
             api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -245,6 +248,7 @@ class Sites(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=FrameworkList)
@@ -271,6 +275,7 @@ class Sites(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=SpecificationList)
@@ -308,6 +313,7 @@ class Sites(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Site)
@@ -457,6 +463,7 @@ class Sites(Service):
             api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -495,6 +502,7 @@ class Sites(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -540,6 +548,7 @@ class Sites(Service):
         api_params['deploymentId'] = self._normalize_value(deployment_id)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -593,6 +602,7 @@ class Sites(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=DeploymentList)
@@ -665,6 +675,7 @@ class Sites(Service):
         upload_id = ''
 
         response = self.client.chunked_upload(api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'multipart/form-data',
         }, api_params, param_name, on_progress, upload_id)
 
@@ -710,6 +721,7 @@ class Sites(Service):
         api_params['deploymentId'] = self._normalize_value(deployment_id)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -790,6 +802,7 @@ class Sites(Service):
             api_params['activate'] = self._normalize_value(activate)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -849,6 +862,7 @@ class Sites(Service):
             api_params['activate'] = self._normalize_value(activate)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -894,6 +908,7 @@ class Sites(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Deployment)
@@ -938,6 +953,7 @@ class Sites(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -988,6 +1004,7 @@ class Sites(Service):
             api_params['type'] = self._normalize_value(type)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response
@@ -1032,6 +1049,7 @@ class Sites(Service):
 
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1080,6 +1098,7 @@ class Sites(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=ExecutionList)
@@ -1124,6 +1143,7 @@ class Sites(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Execution)
@@ -1168,6 +1188,7 @@ class Sites(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1216,6 +1237,7 @@ class Sites(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=VariableList)
@@ -1279,6 +1301,7 @@ class Sites(Service):
             api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1324,6 +1347,7 @@ class Sites(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Variable)
@@ -1380,6 +1404,7 @@ class Sites(Service):
         api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1425,6 +1450,7 @@ class Sites(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 

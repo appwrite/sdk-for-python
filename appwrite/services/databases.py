@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -86,6 +87,7 @@ class Databases(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=DatabaseList)
@@ -139,6 +141,7 @@ class Databases(Service):
             api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -175,6 +178,7 @@ class Databases(Service):
             api_params['queries'] = self._normalize_value(queries)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=TransactionList)
@@ -210,6 +214,7 @@ class Databases(Service):
             api_params['ttl'] = self._normalize_value(ttl)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -248,6 +253,7 @@ class Databases(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Transaction)
@@ -295,6 +301,7 @@ class Databases(Service):
             api_params['rollback'] = self._normalize_value(rollback)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -333,6 +340,7 @@ class Databases(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -376,6 +384,7 @@ class Databases(Service):
             api_params['operations'] = self._normalize_value(operations)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -417,6 +426,7 @@ class Databases(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Database)
@@ -467,6 +477,7 @@ class Databases(Service):
             api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -508,6 +519,7 @@ class Databases(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -564,6 +576,7 @@ class Databases(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=CollectionList)
@@ -642,6 +655,7 @@ class Databases(Service):
             api_params['indexes'] = self._normalize_value(indexes)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -690,6 +704,7 @@ class Databases(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Collection)
@@ -761,6 +776,7 @@ class Databases(Service):
             api_params['purge'] = self._normalize_value(purge)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -809,6 +825,7 @@ class Databases(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -867,6 +884,7 @@ class Databases(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=AttributeList)
@@ -946,6 +964,7 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1025,6 +1044,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1097,6 +1117,7 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1167,6 +1188,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1238,6 +1260,7 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1308,6 +1331,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1380,6 +1404,7 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1451,6 +1476,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1530,6 +1556,7 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1608,6 +1635,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1688,6 +1716,7 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1767,6 +1796,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1847,6 +1877,7 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1926,6 +1957,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1998,6 +2030,7 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2069,6 +2102,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2135,6 +2169,7 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2205,6 +2240,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2279,6 +2315,7 @@ class Databases(Service):
             api_params['encrypt'] = self._normalize_value(encrypt)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2347,6 +2384,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2421,6 +2459,7 @@ class Databases(Service):
             api_params['encrypt'] = self._normalize_value(encrypt)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2489,6 +2528,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2555,6 +2595,7 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2625,6 +2666,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2691,6 +2733,7 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2761,6 +2804,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2842,6 +2886,7 @@ class Databases(Service):
             api_params['onDelete'] = self._normalize_value(on_delete)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2907,6 +2952,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2991,6 +3037,7 @@ class Databases(Service):
             api_params['encrypt'] = self._normalize_value(encrypt)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3066,6 +3113,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3140,6 +3188,7 @@ class Databases(Service):
             api_params['encrypt'] = self._normalize_value(encrypt)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3208,6 +3257,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3280,6 +3330,7 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3351,6 +3402,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3432,6 +3484,7 @@ class Databases(Service):
             api_params['encrypt'] = self._normalize_value(encrypt)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3504,6 +3557,7 @@ class Databases(Service):
         api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3559,6 +3613,7 @@ class Databases(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
         if not isinstance(response, dict):
             raise AppwriteException('Expected object response when hydrating a response model')
@@ -3645,6 +3700,7 @@ class Databases(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3717,6 +3773,7 @@ class Databases(Service):
             api_params['ttl'] = self._normalize_value(ttl)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return DocumentList.with_data(response, model_type)
@@ -3790,6 +3847,7 @@ class Databases(Service):
         api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3853,6 +3911,7 @@ class Databases(Service):
         api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3917,6 +3976,7 @@ class Databases(Service):
         api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3983,6 +4043,7 @@ class Databases(Service):
         api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4044,6 +4105,7 @@ class Databases(Service):
         api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4113,6 +4175,7 @@ class Databases(Service):
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return Document.with_data(response, model_type)
@@ -4184,6 +4247,7 @@ class Databases(Service):
         api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4256,6 +4320,7 @@ class Databases(Service):
         api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4315,6 +4380,7 @@ class Databases(Service):
         api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4394,6 +4460,7 @@ class Databases(Service):
         api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4473,6 +4540,7 @@ class Databases(Service):
         api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4531,6 +4599,7 @@ class Databases(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=IndexList)
@@ -4610,6 +4679,7 @@ class Databases(Service):
             api_params['lengths'] = self._normalize_value(lengths)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4665,6 +4735,7 @@ class Databases(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Index)
@@ -4719,6 +4790,7 @@ class Databases(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 

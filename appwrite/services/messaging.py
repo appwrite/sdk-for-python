@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -60,6 +61,7 @@ class Messaging(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=MessageList)
@@ -155,6 +157,7 @@ class Messaging(Service):
         api_params['scheduledAt'] = self._normalize_value(scheduled_at)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -238,6 +241,7 @@ class Messaging(Service):
         api_params['attachments'] = self._normalize_value(attachments)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -364,6 +368,7 @@ class Messaging(Service):
             api_params['priority'] = self._normalize_value(priority)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -475,6 +480,7 @@ class Messaging(Service):
         api_params['priority'] = self._normalize_value(priority)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -544,6 +550,7 @@ class Messaging(Service):
         api_params['scheduledAt'] = self._normalize_value(scheduled_at)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -607,6 +614,7 @@ class Messaging(Service):
         api_params['scheduledAt'] = self._normalize_value(scheduled_at)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -646,6 +654,7 @@ class Messaging(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Message)
@@ -683,6 +692,7 @@ class Messaging(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -731,6 +741,7 @@ class Messaging(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=LogList)
@@ -778,6 +789,7 @@ class Messaging(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=TargetList)
@@ -823,6 +835,7 @@ class Messaging(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=ProviderList)
@@ -896,6 +909,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -967,6 +981,7 @@ class Messaging(Service):
         api_params['sandbox'] = self._normalize_value(sandbox)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1020,6 +1035,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1071,6 +1087,7 @@ class Messaging(Service):
         api_params['serviceAccountJSON'] = self._normalize_value(service_account_json)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1154,6 +1171,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1235,6 +1253,7 @@ class Messaging(Service):
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1299,6 +1318,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1361,6 +1381,7 @@ class Messaging(Service):
             api_params['authKey'] = self._normalize_value(auth_key)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1435,6 +1456,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1507,6 +1529,7 @@ class Messaging(Service):
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1581,6 +1604,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1653,6 +1677,175 @@ class Messaging(Service):
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Provider)
+
+
+    def create_ses_provider(
+        self,
+        provider_id: str,
+        name: str,
+        access_key: Optional[str] = None,
+        secret_key: Optional[str] = None,
+        region: Optional[str] = None,
+        from_name: Optional[str] = None,
+        from_email: Optional[str] = None,
+        reply_to_name: Optional[str] = None,
+        reply_to_email: Optional[str] = None,
+        enabled: Optional[bool] = None
+    ) -> Provider:
+        """
+        Create a new Amazon SES provider.
+
+        Parameters
+        ----------
+        provider_id : str
+            Provider ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+        name : str
+            Provider name.
+        access_key : Optional[str]
+            AWS access key ID.
+        secret_key : Optional[str]
+            AWS secret access key.
+        region : Optional[str]
+            AWS region, for example us-east-1.
+        from_name : Optional[str]
+            Sender Name.
+        from_email : Optional[str]
+            Sender email address.
+        reply_to_name : Optional[str]
+            Name set in the reply to field for the mail. Default value is sender name.
+        reply_to_email : Optional[str]
+            Email set in the reply to field for the mail. Default value is sender email.
+        enabled : Optional[bool]
+            Set as enabled.
+        
+        Returns
+        -------
+        Provider
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/messaging/providers/ses'
+        api_params = {}
+        if provider_id is None:
+            raise AppwriteException('Missing required parameter: "provider_id"')
+
+        if name is None:
+            raise AppwriteException('Missing required parameter: "name"')
+
+
+        api_params['providerId'] = self._normalize_value(provider_id)
+        api_params['name'] = self._normalize_value(name)
+        if access_key is not None:
+            api_params['accessKey'] = self._normalize_value(access_key)
+        if secret_key is not None:
+            api_params['secretKey'] = self._normalize_value(secret_key)
+        if region is not None:
+            api_params['region'] = self._normalize_value(region)
+        if from_name is not None:
+            api_params['fromName'] = self._normalize_value(from_name)
+        if from_email is not None:
+            api_params['fromEmail'] = self._normalize_value(from_email)
+        if reply_to_name is not None:
+            api_params['replyToName'] = self._normalize_value(reply_to_name)
+        if reply_to_email is not None:
+            api_params['replyToEmail'] = self._normalize_value(reply_to_email)
+        api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Provider)
+
+
+    def update_ses_provider(
+        self,
+        provider_id: str,
+        name: Optional[str] = None,
+        enabled: Optional[bool] = None,
+        access_key: Optional[str] = None,
+        secret_key: Optional[str] = None,
+        region: Optional[str] = None,
+        from_name: Optional[str] = None,
+        from_email: Optional[str] = None,
+        reply_to_name: Optional[str] = None,
+        reply_to_email: Optional[str] = None
+    ) -> Provider:
+        """
+        Update an Amazon SES provider by its unique ID.
+
+        Parameters
+        ----------
+        provider_id : str
+            Provider ID.
+        name : Optional[str]
+            Provider name.
+        enabled : Optional[bool]
+            Set as enabled.
+        access_key : Optional[str]
+            AWS access key ID.
+        secret_key : Optional[str]
+            AWS secret access key.
+        region : Optional[str]
+            AWS region, for example us-east-1.
+        from_name : Optional[str]
+            Sender Name.
+        from_email : Optional[str]
+            Sender email address.
+        reply_to_name : Optional[str]
+            Name set in the Reply To field for the mail. Default value is Sender Name.
+        reply_to_email : Optional[str]
+            Email set in the Reply To field for the mail. Default value is Sender Email.
+        
+        Returns
+        -------
+        Provider
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/messaging/providers/ses/{providerId}'
+        api_params = {}
+        if provider_id is None:
+            raise AppwriteException('Missing required parameter: "provider_id"')
+
+        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+
+        if name is not None:
+            api_params['name'] = self._normalize_value(name)
+        api_params['enabled'] = self._normalize_value(enabled)
+        if access_key is not None:
+            api_params['accessKey'] = self._normalize_value(access_key)
+        if secret_key is not None:
+            api_params['secretKey'] = self._normalize_value(secret_key)
+        if region is not None:
+            api_params['region'] = self._normalize_value(region)
+        if from_name is not None:
+            api_params['fromName'] = self._normalize_value(from_name)
+        if from_email is not None:
+            api_params['fromEmail'] = self._normalize_value(from_email)
+        if reply_to_name is not None:
+            api_params['replyToName'] = self._normalize_value(reply_to_name)
+        if reply_to_email is not None:
+            api_params['replyToEmail'] = self._normalize_value(reply_to_email)
+
+        response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1759,6 +1952,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1859,6 +2053,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1923,6 +2118,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1985,6 +2181,7 @@ class Messaging(Service):
             api_params['from'] = self._normalize_value(xfrom)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2049,6 +2246,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2111,6 +2309,7 @@ class Messaging(Service):
             api_params['from'] = self._normalize_value(xfrom)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2175,6 +2374,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2237,6 +2437,7 @@ class Messaging(Service):
             api_params['from'] = self._normalize_value(xfrom)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2301,6 +2502,7 @@ class Messaging(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2363,6 +2565,7 @@ class Messaging(Service):
             api_params['from'] = self._normalize_value(xfrom)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2402,6 +2605,7 @@ class Messaging(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Provider)
@@ -2439,6 +2643,7 @@ class Messaging(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2487,6 +2692,7 @@ class Messaging(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=LogList)
@@ -2534,6 +2740,7 @@ class Messaging(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=LogList)
@@ -2579,6 +2786,7 @@ class Messaging(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=TopicList)
@@ -2628,6 +2836,7 @@ class Messaging(Service):
             api_params['subscribe'] = self._normalize_value(subscribe)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2667,6 +2876,7 @@ class Messaging(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Topic)
@@ -2713,6 +2923,7 @@ class Messaging(Service):
         api_params['subscribe'] = self._normalize_value(subscribe)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2751,6 +2962,7 @@ class Messaging(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2799,6 +3011,7 @@ class Messaging(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=LogList)
@@ -2851,6 +3064,7 @@ class Messaging(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=SubscriberList)
@@ -2902,6 +3116,7 @@ class Messaging(Service):
         api_params['targetId'] = self._normalize_value(target_id)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2948,6 +3163,7 @@ class Messaging(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Subscriber)
@@ -2992,6 +3208,7 @@ class Messaging(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 

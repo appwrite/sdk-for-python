@@ -94,4 +94,6 @@ class ProjectKeyScopes(Enum):
     DOMAINS_READ = "domains.read"
     DOMAINS_WRITE = "domains.write"
     EVENTS_READ = "events.read"
+    APPS_READ = "apps.read"
+    APPS_WRITE = "apps.write"
     USAGE_READ = "usage.read"

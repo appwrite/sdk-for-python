@@ -17,13 +17,14 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : f'AppwritePythonSDK/20.0.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
+            'user-agent' : f'AppwritePythonSDK/20.1.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '20.0.0',
+            'x-sdk-version': '20.1.0',
             'X-Appwrite-Response-Format' : '1.9.5',
         }
+        self._config = {}
 
     def set_self_signed(self, status=True):
         self._self_signed = status
@@ -43,68 +44,81 @@ class Client:
     def get_headers(self):
         return dict(self._global_headers)
 
+    def get_config(self, key):
+        return self._config.get(key, '')
+
     def set_project(self, value):
         """Your project ID"""
 
-        self._global_headers['x-appwrite-project'] = value
+        self._config['project'] = value
         return self
 
     def set_key(self, value):
         """Your secret API key"""
 
         self._global_headers['x-appwrite-key'] = value
+        self._config['key'] = value
         return self
 
     def set_jwt(self, value):
         """Your secret JSON Web Token"""
 
         self._global_headers['x-appwrite-jwt'] = value
+        self._config['jwt'] = value
         return self
 
     def set_locale(self, value):
         self._global_headers['x-appwrite-locale'] = value
+        self._config['locale'] = value
         return self
 
     def set_session(self, value):
         """The user session to authenticate with"""
 
         self._global_headers['x-appwrite-session'] = value
+        self._config['session'] = value
         return self
 
     def set_forwarded_user_agent(self, value):
         """The user agent string of the client that made the request"""
 
         self._global_headers['x-forwarded-user-agent'] = value
+        self._config['forwardeduseragent'] = value
         return self
 
     def set_dev_key(self, value):
         """Your secret dev API key"""
 
         self._global_headers['x-appwrite-dev-key'] = value
+        self._config['devkey'] = value
         return self
 
     def set_cookie(self, value):
         """The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes."""
 
         self._global_headers['cookie'] = value
+        self._config['cookie'] = value
         return self
 
     def set_impersonate_user_id(self, value):
         """Impersonate a user by ID on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data."""
 
         self._global_headers['x-appwrite-impersonate-user-id'] = value
+        self._config['impersonateuserid'] = value
         return self
 
     def set_impersonate_user_email(self, value):
         """Impersonate a user by email on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data."""
 
         self._global_headers['x-appwrite-impersonate-user-email'] = value
+        self._config['impersonateuseremail'] = value
         return self
 
     def set_impersonate_user_phone(self, value):
         """Impersonate a user by phone on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data."""
 
         self._global_headers['x-appwrite-impersonate-user-phone'] = value
+        self._config['impersonateuserphone'] = value
         return self
 
     def call(self, method, path='', headers=None, params=None, response_type='json'):

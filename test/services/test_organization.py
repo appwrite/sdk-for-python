@@ -131,6 +131,7 @@ class OrganizationServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -149,9 +150,17 @@ class OrganizationServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -171,6 +180,7 @@ class OrganizationServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -189,9 +199,17 @@ class OrganizationServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -210,6 +228,7 @@ class OrganizationServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -228,9 +247,17 @@ class OrganizationServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)

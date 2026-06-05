@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -36,6 +37,7 @@ class Health(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthStatus)
@@ -62,9 +64,38 @@ class Health(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthAntivirus)
+
+
+    def get_audits_db(
+        self
+    ) -> HealthStatusList:
+        """
+        Check the database that backs the audit and activity store. When the connection is reachable the endpoint returns a passing status with its response time.
+        
+
+        Returns
+        -------
+        HealthStatusList
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/health/audits-db'
+        api_params = {}
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+        }, api_params)
+
+        return self._parse_response(response, model=HealthStatusList)
 
 
     def get_cache(
@@ -88,6 +119,7 @@ class Health(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthStatusList)
@@ -123,6 +155,7 @@ class Health(Service):
             api_params['domain'] = self._normalize_value(domain)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthCertificate)
@@ -164,6 +197,7 @@ class Health(Service):
             api_params['inactivityDays'] = self._normalize_value(inactivity_days)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthStatus)
@@ -190,6 +224,7 @@ class Health(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthStatusList)
@@ -216,6 +251,7 @@ class Health(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthStatusList)
@@ -252,6 +288,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -287,6 +324,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -322,6 +360,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -362,6 +401,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -397,6 +437,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -440,6 +481,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -475,6 +517,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -510,6 +553,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -545,6 +589,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -580,6 +625,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -615,6 +661,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -650,6 +697,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -685,6 +733,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -720,6 +769,7 @@ class Health(Service):
             api_params['threshold'] = self._normalize_value(threshold)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthQueue)
@@ -746,6 +796,7 @@ class Health(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthStatus)
@@ -772,6 +823,7 @@ class Health(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthStatus)
@@ -798,6 +850,7 @@ class Health(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=HealthTime)

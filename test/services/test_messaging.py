@@ -639,6 +639,49 @@ class MessagingServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_create_ses_provider(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "name": "Mailgun",
+    "provider": "mailgun",
+    "enabled": True,
+    "type": "sms",
+    "credentials": {}
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.messaging.create_ses_provider(
+            '<PROVIDER_ID>',
+            '<NAME>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_ses_provider(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "name": "Mailgun",
+    "provider": "mailgun",
+    "enabled": True,
+    "type": "sms",
+    "credentials": {}
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.messaging.update_ses_provider(
+            '<PROVIDER_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_create_smtp_provider(self, m):
         data = {
     "$id": "5e5ea5c16897e",

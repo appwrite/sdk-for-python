@@ -6,8 +6,8 @@ from .dev_key import DevKey
 from .project_auth_method import ProjectAuthMethod
 from .project_service import ProjectService
 from .project_protocol import ProjectProtocol
-from .billing_limits import BillingLimits
 from .block import Block
+from .billing_limits import BillingLimits
 
 class Project(AppwriteModel):
     """
@@ -25,6 +25,8 @@ class Project(AppwriteModel):
         Project name.
     teamid : str
         Project team ID.
+    region : str
+        Project region
     devkeys : List[DevKey]
         Deprecated since 1.9.5: List of dev keys.
     smtpenabled : bool
@@ -61,20 +63,37 @@ class Project(AppwriteModel):
         List of services.
     protocols : List[ProjectProtocol]
         List of protocols.
-    region : str
-        Project region
-    billinglimits : Optional[BillingLimits]
-        Billing limits reached
     blocks : List[Block]
         Project blocks information
     consoleaccessedat : str
         Last time the project was accessed via console. Used with plan&#039;s projectInactivityDays to determine if project is paused.
+    billinglimits : Optional[BillingLimits]
+        Billing limits reached
+    oauth2serverenabled : bool
+        OAuth2 server status
+    oauth2serverauthorizationurl : str
+        OAuth2 server authorization URL
+    oauth2serverscopes : List[Any]
+        OAuth2 server allowed scopes
+    oauth2serveraccesstokenduration : float
+        OAuth2 server access token duration in seconds for confidential clients
+    oauth2serverrefreshtokenduration : float
+        OAuth2 server refresh token duration in seconds for confidential clients
+    oauth2serverpublicaccesstokenduration : float
+        OAuth2 server access token duration in seconds for public clients (SPAs, mobile, native)
+    oauth2serverpublicrefreshtokenduration : float
+        OAuth2 server refresh token duration in seconds for public clients (SPAs, mobile, native)
+    oauth2serverconfidentialpkce : bool
+        When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
+    oauth2serverdiscoveryurl : str
+        OAuth2 server discovery URL
     """
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     name: str = Field(..., alias='name')
     teamid: str = Field(..., alias='teamId')
+    region: str = Field(..., alias='region')
     devkeys: List[DevKey] = Field(..., alias='devKeys')
     smtpenabled: bool = Field(..., alias='smtpEnabled')
     smtpsendername: str = Field(..., alias='smtpSenderName')
@@ -93,7 +112,15 @@ class Project(AppwriteModel):
     authmethods: List[ProjectAuthMethod] = Field(..., alias='authMethods')
     services: List[ProjectService] = Field(..., alias='services')
     protocols: List[ProjectProtocol] = Field(..., alias='protocols')
-    region: str = Field(..., alias='region')
-    billinglimits: Optional[BillingLimits] = Field(default=None, alias='billingLimits')
     blocks: List[Block] = Field(..., alias='blocks')
     consoleaccessedat: str = Field(..., alias='consoleAccessedAt')
+    billinglimits: Optional[BillingLimits] = Field(default=None, alias='billingLimits')
+    oauth2serverenabled: bool = Field(..., alias='oAuth2ServerEnabled')
+    oauth2serverauthorizationurl: str = Field(..., alias='oAuth2ServerAuthorizationUrl')
+    oauth2serverscopes: List[Any] = Field(..., alias='oAuth2ServerScopes')
+    oauth2serveraccesstokenduration: float = Field(..., alias='oAuth2ServerAccessTokenDuration')
+    oauth2serverrefreshtokenduration: float = Field(..., alias='oAuth2ServerRefreshTokenDuration')
+    oauth2serverpublicaccesstokenduration: float = Field(..., alias='oAuth2ServerPublicAccessTokenDuration')
+    oauth2serverpublicrefreshtokenduration: float = Field(..., alias='oAuth2ServerPublicRefreshTokenDuration')
+    oauth2serverconfidentialpkce: bool = Field(..., alias='oAuth2ServerConfidentialPkce')
+    oauth2serverdiscoveryurl: str = Field(..., alias='oAuth2ServerDiscoveryUrl')

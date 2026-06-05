@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -60,6 +61,7 @@ from ..models.platform_linux import PlatformLinux
 from ..models.platform_web import PlatformWeb
 from ..models.platform_windows import PlatformWindows
 from ..models.policy_list import PolicyList
+from ..models.policy_password_strength import PolicyPasswordStrength
 from ..enums.project_policy_id import ProjectPolicyId
 from ..models.policy_password_dictionary import PolicyPasswordDictionary
 from ..models.policy_password_history import PolicyPasswordHistory
@@ -109,6 +111,7 @@ class Project(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -135,6 +138,7 @@ class Project(Service):
         api_params = {}
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -180,6 +184,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -221,6 +226,7 @@ class Project(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=KeyList)
@@ -278,6 +284,7 @@ class Project(Service):
         api_params['expire'] = self._normalize_value(expire)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -325,6 +332,7 @@ class Project(Service):
         api_params['duration'] = self._normalize_value(duration)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -363,6 +371,7 @@ class Project(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Key)
@@ -418,6 +427,7 @@ class Project(Service):
         api_params['expire'] = self._normalize_value(expire)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -456,6 +466,7 @@ class Project(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -494,6 +505,7 @@ class Project(Service):
         api_params['labels'] = self._normalize_value(labels)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -535,6 +547,7 @@ class Project(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=MockNumberList)
@@ -579,6 +592,7 @@ class Project(Service):
         api_params['otp'] = self._normalize_value(otp)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -617,6 +631,7 @@ class Project(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=MockNumber)
@@ -661,6 +676,7 @@ class Project(Service):
         api_params['otp'] = self._normalize_value(otp)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -699,6 +715,7 @@ class Project(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -740,9 +757,81 @@ class Project(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=OAuth2ProviderList)
+
+
+    def update_o_auth2_server(
+        self,
+        enabled: bool,
+        authorization_url: str,
+        scopes: Optional[List[str]] = None,
+        access_token_duration: Optional[float] = None,
+        refresh_token_duration: Optional[float] = None,
+        public_access_token_duration: Optional[float] = None,
+        public_refresh_token_duration: Optional[float] = None,
+        confidential_pkce: Optional[bool] = None
+    ) -> ProjectModel:
+        """
+        Update the OAuth2 server (OIDC provider) configuration.
+
+        Parameters
+        ----------
+        enabled : bool
+            Enable or disable the OAuth2 server.
+        authorization_url : str
+            URL to your application with consent screen.
+        scopes : Optional[List[str]]
+            List of allowed OAuth2 scopes. Maximum of 100 scopes are allowed, each up to 128 characters long.
+        access_token_duration : Optional[float]
+            Access token duration in seconds for confidential clients (server-side apps that authenticate with a client secret). Leave empty to use default 8 hours.
+        refresh_token_duration : Optional[float]
+            Refresh token duration in seconds for confidential clients (server-side apps that authenticate with a client secret). Leave empty to use default 1 year.
+        public_access_token_duration : Optional[float]
+            Access token duration in seconds for public clients (SPAs, mobile, and native apps that cannot keep a client secret). Leave empty to use default 1 hour.
+        public_refresh_token_duration : Optional[float]
+            Refresh token duration in seconds for public clients (SPAs, mobile, and native apps that cannot keep a client secret). Leave empty to use default 30 days.
+        confidential_pkce : Optional[bool]
+            When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
+        
+        Returns
+        -------
+        ProjectModel
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2-server'
+        api_params = {}
+        if enabled is None:
+            raise AppwriteException('Missing required parameter: "enabled"')
+
+        if authorization_url is None:
+            raise AppwriteException('Missing required parameter: "authorization_url"')
+
+
+        api_params['enabled'] = self._normalize_value(enabled)
+        api_params['authorizationUrl'] = self._normalize_value(authorization_url)
+        if scopes is not None:
+            api_params['scopes'] = self._normalize_value(scopes)
+        api_params['accessTokenDuration'] = self._normalize_value(access_token_duration)
+        api_params['refreshTokenDuration'] = self._normalize_value(refresh_token_duration)
+        api_params['publicAccessTokenDuration'] = self._normalize_value(public_access_token_duration)
+        api_params['publicRefreshTokenDuration'] = self._normalize_value(public_refresh_token_duration)
+        api_params['confidentialPkce'] = self._normalize_value(confidential_pkce)
+
+        response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=ProjectModel)
 
 
     def update_o_auth2_amazon(
@@ -759,7 +848,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Amazon OAuth2 app. For example: amzn1.application-oa2-client.87400c00000000000000000000063d5b2
         client_secret : Optional[str]
-            'Client Secret' of Amazon OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Amazon OAuth2 app. For example: 79ffe4000000000000000000000000000000000000000000000000000002de55
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -782,6 +871,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -833,6 +923,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -854,7 +945,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Auth0 OAuth2 app. For example: OaOkIA000000000000000000005KLSYq
         client_secret : Optional[str]
-            'Client Secret' of Auth0 OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Auth0 OAuth2 app. For example: zXz0000-00000000000000000000000000000-00000000000000000000PJafnF
         endpoint : Optional[str]
             Domain of Auth0 instance. For example: example.us.auth0.com
         enabled : Optional[bool]
@@ -880,6 +971,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -901,7 +993,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Authentik OAuth2 app. For example: dTKOPa0000000000000000000000000000e7G8hv
         client_secret : Optional[str]
-            'Client Secret' of Authentik OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Authentik OAuth2 app. For example: ntQadq000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000Hp5WK
         endpoint : Optional[str]
             Domain of Authentik instance. For example: example.authentik.com
         enabled : Optional[bool]
@@ -927,6 +1019,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -947,7 +1040,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Autodesk OAuth2 app. For example: 5zw90v00000000000000000000kVYXN7
         client_secret : Optional[str]
-            'Client Secret' of Autodesk OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Autodesk OAuth2 app. For example: 7I000000000000MW
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -970,6 +1063,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -990,7 +1084,7 @@ class Project(Service):
         key : Optional[str]
             'Key' of Bitbucket OAuth2 app. For example: Knt70000000000ByRc
         secret : Optional[str]
-            'Secret' of Bitbucket OAuth2 app. For example: your-oauth2-client-secret
+            'Secret' of Bitbucket OAuth2 app. For example: NMfLZJ00000000000000000000TLQdDx
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1013,6 +1107,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1033,7 +1128,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Bitly OAuth2 app. For example: d95151000000000000000000000000000067af9b
         client_secret : Optional[str]
-            'Client Secret' of Bitly OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Bitly OAuth2 app. For example: a13e250000000000000000000000000000d73095
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1056,6 +1151,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1076,7 +1172,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Box OAuth2 app. For example: deglcs00000000000000000000x2og6y
         client_secret : Optional[str]
-            'Client Secret' of Box OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Box OAuth2 app. For example: OKM1f100000000000000000000eshEif
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1099,6 +1195,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1119,7 +1216,7 @@ class Project(Service):
         api_key : Optional[str]
             'API Key' of Dailymotion OAuth2 app. For example: 07a9000000000000067f
         api_secret : Optional[str]
-            'API Secret' of Dailymotion OAuth2 app. For example: your-oauth2-client-secret
+            'API Secret' of Dailymotion OAuth2 app. For example: a399a90000000000000000000000000000d90639
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1142,6 +1239,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1162,7 +1260,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Discord OAuth2 app. For example: 950722000000343754
         client_secret : Optional[str]
-            'Client Secret' of Discord OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Discord OAuth2 app. For example: YmPXnM000000000000000000002zFg5D
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1185,6 +1283,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1205,7 +1304,7 @@ class Project(Service):
         public_key : Optional[str]
             'Public Key, also known as API Key' of Disqus OAuth2 app. For example: cgegH70000000000000000000000000000000000000000000000000000Hr1nYX
         secret_key : Optional[str]
-            'Secret Key, also known as API Secret' of Disqus OAuth2 app. For example: your-oauth2-client-secret
+            'Secret Key, also known as API Secret' of Disqus OAuth2 app. For example: W7Bykj00000000000000000000000000000000000000000000000000003o43w9
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1228,6 +1327,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1248,7 +1348,7 @@ class Project(Service):
         app_key : Optional[str]
             'App Key' of Dropbox OAuth2 app. For example: jl000000000009t
         app_secret : Optional[str]
-            'App Secret' of Dropbox OAuth2 app. For example: your-oauth2-client-secret
+            'App Secret' of Dropbox OAuth2 app. For example: g200000000000vw
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1271,6 +1371,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1291,7 +1392,7 @@ class Project(Service):
         key_string : Optional[str]
             'Keystring' of Etsy OAuth2 app. For example: nsgzxh0000000000008j85a2
         shared_secret : Optional[str]
-            'Shared Secret' of Etsy OAuth2 app. For example: your-oauth2-client-secret
+            'Shared Secret' of Etsy OAuth2 app. For example: tp000000ru
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1314,6 +1415,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1334,7 +1436,7 @@ class Project(Service):
         app_id : Optional[str]
             'App ID' of Facebook OAuth2 app. For example: 260600000007694
         app_secret : Optional[str]
-            'App Secret' of Facebook OAuth2 app. For example: your-oauth2-client-secret
+            'App Secret' of Facebook OAuth2 app. For example: 2d0b2800000000000000000000d38af4
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1357,6 +1459,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1377,7 +1480,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Figma OAuth2 app. For example: byay5H0000000000VtiI40
         client_secret : Optional[str]
-            'Client Secret' of Figma OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Figma OAuth2 app. For example: yEpOYn0000000000000000004iIsU5
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1400,6 +1503,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1421,7 +1525,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of FusionAuth OAuth2 app. For example: b2222c00-0000-0000-0000-000000862097
         client_secret : Optional[str]
-            'Client Secret' of FusionAuth OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of FusionAuth OAuth2 app. For example: Jx4s0C0000000000000000000000000000000wGqLsc
         endpoint : Optional[str]
             Domain of FusionAuth instance. For example: example.fusionauth.io
         enabled : Optional[bool]
@@ -1447,6 +1551,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1467,7 +1572,7 @@ class Project(Service):
         client_id : Optional[str]
             'OAuth2 app Client ID, or App ID' of GitHub OAuth2 app. For example: e4d87900000000540733. Example of wrong value: 370006
         client_secret : Optional[str]
-            'Client Secret' of GitHub OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of GitHub OAuth2 app. For example: 5e07c00000000000000000000000000000198bcc
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1490,6 +1595,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1511,7 +1617,7 @@ class Project(Service):
         application_id : Optional[str]
             'Application ID' of Gitlab OAuth2 app. For example: d41ffe0000000000000000000000000000000000000000000000000000d5e252
         secret : Optional[str]
-            'Secret' of Gitlab OAuth2 app. For example: your-oauth2-client-secret
+            'Secret' of Gitlab OAuth2 app. For example: gloas-838cfa0000000000000000000000000000000000000000000000000000ecbb38
         endpoint : Optional[str]
             Endpoint URL of self-hosted GitLab instance. For example: https://gitlab.com
         enabled : Optional[bool]
@@ -1537,6 +1643,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1558,7 +1665,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
         client_secret : Optional[str]
-            'Client Secret' of Google OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Google OAuth2 app. For example: GOCSPX-2k8gsR0000000000000000VNahJj
         prompt : Optional[List[ProjectOAuth2GooglePrompt]]
             Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
         enabled : Optional[bool]
@@ -1584,6 +1691,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1606,7 +1714,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Keycloak OAuth2 app. For example: appwrite-o0000000st-app
         client_secret : Optional[str]
-            'Client Secret' of Keycloak OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Keycloak OAuth2 app. For example: jdjrJd00000000000000000000HUsaZO
         endpoint : Optional[str]
             Domain of Keycloak instance. For example: keycloak.example.com
         realm_name : Optional[str]
@@ -1635,6 +1743,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1655,7 +1764,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Kick OAuth2 app. For example: 01KQ7C00000000000001MFHS32
         client_secret : Optional[str]
-            'Client Secret' of Kick OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Kick OAuth2 app. For example: 34ac5600000000000000000000000000000000000000000000000000e830c8b
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1678,6 +1787,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1698,7 +1808,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Linkedin OAuth2 app. For example: 770000000000dv
         primary_client_secret : Optional[str]
-            'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: your-oauth2-client-secret
+            'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: WPL_AP1.2Bf0000000000000./HtlYw==
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1721,6 +1831,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1742,7 +1853,7 @@ class Project(Service):
         application_id : Optional[str]
             'Entra ID Application ID, also known as Client ID' of Microsoft OAuth2 app. For example: 00001111-aaaa-2222-bbbb-3333cccc4444
         application_secret : Optional[str]
-            'Entra ID Application Secret, also known as Client Secret' of Microsoft OAuth2 app. For example: your-oauth2-client-secret
+            'Entra ID Application Secret, also known as Client Secret' of Microsoft OAuth2 app. For example: A1bC2dE3fH4iJ5kL6mN7oP8qR9sT0u
         tenant : Optional[str]
             Microsoft Entra ID tenant identifier. Use 'common', 'organizations', 'consumers' or a specific tenant ID. For example: common
         enabled : Optional[bool]
@@ -1768,6 +1879,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1788,7 +1900,7 @@ class Project(Service):
         oauth_client_id : Optional[str]
             'OAuth Client ID' of Notion OAuth2 app. For example: 341d8700-0000-0000-0000-000000446ee3
         oauth_client_secret : Optional[str]
-            'OAuth Client Secret' of Notion OAuth2 app. For example: your-oauth2-client-secret
+            'OAuth Client Secret' of Notion OAuth2 app. For example: secret_dLUr4b000000000000000000000000000000lFHAa9
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1811,6 +1923,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1835,7 +1948,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Oidc OAuth2 app. For example: qibI2x0000000000000000000000000006L2YFoG
         client_secret : Optional[str]
-            'Client Secret' of Oidc OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Oidc OAuth2 app. For example: Ah68ed000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003qpcHV
         well_known_url : Optional[str]
             OpenID Connect well-known configuration URL. When provided, authorization, token, and user info endpoints can be discovered automatically. For example: https://myoauth.com/.well-known/openid-configuration
         authorization_url : Optional[str]
@@ -1870,6 +1983,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1892,7 +2006,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Okta OAuth2 app. For example: 0oa00000000000000698
         client_secret : Optional[str]
-            'Client Secret' of Okta OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Okta OAuth2 app. For example: Kiq0000000000000000000000000000000000000-00000000000H2L5-3SJ-vRV
         domain : Optional[str]
             Okta company domain. Required when enabling the provider. For example: trial-6400025.okta.com. Example of wrong value: trial-6400025-admin.okta.com, or https://trial-6400025.okta.com/
         authorization_server_id : Optional[str]
@@ -1921,6 +2035,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1941,7 +2056,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Paypal OAuth2 app. For example: AdhIEG7-000000000000-0000000000000000000000000000000-0000000000000000000000-2pyB
         secret_key : Optional[str]
-            'Secret Key 1 or Secret Key 2' of Paypal OAuth2 app. For example: your-oauth2-client-secret
+            'Secret Key 1 or Secret Key 2' of Paypal OAuth2 app. For example: EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -1964,6 +2079,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1984,7 +2100,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of PaypalSandbox OAuth2 app. For example: AdhIEG7-000000000000-0000000000000000000000000000000-0000000000000000000000-2pyB
         secret_key : Optional[str]
-            'Secret Key 1 or Secret Key 2' of PaypalSandbox OAuth2 app. For example: your-oauth2-client-secret
+            'Secret Key 1 or Secret Key 2' of PaypalSandbox OAuth2 app. For example: EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2007,6 +2123,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2027,7 +2144,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Podio OAuth2 app. For example: appwrite-o0000000st-app
         client_secret : Optional[str]
-            'Client Secret' of Podio OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Podio OAuth2 app. For example: Rn247T0000000000000000000000000000000000000000000000000000W2zWTN
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2050,6 +2167,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2070,7 +2188,7 @@ class Project(Service):
         customer_key : Optional[str]
             'Consumer Key' of Salesforce OAuth2 app. For example: 3MVG9I0000000000000000000000000000000000000000000000000000000000000000000000000C5Aejq
         customer_secret : Optional[str]
-            'Consumer Secret' of Salesforce OAuth2 app. For example: your-oauth2-client-secret
+            'Consumer Secret' of Salesforce OAuth2 app. For example: 3w000000000000e2
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2093,6 +2211,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2113,7 +2232,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Slack OAuth2 app. For example: 23000000089.15000000000023
         client_secret : Optional[str]
-            'Client Secret' of Slack OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Slack OAuth2 app. For example: 81656000000000000000000000f3d2fd
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2136,6 +2255,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2156,7 +2276,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Spotify OAuth2 app. For example: 6ec271000000000000000000009beace
         client_secret : Optional[str]
-            'Client Secret' of Spotify OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Spotify OAuth2 app. For example: db068a000000000000000000008b5b9f
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2179,6 +2299,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2199,7 +2320,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Stripe OAuth2 app. For example: ca_UKibXX0000000000000000000006byvR
         api_secret_key : Optional[str]
-            'API Secret Key' of Stripe OAuth2 app. For example: your-oauth2-client-secret
+            'API Secret Key' of Stripe OAuth2 app. For example: sk_51SfOd000000000000000000000000000000000000000000000000000000000000000000000000000000000000000QGWYfp
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2222,6 +2343,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2242,7 +2364,7 @@ class Project(Service):
         oauth2_client_id : Optional[str]
             'OAuth2 Client ID' of Tradeshift OAuth2 app. For example: appwrite-tes00000.0000000000est-app
         oauth2_client_secret : Optional[str]
-            'OAuth2 Client Secret' of Tradeshift OAuth2 app. For example: your-oauth2-client-secret
+            'OAuth2 Client Secret' of Tradeshift OAuth2 app. For example: 7cb52700-0000-0000-0000-000000ca5b83
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2265,6 +2387,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2285,7 +2408,7 @@ class Project(Service):
         oauth2_client_id : Optional[str]
             'OAuth2 Client ID' of Tradeshift Sandbox OAuth2 app. For example: appwrite-tes00000.0000000000est-app
         oauth2_client_secret : Optional[str]
-            'OAuth2 Client Secret' of Tradeshift Sandbox OAuth2 app. For example: your-oauth2-client-secret
+            'OAuth2 Client Secret' of Tradeshift Sandbox OAuth2 app. For example: 7cb52700-0000-0000-0000-000000ca5b83
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2308,6 +2431,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2328,7 +2452,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Twitch OAuth2 app. For example: vvi0in000000000000000000ikmt9p
         client_secret : Optional[str]
-            'Client Secret' of Twitch OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Twitch OAuth2 app. For example: pmapue000000000000000000zylw3v
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2351,6 +2475,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2371,7 +2496,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of WordPress OAuth2 app. For example: 130005
         client_secret : Optional[str]
-            'Client Secret' of WordPress OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of WordPress OAuth2 app. For example: PlBfJS0000000000000000000000000000000000000000000000000000EdUZJk
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2394,6 +2519,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2414,7 +2540,7 @@ class Project(Service):
         customer_key : Optional[str]
             'Customer Key' of X OAuth2 app. For example: slzZV0000000000000NFLaWT
         secret_key : Optional[str]
-            'Secret Key' of X OAuth2 app. For example: your-oauth2-client-secret
+            'Secret Key' of X OAuth2 app. For example: tkEPkp00000000000000000000000000000000000000FTxbI9
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2437,6 +2563,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2457,7 +2584,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID, also known as Customer Key' of Yahoo OAuth2 app. For example: dj0yJm000000000000000000000000000000000000000000000000000000000000000000000000000000000000Z4PWRm
         client_secret : Optional[str]
-            'Client Secret, also known as Customer Secret' of Yahoo OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret, also known as Customer Secret' of Yahoo OAuth2 app. For example: cf978f0000000000000000000000000000c5e2e9
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2480,6 +2607,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2500,7 +2628,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Yandex OAuth2 app. For example: 6a8a6a0000000000000000000091483c
         client_secret : Optional[str]
-            'Client Secret' of Yandex OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Yandex OAuth2 app. For example: bbf98500000000000000000000c75a63
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2523,6 +2651,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2543,7 +2672,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Zoho OAuth2 app. For example: 1000.83C178000000000000000000RPNX0B
         client_secret : Optional[str]
-            'Client Secret' of Zoho OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Zoho OAuth2 app. For example: fb5cac000000000000000000000000000000a68f6e
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2566,6 +2695,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2586,7 +2716,7 @@ class Project(Service):
         client_id : Optional[str]
             'Client ID' of Zoom OAuth2 app. For example: QMAC00000000000000w0AQ
         client_secret : Optional[str]
-            'Client Secret' of Zoom OAuth2 app. For example: your-oauth2-client-secret
+            'Client Secret' of Zoom OAuth2 app. For example: GAWsG4000000000000000000007U01ON
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2609,6 +2739,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2647,6 +2778,7 @@ class Project(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
         if not isinstance(response, dict):
             raise AppwriteException('Expected object response when hydrating a response model')
@@ -2809,6 +2941,7 @@ class Project(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=PlatformList)
@@ -2860,6 +2993,7 @@ class Project(Service):
         api_params['applicationId'] = self._normalize_value(application_id)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2912,6 +3046,7 @@ class Project(Service):
         api_params['applicationId'] = self._normalize_value(application_id)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2964,6 +3099,7 @@ class Project(Service):
         api_params['bundleIdentifier'] = self._normalize_value(bundle_identifier)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3016,6 +3152,7 @@ class Project(Service):
         api_params['bundleIdentifier'] = self._normalize_value(bundle_identifier)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3068,6 +3205,7 @@ class Project(Service):
         api_params['packageName'] = self._normalize_value(package_name)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3120,6 +3258,7 @@ class Project(Service):
         api_params['packageName'] = self._normalize_value(package_name)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3172,6 +3311,7 @@ class Project(Service):
         api_params['hostname'] = self._normalize_value(hostname)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3224,6 +3364,7 @@ class Project(Service):
         api_params['hostname'] = self._normalize_value(hostname)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3276,6 +3417,7 @@ class Project(Service):
         api_params['packageIdentifierName'] = self._normalize_value(package_identifier_name)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3328,6 +3470,7 @@ class Project(Service):
         api_params['packageIdentifierName'] = self._normalize_value(package_identifier_name)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3366,6 +3509,7 @@ class Project(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
         if not isinstance(response, dict):
             raise AppwriteException('Expected object response when hydrating a response model')
@@ -3420,6 +3564,7 @@ class Project(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3461,6 +3606,7 @@ class Project(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=PolicyList)
@@ -3498,6 +3644,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3536,6 +3683,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3574,6 +3722,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3630,6 +3779,7 @@ class Project(Service):
             api_params['userMFA'] = self._normalize_value(user_mfa)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3668,6 +3818,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3705,6 +3856,7 @@ class Project(Service):
         api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3743,10 +3895,68 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
+
+
+    def update_password_strength_policy(
+        self,
+        min: Optional[float] = None,
+        uppercase: Optional[bool] = None,
+        lowercase: Optional[bool] = None,
+        number: Optional[bool] = None,
+        symbols: Optional[bool] = None
+    ) -> PolicyPasswordStrength:
+        """
+        Update the password strength requirements for users in the project.
+
+        Parameters
+        ----------
+        min : Optional[float]
+            Minimum password length. Value must be between 8 and 256. Default is 8.
+        uppercase : Optional[bool]
+            Whether passwords must include at least one uppercase letter.
+        lowercase : Optional[bool]
+            Whether passwords must include at least one lowercase letter.
+        number : Optional[bool]
+            Whether passwords must include at least one number.
+        symbols : Optional[bool]
+            Whether passwords must include at least one symbol.
+        
+        Returns
+        -------
+        PolicyPasswordStrength
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/policies/password-strength'
+        api_params = {}
+
+        if min is not None:
+            api_params['min'] = self._normalize_value(min)
+        if uppercase is not None:
+            api_params['uppercase'] = self._normalize_value(uppercase)
+        if lowercase is not None:
+            api_params['lowercase'] = self._normalize_value(lowercase)
+        if number is not None:
+            api_params['number'] = self._normalize_value(number)
+        if symbols is not None:
+            api_params['symbols'] = self._normalize_value(symbols)
+
+        response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=PolicyPasswordStrength)
 
 
     def update_session_alert_policy(
@@ -3781,6 +3991,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3819,6 +4030,7 @@ class Project(Service):
         api_params['duration'] = self._normalize_value(duration)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3857,6 +4069,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3892,6 +4105,7 @@ class Project(Service):
         api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3927,6 +4141,7 @@ class Project(Service):
         api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -3936,18 +4151,18 @@ class Project(Service):
     def get_policy(
         self,
         policy_id: ProjectPolicyId
-    ) -> Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail]:
+    ) -> Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail]:
         """
         Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
 
         Parameters
         ----------
         policy_id : ProjectPolicyId
-            Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, deny-aliased-email, deny-disposable-email, deny-free-email.
+            Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, deny-aliased-email, deny-disposable-email, deny-free-email.
         
         Returns
         -------
-        Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail]
+        Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail]
             API response as one of the typed response models
         
         Raises
@@ -3965,6 +4180,7 @@ class Project(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
         if not isinstance(response, dict):
             raise AppwriteException('Expected object response when hydrating a response model')
@@ -3974,6 +4190,9 @@ class Project(Service):
 
         if response.get('$id') == 'password-history':
             return self._parse_response(response, model=PolicyPasswordHistory)
+
+        if response.get('$id') == 'password-strength':
+            return self._parse_response(response, model=PolicyPasswordStrength)
 
         if response.get('$id') == 'password-personal-data':
             return self._parse_response(response, model=PolicyPasswordPersonalData)
@@ -4047,6 +4266,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4092,6 +4312,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4163,6 +4384,7 @@ class Project(Service):
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4201,6 +4423,7 @@ class Project(Service):
         api_params['emails'] = self._normalize_value(emails)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4242,6 +4465,7 @@ class Project(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=EmailTemplateList)
@@ -4308,6 +4532,7 @@ class Project(Service):
         api_params['replyToName'] = self._normalize_value(reply_to_name)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4351,6 +4576,7 @@ class Project(Service):
             api_params['locale'] = self._normalize_value(locale)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=EmailTemplate)
@@ -4391,6 +4617,7 @@ class Project(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=VariableList)
@@ -4447,6 +4674,7 @@ class Project(Service):
             api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4485,6 +4713,7 @@ class Project(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Variable)
@@ -4534,6 +4763,7 @@ class Project(Service):
         api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -4572,6 +4802,7 @@ class Project(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 

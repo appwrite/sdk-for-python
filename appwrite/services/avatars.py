@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -64,6 +65,7 @@ class Avatars(Service):
             api_params['quality'] = self._normalize_value(quality)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response
@@ -119,6 +121,7 @@ class Avatars(Service):
             api_params['quality'] = self._normalize_value(quality)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response
@@ -158,6 +161,7 @@ class Avatars(Service):
         api_params['url'] = self._normalize_value(url)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response
@@ -213,6 +217,7 @@ class Avatars(Service):
             api_params['quality'] = self._normalize_value(quality)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response
@@ -264,6 +269,7 @@ class Avatars(Service):
             api_params['height'] = self._normalize_value(height)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response
@@ -319,6 +325,7 @@ class Avatars(Service):
             api_params['background'] = self._normalize_value(background)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response
@@ -372,6 +379,7 @@ class Avatars(Service):
             api_params['download'] = self._normalize_value(download)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response
@@ -508,6 +516,7 @@ class Avatars(Service):
             api_params['output'] = self._normalize_value(output)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response

@@ -1,5 +1,15 @@
 # Change Log
 
+## 20.1.0
+
+* Added: `createSesProvider` and `updateSesProvider` to `messaging`
+* Added: `updateOAuth2Server` to `project` for OAuth2 server settings
+* Added: `updatePasswordStrengthPolicy` and `PolicyPasswordStrength` to `project`
+* Added: `getAuditsDB` health check to `health`
+* Added: `password-strength` to `ProjectPolicyId`
+* Added: `apps.read` and `apps.write` to `ProjectKeyScopes`
+
+
 ## 20.0.0
 
 * Breaking: Removed `githubImagine` and `googleImagine` from `ProjectOAuthProviderId`
@@ -8,7 +18,7 @@
 * Added: `Organization` service for managing projects and API keys
 * Added: `PolicyDenyAliasedEmail`, `PolicyDenyDisposableEmail`, and `PolicyDenyFreeEmail` policy models
 * Added: `deny-aliased-email`, `deny-disposable-email`, and `deny-free-email` to `ProjectPolicyId`
-* Added: `BrowserTheme`, `HealthQueueName`, `OrganizationKeyScopes`, and `Region` enums
+* Replaced: `BrowserTheme`, `HealthQueueName`, `OrganizationKeyScopes`, and `Region` enums
 * Added: `dart-3.12` and `flutter-3.44` runtimes
 * Added: `ProjectList` model and new attributes on `Function`, `Site`, and `UsageGauge`
 * Updated: `functions`, `sites`, `usage`, `health`, and `avatars` services

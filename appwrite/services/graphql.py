@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -40,6 +41,7 @@ class Graphql(Service):
         api_params['query'] = self._normalize_value(query)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'x-sdk-graphql': 'true',
             'content-type': 'application/json',
         }, api_params)
@@ -79,6 +81,7 @@ class Graphql(Service):
         api_params['query'] = self._normalize_value(query)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'x-sdk-graphql': 'true',
             'content-type': 'application/json',
         }, api_params)
