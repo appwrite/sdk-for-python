@@ -3,6 +3,7 @@ from enum import Enum
 class ProjectPolicyId(Enum):
     PASSWORD_DICTIONARY = "password-dictionary"
     PASSWORD_HISTORY = "password-history"
+    PASSWORD_STRENGTH = "password-strength"
     PASSWORD_PERSONAL_DATA = "password-personal-data"
     SESSION_ALERT = "session-alert"
     SESSION_DURATION = "session-duration"

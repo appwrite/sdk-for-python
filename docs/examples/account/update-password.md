@@ -12,7 +12,7 @@ account = Account(client)
 
 result: User = account.update_password(
     password = '',
-    old_password = 'password' # optional
+    old_password = '<OLD_PASSWORD>' # optional
 )
 
 print(result.model_dump())

@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -45,6 +46,7 @@ class Webhooks(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=WebhookList)
@@ -127,6 +129,7 @@ class Webhooks(Service):
         api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -165,6 +168,7 @@ class Webhooks(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Webhook)
@@ -243,6 +247,7 @@ class Webhooks(Service):
             api_params['authPassword'] = self._normalize_value(auth_password)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -281,6 +286,7 @@ class Webhooks(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -323,6 +329,7 @@ class Webhooks(Service):
         api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 

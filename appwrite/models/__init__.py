@@ -172,6 +172,7 @@ from .o_auth2_microsoft import OAuth2Microsoft
 from .o_auth2_provider_list import OAuth2ProviderList
 from .policy_password_dictionary import PolicyPasswordDictionary
 from .policy_password_history import PolicyPasswordHistory
+from .policy_password_strength import PolicyPasswordStrength
 from .policy_password_personal_data import PolicyPasswordPersonalData
 from .policy_session_alert import PolicySessionAlert
 from .policy_session_duration import PolicySessionDuration
@@ -406,6 +407,7 @@ __all__ = [
     'OAuth2ProviderList',
     'PolicyPasswordDictionary',
     'PolicyPasswordHistory',
+    'PolicyPasswordStrength',
     'PolicyPasswordPersonalData',
     'PolicySessionAlert',
     'PolicySessionDuration',

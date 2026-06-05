@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -56,6 +57,7 @@ class Storage(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=BucketList)
@@ -144,6 +146,7 @@ class Storage(Service):
             api_params['transformations'] = self._normalize_value(transformations)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -182,6 +185,7 @@ class Storage(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Bucket)
@@ -270,6 +274,7 @@ class Storage(Service):
             api_params['transformations'] = self._normalize_value(transformations)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -308,6 +313,7 @@ class Storage(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -361,6 +367,7 @@ class Storage(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=FileList)
@@ -433,6 +440,7 @@ class Storage(Service):
         upload_id = file_id
 
         response = self.client.chunked_upload(api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'multipart/form-data',
         }, api_params, param_name, on_progress, upload_id)
 
@@ -478,6 +486,7 @@ class Storage(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=File)
@@ -531,6 +540,7 @@ class Storage(Service):
         api_params['permissions'] = self._normalize_value(permissions)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -576,6 +586,7 @@ class Storage(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -626,6 +637,7 @@ class Storage(Service):
             api_params['token'] = self._normalize_value(token)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response
@@ -730,6 +742,7 @@ class Storage(Service):
             api_params['token'] = self._normalize_value(token)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response
@@ -779,6 +792,7 @@ class Storage(Service):
             api_params['token'] = self._normalize_value(token)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return response

@@ -21,6 +21,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -39,9 +40,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -70,6 +79,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -88,9 +98,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -229,6 +247,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -247,9 +266,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -354,12 +381,61 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_update_o_auth2_server(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "name": "New Project",
+    "teamId": "1592981250",
+    "region": "fra",
+    "devKeys": [],
+    "smtpEnabled": True,
+    "smtpSenderName": "John Appwrite",
+    "smtpSenderEmail": "john@appwrite.io",
+    "smtpReplyToName": "Support Team",
+    "smtpReplyToEmail": "support@appwrite.io",
+    "smtpHost": "mail.appwrite.io",
+    "smtpPort": 25.0,
+    "smtpUsername": "emailuser",
+    "smtpPassword": "",
+    "smtpSecure": "tls",
+    "pingCount": 1.0,
+    "pingedAt": "2020-10-15T06:38:00.000+00:00",
+    "labels": [],
+    "status": "active",
+    "authMethods": [],
+    "services": [],
+    "protocols": [],
+    "blocks": [],
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.project.update_o_auth2_server(
+            True,
+            'https://example.com',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_o_auth2_amazon(self, m):
         data = {
     "$id": "github",
     "enabled": True,
     "clientId": "amzn1.application-oa2-client.87400c00000000000000000000063d5b2",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "79ffe4000000000000000000000000000000000000000000000000000002de55"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -393,7 +469,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "OaOkIA000000000000000000005KLSYq",
-    "clientSecret": "your-oauth2-client-secret",
+    "clientSecret": "zXz0000-00000000000000000000000000000-00000000000000000000PJafnF",
     "endpoint": "example.us.auth0.com"
 }
         headers = {'Content-Type': 'application/json'}
@@ -410,7 +486,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "dTKOPa0000000000000000000000000000e7G8hv",
-    "clientSecret": "your-oauth2-client-secret",
+    "clientSecret": "ntQadq000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000Hp5WK",
     "endpoint": "example.authentik.com"
 }
         headers = {'Content-Type': 'application/json'}
@@ -427,7 +503,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "5zw90v00000000000000000000kVYXN7",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "7I000000000000MW"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -443,7 +519,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "key": "Knt70000000000ByRc",
-    "secret": "your-oauth2-client-secret"
+    "secret": "NMfLZJ00000000000000000000TLQdDx"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -459,7 +535,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "d95151000000000000000000000000000067af9b",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "a13e250000000000000000000000000000d73095"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -475,7 +551,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "deglcs00000000000000000000x2og6y",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "OKM1f100000000000000000000eshEif"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -491,7 +567,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "apiKey": "07a9000000000000067f",
-    "apiSecret": "your-oauth2-client-secret"
+    "apiSecret": "a399a90000000000000000000000000000d90639"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -507,7 +583,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "950722000000343754",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "YmPXnM000000000000000000002zFg5D"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -523,7 +599,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "publicKey": "cgegH70000000000000000000000000000000000000000000000000000Hr1nYX",
-    "secretKey": "your-oauth2-client-secret"
+    "secretKey": "W7Bykj00000000000000000000000000000000000000000000000000003o43w9"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -539,7 +615,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "appKey": "jl000000000009t",
-    "appSecret": "your-oauth2-client-secret"
+    "appSecret": "g200000000000vw"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -555,7 +631,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "keyString": "nsgzxh0000000000008j85a2",
-    "sharedSecret": "your-oauth2-client-secret"
+    "sharedSecret": "tp000000ru"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -571,7 +647,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "appId": "260600000007694",
-    "appSecret": "your-oauth2-client-secret"
+    "appSecret": "2d0b2800000000000000000000d38af4"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -587,7 +663,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "byay5H0000000000VtiI40",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "yEpOYn0000000000000000004iIsU5"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -603,7 +679,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "b2222c00-0000-0000-0000-000000862097",
-    "clientSecret": "your-oauth2-client-secret",
+    "clientSecret": "Jx4s0C0000000000000000000000000000000wGqLsc",
     "endpoint": "example.fusionauth.io"
 }
         headers = {'Content-Type': 'application/json'}
@@ -620,7 +696,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "e4d87900000000540733",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "5e07c00000000000000000000000000000198bcc"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -636,7 +712,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "applicationId": "d41ffe0000000000000000000000000000000000000000000000000000d5e252",
-    "secret": "your-oauth2-client-secret",
+    "secret": "gloas-838cfa0000000000000000000000000000000000000000000000000000ecbb38",
     "endpoint": "https:\/\/gitlab.com"
 }
         headers = {'Content-Type': 'application/json'}
@@ -653,7 +729,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com",
-    "clientSecret": "your-oauth2-client-secret",
+    "clientSecret": "GOCSPX-2k8gsR0000000000000000VNahJj",
     "prompt": []
 }
         headers = {'Content-Type': 'application/json'}
@@ -670,7 +746,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "appwrite-o0000000st-app",
-    "clientSecret": "your-oauth2-client-secret",
+    "clientSecret": "jdjrJd00000000000000000000HUsaZO",
     "endpoint": "keycloak.example.com",
     "realmName": "appwrite-realm"
 }
@@ -688,7 +764,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "01KQ7C00000000000001MFHS32",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "34ac5600000000000000000000000000000000000000000000000000e830c8b"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -704,7 +780,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "770000000000dv",
-    "primaryClientSecret": "your-oauth2-client-secret"
+    "primaryClientSecret": "WPL_AP1.2Bf0000000000000.\/HtlYw=="
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -720,7 +796,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "applicationId": "00001111-aaaa-2222-bbbb-3333cccc4444",
-    "applicationSecret": "your-oauth2-client-secret",
+    "applicationSecret": "A1bC2dE3fH4iJ5kL6mN7oP8qR9sT0u",
     "tenant": "common"
 }
         headers = {'Content-Type': 'application/json'}
@@ -737,7 +813,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "oauthClientId": "341d8700-0000-0000-0000-000000446ee3",
-    "oauthClientSecret": "your-oauth2-client-secret"
+    "oauthClientSecret": "secret_dLUr4b000000000000000000000000000000lFHAa9"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -753,7 +829,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "qibI2x0000000000000000000000000006L2YFoG",
-    "clientSecret": "your-oauth2-client-secret",
+    "clientSecret": "Ah68ed000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003qpcHV",
     "wellKnownURL": "https:\/\/myoauth.com\/.well-known\/openid-configuration",
     "authorizationURL": "https:\/\/myoauth.com\/oauth2\/authorize",
     "tokenURL": "https:\/\/myoauth.com\/oauth2\/token",
@@ -773,7 +849,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "0oa00000000000000698",
-    "clientSecret": "your-oauth2-client-secret",
+    "clientSecret": "Kiq0000000000000000000000000000000000000-00000000000H2L5-3SJ-vRV",
     "domain": "trial-6400025.okta.com",
     "authorizationServerId": "aus000000000000000h7z"
 }
@@ -791,7 +867,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "AdhIEG7-000000000000-0000000000000000000000000000000-0000000000000000000000-2pyB",
-    "secretKey": "your-oauth2-client-secret"
+    "secretKey": "EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -807,7 +883,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "AdhIEG7-000000000000-0000000000000000000000000000000-0000000000000000000000-2pyB",
-    "secretKey": "your-oauth2-client-secret"
+    "secretKey": "EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -823,7 +899,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "appwrite-oauth-test-app",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "Rn247T0000000000000000000000000000000000000000000000000000W2zWTN"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -839,7 +915,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "customerKey": "3MVG9I0000000000000000000000000000000000000000000000000000000000000000000000000C5Aejq",
-    "customerSecret": "your-oauth2-client-secret"
+    "customerSecret": "3w000000000000e2"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -855,7 +931,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "23000000089.15000000000023",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "81656000000000000000000000f3d2fd"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -871,7 +947,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "6ec271000000000000000000009beace",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "db068a000000000000000000008b5b9f"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -887,7 +963,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "ca_UKibXX0000000000000000000006byvR",
-    "apiSecretKey": "your-oauth2-client-secret"
+    "apiSecretKey": "sk_51SfOd000000000000000000000000000000000000000000000000000000000000000000000000000000000000000QGWYfp"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -903,7 +979,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "oauth2ClientId": "appwrite-test-org.appwrite-test-app",
-    "oauth2ClientSecret": "your-oauth2-client-secret"
+    "oauth2ClientSecret": "7cb52700-0000-0000-0000-000000ca5b83"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -919,7 +995,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "oauth2ClientId": "appwrite-test-org.appwrite-test-app",
-    "oauth2ClientSecret": "your-oauth2-client-secret"
+    "oauth2ClientSecret": "7cb52700-0000-0000-0000-000000ca5b83"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -935,7 +1011,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "vvi0in000000000000000000ikmt9p",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "pmapue000000000000000000zylw3v"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -951,7 +1027,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "130005",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "PlBfJS0000000000000000000000000000000000000000000000000000EdUZJk"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -967,7 +1043,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "customerKey": "slzZV0000000000000NFLaWT",
-    "secretKey": "your-oauth2-client-secret"
+    "secretKey": "tkEPkp00000000000000000000000000000000000000FTxbI9"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -983,7 +1059,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "dj0yJm000000000000000000000000000000000000000000000000000000000000000000000000000000000000Z4PWRm",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "cf978f0000000000000000000000000000c5e2e9"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -999,7 +1075,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "6a8a6a0000000000000000000091483c",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "bbf98500000000000000000000c75a63"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1015,7 +1091,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "1000.83C178000000000000000000RPNX0B",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "fb5cac000000000000000000000000000000a68f6e"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1031,7 +1107,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "QMAC00000000000000w0AQ",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "GAWsG4000000000000000000007U01ON"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1047,7 +1123,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$id": "github",
     "enabled": True,
     "clientId": "e4d87900000000540733",
-    "clientSecret": "your-oauth2-client-secret"
+    "clientSecret": "5e07c00000000000000000000000000000198bcc"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1316,7 +1392,7 @@ class ProjectServiceTest(unittest.TestCase):
     @requests_mock.Mocker()
     def test_list_policies(self, m):
         data = {
-    "total": 9.0,
+    "total": 10.0,
     "policies": []
 }
         headers = {'Content-Type': 'application/json'}
@@ -1335,6 +1411,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1353,9 +1430,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1374,6 +1459,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1392,9 +1478,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1413,6 +1507,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1431,9 +1526,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1452,6 +1555,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1470,9 +1574,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1490,6 +1602,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1508,9 +1621,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1529,6 +1650,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1547,9 +1669,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1568,6 +1698,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1586,15 +1717,41 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
 
         response = self.project.update_password_personal_data_policy(
             True,
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_password_strength_policy(self, m):
+        data = {
+    "$id": "password-dictionary",
+    "min": 12.0,
+    "uppercase": True,
+    "lowercase": True,
+    "number": True,
+    "symbols": True
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.project.update_password_strength_policy(
         )
 
         self.assertEqual(response.to_dict(), data)
@@ -1607,6 +1764,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1625,9 +1783,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1646,6 +1812,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1664,9 +1831,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1685,6 +1860,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1703,9 +1879,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1724,6 +1908,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1742,9 +1927,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1763,6 +1956,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1781,9 +1975,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1817,6 +2019,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1835,9 +2038,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1857,6 +2068,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1875,9 +2087,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1897,6 +2117,7 @@ class ProjectServiceTest(unittest.TestCase):
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "name": "New Project",
     "teamId": "1592981250",
+    "region": "fra",
     "devKeys": [],
     "smtpEnabled": True,
     "smtpSenderName": "John Appwrite",
@@ -1915,9 +2136,17 @@ class ProjectServiceTest(unittest.TestCase):
     "authMethods": [],
     "services": [],
     "protocols": [],
-    "region": "fra",
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "oAuth2ServerEnabled": True,
+    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
+    "oAuth2ServerScopes": [],
+    "oAuth2ServerAccessTokenDuration": 3600.0,
+    "oAuth2ServerRefreshTokenDuration": 86400.0,
+    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
+    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
+    "oAuth2ServerConfidentialPkce": True,
+    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)

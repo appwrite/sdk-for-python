@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -38,6 +39,7 @@ class Locale(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=LocaleModel)
@@ -64,6 +66,7 @@ class Locale(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=LocaleCodeList)
@@ -90,6 +93,7 @@ class Locale(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=ContinentList)
@@ -116,6 +120,7 @@ class Locale(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=CountryList)
@@ -142,6 +147,7 @@ class Locale(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=CountryList)
@@ -168,6 +174,7 @@ class Locale(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=PhoneList)
@@ -194,6 +201,7 @@ class Locale(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=CurrencyList)
@@ -220,6 +228,7 @@ class Locale(Service):
         api_params = {}
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=LanguageList)

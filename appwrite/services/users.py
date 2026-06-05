@@ -1,4 +1,5 @@
 from ..service import Service
+from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
@@ -71,6 +72,7 @@ class Users(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return UserList.with_data(response, model_type)
@@ -130,6 +132,7 @@ class Users(Service):
             api_params['name'] = self._normalize_value(name)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -191,6 +194,7 @@ class Users(Service):
             api_params['name'] = self._normalize_value(name)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -252,6 +256,7 @@ class Users(Service):
             api_params['name'] = self._normalize_value(name)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -298,6 +303,7 @@ class Users(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=IdentityList)
@@ -335,6 +341,7 @@ class Users(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -396,6 +403,7 @@ class Users(Service):
             api_params['name'] = self._normalize_value(name)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -457,6 +465,7 @@ class Users(Service):
             api_params['name'] = self._normalize_value(name)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -553,6 +562,7 @@ class Users(Service):
             api_params['name'] = self._normalize_value(name)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -635,6 +645,7 @@ class Users(Service):
             api_params['name'] = self._normalize_value(name)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -701,6 +712,7 @@ class Users(Service):
             api_params['name'] = self._normalize_value(name)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -743,6 +755,7 @@ class Users(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return User.with_data(response, model_type)
@@ -780,6 +793,7 @@ class Users(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -829,6 +843,7 @@ class Users(Service):
         api_params['email'] = self._normalize_value(email)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -879,6 +894,7 @@ class Users(Service):
         api_params['impersonator'] = self._normalize_value(impersonator)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -927,6 +943,7 @@ class Users(Service):
             api_params['duration'] = self._normalize_value(duration)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -978,6 +995,7 @@ class Users(Service):
         api_params['labels'] = self._normalize_value(labels)
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1026,6 +1044,7 @@ class Users(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=LogList)
@@ -1078,6 +1097,7 @@ class Users(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=MembershipList)
@@ -1126,6 +1146,7 @@ class Users(Service):
         api_params['mfa'] = self._normalize_value(mfa)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1171,6 +1192,7 @@ class Users(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1209,6 +1231,7 @@ class Users(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=MfaFactors)
@@ -1246,6 +1269,7 @@ class Users(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=MfaRecoveryCodes)
@@ -1283,6 +1307,7 @@ class Users(Service):
 
 
         response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1321,6 +1346,7 @@ class Users(Service):
 
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1370,6 +1396,7 @@ class Users(Service):
         api_params['name'] = self._normalize_value(name)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1419,6 +1446,7 @@ class Users(Service):
         api_params['password'] = self._normalize_value(password)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1468,6 +1496,7 @@ class Users(Service):
         api_params['number'] = self._normalize_value(number)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1510,6 +1539,7 @@ class Users(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return Preferences.with_data(response, model_type)
@@ -1558,6 +1588,7 @@ class Users(Service):
         api_params['prefs'] = self._normalize_value(prefs)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1601,6 +1632,7 @@ class Users(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=SessionList)
@@ -1640,6 +1672,7 @@ class Users(Service):
 
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1678,6 +1711,7 @@ class Users(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1723,6 +1757,7 @@ class Users(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1772,6 +1807,7 @@ class Users(Service):
         api_params['status'] = self._normalize_value(status)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1820,6 +1856,7 @@ class Users(Service):
             api_params['total'] = self._normalize_value(total)
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=TargetList)
@@ -1888,6 +1925,7 @@ class Users(Service):
             api_params['name'] = self._normalize_value(name)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -1933,6 +1971,7 @@ class Users(Service):
 
 
         response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
         }, api_params)
 
         return self._parse_response(response, model=Target)
@@ -1992,6 +2031,7 @@ class Users(Service):
             api_params['name'] = self._normalize_value(name)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2037,6 +2077,7 @@ class Users(Service):
 
 
         response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2086,6 +2127,7 @@ class Users(Service):
             api_params['expire'] = self._normalize_value(expire)
 
         response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2135,6 +2177,7 @@ class Users(Service):
         api_params['emailVerification'] = self._normalize_value(email_verification)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
@@ -2184,6 +2227,7 @@ class Users(Service):
         api_params['phoneVerification'] = self._normalize_value(phone_verification)
 
         response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
         }, api_params)
 
