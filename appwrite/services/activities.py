@@ -42,6 +42,7 @@ class Activities(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ActivityEventList)
@@ -81,6 +82,7 @@ class Activities(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ActivityEvent)

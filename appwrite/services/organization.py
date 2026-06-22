@@ -51,6 +51,7 @@ class Organization(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=KeyList)
@@ -108,6 +109,7 @@ class Organization(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Key)
@@ -146,6 +148,7 @@ class Organization(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Key)
@@ -203,6 +206,7 @@ class Organization(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Key)
@@ -288,6 +292,7 @@ class Organization(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectList)
@@ -339,6 +344,7 @@ class Organization(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Project)
@@ -423,6 +429,7 @@ class Organization(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Project)

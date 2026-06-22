@@ -129,6 +129,7 @@ class TeamsServiceTest(unittest.TestCase):
     "joined": "2020-10-15T06:38:00.000+00:00",
     "confirm": True,
     "mfa": True,
+    "userAccessedAt": "2020-10-15T06:38:00.000+00:00",
     "roles": []
 }
         headers = {'Content-Type': 'application/json'}
@@ -157,6 +158,7 @@ class TeamsServiceTest(unittest.TestCase):
     "joined": "2020-10-15T06:38:00.000+00:00",
     "confirm": True,
     "mfa": True,
+    "userAccessedAt": "2020-10-15T06:38:00.000+00:00",
     "roles": []
 }
         headers = {'Content-Type': 'application/json'}
@@ -185,6 +187,7 @@ class TeamsServiceTest(unittest.TestCase):
     "joined": "2020-10-15T06:38:00.000+00:00",
     "confirm": True,
     "mfa": True,
+    "userAccessedAt": "2020-10-15T06:38:00.000+00:00",
     "roles": []
 }
         headers = {'Content-Type': 'application/json'}
@@ -227,6 +230,7 @@ class TeamsServiceTest(unittest.TestCase):
     "joined": "2020-10-15T06:38:00.000+00:00",
     "confirm": True,
     "mfa": True,
+    "userAccessedAt": "2020-10-15T06:38:00.000+00:00",
     "roles": []
 }
         headers = {'Content-Type': 'application/json'}

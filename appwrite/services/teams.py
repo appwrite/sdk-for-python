@@ -61,6 +61,7 @@ class Teams(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return TeamList.with_data(response, model_type)
@@ -116,6 +117,7 @@ class Teams(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Team.with_data(response, model_type)
@@ -158,6 +160,7 @@ class Teams(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return Team.with_data(response, model_type)
@@ -208,6 +211,7 @@ class Teams(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Team.with_data(response, model_type)
@@ -300,6 +304,7 @@ class Teams(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=MembershipList)
@@ -378,6 +383,7 @@ class Teams(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Membership)
@@ -423,6 +429,7 @@ class Teams(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Membership)
@@ -477,6 +484,7 @@ class Teams(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Membership)
@@ -586,6 +594,7 @@ class Teams(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Membership)
@@ -628,6 +637,7 @@ class Teams(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return Preferences.with_data(response, model_type)
@@ -678,6 +688,7 @@ class Teams(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Preferences.with_data(response, model_type)

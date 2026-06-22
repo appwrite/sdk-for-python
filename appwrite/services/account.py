@@ -55,6 +55,7 @@ class Account(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return User.with_data(response, model_type)
@@ -117,6 +118,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return User.with_data(response, model_type)
@@ -169,6 +171,7 @@ class Account(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return User.with_data(response, model_type)
@@ -210,6 +213,7 @@ class Account(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=IdentityList)
@@ -286,6 +290,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Jwt)
@@ -327,6 +332,7 @@ class Account(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=LogList)
@@ -370,6 +376,7 @@ class Account(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return User.with_data(response, model_type)
@@ -409,6 +416,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=MfaType)
@@ -459,6 +467,7 @@ class Account(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return User.with_data(response, model_type)
@@ -537,6 +546,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=MfaChallenge)
@@ -583,6 +593,7 @@ class Account(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Session)
@@ -610,6 +621,7 @@ class Account(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=MfaFactors)
@@ -637,6 +649,7 @@ class Account(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=MfaRecoveryCodes)
@@ -665,6 +678,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=MfaRecoveryCodes)
@@ -693,6 +707,7 @@ class Account(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=MfaRecoveryCodes)
@@ -736,6 +751,7 @@ class Account(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return User.with_data(response, model_type)
@@ -784,6 +800,7 @@ class Account(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return User.with_data(response, model_type)
@@ -834,6 +851,7 @@ class Account(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return User.with_data(response, model_type)
@@ -868,6 +886,7 @@ class Account(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return Preferences.with_data(response, model_type)
@@ -911,6 +930,7 @@ class Account(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return User.with_data(response, model_type)
@@ -957,6 +977,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Token)
@@ -1012,6 +1033,7 @@ class Account(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Token)
@@ -1039,6 +1061,7 @@ class Account(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=SessionList)
@@ -1095,6 +1118,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Session)
@@ -1143,6 +1167,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Session)
@@ -1192,6 +1217,7 @@ class Account(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Session)
@@ -1241,6 +1267,7 @@ class Account(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Session)
@@ -1287,6 +1314,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Session)
@@ -1325,6 +1353,7 @@ class Account(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Session)
@@ -1364,6 +1393,7 @@ class Account(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Session)
@@ -1438,6 +1468,7 @@ class Account(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return User.with_data(response, model_type)
@@ -1492,6 +1523,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Token)
@@ -1551,6 +1583,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Token)
@@ -1608,6 +1641,7 @@ class Account(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'text/html',
         }, api_params, response_type='location')
 
         return response
@@ -1656,6 +1690,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Token)
@@ -1698,6 +1733,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Token)
@@ -1743,6 +1779,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Token)
@@ -1789,6 +1826,7 @@ class Account(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Token)
@@ -1838,6 +1876,7 @@ class Account(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Token)
@@ -1866,6 +1905,7 @@ class Account(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Token)
@@ -1912,6 +1952,7 @@ class Account(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Token)

@@ -67,7 +67,7 @@ class AccountServiceTest(unittest.TestCase):
         response = self.account.create(
             '<USER_ID>',
             'email@example.com',
-            '',
+            'password',
         )
 
         self.assertEqual(response.to_dict(), data)
@@ -581,7 +581,7 @@ class AccountServiceTest(unittest.TestCase):
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
 
         response = self.account.update_password(
-            '',
+            'password',
         )
 
         self.assertEqual(response.to_dict(), data)
@@ -693,7 +693,7 @@ class AccountServiceTest(unittest.TestCase):
         response = self.account.update_recovery(
             '<USER_ID>',
             '<SECRET>',
-            '',
+            'password',
         )
 
         self.assertEqual(response.to_dict(), data)

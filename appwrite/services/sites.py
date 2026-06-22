@@ -67,6 +67,7 @@ class Sites(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=SiteList)
@@ -222,6 +223,7 @@ class Sites(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Site)
@@ -249,6 +251,7 @@ class Sites(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=FrameworkList)
@@ -276,6 +279,7 @@ class Sites(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=SpecificationList)
@@ -314,6 +318,7 @@ class Sites(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Site)
@@ -465,6 +470,7 @@ class Sites(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Site)
@@ -550,6 +556,7 @@ class Sites(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Site)
@@ -603,6 +610,7 @@ class Sites(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=DeploymentList)
@@ -677,6 +685,7 @@ class Sites(Service):
         response = self.client.chunked_upload(api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'multipart/form-data',
+            'accept': 'application/json',
         }, api_params, param_name, on_progress, upload_id)
 
         return self._parse_response(response, model=Deployment)
@@ -723,6 +732,7 @@ class Sites(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Deployment)
@@ -804,6 +814,7 @@ class Sites(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Deployment)
@@ -864,6 +875,7 @@ class Sites(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Deployment)
@@ -909,6 +921,7 @@ class Sites(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Deployment)
@@ -1005,6 +1018,7 @@ class Sites(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': '*/*',
         }, api_params)
 
         return response
@@ -1051,6 +1065,7 @@ class Sites(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Deployment)
@@ -1099,6 +1114,7 @@ class Sites(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ExecutionList)
@@ -1144,6 +1160,7 @@ class Sites(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Execution)
@@ -1190,6 +1207,7 @@ class Sites(Service):
         response = self.client.call('delete', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return response
@@ -1238,6 +1256,7 @@ class Sites(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=VariableList)
@@ -1303,6 +1322,7 @@ class Sites(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Variable)
@@ -1348,6 +1368,7 @@ class Sites(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Variable)
@@ -1406,6 +1427,7 @@ class Sites(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Variable)

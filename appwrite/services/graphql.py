@@ -44,6 +44,7 @@ class Graphql(Service):
             'X-Appwrite-Project': self.client.get_config('project'),
             'x-sdk-graphql': 'true',
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return response
@@ -84,6 +85,7 @@ class Graphql(Service):
             'X-Appwrite-Project': self.client.get_config('project'),
             'x-sdk-graphql': 'true',
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return response

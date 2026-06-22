@@ -47,6 +47,7 @@ class Backups(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=BackupArchiveList)
@@ -90,6 +91,7 @@ class Backups(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=BackupArchive)
@@ -128,6 +130,7 @@ class Backups(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=BackupArchive)
@@ -167,6 +170,7 @@ class Backups(Service):
         response = self.client.call('delete', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return response
@@ -203,6 +207,7 @@ class Backups(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=BackupPolicyList)
@@ -277,6 +282,7 @@ class Backups(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=BackupPolicy)
@@ -315,6 +321,7 @@ class Backups(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=BackupPolicy)
@@ -371,6 +378,7 @@ class Backups(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=BackupPolicy)
@@ -410,6 +418,7 @@ class Backups(Service):
         response = self.client.call('delete', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return response
@@ -466,6 +475,7 @@ class Backups(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=BackupRestoration)
@@ -502,6 +512,7 @@ class Backups(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=BackupRestorationList)
@@ -540,6 +551,7 @@ class Backups(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=BackupRestoration)

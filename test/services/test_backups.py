@@ -110,6 +110,7 @@ class BackupsServiceTest(unittest.TestCase):
     "resources": [],
     "retention": 7.0,
     "schedule": "0 * * * *",
+    "type": "full",
     "enabled": True
 }
         headers = {'Content-Type': 'application/json'}
@@ -135,6 +136,7 @@ class BackupsServiceTest(unittest.TestCase):
     "resources": [],
     "retention": 7.0,
     "schedule": "0 * * * *",
+    "type": "full",
     "enabled": True
 }
         headers = {'Content-Type': 'application/json'}
@@ -157,6 +159,7 @@ class BackupsServiceTest(unittest.TestCase):
     "resources": [],
     "retention": 7.0,
     "schedule": "0 * * * *",
+    "type": "full",
     "enabled": True
 }
         headers = {'Content-Type': 'application/json'}

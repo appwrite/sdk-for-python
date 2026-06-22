@@ -1,5 +1,19 @@
 # Change Log
 
+## 21.0.0
+
+* Added: `apps` service for managing apps and app secrets
+* Added: `oauth2` service for the OAuth2 authorization, device, and token flows
+* Added: device authorization grant parameters (`verificationUrl`, `userCodeLength`, `userCodeFormat`, `deviceCodeDuration`) to `updateOAuth2Server`
+* Added: `emailCanonical`, `emailIsFree`, `emailIsDisposable`, `emailIsCorporate`, and `emailIsCanonical` to the `User` model
+* Added: `userAccessedAt` to the `Membership` model
+* Added: `PolicyDenyCorporateEmail` and `deny-corporate-email` to `ProjectPolicyId`
+* Added: `dedicatedDatabases.execute` to `ProjectKeyScopes`
+* Breaking: `usage.listEvents` now takes a required `metrics` array with `resource`, `interval`, and `dimensions` instead of `queries` and `total`
+* Breaking: Replaced `UsageEvent` and `UsageGauge` models with `UsageDataPoint` and `UsageMetric`
+* Updated: Send an `Accept: application/json` header on all requests
+
+
 ## 20.1.0
 
 * Added: `createSesProvider` and `updateSesProvider` to `messaging`

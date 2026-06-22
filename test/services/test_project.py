@@ -31,7 +31,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -41,16 +41,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -89,7 +80,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -99,16 +90,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -257,7 +239,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -267,16 +249,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -398,7 +371,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -408,16 +381,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1421,7 +1385,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1431,21 +1395,51 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
 
         response = self.project.update_deny_aliased_email_policy(
+            True,
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_deny_corporate_email_policy(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "name": "New Project",
+    "teamId": "1592981250",
+    "region": "fra",
+    "devKeys": [],
+    "smtpEnabled": True,
+    "smtpSenderName": "John Appwrite",
+    "smtpSenderEmail": "john@appwrite.io",
+    "smtpReplyToName": "Support Team",
+    "smtpReplyToEmail": "support@appwrite.io",
+    "smtpHost": "mail.appwrite.io",
+    "smtpPort": 25.0,
+    "smtpUsername": "emailuser",
+    "smtpPassword": "smtp-password",
+    "smtpSecure": "tls",
+    "pingCount": 1.0,
+    "pingedAt": "2020-10-15T06:38:00.000+00:00",
+    "labels": [],
+    "status": "active",
+    "authMethods": [],
+    "services": [],
+    "protocols": [],
+    "blocks": [],
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.project.update_deny_corporate_email_policy(
             True,
         )
 
@@ -1469,7 +1463,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1479,16 +1473,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1517,7 +1502,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1527,16 +1512,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1565,7 +1541,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1575,16 +1551,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1612,7 +1579,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1622,16 +1589,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1660,7 +1618,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1670,16 +1628,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1708,7 +1657,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1718,16 +1667,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1774,7 +1714,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1784,16 +1724,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1822,7 +1753,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1832,16 +1763,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1870,7 +1792,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1880,16 +1802,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1918,7 +1831,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1928,16 +1841,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1966,7 +1870,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -1976,16 +1880,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -2029,7 +1924,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -2039,16 +1934,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -2078,7 +1964,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -2088,16 +1974,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -2127,7 +2004,7 @@ class ProjectServiceTest(unittest.TestCase):
     "smtpHost": "mail.appwrite.io",
     "smtpPort": 25.0,
     "smtpUsername": "emailuser",
-    "smtpPassword": "",
+    "smtpPassword": "smtp-password",
     "smtpSecure": "tls",
     "pingCount": 1.0,
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
@@ -2137,16 +2014,7 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
-    "oAuth2ServerEnabled": True,
-    "oAuth2ServerAuthorizationUrl": "https:\/\/cloud.appwrite.io\/oauth2\/.well-known\/openid-configuration",
-    "oAuth2ServerScopes": [],
-    "oAuth2ServerAccessTokenDuration": 3600.0,
-    "oAuth2ServerRefreshTokenDuration": 86400.0,
-    "oAuth2ServerPublicAccessTokenDuration": 3600.0,
-    "oAuth2ServerPublicRefreshTokenDuration": 2592000.0,
-    "oAuth2ServerConfidentialPkce": True,
-    "oAuth2ServerDiscoveryUrl": "https:\/\/auth.example.com\/.well-known\/openid-configuration"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)

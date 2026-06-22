@@ -15,7 +15,8 @@ result: ProjectModel = project.update_membership_privacy_policy(
     user_email = False, # optional
     user_phone = False, # optional
     user_name = False, # optional
-    user_mfa = False # optional
+    user_mfa = False, # optional
+    user_accessed_at = False # optional
 )
 
 print(result.model_dump())

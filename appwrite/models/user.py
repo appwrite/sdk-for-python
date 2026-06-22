@@ -48,6 +48,16 @@ class User(AppwriteModel, Generic[T]):
         User phone number in E.164 format.
     emailverification : bool
         Email verification status.
+    emailcanonical : Optional[str]
+        Canonical form of the user email address.
+    emailisfree : Optional[bool]
+        Whether the user email is from a free email provider.
+    emailisdisposable : Optional[bool]
+        Whether the user email is from a disposable email provider.
+    emailiscorporate : Optional[bool]
+        Whether the user email is from a corporate domain.
+    emailiscanonical : Optional[bool]
+        Whether the user email is in its canonical form.
     phoneverification : bool
         Phone verification status.
     mfa : bool
@@ -77,6 +87,11 @@ class User(AppwriteModel, Generic[T]):
     email: str = Field(..., alias='email')
     phone: str = Field(..., alias='phone')
     emailverification: bool = Field(..., alias='emailVerification')
+    emailcanonical: Optional[str] = Field(default=None, alias='emailCanonical')
+    emailisfree: Optional[bool] = Field(default=None, alias='emailIsFree')
+    emailisdisposable: Optional[bool] = Field(default=None, alias='emailIsDisposable')
+    emailiscorporate: Optional[bool] = Field(default=None, alias='emailIsCorporate')
+    emailiscanonical: Optional[bool] = Field(default=None, alias='emailIsCanonical')
     phoneverification: bool = Field(..., alias='phoneVerification')
     mfa: bool = Field(..., alias='mfa')
     prefs: Preferences[T] = Field(..., alias='prefs')

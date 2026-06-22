@@ -58,6 +58,7 @@ class Storage(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=BucketList)
@@ -148,6 +149,7 @@ class Storage(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Bucket)
@@ -186,6 +188,7 @@ class Storage(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Bucket)
@@ -276,6 +279,7 @@ class Storage(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Bucket)
@@ -368,6 +372,7 @@ class Storage(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=FileList)
@@ -442,6 +447,7 @@ class Storage(Service):
         response = self.client.chunked_upload(api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'multipart/form-data',
+            'accept': 'application/json',
         }, api_params, param_name, on_progress, upload_id)
 
         return self._parse_response(response, model=File)
@@ -487,6 +493,7 @@ class Storage(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=File)
@@ -542,6 +549,7 @@ class Storage(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=File)
@@ -638,6 +646,7 @@ class Storage(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': '*/*',
         }, api_params)
 
         return response
@@ -743,6 +752,7 @@ class Storage(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'image/*',
         }, api_params)
 
         return response
@@ -793,6 +803,7 @@ class Storage(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': '*/*',
         }, api_params)
 
         return response
