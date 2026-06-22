@@ -88,6 +88,7 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=DatabaseList)
@@ -143,11 +144,13 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Database)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_transactions` instead.")
     def list_transactions(
         self,
         queries: Optional[List[str]] = None
@@ -155,6 +158,8 @@ class Databases(Service):
         """
         List transactions across all databases.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.list_transactions` instead.
         Parameters
         ----------
         queries : Optional[List[str]]
@@ -179,11 +184,13 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=TransactionList)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_transaction` instead.")
     def create_transaction(
         self,
         ttl: Optional[float] = None
@@ -191,6 +198,8 @@ class Databases(Service):
         """
         Create a new transaction.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_transaction` instead.
         Parameters
         ----------
         ttl : Optional[float]
@@ -216,11 +225,13 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Transaction)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get_transaction` instead.")
     def get_transaction(
         self,
         transaction_id: str
@@ -228,6 +239,8 @@ class Databases(Service):
         """
         Get a transaction by its unique ID.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.get_transaction` instead.
         Parameters
         ----------
         transaction_id : str
@@ -254,11 +267,13 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Transaction)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_transaction` instead.")
     def update_transaction(
         self,
         transaction_id: str,
@@ -268,6 +283,8 @@ class Databases(Service):
         """
         Update a transaction, to either commit or roll back its operations.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_transaction` instead.
         Parameters
         ----------
         transaction_id : str
@@ -303,11 +320,13 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Transaction)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_transaction` instead.")
     def delete_transaction(
         self,
         transaction_id: str
@@ -315,6 +334,8 @@ class Databases(Service):
         """
         Delete a transaction by its unique ID.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.delete_transaction` instead.
         Parameters
         ----------
         transaction_id : str
@@ -347,6 +368,7 @@ class Databases(Service):
         return response
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_operations` instead.")
     def create_operations(
         self,
         transaction_id: str,
@@ -355,6 +377,8 @@ class Databases(Service):
         """
         Create multiple operations in a single transaction.
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_operations` instead.
         Parameters
         ----------
         transaction_id : str
@@ -386,6 +410,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Transaction)
@@ -427,6 +452,7 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Database)
@@ -479,6 +505,7 @@ class Databases(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Database)
@@ -577,6 +604,7 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=CollectionList)
@@ -657,6 +685,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Collection)
@@ -705,6 +734,7 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Collection)
@@ -778,6 +808,7 @@ class Databases(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Collection)
@@ -885,6 +916,7 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeList)
@@ -966,6 +998,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeBigint)
@@ -1046,6 +1079,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeBigint)
@@ -1119,6 +1153,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeBoolean)
@@ -1190,6 +1225,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeBoolean)
@@ -1262,6 +1298,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeDatetime)
@@ -1333,6 +1370,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeDatetime)
@@ -1406,6 +1444,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeEmail)
@@ -1478,6 +1517,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeEmail)
@@ -1558,6 +1598,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeEnum)
@@ -1637,6 +1678,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeEnum)
@@ -1718,6 +1760,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeFloat)
@@ -1798,6 +1841,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeFloat)
@@ -1879,6 +1923,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeInteger)
@@ -1959,6 +2004,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeInteger)
@@ -2032,6 +2078,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeIp)
@@ -2104,6 +2151,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeIp)
@@ -2116,7 +2164,7 @@ class Databases(Service):
         collection_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None
+        default: Optional[List[List[Any]]] = None
     ) -> AttributeLine:
         """
         Create a geometric line attribute.
@@ -2133,7 +2181,7 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : Optional[List[Any]]
+        default : Optional[List[List[Any]]]
             Default value for attribute when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when attribute is required.
         
         Returns
@@ -2171,6 +2219,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeLine)
@@ -2183,7 +2232,7 @@ class Databases(Service):
         collection_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None,
+        default: Optional[List[List[Any]]] = None,
         new_key: Optional[str] = None
     ) -> AttributeLine:
         """
@@ -2201,7 +2250,7 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : Optional[List[Any]]
+        default : Optional[List[List[Any]]]
             Default value for attribute when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when attribute is required.
         new_key : Optional[str]
             New attribute key.
@@ -2242,11 +2291,13 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeLine)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_longtext_column` instead.")
     def create_longtext_attribute(
         self,
         database_id: str,
@@ -2261,6 +2312,8 @@ class Databases(Service):
         Create a longtext attribute.
         
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_longtext_column` instead.
         Parameters
         ----------
         database_id : str
@@ -2317,11 +2370,13 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeLongtext)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_longtext_column` instead.")
     def update_longtext_attribute(
         self,
         database_id: str,
@@ -2335,6 +2390,8 @@ class Databases(Service):
         Update a longtext attribute. Changing the `default` value will not update already existing documents.
         
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_longtext_column` instead.
         Parameters
         ----------
         database_id : str
@@ -2386,11 +2443,13 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeLongtext)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_mediumtext_column` instead.")
     def create_mediumtext_attribute(
         self,
         database_id: str,
@@ -2405,6 +2464,8 @@ class Databases(Service):
         Create a mediumtext attribute.
         
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_mediumtext_column` instead.
         Parameters
         ----------
         database_id : str
@@ -2461,11 +2522,13 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeMediumtext)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_mediumtext_column` instead.")
     def update_mediumtext_attribute(
         self,
         database_id: str,
@@ -2479,6 +2542,8 @@ class Databases(Service):
         Update a mediumtext attribute. Changing the `default` value will not update already existing documents.
         
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_mediumtext_column` instead.
         Parameters
         ----------
         database_id : str
@@ -2530,6 +2595,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeMediumtext)
@@ -2542,7 +2608,7 @@ class Databases(Service):
         collection_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None
+        default: Optional[List[float]] = None
     ) -> AttributePoint:
         """
         Create a geometric point attribute.
@@ -2559,7 +2625,7 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : Optional[List[Any]]
+        default : Optional[List[float]]
             Default value for attribute when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when attribute is required.
         
         Returns
@@ -2597,6 +2663,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributePoint)
@@ -2609,7 +2676,7 @@ class Databases(Service):
         collection_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None,
+        default: Optional[List[float]] = None,
         new_key: Optional[str] = None
     ) -> AttributePoint:
         """
@@ -2627,7 +2694,7 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : Optional[List[Any]]
+        default : Optional[List[float]]
             Default value for attribute when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when attribute is required.
         new_key : Optional[str]
             New attribute key.
@@ -2668,6 +2735,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributePoint)
@@ -2680,7 +2748,7 @@ class Databases(Service):
         collection_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None
+        default: Optional[List[List[Any]]] = None
     ) -> AttributePolygon:
         """
         Create a geometric polygon attribute.
@@ -2697,7 +2765,7 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : Optional[List[Any]]
+        default : Optional[List[List[Any]]]
             Default value for attribute when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when attribute is required.
         
         Returns
@@ -2735,6 +2803,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributePolygon)
@@ -2747,7 +2816,7 @@ class Databases(Service):
         collection_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None,
+        default: Optional[List[List[Any]]] = None,
         new_key: Optional[str] = None
     ) -> AttributePolygon:
         """
@@ -2765,7 +2834,7 @@ class Databases(Service):
             Attribute Key.
         required : bool
             Is attribute required?
-        default : Optional[List[Any]]
+        default : Optional[List[List[Any]]]
             Default value for attribute when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when attribute is required.
         new_key : Optional[str]
             New attribute key.
@@ -2806,6 +2875,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributePolygon)
@@ -2888,6 +2958,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeRelationship)
@@ -2954,6 +3025,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeRelationship)
@@ -3039,6 +3111,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeString)
@@ -3115,11 +3188,13 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeString)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_text_column` instead.")
     def create_text_attribute(
         self,
         database_id: str,
@@ -3134,6 +3209,8 @@ class Databases(Service):
         Create a text attribute.
         
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_text_column` instead.
         Parameters
         ----------
         database_id : str
@@ -3190,11 +3267,13 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeText)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_text_column` instead.")
     def update_text_attribute(
         self,
         database_id: str,
@@ -3208,6 +3287,8 @@ class Databases(Service):
         Update a text attribute. Changing the `default` value will not update already existing documents.
         
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_text_column` instead.
         Parameters
         ----------
         database_id : str
@@ -3259,6 +3340,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeText)
@@ -3332,6 +3414,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeUrl)
@@ -3404,11 +3487,13 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeUrl)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_varchar_column` instead.")
     def create_varchar_attribute(
         self,
         database_id: str,
@@ -3424,6 +3509,8 @@ class Databases(Service):
         Create a varchar attribute.
         
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_varchar_column` instead.
         Parameters
         ----------
         database_id : str
@@ -3486,11 +3573,13 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeVarchar)
 
 
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_varchar_column` instead.")
     def update_varchar_attribute(
         self,
         database_id: str,
@@ -3505,6 +3594,8 @@ class Databases(Service):
         Update a varchar attribute. Changing the `default` value will not update already existing documents.
         
 
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.update_varchar_column` instead.
         Parameters
         ----------
         database_id : str
@@ -3559,6 +3650,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=AttributeVarchar)
@@ -3614,6 +3706,7 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
         if not isinstance(response, dict):
             raise AppwriteException('Expected object response when hydrating a response model')
@@ -3774,6 +3867,7 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return DocumentList.with_data(response, model_type)
@@ -3849,6 +3943,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Document.with_data(response, model_type)
@@ -3913,6 +4008,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return DocumentList.with_data(response, model_type)
@@ -3978,6 +4074,7 @@ class Databases(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return DocumentList.with_data(response, model_type)
@@ -4045,6 +4142,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return DocumentList.with_data(response, model_type)
@@ -4102,11 +4200,13 @@ class Databases(Service):
 
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('delete', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return DocumentList.with_data(response, model_type)
@@ -4176,6 +4276,7 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return Document.with_data(response, model_type)
@@ -4249,6 +4350,7 @@ class Databases(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Document.with_data(response, model_type)
@@ -4322,6 +4424,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Document.with_data(response, model_type)
@@ -4377,7 +4480,8 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
         api_path = api_path.replace('{documentId}', str(self._normalize_value(document_id)))
 
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('delete', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4462,6 +4566,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Document.with_data(response, model_type)
@@ -4542,6 +4647,7 @@ class Databases(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Document.with_data(response, model_type)
@@ -4600,6 +4706,7 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=IndexList)
@@ -4681,6 +4788,7 @@ class Databases(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Index)
@@ -4736,6 +4844,7 @@ class Databases(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Index)

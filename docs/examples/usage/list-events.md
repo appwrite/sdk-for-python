@@ -11,8 +11,17 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 usage = Usage(client)
 
 result: UsageEventList = usage.list_events(
-    queries = [], # optional
-    total = False # optional
+    metrics = [],
+    resource = '<RESOURCE>', # optional
+    resource_id = '<RESOURCE_ID>', # optional
+    interval = '1m', # optional
+    dimensions = [], # optional
+    start_at = '2020-10-15T06:38:00.000+00:00', # optional
+    end_at = '2020-10-15T06:38:00.000+00:00', # optional
+    order_by = 'time', # optional
+    order_dir = 'asc', # optional
+    limit = 1, # optional
+    offset = 0 # optional
 )
 
 print(result.model_dump())

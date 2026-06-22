@@ -18,7 +18,7 @@ result: Webhook = webhooks.create(
     enabled = False, # optional
     tls = False, # optional
     auth_username = '<AUTH_USERNAME>', # optional
-    auth_password = '<AUTH_PASSWORD>', # optional
+    auth_password = 'password', # optional
     secret = '<SECRET>' # optional
 )
 

@@ -85,6 +85,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=DatabaseList)
@@ -94,7 +95,8 @@ class TablesDB(Service):
         self,
         database_id: str,
         name: str,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
+        dedicated_database_id: Optional[str] = None
     ) -> Database:
         """
         Create a new Database.
@@ -108,6 +110,8 @@ class TablesDB(Service):
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+        dedicated_database_id : Optional[str]
+            Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
         
         Returns
         -------
@@ -133,10 +137,13 @@ class TablesDB(Service):
         api_params['name'] = self._normalize_value(name)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if dedicated_database_id is not None:
+            api_params['dedicatedDatabaseId'] = self._normalize_value(dedicated_database_id)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Database)
@@ -173,6 +180,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=TransactionList)
@@ -210,6 +218,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Transaction)
@@ -248,6 +257,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Transaction)
@@ -297,6 +307,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Transaction)
@@ -380,6 +391,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Transaction)
@@ -418,6 +430,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Database)
@@ -467,6 +480,7 @@ class TablesDB(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Database)
@@ -559,6 +573,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=TableList)
@@ -636,6 +651,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Table)
@@ -681,6 +697,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Table)
@@ -751,6 +768,7 @@ class TablesDB(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Table)
@@ -852,6 +870,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnList)
@@ -930,6 +949,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnBigint)
@@ -1007,6 +1027,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnBigint)
@@ -1077,6 +1098,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnBoolean)
@@ -1145,6 +1167,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnBoolean)
@@ -1214,6 +1237,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnDatetime)
@@ -1282,6 +1306,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnDatetime)
@@ -1352,6 +1377,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnEmail)
@@ -1421,6 +1447,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnEmail)
@@ -1497,6 +1524,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnEnum)
@@ -1573,6 +1601,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnEnum)
@@ -1651,6 +1680,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnFloat)
@@ -1728,6 +1758,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnFloat)
@@ -1806,6 +1837,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnInteger)
@@ -1883,6 +1915,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnInteger)
@@ -1953,6 +1986,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnIp)
@@ -2022,6 +2056,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnIp)
@@ -2033,7 +2068,7 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None
+        default: Optional[List[List[Any]]] = None
     ) -> ColumnLine:
         """
         Create a geometric line column.
@@ -2048,7 +2083,7 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : Optional[List[Any]]
+        default : Optional[List[List[Any]]]
             Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
         
         Returns
@@ -2086,6 +2121,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnLine)
@@ -2097,7 +2133,7 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None,
+        default: Optional[List[List[Any]]] = None,
         new_key: Optional[str] = None
     ) -> ColumnLine:
         """
@@ -2113,7 +2149,7 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : Optional[List[Any]]
+        default : Optional[List[List[Any]]]
             Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
@@ -2154,6 +2190,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnLine)
@@ -2229,6 +2266,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnLongtext)
@@ -2298,6 +2336,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnLongtext)
@@ -2373,6 +2412,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnMediumtext)
@@ -2442,6 +2482,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnMediumtext)
@@ -2453,7 +2494,7 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None
+        default: Optional[List[float]] = None
     ) -> ColumnPoint:
         """
         Create a geometric point column.
@@ -2468,7 +2509,7 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : Optional[List[Any]]
+        default : Optional[List[float]]
             Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
         
         Returns
@@ -2506,6 +2547,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnPoint)
@@ -2517,7 +2559,7 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None,
+        default: Optional[List[float]] = None,
         new_key: Optional[str] = None
     ) -> ColumnPoint:
         """
@@ -2533,7 +2575,7 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : Optional[List[Any]]
+        default : Optional[List[float]]
             Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
@@ -2574,6 +2616,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnPoint)
@@ -2585,7 +2628,7 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None
+        default: Optional[List[List[Any]]] = None
     ) -> ColumnPolygon:
         """
         Create a geometric polygon column.
@@ -2600,7 +2643,7 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : Optional[List[Any]]
+        default : Optional[List[List[Any]]]
             Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
         
         Returns
@@ -2638,6 +2681,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnPolygon)
@@ -2649,7 +2693,7 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[Any]] = None,
+        default: Optional[List[List[Any]]] = None,
         new_key: Optional[str] = None
     ) -> ColumnPolygon:
         """
@@ -2665,7 +2709,7 @@ class TablesDB(Service):
             Column Key.
         required : bool
             Is column required?
-        default : Optional[List[Any]]
+        default : Optional[List[List[Any]]]
             Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
@@ -2706,6 +2750,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnPolygon)
@@ -2785,6 +2830,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnRelationship)
@@ -2870,6 +2916,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnString)
@@ -2946,6 +2993,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnString)
@@ -3021,6 +3069,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnText)
@@ -3090,6 +3139,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnText)
@@ -3160,6 +3210,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnUrl)
@@ -3229,6 +3280,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnUrl)
@@ -3311,6 +3363,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnVarchar)
@@ -3384,6 +3437,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnVarchar)
@@ -3436,6 +3490,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
         if not isinstance(response, dict):
             raise AppwriteException('Expected object response when hydrating a response model')
@@ -3583,6 +3638,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnRelationship)
@@ -3638,6 +3694,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnIndexList)
@@ -3716,6 +3773,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnIndex)
@@ -3768,6 +3826,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ColumnIndex)
@@ -3890,6 +3949,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return RowList.with_data(response, model_type)
@@ -3962,6 +4022,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Row.with_data(response, model_type)
@@ -4023,6 +4084,7 @@ class TablesDB(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return RowList.with_data(response, model_type)
@@ -4085,6 +4147,7 @@ class TablesDB(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return RowList.with_data(response, model_type)
@@ -4149,6 +4212,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return RowList.with_data(response, model_type)
@@ -4203,11 +4267,13 @@ class TablesDB(Service):
 
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('delete', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return RowList.with_data(response, model_type)
@@ -4274,6 +4340,7 @@ class TablesDB(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return Row.with_data(response, model_type)
@@ -4344,6 +4411,7 @@ class TablesDB(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Row.with_data(response, model_type)
@@ -4414,6 +4482,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Row.with_data(response, model_type)
@@ -4466,7 +4535,8 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
 
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('delete', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4548,6 +4618,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Row.with_data(response, model_type)
@@ -4625,6 +4696,7 @@ class TablesDB(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return Row.with_data(response, model_type)

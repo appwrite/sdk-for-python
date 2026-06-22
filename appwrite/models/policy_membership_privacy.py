@@ -21,6 +21,8 @@ class PolicyMembershipPrivacy(AppwriteModel):
         Whether user name is visible in memberships.
     usermfa : bool
         Whether user MFA status is visible in memberships.
+    useraccessedat : bool
+        Whether user last access time is visible in memberships.
     """
     id: str = Field(..., alias='$id')
     userid: bool = Field(..., alias='userId')
@@ -28,3 +30,4 @@ class PolicyMembershipPrivacy(AppwriteModel):
     userphone: bool = Field(..., alias='userPhone')
     username: bool = Field(..., alias='userName')
     usermfa: bool = Field(..., alias='userMFA')
+    useraccessedat: bool = Field(..., alias='userAccessedAt')

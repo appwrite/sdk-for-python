@@ -29,6 +29,8 @@ class BackupPolicy(AppwriteModel):
         How many days to keep the backup before it will be automatically deleted.
     schedule : str
         Policy backup schedule in CRON format.
+    type : str
+        Backup type. Possible values: full (complete database snapshot), incremental (changes since last backup).
     enabled : bool
         Is this policy enabled.
     """
@@ -42,4 +44,5 @@ class BackupPolicy(AppwriteModel):
     resourcetype: Optional[str] = Field(default=None, alias='resourceType')
     retention: float = Field(..., alias='retention')
     schedule: str = Field(..., alias='schedule')
+    type: str = Field(..., alias='type')
     enabled: bool = Field(..., alias='enabled')

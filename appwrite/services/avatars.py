@@ -66,6 +66,7 @@ class Avatars(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'image/png',
         }, api_params)
 
         return response
@@ -122,6 +123,7 @@ class Avatars(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'image/png',
         }, api_params)
 
         return response
@@ -162,6 +164,7 @@ class Avatars(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'image/*',
         }, api_params)
 
         return response
@@ -218,6 +221,7 @@ class Avatars(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'image/png',
         }, api_params)
 
         return response
@@ -270,6 +274,7 @@ class Avatars(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'image/*',
         }, api_params)
 
         return response
@@ -326,6 +331,7 @@ class Avatars(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'image/png',
         }, api_params)
 
         return response
@@ -380,6 +386,7 @@ class Avatars(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'image/png',
         }, api_params)
 
         return response
@@ -517,6 +524,7 @@ class Avatars(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'image/png',
         }, api_params)
 
         return response

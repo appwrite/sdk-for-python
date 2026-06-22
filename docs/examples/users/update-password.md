@@ -12,7 +12,7 @@ users = Users(client)
 
 result: User = users.update_password(
     user_id = '<USER_ID>',
-    password = ''
+    password = 'password'
 )
 
 print(result.model_dump())

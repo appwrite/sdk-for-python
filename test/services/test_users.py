@@ -741,7 +741,7 @@ class UsersServiceTest(unittest.TestCase):
 
         response = self.users.update_password(
             '<USER_ID>',
-            '',
+            'password',
         )
 
         self.assertEqual(response.to_dict(), data)

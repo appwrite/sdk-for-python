@@ -14,3 +14,4 @@ class ProjectPolicyId(Enum):
     DENY_ALIASED_EMAIL = "deny-aliased-email"
     DENY_DISPOSABLE_EMAIL = "deny-disposable-email"
     DENY_FREE_EMAIL = "deny-free-email"
+    DENY_CORPORATE_EMAIL = "deny-corporate-email"

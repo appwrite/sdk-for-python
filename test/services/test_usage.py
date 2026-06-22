@@ -16,13 +16,14 @@ class UsageServiceTest(unittest.TestCase):
     @requests_mock.Mocker()
     def test_list_events(self, m):
         data = {
-    "total": 5.0,
-    "events": []
+    "interval": "1d",
+    "metrics": []
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
 
         response = self.usage.list_events(
+            [],
         )
 
         self.assertEqual(response.to_dict(), data)
@@ -30,13 +31,14 @@ class UsageServiceTest(unittest.TestCase):
     @requests_mock.Mocker()
     def test_list_gauges(self, m):
         data = {
-    "total": 5.0,
-    "gauges": []
+    "interval": "1d",
+    "metrics": []
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
 
         response = self.usage.list_gauges(
+            [],
         )
 
         self.assertEqual(response.to_dict(), data)

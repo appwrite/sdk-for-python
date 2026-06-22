@@ -13,7 +13,7 @@ account = Account(client)
 result: Token = account.update_recovery(
     user_id = '<USER_ID>',
     secret = '<SECRET>',
-    password = ''
+    password = 'password'
 )
 
 print(result.model_dump())

@@ -19,3 +19,4 @@ class ProjectServiceId(Enum):
     MIGRATIONS = "migrations"
     MESSAGING = "messaging"
     ADVISOR = "advisor"
+    OAUTH2 = "oauth2"

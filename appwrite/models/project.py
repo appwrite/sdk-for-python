@@ -69,23 +69,33 @@ class Project(AppwriteModel):
         Last time the project was accessed via console. Used with plan&#039;s projectInactivityDays to determine if project is paused.
     billinglimits : Optional[BillingLimits]
         Billing limits reached
-    oauth2serverenabled : bool
+    oauth2serverenabled : Optional[bool]
         OAuth2 server status
-    oauth2serverauthorizationurl : str
+    oauth2serverauthorizationurl : Optional[str]
         OAuth2 server authorization URL
-    oauth2serverscopes : List[Any]
+    oauth2serverscopes : Optional[List[Any]]
         OAuth2 server allowed scopes
-    oauth2serveraccesstokenduration : float
+    oauth2serverauthorizationdetailstypes : Optional[List[Any]]
+        OAuth2 server accepted RFC 9396 authorization_details types
+    oauth2serveraccesstokenduration : Optional[float]
         OAuth2 server access token duration in seconds for confidential clients
-    oauth2serverrefreshtokenduration : float
+    oauth2serverrefreshtokenduration : Optional[float]
         OAuth2 server refresh token duration in seconds for confidential clients
-    oauth2serverpublicaccesstokenduration : float
+    oauth2serverpublicaccesstokenduration : Optional[float]
         OAuth2 server access token duration in seconds for public clients (SPAs, mobile, native)
-    oauth2serverpublicrefreshtokenduration : float
+    oauth2serverpublicrefreshtokenduration : Optional[float]
         OAuth2 server refresh token duration in seconds for public clients (SPAs, mobile, native)
-    oauth2serverconfidentialpkce : bool
+    oauth2serverconfidentialpkce : Optional[bool]
         When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
-    oauth2serverdiscoveryurl : str
+    oauth2serververificationurl : Optional[str]
+        URL to your application page where users enter the device flow user code. Empty when the Device Authorization Grant is not configured.
+    oauth2serverusercodelength : Optional[float]
+        Number of characters in the device flow user code, excluding the formatting separator.
+    oauth2serverusercodeformat : Optional[str]
+        Character set for device flow user codes: `numeric`, `alphabetic`, or `alphanumeric`.
+    oauth2serverdevicecodeduration : Optional[float]
+        Lifetime in seconds of device flow device codes and user codes.
+    oauth2serverdiscoveryurl : Optional[str]
         OAuth2 server discovery URL
     """
     id: str = Field(..., alias='$id')
@@ -115,12 +125,17 @@ class Project(AppwriteModel):
     blocks: List[Block] = Field(..., alias='blocks')
     consoleaccessedat: str = Field(..., alias='consoleAccessedAt')
     billinglimits: Optional[BillingLimits] = Field(default=None, alias='billingLimits')
-    oauth2serverenabled: bool = Field(..., alias='oAuth2ServerEnabled')
-    oauth2serverauthorizationurl: str = Field(..., alias='oAuth2ServerAuthorizationUrl')
-    oauth2serverscopes: List[Any] = Field(..., alias='oAuth2ServerScopes')
-    oauth2serveraccesstokenduration: float = Field(..., alias='oAuth2ServerAccessTokenDuration')
-    oauth2serverrefreshtokenduration: float = Field(..., alias='oAuth2ServerRefreshTokenDuration')
-    oauth2serverpublicaccesstokenduration: float = Field(..., alias='oAuth2ServerPublicAccessTokenDuration')
-    oauth2serverpublicrefreshtokenduration: float = Field(..., alias='oAuth2ServerPublicRefreshTokenDuration')
-    oauth2serverconfidentialpkce: bool = Field(..., alias='oAuth2ServerConfidentialPkce')
-    oauth2serverdiscoveryurl: str = Field(..., alias='oAuth2ServerDiscoveryUrl')
+    oauth2serverenabled: Optional[bool] = Field(default=None, alias='oAuth2ServerEnabled')
+    oauth2serverauthorizationurl: Optional[str] = Field(default=None, alias='oAuth2ServerAuthorizationUrl')
+    oauth2serverscopes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerScopes')
+    oauth2serverauthorizationdetailstypes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerAuthorizationDetailsTypes')
+    oauth2serveraccesstokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerAccessTokenDuration')
+    oauth2serverrefreshtokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerRefreshTokenDuration')
+    oauth2serverpublicaccesstokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerPublicAccessTokenDuration')
+    oauth2serverpublicrefreshtokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerPublicRefreshTokenDuration')
+    oauth2serverconfidentialpkce: Optional[bool] = Field(default=None, alias='oAuth2ServerConfidentialPkce')
+    oauth2serververificationurl: Optional[str] = Field(default=None, alias='oAuth2ServerVerificationUrl')
+    oauth2serverusercodelength: Optional[float] = Field(default=None, alias='oAuth2ServerUserCodeLength')
+    oauth2serverusercodeformat: Optional[str] = Field(default=None, alias='oAuth2ServerUserCodeFormat')
+    oauth2serverdevicecodeduration: Optional[float] = Field(default=None, alias='oAuth2ServerDeviceCodeDuration')
+    oauth2serverdiscoveryurl: Optional[str] = Field(default=None, alias='oAuth2ServerDiscoveryUrl')

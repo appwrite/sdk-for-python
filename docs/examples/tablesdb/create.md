@@ -13,7 +13,8 @@ tables_db = TablesDB(client)
 result: Database = tables_db.create(
     database_id = '<DATABASE_ID>',
     name = '<NAME>',
-    enabled = False # optional
+    enabled = False, # optional
+    dedicated_database_id = '<DEDICATED_DATABASE_ID>' # optional
 )
 
 print(result.model_dump())

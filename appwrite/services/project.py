@@ -75,6 +75,7 @@ from ..models.policy_membership_privacy import PolicyMembershipPrivacy
 from ..models.policy_deny_aliased_email import PolicyDenyAliasedEmail
 from ..models.policy_deny_disposable_email import PolicyDenyDisposableEmail
 from ..models.policy_deny_free_email import PolicyDenyFreeEmail
+from ..models.policy_deny_corporate_email import PolicyDenyCorporateEmail
 from ..enums.project_protocol_id import ProjectProtocolId
 from ..enums.project_service_id import ProjectServiceId
 from ..enums.project_smtp_secure import ProjectSMTPSecure
@@ -186,6 +187,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -227,6 +229,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=KeyList)
@@ -286,6 +289,7 @@ class Project(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Key)
@@ -334,6 +338,7 @@ class Project(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=EphemeralKey)
@@ -372,6 +377,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Key)
@@ -429,6 +435,7 @@ class Project(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Key)
@@ -507,6 +514,7 @@ class Project(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -548,6 +556,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=MockNumberList)
@@ -594,6 +603,7 @@ class Project(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=MockNumber)
@@ -632,6 +642,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=MockNumber)
@@ -678,6 +689,7 @@ class Project(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=MockNumber)
@@ -758,6 +770,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2ProviderList)
@@ -768,11 +781,16 @@ class Project(Service):
         enabled: bool,
         authorization_url: str,
         scopes: Optional[List[str]] = None,
+        authorization_details_types: Optional[List[str]] = None,
         access_token_duration: Optional[float] = None,
         refresh_token_duration: Optional[float] = None,
         public_access_token_duration: Optional[float] = None,
         public_refresh_token_duration: Optional[float] = None,
-        confidential_pkce: Optional[bool] = None
+        confidential_pkce: Optional[bool] = None,
+        verification_url: Optional[str] = None,
+        user_code_length: Optional[float] = None,
+        user_code_format: Optional[str] = None,
+        device_code_duration: Optional[float] = None
     ) -> ProjectModel:
         """
         Update the OAuth2 server (OIDC provider) configuration.
@@ -785,6 +803,8 @@ class Project(Service):
             URL to your application with consent screen.
         scopes : Optional[List[str]]
             List of allowed OAuth2 scopes. Maximum of 100 scopes are allowed, each up to 128 characters long.
+        authorization_details_types : Optional[List[str]]
+            List of accepted `authorization_details` types. Maximum of 100 types are allowed, each up to 128 characters long.
         access_token_duration : Optional[float]
             Access token duration in seconds for confidential clients (server-side apps that authenticate with a client secret). Leave empty to use default 8 hours.
         refresh_token_duration : Optional[float]
@@ -795,6 +815,14 @@ class Project(Service):
             Refresh token duration in seconds for public clients (SPAs, mobile, and native apps that cannot keep a client secret). Leave empty to use default 30 days.
         confidential_pkce : Optional[bool]
             When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
+        verification_url : Optional[str]
+            URL to your application page where users enter the device flow user code. Required to enable the Device Authorization Grant.
+        user_code_length : Optional[float]
+            Number of characters in the device flow user code, excluding the formatting separator. Shorter codes are easier to type but weaker; pair short codes with short expiry. Leave empty to use default 8.
+        user_code_format : Optional[str]
+            Character set for device flow user codes: `numeric` (digits only — best for numeric keypads and TV remotes), `alphabetic` (letters only), or `alphanumeric` (letters and digits — highest entropy per character). Defaults to `alphanumeric`.
+        device_code_duration : Optional[float]
+            Lifetime in seconds of device flow device codes and user codes. Device codes are intentionally short-lived. Leave empty to use default 600.
         
         Returns
         -------
@@ -820,15 +848,24 @@ class Project(Service):
         api_params['authorizationUrl'] = self._normalize_value(authorization_url)
         if scopes is not None:
             api_params['scopes'] = self._normalize_value(scopes)
+        if authorization_details_types is not None:
+            api_params['authorizationDetailsTypes'] = self._normalize_value(authorization_details_types)
         api_params['accessTokenDuration'] = self._normalize_value(access_token_duration)
         api_params['refreshTokenDuration'] = self._normalize_value(refresh_token_duration)
         api_params['publicAccessTokenDuration'] = self._normalize_value(public_access_token_duration)
         api_params['publicRefreshTokenDuration'] = self._normalize_value(public_refresh_token_duration)
         api_params['confidentialPkce'] = self._normalize_value(confidential_pkce)
+        if verification_url is not None:
+            api_params['verificationUrl'] = self._normalize_value(verification_url)
+        api_params['userCodeLength'] = self._normalize_value(user_code_length)
+        if user_code_format is not None:
+            api_params['userCodeFormat'] = self._normalize_value(user_code_format)
+        api_params['deviceCodeDuration'] = self._normalize_value(device_code_duration)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -873,6 +910,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Amazon)
@@ -925,6 +963,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Apple)
@@ -973,6 +1012,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Auth0)
@@ -1021,6 +1061,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Authentik)
@@ -1065,6 +1106,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Autodesk)
@@ -1109,6 +1151,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Bitbucket)
@@ -1153,6 +1196,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Bitly)
@@ -1197,6 +1241,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Box)
@@ -1241,6 +1286,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Dailymotion)
@@ -1285,6 +1331,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Discord)
@@ -1329,6 +1376,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Disqus)
@@ -1373,6 +1421,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Dropbox)
@@ -1417,6 +1466,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Etsy)
@@ -1461,6 +1511,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Facebook)
@@ -1505,6 +1556,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Figma)
@@ -1553,6 +1605,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2FusionAuth)
@@ -1597,6 +1650,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Github)
@@ -1645,6 +1699,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Gitlab)
@@ -1693,6 +1748,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Google)
@@ -1745,6 +1801,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Keycloak)
@@ -1789,6 +1846,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Kick)
@@ -1833,6 +1891,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Linkedin)
@@ -1881,6 +1940,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Microsoft)
@@ -1925,6 +1985,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Notion)
@@ -1985,6 +2046,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Oidc)
@@ -2037,6 +2099,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Okta)
@@ -2081,6 +2144,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Paypal)
@@ -2125,6 +2189,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Paypal)
@@ -2169,6 +2234,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Podio)
@@ -2213,6 +2279,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Salesforce)
@@ -2257,6 +2324,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Slack)
@@ -2301,6 +2369,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Spotify)
@@ -2345,6 +2414,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Stripe)
@@ -2389,6 +2459,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Tradeshift)
@@ -2433,6 +2504,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Tradeshift)
@@ -2477,6 +2549,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Twitch)
@@ -2521,6 +2594,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2WordPress)
@@ -2565,6 +2639,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2X)
@@ -2609,6 +2684,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Yahoo)
@@ -2653,6 +2729,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Yandex)
@@ -2697,6 +2774,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Zoho)
@@ -2741,6 +2819,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Zoom)
@@ -2779,6 +2858,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
         if not isinstance(response, dict):
             raise AppwriteException('Expected object response when hydrating a response model')
@@ -2942,6 +3022,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PlatformList)
@@ -2995,6 +3076,7 @@ class Project(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PlatformAndroid)
@@ -3048,6 +3130,7 @@ class Project(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PlatformAndroid)
@@ -3101,6 +3184,7 @@ class Project(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PlatformApple)
@@ -3154,6 +3238,7 @@ class Project(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PlatformApple)
@@ -3207,6 +3292,7 @@ class Project(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PlatformLinux)
@@ -3260,6 +3346,7 @@ class Project(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PlatformLinux)
@@ -3313,6 +3400,7 @@ class Project(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PlatformWeb)
@@ -3366,6 +3454,7 @@ class Project(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PlatformWeb)
@@ -3419,6 +3508,7 @@ class Project(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PlatformWindows)
@@ -3472,6 +3562,7 @@ class Project(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PlatformWindows)
@@ -3510,6 +3601,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
         if not isinstance(response, dict):
             raise AppwriteException('Expected object response when hydrating a response model')
@@ -3607,6 +3699,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PolicyList)
@@ -3646,6 +3739,47 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=ProjectModel)
+
+
+    def update_deny_corporate_email_policy(
+        self,
+        enabled: bool
+    ) -> ProjectModel:
+        """
+        Configures if only corporate email addresses (non-free and non-disposable domains) are allowed during new user sign-ups and email updates.
+
+        Parameters
+        ----------
+        enabled : bool
+            Set whether or not to restrict sign-ups and email updates to corporate email addresses only.
+        
+        Returns
+        -------
+        ProjectModel
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/policies/deny-corporate-email'
+        api_params = {}
+        if enabled is None:
+            raise AppwriteException('Missing required parameter: "enabled"')
+
+
+        api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -3685,6 +3819,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -3724,6 +3859,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -3735,7 +3871,8 @@ class Project(Service):
         user_email: Optional[bool] = None,
         user_phone: Optional[bool] = None,
         user_name: Optional[bool] = None,
-        user_mfa: Optional[bool] = None
+        user_mfa: Optional[bool] = None,
+        user_accessed_at: Optional[bool] = None
     ) -> ProjectModel:
         """
         Updating this policy allows you to control if team members can see other members information. When enabled, all team members can see ID, name, email, phone number, and MFA status of other members..
@@ -3752,6 +3889,8 @@ class Project(Service):
             Set to true if you want make user name visible to all team members, or false to hide it.
         user_mfa : Optional[bool]
             Set to true if you want make user MFA status visible to all team members, or false to hide it.
+        user_accessed_at : Optional[bool]
+            Set to true if you want make user last access time visible to all team members, or false to hide it.
         
         Returns
         -------
@@ -3777,10 +3916,13 @@ class Project(Service):
             api_params['userName'] = self._normalize_value(user_name)
         if user_mfa is not None:
             api_params['userMFA'] = self._normalize_value(user_mfa)
+        if user_accessed_at is not None:
+            api_params['userAccessedAt'] = self._normalize_value(user_accessed_at)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -3820,6 +3962,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -3858,6 +4001,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -3897,6 +4041,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -3954,6 +4099,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=PolicyPasswordStrength)
@@ -3993,6 +4139,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -4032,6 +4179,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -4071,6 +4219,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -4107,6 +4256,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -4143,6 +4293,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -4151,18 +4302,18 @@ class Project(Service):
     def get_policy(
         self,
         policy_id: ProjectPolicyId
-    ) -> Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail]:
+    ) -> Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]:
         """
         Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
 
         Parameters
         ----------
         policy_id : ProjectPolicyId
-            Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, deny-aliased-email, deny-disposable-email, deny-free-email.
+            Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
         
         Returns
         -------
-        Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail]
+        Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]
             API response as one of the typed response models
         
         Raises
@@ -4181,6 +4332,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
         if not isinstance(response, dict):
             raise AppwriteException('Expected object response when hydrating a response model')
@@ -4223,6 +4375,9 @@ class Project(Service):
 
         if response.get('$id') == 'deny-free-email':
             return self._parse_response(response, model=PolicyDenyFreeEmail)
+
+        if response.get('$id') == 'deny-corporate-email':
+            return self._parse_response(response, model=PolicyDenyCorporateEmail)
 
         raise AppwriteException('Unable to match response to any known model')
 
@@ -4268,6 +4423,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -4284,7 +4440,7 @@ class Project(Service):
         Parameters
         ----------
         service_id : ProjectServiceId
-            Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging, advisor
+            Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging, advisor, oauth2
         enabled : bool
             Service status.
         
@@ -4314,6 +4470,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -4386,6 +4543,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=ProjectModel)
@@ -4466,6 +4624,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=EmailTemplateList)
@@ -4534,6 +4693,7 @@ class Project(Service):
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=EmailTemplate)
@@ -4577,6 +4737,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=EmailTemplate)
@@ -4618,6 +4779,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=VariableList)
@@ -4676,6 +4838,7 @@ class Project(Service):
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Variable)
@@ -4714,6 +4877,7 @@ class Project(Service):
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Variable)
@@ -4765,6 +4929,7 @@ class Project(Service):
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return self._parse_response(response, model=Variable)

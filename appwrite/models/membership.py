@@ -35,6 +35,8 @@ class Membership(AppwriteModel):
         User confirmation status, true if the user has joined the team or false otherwise.
     mfa : bool
         Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
+    useraccessedat : str
+        Most recent access date in ISO 8601 format. Show this attribute by toggling membership privacy in the Console.
     roles : List[Any]
         User list of roles
     """
@@ -51,4 +53,5 @@ class Membership(AppwriteModel):
     joined: str = Field(..., alias='joined')
     confirm: bool = Field(..., alias='confirm')
     mfa: bool = Field(..., alias='mfa')
+    useraccessedat: str = Field(..., alias='userAccessedAt')
     roles: List[Any] = Field(..., alias='roles')

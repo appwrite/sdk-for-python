@@ -91,6 +91,7 @@ class ProjectKeyScopes(Enum):
     ARCHIVES_WRITE = "archives.write"
     RESTORATIONS_READ = "restorations.read"
     RESTORATIONS_WRITE = "restorations.write"
+    DEDICATEDDATABASES_EXECUTE = "dedicatedDatabases.execute"
     DOMAINS_READ = "domains.read"
     DOMAINS_WRITE = "domains.write"
     EVENTS_READ = "events.read"
