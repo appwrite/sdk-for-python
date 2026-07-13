@@ -196,7 +196,7 @@ class BackupsServiceTest(unittest.TestCase):
     "migrationId": "did8jx6ws45jana098ab7",
     "services": [],
     "resources": [],
-    "options": "{databases.database[{oldId, newId, newName}]}"
+    "options": "{databases.database[{oldId, newId, newName, newSpecification}]}"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -235,7 +235,7 @@ class BackupsServiceTest(unittest.TestCase):
     "migrationId": "did8jx6ws45jana098ab7",
     "services": [],
     "resources": [],
-    "options": "{databases.database[{oldId, newId, newName}]}"
+    "options": "{databases.database[{oldId, newId, newName, newSpecification}]}"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)

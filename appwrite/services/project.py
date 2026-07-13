@@ -14,6 +14,7 @@ from ..models.mock_number import MockNumber
 from ..models.o_auth2_provider_list import OAuth2ProviderList
 from ..models.o_auth2_amazon import OAuth2Amazon
 from ..models.o_auth2_apple import OAuth2Apple
+from ..models.o_auth2_appwrite import OAuth2Appwrite
 from ..models.o_auth2_auth0 import OAuth2Auth0
 from ..models.o_auth2_authentik import OAuth2Authentik
 from ..models.o_auth2_autodesk import OAuth2Autodesk
@@ -37,6 +38,7 @@ from ..models.o_auth2_kick import OAuth2Kick
 from ..models.o_auth2_linkedin import OAuth2Linkedin
 from ..models.o_auth2_microsoft import OAuth2Microsoft
 from ..models.o_auth2_notion import OAuth2Notion
+from ..enums.project_o_auth2_oidc_prompt import ProjectOAuth2OidcPrompt
 from ..models.o_auth2_oidc import OAuth2Oidc
 from ..models.o_auth2_okta import OAuth2Okta
 from ..models.o_auth2_paypal import OAuth2Paypal
@@ -254,7 +256,7 @@ class Project(Service):
         name : str
             Key name. Max length: 128 chars.
         scopes : List[ProjectKeyScopes]
-            Key scopes list. Maximum of 100 scopes are allowed.
+            Key scopes list. Maximum of 200 scopes are allowed.
         expire : Optional[str]
             Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
         
@@ -308,7 +310,7 @@ class Project(Service):
         Parameters
         ----------
         scopes : List[ProjectKeyScopes]
-            Key scopes list. Maximum of 100 scopes are allowed.
+            Key scopes list. Maximum of 200 scopes are allowed.
         duration : float
             Time in seconds before ephemeral key expires. Maximum duration is 3600 seconds.
         
@@ -400,7 +402,7 @@ class Project(Service):
         name : str
             Key name. Max length: 128 chars.
         scopes : List[ProjectKeyScopes]
-            Key scopes list. Maximum of 100 scopes are allowed.
+            Key scopes list. Maximum of 200 scopes are allowed.
         expire : Optional[str]
             Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
         
@@ -790,7 +792,8 @@ class Project(Service):
         verification_url: Optional[str] = None,
         user_code_length: Optional[float] = None,
         user_code_format: Optional[str] = None,
-        device_code_duration: Optional[float] = None
+        device_code_duration: Optional[float] = None,
+        default_scopes: Optional[List[str]] = None
     ) -> ProjectModel:
         """
         Update the OAuth2 server (OIDC provider) configuration.
@@ -823,6 +826,8 @@ class Project(Service):
             Character set for device flow user codes: `numeric` (digits only — best for numeric keypads and TV remotes), `alphabetic` (letters only), or `alphanumeric` (letters and digits — highest entropy per character). Defaults to `alphanumeric`.
         device_code_duration : Optional[float]
             Lifetime in seconds of device flow device codes and user codes. Device codes are intentionally short-lived. Leave empty to use default 600.
+        default_scopes : Optional[List[str]]
+            List of OAuth2 scopes used when an authorization request omits the scope parameter. Every default scope must also be allowed by the OAuth2 server. Maximum of 100 scopes are allowed, each up to 128 characters long.
         
         Returns
         -------
@@ -861,6 +866,8 @@ class Project(Service):
         if user_code_format is not None:
             api_params['userCodeFormat'] = self._normalize_value(user_code_format)
         api_params['deviceCodeDuration'] = self._normalize_value(device_code_duration)
+        if default_scopes is not None:
+            api_params['defaultScopes'] = self._normalize_value(default_scopes)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -967,6 +974,51 @@ class Project(Service):
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Apple)
+
+
+    def update_o_auth2_appwrite(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None
+    ) -> OAuth2Appwrite:
+        """
+        Update the project OAuth2 Appwrite configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Appwrite OAuth2 app. For example: 6a42000000000000b5a0
+        client_secret : Optional[str]
+            'Client Secret' of Appwrite OAuth2 app. For example: b86afd000000000000000000000000000000000000000000000000000ced5f93
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        
+        Returns
+        -------
+        OAuth2Appwrite
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/appwrite'
+        api_params = {}
+
+        api_params['clientId'] = self._normalize_value(client_id)
+        api_params['clientSecret'] = self._normalize_value(client_secret)
+        api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=OAuth2Appwrite)
 
 
     def update_o_auth2_auth0(
@@ -1999,6 +2051,8 @@ class Project(Service):
         authorization_url: Optional[str] = None,
         token_url: Optional[str] = None,
         user_info_url: Optional[str] = None,
+        prompt: Optional[List[ProjectOAuth2OidcPrompt]] = None,
+        max_age: Optional[float] = None,
         enabled: Optional[bool] = None
     ) -> OAuth2Oidc:
         """
@@ -2018,6 +2072,10 @@ class Project(Service):
             OpenID Connect token endpoint URL. Required when wellKnownURL is not provided. For example: https://myoauth.com/oauth2/token
         user_info_url : Optional[str]
             OpenID Connect user info endpoint URL. Required when wellKnownURL is not provided. For example: https://myoauth.com/oauth2/userinfo
+        prompt : Optional[List[ProjectOAuth2OidcPrompt]]
+            Array of OpenID Connect prompt values controlling the authentication and consent screens. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
+        max_age : Optional[float]
+            Maximum authentication age in seconds. When set, the user must have authenticated within this many seconds, otherwise they are prompted to re-authenticate.
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2041,6 +2099,8 @@ class Project(Service):
         api_params['authorizationURL'] = self._normalize_value(authorization_url)
         api_params['tokenURL'] = self._normalize_value(token_url)
         api_params['userInfoURL'] = self._normalize_value(user_info_url)
+        api_params['prompt'] = self._normalize_value(prompt)
+        api_params['maxAge'] = self._normalize_value(max_age)
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {

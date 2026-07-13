@@ -15,6 +15,8 @@ class Block(AppwriteModel):
         Resource type that is blocked
     resourceid : str
         Resource identifier that is blocked
+    mode : str
+        Block mode. full blocks reads and writes; readOnly blocks writes only.
     reason : Optional[str]
         Reason for the block. Can be null if no reason was provided.
     expiredat : Optional[str]
@@ -33,6 +35,7 @@ class Block(AppwriteModel):
     createdat: str = Field(..., alias='$createdAt')
     resourcetype: str = Field(..., alias='resourceType')
     resourceid: str = Field(..., alias='resourceId')
+    mode: str = Field(..., alias='mode')
     reason: Optional[str] = Field(default=None, alias='reason')
     expiredat: Optional[str] = Field(default=None, alias='expiredAt')
     projectname: str = Field(..., alias='projectName')

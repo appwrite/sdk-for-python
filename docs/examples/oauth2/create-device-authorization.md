@@ -13,7 +13,9 @@ oauth2 = Oauth2(client)
 result: Oauth2DeviceAuthorization = oauth2.create_device_authorization(
     client_id = '<CLIENT_ID>', # optional
     scope = '<SCOPE>', # optional
-    authorization_details = '<AUTHORIZATION_DETAILS>' # optional
+    authorization_details = '<AUTHORIZATION_DETAILS>', # optional
+    resource = '', # optional
+    audience = '<AUDIENCE>' # optional
 )
 
 print(result.model_dump())

@@ -1,19 +1,131 @@
 from ..service import Service
 from urllib.parse import quote
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from ..models.organization import Organization as OrganizationModel
 from ..models.key_list import KeyList
 from ..enums.organization_key_scopes import OrganizationKeyScopes
 from ..models.key import Key
+from ..models.membership_list import MembershipList
+from ..models.membership import Membership
 from ..models.project_list import ProjectList
 from ..enums.region import Region
 from ..models.project import Project
+
+T = TypeVar('T')
 
 class Organization(Service):
 
     def __init__(self, client) -> None:
         super(Organization, self).__init__(client)
+
+    def get(
+        self,
+        model_type: Type[T] = dict
+    ) -> OrganizationModel[T]:
+        """
+        Get the current organization.
+
+        Parameters
+        ----------
+        
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
+        Returns
+        -------
+        OrganizationModel[T]
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization'
+        api_params = {}
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return OrganizationModel.with_data(response, model_type)
+
+
+    def update(
+        self,
+        name: str,
+        model_type: Type[T] = dict
+    ) -> OrganizationModel[T]:
+        """
+        Update the current organization's name.
+
+        Parameters
+        ----------
+        name : str
+            New organization name. Max length: 128 chars.
+        
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        
+        Returns
+        -------
+        OrganizationModel[T]
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization'
+        api_params = {}
+        if name is None:
+            raise AppwriteException('Missing required parameter: "name"')
+
+
+        api_params['name'] = self._normalize_value(name)
+
+        response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return OrganizationModel.with_data(response, model_type)
+
+
+    def delete(
+        self
+    ) -> Dict[str, Any]:
+        """
+        Delete the current organization. All projects that belong to the organization are deleted as well.
+
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization'
+        api_params = {}
+
+        response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+        }, api_params)
+
+        return response
+
 
     def list_keys(
         self,
@@ -74,7 +186,7 @@ class Organization(Service):
         name : str
             Key name. Max length: 128 chars.
         scopes : List[OrganizationKeyScopes]
-            Key scopes list. Maximum of 100 scopes are allowed.
+            Key scopes list. Maximum of 200 scopes are allowed.
         expire : Optional[str]
             Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
         
@@ -171,7 +283,7 @@ class Organization(Service):
         name : str
             Key name. Max length: 128 chars.
         scopes : List[OrganizationKeyScopes]
-            Key scopes list. Maximum of 100 scopes are allowed.
+            Key scopes list. Maximum of 200 scopes are allowed.
         expire : Optional[str]
             Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
         
@@ -251,6 +363,243 @@ class Organization(Service):
         return response
 
 
+    def list_memberships(
+        self,
+        queries: Optional[List[str]] = None,
+        search: Optional[str] = None,
+        total: Optional[bool] = None
+    ) -> MembershipList:
+        """
+        Get a list of all memberships from the current organization.
+
+        Parameters
+        ----------
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, teamId, invited, joined, confirm, roles
+        search : Optional[str]
+            Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        
+        Returns
+        -------
+        MembershipList
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/memberships'
+        api_params = {}
+
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if search is not None:
+            api_params['search'] = self._normalize_value(search)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=MembershipList)
+
+
+    def create_membership(
+        self,
+        roles: List[str],
+        email: Optional[str] = None,
+        user_id: Optional[str] = None,
+        phone: Optional[str] = None,
+        url: Optional[str] = None,
+        name: Optional[str] = None
+    ) -> Membership:
+        """
+        Invite a new member to join the current organization. An email with a link to join the organization will be sent to the new member's email address. If member doesn't exist in the project it will be automatically created.
+
+        Parameters
+        ----------
+        roles : List[str]
+            Array of strings. Use this param to set the user roles in the organization. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 81 characters long.
+        email : Optional[str]
+            Email of the new organization member.
+        user_id : Optional[str]
+            ID of the user to be added to the organization.
+        phone : Optional[str]
+            Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
+        url : Optional[str]
+            URL to redirect the user back to your app from the invitation email. This parameter is not required when an API key is supplied.
+        name : Optional[str]
+            Name of the new organization member. Max length: 128 chars.
+        
+        Returns
+        -------
+        Membership
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/memberships'
+        api_params = {}
+        if roles is None:
+            raise AppwriteException('Missing required parameter: "roles"')
+
+
+        if email is not None:
+            api_params['email'] = self._normalize_value(email)
+        if user_id is not None:
+            api_params['userId'] = self._normalize_value(user_id)
+        if phone is not None:
+            api_params['phone'] = self._normalize_value(phone)
+        api_params['roles'] = self._normalize_value(roles)
+        if url is not None:
+            api_params['url'] = self._normalize_value(url)
+        if name is not None:
+            api_params['name'] = self._normalize_value(name)
+
+        response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Membership)
+
+
+    def get_membership(
+        self,
+        membership_id: str
+    ) -> Membership:
+        """
+        Get a membership from the current organization by its unique ID.
+
+        Parameters
+        ----------
+        membership_id : str
+            Membership ID.
+        
+        Returns
+        -------
+        Membership
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/memberships/{membershipId}'
+        api_params = {}
+        if membership_id is None:
+            raise AppwriteException('Missing required parameter: "membership_id"')
+
+        api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
+
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Membership)
+
+
+    def update_membership(
+        self,
+        membership_id: str,
+        roles: List[str]
+    ) -> Membership:
+        """
+        Modify the roles of a member in the current organization.
+
+        Parameters
+        ----------
+        membership_id : str
+            Membership ID.
+        roles : List[str]
+            An array of strings. Use this param to set the user's roles in the organization. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 81 characters long.
+        
+        Returns
+        -------
+        Membership
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/memberships/{membershipId}'
+        api_params = {}
+        if membership_id is None:
+            raise AppwriteException('Missing required parameter: "membership_id"')
+
+        if roles is None:
+            raise AppwriteException('Missing required parameter: "roles"')
+
+        api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
+
+        api_params['roles'] = self._normalize_value(roles)
+
+        response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Membership)
+
+
+    def delete_membership(
+        self,
+        membership_id: str
+    ) -> Dict[str, Any]:
+        """
+        Remove a member from the current organization. The member is removed whether they accepted the invitation or not; a pending invitation is revoked.
+
+        Parameters
+        ----------
+        membership_id : str
+            Membership ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/memberships/{membershipId}'
+        api_params = {}
+        if membership_id is None:
+            raise AppwriteException('Missing required parameter: "membership_id"')
+
+        api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
+
+
+        response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+        }, api_params)
+
+        return response
+
+
     def list_projects(
         self,
         queries: Optional[List[str]] = None,
@@ -263,7 +612,7 @@ class Organization(Service):
         Parameters
         ----------
         queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId, labels, search
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId, labels, search, accessedAt
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]

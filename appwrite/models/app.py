@@ -34,6 +34,8 @@ class App(AppwriteModel):
         Application tagline shown to users during OAuth2 consent.
     tags : List[Any]
         Application tags shown to users during OAuth2 consent.
+    labels : List[Any]
+        Application labels. Read-only for clients; only a server SDK using a project API key can update them.
     images : List[Any]
         Application image URLs shown to users during OAuth2 consent.
     supporturl : str
@@ -69,6 +71,7 @@ class App(AppwriteModel):
     contacts: List[Any] = Field(..., alias='contacts')
     tagline: str = Field(..., alias='tagline')
     tags: List[Any] = Field(..., alias='tags')
+    labels: List[Any] = Field(..., alias='labels')
     images: List[Any] = Field(..., alias='images')
     supporturl: str = Field(..., alias='supportUrl')
     datadeletionurl: str = Field(..., alias='dataDeletionUrl')

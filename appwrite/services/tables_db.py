@@ -96,7 +96,7 @@ class TablesDB(Service):
         database_id: str,
         name: str,
         enabled: Optional[bool] = None,
-        dedicated_database_id: Optional[str] = None
+        specification: Optional[str] = None
     ) -> Database:
         """
         Create a new Database.
@@ -110,8 +110,8 @@ class TablesDB(Service):
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-        dedicated_database_id : Optional[str]
-            Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
+        specification : Optional[str]
+            Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
         
         Returns
         -------
@@ -137,8 +137,8 @@ class TablesDB(Service):
         api_params['name'] = self._normalize_value(name)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
-        if dedicated_database_id is not None:
-            api_params['dedicatedDatabaseId'] = self._normalize_value(dedicated_database_id)
+        if specification is not None:
+            api_params['specification'] = self._normalize_value(specification)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

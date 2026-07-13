@@ -23,7 +23,8 @@ result: ProjectModel = project.update_o_auth2_server(
     verification_url = 'https://example.com', # optional
     user_code_length = 6, # optional
     user_code_format = 'numeric', # optional
-    device_code_duration = 60 # optional
+    device_code_duration = 60, # optional
+    default_scopes = [] # optional
 )
 
 print(result.model_dump())

@@ -21,13 +21,13 @@ from ..enums.template_reference_type import TemplateReferenceType
 from ..enums.vcs_reference_type import VCSReferenceType
 from ..enums.deployment_download_type import DeploymentDownloadType
 from ..enums.execution_method import ExecutionMethod
-from ..enums.health_queue_name import HealthQueueName
 from ..enums.message_priority import MessagePriority
 from ..enums.smtp_encryption import SmtpEncryption
 from ..enums.organization_key_scopes import OrganizationKeyScopes
 from ..enums.region import Region
 from ..enums.project_auth_method_id import ProjectAuthMethodId
 from ..enums.project_o_auth2_google_prompt import ProjectOAuth2GooglePrompt
+from ..enums.project_o_auth2_oidc_prompt import ProjectOAuth2OidcPrompt
 from ..enums.project_o_auth_provider_id import ProjectOAuthProviderId
 from ..enums.project_policy_id import ProjectPolicyId
 from ..enums.project_protocol_id import ProjectProtocolId
@@ -46,6 +46,7 @@ from ..enums.tables_db_index_type import TablesDBIndexType
 from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
 from ..enums.database_type import DatabaseType
+from ..enums.database_status import DatabaseStatus
 from ..enums.attribute_status import AttributeStatus
 from ..enums.column_status import ColumnStatus
 from ..enums.index_status import IndexStatus
@@ -53,12 +54,12 @@ from ..enums.deployment_status import DeploymentStatus
 from ..enums.execution_trigger import ExecutionTrigger
 from ..enums.execution_status import ExecutionStatus
 from ..enums.o_auth2_google_prompt import OAuth2GooglePrompt
+from ..enums.o_auth2_oidc_prompt import OAuth2OidcPrompt
 from ..enums.platform_type import PlatformType
-from ..enums.health_antivirus_status import HealthAntivirusStatus
-from ..enums.health_check_status import HealthCheckStatus
 from ..enums.proxy_rule_deployment_resource_type import ProxyRuleDeploymentResourceType
 from ..enums.proxy_rule_status import ProxyRuleStatus
 from ..enums.message_status import MessageStatus
+from ..enums.billing_plan_group import BillingPlanGroup
 
 class ValueClassEncoder(json.JSONEncoder):
     def default(self, o):
@@ -128,9 +129,6 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, ExecutionMethod):
             return o.value
 
-        if isinstance(o, HealthQueueName):
-            return o.value
-
         if isinstance(o, MessagePriority):
             return o.value
 
@@ -147,6 +145,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, ProjectOAuth2GooglePrompt):
+            return o.value
+
+        if isinstance(o, ProjectOAuth2OidcPrompt):
             return o.value
 
         if isinstance(o, ProjectOAuthProviderId):
@@ -203,6 +204,9 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, DatabaseType):
             return o.value
 
+        if isinstance(o, DatabaseStatus):
+            return o.value
+
         if isinstance(o, AttributeStatus):
             return o.value
 
@@ -224,13 +228,10 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, OAuth2GooglePrompt):
             return o.value
 
+        if isinstance(o, OAuth2OidcPrompt):
+            return o.value
+
         if isinstance(o, PlatformType):
-            return o.value
-
-        if isinstance(o, HealthAntivirusStatus):
-            return o.value
-
-        if isinstance(o, HealthCheckStatus):
             return o.value
 
         if isinstance(o, ProxyRuleDeploymentResourceType):
@@ -240,6 +241,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, MessageStatus):
+            return o.value
+
+        if isinstance(o, BillingPlanGroup):
             return o.value
 
         return super().default(o)

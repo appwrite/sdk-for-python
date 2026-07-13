@@ -37,6 +37,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -86,6 +87,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -245,6 +247,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -377,6 +380,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -423,6 +427,22 @@ class ProjectServiceTest(unittest.TestCase):
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
 
         response = self.project.update_o_auth2_apple(
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_o_auth2_appwrite(self, m):
+        data = {
+    "$id": "github",
+    "enabled": True,
+    "clientId": "6a42000000000000b5a0",
+    "clientSecret": "b86afd000000000000000000000000000000000000000000000000000ced5f93"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.project.update_o_auth2_appwrite(
         )
 
         self.assertEqual(response.to_dict(), data)
@@ -797,7 +817,8 @@ class ProjectServiceTest(unittest.TestCase):
     "wellKnownURL": "https:\/\/myoauth.com\/.well-known\/openid-configuration",
     "authorizationURL": "https:\/\/myoauth.com\/oauth2\/authorize",
     "tokenURL": "https:\/\/myoauth.com\/oauth2\/token",
-    "userInfoURL": "https:\/\/myoauth.com\/oauth2\/userinfo"
+    "userInfoURL": "https:\/\/myoauth.com\/oauth2\/userinfo",
+    "prompt": []
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1391,6 +1412,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1430,6 +1452,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1469,6 +1492,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1508,6 +1532,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1547,6 +1572,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1585,6 +1611,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1624,6 +1651,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1663,6 +1691,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1720,6 +1749,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1759,6 +1789,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1798,6 +1829,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1837,6 +1869,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1876,6 +1909,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1930,6 +1964,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -1970,6 +2005,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],
@@ -2010,6 +2046,7 @@ class ProjectServiceTest(unittest.TestCase):
     "pingedAt": "2020-10-15T06:38:00.000+00:00",
     "labels": [],
     "status": "active",
+    "onboarding": {},
     "authMethods": [],
     "services": [],
     "protocols": [],

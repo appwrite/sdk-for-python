@@ -17,11 +17,11 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : f'AppwritePythonSDK/21.0.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
+            'user-agent' : f'AppwritePythonSDK/22.0.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '21.0.0',
+            'x-sdk-version': '22.0.0',
             'X-Appwrite-Response-Format' : '1.9.5',
         }
         self._config = {}
@@ -65,6 +65,13 @@ class Client:
 
         self._global_headers['x-appwrite-jwt'] = value
         self._config['jwt'] = value
+        return self
+
+    def set_bearer(self, value):
+        """The OAuth access token to authenticate with"""
+
+        self._global_headers['authorization'] = value
+        self._config['bearer'] = value
         return self
 
     def set_locale(self, value):
@@ -341,6 +348,8 @@ class Client:
 
             if isinstance(value, list) or isinstance(value, dict):
                 output = {**output, **self.flatten(value, finalKey, stringify)}
+            elif isinstance(value, bool):
+                output[finalKey] = 'true' if value else 'false'
             else:
                 if stringify:
                     output[finalKey] = str(value)

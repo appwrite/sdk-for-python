@@ -6,7 +6,6 @@ from appwrite.utils.deprecated import deprecated
 from ..models.message_list import MessageList
 from ..models.message import Message
 from ..enums.message_priority import MessagePriority
-from ..models.log_list import LogList
 from ..models.target_list import TargetList
 from ..models.provider_list import ProviderList
 from ..models.provider import Provider
@@ -705,55 +704,6 @@ class Messaging(Service):
         }, api_params)
 
         return response
-
-
-    def list_message_logs(
-        self,
-        message_id: str,
-        queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
-    ) -> LogList:
-        """
-        Get the message activity logs listed by its unique ID.
-
-        Parameters
-        ----------
-        message_id : str
-            Message ID.
-        queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-        total : Optional[bool]
-            When set to false, the total count returned will be 0 and will not be calculated.
-        
-        Returns
-        -------
-        LogList
-            API response as a typed Pydantic model
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/messages/{messageId}/logs'
-        api_params = {}
-        if message_id is None:
-            raise AppwriteException('Missing required parameter: "message_id"')
-
-        api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
-
-        if queries is not None:
-            api_params['queries'] = self._normalize_value(queries)
-        if total is not None:
-            api_params['total'] = self._normalize_value(total)
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
-
-        return self._parse_response(response, model=LogList)
 
 
     def list_targets(
@@ -2686,104 +2636,6 @@ class Messaging(Service):
         return response
 
 
-    def list_provider_logs(
-        self,
-        provider_id: str,
-        queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
-    ) -> LogList:
-        """
-        Get the provider activity logs listed by its unique ID.
-
-        Parameters
-        ----------
-        provider_id : str
-            Provider ID.
-        queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-        total : Optional[bool]
-            When set to false, the total count returned will be 0 and will not be calculated.
-        
-        Returns
-        -------
-        LogList
-            API response as a typed Pydantic model
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/providers/{providerId}/logs'
-        api_params = {}
-        if provider_id is None:
-            raise AppwriteException('Missing required parameter: "provider_id"')
-
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
-        if queries is not None:
-            api_params['queries'] = self._normalize_value(queries)
-        if total is not None:
-            api_params['total'] = self._normalize_value(total)
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
-
-        return self._parse_response(response, model=LogList)
-
-
-    def list_subscriber_logs(
-        self,
-        subscriber_id: str,
-        queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
-    ) -> LogList:
-        """
-        Get the subscriber activity logs listed by its unique ID.
-
-        Parameters
-        ----------
-        subscriber_id : str
-            Subscriber ID.
-        queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-        total : Optional[bool]
-            When set to false, the total count returned will be 0 and will not be calculated.
-        
-        Returns
-        -------
-        LogList
-            API response as a typed Pydantic model
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/subscribers/{subscriberId}/logs'
-        api_params = {}
-        if subscriber_id is None:
-            raise AppwriteException('Missing required parameter: "subscriber_id"')
-
-        api_path = api_path.replace('{subscriberId}', str(self._normalize_value(subscriber_id)))
-
-        if queries is not None:
-            api_params['queries'] = self._normalize_value(queries)
-        if total is not None:
-            api_params['total'] = self._normalize_value(total)
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
-
-        return self._parse_response(response, model=LogList)
-
-
     def list_topics(
         self,
         queries: Optional[List[str]] = None,
@@ -3009,55 +2861,6 @@ class Messaging(Service):
         }, api_params)
 
         return response
-
-
-    def list_topic_logs(
-        self,
-        topic_id: str,
-        queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
-    ) -> LogList:
-        """
-        Get the topic activity logs listed by its unique ID.
-
-        Parameters
-        ----------
-        topic_id : str
-            Topic ID.
-        queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-        total : Optional[bool]
-            When set to false, the total count returned will be 0 and will not be calculated.
-        
-        Returns
-        -------
-        LogList
-            API response as a typed Pydantic model
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/messaging/topics/{topicId}/logs'
-        api_params = {}
-        if topic_id is None:
-            raise AppwriteException('Missing required parameter: "topic_id"')
-
-        api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
-
-        if queries is not None:
-            api_params['queries'] = self._normalize_value(queries)
-        if total is not None:
-            api_params['total'] = self._normalize_value(total)
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
-
-        return self._parse_response(response, model=LogList)
 
 
     def list_subscribers(

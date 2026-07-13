@@ -126,7 +126,7 @@ class Functions(Service):
         commands : Optional[str]
             Build Commands.
         scopes : Optional[List[ProjectKeyScopes]]
-            List of scopes allowed for API key auto-generated for every execution. Maximum of 100 scopes are allowed.
+            List of scopes allowed for API key auto-generated for every execution. Maximum of 200 scopes are allowed.
         installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Control System) deployment.
         provider_repository_id : Optional[str]
@@ -251,11 +251,17 @@ class Functions(Service):
 
 
     def list_specifications(
-        self
+        self,
+        type: Optional[str] = None
     ) -> SpecificationList:
         """
         List allowed function specifications for this instance.
 
+        Parameters
+        ----------
+        type : Optional[str]
+            Specification type to list. Can be one of: runtimes, builds.
+        
         Returns
         -------
         SpecificationList
@@ -269,6 +275,9 @@ class Functions(Service):
 
         api_path = '/functions/specifications'
         api_params = {}
+
+        if type is not None:
+            api_params['type'] = self._normalize_value(type)
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -370,7 +379,7 @@ class Functions(Service):
         commands : Optional[str]
             Build Commands.
         scopes : Optional[List[ProjectKeyScopes]]
-            List of scopes allowed for API Key auto-generated for every execution. Maximum of 100 scopes are allowed.
+            List of scopes allowed for API Key auto-generated for every execution. Maximum of 200 scopes are allowed.
         installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Controle System) deployment.
         provider_repository_id : Optional[str]
@@ -445,8 +454,7 @@ class Functions(Service):
             api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
         api_params['providerBranches'] = self._normalize_value(provider_branches)
         api_params['providerPaths'] = self._normalize_value(provider_paths)
-        if build_specification is not None:
-            api_params['buildSpecification'] = self._normalize_value(build_specification)
+        api_params['buildSpecification'] = self._normalize_value(build_specification)
         if runtime_specification is not None:
             api_params['runtimeSpecification'] = self._normalize_value(runtime_specification)
         if deployment_retention is not None:
@@ -968,7 +976,8 @@ class Functions(Service):
         self,
         function_id: str,
         deployment_id: str,
-        type: Optional[DeploymentDownloadType] = None
+        type: Optional[DeploymentDownloadType] = None,
+        token: Optional[str] = None
     ) -> bytes:
         """
         Get a function deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
@@ -981,6 +990,8 @@ class Functions(Service):
             Deployment ID.
         type : Optional[DeploymentDownloadType]
             Deployment file to download. Can be: "source", "output".
+        token : Optional[str]
+            Presigned source-download token for accessing this deployment without a session (jobs-service).
         
         Returns
         -------
@@ -1006,6 +1017,8 @@ class Functions(Service):
 
         if type is not None:
             api_params['type'] = self._normalize_value(type)
+        if token is not None:
+            api_params['token'] = self._normalize_value(token)
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

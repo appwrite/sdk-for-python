@@ -1,5 +1,29 @@
 # Change Log
 
+## 22.0.0
+
+* Breaking: removed `Health` service and all health models and enums
+* Breaking: removed `Usage` service and `UsageMetric`, `UsageDataPoint`, `UsageEventList`, `UsageGaugeList` models
+* Breaking: removed messaging `list_message_logs`, `list_provider_logs`, `list_subscriber_logs`, `list_topic_logs` methods
+* Breaking: renamed `tables_db.create` parameter `dedicated_database_id` to `specification`
+* Breaking: removed `countryCode` and `countryName` from `ActivityEvent` model
+* Added: `Client.set_bearer` for OAuth access token authentication
+* Added: `organization` service `get`, `update`, `delete` and membership CRUD methods
+* Added: `oauth2` service `create_par`, `list_organizations`, `list_projects` methods
+* Added: `resource`, `audience`, `request_uri` OAuth2 parameters; `scope` on `approve`
+* Added: `appwrite` OAuth provider, `OAuth2Appwrite` model, `update_o_auth2_appwrite` method
+* Added: `Query.vector_dot`, `Query.vector_cosine`, `Query.vector_euclidean` methods
+* Added: `apps.update_labels` method and `labels` field on `App` model
+* Added: `new_specification` parameter to `backups.create_restoration`
+* Added: `type` parameter to `functions` and `sites` `list_specifications`
+* Added: `token` parameter to `functions.get_deployment_download`
+* Added: `prompt` and `max_age` parameters to `update_o_auth2_oidc`; `default_scopes` to `update_o_auth2_server`
+* Added: `BillingPlan`, `Organization`, `Program`, `Oauth2PAR`, `DatabaseStatus`, `BillingPlanGroup` models and enums
+* Added: `status` on `Database`, `mode` on `Block`, `onboarding` on `Project`, geolocation fields on `Locale`
+* Added: organization, `project.oauth2`, and `stages` key scope enum values
+* Fixed: booleans now serialized as `true`/`false` in flattened query parameters
+* Fixed: `model_dump` on `Document`, `Row`, `Preferences` now includes dynamic `data`
+
 ## 21.0.0
 
 * Added: `apps` service for managing apps and app secrets

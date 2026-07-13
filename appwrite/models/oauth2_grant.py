@@ -21,6 +21,8 @@ class Oauth2Grant(AppwriteModel):
         ID of the OAuth2 client (app) the grant was requested for.
     scopes : List[Any]
         Requested OAuth2 scopes the user is being asked to consent to.
+    resources : List[Any]
+        Requested RFC 8707 resource indicators the user is being asked to consent to.
     authorizationdetails : str
         Requested authorization_details the user is being asked to consent to, as a JSON string. Each entry has a `type` plus project-defined fields.
     prompt : str
@@ -38,6 +40,7 @@ class Oauth2Grant(AppwriteModel):
     userid: str = Field(..., alias='userId')
     appid: str = Field(..., alias='appId')
     scopes: List[Any] = Field(..., alias='scopes')
+    resources: List[Any] = Field(..., alias='resources')
     authorizationdetails: str = Field(..., alias='authorizationDetails')
     prompt: str = Field(..., alias='prompt')
     redirecturi: str = Field(..., alias='redirectUri')
