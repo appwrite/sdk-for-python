@@ -638,7 +638,8 @@ class TablesDB(Service):
 
         api_params['tableId'] = self._normalize_value(table_id)
         api_params['name'] = self._normalize_value(name)
-        api_params['permissions'] = self._normalize_value(permissions)
+        if permissions is not None:
+            api_params['permissions'] = self._normalize_value(permissions)
         if row_security is not None:
             api_params['rowSecurity'] = self._normalize_value(row_security)
         if enabled is not None:
@@ -757,7 +758,8 @@ class TablesDB(Service):
 
         if name is not None:
             api_params['name'] = self._normalize_value(name)
-        api_params['permissions'] = self._normalize_value(permissions)
+        if permissions is not None:
+            api_params['permissions'] = self._normalize_value(permissions)
         if row_security is not None:
             api_params['rowSecurity'] = self._normalize_value(row_security)
         if enabled is not None:
@@ -940,9 +942,12 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['min'] = self._normalize_value(min)
-        api_params['max'] = self._normalize_value(max)
-        api_params['default'] = self._normalize_value(default)
+        if min is not None:
+            api_params['min'] = self._normalize_value(min)
+        if max is not None:
+            api_params['max'] = self._normalize_value(max)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
@@ -1019,10 +1024,13 @@ class TablesDB(Service):
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
         api_params['required'] = self._normalize_value(required)
-        api_params['min'] = self._normalize_value(min)
-        api_params['max'] = self._normalize_value(max)
+        if min is not None:
+            api_params['min'] = self._normalize_value(min)
+        if max is not None:
+            api_params['max'] = self._normalize_value(max)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1091,7 +1099,8 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
@@ -1162,7 +1171,8 @@ class TablesDB(Service):
 
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1230,7 +1240,8 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
@@ -1301,7 +1312,8 @@ class TablesDB(Service):
 
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1370,7 +1382,8 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
@@ -1442,7 +1455,8 @@ class TablesDB(Service):
 
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1517,7 +1531,8 @@ class TablesDB(Service):
         api_params['key'] = self._normalize_value(key)
         api_params['elements'] = self._normalize_value(elements)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
@@ -1596,7 +1611,8 @@ class TablesDB(Service):
         api_params['elements'] = self._normalize_value(elements)
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1671,9 +1687,12 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['min'] = self._normalize_value(min)
-        api_params['max'] = self._normalize_value(max)
-        api_params['default'] = self._normalize_value(default)
+        if min is not None:
+            api_params['min'] = self._normalize_value(min)
+        if max is not None:
+            api_params['max'] = self._normalize_value(max)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
@@ -1750,10 +1769,13 @@ class TablesDB(Service):
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
         api_params['required'] = self._normalize_value(required)
-        api_params['min'] = self._normalize_value(min)
-        api_params['max'] = self._normalize_value(max)
+        if min is not None:
+            api_params['min'] = self._normalize_value(min)
+        if max is not None:
+            api_params['max'] = self._normalize_value(max)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1828,9 +1850,12 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['min'] = self._normalize_value(min)
-        api_params['max'] = self._normalize_value(max)
-        api_params['default'] = self._normalize_value(default)
+        if min is not None:
+            api_params['min'] = self._normalize_value(min)
+        if max is not None:
+            api_params['max'] = self._normalize_value(max)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
@@ -1907,10 +1932,13 @@ class TablesDB(Service):
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
         api_params['required'] = self._normalize_value(required)
-        api_params['min'] = self._normalize_value(min)
-        api_params['max'] = self._normalize_value(max)
+        if min is not None:
+            api_params['min'] = self._normalize_value(min)
+        if max is not None:
+            api_params['max'] = self._normalize_value(max)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1979,7 +2007,8 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
@@ -2051,7 +2080,8 @@ class TablesDB(Service):
 
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2116,7 +2146,8 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2184,8 +2215,10 @@ class TablesDB(Service):
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2257,7 +2290,8 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
@@ -2331,7 +2365,8 @@ class TablesDB(Service):
 
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2403,7 +2438,8 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
@@ -2477,7 +2513,8 @@ class TablesDB(Service):
 
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2542,7 +2579,8 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2610,8 +2648,10 @@ class TablesDB(Service):
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2676,7 +2716,8 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2744,8 +2785,10 @@ class TablesDB(Service):
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2822,8 +2865,10 @@ class TablesDB(Service):
         api_params['type'] = self._normalize_value(type)
         if two_way is not None:
             api_params['twoWay'] = self._normalize_value(two_way)
-        api_params['key'] = self._normalize_value(key)
-        api_params['twoWayKey'] = self._normalize_value(two_way_key)
+        if key is not None:
+            api_params['key'] = self._normalize_value(key)
+        if two_way_key is not None:
+            api_params['twoWayKey'] = self._normalize_value(two_way_key)
         if on_delete is not None:
             api_params['onDelete'] = self._normalize_value(on_delete)
 
@@ -2907,7 +2952,8 @@ class TablesDB(Service):
         api_params['key'] = self._normalize_value(key)
         api_params['size'] = self._normalize_value(size)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
@@ -2987,8 +3033,10 @@ class TablesDB(Service):
 
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
-        api_params['size'] = self._normalize_value(size)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if size is not None:
+            api_params['size'] = self._normalize_value(size)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -3060,7 +3108,8 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
@@ -3134,7 +3183,8 @@ class TablesDB(Service):
 
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -3203,7 +3253,8 @@ class TablesDB(Service):
 
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
@@ -3275,7 +3326,8 @@ class TablesDB(Service):
 
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -3354,7 +3406,8 @@ class TablesDB(Service):
         api_params['key'] = self._normalize_value(key)
         api_params['size'] = self._normalize_value(size)
         api_params['required'] = self._normalize_value(required)
-        api_params['default'] = self._normalize_value(default)
+        if default is not None:
+            api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
@@ -3431,8 +3484,10 @@ class TablesDB(Service):
 
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
-        api_params['size'] = self._normalize_value(size)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if size is not None:
+            api_params['size'] = self._normalize_value(size)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -3632,8 +3687,10 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        api_params['onDelete'] = self._normalize_value(on_delete)
-        api_params['newKey'] = self._normalize_value(new_key)
+        if on_delete is not None:
+            api_params['onDelete'] = self._normalize_value(on_delete)
+        if new_key is not None:
+            api_params['newKey'] = self._normalize_value(new_key)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4016,8 +4073,10 @@ class TablesDB(Service):
 
         api_params['rowId'] = self._normalize_value(row_id)
         api_params['data'] = self._normalize_value(data)
-        api_params['permissions'] = self._normalize_value(permissions)
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if permissions is not None:
+            api_params['permissions'] = self._normalize_value(permissions)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4079,7 +4138,8 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
         api_params['rows'] = self._normalize_value(rows)
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4142,7 +4202,8 @@ class TablesDB(Service):
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
         api_params['rows'] = self._normalize_value(rows)
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4207,7 +4268,8 @@ class TablesDB(Service):
             api_params['data'] = self._normalize_value(data)
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4405,8 +4467,10 @@ class TablesDB(Service):
 
         if data is not None:
             api_params['data'] = self._normalize_value(data)
-        api_params['permissions'] = self._normalize_value(permissions)
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if permissions is not None:
+            api_params['permissions'] = self._normalize_value(permissions)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4476,8 +4540,10 @@ class TablesDB(Service):
 
         if data is not None:
             api_params['data'] = self._normalize_value(data)
-        api_params['permissions'] = self._normalize_value(permissions)
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if permissions is not None:
+            api_params['permissions'] = self._normalize_value(permissions)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4612,8 +4678,10 @@ class TablesDB(Service):
 
         if value is not None:
             api_params['value'] = self._normalize_value(value)
-        api_params['min'] = self._normalize_value(min)
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if min is not None:
+            api_params['min'] = self._normalize_value(min)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4690,8 +4758,10 @@ class TablesDB(Service):
 
         if value is not None:
             api_params['value'] = self._normalize_value(value)
-        api_params['max'] = self._normalize_value(max)
-        api_params['transactionId'] = self._normalize_value(transaction_id)
+        if max is not None:
+            api_params['max'] = self._normalize_value(max)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

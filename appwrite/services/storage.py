@@ -128,7 +128,8 @@ class Storage(Service):
 
         api_params['bucketId'] = self._normalize_value(bucket_id)
         api_params['name'] = self._normalize_value(name)
-        api_params['permissions'] = self._normalize_value(permissions)
+        if permissions is not None:
+            api_params['permissions'] = self._normalize_value(permissions)
         if file_security is not None:
             api_params['fileSecurity'] = self._normalize_value(file_security)
         if enabled is not None:
@@ -258,7 +259,8 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
         api_params['name'] = self._normalize_value(name)
-        api_params['permissions'] = self._normalize_value(permissions)
+        if permissions is not None:
+            api_params['permissions'] = self._normalize_value(permissions)
         if file_security is not None:
             api_params['fileSecurity'] = self._normalize_value(file_security)
         if enabled is not None:
@@ -544,7 +546,8 @@ class Storage(Service):
 
         if name is not None:
             api_params['name'] = self._normalize_value(name)
-        api_params['permissions'] = self._normalize_value(permissions)
+        if permissions is not None:
+            api_params['permissions'] = self._normalize_value(permissions)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

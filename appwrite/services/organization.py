@@ -216,7 +216,8 @@ class Organization(Service):
         api_params['keyId'] = self._normalize_value(key_id)
         api_params['name'] = self._normalize_value(name)
         api_params['scopes'] = self._normalize_value(scopes)
-        api_params['expire'] = self._normalize_value(expire)
+        if expire is not None:
+            api_params['expire'] = self._normalize_value(expire)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -313,7 +314,8 @@ class Organization(Service):
 
         api_params['name'] = self._normalize_value(name)
         api_params['scopes'] = self._normalize_value(scopes)
-        api_params['expire'] = self._normalize_value(expire)
+        if expire is not None:
+            api_params['expire'] = self._normalize_value(expire)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

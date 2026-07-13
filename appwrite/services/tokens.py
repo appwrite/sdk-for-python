@@ -107,7 +107,8 @@ class Tokens(Service):
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
-        api_params['expire'] = self._normalize_value(expire)
+        if expire is not None:
+            api_params['expire'] = self._normalize_value(expire)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -190,7 +191,8 @@ class Tokens(Service):
 
         api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
 
-        api_params['expire'] = self._normalize_value(expire)
+        if expire is not None:
+            api_params['expire'] = self._normalize_value(expire)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

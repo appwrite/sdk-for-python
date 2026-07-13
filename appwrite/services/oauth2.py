@@ -441,7 +441,8 @@ class Oauth2(Service):
             api_params['code_challenge_method'] = self._normalize_value(code_challenge_method)
         if prompt is not None:
             api_params['prompt'] = self._normalize_value(prompt)
-        api_params['max_age'] = self._normalize_value(max_age)
+        if max_age is not None:
+            api_params['max_age'] = self._normalize_value(max_age)
         if authorization_details is not None:
             api_params['authorization_details'] = self._normalize_value(authorization_details)
         if resource is not None:

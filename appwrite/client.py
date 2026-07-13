@@ -70,7 +70,7 @@ class Client:
     def set_bearer(self, value):
         """The OAuth access token to authenticate with"""
 
-        self._global_headers['authorization'] = value
+        self._global_headers['authorization'] = 'Bearer ' + value
         self._config['bearer'] = value
         return self
 

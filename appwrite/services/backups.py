@@ -86,7 +86,8 @@ class Backups(Service):
 
 
         api_params['services'] = self._normalize_value(services)
-        api_params['resourceId'] = self._normalize_value(resource_id)
+        if resource_id is not None:
+            api_params['resourceId'] = self._normalize_value(resource_id)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -273,7 +274,8 @@ class Backups(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         api_params['services'] = self._normalize_value(services)
-        api_params['resourceId'] = self._normalize_value(resource_id)
+        if resource_id is not None:
+            api_params['resourceId'] = self._normalize_value(resource_id)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
         api_params['retention'] = self._normalize_value(retention)
@@ -369,11 +371,14 @@ class Backups(Service):
 
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
-        api_params['name'] = self._normalize_value(name)
-        api_params['retention'] = self._normalize_value(retention)
+        if name is not None:
+            api_params['name'] = self._normalize_value(name)
+        if retention is not None:
+            api_params['retention'] = self._normalize_value(retention)
         if schedule is not None:
             api_params['schedule'] = self._normalize_value(schedule)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

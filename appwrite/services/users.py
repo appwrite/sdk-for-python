@@ -125,8 +125,10 @@ class Users(Service):
 
 
         api_params['userId'] = self._normalize_value(user_id)
-        api_params['email'] = self._normalize_value(email)
-        api_params['phone'] = self._normalize_value(phone)
+        if email is not None:
+            api_params['email'] = self._normalize_value(email)
+        if phone is not None:
+            api_params['phone'] = self._normalize_value(phone)
         if password is not None:
             api_params['password'] = self._normalize_value(password)
         if name is not None:
