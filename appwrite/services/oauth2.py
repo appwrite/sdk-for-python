@@ -7,6 +7,9 @@ from ..models.oauth2_approve import Oauth2Approve
 from ..models.oauth2_authorize import Oauth2Authorize
 from ..models.oauth2_device_authorization import Oauth2DeviceAuthorization
 from ..models.oauth2_grant import Oauth2Grant
+from ..models.oauth2_organization_list import Oauth2OrganizationList
+from ..models.oauth2_par import Oauth2PAR
+from ..models.oauth2_project_list import Oauth2ProjectList
 from ..models.oauth2_reject import Oauth2Reject
 from ..models.oauth2_token import Oauth2Token
 
@@ -18,7 +21,8 @@ class Oauth2(Service):
     def approve(
         self,
         grant_id: str,
-        authorization_details: Optional[str] = None
+        authorization_details: Optional[str] = None,
+        scope: Optional[str] = None
     ) -> Oauth2Approve:
         """
         Approve an OAuth2 grant after the user gives consent. Returns the `redirectUrl` the end user should be sent to. The consent screen may optionally pass enriched `authorization_details` to record the concrete resources the user selected. You can pass Accept header of `application/json` to receive a JSON response instead of a redirect.
@@ -29,6 +33,8 @@ class Oauth2(Service):
             Grant ID made during authorization, provided to consent screen in URL search params.
         authorization_details : Optional[str]
             Enriched `authorization_details` the user consented to, replacing what the client requested. Each entry must use a `type` the project accepts. Optional; omit to keep the originally requested details.
+        scope : Optional[str]
+            Space-separated scopes the user consented to. Must be a subset of the scopes originally requested; identity scopes such as `openid` are always retained. Optional; omit to keep the originally requested scopes.
         
         Returns
         -------
@@ -51,6 +57,8 @@ class Oauth2(Service):
         api_params['grant_id'] = self._normalize_value(grant_id)
         if authorization_details is not None:
             api_params['authorization_details'] = self._normalize_value(authorization_details)
+        if scope is not None:
+            api_params['scope'] = self._normalize_value(scope)
 
         response = self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -62,31 +70,34 @@ class Oauth2(Service):
 
     def authorize(
         self,
-        client_id: str,
-        redirect_uri: str,
-        response_type: str,
-        scope: str,
+        client_id: Optional[str] = None,
+        redirect_uri: Optional[str] = None,
+        response_type: Optional[str] = None,
+        scope: Optional[str] = None,
         state: Optional[str] = None,
         nonce: Optional[str] = None,
         code_challenge: Optional[str] = None,
         code_challenge_method: Optional[str] = None,
         prompt: Optional[str] = None,
         max_age: Optional[float] = None,
-        authorization_details: Optional[str] = None
+        authorization_details: Optional[str] = None,
+        resource: Optional[str] = None,
+        audience: Optional[str] = None,
+        request_uri: Optional[str] = None
     ) -> Oauth2Authorize:
         """
         Begin the OAuth2 authorization flow. When called without a session, the user is redirected to the consent screen without grant ID. When called with a session, the redirect URL includes param for grant ID. You can pass Accept header of `application/json` to receive a JSON response instead of a redirect.
 
         Parameters
         ----------
-        client_id : str
+        client_id : Optional[str]
             OAuth2 client ID.
-        redirect_uri : str
+        redirect_uri : Optional[str]
             Redirect URI where visitor will be redirected after authorization, whether successful or not.
-        response_type : str
+        response_type : Optional[str]
             OAuth2 / OIDC response type. One of `code` (Authorization Code Flow), `id_token` (Implicit Flow, OIDC login only), or `code id_token` (Hybrid Flow).
-        scope : str
-            Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`.
+        scope : Optional[str]
+            Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`, `phone`.
         state : Optional[str]
             OAuth2 state. You receive this back in the redirect URI.
         nonce : Optional[str]
@@ -101,6 +112,12 @@ class Oauth2(Service):
             OIDC max_age paraleter for customization of consent screen. Maximum allowable elapsed time in seconds since the user last authenticated. If exceeded, re-authentication is required.
         authorization_details : Optional[str]
             Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+        resource : Optional[str]
+            RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
+        audience : Optional[str]
+            Compatibility alias for a single OAuth2 resource indicator URI.
+        request_uri : Optional[str]
+            OAuth2 authorization request handle returned by the pushed authorization request endpoint.
         
         Returns
         -------
@@ -115,24 +132,16 @@ class Oauth2(Service):
 
         api_path = '/oauth2/{project_id}/authorize'
         api_params = {}
-        if client_id is None:
-            raise AppwriteException('Missing required parameter: "client_id"')
-
-        if redirect_uri is None:
-            raise AppwriteException('Missing required parameter: "redirect_uri"')
-
-        if response_type is None:
-            raise AppwriteException('Missing required parameter: "response_type"')
-
-        if scope is None:
-            raise AppwriteException('Missing required parameter: "scope"')
-
         api_path = api_path.replace('{project_id}', str(self._normalize_value(self.client.get_config('project'))))
 
-        api_params['client_id'] = self._normalize_value(client_id)
-        api_params['redirect_uri'] = self._normalize_value(redirect_uri)
-        api_params['response_type'] = self._normalize_value(response_type)
-        api_params['scope'] = self._normalize_value(scope)
+        if client_id is not None:
+            api_params['client_id'] = self._normalize_value(client_id)
+        if redirect_uri is not None:
+            api_params['redirect_uri'] = self._normalize_value(redirect_uri)
+        if response_type is not None:
+            api_params['response_type'] = self._normalize_value(response_type)
+        if scope is not None:
+            api_params['scope'] = self._normalize_value(scope)
         if state is not None:
             api_params['state'] = self._normalize_value(state)
         if nonce is not None:
@@ -147,6 +156,12 @@ class Oauth2(Service):
             api_params['max_age'] = self._normalize_value(max_age)
         if authorization_details is not None:
             api_params['authorization_details'] = self._normalize_value(authorization_details)
+        if resource is not None:
+            api_params['resource'] = self._normalize_value(resource)
+        if audience is not None:
+            api_params['audience'] = self._normalize_value(audience)
+        if request_uri is not None:
+            api_params['request_uri'] = self._normalize_value(request_uri)
 
         response = self.client.call('get', api_path, {
             'accept': 'application/json',
@@ -159,7 +174,9 @@ class Oauth2(Service):
         self,
         client_id: Optional[str] = None,
         scope: Optional[str] = None,
-        authorization_details: Optional[str] = None
+        authorization_details: Optional[str] = None,
+        resource: Optional[str] = None,
+        audience: Optional[str] = None
     ) -> Oauth2DeviceAuthorization:
         """
         Start the OAuth2 Device Authorization Grant. Returns the device code, user code, verification URL, expiration, and polling interval.
@@ -172,6 +189,10 @@ class Oauth2(Service):
             Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`.
         authorization_details : Optional[str]
             Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+        resource : Optional[str]
+            RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
+        audience : Optional[str]
+            Compatibility alias for a single OAuth2 resource indicator URI.
         
         Returns
         -------
@@ -194,6 +215,10 @@ class Oauth2(Service):
             api_params['scope'] = self._normalize_value(scope)
         if authorization_details is not None:
             api_params['authorization_details'] = self._normalize_value(authorization_details)
+        if resource is not None:
+            api_params['resource'] = self._normalize_value(resource)
+        if audience is not None:
+            api_params['audience'] = self._normalize_value(audience)
 
         response = self.client.call('post', api_path, {
             'content-type': 'application/json',
@@ -280,6 +305,204 @@ class Oauth2(Service):
         }, api_params)
 
         return self._parse_response(response, model=Oauth2Grant)
+
+
+    def list_organizations(
+        self,
+        limit: Optional[float] = None,
+        offset: Optional[float] = None,
+        search: Optional[str] = None
+    ) -> Oauth2OrganizationList:
+        """
+        List the organizations the OAuth2 access token can access. Resolves the token's `organization` authorization details, expanding the `*` wildcard into the concrete set of organizations the user can see.
+
+        Parameters
+        ----------
+        limit : Optional[float]
+            Maximum number of organizations to return. Between 1 and 5000.
+        offset : Optional[float]
+            Number of organizations to skip before returning results. Used for pagination.
+        search : Optional[str]
+            Search term to filter your list results. Max length: 256 chars.
+        
+        Returns
+        -------
+        Oauth2OrganizationList
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/oauth2/{project_id}/organizations'
+        api_params = {}
+        api_path = api_path.replace('{project_id}', str(self._normalize_value(self.client.get_config('project'))))
+
+        if limit is not None:
+            api_params['limit'] = self._normalize_value(limit)
+        if offset is not None:
+            api_params['offset'] = self._normalize_value(offset)
+        if search is not None:
+            api_params['search'] = self._normalize_value(search)
+
+        response = self.client.call('get', api_path, {
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Oauth2OrganizationList)
+
+
+    def create_par(
+        self,
+        client_id: str,
+        redirect_uri: str,
+        response_type: str,
+        scope: Optional[str] = None,
+        state: Optional[str] = None,
+        nonce: Optional[str] = None,
+        code_challenge: Optional[str] = None,
+        code_challenge_method: Optional[str] = None,
+        prompt: Optional[str] = None,
+        max_age: Optional[float] = None,
+        authorization_details: Optional[str] = None,
+        resource: Optional[str] = None,
+        audience: Optional[str] = None
+    ) -> Oauth2PAR:
+        """
+        Store an OAuth2 authorization request server-side and receive a short-lived request_uri handle for the authorize endpoint.
+
+        Parameters
+        ----------
+        client_id : str
+            OAuth2 client ID.
+        redirect_uri : str
+            Redirect URI where visitor will be redirected after authorization, whether successful or not.
+        response_type : str
+            OAuth2 / OIDC response type.
+        scope : Optional[str]
+            Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`, `phone`.
+        state : Optional[str]
+            OAuth2 state. You receive this back in the redirect URI.
+        nonce : Optional[str]
+            OIDC nonce parameter to prevent replay attacks. Required when response_type includes `id_token`.
+        code_challenge : Optional[str]
+            PKCE code challenge. Required when OAuth2 app is public.
+        code_challenge_method : Optional[str]
+            PKCE code challenge method. Required when OAuth2 app is public.
+        prompt : Optional[str]
+            OIDC prompt parameter for customization of consent screen. Space-separated list of: none, login, consent, select_account.
+        max_age : Optional[float]
+            OIDC max_age parameter for customization of consent screen.
+        authorization_details : Optional[str]
+            Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+        resource : Optional[str]
+            RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
+        audience : Optional[str]
+            Compatibility alias for a single OAuth2 resource indicator URI.
+        
+        Returns
+        -------
+        Oauth2PAR
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/oauth2/{project_id}/par'
+        api_params = {}
+        if client_id is None:
+            raise AppwriteException('Missing required parameter: "client_id"')
+
+        if redirect_uri is None:
+            raise AppwriteException('Missing required parameter: "redirect_uri"')
+
+        if response_type is None:
+            raise AppwriteException('Missing required parameter: "response_type"')
+
+        api_path = api_path.replace('{project_id}', str(self._normalize_value(self.client.get_config('project'))))
+
+        api_params['client_id'] = self._normalize_value(client_id)
+        api_params['redirect_uri'] = self._normalize_value(redirect_uri)
+        api_params['response_type'] = self._normalize_value(response_type)
+        if scope is not None:
+            api_params['scope'] = self._normalize_value(scope)
+        if state is not None:
+            api_params['state'] = self._normalize_value(state)
+        if nonce is not None:
+            api_params['nonce'] = self._normalize_value(nonce)
+        if code_challenge is not None:
+            api_params['code_challenge'] = self._normalize_value(code_challenge)
+        if code_challenge_method is not None:
+            api_params['code_challenge_method'] = self._normalize_value(code_challenge_method)
+        if prompt is not None:
+            api_params['prompt'] = self._normalize_value(prompt)
+        if max_age is not None:
+            api_params['max_age'] = self._normalize_value(max_age)
+        if authorization_details is not None:
+            api_params['authorization_details'] = self._normalize_value(authorization_details)
+        if resource is not None:
+            api_params['resource'] = self._normalize_value(resource)
+        if audience is not None:
+            api_params['audience'] = self._normalize_value(audience)
+
+        response = self.client.call('post', api_path, {
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Oauth2PAR)
+
+
+    def list_projects(
+        self,
+        limit: Optional[float] = None,
+        offset: Optional[float] = None,
+        search: Optional[str] = None
+    ) -> Oauth2ProjectList:
+        """
+        List the projects the OAuth2 access token can access. Resolves the token's `project` authorization details, expanding the `*` wildcard into the concrete set of projects the user can see.
+
+        Parameters
+        ----------
+        limit : Optional[float]
+            Maximum number of projects to return. Between 1 and 5000.
+        offset : Optional[float]
+            Number of projects to skip before returning results. Used for pagination.
+        search : Optional[str]
+            Search term to filter your list results. Max length: 256 chars.
+        
+        Returns
+        -------
+        Oauth2ProjectList
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/oauth2/{project_id}/projects'
+        api_params = {}
+        api_path = api_path.replace('{project_id}', str(self._normalize_value(self.client.get_config('project'))))
+
+        if limit is not None:
+            api_params['limit'] = self._normalize_value(limit)
+        if offset is not None:
+            api_params['offset'] = self._normalize_value(offset)
+        if search is not None:
+            api_params['search'] = self._normalize_value(search)
+
+        response = self.client.call('get', api_path, {
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Oauth2ProjectList)
 
 
     def reject(
@@ -386,7 +609,9 @@ class Oauth2(Service):
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
         code_verifier: Optional[str] = None,
-        redirect_uri: Optional[str] = None
+        redirect_uri: Optional[str] = None,
+        resource: Optional[str] = None,
+        audience: Optional[str] = None
     ) -> Oauth2Token:
         """
         Exchange an OAuth2 authorization code, refresh token, or device code for access and refresh tokens.
@@ -409,6 +634,10 @@ class Oauth2(Service):
             PKCE code verifier. Required for public apps.
         redirect_uri : Optional[str]
             Redirect URI. Required for `authorization_code` grant type.
+        resource : Optional[str]
+            RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
+        audience : Optional[str]
+            Compatibility alias for a single OAuth2 resource indicator URI.
         
         Returns
         -------
@@ -443,6 +672,10 @@ class Oauth2(Service):
             api_params['code_verifier'] = self._normalize_value(code_verifier)
         if redirect_uri is not None:
             api_params['redirect_uri'] = self._normalize_value(redirect_uri)
+        if resource is not None:
+            api_params['resource'] = self._normalize_value(resource)
+        if audience is not None:
+            api_params['audience'] = self._normalize_value(audience)
 
         response = self.client.call('post', api_path, {
             'content-type': 'application/json',

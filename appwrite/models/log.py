@@ -20,7 +20,7 @@ class Log(AppwriteModel):
     mode : str
         API mode when event triggered.
     usertype : str
-        User type who triggered the audit log. Possible values: user, admin, guest, keyProject, keyAccount, keyOrganization.
+        User type who triggered the audit log. Possible values: user, admin, guest, hidden, keyProject, keyAccount, keyOrganization.
     ip : str
         IP session in use when the session was created.
     time : str

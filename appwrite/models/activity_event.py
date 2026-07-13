@@ -45,10 +45,6 @@ class ActivityEvent(AppwriteModel):
         Team ID.
     hostname : str
         Hostname.
-    countrycode : str
-        Country two-character ISO 3166-1 alpha code.
-    countryname : str
-        Country name.
     """
     id: str = Field(..., alias='$id')
     actortype: str = Field(..., alias='actorType')
@@ -68,5 +64,3 @@ class ActivityEvent(AppwriteModel):
     projectid: str = Field(..., alias='projectId')
     teamid: str = Field(..., alias='teamId')
     hostname: str = Field(..., alias='hostname')
-    countrycode: str = Field(..., alias='countryCode')
-    countryname: str = Field(..., alias='countryName')

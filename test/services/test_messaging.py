@@ -251,21 +251,6 @@ class MessagingServiceTest(unittest.TestCase):
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
-    def test_list_message_logs(self, m):
-        data = {
-    "total": 5.0,
-    "logs": []
-}
-        headers = {'Content-Type': 'application/json'}
-        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
-
-        response = self.messaging.list_message_logs(
-            '<MESSAGE_ID>',
-        )
-
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
     def test_list_targets(self, m):
         data = {
     "total": 5.0,
@@ -975,36 +960,6 @@ class MessagingServiceTest(unittest.TestCase):
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
-    def test_list_provider_logs(self, m):
-        data = {
-    "total": 5.0,
-    "logs": []
-}
-        headers = {'Content-Type': 'application/json'}
-        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
-
-        response = self.messaging.list_provider_logs(
-            '<PROVIDER_ID>',
-        )
-
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
-    def test_list_subscriber_logs(self, m):
-        data = {
-    "total": 5.0,
-    "logs": []
-}
-        headers = {'Content-Type': 'application/json'}
-        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
-
-        response = self.messaging.list_subscriber_logs(
-            '<SUBSCRIBER_ID>',
-        )
-
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
     def test_list_topics(self, m):
         data = {
     "total": 5.0,
@@ -1093,21 +1048,6 @@ class MessagingServiceTest(unittest.TestCase):
         )
 
         self.assertEqual(response, data)
-
-    @requests_mock.Mocker()
-    def test_list_topic_logs(self, m):
-        data = {
-    "total": 5.0,
-    "logs": []
-}
-        headers = {'Content-Type': 'application/json'}
-        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
-
-        response = self.messaging.list_topic_logs(
-            '<TOPIC_ID>',
-        )
-
-        self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
     def test_list_subscribers(self, m):

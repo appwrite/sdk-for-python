@@ -23,6 +23,28 @@ class Locale(AppwriteModel):
         True if country is part of the European Union.
     currency : str
         Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format
+    city : Optional[str]
+        City
+    timezone : Optional[str]
+        Name of timezone
+    postalcode : Optional[str]
+        Postal code
+    latitude : Optional[float]
+        Latitude
+    longitude : Optional[float]
+        Longitude
+    autonomoussystemnumber : Optional[str]
+        Autonomous System Number (ASN) of the IP
+    autonomoussystemorganization : Optional[str]
+        Organization that owns the ASN
+    isp : Optional[str]
+        Internet service provider of the IP
+    connectiontype : Optional[str]
+        Connection type of the IP (e.g. cable, cellular, corporate)
+    connectionusagetype : Optional[str]
+        User type classification of the IP (e.g. residential, business, hosting)
+    connectionorganization : Optional[str]
+        Registered organization of the IP
     """
     ip: str = Field(..., alias='ip')
     countrycode: str = Field(..., alias='countryCode')
@@ -31,3 +53,14 @@ class Locale(AppwriteModel):
     continent: str = Field(..., alias='continent')
     eu: bool = Field(..., alias='eu')
     currency: str = Field(..., alias='currency')
+    city: Optional[str] = Field(default=None, alias='city')
+    timezone: Optional[str] = Field(default=None, alias='timeZone')
+    postalcode: Optional[str] = Field(default=None, alias='postalCode')
+    latitude: Optional[float] = Field(default=None, alias='latitude')
+    longitude: Optional[float] = Field(default=None, alias='longitude')
+    autonomoussystemnumber: Optional[str] = Field(default=None, alias='autonomousSystemNumber')
+    autonomoussystemorganization: Optional[str] = Field(default=None, alias='autonomousSystemOrganization')
+    isp: Optional[str] = Field(default=None, alias='isp')
+    connectiontype: Optional[str] = Field(default=None, alias='connectionType')
+    connectionusagetype: Optional[str] = Field(default=None, alias='connectionUsageType')
+    connectionorganization: Optional[str] = Field(default=None, alias='connectionOrganization')

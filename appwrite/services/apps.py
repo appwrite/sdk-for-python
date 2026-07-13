@@ -396,6 +396,53 @@ class Apps(Service):
         return response
 
 
+    def update_labels(
+        self,
+        app_id: str,
+        labels: List[str]
+    ) -> App:
+        """
+        Update the labels of an application. Labels are read-only for clients; only a server SDK using a project API key can set them. Replaces the previous labels.
+
+        Parameters
+        ----------
+        app_id : str
+            Application unique ID.
+        labels : List[str]
+            Array of application labels. Replaces the previous labels. Maximum of 1000 labels are allowed, each up to 36 alphanumeric characters long.
+        
+        Returns
+        -------
+        App
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/apps/{appId}/labels'
+        api_params = {}
+        if app_id is None:
+            raise AppwriteException('Missing required parameter: "app_id"')
+
+        if labels is None:
+            raise AppwriteException('Missing required parameter: "labels"')
+
+        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+
+        api_params['labels'] = self._normalize_value(labels)
+
+        response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=App)
+
+
     def list_secrets(
         self,
         app_id: str,

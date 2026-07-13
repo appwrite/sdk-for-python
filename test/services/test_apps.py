@@ -42,6 +42,7 @@ class AppsServiceTest(unittest.TestCase):
     "contacts": [],
     "tagline": "Automate your workspace.",
     "tags": [],
+    "labels": [],
     "images": [],
     "supportUrl": "https:\/\/example.com\/support",
     "dataDeletionUrl": "https:\/\/example.com\/data-deletion",
@@ -80,6 +81,7 @@ class AppsServiceTest(unittest.TestCase):
     "contacts": [],
     "tagline": "Automate your workspace.",
     "tags": [],
+    "labels": [],
     "images": [],
     "supportUrl": "https:\/\/example.com\/support",
     "dataDeletionUrl": "https:\/\/example.com\/data-deletion",
@@ -116,6 +118,7 @@ class AppsServiceTest(unittest.TestCase):
     "contacts": [],
     "tagline": "Automate your workspace.",
     "tags": [],
+    "labels": [],
     "images": [],
     "supportUrl": "https:\/\/example.com\/support",
     "dataDeletionUrl": "https:\/\/example.com\/data-deletion",
@@ -149,6 +152,44 @@ class AppsServiceTest(unittest.TestCase):
         )
 
         self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
+    def test_update_labels(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "name": "My Application",
+    "description": "Connect your workspace to My Application.",
+    "clientUri": "https:\/\/example.com",
+    "logoUri": "https:\/\/example.com\/logo.png",
+    "privacyPolicyUrl": "https:\/\/example.com\/privacy",
+    "termsUrl": "https:\/\/example.com\/terms",
+    "contacts": [],
+    "tagline": "Automate your workspace.",
+    "tags": [],
+    "labels": [],
+    "images": [],
+    "supportUrl": "https:\/\/example.com\/support",
+    "dataDeletionUrl": "https:\/\/example.com\/data-deletion",
+    "redirectUris": [],
+    "postLogoutRedirectUris": [],
+    "enabled": True,
+    "type": "confidential",
+    "deviceFlow": True,
+    "teamId": "5e5ea5c16897e",
+    "userId": "5e5ea5c16897e",
+    "secrets": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.apps.update_labels(
+            '<APP_ID>',
+            [],
+        )
+
+        self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
     def test_list_secrets(self, m):
@@ -236,6 +277,7 @@ class AppsServiceTest(unittest.TestCase):
     "contacts": [],
     "tagline": "Automate your workspace.",
     "tags": [],
+    "labels": [],
     "images": [],
     "supportUrl": "https:\/\/example.com\/support",
     "dataDeletionUrl": "https:\/\/example.com\/data-deletion",

@@ -14,6 +14,7 @@ from ..models.mock_number import MockNumber
 from ..models.o_auth2_provider_list import OAuth2ProviderList
 from ..models.o_auth2_amazon import OAuth2Amazon
 from ..models.o_auth2_apple import OAuth2Apple
+from ..models.o_auth2_appwrite import OAuth2Appwrite
 from ..models.o_auth2_auth0 import OAuth2Auth0
 from ..models.o_auth2_authentik import OAuth2Authentik
 from ..models.o_auth2_autodesk import OAuth2Autodesk
@@ -37,6 +38,7 @@ from ..models.o_auth2_kick import OAuth2Kick
 from ..models.o_auth2_linkedin import OAuth2Linkedin
 from ..models.o_auth2_microsoft import OAuth2Microsoft
 from ..models.o_auth2_notion import OAuth2Notion
+from ..enums.project_o_auth2_oidc_prompt import ProjectOAuth2OidcPrompt
 from ..models.o_auth2_oidc import OAuth2Oidc
 from ..models.o_auth2_okta import OAuth2Okta
 from ..models.o_auth2_paypal import OAuth2Paypal
@@ -254,7 +256,7 @@ class Project(Service):
         name : str
             Key name. Max length: 128 chars.
         scopes : List[ProjectKeyScopes]
-            Key scopes list. Maximum of 100 scopes are allowed.
+            Key scopes list. Maximum of 200 scopes are allowed.
         expire : Optional[str]
             Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
         
@@ -284,7 +286,8 @@ class Project(Service):
         api_params['keyId'] = self._normalize_value(key_id)
         api_params['name'] = self._normalize_value(name)
         api_params['scopes'] = self._normalize_value(scopes)
-        api_params['expire'] = self._normalize_value(expire)
+        if expire is not None:
+            api_params['expire'] = self._normalize_value(expire)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -308,7 +311,7 @@ class Project(Service):
         Parameters
         ----------
         scopes : List[ProjectKeyScopes]
-            Key scopes list. Maximum of 100 scopes are allowed.
+            Key scopes list. Maximum of 200 scopes are allowed.
         duration : float
             Time in seconds before ephemeral key expires. Maximum duration is 3600 seconds.
         
@@ -400,7 +403,7 @@ class Project(Service):
         name : str
             Key name. Max length: 128 chars.
         scopes : List[ProjectKeyScopes]
-            Key scopes list. Maximum of 100 scopes are allowed.
+            Key scopes list. Maximum of 200 scopes are allowed.
         expire : Optional[str]
             Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
         
@@ -430,7 +433,8 @@ class Project(Service):
 
         api_params['name'] = self._normalize_value(name)
         api_params['scopes'] = self._normalize_value(scopes)
-        api_params['expire'] = self._normalize_value(expire)
+        if expire is not None:
+            api_params['expire'] = self._normalize_value(expire)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -790,7 +794,8 @@ class Project(Service):
         verification_url: Optional[str] = None,
         user_code_length: Optional[float] = None,
         user_code_format: Optional[str] = None,
-        device_code_duration: Optional[float] = None
+        device_code_duration: Optional[float] = None,
+        default_scopes: Optional[List[str]] = None
     ) -> ProjectModel:
         """
         Update the OAuth2 server (OIDC provider) configuration.
@@ -823,6 +828,8 @@ class Project(Service):
             Character set for device flow user codes: `numeric` (digits only — best for numeric keypads and TV remotes), `alphabetic` (letters only), or `alphanumeric` (letters and digits — highest entropy per character). Defaults to `alphanumeric`.
         device_code_duration : Optional[float]
             Lifetime in seconds of device flow device codes and user codes. Device codes are intentionally short-lived. Leave empty to use default 600.
+        default_scopes : Optional[List[str]]
+            List of OAuth2 scopes used when an authorization request omits the scope parameter. Every default scope must also be allowed by the OAuth2 server. Maximum of 100 scopes are allowed, each up to 128 characters long.
         
         Returns
         -------
@@ -850,17 +857,26 @@ class Project(Service):
             api_params['scopes'] = self._normalize_value(scopes)
         if authorization_details_types is not None:
             api_params['authorizationDetailsTypes'] = self._normalize_value(authorization_details_types)
-        api_params['accessTokenDuration'] = self._normalize_value(access_token_duration)
-        api_params['refreshTokenDuration'] = self._normalize_value(refresh_token_duration)
-        api_params['publicAccessTokenDuration'] = self._normalize_value(public_access_token_duration)
-        api_params['publicRefreshTokenDuration'] = self._normalize_value(public_refresh_token_duration)
-        api_params['confidentialPkce'] = self._normalize_value(confidential_pkce)
+        if access_token_duration is not None:
+            api_params['accessTokenDuration'] = self._normalize_value(access_token_duration)
+        if refresh_token_duration is not None:
+            api_params['refreshTokenDuration'] = self._normalize_value(refresh_token_duration)
+        if public_access_token_duration is not None:
+            api_params['publicAccessTokenDuration'] = self._normalize_value(public_access_token_duration)
+        if public_refresh_token_duration is not None:
+            api_params['publicRefreshTokenDuration'] = self._normalize_value(public_refresh_token_duration)
+        if confidential_pkce is not None:
+            api_params['confidentialPkce'] = self._normalize_value(confidential_pkce)
         if verification_url is not None:
             api_params['verificationUrl'] = self._normalize_value(verification_url)
-        api_params['userCodeLength'] = self._normalize_value(user_code_length)
+        if user_code_length is not None:
+            api_params['userCodeLength'] = self._normalize_value(user_code_length)
         if user_code_format is not None:
             api_params['userCodeFormat'] = self._normalize_value(user_code_format)
-        api_params['deviceCodeDuration'] = self._normalize_value(device_code_duration)
+        if device_code_duration is not None:
+            api_params['deviceCodeDuration'] = self._normalize_value(device_code_duration)
+        if default_scopes is not None:
+            api_params['defaultScopes'] = self._normalize_value(default_scopes)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -903,9 +919,12 @@ class Project(Service):
         api_path = '/project/oauth2/amazon'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -954,11 +973,16 @@ class Project(Service):
         api_path = '/project/oauth2/apple'
         api_params = {}
 
-        api_params['serviceId'] = self._normalize_value(service_id)
-        api_params['keyId'] = self._normalize_value(key_id)
-        api_params['teamId'] = self._normalize_value(team_id)
-        api_params['p8File'] = self._normalize_value(p8_file)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if service_id is not None:
+            api_params['serviceId'] = self._normalize_value(service_id)
+        if key_id is not None:
+            api_params['keyId'] = self._normalize_value(key_id)
+        if team_id is not None:
+            api_params['teamId'] = self._normalize_value(team_id)
+        if p8_file is not None:
+            api_params['p8File'] = self._normalize_value(p8_file)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -967,6 +991,54 @@ class Project(Service):
         }, api_params)
 
         return self._parse_response(response, model=OAuth2Apple)
+
+
+    def update_o_auth2_appwrite(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None
+    ) -> OAuth2Appwrite:
+        """
+        Update the project OAuth2 Appwrite configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Appwrite OAuth2 app. For example: 6a42000000000000b5a0
+        client_secret : Optional[str]
+            'Client Secret' of Appwrite OAuth2 app. For example: b86afd000000000000000000000000000000000000000000000000000ced5f93
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        
+        Returns
+        -------
+        OAuth2Appwrite
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/appwrite'
+        api_params = {}
+
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=OAuth2Appwrite)
 
 
     def update_o_auth2_auth0(
@@ -1004,10 +1076,14 @@ class Project(Service):
         api_path = '/project/oauth2/auth0'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['endpoint'] = self._normalize_value(endpoint)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if endpoint is not None:
+            api_params['endpoint'] = self._normalize_value(endpoint)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1053,10 +1129,14 @@ class Project(Service):
         api_path = '/project/oauth2/authentik'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['endpoint'] = self._normalize_value(endpoint)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if endpoint is not None:
+            api_params['endpoint'] = self._normalize_value(endpoint)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1099,9 +1179,12 @@ class Project(Service):
         api_path = '/project/oauth2/autodesk'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1144,9 +1227,12 @@ class Project(Service):
         api_path = '/project/oauth2/bitbucket'
         api_params = {}
 
-        api_params['key'] = self._normalize_value(key)
-        api_params['secret'] = self._normalize_value(secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if key is not None:
+            api_params['key'] = self._normalize_value(key)
+        if secret is not None:
+            api_params['secret'] = self._normalize_value(secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1189,9 +1275,12 @@ class Project(Service):
         api_path = '/project/oauth2/bitly'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1234,9 +1323,12 @@ class Project(Service):
         api_path = '/project/oauth2/box'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1279,9 +1371,12 @@ class Project(Service):
         api_path = '/project/oauth2/dailymotion'
         api_params = {}
 
-        api_params['apiKey'] = self._normalize_value(api_key)
-        api_params['apiSecret'] = self._normalize_value(api_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if api_key is not None:
+            api_params['apiKey'] = self._normalize_value(api_key)
+        if api_secret is not None:
+            api_params['apiSecret'] = self._normalize_value(api_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1324,9 +1419,12 @@ class Project(Service):
         api_path = '/project/oauth2/discord'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1369,9 +1467,12 @@ class Project(Service):
         api_path = '/project/oauth2/disqus'
         api_params = {}
 
-        api_params['publicKey'] = self._normalize_value(public_key)
-        api_params['secretKey'] = self._normalize_value(secret_key)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if public_key is not None:
+            api_params['publicKey'] = self._normalize_value(public_key)
+        if secret_key is not None:
+            api_params['secretKey'] = self._normalize_value(secret_key)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1414,9 +1515,12 @@ class Project(Service):
         api_path = '/project/oauth2/dropbox'
         api_params = {}
 
-        api_params['appKey'] = self._normalize_value(app_key)
-        api_params['appSecret'] = self._normalize_value(app_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if app_key is not None:
+            api_params['appKey'] = self._normalize_value(app_key)
+        if app_secret is not None:
+            api_params['appSecret'] = self._normalize_value(app_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1459,9 +1563,12 @@ class Project(Service):
         api_path = '/project/oauth2/etsy'
         api_params = {}
 
-        api_params['keyString'] = self._normalize_value(key_string)
-        api_params['sharedSecret'] = self._normalize_value(shared_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if key_string is not None:
+            api_params['keyString'] = self._normalize_value(key_string)
+        if shared_secret is not None:
+            api_params['sharedSecret'] = self._normalize_value(shared_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1504,9 +1611,12 @@ class Project(Service):
         api_path = '/project/oauth2/facebook'
         api_params = {}
 
-        api_params['appId'] = self._normalize_value(app_id)
-        api_params['appSecret'] = self._normalize_value(app_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if app_id is not None:
+            api_params['appId'] = self._normalize_value(app_id)
+        if app_secret is not None:
+            api_params['appSecret'] = self._normalize_value(app_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1549,9 +1659,12 @@ class Project(Service):
         api_path = '/project/oauth2/figma'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1597,10 +1710,14 @@ class Project(Service):
         api_path = '/project/oauth2/fusionauth'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['endpoint'] = self._normalize_value(endpoint)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if endpoint is not None:
+            api_params['endpoint'] = self._normalize_value(endpoint)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1643,9 +1760,12 @@ class Project(Service):
         api_path = '/project/oauth2/github'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1691,10 +1811,14 @@ class Project(Service):
         api_path = '/project/oauth2/gitlab'
         api_params = {}
 
-        api_params['applicationId'] = self._normalize_value(application_id)
-        api_params['secret'] = self._normalize_value(secret)
-        api_params['endpoint'] = self._normalize_value(endpoint)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if application_id is not None:
+            api_params['applicationId'] = self._normalize_value(application_id)
+        if secret is not None:
+            api_params['secret'] = self._normalize_value(secret)
+        if endpoint is not None:
+            api_params['endpoint'] = self._normalize_value(endpoint)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1740,10 +1864,14 @@ class Project(Service):
         api_path = '/project/oauth2/google'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['prompt'] = self._normalize_value(prompt)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if prompt is not None:
+            api_params['prompt'] = self._normalize_value(prompt)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1792,11 +1920,16 @@ class Project(Service):
         api_path = '/project/oauth2/keycloak'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['endpoint'] = self._normalize_value(endpoint)
-        api_params['realmName'] = self._normalize_value(realm_name)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if endpoint is not None:
+            api_params['endpoint'] = self._normalize_value(endpoint)
+        if realm_name is not None:
+            api_params['realmName'] = self._normalize_value(realm_name)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1839,9 +1972,12 @@ class Project(Service):
         api_path = '/project/oauth2/kick'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1884,9 +2020,12 @@ class Project(Service):
         api_path = '/project/oauth2/linkedin'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['primaryClientSecret'] = self._normalize_value(primary_client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if primary_client_secret is not None:
+            api_params['primaryClientSecret'] = self._normalize_value(primary_client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1932,10 +2071,14 @@ class Project(Service):
         api_path = '/project/oauth2/microsoft'
         api_params = {}
 
-        api_params['applicationId'] = self._normalize_value(application_id)
-        api_params['applicationSecret'] = self._normalize_value(application_secret)
-        api_params['tenant'] = self._normalize_value(tenant)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if application_id is not None:
+            api_params['applicationId'] = self._normalize_value(application_id)
+        if application_secret is not None:
+            api_params['applicationSecret'] = self._normalize_value(application_secret)
+        if tenant is not None:
+            api_params['tenant'] = self._normalize_value(tenant)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1978,9 +2121,12 @@ class Project(Service):
         api_path = '/project/oauth2/notion'
         api_params = {}
 
-        api_params['oauthClientId'] = self._normalize_value(oauth_client_id)
-        api_params['oauthClientSecret'] = self._normalize_value(oauth_client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if oauth_client_id is not None:
+            api_params['oauthClientId'] = self._normalize_value(oauth_client_id)
+        if oauth_client_secret is not None:
+            api_params['oauthClientSecret'] = self._normalize_value(oauth_client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1999,6 +2145,8 @@ class Project(Service):
         authorization_url: Optional[str] = None,
         token_url: Optional[str] = None,
         user_info_url: Optional[str] = None,
+        prompt: Optional[List[ProjectOAuth2OidcPrompt]] = None,
+        max_age: Optional[float] = None,
         enabled: Optional[bool] = None
     ) -> OAuth2Oidc:
         """
@@ -2018,6 +2166,10 @@ class Project(Service):
             OpenID Connect token endpoint URL. Required when wellKnownURL is not provided. For example: https://myoauth.com/oauth2/token
         user_info_url : Optional[str]
             OpenID Connect user info endpoint URL. Required when wellKnownURL is not provided. For example: https://myoauth.com/oauth2/userinfo
+        prompt : Optional[List[ProjectOAuth2OidcPrompt]]
+            Array of OpenID Connect prompt values controlling the authentication and consent screens. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
+        max_age : Optional[float]
+            Maximum authentication age in seconds. When set, the user must have authenticated within this many seconds, otherwise they are prompted to re-authenticate.
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
         
@@ -2035,13 +2187,24 @@ class Project(Service):
         api_path = '/project/oauth2/oidc'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['wellKnownURL'] = self._normalize_value(well_known_url)
-        api_params['authorizationURL'] = self._normalize_value(authorization_url)
-        api_params['tokenURL'] = self._normalize_value(token_url)
-        api_params['userInfoURL'] = self._normalize_value(user_info_url)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if well_known_url is not None:
+            api_params['wellKnownURL'] = self._normalize_value(well_known_url)
+        if authorization_url is not None:
+            api_params['authorizationURL'] = self._normalize_value(authorization_url)
+        if token_url is not None:
+            api_params['tokenURL'] = self._normalize_value(token_url)
+        if user_info_url is not None:
+            api_params['userInfoURL'] = self._normalize_value(user_info_url)
+        if prompt is not None:
+            api_params['prompt'] = self._normalize_value(prompt)
+        if max_age is not None:
+            api_params['maxAge'] = self._normalize_value(max_age)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2090,11 +2253,16 @@ class Project(Service):
         api_path = '/project/oauth2/okta'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['domain'] = self._normalize_value(domain)
-        api_params['authorizationServerId'] = self._normalize_value(authorization_server_id)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if domain is not None:
+            api_params['domain'] = self._normalize_value(domain)
+        if authorization_server_id is not None:
+            api_params['authorizationServerId'] = self._normalize_value(authorization_server_id)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2137,9 +2305,12 @@ class Project(Service):
         api_path = '/project/oauth2/paypal'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['secretKey'] = self._normalize_value(secret_key)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if secret_key is not None:
+            api_params['secretKey'] = self._normalize_value(secret_key)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2182,9 +2353,12 @@ class Project(Service):
         api_path = '/project/oauth2/paypalSandbox'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['secretKey'] = self._normalize_value(secret_key)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if secret_key is not None:
+            api_params['secretKey'] = self._normalize_value(secret_key)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2227,9 +2401,12 @@ class Project(Service):
         api_path = '/project/oauth2/podio'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2272,9 +2449,12 @@ class Project(Service):
         api_path = '/project/oauth2/salesforce'
         api_params = {}
 
-        api_params['customerKey'] = self._normalize_value(customer_key)
-        api_params['customerSecret'] = self._normalize_value(customer_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if customer_key is not None:
+            api_params['customerKey'] = self._normalize_value(customer_key)
+        if customer_secret is not None:
+            api_params['customerSecret'] = self._normalize_value(customer_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2317,9 +2497,12 @@ class Project(Service):
         api_path = '/project/oauth2/slack'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2362,9 +2545,12 @@ class Project(Service):
         api_path = '/project/oauth2/spotify'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2407,9 +2593,12 @@ class Project(Service):
         api_path = '/project/oauth2/stripe'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['apiSecretKey'] = self._normalize_value(api_secret_key)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if api_secret_key is not None:
+            api_params['apiSecretKey'] = self._normalize_value(api_secret_key)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2452,9 +2641,12 @@ class Project(Service):
         api_path = '/project/oauth2/tradeshift'
         api_params = {}
 
-        api_params['oauth2ClientId'] = self._normalize_value(oauth2_client_id)
-        api_params['oauth2ClientSecret'] = self._normalize_value(oauth2_client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if oauth2_client_id is not None:
+            api_params['oauth2ClientId'] = self._normalize_value(oauth2_client_id)
+        if oauth2_client_secret is not None:
+            api_params['oauth2ClientSecret'] = self._normalize_value(oauth2_client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2497,9 +2689,12 @@ class Project(Service):
         api_path = '/project/oauth2/tradeshiftBox'
         api_params = {}
 
-        api_params['oauth2ClientId'] = self._normalize_value(oauth2_client_id)
-        api_params['oauth2ClientSecret'] = self._normalize_value(oauth2_client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if oauth2_client_id is not None:
+            api_params['oauth2ClientId'] = self._normalize_value(oauth2_client_id)
+        if oauth2_client_secret is not None:
+            api_params['oauth2ClientSecret'] = self._normalize_value(oauth2_client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2542,9 +2737,12 @@ class Project(Service):
         api_path = '/project/oauth2/twitch'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2587,9 +2785,12 @@ class Project(Service):
         api_path = '/project/oauth2/wordpress'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2632,9 +2833,12 @@ class Project(Service):
         api_path = '/project/oauth2/x'
         api_params = {}
 
-        api_params['customerKey'] = self._normalize_value(customer_key)
-        api_params['secretKey'] = self._normalize_value(secret_key)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if customer_key is not None:
+            api_params['customerKey'] = self._normalize_value(customer_key)
+        if secret_key is not None:
+            api_params['secretKey'] = self._normalize_value(secret_key)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2677,9 +2881,12 @@ class Project(Service):
         api_path = '/project/oauth2/yahoo'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2722,9 +2929,12 @@ class Project(Service):
         api_path = '/project/oauth2/yandex'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2767,9 +2977,12 @@ class Project(Service):
         api_path = '/project/oauth2/zoho'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -2812,9 +3025,12 @@ class Project(Service):
         api_path = '/project/oauth2/zoom'
         api_params = {}
 
-        api_params['clientId'] = self._normalize_value(client_id)
-        api_params['clientSecret'] = self._normalize_value(client_secret)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4529,16 +4745,26 @@ class Project(Service):
         api_path = '/project/smtp'
         api_params = {}
 
-        api_params['host'] = self._normalize_value(host)
-        api_params['port'] = self._normalize_value(port)
-        api_params['username'] = self._normalize_value(username)
-        api_params['password'] = self._normalize_value(password)
-        api_params['senderEmail'] = self._normalize_value(sender_email)
-        api_params['senderName'] = self._normalize_value(sender_name)
-        api_params['replyToEmail'] = self._normalize_value(reply_to_email)
-        api_params['replyToName'] = self._normalize_value(reply_to_name)
-        api_params['secure'] = self._normalize_value(secure)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if host is not None:
+            api_params['host'] = self._normalize_value(host)
+        if port is not None:
+            api_params['port'] = self._normalize_value(port)
+        if username is not None:
+            api_params['username'] = self._normalize_value(username)
+        if password is not None:
+            api_params['password'] = self._normalize_value(password)
+        if sender_email is not None:
+            api_params['senderEmail'] = self._normalize_value(sender_email)
+        if sender_name is not None:
+            api_params['senderName'] = self._normalize_value(sender_name)
+        if reply_to_email is not None:
+            api_params['replyToEmail'] = self._normalize_value(reply_to_email)
+        if reply_to_name is not None:
+            api_params['replyToName'] = self._normalize_value(reply_to_name)
+        if secure is not None:
+            api_params['secure'] = self._normalize_value(secure)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4683,12 +4909,18 @@ class Project(Service):
         api_params['templateId'] = self._normalize_value(template_id)
         if locale is not None:
             api_params['locale'] = self._normalize_value(locale)
-        api_params['subject'] = self._normalize_value(subject)
-        api_params['message'] = self._normalize_value(message)
-        api_params['senderName'] = self._normalize_value(sender_name)
-        api_params['senderEmail'] = self._normalize_value(sender_email)
-        api_params['replyToEmail'] = self._normalize_value(reply_to_email)
-        api_params['replyToName'] = self._normalize_value(reply_to_name)
+        if subject is not None:
+            api_params['subject'] = self._normalize_value(subject)
+        if message is not None:
+            api_params['message'] = self._normalize_value(message)
+        if sender_name is not None:
+            api_params['senderName'] = self._normalize_value(sender_name)
+        if sender_email is not None:
+            api_params['senderEmail'] = self._normalize_value(sender_email)
+        if reply_to_email is not None:
+            api_params['replyToEmail'] = self._normalize_value(reply_to_email)
+        if reply_to_name is not None:
+            api_params['replyToName'] = self._normalize_value(reply_to_name)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4922,9 +5154,12 @@ class Project(Service):
 
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
-        api_params['key'] = self._normalize_value(key)
-        api_params['value'] = self._normalize_value(value)
-        api_params['secret'] = self._normalize_value(secret)
+        if key is not None:
+            api_params['key'] = self._normalize_value(key)
+        if value is not None:
+            api_params['value'] = self._normalize_value(value)
+        if secret is not None:
+            api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

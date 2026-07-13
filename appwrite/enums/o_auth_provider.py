@@ -3,6 +3,7 @@ from enum import Enum
 class OAuthProvider(Enum):
     AMAZON = "amazon"
     APPLE = "apple"
+    APPWRITE = "appwrite"
     AUTH0 = "auth0"
     AUTHENTIK = "authentik"
     AUTODESK = "autodesk"

@@ -127,7 +127,8 @@ class Webhooks(Service):
             api_params['authUsername'] = self._normalize_value(auth_username)
         if auth_password is not None:
             api_params['authPassword'] = self._normalize_value(auth_password)
-        api_params['secret'] = self._normalize_value(secret)
+        if secret is not None:
+            api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -330,7 +331,8 @@ class Webhooks(Service):
 
         api_path = api_path.replace('{webhookId}', str(self._normalize_value(webhook_id)))
 
-        api_params['secret'] = self._normalize_value(secret)
+        if secret is not None:
+            api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

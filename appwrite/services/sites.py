@@ -258,11 +258,17 @@ class Sites(Service):
 
 
     def list_specifications(
-        self
+        self,
+        type: Optional[str] = None
     ) -> SpecificationList:
         """
         List allowed site specifications for this instance.
 
+        Parameters
+        ----------
+        type : Optional[str]
+            Specification type to list. Can be one of: runtimes, builds.
+        
         Returns
         -------
         SpecificationList
@@ -276,6 +282,9 @@ class Sites(Service):
 
         api_path = '/sites/specifications'
         api_params = {}
+
+        if type is not None:
+            api_params['type'] = self._normalize_value(type)
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -458,8 +467,10 @@ class Sites(Service):
             api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
             api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
-        api_params['providerBranches'] = self._normalize_value(provider_branches)
-        api_params['providerPaths'] = self._normalize_value(provider_paths)
+        if provider_branches is not None:
+            api_params['providerBranches'] = self._normalize_value(provider_branches)
+        if provider_paths is not None:
+            api_params['providerPaths'] = self._normalize_value(provider_paths)
         if build_specification is not None:
             api_params['buildSpecification'] = self._normalize_value(build_specification)
         if runtime_specification is not None:
@@ -1420,9 +1431,12 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
-        api_params['key'] = self._normalize_value(key)
-        api_params['value'] = self._normalize_value(value)
-        api_params['secret'] = self._normalize_value(secret)
+        if key is not None:
+            api_params['key'] = self._normalize_value(key)
+        if value is not None:
+            api_params['value'] = self._normalize_value(value)
+        if secret is not None:
+            api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

@@ -126,7 +126,7 @@ class Functions(Service):
         commands : Optional[str]
             Build Commands.
         scopes : Optional[List[ProjectKeyScopes]]
-            List of scopes allowed for API key auto-generated for every execution. Maximum of 100 scopes are allowed.
+            List of scopes allowed for API key auto-generated for every execution. Maximum of 200 scopes are allowed.
         installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Control System) deployment.
         provider_repository_id : Optional[str]
@@ -251,11 +251,17 @@ class Functions(Service):
 
 
     def list_specifications(
-        self
+        self,
+        type: Optional[str] = None
     ) -> SpecificationList:
         """
         List allowed function specifications for this instance.
 
+        Parameters
+        ----------
+        type : Optional[str]
+            Specification type to list. Can be one of: runtimes, builds.
+        
         Returns
         -------
         SpecificationList
@@ -269,6 +275,9 @@ class Functions(Service):
 
         api_path = '/functions/specifications'
         api_params = {}
+
+        if type is not None:
+            api_params['type'] = self._normalize_value(type)
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -370,7 +379,7 @@ class Functions(Service):
         commands : Optional[str]
             Build Commands.
         scopes : Optional[List[ProjectKeyScopes]]
-            List of scopes allowed for API Key auto-generated for every execution. Maximum of 100 scopes are allowed.
+            List of scopes allowed for API Key auto-generated for every execution. Maximum of 200 scopes are allowed.
         installation_id : Optional[str]
             Appwrite Installation ID for VCS (Version Controle System) deployment.
         provider_repository_id : Optional[str]
@@ -436,15 +445,18 @@ class Functions(Service):
             api_params['scopes'] = self._normalize_value(scopes)
         if installation_id is not None:
             api_params['installationId'] = self._normalize_value(installation_id)
-        api_params['providerRepositoryId'] = self._normalize_value(provider_repository_id)
+        if provider_repository_id is not None:
+            api_params['providerRepositoryId'] = self._normalize_value(provider_repository_id)
         if provider_branch is not None:
             api_params['providerBranch'] = self._normalize_value(provider_branch)
         if provider_silent_mode is not None:
             api_params['providerSilentMode'] = self._normalize_value(provider_silent_mode)
         if provider_root_directory is not None:
             api_params['providerRootDirectory'] = self._normalize_value(provider_root_directory)
-        api_params['providerBranches'] = self._normalize_value(provider_branches)
-        api_params['providerPaths'] = self._normalize_value(provider_paths)
+        if provider_branches is not None:
+            api_params['providerBranches'] = self._normalize_value(provider_branches)
+        if provider_paths is not None:
+            api_params['providerPaths'] = self._normalize_value(provider_paths)
         if build_specification is not None:
             api_params['buildSpecification'] = self._normalize_value(build_specification)
         if runtime_specification is not None:
@@ -968,7 +980,8 @@ class Functions(Service):
         self,
         function_id: str,
         deployment_id: str,
-        type: Optional[DeploymentDownloadType] = None
+        type: Optional[DeploymentDownloadType] = None,
+        token: Optional[str] = None
     ) -> bytes:
         """
         Get a function deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
@@ -981,6 +994,8 @@ class Functions(Service):
             Deployment ID.
         type : Optional[DeploymentDownloadType]
             Deployment file to download. Can be: "source", "output".
+        token : Optional[str]
+            Presigned source-download token for accessing this deployment without a session (jobs-service).
         
         Returns
         -------
@@ -1006,6 +1021,8 @@ class Functions(Service):
 
         if type is not None:
             api_params['type'] = self._normalize_value(type)
+        if token is not None:
+            api_params['token'] = self._normalize_value(token)
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1169,7 +1186,8 @@ class Functions(Service):
             api_params['method'] = self._normalize_value(method)
         if headers is not None:
             api_params['headers'] = self._normalize_value(headers)
-        api_params['scheduledAt'] = self._normalize_value(scheduled_at)
+        if scheduled_at is not None:
+            api_params['scheduledAt'] = self._normalize_value(scheduled_at)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -1479,9 +1497,12 @@ class Functions(Service):
         api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
-        api_params['key'] = self._normalize_value(key)
-        api_params['value'] = self._normalize_value(value)
-        api_params['secret'] = self._normalize_value(secret)
+        if key is not None:
+            api_params['key'] = self._normalize_value(key)
+        if value is not None:
+            api_params['value'] = self._normalize_value(value)
+        if secret is not None:
+            api_params['secret'] = self._normalize_value(secret)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

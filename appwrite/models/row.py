@@ -57,6 +57,17 @@ class Row(AppwriteModel, Generic[T]):
     def data(self, value: T) -> None:
         object.__setattr__(self, '_data', value)
 
+    def model_dump(self, **kwargs) -> Dict[str, Any]:
+        result = super().model_dump(**kwargs)
+        if hasattr(self, '_data'):
+            if isinstance(self._data, dict):
+                result['data'] = self._data
+            elif hasattr(self._data, 'model_dump'):
+                result['data'] = self._data.model_dump(**kwargs)
+            else:
+                result['data'] = self._data
+        return result
+
     def to_dict(self) -> Dict[str, Any]:
         result = super().to_dict()
         if hasattr(self, '_data'):

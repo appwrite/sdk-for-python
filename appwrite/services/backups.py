@@ -86,7 +86,8 @@ class Backups(Service):
 
 
         api_params['services'] = self._normalize_value(services)
-        api_params['resourceId'] = self._normalize_value(resource_id)
+        if resource_id is not None:
+            api_params['resourceId'] = self._normalize_value(resource_id)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -273,7 +274,8 @@ class Backups(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         api_params['services'] = self._normalize_value(services)
-        api_params['resourceId'] = self._normalize_value(resource_id)
+        if resource_id is not None:
+            api_params['resourceId'] = self._normalize_value(resource_id)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
         api_params['retention'] = self._normalize_value(retention)
@@ -369,11 +371,14 @@ class Backups(Service):
 
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
-        api_params['name'] = self._normalize_value(name)
-        api_params['retention'] = self._normalize_value(retention)
+        if name is not None:
+            api_params['name'] = self._normalize_value(name)
+        if retention is not None:
+            api_params['retention'] = self._normalize_value(retention)
         if schedule is not None:
             api_params['schedule'] = self._normalize_value(schedule)
-        api_params['enabled'] = self._normalize_value(enabled)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call('patch', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -429,10 +434,14 @@ class Backups(Service):
         archive_id: str,
         services: List[BackupServices],
         new_resource_id: Optional[str] = None,
-        new_resource_name: Optional[str] = None
+        new_resource_name: Optional[str] = None,
+        new_specification: Optional[str] = None
     ) -> BackupRestoration:
         """
         Create and trigger a new restoration for a backup on a project.
+        
+        When restoring a DocumentsDB or VectorsDB database to a new resource, pass `newSpecification` to provision the restored database on a different specification than the archived one (for example, restoring onto a larger or smaller dedicated database). Use `serverless` to restore onto the shared pool, or a dedicated specification slug to restore onto a dedicated database of that size. The specification must be permitted by the organization's plan. `newSpecification` is not supported for legacy/TablesDB databases or for bucket restores.
+        
 
         Parameters
         ----------
@@ -444,6 +453,8 @@ class Backups(Service):
             Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         new_resource_name : Optional[str]
             Database name. Max length: 128 chars.
+        new_specification : Optional[str]
+            Specification to provision the restored database on, when restoring a DocumentsDB or VectorsDB database to a new resource. Defaults to the archived database's specification. Use `serverless` for the shared pool or a dedicated specification slug.
         
         Returns
         -------
@@ -471,6 +482,8 @@ class Backups(Service):
             api_params['newResourceId'] = self._normalize_value(new_resource_id)
         if new_resource_name is not None:
             api_params['newResourceName'] = self._normalize_value(new_resource_name)
+        if new_specification is not None:
+            api_params['newSpecification'] = self._normalize_value(new_specification)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

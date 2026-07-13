@@ -57,6 +57,8 @@ class Project(AppwriteModel):
         Labels for the project.
     status : str
         Project status
+    onboarding : Dict[str, Any]
+        Stage progress (completed or skipped) with timestamps and actor types, keyed by stage id.
     authmethods : List[ProjectAuthMethod]
         List of auth methods.
     services : List[ProjectService]
@@ -75,6 +77,8 @@ class Project(AppwriteModel):
         OAuth2 server authorization URL
     oauth2serverscopes : Optional[List[Any]]
         OAuth2 server allowed scopes
+    oauth2serverdefaultscopes : Optional[List[Any]]
+        OAuth2 server scopes used when an authorization request omits the scope parameter
     oauth2serverauthorizationdetailstypes : Optional[List[Any]]
         OAuth2 server accepted RFC 9396 authorization_details types
     oauth2serveraccesstokenduration : Optional[float]
@@ -119,6 +123,7 @@ class Project(AppwriteModel):
     pingedat: str = Field(..., alias='pingedAt')
     labels: List[Any] = Field(..., alias='labels')
     status: str = Field(..., alias='status')
+    onboarding: Dict[str, Any] = Field(..., alias='onboarding')
     authmethods: List[ProjectAuthMethod] = Field(..., alias='authMethods')
     services: List[ProjectService] = Field(..., alias='services')
     protocols: List[ProjectProtocol] = Field(..., alias='protocols')
@@ -128,6 +133,7 @@ class Project(AppwriteModel):
     oauth2serverenabled: Optional[bool] = Field(default=None, alias='oAuth2ServerEnabled')
     oauth2serverauthorizationurl: Optional[str] = Field(default=None, alias='oAuth2ServerAuthorizationUrl')
     oauth2serverscopes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerScopes')
+    oauth2serverdefaultscopes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerDefaultScopes')
     oauth2serverauthorizationdetailstypes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerAuthorizationDetailsTypes')
     oauth2serveraccesstokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerAccessTokenDuration')
     oauth2serverrefreshtokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerRefreshTokenDuration')

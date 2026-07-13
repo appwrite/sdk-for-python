@@ -12,7 +12,8 @@ oauth2 = Oauth2(client)
 
 result: Oauth2Approve = oauth2.approve(
     grant_id = '<GRANT_ID>',
-    authorization_details = '<AUTHORIZATION_DETAILS>' # optional
+    authorization_details = '<AUTHORIZATION_DETAILS>', # optional
+    scope = '<SCOPE>' # optional
 )
 
 print(result.model_dump())

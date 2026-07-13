@@ -37,10 +37,6 @@ class Oauth2ServiceTest(unittest.TestCase):
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
 
         response = self.oauth2.authorize(
-            '<CLIENT_ID>',
-            'https://example.com',
-            'code',
-            '<SCOPE>',
         )
 
         self.assertEqual(response.to_dict(), data)
@@ -72,6 +68,7 @@ class Oauth2ServiceTest(unittest.TestCase):
     "userId": "5e5ea5c16897e",
     "appId": "5e5ea5c16897e",
     "scopes": [],
+    "resources": [],
     "authorizationDetails": "[{\"type\":\"calendar\",\"identifier\":\"primary\",\"actions\":[\"read_events\",\"create_event\"]}]",
     "prompt": "login",
     "redirectUri": "https:\/\/example.com\/callback",
@@ -96,6 +93,7 @@ class Oauth2ServiceTest(unittest.TestCase):
     "userId": "5e5ea5c16897e",
     "appId": "5e5ea5c16897e",
     "scopes": [],
+    "resources": [],
     "authorizationDetails": "[{\"type\":\"calendar\",\"identifier\":\"primary\",\"actions\":[\"read_events\",\"create_event\"]}]",
     "prompt": "login",
     "redirectUri": "https:\/\/example.com\/callback",
@@ -107,6 +105,51 @@ class Oauth2ServiceTest(unittest.TestCase):
 
         response = self.oauth2.get_grant(
             '<GRANT_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_list_organizations(self, m):
+        data = {
+    "total": 5.0,
+    "organizations": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.oauth2.list_organizations(
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_par(self, m):
+        data = {
+    "request_uri": "urn:appwrite:oauth2:request:5e5ea5c16897e",
+    "expires_in": 600.0
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.oauth2.create_par(
+            '<CLIENT_ID>',
+            'https://example.com',
+            'code',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_list_projects(self, m):
+        data = {
+    "total": 5.0,
+    "projects": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.oauth2.list_projects(
         )
 
         self.assertEqual(response.to_dict(), data)
