@@ -4,6 +4,10 @@ from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..models.user import User
+from ..models.oauth2_consent_list import Oauth2ConsentList
+from ..models.oauth2_consent import Oauth2Consent
+from ..models.oauth2_consent_token_list import Oauth2ConsentTokenList
+from ..models.oauth2_consent_token import Oauth2ConsentToken
 from ..models.identity_list import IdentityList
 from ..models.jwt import Jwt
 from ..models.log_list import LogList
@@ -122,6 +126,269 @@ class Account(Service):
         }, api_params)
 
         return User.with_data(response, model_type)
+
+
+    def list_consents(
+        self,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None
+    ) -> Oauth2ConsentList:
+        """
+        Get a list of the OAuth2 consents the current user has given to third-party apps.
+
+        Parameters
+        ----------
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        
+        Returns
+        -------
+        Oauth2ConsentList
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/consents'
+        api_params = {}
+
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Oauth2ConsentList)
+
+
+    def get_consent(
+        self,
+        consent_id: str
+    ) -> Oauth2Consent:
+        """
+        Get an OAuth2 consent the current user has given to a third-party app by its unique ID.
+
+        Parameters
+        ----------
+        consent_id : str
+            Consent unique ID.
+        
+        Returns
+        -------
+        Oauth2Consent
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/consents/{consentId}'
+        api_params = {}
+        if consent_id is None:
+            raise AppwriteException('Missing required parameter: "consent_id"')
+
+        api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
+
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Oauth2Consent)
+
+
+    def delete_consent(
+        self,
+        consent_id: str
+    ) -> Dict[str, Any]:
+        """
+        Delete an OAuth2 consent by its unique ID. All token families issued under the consent are revoked, and the app must ask for consent again to regain access.
+
+        Parameters
+        ----------
+        consent_id : str
+            Consent unique ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/consents/{consentId}'
+        api_params = {}
+        if consent_id is None:
+            raise AppwriteException('Missing required parameter: "consent_id"')
+
+        api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
+
+
+        response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return response
+
+
+    def list_consent_tokens(
+        self,
+        consent_id: str,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None
+    ) -> Oauth2ConsentTokenList:
+        """
+        Get a list of the token families issued under an OAuth2 consent. Each entry represents one authorized device or session; the token secrets themselves are never returned.
+
+        Parameters
+        ----------
+        consent_id : str
+            Consent unique ID.
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        
+        Returns
+        -------
+        Oauth2ConsentTokenList
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/consents/{consentId}/tokens'
+        api_params = {}
+        if consent_id is None:
+            raise AppwriteException('Missing required parameter: "consent_id"')
+
+        api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
+
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Oauth2ConsentTokenList)
+
+
+    def get_consent_token(
+        self,
+        consent_id: str,
+        token_id: str
+    ) -> Oauth2ConsentToken:
+        """
+        Get a token family issued under an OAuth2 consent by its unique ID. The token secrets themselves are never returned.
+
+        Parameters
+        ----------
+        consent_id : str
+            Consent unique ID.
+        token_id : str
+            Token unique ID.
+        
+        Returns
+        -------
+        Oauth2ConsentToken
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/consents/{consentId}/tokens/{tokenId}'
+        api_params = {}
+        if consent_id is None:
+            raise AppwriteException('Missing required parameter: "consent_id"')
+
+        if token_id is None:
+            raise AppwriteException('Missing required parameter: "token_id"')
+
+        api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
+        api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
+
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Oauth2ConsentToken)
+
+
+    def delete_consent_token(
+        self,
+        consent_id: str,
+        token_id: str
+    ) -> Dict[str, Any]:
+        """
+        Delete a token family issued under an OAuth2 consent by its unique ID. The access and refresh tokens of the family stop working immediately; other token families and the consent itself are unaffected.
+
+        Parameters
+        ----------
+        consent_id : str
+            Consent unique ID.
+        token_id : str
+            Token unique ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/consents/{consentId}/tokens/{tokenId}'
+        api_params = {}
+        if consent_id is None:
+            raise AppwriteException('Missing required parameter: "consent_id"')
+
+        if token_id is None:
+            raise AppwriteException('Missing required parameter: "token_id"')
+
+        api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
+        api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
+
+
+        response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return response
 
 
     def update_email(

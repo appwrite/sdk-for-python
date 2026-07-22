@@ -91,7 +91,7 @@ class Oauth2(Service):
         Parameters
         ----------
         client_id : Optional[str]
-            OAuth2 client ID.
+            OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
         redirect_uri : Optional[str]
             Redirect URI where visitor will be redirected after authorization, whether successful or not.
         response_type : Optional[str]
@@ -170,6 +170,109 @@ class Oauth2(Service):
         return self._parse_response(response, model=Oauth2Authorize)
 
 
+    def authorize_post(
+        self,
+        client_id: Optional[str] = None,
+        redirect_uri: Optional[str] = None,
+        response_type: Optional[str] = None,
+        scope: Optional[str] = None,
+        state: Optional[str] = None,
+        nonce: Optional[str] = None,
+        code_challenge: Optional[str] = None,
+        code_challenge_method: Optional[str] = None,
+        prompt: Optional[str] = None,
+        max_age: Optional[float] = None,
+        authorization_details: Optional[str] = None,
+        resource: Optional[str] = None,
+        audience: Optional[str] = None,
+        request_uri: Optional[str] = None
+    ) -> Oauth2Authorize:
+        """
+        Begin the OAuth2 authorization flow. When called without a session, the user is redirected to the consent screen without grant ID. When called with a session, the redirect URL includes param for grant ID. You can pass Accept header of `application/json` to receive a JSON response instead of a redirect.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
+        redirect_uri : Optional[str]
+            Redirect URI where visitor will be redirected after authorization, whether successful or not.
+        response_type : Optional[str]
+            OAuth2 / OIDC response type. One of `code` (Authorization Code Flow), `id_token` (Implicit Flow, OIDC login only), or `code id_token` (Hybrid Flow).
+        scope : Optional[str]
+            Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`, `phone`.
+        state : Optional[str]
+            OAuth2 state. You receive this back in the redirect URI.
+        nonce : Optional[str]
+            OIDC nonce parameter to prevent replay attacks. Required when response_type includes `id_token`.
+        code_challenge : Optional[str]
+            PKCE code challenge. Required when OAuth2 app is public.
+        code_challenge_method : Optional[str]
+            PKCE code challenge method. Required when OAuth2 app is public.
+        prompt : Optional[str]
+            OIDC prompt parameter for customization of consent screen. Space-separated list of: none, login, consent, select_account.
+        max_age : Optional[float]
+            OIDC max_age paraleter for customization of consent screen. Maximum allowable elapsed time in seconds since the user last authenticated. If exceeded, re-authentication is required.
+        authorization_details : Optional[str]
+            Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+        resource : Optional[str]
+            RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
+        audience : Optional[str]
+            Compatibility alias for a single OAuth2 resource indicator URI.
+        request_uri : Optional[str]
+            OAuth2 authorization request handle returned by the pushed authorization request endpoint.
+        
+        Returns
+        -------
+        Oauth2Authorize
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/oauth2/{project_id}/authorize'
+        api_params = {}
+        api_path = api_path.replace('{project_id}', str(self._normalize_value(self.client.get_config('project'))))
+
+        if client_id is not None:
+            api_params['client_id'] = self._normalize_value(client_id)
+        if redirect_uri is not None:
+            api_params['redirect_uri'] = self._normalize_value(redirect_uri)
+        if response_type is not None:
+            api_params['response_type'] = self._normalize_value(response_type)
+        if scope is not None:
+            api_params['scope'] = self._normalize_value(scope)
+        if state is not None:
+            api_params['state'] = self._normalize_value(state)
+        if nonce is not None:
+            api_params['nonce'] = self._normalize_value(nonce)
+        if code_challenge is not None:
+            api_params['code_challenge'] = self._normalize_value(code_challenge)
+        if code_challenge_method is not None:
+            api_params['code_challenge_method'] = self._normalize_value(code_challenge_method)
+        if prompt is not None:
+            api_params['prompt'] = self._normalize_value(prompt)
+        if max_age is not None:
+            api_params['max_age'] = self._normalize_value(max_age)
+        if authorization_details is not None:
+            api_params['authorization_details'] = self._normalize_value(authorization_details)
+        if resource is not None:
+            api_params['resource'] = self._normalize_value(resource)
+        if audience is not None:
+            api_params['audience'] = self._normalize_value(audience)
+        if request_uri is not None:
+            api_params['request_uri'] = self._normalize_value(request_uri)
+
+        response = self.client.call('post', api_path, {
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=Oauth2Authorize)
+
+
     def create_device_authorization(
         self,
         client_id: Optional[str] = None,
@@ -184,7 +287,7 @@ class Oauth2(Service):
         Parameters
         ----------
         client_id : Optional[str]
-            OAuth2 client ID.
+            OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
         scope : Optional[str]
             Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`.
         authorization_details : Optional[str]
@@ -376,7 +479,7 @@ class Oauth2(Service):
         Parameters
         ----------
         client_id : str
-            OAuth2 client ID.
+            OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
         redirect_uri : str
             Redirect URI where visitor will be redirected after authorization, whether successful or not.
         response_type : str
@@ -562,7 +665,7 @@ class Oauth2(Service):
         token_type_hint : Optional[str]
             Type of token to revoke (access_token or refresh_token).
         client_id : Optional[str]
-            OAuth2 client ID.
+            OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
         client_secret : Optional[str]
             OAuth2 client secret. Required for confidential apps; omitted for public apps.
         
@@ -627,7 +730,7 @@ class Oauth2(Service):
         device_code : Optional[str]
             Device code obtained from the device authorization endpoint. Required for `urn:ietf:params:oauth:grant-type:device_code` grant type.
         client_id : Optional[str]
-            OAuth2 client ID.
+            OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
         client_secret : Optional[str]
             OAuth2 client secret. Required for confidential apps.
         code_verifier : Optional[str]

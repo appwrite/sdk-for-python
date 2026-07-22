@@ -67,6 +67,20 @@ class AppsServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_list_o_auth2_scopes(self, m):
+        data = {
+    "total": 5.0,
+    "scopes": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.apps.list_o_auth2_scopes(
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_get(self, m):
         data = {
     "$id": "5e5ea5c16897e",
@@ -234,7 +248,7 @@ class AppsServiceTest(unittest.TestCase):
     "$createdAt": "2020-10-15T06:38:00.000+00:00",
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "appId": "5e5ea5c16897e",
-    "secret": "$argon2i$v=19$m=16,t=2,p=1$MTIzMTIzMTIzMTIzMQ$3\/ZUl3IWERBO2RIm5rHltg",
+    "secret": "",
     "hint": "f5c6c7",
     "createdById": "5e5ea5c16897e",
     "createdByName": "Walter White"

@@ -42,7 +42,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -92,7 +93,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -252,7 +254,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -385,7 +388,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1417,7 +1421,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1457,7 +1462,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1497,7 +1503,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1537,7 +1544,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1577,7 +1585,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1616,7 +1625,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1656,7 +1666,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1696,7 +1707,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1754,7 +1766,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1794,7 +1807,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1834,7 +1848,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1874,7 +1889,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1914,7 +1930,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -1969,7 +1986,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -2010,7 +2028,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -2051,7 +2070,8 @@ class ProjectServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)

@@ -73,6 +73,108 @@ class AccountServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_list_consents(self, m):
+        data = {
+    "total": 5.0,
+    "consents": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.account.list_consents(
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_consent(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "userId": "5e5ea5c16897e",
+    "appId": "5e5ea5c16897e",
+    "cimdUrl": "https:\/\/example.com\/.well-known\/client-metadata.json",
+    "scopes": [],
+    "resources": [],
+    "authorizationDetails": "[{\"type\":\"calendar\",\"identifier\":\"primary\",\"actions\":[\"read_events\",\"create_event\"]}]",
+    "expire": "2020-10-15T06:38:00.000+00:00"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.account.get_consent(
+            '<CONSENT_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_delete_consent(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.account.delete_consent(
+            '<CONSENT_ID>',
+        )
+
+        self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
+    def test_list_consent_tokens(self, m):
+        data = {
+    "total": 5.0,
+    "tokens": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.account.list_consent_tokens(
+            '<CONSENT_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_consent_token(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "consentId": "5e5ea5c16897e",
+    "userId": "5e5ea5c16897e",
+    "appId": "5e5ea5c16897e",
+    "cimdUrl": "https:\/\/example.com\/.well-known\/client-metadata.json",
+    "scopes": [],
+    "resources": [],
+    "authorizationDetails": "[{\"type\":\"calendar\",\"identifier\":\"primary\",\"actions\":[\"read_events\",\"create_event\"]}]",
+    "expire": "2020-10-15T06:38:00.000+00:00"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.account.get_consent_token(
+            '<CONSENT_ID>',
+            '<TOKEN_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_delete_consent_token(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.account.delete_consent_token(
+            '<CONSENT_ID>',
+            '<TOKEN_ID>',
+        )
+
+        self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
     def test_update_email(self, m):
         data = {
     "$id": "5e5ea5c16897e",

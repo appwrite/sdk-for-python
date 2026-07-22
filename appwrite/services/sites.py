@@ -988,7 +988,8 @@ class Sites(Service):
         self,
         site_id: str,
         deployment_id: str,
-        type: Optional[DeploymentDownloadType] = None
+        type: Optional[DeploymentDownloadType] = None,
+        token: Optional[str] = None
     ) -> bytes:
         """
         Get a site deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
@@ -1001,6 +1002,8 @@ class Sites(Service):
             Deployment ID.
         type : Optional[DeploymentDownloadType]
             Deployment file to download. Can be: "source", "output".
+        token : Optional[str]
+            Presigned source-download token for accessing this deployment without a session (jobs-service).
         
         Returns
         -------
@@ -1026,6 +1029,8 @@ class Sites(Service):
 
         if type is not None:
             api_params['type'] = self._normalize_value(type)
+        if token is not None:
+            api_params['token'] = self._normalize_value(token)
 
         response = self.client.call('get', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

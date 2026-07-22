@@ -18,7 +18,7 @@ class AppSecretPlaintext(AppwriteModel):
     appid : str
         Application ID this secret belongs to.
     secret : str
-        Application client secret. Returned in full only when the secret is created; subsequent reads return a masked value.
+        Application client secret. Returned only when the secret is created; subsequent reads always return an empty value.
     hint : str
         Last few characters of the client secret, used to help identify it.
     createdbyid : str

@@ -42,6 +42,20 @@ class Oauth2ServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_authorize_post(self, m):
+        data = {
+    "grantId": "5e5ea5c16897e",
+    "redirectUrl": "https:\/\/example.com\/callback?code=abcde&state=fghij"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.oauth2.authorize_post(
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_create_device_authorization(self, m):
         data = {
     "device_code": "5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a",

@@ -35,9 +35,7 @@ class DatabasesServiceTest(unittest.TestCase):
     "$createdAt": "2020-10-15T06:38:00.000+00:00",
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "enabled": True,
-    "type": "legacy",
-    "policies": [],
-    "archives": []
+    "type": "legacy"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -158,9 +156,7 @@ class DatabasesServiceTest(unittest.TestCase):
     "$createdAt": "2020-10-15T06:38:00.000+00:00",
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "enabled": True,
-    "type": "legacy",
-    "policies": [],
-    "archives": []
+    "type": "legacy"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -179,9 +175,7 @@ class DatabasesServiceTest(unittest.TestCase):
     "$createdAt": "2020-10-15T06:38:00.000+00:00",
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "enabled": True,
-    "type": "legacy",
-    "policies": [],
-    "archives": []
+    "type": "legacy"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)

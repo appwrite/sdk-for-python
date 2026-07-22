@@ -39,6 +39,7 @@ class OrganizationServiceTest(unittest.TestCase):
         "screenshotsGenerated": 50.0,
         "members": 25.0,
         "webhooks": 25.0,
+        "wafRules": 2.0,
         "projects": 2.0,
         "platforms": 3.0,
         "users": 25.0,
@@ -264,6 +265,7 @@ class OrganizationServiceTest(unittest.TestCase):
         "screenshotsGenerated": 50.0,
         "members": 25.0,
         "webhooks": 25.0,
+        "wafRules": 2.0,
         "projects": 2.0,
         "platforms": 3.0,
         "users": 25.0,
@@ -725,7 +727,8 @@ class OrganizationServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -766,7 +769,8 @@ class OrganizationServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -806,7 +810,8 @@ class OrganizationServiceTest(unittest.TestCase):
     "services": [],
     "protocols": [],
     "blocks": [],
-    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00"
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)

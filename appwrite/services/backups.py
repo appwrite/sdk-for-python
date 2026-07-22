@@ -434,13 +434,18 @@ class Backups(Service):
         archive_id: str,
         services: List[BackupServices],
         new_resource_id: Optional[str] = None,
-        new_resource_name: Optional[str] = None,
-        new_specification: Optional[str] = None
+        new_resource_name: Optional[str] = None
     ) -> BackupRestoration:
         """
         Create and trigger a new restoration for a backup on a project.
         
-        When restoring a DocumentsDB or VectorsDB database to a new resource, pass `newSpecification` to provision the restored database on a different specification than the archived one (for example, restoring onto a larger or smaller dedicated database). Use `serverless` to restore onto the shared pool, or a dedicated specification slug to restore onto a dedicated database of that size. The specification must be permitted by the organization's plan. `newSpecification` is not supported for legacy/TablesDB databases or for bucket restores.
+        For a backup of one database, the restoration resolves its destination before it is queued. Pass `newResourceId` to restore into that database ID, including the archived database ID to overwrite it. When `newResourceId` is omitted, a new database ID is generated and returned in `options`.
+        
+        The restoration migration records the archived database in `resourceId` and `resourceType`, and the resolved database in `destinationResourceId` and `destinationResourceType`. Database types are stored canonically as `database`, `documentsdb`, or `vectorsdb`. Project-wide restorations leave these fields empty because they do not have a single source or destination database.
+        
+        To list every migration related to one database, use its canonical type in a nested `OR(AND(...), AND(...), AND(...))` across the root, parent, and destination relation pairs: `(resourceType, resourceId)`, `(parentResourceType, parentResourceId)`, and `(destinationResourceType, destinationResourceId)`. Legacy and TablesDB databases use `database`; the operational `resourceType` of a table migration is not rewritten to `tablesdb`.
+        
+        When restoring a DocumentsDB or VectorsDB database to a new resource from a dedicated source, the restore provisions a fresh dedicated backing database at the source database's own specification.
         
 
         Parameters
@@ -450,11 +455,9 @@ class Backups(Service):
         services : List[BackupServices]
             Array of services to restore
         new_resource_id : Optional[str]
-            Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+            Destination resource ID. Omit to generate a new ID, or pass the archived resource ID to overwrite it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         new_resource_name : Optional[str]
             Database name. Max length: 128 chars.
-        new_specification : Optional[str]
-            Specification to provision the restored database on, when restoring a DocumentsDB or VectorsDB database to a new resource. Defaults to the archived database's specification. Use `serverless` for the shared pool or a dedicated specification slug.
         
         Returns
         -------
@@ -482,8 +485,6 @@ class Backups(Service):
             api_params['newResourceId'] = self._normalize_value(new_resource_id)
         if new_resource_name is not None:
             api_params['newResourceName'] = self._normalize_value(new_resource_name)
-        if new_specification is not None:
-            api_params['newSpecification'] = self._normalize_value(new_specification)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),

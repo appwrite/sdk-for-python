@@ -1,7 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.tables_db import TablesDB
-from appwrite.models import Database
+from appwrite.models import DedicatedDatabase
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -10,12 +10,9 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 tables_db = TablesDB(client)
 
-result: Database = tables_db.create(
+result: DedicatedDatabase = tables_db.create_failover(
     database_id = '<DATABASE_ID>',
-    name = '<NAME>',
-    enabled = False, # optional
-    specification = 'serverless', # optional
-    replicas = 0 # optional
+    target_replica_id = '<TARGET_REPLICA_ID>' # optional
 )
 
 print(result.model_dump())

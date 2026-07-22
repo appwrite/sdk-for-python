@@ -1,5 +1,17 @@
 # Change Log
 
+## 22.1.0
+
+* Updated: removed `new_specification` parameter from `backups.create_restoration`
+* Updated: `Database.policies` and `Database.archives` are now optional
+* Added: account OAuth2 consent methods `list_consents`, `get_consent`, `delete_consent` and consent token methods
+* Added: `Oauth2Consent` and `Oauth2ConsentToken` models
+* Added: `oauth2.authorize_post` method and `oauth2.introspect` key scope
+* Added: `apps.list_o_auth2_scopes` method and `AppScope` model
+* Added: geolocation, connection, and SDK attribution fields on `ActivityEvent`
+* Added: `token` parameter to `sites.get_deployment_download`
+* Updated: `AppSecret.secret` is always empty; the secret is returned only on creation
+
 ## 22.0.0
 
 * Breaking: removed `Health` service and all health models and enums
