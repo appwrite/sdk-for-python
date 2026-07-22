@@ -40,6 +40,8 @@ class BillingPlan(AppwriteModel):
         Members
     webhooks : float
         Webhooks
+    wafrules : float
+        Maximum WAF rules per project
     projects : float
         Projects
     platforms : float
@@ -165,6 +167,7 @@ class BillingPlan(AppwriteModel):
     screenshotsgenerated: float = Field(..., alias='screenshotsGenerated')
     members: float = Field(..., alias='members')
     webhooks: float = Field(..., alias='webhooks')
+    wafrules: float = Field(..., alias='wafRules')
     projects: float = Field(..., alias='projects')
     platforms: float = Field(..., alias='platforms')
     users: float = Field(..., alias='users')

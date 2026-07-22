@@ -5,6 +5,7 @@ from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..models.apps_list import AppsList
 from ..models.app import App
+from ..models.app_scope_list import AppScopeList
 from ..models.app_secret_list import AppSecretList
 from ..models.app_secret_plaintext import AppSecretPlaintext
 from ..models.app_secret import AppSecret
@@ -88,7 +89,7 @@ class Apps(Service):
         name : str
             Application name.
         redirect_uris : List[str]
-            Redirect URIs (array of valid URLs).
+            Redirect URIs. Each must be an https URL, an http loopback URL (localhost, 127.0.0.1, [::1]), or a private-use scheme URI (e.g. com.example.app:/oauth), and must not contain a fragment.
         description : Optional[str]
             Application description shown to users during OAuth2 consent.
         client_uri : Optional[str]
@@ -112,7 +113,7 @@ class Apps(Service):
         data_deletion_url : Optional[str]
             Application data deletion URL shown to users during OAuth2 consent.
         post_logout_redirect_uris : Optional[List[str]]
-            Post-logout redirect URIs for OpenID Connect RP-Initiated Logout (array of valid URLs). After ending the user session, the logout endpoint only redirects to URIs in this list.
+            Post-logout redirect URIs for OpenID Connect RP-Initiated Logout. Each must be an https URL, an http loopback URL, or a private-use scheme URI, and must not contain a fragment. After ending the user session, the logout endpoint only redirects to URIs in this list.
         enabled : Optional[bool]
             Is application enabled?
         type : Optional[str]
@@ -190,6 +191,34 @@ class Apps(Service):
         return self._parse_response(response, model=App)
 
 
+    def list_o_auth2_scopes(
+        self
+    ) -> AppScopeList:
+        """
+        List scopes an application can request during the OAuth2 flow.
+
+        Returns
+        -------
+        AppScopeList
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/apps/scopes/oauth2'
+        api_params = {}
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=AppScopeList)
+
+
     def get(
         self,
         app_id: str
@@ -200,7 +229,7 @@ class Apps(Service):
         Parameters
         ----------
         app_id : str
-            Application unique ID.
+            Application unique ID or HTTPS client ID metadata document URL.
         
         Returns
         -------
@@ -284,9 +313,9 @@ class Apps(Service):
         enabled : Optional[bool]
             Is application enabled?
         redirect_uris : Optional[List[str]]
-            Redirect URIs (array of valid URLs).
+            Redirect URIs. Each must be an https URL, an http loopback URL (localhost, 127.0.0.1, [::1]), or a private-use scheme URI (e.g. com.example.app:/oauth), and must not contain a fragment.
         post_logout_redirect_uris : Optional[List[str]]
-            Post-logout redirect URIs for OpenID Connect RP-Initiated Logout (array of valid URLs). After ending the user session, the logout endpoint only redirects to URIs in this list.
+            Post-logout redirect URIs for OpenID Connect RP-Initiated Logout. Each must be an https URL, an http loopback URL, or a private-use scheme URI, and must not contain a fragment. After ending the user session, the logout endpoint only redirects to URIs in this list.
         type : Optional[str]
             OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
         device_flow : Optional[bool]

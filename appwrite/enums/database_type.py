@@ -5,3 +5,6 @@ class DatabaseType(Enum):
     TABLESDB = "tablesdb"
     DOCUMENTSDB = "documentsdb"
     VECTORSDB = "vectorsdb"
+    MYSQL = "mysql"
+    POSTGRESQL = "postgresql"
+    MONGODB = "mongodb"

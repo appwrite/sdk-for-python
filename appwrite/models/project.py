@@ -69,6 +69,8 @@ class Project(AppwriteModel):
         Project blocks information
     consoleaccessedat : str
         Last time the project was accessed via console. Used with plan&#039;s projectInactivityDays to determine if project is paused.
+    wafenabled : bool
+        Whether WAF enforcement is enabled for the project.
     billinglimits : Optional[BillingLimits]
         Billing limits reached
     oauth2serverenabled : Optional[bool]
@@ -129,6 +131,7 @@ class Project(AppwriteModel):
     protocols: List[ProjectProtocol] = Field(..., alias='protocols')
     blocks: List[Block] = Field(..., alias='blocks')
     consoleaccessedat: str = Field(..., alias='consoleAccessedAt')
+    wafenabled: bool = Field(..., alias='wafEnabled')
     billinglimits: Optional[BillingLimits] = Field(default=None, alias='billingLimits')
     oauth2serverenabled: Optional[bool] = Field(default=None, alias='oAuth2ServerEnabled')
     oauth2serverauthorizationurl: Optional[str] = Field(default=None, alias='oAuth2ServerAuthorizationUrl')

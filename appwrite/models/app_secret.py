@@ -18,7 +18,7 @@ class AppSecret(AppwriteModel):
     appid : str
         Application ID this secret belongs to.
     secret : str
-        Hashed application client secret.
+        Always empty. The application client secret is returned only once, in the response of the createSecret method.
     hint : str
         Last few characters of the client secret, used to help identify it.
     createdbyid : str

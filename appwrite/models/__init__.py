@@ -220,6 +220,10 @@ from .billing_plan_limits import BillingPlanLimits
 from .billing_plan_dedicated_database_limits import BillingPlanDedicatedDatabaseLimits
 from .billing_plan_supported_addons import BillingPlanSupportedAddons
 from .block import Block
+from .dedicated_database import DedicatedDatabase
+from .database_status import DatabaseStatus
+from .dedicated_database_member import DedicatedDatabaseMember
+from .dedicated_database_replicas import DedicatedDatabaseReplicas
 from .organization import Organization
 from .backup_policy import BackupPolicy
 from .policy_deny_aliased_email import PolicyDenyAliasedEmail
@@ -228,10 +232,17 @@ from .policy_deny_free_email import PolicyDenyFreeEmail
 from .policy_deny_corporate_email import PolicyDenyCorporateEmail
 from .program import Program
 from .backup_restoration import BackupRestoration
+from .dedicated_database_specification import DedicatedDatabaseSpecification
+from .dedicated_database_specification_list import DedicatedDatabaseSpecificationList
+from .dedicated_database_specification_pricing import DedicatedDatabaseSpecificationPricing
+from .database_status_connections import DatabaseStatusConnections
+from .database_status_replica import DatabaseStatusReplica
+from .database_status_volume import DatabaseStatusVolume
 from .usage_billing_plan import UsageBillingPlan
 from .app import App
 from .app_secret import AppSecret
 from .app_secret_plaintext import AppSecretPlaintext
+from .app_scope import AppScope
 from .oauth2_authorize import Oauth2Authorize
 from .oauth2_approve import Oauth2Approve
 from .oauth2_reject import Oauth2Reject
@@ -239,16 +250,21 @@ from .oauth2_grant import Oauth2Grant
 from .oauth2_device_authorization import Oauth2DeviceAuthorization
 from .oauth2_par import Oauth2PAR
 from .oauth2_token import Oauth2Token
+from .oauth2_consent import Oauth2Consent
+from .oauth2_consent_token import Oauth2ConsentToken
 from .oauth2_project import Oauth2Project
 from .oauth2_organization import Oauth2Organization
 from .oauth2_project_list import Oauth2ProjectList
 from .oauth2_organization_list import Oauth2OrganizationList
+from .oauth2_consent_list import Oauth2ConsentList
+from .oauth2_consent_token_list import Oauth2ConsentTokenList
 from .activity_event_list import ActivityEventList
 from .backup_archive_list import BackupArchiveList
 from .backup_policy_list import BackupPolicyList
 from .backup_restoration_list import BackupRestorationList
 from .apps_list import AppsList
 from .app_secret_list import AppSecretList
+from .app_scope_list import AppScopeList
 
 __all__ = [
     'AppwriteModel',
@@ -473,6 +489,10 @@ __all__ = [
     'BillingPlanDedicatedDatabaseLimits',
     'BillingPlanSupportedAddons',
     'Block',
+    'DedicatedDatabase',
+    'DatabaseStatus',
+    'DedicatedDatabaseMember',
+    'DedicatedDatabaseReplicas',
     'Organization',
     'BackupPolicy',
     'PolicyDenyAliasedEmail',
@@ -481,10 +501,17 @@ __all__ = [
     'PolicyDenyCorporateEmail',
     'Program',
     'BackupRestoration',
+    'DedicatedDatabaseSpecification',
+    'DedicatedDatabaseSpecificationList',
+    'DedicatedDatabaseSpecificationPricing',
+    'DatabaseStatusConnections',
+    'DatabaseStatusReplica',
+    'DatabaseStatusVolume',
     'UsageBillingPlan',
     'App',
     'AppSecret',
     'AppSecretPlaintext',
+    'AppScope',
     'Oauth2Authorize',
     'Oauth2Approve',
     'Oauth2Reject',
@@ -492,14 +519,19 @@ __all__ = [
     'Oauth2DeviceAuthorization',
     'Oauth2PAR',
     'Oauth2Token',
+    'Oauth2Consent',
+    'Oauth2ConsentToken',
     'Oauth2Project',
     'Oauth2Organization',
     'Oauth2ProjectList',
     'Oauth2OrganizationList',
+    'Oauth2ConsentList',
+    'Oauth2ConsentTokenList',
     'ActivityEventList',
     'BackupArchiveList',
     'BackupPolicyList',
     'BackupRestorationList',
     'AppsList',
     'AppSecretList',
+    'AppScopeList',
 ]

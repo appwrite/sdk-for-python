@@ -5,8 +5,12 @@ from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..models.database_list import DatabaseList
 from ..models.database import Database
+from ..models.dedicated_database_specification_list import DedicatedDatabaseSpecificationList
 from ..models.transaction_list import TransactionList
 from ..models.transaction import Transaction
+from ..models.dedicated_database import DedicatedDatabase
+from ..models.dedicated_database_replicas import DedicatedDatabaseReplicas
+from ..models.database_status import DatabaseStatus
 from ..models.table_list import TableList
 from ..models.table import Table
 from ..models.column_list import ColumnList
@@ -96,7 +100,8 @@ class TablesDB(Service):
         database_id: str,
         name: str,
         enabled: Optional[bool] = None,
-        specification: Optional[str] = None
+        specification: Optional[str] = None,
+        replicas: Optional[float] = None
     ) -> Database:
         """
         Create a new Database.
@@ -112,6 +117,8 @@ class TablesDB(Service):
             Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
         specification : Optional[str]
             Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
+        replicas : Optional[float]
+            Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
         
         Returns
         -------
@@ -139,6 +146,8 @@ class TablesDB(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if specification is not None:
             api_params['specification'] = self._normalize_value(specification)
+        if replicas is not None:
+            api_params['replicas'] = self._normalize_value(replicas)
 
         response = self.client.call('post', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -147,6 +156,34 @@ class TablesDB(Service):
         }, api_params)
 
         return self._parse_response(response, model=Database)
+
+
+    def list_specifications(
+        self
+    ) -> DedicatedDatabaseSpecificationList:
+        """
+        List the dedicated database specifications available on the current plan. Each specification reports its resource limits, pricing, and whether it is enabled for the organization.
+
+        Returns
+        -------
+        DedicatedDatabaseSpecificationList
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/specifications'
+        api_params = {}
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=DedicatedDatabaseSpecificationList)
 
 
     def list_transactions(
@@ -440,7 +477,8 @@ class TablesDB(Service):
         self,
         database_id: str,
         name: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
+        replicas: Optional[float] = None
     ) -> Database:
         """
         Update a database by its unique ID.
@@ -453,6 +491,8 @@ class TablesDB(Service):
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+        replicas : Optional[float]
+            Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
         
         Returns
         -------
@@ -476,6 +516,8 @@ class TablesDB(Service):
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if replicas is not None:
+            api_params['replicas'] = self._normalize_value(replicas)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -523,6 +565,129 @@ class TablesDB(Service):
         }, api_params)
 
         return response
+
+
+    def create_failover(
+        self,
+        database_id: str,
+        target_replica_id: Optional[str] = None
+    ) -> DedicatedDatabase:
+        """
+        Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        target_replica_id : Optional[str]
+            Target replica ID to promote. If not specified, the healthiest replica is selected.
+        
+        Returns
+        -------
+        DedicatedDatabase
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/failovers'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+
+        if target_replica_id is not None:
+            api_params['targetReplicaId'] = self._normalize_value(target_replica_id)
+
+        response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=DedicatedDatabase)
+
+
+    def get_replicas(
+        self,
+        database_id: str
+    ) -> DedicatedDatabaseReplicas:
+        """
+        Get high availability status for a dedicated database. Returns replica statuses, replication lag, and sync mode.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        
+        Returns
+        -------
+        DedicatedDatabaseReplicas
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/replicas'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=DedicatedDatabaseReplicas)
+
+
+    def get_status(
+        self,
+        database_id: str
+    ) -> DatabaseStatus:
+        """
+        Get real-time health and status information for a dedicated database. Returns health status, readiness, uptime, connection info, replica status, and volume information.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        
+        Returns
+        -------
+        DatabaseStatus
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/status'
+        api_params = {}
+        if database_id is None:
+            raise AppwriteException('Missing required parameter: "database_id"')
+
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=DatabaseStatus)
 
 
     def list_tables(

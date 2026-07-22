@@ -26,10 +26,12 @@ class Database(AppwriteModel):
     type : DatabaseType
         Database type.
     status : Optional[DatabaseStatus]
-        Database status. Possible values: `provisioning`, `ready` or `failed`
-    policies : List[BackupPolicy]
+        Dedicated database lifecycle status. Null when the database has no valid dedicated backing.
+    replicas : Optional[float]
+        Number of secondary high availability replicas, excluding the primary. Null when backing configuration is unavailable.
+    policies : Optional[List[BackupPolicy]]
         Database backup policies.
-    archives : List[BackupArchive]
+    archives : Optional[List[BackupArchive]]
         Database backup archives.
     """
     id: str = Field(..., alias='$id')
@@ -39,5 +41,6 @@ class Database(AppwriteModel):
     enabled: bool = Field(..., alias='enabled')
     type: DatabaseType = Field(..., alias='type')
     status: Optional[DatabaseStatus] = Field(default=None, alias='status')
-    policies: List[BackupPolicy] = Field(..., alias='policies')
-    archives: List[BackupArchive] = Field(..., alias='archives')
+    replicas: Optional[float] = Field(default=None, alias='replicas')
+    policies: Optional[List[BackupPolicy]] = Field(default=None, alias='policies')
+    archives: Optional[List[BackupArchive]] = Field(default=None, alias='archives')

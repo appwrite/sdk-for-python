@@ -13,6 +13,7 @@ sites = Sites(client)
 result: bytes = sites.get_deployment_download(
     site_id = '<SITE_ID>',
     deployment_id = '<DEPLOYMENT_ID>',
-    type = DeploymentDownloadType.SOURCE # optional
+    type = DeploymentDownloadType.SOURCE, # optional
+    token = '<TOKEN>' # optional
 )
 ```

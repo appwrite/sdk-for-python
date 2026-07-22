@@ -35,9 +35,7 @@ class TablesDBServiceTest(unittest.TestCase):
     "$createdAt": "2020-10-15T06:38:00.000+00:00",
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "enabled": True,
-    "type": "legacy",
-    "policies": [],
-    "archives": []
+    "type": "legacy"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -45,6 +43,27 @@ class TablesDBServiceTest(unittest.TestCase):
         response = self.tables_db.create(
             '<DATABASE_ID>',
             '<NAME>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_list_specifications(self, m):
+        data = {
+    "specifications": [],
+    "total": 9.0,
+    "pricing": {
+        "storageOverageRate": 0.125,
+        "bandwidthOverageRate": 0.08,
+        "replicaRate": 1,
+        "crossRegionReplicaRate": 1,
+        "pitrRate": 0.2
+    }
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.tables_db.list_specifications(
         )
 
         self.assertEqual(response.to_dict(), data)
@@ -158,9 +177,7 @@ class TablesDBServiceTest(unittest.TestCase):
     "$createdAt": "2020-10-15T06:38:00.000+00:00",
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "enabled": True,
-    "type": "legacy",
-    "policies": [],
-    "archives": []
+    "type": "legacy"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -179,9 +196,7 @@ class TablesDBServiceTest(unittest.TestCase):
     "$createdAt": "2020-10-15T06:38:00.000+00:00",
     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
     "enabled": True,
-    "type": "legacy",
-    "policies": [],
-    "archives": []
+    "type": "legacy"
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -203,6 +218,106 @@ class TablesDBServiceTest(unittest.TestCase):
         )
 
         self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
+    def test_create_failover(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "projectId": "5e5ea5c16897e",
+    "name": "My Production Database",
+    "api": "postgresql",
+    "engine": "postgresql",
+    "version": "16",
+    "specification": "s-2vcpu-2gb",
+    "backend": "edge",
+    "hostname": "db-myproject-mydb.fra.appwrite.center",
+    "connectionPort": 5432.0,
+    "connectionUser": "appwrite_user",
+    "connectionPassword": "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+    "connectionString": "postgresql:\/\/user:pass@db-myproject-mydb.fra.appwrite.center:5432\/postgres?sslmode=require",
+    "ssl": True,
+    "status": "ready",
+    "containerStatus": "active",
+    "lifecycleState": "active",
+    "idleTimeoutMinutes": 15.0,
+    "cpu": 2000.0,
+    "memory": 4096.0,
+    "storage": 100.0,
+    "storageClass": "ssd",
+    "storageMaxGb": 100.0,
+    "nodePool": "db-pool-4vcpu-8gb",
+    "replicas": 2.0,
+    "syncMode": "async",
+    "crossRegionReplicas": 1.0,
+    "networkMaxConnections": 500.0,
+    "networkIdleTimeoutSeconds": 900.0,
+    "networkIPAllowlist": [],
+    "backupEnabled": True,
+    "pitr": True,
+    "pitrRetentionDays": 14.0,
+    "storageAutoscaling": True,
+    "storageAutoscalingThresholdPercent": 85.0,
+    "storageAutoscalingMaxGb": 500.0,
+    "maintenanceWindowDay": "sun",
+    "maintenanceWindowHourUtc": 3.0,
+    "metricsEnabled": True,
+    "sqlApiEnabled": True,
+    "sqlApiAllowedStatements": [],
+    "sqlApiMaxRows": 10000.0,
+    "sqlApiMaxBytes": 10485760.0,
+    "sqlApiTimeoutSeconds": 30.0,
+    "error": ""
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.tables_db.create_failover(
+            '<DATABASE_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_replicas(self, m):
+        data = {
+    "replicas": 2.0,
+    "syncMode": "async",
+    "members": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.tables_db.get_replicas(
+            '<DATABASE_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_status(self, m):
+        data = {
+    "health": "healthy",
+    "ready": True,
+    "engine": "postgresql",
+    "version": "17",
+    "uptime": 86400.0,
+    "connections": {
+        "current": 12.0,
+        "max": 100.0
+    },
+    "replicas": [],
+    "volumes": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.tables_db.get_status(
+            '<DATABASE_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
     def test_list_tables(self, m):

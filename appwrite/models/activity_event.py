@@ -37,6 +37,24 @@ class ActivityEvent(AppwriteModel):
         API mode when event triggered.
     country : str
         Location.
+    continentcode : str
+        Continent code.
+    city : str
+        City name.
+    subdivisions : str
+        Region/state chain.
+    isp : str
+        Internet service provider.
+    autonomoussystemnumber : str
+        Autonomous System Number (ASN).
+    autonomoussystemorganization : str
+        Organization that owns the ASN.
+    connectiontype : str
+        Connection type (e.g. cable, cellular, corporate).
+    connectionusagetype : str
+        User type (e.g. residential, business, hosting).
+    connectionorganization : str
+        Registered organization of the IP.
     time : str
         Log creation date in ISO 8601 format.
     projectid : str
@@ -45,6 +63,10 @@ class ActivityEvent(AppwriteModel):
         Team ID.
     hostname : str
         Hostname.
+    sdk : str
+        Name of the SDK that triggered the event.
+    sdkversion : str
+        Version of the SDK that triggered the event.
     """
     id: str = Field(..., alias='$id')
     actortype: str = Field(..., alias='actorType')
@@ -60,7 +82,18 @@ class ActivityEvent(AppwriteModel):
     ip: str = Field(..., alias='ip')
     mode: str = Field(..., alias='mode')
     country: str = Field(..., alias='country')
+    continentcode: str = Field(..., alias='continentCode')
+    city: str = Field(..., alias='city')
+    subdivisions: str = Field(..., alias='subdivisions')
+    isp: str = Field(..., alias='isp')
+    autonomoussystemnumber: str = Field(..., alias='autonomousSystemNumber')
+    autonomoussystemorganization: str = Field(..., alias='autonomousSystemOrganization')
+    connectiontype: str = Field(..., alias='connectionType')
+    connectionusagetype: str = Field(..., alias='connectionUsageType')
+    connectionorganization: str = Field(..., alias='connectionOrganization')
     time: str = Field(..., alias='time')
     projectid: str = Field(..., alias='projectId')
     teamid: str = Field(..., alias='teamId')
     hostname: str = Field(..., alias='hostname')
+    sdk: str = Field(..., alias='sdk')
+    sdkversion: str = Field(..., alias='sdkVersion')

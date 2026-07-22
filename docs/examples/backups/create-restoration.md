@@ -15,8 +15,7 @@ result: BackupRestoration = backups.create_restoration(
     archive_id = '<ARCHIVE_ID>',
     services = [BackupServices.DATABASES],
     new_resource_id = '<NEW_RESOURCE_ID>', # optional
-    new_resource_name = '<NEW_RESOURCE_NAME>', # optional
-    new_specification = 'serverless' # optional
+    new_resource_name = '<NEW_RESOURCE_NAME>' # optional
 )
 
 print(result.model_dump())
