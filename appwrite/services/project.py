@@ -790,6 +790,7 @@ class Project(Service):
         refresh_token_duration: Optional[float] = None,
         public_access_token_duration: Optional[float] = None,
         public_refresh_token_duration: Optional[float] = None,
+        installation_access_token_duration: Optional[float] = None,
         confidential_pkce: Optional[bool] = None,
         verification_url: Optional[str] = None,
         user_code_length: Optional[float] = None,
@@ -818,6 +819,8 @@ class Project(Service):
             Access token duration in seconds for public clients (SPAs, mobile, and native apps that cannot keep a client secret). Leave empty to use default 1 hour.
         public_refresh_token_duration : Optional[float]
             Refresh token duration in seconds for public clients (SPAs, mobile, and native apps that cannot keep a client secret). Leave empty to use default 30 days.
+        installation_access_token_duration : Optional[float]
+            Access token duration in seconds for app installation access tokens. Leave empty to use default 1 hour.
         confidential_pkce : Optional[bool]
             When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
         verification_url : Optional[str]
@@ -865,6 +868,8 @@ class Project(Service):
             api_params['publicAccessTokenDuration'] = self._normalize_value(public_access_token_duration)
         if public_refresh_token_duration is not None:
             api_params['publicRefreshTokenDuration'] = self._normalize_value(public_refresh_token_duration)
+        if installation_access_token_duration is not None:
+            api_params['installationAccessTokenDuration'] = self._normalize_value(installation_access_token_duration)
         if confidential_pkce is not None:
             api_params['confidentialPkce'] = self._normalize_value(confidential_pkce)
         if verification_url is not None:

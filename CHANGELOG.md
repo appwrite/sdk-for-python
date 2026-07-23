@@ -1,5 +1,14 @@
 # Change Log
 
+## 22.2.0
+
+* Added: `apps` installation and key management methods (`list_installations`, `get_installation`, `create_installation_token`, `list_installation_scopes`, `list_keys`, `create_key`, `get_key`, `delete_key`)
+* Added: `installation_scopes` and `installation_redirect_url` parameters to `apps.update`
+* Added: app installation management methods to `organization` and `teams` services
+* Added: `installation_access_token_duration` parameter to `project.update_o_auth2_server`
+* Added: `installationScopes` and `installationRedirectUrl` fields to `App` model
+* Added: `organization.installations.read`/`organization.installations.write` key scopes
+
 ## 22.1.0
 
 * Updated: removed `new_specification` parameter from `backups.create_restoration`

@@ -56,6 +56,10 @@ class App(AppwriteModel):
         ID of team that owns the application, if owned by team. Otherwise, user ID will be used.
     userid : str
         ID of user who owns the application, if owned by user. Otherwise, team ID will be used.
+    installationscopes : List[Any]
+        Scopes the application requests when installed on a team. Organization-level and project-level scopes only.
+    installationredirecturl : str
+        URL users are redirected to after creating or updating an installation of this application. Empty for no redirect.
     secrets : List[AppSecret]
         List of application secrets.
     """
@@ -82,4 +86,6 @@ class App(AppwriteModel):
     deviceflow: bool = Field(..., alias='deviceFlow')
     teamid: str = Field(..., alias='teamId')
     userid: str = Field(..., alias='userId')
+    installationscopes: List[Any] = Field(..., alias='installationScopes')
+    installationredirecturl: str = Field(..., alias='installationRedirectUrl')
     secrets: List[AppSecret] = Field(..., alias='secrets')

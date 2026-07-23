@@ -5,6 +5,8 @@ from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..models.team_list import TeamList
 from ..models.team import Team
+from ..models.app_installation_list import AppInstallationList
+from ..models.app_installation import AppInstallation
 from ..models.membership_list import MembershipList
 from ..models.membership import Membership
 from ..models.preferences import Preferences
@@ -251,6 +253,252 @@ class Teams(Service):
         response = self.client.call('delete', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
             'content-type': 'application/json',
+        }, api_params)
+
+        return response
+
+
+    def list_installations(
+        self,
+        team_id: str,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None
+    ) -> AppInstallationList:
+        """
+        List app installations on a team. Any team member can read installations.
+
+        Parameters
+        ----------
+        team_id : str
+            Team ID.
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        
+        Returns
+        -------
+        AppInstallationList
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/teams/{teamId}/installations'
+        api_params = {}
+        if team_id is None:
+            raise AppwriteException('Missing required parameter: "team_id"')
+
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
+
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=AppInstallationList)
+
+
+    def create_installation(
+        self,
+        team_id: str,
+        app_id: str,
+        authorization_details: Optional[str] = None
+    ) -> AppInstallation:
+        """
+        Install an app on a team. When authenticated as a user, only team members with the owner role can install apps. Requests using an API key or in admin mode can install apps on any team. The installation is granted the scopes the app currently requests.
+
+        Parameters
+        ----------
+        team_id : str
+            Team ID.
+        app_id : str
+            Application unique ID.
+        authorization_details : Optional[str]
+            Authorization details granted to the installation as a JSON array of objects, each with a `type` and app-defined fields. The Appwrite Console stores authorized project IDs here.
+        
+        Returns
+        -------
+        AppInstallation
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/teams/{teamId}/installations'
+        api_params = {}
+        if team_id is None:
+            raise AppwriteException('Missing required parameter: "team_id"')
+
+        if app_id is None:
+            raise AppwriteException('Missing required parameter: "app_id"')
+
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
+
+        api_params['appId'] = self._normalize_value(app_id)
+        if authorization_details is not None:
+            api_params['authorizationDetails'] = self._normalize_value(authorization_details)
+
+        response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=AppInstallation)
+
+
+    def get_installation(
+        self,
+        team_id: str,
+        installation_id: str
+    ) -> AppInstallation:
+        """
+        Get an app installation on a team by its unique ID. Any team member can read installations.
+
+        Parameters
+        ----------
+        team_id : str
+            Team ID.
+        installation_id : str
+            Installation unique ID.
+        
+        Returns
+        -------
+        AppInstallation
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/teams/{teamId}/installations/{installationId}'
+        api_params = {}
+        if team_id is None:
+            raise AppwriteException('Missing required parameter: "team_id"')
+
+        if installation_id is None:
+            raise AppwriteException('Missing required parameter: "installation_id"')
+
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
+        api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
+
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=AppInstallation)
+
+
+    def update_installation(
+        self,
+        team_id: str,
+        installation_id: str,
+        authorization_details: Optional[str] = None
+    ) -> AppInstallation:
+        """
+        Update an app installation on a team. Only team members with the owner role can update installations. The installation's granted scopes are refreshed to the scopes the app currently requests; previously issued installation access tokens are revoked.
+
+        Parameters
+        ----------
+        team_id : str
+            Team ID.
+        installation_id : str
+            Installation unique ID.
+        authorization_details : Optional[str]
+            Authorization details granted to the installation as a JSON array of objects, each with a `type` and app-defined fields. Omit to keep the current value.
+        
+        Returns
+        -------
+        AppInstallation
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/teams/{teamId}/installations/{installationId}'
+        api_params = {}
+        if team_id is None:
+            raise AppwriteException('Missing required parameter: "team_id"')
+
+        if installation_id is None:
+            raise AppwriteException('Missing required parameter: "installation_id"')
+
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
+        api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
+
+        if authorization_details is not None:
+            api_params['authorizationDetails'] = self._normalize_value(authorization_details)
+
+        response = self.client.call('put', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=AppInstallation)
+
+
+    def delete_installation(
+        self,
+        team_id: str,
+        installation_id: str
+    ) -> Dict[str, Any]:
+        """
+        Uninstall an app from a team by its installation ID. Only team members with the owner role can remove installations. Previously issued installation access tokens are revoked.
+
+        Parameters
+        ----------
+        team_id : str
+            Team ID.
+        installation_id : str
+            Installation unique ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/teams/{teamId}/installations/{installationId}'
+        api_params = {}
+        if team_id is None:
+            raise AppwriteException('Missing required parameter: "team_id"')
+
+        if installation_id is None:
+            raise AppwriteException('Missing required parameter: "installation_id"')
+
+        api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
+        api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
+
+
+        response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
         }, api_params)
 
         return response

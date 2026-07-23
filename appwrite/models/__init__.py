@@ -243,6 +243,8 @@ from .app import App
 from .app_secret import AppSecret
 from .app_secret_plaintext import AppSecretPlaintext
 from .app_scope import AppScope
+from .app_installation import AppInstallation
+from .app_key import AppKey
 from .oauth2_authorize import Oauth2Authorize
 from .oauth2_approve import Oauth2Approve
 from .oauth2_reject import Oauth2Reject
@@ -265,6 +267,8 @@ from .backup_restoration_list import BackupRestorationList
 from .apps_list import AppsList
 from .app_secret_list import AppSecretList
 from .app_scope_list import AppScopeList
+from .app_installation_list import AppInstallationList
+from .app_key_list import AppKeyList
 
 __all__ = [
     'AppwriteModel',
@@ -512,6 +516,8 @@ __all__ = [
     'AppSecret',
     'AppSecretPlaintext',
     'AppScope',
+    'AppInstallation',
+    'AppKey',
     'Oauth2Authorize',
     'Oauth2Approve',
     'Oauth2Reject',
@@ -534,4 +540,6 @@ __all__ = [
     'AppsList',
     'AppSecretList',
     'AppScopeList',
+    'AppInstallationList',
+    'AppKeyList',
 ]

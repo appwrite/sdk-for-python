@@ -91,6 +91,8 @@ class Project(AppwriteModel):
         OAuth2 server access token duration in seconds for public clients (SPAs, mobile, native)
     oauth2serverpublicrefreshtokenduration : Optional[float]
         OAuth2 server refresh token duration in seconds for public clients (SPAs, mobile, native)
+    oauth2serverinstallationaccesstokenduration : Optional[float]
+        OAuth2 server access token duration in seconds for app installation access tokens
     oauth2serverconfidentialpkce : Optional[bool]
         When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
     oauth2serververificationurl : Optional[str]
@@ -142,6 +144,7 @@ class Project(AppwriteModel):
     oauth2serverrefreshtokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerRefreshTokenDuration')
     oauth2serverpublicaccesstokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerPublicAccessTokenDuration')
     oauth2serverpublicrefreshtokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerPublicRefreshTokenDuration')
+    oauth2serverinstallationaccesstokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerInstallationAccessTokenDuration')
     oauth2serverconfidentialpkce: Optional[bool] = Field(default=None, alias='oAuth2ServerConfidentialPkce')
     oauth2serververificationurl: Optional[str] = Field(default=None, alias='oAuth2ServerVerificationUrl')
     oauth2serverusercodelength: Optional[float] = Field(default=None, alias='oAuth2ServerUserCodeLength')

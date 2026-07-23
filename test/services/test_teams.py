@@ -99,6 +99,103 @@ class TeamsServiceTest(unittest.TestCase):
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
+    def test_list_installations(self, m):
+        data = {
+    "total": 5.0,
+    "installations": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.teams.list_installations(
+            '<TEAM_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_installation(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "appId": "5e5ea5c16897e",
+    "teamId": "5e5ea5c16897e",
+    "scopes": [],
+    "authorizationDetails": {},
+    "createdById": "5e5ea5c16897e",
+    "createdByName": "Walter White"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.teams.create_installation(
+            '<TEAM_ID>',
+            '<APP_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_installation(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "appId": "5e5ea5c16897e",
+    "teamId": "5e5ea5c16897e",
+    "scopes": [],
+    "authorizationDetails": {},
+    "createdById": "5e5ea5c16897e",
+    "createdByName": "Walter White"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.teams.get_installation(
+            '<TEAM_ID>',
+            '<INSTALLATION_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_installation(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "appId": "5e5ea5c16897e",
+    "teamId": "5e5ea5c16897e",
+    "scopes": [],
+    "authorizationDetails": {},
+    "createdById": "5e5ea5c16897e",
+    "createdByName": "Walter White"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.teams.update_installation(
+            '<TEAM_ID>',
+            '<INSTALLATION_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_delete_installation(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.teams.delete_installation(
+            '<TEAM_ID>',
+            '<INSTALLATION_ID>',
+        )
+
+        self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
     def test_list_memberships(self, m):
         data = {
     "total": 5.0,
