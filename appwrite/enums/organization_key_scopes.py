@@ -7,6 +7,8 @@ class OrganizationKeyScopes(Enum):
     DEVKEYS_WRITE = "devKeys.write"
     ORGANIZATION_KEYS_READ = "organization.keys.read"
     ORGANIZATION_KEYS_WRITE = "organization.keys.write"
+    ORGANIZATION_INSTALLATIONS_READ = "organization.installations.read"
+    ORGANIZATION_INSTALLATIONS_WRITE = "organization.installations.write"
     ORGANIZATION_MEMBERSHIPS_READ = "organization.memberships.read"
     ORGANIZATION_MEMBERSHIPS_WRITE = "organization.memberships.write"
     ORGANIZATION_READ = "organization.read"

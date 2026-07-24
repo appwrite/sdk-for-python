@@ -28,7 +28,9 @@ result: App = apps.update(
     redirect_uris = [], # optional
     post_logout_redirect_uris = [], # optional
     type = 'public', # optional
-    device_flow = False # optional
+    device_flow = False, # optional
+    installation_scopes = [], # optional
+    installation_redirect_url = 'https://example.com' # optional
 )
 
 print(result.model_dump())

@@ -53,6 +53,8 @@ class AppsServiceTest(unittest.TestCase):
     "deviceFlow": True,
     "teamId": "5e5ea5c16897e",
     "userId": "5e5ea5c16897e",
+    "installationScopes": [],
+    "installationRedirectUrl": "https:\/\/example.com\/setup",
     "secrets": []
 }
         headers = {'Content-Type': 'application/json'}
@@ -62,6 +64,20 @@ class AppsServiceTest(unittest.TestCase):
             '<APP_ID>',
             '<NAME>',
             [],
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_list_installation_scopes(self, m):
+        data = {
+    "total": 5.0,
+    "scopes": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.apps.list_installation_scopes(
         )
 
         self.assertEqual(response.to_dict(), data)
@@ -106,6 +122,8 @@ class AppsServiceTest(unittest.TestCase):
     "deviceFlow": True,
     "teamId": "5e5ea5c16897e",
     "userId": "5e5ea5c16897e",
+    "installationScopes": [],
+    "installationRedirectUrl": "https:\/\/example.com\/setup",
     "secrets": []
 }
         headers = {'Content-Type': 'application/json'}
@@ -143,6 +161,8 @@ class AppsServiceTest(unittest.TestCase):
     "deviceFlow": True,
     "teamId": "5e5ea5c16897e",
     "userId": "5e5ea5c16897e",
+    "installationScopes": [],
+    "installationRedirectUrl": "https:\/\/example.com\/setup",
     "secrets": []
 }
         headers = {'Content-Type': 'application/json'}
@@ -163,6 +183,134 @@ class AppsServiceTest(unittest.TestCase):
 
         response = self.apps.delete(
             '<APP_ID>',
+        )
+
+        self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
+    def test_list_installations(self, m):
+        data = {
+    "total": 5.0,
+    "installations": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.apps.list_installations(
+            '<APP_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_installation(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "appId": "5e5ea5c16897e",
+    "teamId": "5e5ea5c16897e",
+    "scopes": [],
+    "authorizationDetails": {},
+    "createdById": "5e5ea5c16897e",
+    "createdByName": "Walter White"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.apps.get_installation(
+            '<APP_ID>',
+            '<INSTALLATION_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_installation_token(self, m):
+        data = {
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...",
+    "token_type": "Bearer",
+    "expires_in": 3600.0,
+    "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+    "scope": "openid email profile"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.apps.create_installation_token(
+            '<APP_ID>',
+            '<INSTALLATION_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_list_keys(self, m):
+        data = {
+    "total": 5.0,
+    "keys": []
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.apps.list_keys(
+            '<APP_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_key(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "appId": "5e5ea5c16897e",
+    "secret": "5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a",
+    "hint": "f5c6c7",
+    "createdById": "5e5ea5c16897e",
+    "createdByName": "Walter White"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.apps.create_key(
+            '<APP_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_key(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "appId": "5e5ea5c16897e",
+    "secret": "5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a",
+    "hint": "f5c6c7",
+    "createdById": "5e5ea5c16897e",
+    "createdByName": "Walter White"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.apps.get_key(
+            '<APP_ID>',
+            '<KEY_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_delete_key(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.apps.delete_key(
+            '<APP_ID>',
+            '<KEY_ID>',
         )
 
         self.assertEqual(response, data)
@@ -193,6 +341,8 @@ class AppsServiceTest(unittest.TestCase):
     "deviceFlow": True,
     "teamId": "5e5ea5c16897e",
     "userId": "5e5ea5c16897e",
+    "installationScopes": [],
+    "installationRedirectUrl": "https:\/\/example.com\/setup",
     "secrets": []
 }
         headers = {'Content-Type': 'application/json'}
@@ -302,6 +452,8 @@ class AppsServiceTest(unittest.TestCase):
     "deviceFlow": True,
     "teamId": "5e5ea5c16897e",
     "userId": "5e5ea5c16897e",
+    "installationScopes": [],
+    "installationRedirectUrl": "https:\/\/example.com\/setup",
     "secrets": []
 }
         headers = {'Content-Type': 'application/json'}

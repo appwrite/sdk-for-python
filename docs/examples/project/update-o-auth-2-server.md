@@ -19,6 +19,7 @@ result: ProjectModel = project.update_o_auth2_server(
     refresh_token_duration = 60, # optional
     public_access_token_duration = 60, # optional
     public_refresh_token_duration = 60, # optional
+    installation_access_token_duration = 60, # optional
     confidential_pkce = False, # optional
     verification_url = 'https://example.com', # optional
     user_code_length = 6, # optional

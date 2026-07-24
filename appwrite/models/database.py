@@ -27,6 +27,10 @@ class Database(AppwriteModel):
         Database type.
     status : Optional[DatabaseStatus]
         Dedicated database lifecycle status. Null when the database has no valid dedicated backing.
+    engine : Optional[str]
+        Underlying engine of the dedicated backing: postgresql, mysql, mariadb, or mongodb. A managed product (tablesdb, documentsdb, vectorsdb) reports the engine it runs on, so its type and engine can differ. Null when the database has no dedicated backing.
+    specification : Optional[str]
+        Compute specification identifier of the dedicated backing, e.g. s-2vcpu-2gb. Null when the database has no dedicated backing.
     replicas : Optional[float]
         Number of secondary high availability replicas, excluding the primary. Null when backing configuration is unavailable.
     policies : Optional[List[BackupPolicy]]
@@ -41,6 +45,8 @@ class Database(AppwriteModel):
     enabled: bool = Field(..., alias='enabled')
     type: DatabaseType = Field(..., alias='type')
     status: Optional[DatabaseStatus] = Field(default=None, alias='status')
+    engine: Optional[str] = Field(default=None, alias='engine')
+    specification: Optional[str] = Field(default=None, alias='specification')
     replicas: Optional[float] = Field(default=None, alias='replicas')
     policies: Optional[List[BackupPolicy]] = Field(default=None, alias='policies')
     archives: Optional[List[BackupArchive]] = Field(default=None, alias='archives')
