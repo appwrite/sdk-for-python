@@ -180,6 +180,7 @@ from .policy_session_invalidation import PolicySessionInvalidation
 from .policy_session_limit import PolicySessionLimit
 from .policy_user_limit import PolicyUserLimit
 from .policy_membership_privacy import PolicyMembershipPrivacy
+from .policy_mfa_factors import PolicyMfaFactors
 from .platform_web import PlatformWeb
 from .platform_apple import PlatformApple
 from .platform_android import PlatformAndroid

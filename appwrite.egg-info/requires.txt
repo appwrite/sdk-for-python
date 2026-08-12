@@ -1,0 +1,5 @@
+requests
+pydantic<3,>=2
+
+[test]
+requests_mock==1.11.0

@@ -74,6 +74,7 @@ from ..models.policy_session_invalidation import PolicySessionInvalidation
 from ..models.policy_session_limit import PolicySessionLimit
 from ..models.policy_user_limit import PolicyUserLimit
 from ..models.policy_membership_privacy import PolicyMembershipPrivacy
+from ..models.policy_mfa_factors import PolicyMfaFactors
 from ..models.policy_deny_aliased_email import PolicyDenyAliasedEmail
 from ..models.policy_deny_disposable_email import PolicyDenyDisposableEmail
 from ..models.policy_deny_free_email import PolicyDenyFreeEmail
@@ -4523,18 +4524,18 @@ class Project(Service):
     def get_policy(
         self,
         policy_id: ProjectPolicyId
-    ) -> Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]:
+    ) -> Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]:
         """
         Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
 
         Parameters
         ----------
         policy_id : ProjectPolicyId
-            Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
+            Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
         
         Returns
         -------
-        Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]
+        Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]
             API response as one of the typed response models
         
         Raises
@@ -4587,6 +4588,9 @@ class Project(Service):
 
         if response.get('$id') == 'membership-privacy':
             return self._parse_response(response, model=PolicyMembershipPrivacy)
+
+        if response.get('$id') == 'mfa-factors':
+            return self._parse_response(response, model=PolicyMfaFactors)
 
         if response.get('$id') == 'deny-aliased-email':
             return self._parse_response(response, model=PolicyDenyAliasedEmail)
