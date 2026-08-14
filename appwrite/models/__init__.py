@@ -43,11 +43,9 @@ from .subscriber_list import SubscriberList
 from .target_list import TargetList
 from .transaction_list import TransactionList
 from .specification_list import SpecificationList
-from .embedding_list import EmbeddingList
 from .insight_list import InsightList
 from .report_list import ReportList
 from .database import Database
-from .embedding import Embedding
 from .collection import Collection
 from .attribute_list import AttributeList
 from .attribute_string import AttributeString
@@ -325,11 +323,9 @@ __all__ = [
     'TargetList',
     'TransactionList',
     'SpecificationList',
-    'EmbeddingList',
     'InsightList',
     'ReportList',
     'Database',
-    'Embedding',
     'Collection',
     'AttributeList',
     'AttributeString',
