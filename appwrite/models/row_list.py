@@ -26,7 +26,7 @@ class RowList(AppwriteModel, Generic[T]):
         instance = cls.model_validate(data)
         if 'rows' in data and data['rows'] is not None:
             instance.rows = [
-                Row.with_data(row, model_type) 
+                Row.with_data(row, model_type)
                 for row in data['rows']
             ]
         return instance

@@ -26,8 +26,8 @@ class Organization(AppwriteModel, Generic[T]):
         Total number of team members.
     prefs : Preferences[T]
         Team preferences as a key-value object
-    billingbudget : float
-        Project budget limit
+    billingbudget : Optional[float]
+        Project budget limit. Null when no budget is set.
     budgetalerts : List[Any]
         Project budget limit
     billingplan : str
@@ -44,7 +44,7 @@ class Organization(AppwriteModel, Generic[T]):
         Current invoice cycle start date.
     billingnextinvoicedate : str
         Next invoice cycle start date.
-    billingtrialstartdate : str
+    billingtrialstartdate : Optional[str]
         Start date of trial.
     billingtrialdays : float
         Number of trial days.
@@ -54,29 +54,29 @@ class Organization(AppwriteModel, Generic[T]):
         Current active aggregation id.
     paymentmethodid : str
         Default payment method.
-    billingaddressid : str
+    billingaddressid : Optional[str]
         Default payment method.
-    backuppaymentmethodid : str
+    backuppaymentmethodid : Optional[str]
         Backup payment method.
     status : str
         Team status.
-    remarks : str
+    remarks : Optional[str]
         Remarks on team status.
-    agreementbaa : str
+    agreementbaa : Optional[str]
         Organization agreements
-    programmanagername : str
+    programmanagername : Optional[str]
         Program manager&#039;s name.
-    programmanagercalendar : str
+    programmanagercalendar : Optional[str]
         Program manager&#039;s calendar link.
-    programdiscordchannelname : str
+    programdiscordchannelname : Optional[str]
         Program&#039;s discord channel name.
-    programdiscordchannelurl : str
+    programdiscordchannelurl : Optional[str]
         Program&#039;s discord channel URL.
     billinglimits : Optional[BillingLimits]
         Billing limits reached
-    billingplandowngrade : str
+    billingplandowngrade : Optional[str]
         Billing plan selected for downgrade.
-    billingtaxid : str
+    billingtaxid : Optional[str]
         Tax Id
     markedfordeletion : bool
         Marked for deletion
@@ -91,7 +91,7 @@ class Organization(AppwriteModel, Generic[T]):
     name: str = Field(..., alias='name')
     total: float = Field(..., alias='total')
     prefs: Preferences[T] = Field(..., alias='prefs')
-    billingbudget: float = Field(..., alias='billingBudget')
+    billingbudget: Optional[float] = Field(default=None, alias='billingBudget')
     budgetalerts: List[Any] = Field(..., alias='budgetAlerts')
     billingplan: str = Field(..., alias='billingPlan')
     billingplanid: str = Field(..., alias='billingPlanId')
@@ -100,23 +100,23 @@ class Organization(AppwriteModel, Generic[T]):
     billingstartdate: str = Field(..., alias='billingStartDate')
     billingcurrentinvoicedate: str = Field(..., alias='billingCurrentInvoiceDate')
     billingnextinvoicedate: str = Field(..., alias='billingNextInvoiceDate')
-    billingtrialstartdate: str = Field(..., alias='billingTrialStartDate')
+    billingtrialstartdate: Optional[str] = Field(default=None, alias='billingTrialStartDate')
     billingtrialdays: float = Field(..., alias='billingTrialDays')
     billingaggregationid: str = Field(..., alias='billingAggregationId')
     billinginvoiceid: str = Field(..., alias='billingInvoiceId')
     paymentmethodid: str = Field(..., alias='paymentMethodId')
-    billingaddressid: str = Field(..., alias='billingAddressId')
-    backuppaymentmethodid: str = Field(..., alias='backupPaymentMethodId')
+    billingaddressid: Optional[str] = Field(default=None, alias='billingAddressId')
+    backuppaymentmethodid: Optional[str] = Field(default=None, alias='backupPaymentMethodId')
     status: str = Field(..., alias='status')
-    remarks: str = Field(..., alias='remarks')
-    agreementbaa: str = Field(..., alias='agreementBAA')
-    programmanagername: str = Field(..., alias='programManagerName')
-    programmanagercalendar: str = Field(..., alias='programManagerCalendar')
-    programdiscordchannelname: str = Field(..., alias='programDiscordChannelName')
-    programdiscordchannelurl: str = Field(..., alias='programDiscordChannelUrl')
+    remarks: Optional[str] = Field(default=None, alias='remarks')
+    agreementbaa: Optional[str] = Field(default=None, alias='agreementBAA')
+    programmanagername: Optional[str] = Field(default=None, alias='programManagerName')
+    programmanagercalendar: Optional[str] = Field(default=None, alias='programManagerCalendar')
+    programdiscordchannelname: Optional[str] = Field(default=None, alias='programDiscordChannelName')
+    programdiscordchannelurl: Optional[str] = Field(default=None, alias='programDiscordChannelUrl')
     billinglimits: Optional[BillingLimits] = Field(default=None, alias='billingLimits')
-    billingplandowngrade: str = Field(..., alias='billingPlanDowngrade')
-    billingtaxid: str = Field(..., alias='billingTaxId')
+    billingplandowngrade: Optional[str] = Field(default=None, alias='billingPlanDowngrade')
+    billingtaxid: Optional[str] = Field(default=None, alias='billingTaxId')
     markedfordeletion: bool = Field(..., alias='markedForDeletion')
     platform: str = Field(..., alias='platform')
     projects: List[Any] = Field(..., alias='projects')

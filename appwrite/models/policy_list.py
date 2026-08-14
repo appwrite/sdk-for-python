@@ -12,6 +12,7 @@ from .policy_session_invalidation import PolicySessionInvalidation
 from .policy_session_limit import PolicySessionLimit
 from .policy_user_limit import PolicyUserLimit
 from .policy_membership_privacy import PolicyMembershipPrivacy
+from .policy_mfa_factors import PolicyMfaFactors
 from .policy_deny_aliased_email import PolicyDenyAliasedEmail
 from .policy_deny_disposable_email import PolicyDenyDisposableEmail
 from .policy_deny_free_email import PolicyDenyFreeEmail
@@ -25,8 +26,8 @@ class PolicyList(AppwriteModel):
     ----------
     total : float
         Total number of policies in the given project.
-    policies : List[Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]]
+    policies : List[Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]]
         List of policies.
     """
     total: float = Field(..., alias='total')
-    policies: List[Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]] = Field(..., alias='policies')
+    policies: List[Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]] = Field(..., alias='policies')

@@ -26,7 +26,7 @@ class UserList(AppwriteModel, Generic[T]):
         instance = cls.model_validate(data)
         if 'users' in data and data['users'] is not None:
             instance.users = [
-                User.with_data(row, model_type) 
+                User.with_data(row, model_type)
                 for row in data['users']
             ]
         return instance

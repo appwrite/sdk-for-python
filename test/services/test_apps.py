@@ -226,6 +226,19 @@ class AppsServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_delete_installation(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.apps.delete_installation(
+            '<APP_ID>',
+            '<INSTALLATION_ID>',
+        )
+
+        self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
     def test_create_installation_token(self, m):
         data = {
     "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...",

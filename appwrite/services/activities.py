@@ -13,14 +13,14 @@ class Activities(Service):
 
     def list_events(
         self,
-        queries: Optional[str] = None
+        queries: Optional[List[str]] = None
     ) -> ActivityEventList:
         """
         List all events for selected filters.
 
         Parameters
         ----------
-        queries : Optional[str]
+        queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on attributes such as userId, teamId, etc.
         
         Returns

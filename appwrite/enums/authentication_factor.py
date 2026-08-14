@@ -5,3 +5,4 @@ class AuthenticationFactor(Enum):
     PHONE = "phone"
     TOTP = "totp"
     RECOVERYCODE = "recoverycode"
+    CUSTOM = "custom"

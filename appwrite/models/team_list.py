@@ -26,7 +26,7 @@ class TeamList(AppwriteModel, Generic[T]):
         instance = cls.model_validate(data)
         if 'teams' in data and data['teams'] is not None:
             instance.teams = [
-                Team.with_data(row, model_type) 
+                Team.with_data(row, model_type)
                 for row in data['teams']
             ]
         return instance

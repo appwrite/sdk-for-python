@@ -1,8 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.project import Project
-from appwrite.models import Key
-from appwrite.enums import ProjectKeyScopes
+from appwrite.models import Project as ProjectModel
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -11,11 +10,11 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 project = Project(client)
 
-result: Key = project.create_key(
-    key_id = '<KEY_ID>',
-    name = '<NAME>',
-    scopes = [ProjectKeyScopes.PROJECT_READ],
-    expire = '2020-10-15T06:38:00.000+00:00' # optional
+result: ProjectModel = project.update_mfa_factors_policy(
+    totp = False, # optional
+    email = False, # optional
+    phone = False, # optional
+    custom = False # optional
 )
 
 print(result.model_dump())

@@ -11,6 +11,7 @@ class Runtime(Enum):
     NODE_23 = "node-23"
     NODE_24 = "node-24"
     NODE_25 = "node-25"
+    NODE_26 = "node-26"
     PHP_8_0 = "php-8.0"
     PHP_8_1 = "php-8.1"
     PHP_8_2 = "php-8.2"

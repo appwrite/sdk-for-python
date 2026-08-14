@@ -26,7 +26,7 @@ class DocumentList(AppwriteModel, Generic[T]):
         instance = cls.model_validate(data)
         if 'documents' in data and data['documents'] is not None:
             instance.documents = [
-                Document.with_data(row, model_type) 
+                Document.with_data(row, model_type)
                 for row in data['documents']
             ]
         return instance

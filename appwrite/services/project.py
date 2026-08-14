@@ -7,8 +7,8 @@ from ..models.project import Project as ProjectModel
 from ..enums.project_auth_method_id import ProjectAuthMethodId
 from ..models.key_list import KeyList
 from ..enums.project_key_scopes import ProjectKeyScopes
-from ..models.key import Key
 from ..models.ephemeral_key import EphemeralKey
+from ..models.key import Key
 from ..models.mock_number_list import MockNumberList
 from ..models.mock_number import MockNumber
 from ..models.o_auth2_provider_list import OAuth2ProviderList
@@ -74,6 +74,7 @@ from ..models.policy_session_invalidation import PolicySessionInvalidation
 from ..models.policy_session_limit import PolicySessionLimit
 from ..models.policy_user_limit import PolicyUserLimit
 from ..models.policy_membership_privacy import PolicyMembershipPrivacy
+from ..models.policy_mfa_factors import PolicyMfaFactors
 from ..models.policy_deny_aliased_email import PolicyDenyAliasedEmail
 from ..models.policy_deny_disposable_email import PolicyDenyDisposableEmail
 from ..models.policy_deny_free_email import PolicyDenyFreeEmail
@@ -235,67 +236,6 @@ class Project(Service):
         }, api_params)
 
         return self._parse_response(response, model=KeyList)
-
-
-    def create_key(
-        self,
-        key_id: str,
-        name: str,
-        scopes: List[ProjectKeyScopes],
-        expire: Optional[str] = None
-    ) -> Key:
-        """
-        Create a new API key. It's recommended to have multiple API keys with strict scopes for separate functions within your project.
-        
-        You can also create an ephemeral API key if you need a short-lived key instead.
-
-        Parameters
-        ----------
-        key_id : str
-            Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        name : str
-            Key name. Max length: 128 chars.
-        scopes : List[ProjectKeyScopes]
-            Key scopes list. Maximum of 200 scopes are allowed.
-        expire : Optional[str]
-            Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
-        
-        Returns
-        -------
-        Key
-            API response as a typed Pydantic model
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/project/keys'
-        api_params = {}
-        if key_id is None:
-            raise AppwriteException('Missing required parameter: "key_id"')
-
-        if name is None:
-            raise AppwriteException('Missing required parameter: "name"')
-
-        if scopes is None:
-            raise AppwriteException('Missing required parameter: "scopes"')
-
-
-        api_params['keyId'] = self._normalize_value(key_id)
-        api_params['name'] = self._normalize_value(name)
-        api_params['scopes'] = self._normalize_value(scopes)
-        if expire is not None:
-            api_params['expire'] = self._normalize_value(expire)
-
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
-
-        return self._parse_response(response, model=Key)
 
 
     def create_ephemeral_key(
@@ -796,7 +736,8 @@ class Project(Service):
         user_code_length: Optional[float] = None,
         user_code_format: Optional[str] = None,
         device_code_duration: Optional[float] = None,
-        default_scopes: Optional[List[str]] = None
+        default_scopes: Optional[List[str]] = None,
+        installation_scopes: Optional[List[str]] = None
     ) -> ProjectModel:
         """
         Update the OAuth2 server (OIDC provider) configuration.
@@ -833,6 +774,8 @@ class Project(Service):
             Lifetime in seconds of device flow device codes and user codes. Device codes are intentionally short-lived. Leave empty to use default 600.
         default_scopes : Optional[List[str]]
             List of OAuth2 scopes used when an authorization request omits the scope parameter. Every default scope must also be allowed by the OAuth2 server. Maximum of 100 scopes are allowed, each up to 128 characters long.
+        installation_scopes : Optional[List[str]]
+            List of scopes an application may request when installed on a team. Omitting the parameter clears the list, so no installation scopes can be granted. Maximum of 100 scopes are allowed, each up to 128 characters long.
         
         Returns
         -------
@@ -882,6 +825,8 @@ class Project(Service):
             api_params['deviceCodeDuration'] = self._normalize_value(device_code_duration)
         if default_scopes is not None:
             api_params['defaultScopes'] = self._normalize_value(default_scopes)
+        if installation_scopes is not None:
+            api_params['installationScopes'] = self._normalize_value(installation_scopes)
 
         response = self.client.call('put', api_path, {
             'X-Appwrite-Project': self.client.get_config('project'),
@@ -4149,6 +4094,59 @@ class Project(Service):
         return self._parse_response(response, model=ProjectModel)
 
 
+    def update_mfa_factors_policy(
+        self,
+        totp: Optional[bool] = None,
+        email: Optional[bool] = None,
+        phone: Optional[bool] = None,
+        custom: Optional[bool] = None
+    ) -> ProjectModel:
+        """
+        Updating this policy allows you to control which factors users can use to complete an MFA challenge. Disabled factors cannot be used to create a challenge and are reported as unavailable when listing factors. The custom factor is disabled by default; enable it to deliver challenge codes through your own channel. Recovery codes always remain available as a fallback.
+
+        Parameters
+        ----------
+        totp : Optional[bool]
+            Set to true to allow TOTP to complete an MFA challenge, or false to disable it.
+        email : Optional[bool]
+            Set to true to allow email to complete an MFA challenge, or false to disable it.
+        phone : Optional[bool]
+            Set to true to allow phone (SMS) to complete an MFA challenge, or false to disable it.
+        custom : Optional[bool]
+            Set to true to allow the custom factor to complete an MFA challenge, or false to disable it.
+        
+        Returns
+        -------
+        ProjectModel
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/policies/mfa-factors'
+        api_params = {}
+
+        if totp is not None:
+            api_params['totp'] = self._normalize_value(totp)
+        if email is not None:
+            api_params['email'] = self._normalize_value(email)
+        if phone is not None:
+            api_params['phone'] = self._normalize_value(phone)
+        if custom is not None:
+            api_params['custom'] = self._normalize_value(custom)
+
+        response = self.client.call('patch', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=ProjectModel)
+
+
     def update_password_dictionary_policy(
         self,
         enabled: bool
@@ -4201,7 +4199,7 @@ class Project(Service):
         Parameters
         ----------
         total : Optional[float]
-            Set the password history length per user. Value can be between 1 and 5000, or null to disable the limit.
+            Set the password history length per user. Value can be between 1 and 20, or null to disable the limit.
         
         Returns
         -------
@@ -4376,7 +4374,7 @@ class Project(Service):
         Parameters
         ----------
         duration : float
-            Maximum session length in seconds. Minium allowed value is 5 second, and maximum is 1 year, which is 31536000 seconds.
+            Maximum session length in seconds. Minium allowed value is 60 seconds, and maximum is 1 year, which is 31536000 seconds.
         
         Returns
         -------
@@ -4448,15 +4446,15 @@ class Project(Service):
 
     def update_session_limit_policy(
         self,
-        total: Optional[float]
+        total: float
     ) -> ProjectModel:
         """
         Update the maximum number of sessions allowed per user. When the limit is hit, the oldest session will be deleted to make room for new one.
 
         Parameters
         ----------
-        total : Optional[float]
-            Set the maximum number of sessions allowed per user. Value can be between 1 and 5000, or null to disable the limit.
+        total : float
+            Set the maximum number of sessions allowed per user. Value can be between 1 and 100.
         
         Returns
         -------
@@ -4471,6 +4469,9 @@ class Project(Service):
 
         api_path = '/project/policies/session-limit'
         api_params = {}
+        if total is None:
+            raise AppwriteException('Missing required parameter: "total"')
+
 
         api_params['total'] = self._normalize_value(total)
 
@@ -4493,7 +4494,7 @@ class Project(Service):
         Parameters
         ----------
         total : Optional[float]
-            Set the maximum number of users allowed in the project. Value can be between 1 and 5000, or null to disable the limit.
+            Set the maximum number of users allowed in the project. Value can be between 0 and 10000. Use 0 or null to disable the limit.
         
         Returns
         -------
@@ -4523,18 +4524,18 @@ class Project(Service):
     def get_policy(
         self,
         policy_id: ProjectPolicyId
-    ) -> Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]:
+    ) -> Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]:
         """
         Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
 
         Parameters
         ----------
         policy_id : ProjectPolicyId
-            Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
+            Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
         
         Returns
         -------
-        Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]
+        Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]
             API response as one of the typed response models
         
         Raises
@@ -4587,6 +4588,9 @@ class Project(Service):
 
         if response.get('$id') == 'membership-privacy':
             return self._parse_response(response, model=PolicyMembershipPrivacy)
+
+        if response.get('$id') == 'mfa-factors':
+            return self._parse_response(response, model=PolicyMfaFactors)
 
         if response.get('$id') == 'deny-aliased-email':
             return self._parse_response(response, model=PolicyDenyAliasedEmail)

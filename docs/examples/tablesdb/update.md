@@ -14,7 +14,9 @@ result: Database = tables_db.update(
     database_id = '<DATABASE_ID>',
     name = '<NAME>', # optional
     enabled = False, # optional
-    replicas = 0 # optional
+    specification = 'serverless', # optional
+    replicas = 0, # optional
+    sync_mode = 'async' # optional
 )
 
 print(result.model_dump())

@@ -9,7 +9,6 @@ from ..models.oauth2_consent import Oauth2Consent
 from ..models.oauth2_consent_token_list import Oauth2ConsentTokenList
 from ..models.oauth2_consent_token import Oauth2ConsentToken
 from ..models.identity_list import IdentityList
-from ..models.jwt import Jwt
 from ..models.log_list import LogList
 from ..enums.authenticator_type import AuthenticatorType
 from ..models.mfa_type import MfaType
@@ -525,44 +524,6 @@ class Account(Service):
         return response
 
 
-    def create_jwt(
-        self,
-        duration: Optional[float] = None
-    ) -> Jwt:
-        """
-        Use this endpoint to create a JSON Web Token. You can use the resulting JWT to authenticate on behalf of the current user when working with the Appwrite server-side API and SDKs. The JWT secret is valid for 15 minutes from its creation and will be invalid if the user will logout in that time frame.
-
-        Parameters
-        ----------
-        duration : Optional[float]
-            Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
-        
-        Returns
-        -------
-        Jwt
-            API response as a typed Pydantic model
-        
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/account/jwts'
-        api_params = {}
-
-        if duration is not None:
-            api_params['duration'] = self._normalize_value(duration)
-
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
-
-        return self._parse_response(response, model=Jwt)
-
-
     def list_logs(
         self,
         queries: Optional[List[str]] = None,
@@ -789,7 +750,7 @@ class Account(Service):
         Parameters
         ----------
         factor : AuthenticationFactor
-            Factor used for verification. Must be one of following: `email`, `phone`, `totp`, `recoveryCode`.
+            Factor used for verification. Must be one of following: `email`, `phone`, `totp`, `recoveryCode`, `custom`.
         
         Returns
         -------

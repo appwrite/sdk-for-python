@@ -17,7 +17,7 @@ class BillingPlanAddonDetails(AppwriteModel):
         Addon limit
     type : str
         Addon type
-    currency : str
+    currency : Optional[str]
         Price currency
     price : float
         Price
@@ -30,7 +30,7 @@ class BillingPlanAddonDetails(AppwriteModel):
     planincluded: float = Field(..., alias='planIncluded')
     limit: float = Field(..., alias='limit')
     type: str = Field(..., alias='type')
-    currency: str = Field(..., alias='currency')
+    currency: Optional[str] = Field(default=None, alias='currency')
     price: float = Field(..., alias='price')
     value: float = Field(..., alias='value')
     invoicedesc: str = Field(..., alias='invoiceDesc')

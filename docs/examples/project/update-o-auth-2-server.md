@@ -25,7 +25,8 @@ result: ProjectModel = project.update_o_auth2_server(
     user_code_length = 6, # optional
     user_code_format = 'numeric', # optional
     device_code_duration = 60, # optional
-    default_scopes = [] # optional
+    default_scopes = [], # optional
+    installation_scopes = [] # optional
 )
 
 print(result.model_dump())

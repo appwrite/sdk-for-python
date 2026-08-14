@@ -439,13 +439,13 @@ class Backups(Service):
         """
         Create and trigger a new restoration for a backup on a project.
         
-        For a backup of one database, the restoration resolves its destination before it is queued. Pass `newResourceId` to restore into that database ID, including the archived database ID to overwrite it. When `newResourceId` is omitted, a new database ID is generated and returned in `options`.
+        For a backup of one database, the restoration resolves its destination before it is queued. When `newResourceId` is omitted, the archived database is restored in place and its own ID is returned in `options`. Pass a different `newResourceId` to restore alongside it as a new database instead.
         
         The restoration migration records the archived database in `resourceId` and `resourceType`, and the resolved database in `destinationResourceId` and `destinationResourceType`. Database types are stored canonically as `database`, `documentsdb`, or `vectorsdb`. Project-wide restorations leave these fields empty because they do not have a single source or destination database.
         
         To list every migration related to one database, use its canonical type in a nested `OR(AND(...), AND(...), AND(...))` across the root, parent, and destination relation pairs: `(resourceType, resourceId)`, `(parentResourceType, parentResourceId)`, and `(destinationResourceType, destinationResourceId)`. Legacy and TablesDB databases use `database`; the operational `resourceType` of a table migration is not rewritten to `tablesdb`.
         
-        When restoring a DocumentsDB or VectorsDB database to a new resource from a dedicated source, the restore provisions a fresh dedicated backing database at the source database's own specification.
+        When restoring a DocumentsDB or VectorsDB database from a dedicated source, the restore provisions a fresh dedicated backing database at the source database's own specification and lands the data there. An in-place restore swaps the database onto that backing only once the restore has succeeded, and retires the backing it displaced only once that swap is confirmed, so the source keeps serving its own data until the restored data is in place and any failure leaves it untouched. A serverless source has no dedicated backing to clone and restores onto the archived database instead.
         
 
         Parameters
@@ -455,7 +455,7 @@ class Backups(Service):
         services : List[BackupServices]
             Array of services to restore
         new_resource_id : Optional[str]
-            Destination resource ID. Omit to generate a new ID, or pass the archived resource ID to overwrite it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+            Destination resource ID. Omit to restore the archived resource in place, or pass a different ID to restore alongside it as a new resource. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         new_resource_name : Optional[str]
             Database name. Max length: 128 chars.
         

@@ -231,19 +231,6 @@ class AccountServiceTest(unittest.TestCase):
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
-    def test_create_jwt(self, m):
-        data = {
-    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-}
-        headers = {'Content-Type': 'application/json'}
-        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
-
-        response = self.account.create_jwt(
-        )
-
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
     def test_list_logs(self, m):
         data = {
     "total": 5.0,
@@ -526,7 +513,8 @@ class AccountServiceTest(unittest.TestCase):
     "totp": True,
     "phone": True,
     "email": True,
-    "recoveryCode": True
+    "recoveryCode": True,
+    "custom": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -542,7 +530,8 @@ class AccountServiceTest(unittest.TestCase):
     "totp": True,
     "phone": True,
     "email": True,
-    "recoveryCode": True
+    "recoveryCode": True,
+    "custom": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -727,7 +716,6 @@ class AccountServiceTest(unittest.TestCase):
         response = self.account.get_prefs(
         )
 
-        data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()

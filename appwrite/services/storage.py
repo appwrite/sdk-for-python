@@ -341,7 +341,7 @@ class Storage(Service):
         bucket_id : str
             Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
         queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, signature, mimeType, sizeOriginal, chunksTotal, chunksUploaded
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, folder, signature, mimeType, sizeOriginal, chunksTotal, chunksUploaded
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
@@ -386,6 +386,7 @@ class Storage(Service):
         file_id: str,
         file: InputFile,
         permissions: Optional[List[str]] = None,
+        folder: Optional[str] = None,
         on_progress = None
     ) -> File:
         """
@@ -408,6 +409,8 @@ class Storage(Service):
             Binary file. Appwrite SDKs provide helpers to handle file input. [Learn about file input](https://appwrite.io/docs/products/storage/upload-download#input-file).
         permissions : Optional[List[str]]
             An array of permission strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+        folder : Optional[str]
+            Virtual folder to place the file in, for example "photos/2026". Nest folders with `/`. Defaults to the bucket root.
                 on_progress : callable, optional
             Optional callback for upload progress
         
@@ -439,6 +442,8 @@ class Storage(Service):
         api_params['file'] = self._normalize_value(file)
         if permissions is not None:
             api_params['permissions'] = self._normalize_value(permissions)
+        if folder is not None:
+            api_params['folder'] = self._normalize_value(folder)
 
         param_name = 'file'
 

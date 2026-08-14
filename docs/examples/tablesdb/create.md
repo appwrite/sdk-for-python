@@ -15,7 +15,8 @@ result: Database = tables_db.create(
     name = '<NAME>',
     enabled = False, # optional
     specification = 'serverless', # optional
-    replicas = 0 # optional
+    replicas = 0, # optional
+    sync_mode = 'async' # optional
 )
 
 print(result.model_dump())

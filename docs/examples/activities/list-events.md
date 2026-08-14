@@ -11,7 +11,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 activities = Activities(client)
 
 result: ActivityEventList = activities.list_events(
-    queries = '' # optional
+    queries = [] # optional
 )
 
 print(result.model_dump())

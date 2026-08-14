@@ -569,12 +569,32 @@ class UsersServiceTest(unittest.TestCase):
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
+    def test_get_mfa_challenge(self, m):
+        data = {
+    "$id": "bb8ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "userId": "5e5ea5c168bb8",
+    "expire": "2020-10-15T06:38:00.000+00:00",
+    "code": "446372"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.users.get_mfa_challenge(
+            '<USER_ID>',
+            '<CHALLENGE_ID>',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_list_mfa_factors(self, m):
         data = {
     "totp": True,
     "phone": True,
     "email": True,
-    "recoveryCode": True
+    "recoveryCode": True,
+    "custom": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -591,7 +611,8 @@ class UsersServiceTest(unittest.TestCase):
     "totp": True,
     "phone": True,
     "email": True,
-    "recoveryCode": True
+    "recoveryCode": True,
+    "custom": True
 }
         headers = {'Content-Type': 'application/json'}
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
@@ -786,7 +807,6 @@ class UsersServiceTest(unittest.TestCase):
             '<USER_ID>',
         )
 
-        data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -800,7 +820,6 @@ class UsersServiceTest(unittest.TestCase):
             {},
         )
 
-        data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
