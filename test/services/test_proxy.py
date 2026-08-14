@@ -14,6 +14,24 @@ class ProxyServiceTest(unittest.TestCase):
         self.proxy = Proxy(self.client)
 
     @requests_mock.Mocker()
+    def test_create_invalidation(self, m):
+        data = {
+    "domain": "appwrite.company.com",
+    "type": "tag",
+    "reference": "products",
+    "status": "success"
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.proxy.create_invalidation(
+            '',
+            'tag',
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_list_rules(self, m):
         data = {
     "total": 5.0,

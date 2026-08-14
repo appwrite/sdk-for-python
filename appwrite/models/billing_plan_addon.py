@@ -10,10 +10,10 @@ class BillingPlanAddon(AppwriteModel):
 
     Attributes
     ----------
-    seats : BillingPlanAddonDetails
+    seats : Optional[BillingPlanAddonDetails]
         Addon seats
-    projects : BillingPlanAddonDetails
+    projects : Optional[BillingPlanAddonDetails]
         Addon projects
     """
-    seats: BillingPlanAddonDetails = Field(..., alias='seats')
-    projects: BillingPlanAddonDetails = Field(..., alias='projects')
+    seats: Optional[BillingPlanAddonDetails] = Field(default=None, alias='seats')
+    projects: Optional[BillingPlanAddonDetails] = Field(default=None, alias='projects')

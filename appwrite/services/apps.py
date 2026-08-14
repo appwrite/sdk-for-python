@@ -262,7 +262,7 @@ class Apps(Service):
         Parameters
         ----------
         app_id : str
-            Application unique ID or HTTPS client ID metadata document URL.
+            Application unique ID.
         
         Returns
         -------
@@ -356,7 +356,7 @@ class Apps(Service):
         device_flow : Optional[bool]
             Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
         installation_scopes : Optional[List[str]]
-            Scopes the application requests when installed on a team. Organization-level and project-level scopes only; use the list scopes endpoint with `type=installation` to discover available values. Maximum of 100 scopes are allowed.
+            Scopes the application requests when installed on a team. Only scopes allowed by the project's OAuth2 server installation scopes configuration are accepted; use the list installation scopes endpoint to discover available values. Maximum of 100 scopes are allowed.
         installation_redirect_url : Optional[str]
             URL users are redirected to after creating or updating an installation of this application. Must be an https URL, an http loopback URL (localhost, 127.0.0.1, [::1]), or a private-use scheme URI, and must not contain a fragment. Leave empty for no redirect.
         
@@ -475,7 +475,7 @@ class Apps(Service):
         total: Optional[bool] = None
     ) -> AppInstallationList:
         """
-        List installations of an application. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header.
+        List installations of an application. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app.
 
         Parameters
         ----------
@@ -523,7 +523,7 @@ class Apps(Service):
         installation_id: str
     ) -> AppInstallation:
         """
-        Get an installation of an application by its unique ID. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header.
+        Get an installation of an application by its unique ID. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app.
 
         Parameters
         ----------
@@ -563,13 +563,60 @@ class Apps(Service):
         return self._parse_response(response, model=AppInstallation)
 
 
+    def delete_installation(
+        self,
+        app_id: str,
+        installation_id: str
+    ) -> Dict[str, Any]:
+        """
+        Delete an installation of an application by its unique ID. Requires a caller with update access to the app. Previously issued installation access tokens are revoked.
+
+        Parameters
+        ----------
+        app_id : str
+            Application unique ID.
+        installation_id : str
+            Installation unique ID.
+        
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/apps/{appId}/installations/{installationId}'
+        api_params = {}
+        if app_id is None:
+            raise AppwriteException('Missing required parameter: "app_id"')
+
+        if installation_id is None:
+            raise AppwriteException('Missing required parameter: "installation_id"')
+
+        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
+
+
+        response = self.client.call('delete', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return response
+
+
     def create_installation_token(
         self,
         app_id: str,
         installation_id: str
     ) -> Oauth2Token:
         """
-        Create a token for an installation of an application. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header. The returned token carries the scopes and authorization details granted to the installation, and can be used as an `Authorization: Bearer` header everywhere OAuth2 access tokens are accepted. Multiple tokens can be active for the same installation at once; each token stays valid until it expires or the installation is updated or deleted.
+        Create a token for an installation of an application. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app. The returned token carries the scopes and authorization details granted to the installation, and can be used as an `Authorization: Bearer` header everywhere OAuth2 access tokens are accepted. Multiple tokens can be active for the same installation at once; each token stays valid until it expires or the installation is updated or deleted.
 
         Parameters
         ----------

@@ -11,7 +11,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 project = Project(client)
 
 result: ProjectModel = project.update_session_duration_policy(
-    duration = 5
+    duration = 60
 )
 
 print(result.model_dump())

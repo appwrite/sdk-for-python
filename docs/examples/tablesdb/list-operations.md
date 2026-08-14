@@ -1,0 +1,21 @@
+```python
+from appwrite.client import Client
+from appwrite.services.tables_db import TablesDB
+from appwrite.models import DedicatedDatabaseOperationList
+
+client = Client()
+client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+client.set_key('<YOUR_API_KEY>') # Your secret API key
+
+tables_db = TablesDB(client)
+
+result: DedicatedDatabaseOperationList = tables_db.list_operations(
+    database_id = '<DATABASE_ID>',
+    status = 'running', # optional
+    limit = 1, # optional
+    offset = 0 # optional
+)
+
+print(result.model_dump())
+```

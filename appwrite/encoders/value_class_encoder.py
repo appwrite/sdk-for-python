@@ -15,6 +15,7 @@ from ..enums.relationship_type import RelationshipType
 from ..enums.relation_mutate import RelationMutate
 from ..enums.databases_index_type import DatabasesIndexType
 from ..enums.order_by import OrderBy
+from ..enums.embedding_model import EmbeddingModel
 from ..enums.runtime import Runtime
 from ..enums.project_key_scopes import ProjectKeyScopes
 from ..enums.template_reference_type import TemplateReferenceType
@@ -35,6 +36,7 @@ from ..enums.project_service_id import ProjectServiceId
 from ..enums.project_smtp_secure import ProjectSMTPSecure
 from ..enums.project_email_template_id import ProjectEmailTemplateId
 from ..enums.project_email_template_locale import ProjectEmailTemplateLocale
+from ..enums.invalidation_type import InvalidationType
 from ..enums.status_code import StatusCode
 from ..enums.proxy_resource_type import ProxyResourceType
 from ..enums.framework import Framework
@@ -111,6 +113,9 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, OrderBy):
             return o.value
 
+        if isinstance(o, EmbeddingModel):
+            return o.value
+
         if isinstance(o, Runtime):
             return o.value
 
@@ -169,6 +174,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, ProjectEmailTemplateLocale):
+            return o.value
+
+        if isinstance(o, InvalidationType):
             return o.value
 
         if isinstance(o, StatusCode):

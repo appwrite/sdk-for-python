@@ -267,7 +267,7 @@ class Sites(Service):
         Parameters
         ----------
         type : Optional[str]
-            Specification type to list. Can be one of: runtimes, builds.
+            Specification type to list. Can be one of: runtimes, builds. Defaults to runtimes.
         
         Returns
         -------

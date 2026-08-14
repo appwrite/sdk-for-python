@@ -81,6 +81,8 @@ class Project(AppwriteModel):
         OAuth2 server allowed scopes
     oauth2serverdefaultscopes : Optional[List[Any]]
         OAuth2 server scopes used when an authorization request omits the scope parameter
+    oauth2serverinstallationscopes : Optional[List[Any]]
+        Scopes an application may request when installed on a team
     oauth2serverauthorizationdetailstypes : Optional[List[Any]]
         OAuth2 server accepted RFC 9396 authorization_details types
     oauth2serveraccesstokenduration : Optional[float]
@@ -139,6 +141,7 @@ class Project(AppwriteModel):
     oauth2serverauthorizationurl: Optional[str] = Field(default=None, alias='oAuth2ServerAuthorizationUrl')
     oauth2serverscopes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerScopes')
     oauth2serverdefaultscopes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerDefaultScopes')
+    oauth2serverinstallationscopes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerInstallationScopes')
     oauth2serverauthorizationdetailstypes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerAuthorizationDetailsTypes')
     oauth2serveraccesstokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerAccessTokenDuration')
     oauth2serverrefreshtokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerRefreshTokenDuration')

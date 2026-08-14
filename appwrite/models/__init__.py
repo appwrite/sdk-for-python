@@ -43,9 +43,11 @@ from .subscriber_list import SubscriberList
 from .target_list import TargetList
 from .transaction_list import TransactionList
 from .specification_list import SpecificationList
+from .embedding_list import EmbeddingList
 from .insight_list import InsightList
 from .report_list import ReportList
 from .database import Database
+from .embedding import Embedding
 from .collection import Collection
 from .attribute_list import AttributeList
 from .attribute_string import AttributeString
@@ -180,6 +182,7 @@ from .policy_session_invalidation import PolicySessionInvalidation
 from .policy_session_limit import PolicySessionLimit
 from .policy_user_limit import PolicyUserLimit
 from .policy_membership_privacy import PolicyMembershipPrivacy
+from .policy_mfa_factors import PolicyMfaFactors
 from .platform_web import PlatformWeb
 from .platform_apple import PlatformApple
 from .platform_android import PlatformAndroid
@@ -197,6 +200,7 @@ from .specification import Specification
 from .proxy_rule import ProxyRule
 from .email_template import EmailTemplate
 from .mfa_challenge import MfaChallenge
+from .mfa_challenge_secret import MfaChallengeSecret
 from .mfa_recovery_codes import MfaRecoveryCodes
 from .mfa_type import MfaType
 from .mfa_factors import MfaFactors
@@ -220,10 +224,14 @@ from .billing_plan_limits import BillingPlanLimits
 from .billing_plan_dedicated_database_limits import BillingPlanDedicatedDatabaseLimits
 from .billing_plan_supported_addons import BillingPlanSupportedAddons
 from .block import Block
+from .database_migration import DatabaseMigration
 from .dedicated_database import DedicatedDatabase
 from .database_status import DatabaseStatus
 from .dedicated_database_member import DedicatedDatabaseMember
+from .dedicated_database_operation import DedicatedDatabaseOperation
+from .dedicated_database_operation_list import DedicatedDatabaseOperationList
 from .dedicated_database_replicas import DedicatedDatabaseReplicas
+from .proxy_invalidation import ProxyInvalidation
 from .organization import Organization
 from .backup_policy import BackupPolicy
 from .policy_deny_aliased_email import PolicyDenyAliasedEmail
@@ -264,6 +272,7 @@ from .activity_event_list import ActivityEventList
 from .backup_archive_list import BackupArchiveList
 from .backup_policy_list import BackupPolicyList
 from .backup_restoration_list import BackupRestorationList
+from .database_migration_list import DatabaseMigrationList
 from .apps_list import AppsList
 from .app_secret_list import AppSecretList
 from .app_scope_list import AppScopeList
@@ -316,9 +325,11 @@ __all__ = [
     'TargetList',
     'TransactionList',
     'SpecificationList',
+    'EmbeddingList',
     'InsightList',
     'ReportList',
     'Database',
+    'Embedding',
     'Collection',
     'AttributeList',
     'AttributeString',
@@ -453,6 +464,7 @@ __all__ = [
     'PolicySessionLimit',
     'PolicyUserLimit',
     'PolicyMembershipPrivacy',
+    'PolicyMfaFactors',
     'PlatformWeb',
     'PlatformApple',
     'PlatformAndroid',
@@ -470,6 +482,7 @@ __all__ = [
     'ProxyRule',
     'EmailTemplate',
     'MfaChallenge',
+    'MfaChallengeSecret',
     'MfaRecoveryCodes',
     'MfaType',
     'MfaFactors',
@@ -493,10 +506,14 @@ __all__ = [
     'BillingPlanDedicatedDatabaseLimits',
     'BillingPlanSupportedAddons',
     'Block',
+    'DatabaseMigration',
     'DedicatedDatabase',
     'DatabaseStatus',
     'DedicatedDatabaseMember',
+    'DedicatedDatabaseOperation',
+    'DedicatedDatabaseOperationList',
     'DedicatedDatabaseReplicas',
+    'ProxyInvalidation',
     'Organization',
     'BackupPolicy',
     'PolicyDenyAliasedEmail',
@@ -537,6 +554,7 @@ __all__ = [
     'BackupArchiveList',
     'BackupPolicyList',
     'BackupRestorationList',
+    'DatabaseMigrationList',
     'AppsList',
     'AppSecretList',
     'AppScopeList',

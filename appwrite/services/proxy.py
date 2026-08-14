@@ -3,6 +3,8 @@ from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from ..enums.invalidation_type import InvalidationType
+from ..models.proxy_invalidation import ProxyInvalidation
 from ..models.proxy_rule_list import ProxyRuleList
 from ..models.proxy_rule import ProxyRule
 from ..enums.status_code import StatusCode
@@ -12,6 +14,60 @@ class Proxy(Service):
 
     def __init__(self, client) -> None:
         super(Proxy, self).__init__(client)
+
+    def create_invalidation(
+        self,
+        domain: str,
+        type: InvalidationType,
+        reference: Optional[str] = None
+    ) -> ProxyInvalidation:
+        """
+        Create a new CDN cache invalidation for a domain. Executes a hard purge of cached content.
+        
+        Depending on type, the invalidation purges a single cache tag, a single URL path, or all cached content for the domain.
+
+        Parameters
+        ----------
+        domain : str
+            Domain name.
+        type : InvalidationType
+            Type of reference passed. Allowed values are: tag, path, all
+        reference : Optional[str]
+            Reference to invalidate. Depending on type this can be: cache tag name (up to 128 characters), URL path (up to 2048 characters). Not required when type is all.
+        
+        Returns
+        -------
+        ProxyInvalidation
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/proxy/invalidations'
+        api_params = {}
+        if domain is None:
+            raise AppwriteException('Missing required parameter: "domain"')
+
+        if type is None:
+            raise AppwriteException('Missing required parameter: "type"')
+
+
+        api_params['domain'] = self._normalize_value(domain)
+        api_params['type'] = self._normalize_value(type)
+        if reference is not None:
+            api_params['reference'] = self._normalize_value(reference)
+
+        response = self.client.call('post', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=ProxyInvalidation)
+
 
     def list_rules(
         self,

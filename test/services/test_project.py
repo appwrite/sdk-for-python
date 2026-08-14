@@ -121,30 +121,6 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
-    def test_create_key(self, m):
-        data = {
-    "$id": "5e5ea5c16897e",
-    "$createdAt": "2020-10-15T06:38:00.000+00:00",
-    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
-    "name": "My API Key",
-    "expire": "2020-10-15T06:38:00.000+00:00",
-    "scopes": [],
-    "secret": "919c2d18fb5d4...a2ae413da83346ad2",
-    "accessedAt": "2020-10-15T06:38:00.000+00:00",
-    "sdks": []
-}
-        headers = {'Content-Type': 'application/json'}
-        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
-
-        response = self.project.create_key(
-            '<KEY_ID>',
-            '<NAME>',
-            [],
-        )
-
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
     def test_create_ephemeral_key(self, m):
         data = {
     "$id": "5e5ea5c16897e",
@@ -1592,6 +1568,46 @@ class ProjectServiceTest(unittest.TestCase):
         m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
 
         response = self.project.update_membership_privacy_policy(
+        )
+
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_mfa_factors_policy(self, m):
+        data = {
+    "$id": "5e5ea5c16897e",
+    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+    "name": "New Project",
+    "teamId": "1592981250",
+    "region": "fra",
+    "devKeys": [],
+    "smtpEnabled": True,
+    "smtpSenderName": "John Appwrite",
+    "smtpSenderEmail": "john@appwrite.io",
+    "smtpReplyToName": "Support Team",
+    "smtpReplyToEmail": "support@appwrite.io",
+    "smtpHost": "mail.appwrite.io",
+    "smtpPort": 25.0,
+    "smtpUsername": "emailuser",
+    "smtpPassword": "smtp-password",
+    "smtpSecure": "tls",
+    "pingCount": 1.0,
+    "pingedAt": "2020-10-15T06:38:00.000+00:00",
+    "labels": [],
+    "status": "active",
+    "onboarding": {},
+    "authMethods": [],
+    "services": [],
+    "protocols": [],
+    "blocks": [],
+    "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+    "wafEnabled": True
+}
+        headers = {'Content-Type': 'application/json'}
+        m.request(requests_mock.ANY, requests_mock.ANY, text=json.dumps(data), headers=headers)
+
+        response = self.project.update_mfa_factors_policy(
         )
 
         self.assertEqual(response.to_dict(), data)

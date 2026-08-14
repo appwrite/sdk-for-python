@@ -11,6 +11,7 @@ class ProjectPolicyId(Enum):
     SESSION_LIMIT = "session-limit"
     USER_LIMIT = "user-limit"
     MEMBERSHIP_PRIVACY = "membership-privacy"
+    MFA_FACTORS = "mfa-factors"
     DENY_ALIASED_EMAIL = "deny-aliased-email"
     DENY_DISPOSABLE_EMAIL = "deny-disposable-email"
     DENY_FREE_EMAIL = "deny-free-email"

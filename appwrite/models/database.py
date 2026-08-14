@@ -28,7 +28,7 @@ class Database(AppwriteModel):
     status : Optional[DatabaseStatus]
         Dedicated database lifecycle status. Null when the database has no valid dedicated backing.
     engine : Optional[str]
-        Underlying engine of the dedicated backing: postgresql, mysql, mariadb, or mongodb. A managed product (tablesdb, documentsdb, vectorsdb) reports the engine it runs on, so its type and engine can differ. Null when the database has no dedicated backing.
+        Underlying engine of the dedicated backing: postgresql, mysql, or mongodb. A managed product (tablesdb, documentsdb, vectorsdb) reports the engine it runs on, so its type and engine can differ. Null when the database has no dedicated backing.
     specification : Optional[str]
         Compute specification identifier of the dedicated backing, e.g. s-2vcpu-2gb. Null when the database has no dedicated backing.
     replicas : Optional[float]

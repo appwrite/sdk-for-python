@@ -21,6 +21,10 @@ class File(AppwriteModel):
         File permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
     name : str
         File name.
+    folder : str
+        Virtual folder containing the file, with a trailing slash. Empty for the bucket root.
+    key : str
+        Full virtual path of the file: the folder followed by the file name.
     signature : str
         File MD5 signature.
     mimetype : str
@@ -44,6 +48,8 @@ class File(AppwriteModel):
     updatedat: str = Field(..., alias='$updatedAt')
     permissions: List[Any] = Field(..., alias='$permissions')
     name: str = Field(..., alias='name')
+    folder: str = Field(..., alias='folder')
+    key: str = Field(..., alias='key')
     signature: str = Field(..., alias='signature')
     mimetype: str = Field(..., alias='mimeType')
     sizeoriginal: float = Field(..., alias='sizeOriginal')

@@ -1,5 +1,23 @@
 # Change Log
 
+## 23.0.0
+
+* Breaking: removed `account.createJWT`; use `users.createJWT` instead. A leaked JWT could mint further JWTs, letting a credential outlive its own expiry — a session cannot duplicate itself to live forever either
+* Breaking: removed `project.createKey`. A leaked key could mint further hidden keys, making a compromise far harder to contain and revoke
+* Breaking: `activities.listEvents` `queries` now takes an array instead of a string
+* Added: `embeddings` service with `createTextEmbeddings`, plus the `EmbeddingModel` enum
+* Added: TablesDB migration methods `listMigrations`, `createMigration`, `getMigration`, `deleteMigration`, `cutoverMigration`, and `listOperations`
+* Added: `proxy.createInvalidation` for purging cached edge responses, plus the `InvalidationType` enum
+* Added: `apps.deleteInstallation`
+* Added: `users.getMFAChallenge` and the `MfaChallengeSecret` model
+* Added: `project.updateMFAFactorsPolicy` and the `PolicyMfaFactors` model
+* Added: `client.setOrganization` for organization-scoped requests
+* Added: `folder` parameter to `storage.createFile`
+* Added: `syncMode` parameter to `tablesDB.create` and `tablesDB.update`, and `specification` to `tablesDB.update`
+* Added: `installationScopes` parameter to `project.updateOAuth2Server`
+* Added: `custom` authentication factor, `node-26` runtime, `mfa-factors` project policy, and the `embeddings.write` and `proxy.invalidations.write` key scopes
+* Updated: response format to `1.9.6`
+
 ## 22.2.0
 
 * Added: `apps` installation and key management methods (`list_installations`, `get_installation`, `create_installation_token`, `list_installation_scopes`, `list_keys`, `create_key`, `get_key`, `delete_key`)

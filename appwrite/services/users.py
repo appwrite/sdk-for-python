@@ -11,6 +11,7 @@ from ..models.jwt import Jwt
 from ..models.log_list import LogList
 from ..models.membership_list import MembershipList
 from ..enums.authenticator_type import AuthenticatorType
+from ..models.mfa_challenge_secret import MfaChallengeSecret
 from ..models.mfa_factors import MfaFactors
 from ..models.mfa_recovery_codes import MfaRecoveryCodes
 from ..models.preferences import Preferences
@@ -1217,6 +1218,52 @@ class Users(Service):
         }, api_params)
 
         return response
+
+
+    def get_mfa_challenge(
+        self,
+        user_id: str,
+        challenge_id: str
+    ) -> MfaChallengeSecret:
+        """
+        Get a custom MFA challenge for a user, including the code to be delivered through your own channel.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        challenge_id : str
+            ID of the challenge.
+        
+        Returns
+        -------
+        MfaChallengeSecret
+            API response as a typed Pydantic model
+        
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/mfa/challenges/{challengeId}'
+        api_params = {}
+        if user_id is None:
+            raise AppwriteException('Missing required parameter: "user_id"')
+
+        if challenge_id is None:
+            raise AppwriteException('Missing required parameter: "challenge_id"')
+
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
+        api_path = api_path.replace('{challengeId}', str(self._normalize_value(challenge_id)))
+
+
+        response = self.client.call('get', api_path, {
+            'X-Appwrite-Project': self.client.get_config('project'),
+            'accept': 'application/json',
+        }, api_params)
+
+        return self._parse_response(response, model=MfaChallengeSecret)
 
 
     def list_mfa_factors(

@@ -36,7 +36,7 @@ class BillingPlan(AppwriteModel):
         Image Transformations
     screenshotsgenerated : float
         Screenshots generated
-    members : float
+    members : Optional[float]
         Members
     webhooks : float
         Webhooks
@@ -84,7 +84,7 @@ class BillingPlan(AppwriteModel):
         SMS authentications per month
     domains : float
         Custom domains
-    activitylogs : float
+    activitylogs : Optional[float]
         Activity log days
     usagelogs : float
         Usage history days
@@ -132,13 +132,13 @@ class BillingPlan(AppwriteModel):
         Does plan support restricting sign-ups to corporate email addresses only.
     supportsprojectspecificroles : bool
         Does plan support project-specific member roles.
-    backupsenabled : bool
+    backupsenabled : Optional[bool]
         Does plan support backup policies.
     usageperproject : bool
         Whether usage addons are calculated per project.
     supportedaddons : BillingPlanSupportedAddons
         Supported addons for this plan
-    backuppolicies : float
+    backuppolicies : Optional[float]
         How many policies does plan support
     deploymentsize : float
         Maximum function and site deployment size in MB
@@ -165,7 +165,7 @@ class BillingPlan(AppwriteModel):
     storage: float = Field(..., alias='storage')
     imagetransformations: float = Field(..., alias='imageTransformations')
     screenshotsgenerated: float = Field(..., alias='screenshotsGenerated')
-    members: float = Field(..., alias='members')
+    members: Optional[float] = Field(default=None, alias='members')
     webhooks: float = Field(..., alias='webhooks')
     wafrules: float = Field(..., alias='wafRules')
     projects: float = Field(..., alias='projects')
@@ -189,7 +189,7 @@ class BillingPlan(AppwriteModel):
     topics: float = Field(..., alias='topics')
     authphone: float = Field(..., alias='authPhone')
     domains: float = Field(..., alias='domains')
-    activitylogs: float = Field(..., alias='activityLogs')
+    activitylogs: Optional[float] = Field(default=None, alias='activityLogs')
     usagelogs: float = Field(..., alias='usageLogs')
     usagelogsintervals: Optional[List[Any]] = Field(default=None, alias='usageLogsIntervals')
     projectinactivitydays: float = Field(..., alias='projectInactivityDays')
@@ -213,10 +213,10 @@ class BillingPlan(AppwriteModel):
     supportsfreeemailvalidation: bool = Field(..., alias='supportsFreeEmailValidation')
     supportscorporateemailvalidation: bool = Field(..., alias='supportsCorporateEmailValidation')
     supportsprojectspecificroles: bool = Field(..., alias='supportsProjectSpecificRoles')
-    backupsenabled: bool = Field(..., alias='backupsEnabled')
+    backupsenabled: Optional[bool] = Field(default=None, alias='backupsEnabled')
     usageperproject: bool = Field(..., alias='usagePerProject')
     supportedaddons: BillingPlanSupportedAddons = Field(..., alias='supportedAddons')
-    backuppolicies: float = Field(..., alias='backupPolicies')
+    backuppolicies: Optional[float] = Field(default=None, alias='backupPolicies')
     deploymentsize: float = Field(..., alias='deploymentSize')
     buildsize: float = Field(..., alias='buildSize')
     databasesallowencrypt: bool = Field(..., alias='databasesAllowEncrypt')

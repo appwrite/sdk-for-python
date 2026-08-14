@@ -11,7 +11,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 project = Project(client)
 
 result: ProjectModel = project.update_user_limit_policy(
-    total = 1
+    total = 0
 )
 
 print(result.model_dump())
