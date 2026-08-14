@@ -15,6 +15,7 @@ from ..enums.relationship_type import RelationshipType
 from ..enums.relation_mutate import RelationMutate
 from ..enums.databases_index_type import DatabasesIndexType
 from ..enums.order_by import OrderBy
+from ..enums.embedding_model import EmbeddingModel
 from ..enums.runtime import Runtime
 from ..enums.project_key_scopes import ProjectKeyScopes
 from ..enums.template_reference_type import TemplateReferenceType
@@ -110,6 +111,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, OrderBy):
+            return o.value
+
+        if isinstance(o, EmbeddingModel):
             return o.value
 
         if isinstance(o, Runtime):
