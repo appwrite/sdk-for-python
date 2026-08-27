@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class DatabaseStatusVolume(AppwriteModel):
     """
     Volume
@@ -18,6 +19,7 @@ class DatabaseStatusVolume(AppwriteModel):
     mounted : bool
         Whether the volume is mounted.
     """
+
     path: str = Field(..., alias='path')
     usedpercent: str = Field(..., alias='usedPercent')
     available: str = Field(..., alias='available')

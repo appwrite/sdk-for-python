@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class BillingPlanDedicatedDatabaseLimits(AppwriteModel):
     """
     dedicatedDatabaseLimits
@@ -48,6 +49,7 @@ class BillingPlanDedicatedDatabaseLimits(AppwriteModel):
     allowedsyncmodes : Optional[List[Any]]
         Replica synchronization modes available for dedicated databases.
     """
+
     mincpu: Optional[float] = Field(default=None, alias='minCpu')
     maxcpu: Optional[float] = Field(default=None, alias='maxCpu')
     minmemorymb: Optional[float] = Field(default=None, alias='minMemoryMb')

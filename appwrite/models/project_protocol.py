@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.project_protocol_id import ProjectProtocolId
 
+
 class ProjectProtocol(AppwriteModel):
     """
     ProjectProtocol
@@ -15,5 +16,6 @@ class ProjectProtocol(AppwriteModel):
     enabled : bool
         Protocol status.
     """
+
     id: ProjectProtocolId = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')

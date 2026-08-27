@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.column_status import ColumnStatus
 
+
 class ColumnInteger(AppwriteModel):
     """
     ColumnInteger
@@ -33,6 +34,7 @@ class ColumnInteger(AppwriteModel):
     default : Optional[float]
         Default value for column when not provided. Cannot be set when column is required.
     """
+
     key: str = Field(..., alias='key')
     type: str = Field(..., alias='type')
     status: ColumnStatus = Field(..., alias='status')

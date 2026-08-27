@@ -11,7 +11,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 proxy = Proxy(client)
 
 result: ProxyRule = proxy.create_site_rule(
-    domain = '',
+    domain = 'example.com',
     site_id = '<SITE_ID>',
     branch = '<BRANCH>' # optional
 )

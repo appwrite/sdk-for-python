@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class PolicyMfaFactors(AppwriteModel):
     """
     Policy MFA Factors
@@ -20,6 +21,7 @@ class PolicyMfaFactors(AppwriteModel):
     custom : bool
         Whether the custom factor can be used to complete an MFA challenge.
     """
+
     id: str = Field(..., alias='$id')
     totp: bool = Field(..., alias='totp')
     email: bool = Field(..., alias='email')

@@ -18,6 +18,7 @@ from .policy_deny_disposable_email import PolicyDenyDisposableEmail
 from .policy_deny_free_email import PolicyDenyFreeEmail
 from .policy_deny_corporate_email import PolicyDenyCorporateEmail
 
+
 class PolicyList(AppwriteModel):
     """
     Policies List
@@ -29,5 +30,24 @@ class PolicyList(AppwriteModel):
     policies : List[Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]]
         List of policies.
     """
+
     total: float = Field(..., alias='total')
-    policies: List[Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]] = Field(..., alias='policies')
+    policies: List[
+        Union[
+            PolicyPasswordDictionary,
+            PolicyPasswordHistory,
+            PolicyPasswordStrength,
+            PolicyPasswordPersonalData,
+            PolicySessionAlert,
+            PolicySessionDuration,
+            PolicySessionInvalidation,
+            PolicySessionLimit,
+            PolicyUserLimit,
+            PolicyMembershipPrivacy,
+            PolicyMfaFactors,
+            PolicyDenyAliasedEmail,
+            PolicyDenyDisposableEmail,
+            PolicyDenyFreeEmail,
+            PolicyDenyCorporateEmail,
+        ]
+    ] = Field(..., alias='policies')

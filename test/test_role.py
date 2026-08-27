@@ -2,6 +2,7 @@ import unittest
 
 from appwrite.role import Role
 
+
 class TestRoleMethods(unittest.TestCase):
 
     def test_any(self):

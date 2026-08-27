@@ -12,7 +12,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 proxy = Proxy(client)
 
 result: ProxyInvalidation = proxy.create_invalidation(
-    domain = '',
+    domain = 'example.com',
     type = InvalidationType.TAG,
     reference = '<REFERENCE>' # optional
 )

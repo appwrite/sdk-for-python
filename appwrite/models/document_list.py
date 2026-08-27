@@ -6,6 +6,7 @@ from .document import Document
 
 T = TypeVar('T')
 
+
 class DocumentList(AppwriteModel, Generic[T]):
     """
     Documents List
@@ -17,6 +18,7 @@ class DocumentList(AppwriteModel, Generic[T]):
     documents : List[Document[T]]
         List of documents.
     """
+
     total: float = Field(..., alias='total')
     documents: List[Document[T]] = Field(..., alias='documents')
 
@@ -25,8 +27,5 @@ class DocumentList(AppwriteModel, Generic[T]):
         """Create DocumentList instance with typed data."""
         instance = cls.model_validate(data)
         if 'documents' in data and data['documents'] is not None:
-            instance.documents = [
-                Document.with_data(row, model_type)
-                for row in data['documents']
-            ]
+            instance.documents = [Document.with_data(row, model_type) for row in data['documents']]
         return instance

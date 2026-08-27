@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .proxy_rule import ProxyRule
 
+
 class ProxyRuleList(AppwriteModel):
     """
     Rule List
@@ -15,5 +16,6 @@ class ProxyRuleList(AppwriteModel):
     rules : List[ProxyRule]
         List of rules.
     """
+
     total: float = Field(..., alias='total')
     rules: List[ProxyRule] = Field(..., alias='rules')

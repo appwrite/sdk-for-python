@@ -13,10 +13,10 @@ tables_db = TablesDB(client)
 result: ColumnEmail = tables_db.update_email_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
     default = 'email@example.com',
-    new_key = '' # optional
+    new_key = '<NEW_KEY>' # optional
 )
 
 print(result.model_dump())

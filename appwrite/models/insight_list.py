@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .insight import Insight
 
+
 class InsightList(AppwriteModel):
     """
     Insights List
@@ -15,5 +16,6 @@ class InsightList(AppwriteModel):
     insights : List[Insight]
         List of insights.
     """
+
     total: float = Field(..., alias='total')
     insights: List[Insight] = Field(..., alias='insights')

@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class OAuth2Dropbox(AppwriteModel):
     """
     OAuth2Dropbox
@@ -18,6 +19,7 @@ class OAuth2Dropbox(AppwriteModel):
     appsecret : str
         Dropbox OAuth2 app secret.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     appkey: str = Field(..., alias='appKey')

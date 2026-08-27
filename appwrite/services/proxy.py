@@ -10,6 +10,7 @@ from ..models.proxy_rule import ProxyRule
 from ..enums.status_code import StatusCode
 from ..enums.proxy_resource_type import ProxyResourceType
 
+
 class Proxy(Service):
 
     def __init__(self, client) -> None:
@@ -19,11 +20,11 @@ class Proxy(Service):
         self,
         domain: str,
         type: InvalidationType,
-        reference: Optional[str] = None
+        reference: Optional[str] = None,
     ) -> ProxyInvalidation:
         """
         Create a new CDN cache invalidation for a domain. Executes a hard purge of cached content.
-        
+
         Depending on type, the invalidation purges a single cache tag, a single URL path, or all cached content for the domain.
 
         Parameters
@@ -34,12 +35,11 @@ class Proxy(Service):
             Type of reference passed. Allowed values are: tag, path, all
         reference : Optional[str]
             Reference to invalidate. Depending on type this can be: cache tag name (up to 128 characters), URL path (up to 2048 characters). Not required when type is all.
-        
         Returns
         -------
         ProxyInvalidation
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -50,29 +50,30 @@ class Proxy(Service):
         api_params = {}
         if domain is None:
             raise AppwriteException('Missing required parameter: "domain"')
-
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
-
-
         api_params['domain'] = self._normalize_value(domain)
         api_params['type'] = self._normalize_value(type)
         if reference is not None:
             api_params['reference'] = self._normalize_value(reference)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ProxyInvalidation)
-
 
     def list_rules(
         self,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> ProxyRuleList:
         """
         Get a list of all the proxy rules. You can use the query params to filter your results.
@@ -83,12 +84,11 @@ class Proxy(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: domain, type, trigger, deploymentResourceType, deploymentResourceId, deploymentId, deploymentVcsProviderBranch
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         ProxyRuleList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -97,39 +97,41 @@ class Proxy(Service):
 
         api_path = '/proxy/rules'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ProxyRuleList)
 
-
     def create_api_rule(
         self,
-        domain: str
+        domain: str,
     ) -> ProxyRule:
         """
         Create a new proxy rule for serving Appwrite's API on custom domain.
-        
+
         Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
 
         Parameters
         ----------
         domain : str
             Domain name.
-        
         Returns
         -------
         ProxyRule
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -140,28 +142,30 @@ class Proxy(Service):
         api_params = {}
         if domain is None:
             raise AppwriteException('Missing required parameter: "domain"')
-
-
         api_params['domain'] = self._normalize_value(domain)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ProxyRule)
-
 
     def create_function_rule(
         self,
         domain: str,
         function_id: str,
-        branch: Optional[str] = None
+        branch: Optional[str] = None,
     ) -> ProxyRule:
         """
         Create a new proxy rule for executing Appwrite Function on custom domain.
-        
+
         Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
 
         Parameters
@@ -172,12 +176,11 @@ class Proxy(Service):
             ID of function to be executed.
         branch : Optional[str]
             Name of VCS branch to deploy changes automatically
-        
         Returns
         -------
         ProxyRule
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -188,24 +191,25 @@ class Proxy(Service):
         api_params = {}
         if domain is None:
             raise AppwriteException('Missing required parameter: "domain"')
-
         if function_id is None:
             raise AppwriteException('Missing required parameter: "function_id"')
-
-
         api_params['domain'] = self._normalize_value(domain)
         api_params['functionId'] = self._normalize_value(function_id)
         if branch is not None:
             api_params['branch'] = self._normalize_value(branch)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ProxyRule)
-
 
     def create_redirect_rule(
         self,
@@ -213,11 +217,11 @@ class Proxy(Service):
         url: str,
         status_code: StatusCode,
         resource_id: str,
-        resource_type: ProxyResourceType
+        resource_type: ProxyResourceType,
     ) -> ProxyRule:
         """
         Create a new proxy rule for to redirect from custom domain to another domain.
-        
+
         Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
 
         Parameters
@@ -232,12 +236,11 @@ class Proxy(Service):
             ID of parent resource.
         resource_type : ProxyResourceType
             Type of parent resource.
-        
         Returns
         -------
         ProxyRule
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -248,44 +251,42 @@ class Proxy(Service):
         api_params = {}
         if domain is None:
             raise AppwriteException('Missing required parameter: "domain"')
-
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
-
         if status_code is None:
             raise AppwriteException('Missing required parameter: "status_code"')
-
         if resource_id is None:
             raise AppwriteException('Missing required parameter: "resource_id"')
-
         if resource_type is None:
             raise AppwriteException('Missing required parameter: "resource_type"')
-
-
         api_params['domain'] = self._normalize_value(domain)
         api_params['url'] = self._normalize_value(url)
         api_params['statusCode'] = self._normalize_value(status_code)
         api_params['resourceId'] = self._normalize_value(resource_id)
         api_params['resourceType'] = self._normalize_value(resource_type)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ProxyRule)
-
 
     def create_site_rule(
         self,
         domain: str,
         site_id: str,
-        branch: Optional[str] = None
+        branch: Optional[str] = None,
     ) -> ProxyRule:
         """
         Create a new proxy rule for serving Appwrite Site on custom domain.
-        
+
         Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
 
         Parameters
@@ -296,12 +297,11 @@ class Proxy(Service):
             ID of site to be executed.
         branch : Optional[str]
             Name of VCS branch to deploy changes automatically
-        
         Returns
         -------
         ProxyRule
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -312,28 +312,29 @@ class Proxy(Service):
         api_params = {}
         if domain is None:
             raise AppwriteException('Missing required parameter: "domain"')
-
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
-
         api_params['domain'] = self._normalize_value(domain)
         api_params['siteId'] = self._normalize_value(site_id)
         if branch is not None:
             api_params['branch'] = self._normalize_value(branch)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ProxyRule)
 
-
     def get_rule(
         self,
-        rule_id: str
+        rule_id: str,
     ) -> ProxyRule:
         """
         Get a proxy rule by its unique ID.
@@ -342,12 +343,11 @@ class Proxy(Service):
         ----------
         rule_id : str
             Rule ID.
-        
         Returns
         -------
         ProxyRule
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -358,21 +358,23 @@ class Proxy(Service):
         api_params = {}
         if rule_id is None:
             raise AppwriteException('Missing required parameter: "rule_id"')
-
         api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ProxyRule)
 
-
     def delete_rule(
         self,
-        rule_id: str
+        rule_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a proxy rule by its unique ID.
@@ -381,12 +383,11 @@ class Proxy(Service):
         ----------
         rule_id : str
             Rule ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -397,21 +398,23 @@ class Proxy(Service):
         api_params = {}
         if rule_id is None:
             raise AppwriteException('Missing required parameter: "rule_id"')
-
         api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
 
-
     def update_rule_status(
         self,
-        rule_id: str
+        rule_id: str,
     ) -> ProxyRule:
         """
         If not succeeded yet, retry verification process of a proxy rule domain. This endpoint triggers domain verification by checking DNS records. If verification is successful, a TLS certificate will be automatically provisioned for the domain asynchronously in the background.
@@ -420,12 +423,11 @@ class Proxy(Service):
         ----------
         rule_id : str
             Rule ID.
-        
         Returns
         -------
         ProxyRule
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -436,15 +438,17 @@ class Proxy(Service):
         api_params = {}
         if rule_id is None:
             raise AppwriteException('Missing required parameter: "rule_id"')
-
         api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
 
-
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ProxyRule)
-

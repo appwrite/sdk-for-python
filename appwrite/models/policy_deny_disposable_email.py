@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class PolicyDenyDisposableEmail(AppwriteModel):
     """
     Policy Deny Disposable Email
@@ -14,5 +15,6 @@ class PolicyDenyDisposableEmail(AppwriteModel):
     enabled : bool
         Whether the deny disposable email policy is enabled.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')

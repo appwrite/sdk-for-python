@@ -13,7 +13,7 @@ tables_db = TablesDB(client)
 result: ColumnPolygon = tables_db.create_polygon_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
     default = [[[1, 2], [3, 4], [5, 6], [1, 2]]] # optional
 )

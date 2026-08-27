@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class PolicyMembershipPrivacy(AppwriteModel):
     """
     Policy Membership Privacy
@@ -24,6 +25,7 @@ class PolicyMembershipPrivacy(AppwriteModel):
     useraccessedat : bool
         Whether user last access time is visible in memberships.
     """
+
     id: str = Field(..., alias='$id')
     userid: bool = Field(..., alias='userId')
     useremail: bool = Field(..., alias='userEmail')

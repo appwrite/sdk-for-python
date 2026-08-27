@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.message_status import MessageStatus
 
+
 class Message(AppwriteModel):
     """
     Message
@@ -37,6 +38,7 @@ class Message(AppwriteModel):
     status : MessageStatus
         Status of delivery.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

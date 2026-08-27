@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.project_auth_method_id import ProjectAuthMethodId
 
+
 class ProjectAuthMethod(AppwriteModel):
     """
     ProjectAuthMethod
@@ -15,5 +16,6 @@ class ProjectAuthMethod(AppwriteModel):
     enabled : bool
         Auth method status.
     """
+
     id: ProjectAuthMethodId = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')

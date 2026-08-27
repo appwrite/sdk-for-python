@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.column_status import ColumnStatus
 
+
 class ColumnBoolean(AppwriteModel):
     """
     ColumnBoolean
@@ -29,6 +30,7 @@ class ColumnBoolean(AppwriteModel):
     default : Optional[bool]
         Default value for column when not provided. Cannot be set when column is required.
     """
+
     key: str = Field(..., alias='key')
     type: str = Field(..., alias='type')
     status: ColumnStatus = Field(..., alias='status')

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ProjectOAuthProviderId(Enum):
     AMAZON = "amazon"
     APPLE = "apple"
@@ -21,6 +22,7 @@ class ProjectOAuthProviderId(Enum):
     GITHUB = "github"
     GITLAB = "gitlab"
     GOOGLE = "google"
+    HUGGINGFACE = "huggingface"
     KEYCLOAK = "keycloak"
     KICK = "kick"
     LINKEDIN = "linkedin"

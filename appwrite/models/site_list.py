@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .site import Site
 
+
 class SiteList(AppwriteModel):
     """
     Sites List
@@ -15,5 +16,6 @@ class SiteList(AppwriteModel):
     sites : List[Site]
         List of sites.
     """
+
     total: float = Field(..., alias='total')
     sites: List[Site] = Field(..., alias='sites')

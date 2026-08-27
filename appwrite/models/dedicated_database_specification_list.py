@@ -5,6 +5,7 @@ from .base_model import AppwriteModel
 from .dedicated_database_specification import DedicatedDatabaseSpecification
 from .dedicated_database_specification_pricing import DedicatedDatabaseSpecificationPricing
 
+
 class DedicatedDatabaseSpecificationList(AppwriteModel):
     """
     SpecificationList
@@ -18,6 +19,7 @@ class DedicatedDatabaseSpecificationList(AppwriteModel):
     pricing : DedicatedDatabaseSpecificationPricing
         Overage and add-on pricing shared across all specifications.
     """
+
     specifications: List[DedicatedDatabaseSpecification] = Field(..., alias='specifications')
     total: float = Field(..., alias='total')
     pricing: DedicatedDatabaseSpecificationPricing = Field(..., alias='pricing')

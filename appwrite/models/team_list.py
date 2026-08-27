@@ -6,6 +6,7 @@ from .team import Team
 
 T = TypeVar('T')
 
+
 class TeamList(AppwriteModel, Generic[T]):
     """
     Teams List
@@ -17,6 +18,7 @@ class TeamList(AppwriteModel, Generic[T]):
     teams : List[Team[T]]
         List of teams.
     """
+
     total: float = Field(..., alias='total')
     teams: List[Team[T]] = Field(..., alias='teams')
 
@@ -25,8 +27,5 @@ class TeamList(AppwriteModel, Generic[T]):
         """Create TeamList instance with typed data."""
         instance = cls.model_validate(data)
         if 'teams' in data and data['teams'] is not None:
-            instance.teams = [
-                Team.with_data(row, model_type)
-                for row in data['teams']
-            ]
+            instance.teams = [Team.with_data(row, model_type) for row in data['teams']]
         return instance

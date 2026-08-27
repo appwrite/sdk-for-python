@@ -13,7 +13,7 @@ project = Project(client)
 result: OAuth2Okta = project.update_o_auth2_okta(
     client_id = '<CLIENT_ID>', # optional
     client_secret = '<CLIENT_SECRET>', # optional
-    domain = '', # optional
+    domain = 'example.com', # optional
     authorization_server_id = '<AUTHORIZATION_SERVER_ID>', # optional
     enabled = False # optional
 )

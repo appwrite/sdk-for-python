@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class OAuth2Box(AppwriteModel):
     """
     OAuth2Box
@@ -18,6 +19,7 @@ class OAuth2Box(AppwriteModel):
     clientsecret : str
         Box OAuth2 client secret.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')

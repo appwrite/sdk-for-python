@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class FrameworkAdapter(AppwriteModel):
     """
     Framework Adapter
@@ -20,6 +21,7 @@ class FrameworkAdapter(AppwriteModel):
     fallbackfile : str
         Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
     """
+
     key: str = Field(..., alias='key')
     installcommand: str = Field(..., alias='installCommand')
     buildcommand: str = Field(..., alias='buildCommand')

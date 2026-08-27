@@ -13,10 +13,10 @@ tables_db = TablesDB(client)
 result: ColumnEnum = tables_db.create_enum_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
-    elements = [],
+    key = '<KEY>',
+    elements = ["active", "inactive"],
     required = False,
-    default = '<DEFAULT>', # optional
+    default = 'active', # optional
     array = False # optional
 )
 

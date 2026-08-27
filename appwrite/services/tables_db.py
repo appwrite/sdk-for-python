@@ -46,6 +46,7 @@ from ..models.row import Row
 
 T = TypeVar('T')
 
+
 class TablesDB(Service):
 
     def __init__(self, client) -> None:
@@ -55,7 +56,7 @@ class TablesDB(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> DatabaseList:
         """
         Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
@@ -68,12 +69,11 @@ class TablesDB(Service):
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         DatabaseList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -82,7 +82,6 @@ class TablesDB(Service):
 
         api_path = '/tablesdb'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -90,13 +89,17 @@ class TablesDB(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=DatabaseList)
-
 
     def create(
         self,
@@ -105,11 +108,10 @@ class TablesDB(Service):
         enabled: Optional[bool] = None,
         specification: Optional[str] = None,
         replicas: Optional[float] = None,
-        sync_mode: Optional[str] = None
+        sync_mode: Optional[str] = None,
     ) -> Database:
         """
         Create a new Database.
-        
 
         Parameters
         ----------
@@ -125,12 +127,11 @@ class TablesDB(Service):
             Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
         sync_mode : Optional[str]
             Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
-        
         Returns
         -------
         Database
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -141,11 +142,8 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['databaseId'] = self._normalize_value(database_id)
         api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -157,26 +155,29 @@ class TablesDB(Service):
         if sync_mode is not None:
             api_params['syncMode'] = self._normalize_value(sync_mode)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Database)
 
-
     def list_specifications(
-        self
+        self,
     ) -> DedicatedDatabaseSpecificationList:
         """
         List the dedicated database specifications available on the current plan. Each specification reports its resource limits, pricing, and whether it is enabled for the organization.
-
         Returns
         -------
         DedicatedDatabaseSpecificationList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -186,17 +187,21 @@ class TablesDB(Service):
         api_path = '/tablesdb/specifications'
         api_params = {}
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=DedicatedDatabaseSpecificationList)
 
-
     def list_transactions(
         self,
-        queries: Optional[List[str]] = None
+        queries: Optional[List[str]] = None,
     ) -> TransactionList:
         """
         List transactions across all databases.
@@ -205,12 +210,11 @@ class TablesDB(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
-        
         Returns
         -------
         TransactionList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -219,21 +223,24 @@ class TablesDB(Service):
 
         api_path = '/tablesdb/transactions'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=TransactionList)
 
-
     def create_transaction(
         self,
-        ttl: Optional[float] = None
+        ttl: Optional[float] = None,
     ) -> Transaction:
         """
         Create a new transaction.
@@ -242,12 +249,11 @@ class TablesDB(Service):
         ----------
         ttl : Optional[float]
             Seconds before the transaction expires.
-        
         Returns
         -------
         Transaction
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -256,22 +262,25 @@ class TablesDB(Service):
 
         api_path = '/tablesdb/transactions'
         api_params = {}
-
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Transaction)
 
-
     def get_transaction(
         self,
-        transaction_id: str
+        transaction_id: str,
     ) -> Transaction:
         """
         Get a transaction by its unique ID.
@@ -280,12 +289,11 @@ class TablesDB(Service):
         ----------
         transaction_id : str
             Transaction ID.
-        
         Returns
         -------
         Transaction
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -296,23 +304,25 @@ class TablesDB(Service):
         api_params = {}
         if transaction_id is None:
             raise AppwriteException('Missing required parameter: "transaction_id"')
-
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Transaction)
-
 
     def update_transaction(
         self,
         transaction_id: str,
         commit: Optional[bool] = None,
-        rollback: Optional[bool] = None
+        rollback: Optional[bool] = None,
     ) -> Transaction:
         """
         Update a transaction, to either commit or roll back its operations.
@@ -325,12 +335,11 @@ class TablesDB(Service):
             Commit transaction?
         rollback : Optional[bool]
             Rollback transaction?
-        
         Returns
         -------
         Transaction
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -341,26 +350,28 @@ class TablesDB(Service):
         api_params = {}
         if transaction_id is None:
             raise AppwriteException('Missing required parameter: "transaction_id"')
-
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
-
         if commit is not None:
             api_params['commit'] = self._normalize_value(commit)
         if rollback is not None:
             api_params['rollback'] = self._normalize_value(rollback)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Transaction)
 
-
     def delete_transaction(
         self,
-        transaction_id: str
+        transaction_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a transaction by its unique ID.
@@ -369,12 +380,11 @@ class TablesDB(Service):
         ----------
         transaction_id : str
             Transaction ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -385,22 +395,24 @@ class TablesDB(Service):
         api_params = {}
         if transaction_id is None:
             raise AppwriteException('Missing required parameter: "transaction_id"')
-
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def create_operations(
         self,
         transaction_id: str,
-        operations: Optional[List[Dict[str, Any]]] = None
+        operations: Optional[List[Dict[str, Any]]] = None,
     ) -> Transaction:
         """
         Create multiple operations in a single transaction.
@@ -411,12 +423,11 @@ class TablesDB(Service):
             Transaction ID.
         operations : Optional[List[Dict[str, Any]]]
             Array of staged operations.
-        
         Returns
         -------
         Transaction
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -427,24 +438,26 @@ class TablesDB(Service):
         api_params = {}
         if transaction_id is None:
             raise AppwriteException('Missing required parameter: "transaction_id"')
-
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
-
         if operations is not None:
             api_params['operations'] = self._normalize_value(operations)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Transaction)
 
-
     def get(
         self,
-        database_id: str
+        database_id: str,
     ) -> Database:
         """
         Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
@@ -453,12 +466,11 @@ class TablesDB(Service):
         ----------
         database_id : str
             Database ID.
-        
         Returns
         -------
         Database
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -469,17 +481,19 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Database)
-
 
     def update(
         self,
@@ -488,7 +502,7 @@ class TablesDB(Service):
         enabled: Optional[bool] = None,
         specification: Optional[str] = None,
         replicas: Optional[float] = None,
-        sync_mode: Optional[str] = None
+        sync_mode: Optional[str] = None,
     ) -> Database:
         """
         Update a database by its unique ID.
@@ -507,12 +521,11 @@ class TablesDB(Service):
             Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
         sync_mode : Optional[str]
             Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
-        
         Returns
         -------
         Database
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -523,9 +536,7 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -537,18 +548,22 @@ class TablesDB(Service):
         if sync_mode is not None:
             api_params['syncMode'] = self._normalize_value(sync_mode)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Database)
 
-
     def delete(
         self,
-        database_id: str
+        database_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
@@ -557,12 +572,11 @@ class TablesDB(Service):
         ----------
         database_id : str
             Database ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -573,25 +587,27 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def create_failover(
         self,
         database_id: str,
-        target_replica_id: Optional[str] = None
+        target_replica_id: Optional[str] = None,
     ) -> DedicatedDatabase:
         """
-        Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation by a failover that did not finish also accepts this call as a repair, provided `targetReplicaId` names the member to promote.
+        Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation also accepts this call as a repair once nothing is driving the operation it is stuck in. Repairing a failover that did not finish, a `failed` database, a stranded upgrade or migrate, or a stranded compute resize additionally requires `targetReplicaId` to name the member to promote, because the default target may be the member that operation already promoted.
 
         Parameters
         ----------
@@ -599,12 +615,11 @@ class TablesDB(Service):
             Database ID.
         target_replica_id : Optional[str]
             Target replica ID to promote. If not specified, the healthiest replica is selected.
-        
         Returns
         -------
         DedicatedDatabase
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -615,24 +630,26 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-
         if target_replica_id is not None:
             api_params['targetReplicaId'] = self._normalize_value(target_replica_id)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=DedicatedDatabase)
 
-
     def list_migrations(
         self,
-        database_id: str
+        database_id: str,
     ) -> DatabaseMigrationList:
         """
         List the dedicated migrations for a TablesDB database. A database has at most one in-flight migration.
@@ -641,12 +658,11 @@ class TablesDB(Service):
         ----------
         database_id : str
             Database ID.
-        
         Returns
         -------
         DatabaseMigrationList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -657,23 +673,25 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=DatabaseMigrationList)
-
 
     def create_migration(
         self,
         database_id: str,
         specification: str,
-        auto_cutover: Optional[bool] = None
+        auto_cutover: Optional[bool] = None,
     ) -> DatabaseMigration:
         """
         Start migrating a serverless TablesDB database onto a dedicated MySQL compute. Data is copied to the target while the source stays live, with a brief read-only window during cutover.
@@ -686,12 +704,11 @@ class TablesDB(Service):
             Dedicated compute specification to provision as the migration target (e.g. s-2vcpu-4gb). The migration always targets a dedicated compute, so `serverless` is not accepted.
         auto_cutover : Optional[bool]
             Whether to cut over automatically once the copy is verified. When disabled the migration parks at ready_to_cutover and holds there until the cutover is performed manually.
-        
         Returns
         -------
         DatabaseMigration
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -702,29 +719,30 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if specification is None:
             raise AppwriteException('Missing required parameter: "specification"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-
         api_params['specification'] = self._normalize_value(specification)
         if auto_cutover is not None:
             api_params['autoCutover'] = self._normalize_value(auto_cutover)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=DatabaseMigration)
-
 
     def get_migration(
         self,
         database_id: str,
-        migration_id: str
+        migration_id: str,
     ) -> DatabaseMigration:
         """
         Get a single dedicated migration for a TablesDB database by its ID.
@@ -735,12 +753,11 @@ class TablesDB(Service):
             Database ID.
         migration_id : str
             Migration ID.
-        
         Returns
         -------
         DatabaseMigration
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -751,26 +768,27 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if migration_id is None:
             raise AppwriteException('Missing required parameter: "migration_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{migrationId}', str(self._normalize_value(migration_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=DatabaseMigration)
-
 
     def delete_migration(
         self,
         database_id: str,
-        migration_id: str
+        migration_id: str,
     ) -> Dict[str, Any]:
         """
         Abort an in-flight TablesDB dedicated migration. Only allowed before cutover; once the migration has cut over it cannot be aborted.
@@ -781,12 +799,11 @@ class TablesDB(Service):
             Database ID.
         migration_id : str
             Migration ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -797,27 +814,28 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if migration_id is None:
             raise AppwriteException('Missing required parameter: "migration_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{migrationId}', str(self._normalize_value(migration_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def cutover_migration(
         self,
         database_id: str,
-        migration_id: str
+        migration_id: str,
     ) -> DatabaseMigration:
         """
         Cut a verified TablesDB migration over to its dedicated compute. Only applies to a migration created with `autoCutover` disabled, which waits at `ready_to_cutover` until this is called. The routing flip happens shortly after this returns, with a brief read-only window. One call buys one attempt: a cutover that fails a check returns the migration to `verifying` and parks it again, so call this once more to retry.
@@ -828,12 +846,11 @@ class TablesDB(Service):
             Database ID.
         migration_id : str
             Migration ID.
-        
         Returns
         -------
         DatabaseMigration
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -844,29 +861,30 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if migration_id is None:
             raise AppwriteException('Missing required parameter: "migration_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{migrationId}', str(self._normalize_value(migration_id)))
 
-
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=DatabaseMigration)
-
 
     def list_operations(
         self,
         database_id: str,
         status: Optional[str] = None,
         limit: Optional[float] = None,
-        offset: Optional[float] = None
+        offset: Optional[float] = None,
     ) -> DedicatedDatabaseOperationList:
         """
         List the lifecycle operations recorded for a dedicated database, newest first. Every provision, update, restore, backup and replication action is recorded here with its outcome, including an attempt that was abandoned because another worker took over the database.
@@ -881,12 +899,11 @@ class TablesDB(Service):
             Maximum number of operations to return.
         offset : Optional[float]
             Number of operations to skip.
-        
         Returns
         -------
         DedicatedDatabaseOperationList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -897,9 +914,7 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-
         if status is not None:
             api_params['status'] = self._normalize_value(status)
         if limit is not None:
@@ -907,17 +922,21 @@ class TablesDB(Service):
         if offset is not None:
             api_params['offset'] = self._normalize_value(offset)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=DedicatedDatabaseOperationList)
 
-
     def get_replicas(
         self,
-        database_id: str
+        database_id: str,
     ) -> DedicatedDatabaseReplicas:
         """
         Get high availability status for a dedicated database. Returns replica statuses, replication lag, and sync mode.
@@ -926,12 +945,11 @@ class TablesDB(Service):
         ----------
         database_id : str
             Database ID.
-        
         Returns
         -------
         DedicatedDatabaseReplicas
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -942,21 +960,23 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=DedicatedDatabaseReplicas)
 
-
     def get_status(
         self,
-        database_id: str
+        database_id: str,
     ) -> DatabaseStatus:
         """
         Get real-time health and status information for a dedicated database. Returns health status, readiness, uptime, connection info, replica status, and volume information.
@@ -965,12 +985,11 @@ class TablesDB(Service):
         ----------
         database_id : str
             Database ID.
-        
         Returns
         -------
         DatabaseStatus
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -981,24 +1000,26 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=DatabaseStatus)
-
 
     def list_tables(
         self,
         database_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> TableList:
         """
         Get a list of all tables that belong to the provided databaseId. You can use the search parameter to filter your results.
@@ -1013,12 +1034,11 @@ class TablesDB(Service):
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         TableList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1029,9 +1049,7 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -1039,13 +1057,17 @@ class TablesDB(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=TableList)
-
 
     def create_table(
         self,
@@ -1056,7 +1078,7 @@ class TablesDB(Service):
         row_security: Optional[bool] = None,
         enabled: Optional[bool] = None,
         columns: Optional[List[Dict[str, Any]]] = None,
-        indexes: Optional[List[Dict[str, Any]]] = None
+        indexes: Optional[List[Dict[str, Any]]] = None,
     ) -> Table:
         """
         Create a new Table. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
@@ -1079,12 +1101,11 @@ class TablesDB(Service):
             Array of column definitions to create. Each column should contain: key (string), type (string: string, varchar, text, mediumtext, longtext, integer, bigint, double, boolean, datetime, point, linestring, polygon, email, url, ip, enum), size (integer, required for string and varchar types), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.
         indexes : Optional[List[Dict[str, Any]]]
             Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial), attributes (array of column keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
-        
         Returns
         -------
         Table
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1095,15 +1116,11 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-
         api_params['tableId'] = self._normalize_value(table_id)
         api_params['name'] = self._normalize_value(name)
         if permissions is not None:
@@ -1117,19 +1134,23 @@ class TablesDB(Service):
         if indexes is not None:
             api_params['indexes'] = self._normalize_value(indexes)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Table)
-
 
     def get_table(
         self,
         database_id: str,
-        table_id: str
+        table_id: str,
     ) -> Table:
         """
         Get a table by its unique ID. This endpoint response returns a JSON object with the table metadata.
@@ -1140,12 +1161,11 @@ class TablesDB(Service):
             Database ID.
         table_id : str
             Table ID.
-        
         Returns
         -------
         Table
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1156,21 +1176,22 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Table)
-
 
     def update_table(
         self,
@@ -1180,7 +1201,7 @@ class TablesDB(Service):
         permissions: Optional[List[str]] = None,
         row_security: Optional[bool] = None,
         enabled: Optional[bool] = None,
-        purge: Optional[bool] = None
+        purge: Optional[bool] = None,
     ) -> Table:
         """
         Update a table by its unique ID.
@@ -1201,12 +1222,11 @@ class TablesDB(Service):
             Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
         purge : Optional[bool]
             When true, purge all cached list responses for this table as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
-        
         Returns
         -------
         Table
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1217,13 +1237,10 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if permissions is not None:
@@ -1235,19 +1252,23 @@ class TablesDB(Service):
         if purge is not None:
             api_params['purge'] = self._normalize_value(purge)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Table)
-
 
     def delete_table(
         self,
         database_id: str,
-        table_id: str
+        table_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a table by its unique ID. Only users with write permissions have access to delete this resource.
@@ -1258,12 +1279,11 @@ class TablesDB(Service):
             Database ID.
         table_id : str
             Table ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -1274,28 +1294,29 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def list_columns(
         self,
         database_id: str,
         table_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> ColumnList:
         """
         List columns in the table.
@@ -1310,12 +1331,11 @@ class TablesDB(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: key, type, size, required, array, status, error
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         ColumnList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1326,25 +1346,26 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnList)
-
 
     def create_big_int_column(
         self,
@@ -1355,11 +1376,10 @@ class TablesDB(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         default: Optional[float] = None,
-        array: Optional[bool] = None
+        array: Optional[bool] = None,
     ) -> ColumnBigint:
         """
         Create a bigint column. Optionally, minimum and maximum values can be provided.
-        
 
         Parameters
         ----------
@@ -1379,12 +1399,11 @@ class TablesDB(Service):
             Default value. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
-        
         Returns
         -------
         ColumnBigint
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1395,19 +1414,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if min is not None:
@@ -1419,14 +1433,18 @@ class TablesDB(Service):
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnBigint)
-
 
     def update_big_int_column(
         self,
@@ -1437,11 +1455,10 @@ class TablesDB(Service):
         default: Optional[float],
         min: Optional[float] = None,
         max: Optional[float] = None,
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnBigint:
         """
         Update a bigint column. Changing the `default` value will not update already existing rows.
-        
 
         Parameters
         ----------
@@ -1461,12 +1478,11 @@ class TablesDB(Service):
             Maximum value
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnBigint
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1477,20 +1493,15 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         if min is not None:
             api_params['min'] = self._normalize_value(min)
@@ -1500,14 +1511,18 @@ class TablesDB(Service):
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnBigint)
-
 
     def create_boolean_column(
         self,
@@ -1516,11 +1531,10 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[bool] = None,
-        array: Optional[bool] = None
+        array: Optional[bool] = None,
     ) -> ColumnBoolean:
         """
         Create a boolean column.
-        
 
         Parameters
         ----------
@@ -1536,12 +1550,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
-        
         Returns
         -------
         ColumnBoolean
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1552,19 +1565,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if default is not None:
@@ -1572,14 +1580,18 @@ class TablesDB(Service):
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnBoolean)
-
 
     def update_boolean_column(
         self,
@@ -1588,7 +1600,7 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[bool],
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnBoolean:
         """
         Update a boolean column. Changing the `default` value will not update already existing rows.
@@ -1607,12 +1619,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnBoolean
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1623,33 +1634,32 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnBoolean)
-
 
     def create_datetime_column(
         self,
@@ -1658,7 +1668,7 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None
+        array: Optional[bool] = None,
     ) -> ColumnDatetime:
         """
         Create a date time column according to the ISO 8601 standard.
@@ -1677,12 +1687,11 @@ class TablesDB(Service):
             Default value for the column in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
-        
         Returns
         -------
         ColumnDatetime
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1693,19 +1702,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if default is not None:
@@ -1713,14 +1717,18 @@ class TablesDB(Service):
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnDatetime)
-
 
     def update_datetime_column(
         self,
@@ -1729,7 +1737,7 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnDatetime:
         """
         Update a date time column. Changing the `default` value will not update already existing rows.
@@ -1748,12 +1756,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnDatetime
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1764,33 +1771,32 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnDatetime)
-
 
     def create_email_column(
         self,
@@ -1799,11 +1805,10 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None
+        array: Optional[bool] = None,
     ) -> ColumnEmail:
         """
         Create an email column.
-        
 
         Parameters
         ----------
@@ -1819,12 +1824,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
-        
         Returns
         -------
         ColumnEmail
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1835,19 +1839,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if default is not None:
@@ -1855,14 +1854,18 @@ class TablesDB(Service):
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnEmail)
-
 
     def update_email_column(
         self,
@@ -1871,11 +1874,10 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnEmail:
         """
         Update an email column. Changing the `default` value will not update already existing rows.
-        
 
         Parameters
         ----------
@@ -1891,12 +1893,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnEmail
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1907,33 +1908,32 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnEmail)
-
 
     def create_enum_column(
         self,
@@ -1943,7 +1943,7 @@ class TablesDB(Service):
         elements: List[str],
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None
+        array: Optional[bool] = None,
     ) -> ColumnEnum:
         """
         Create an enumeration column. The `elements` param acts as a white-list of accepted values for this column.
@@ -1964,12 +1964,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
-        
         Returns
         -------
         ColumnEnum
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1980,22 +1979,16 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if elements is None:
             raise AppwriteException('Missing required parameter: "elements"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['elements'] = self._normalize_value(elements)
         api_params['required'] = self._normalize_value(required)
@@ -2004,14 +1997,18 @@ class TablesDB(Service):
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnEnum)
-
 
     def update_enum_column(
         self,
@@ -2021,11 +2018,10 @@ class TablesDB(Service):
         elements: List[str],
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnEnum:
         """
         Update an enum column. Changing the `default` value will not update already existing rows.
-        
 
         Parameters
         ----------
@@ -2043,12 +2039,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnEnum
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2059,37 +2054,35 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if elements is None:
             raise AppwriteException('Missing required parameter: "elements"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['elements'] = self._normalize_value(elements)
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnEnum)
-
 
     def create_float_column(
         self,
@@ -2100,11 +2093,10 @@ class TablesDB(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         default: Optional[float] = None,
-        array: Optional[bool] = None
+        array: Optional[bool] = None,
     ) -> ColumnFloat:
         """
         Create a float column. Optionally, minimum and maximum values can be provided.
-        
 
         Parameters
         ----------
@@ -2124,12 +2116,11 @@ class TablesDB(Service):
             Default value. Cannot be set when required.
         array : Optional[bool]
             Is column an array?
-        
         Returns
         -------
         ColumnFloat
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2140,19 +2131,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if min is not None:
@@ -2164,14 +2150,18 @@ class TablesDB(Service):
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnFloat)
-
 
     def update_float_column(
         self,
@@ -2182,11 +2172,10 @@ class TablesDB(Service):
         default: Optional[float],
         min: Optional[float] = None,
         max: Optional[float] = None,
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnFloat:
         """
         Update a float column. Changing the `default` value will not update already existing rows.
-        
 
         Parameters
         ----------
@@ -2206,12 +2195,11 @@ class TablesDB(Service):
             Maximum value
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnFloat
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2222,20 +2210,15 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         if min is not None:
             api_params['min'] = self._normalize_value(min)
@@ -2245,14 +2228,18 @@ class TablesDB(Service):
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnFloat)
-
 
     def create_integer_column(
         self,
@@ -2263,11 +2250,10 @@ class TablesDB(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         default: Optional[float] = None,
-        array: Optional[bool] = None
+        array: Optional[bool] = None,
     ) -> ColumnInteger:
         """
         Create an integer column. Optionally, minimum and maximum values can be provided.
-        
 
         Parameters
         ----------
@@ -2287,12 +2273,11 @@ class TablesDB(Service):
             Default value. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
-        
         Returns
         -------
         ColumnInteger
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2303,19 +2288,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if min is not None:
@@ -2327,14 +2307,18 @@ class TablesDB(Service):
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnInteger)
-
 
     def update_integer_column(
         self,
@@ -2345,11 +2329,10 @@ class TablesDB(Service):
         default: Optional[float],
         min: Optional[float] = None,
         max: Optional[float] = None,
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnInteger:
         """
         Update an integer column. Changing the `default` value will not update already existing rows.
-        
 
         Parameters
         ----------
@@ -2369,12 +2352,11 @@ class TablesDB(Service):
             Maximum value
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnInteger
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2385,20 +2367,15 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         if min is not None:
             api_params['min'] = self._normalize_value(min)
@@ -2408,14 +2385,18 @@ class TablesDB(Service):
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnInteger)
-
 
     def create_ip_column(
         self,
@@ -2424,11 +2405,10 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None
+        array: Optional[bool] = None,
     ) -> ColumnIp:
         """
         Create IP address column.
-        
 
         Parameters
         ----------
@@ -2444,12 +2424,11 @@ class TablesDB(Service):
             Default value. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
-        
         Returns
         -------
         ColumnIp
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2460,19 +2439,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if default is not None:
@@ -2480,14 +2454,18 @@ class TablesDB(Service):
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnIp)
-
 
     def update_ip_column(
         self,
@@ -2496,11 +2474,10 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnIp:
         """
         Update an ip column. Changing the `default` value will not update already existing rows.
-        
 
         Parameters
         ----------
@@ -2516,12 +2493,11 @@ class TablesDB(Service):
             Default value. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnIp
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2532,33 +2508,32 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnIp)
-
 
     def create_line_column(
         self,
@@ -2566,7 +2541,7 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[List[Any]]] = None
+        default: Optional[List[List[Any]]] = None,
     ) -> ColumnLine:
         """
         Create a geometric line column.
@@ -2583,12 +2558,11 @@ class TablesDB(Service):
             Is column required?
         default : Optional[List[List[Any]]]
             Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
-        
         Returns
         -------
         ColumnLine
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2599,32 +2573,31 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnLine)
-
 
     def update_line_column(
         self,
@@ -2633,7 +2606,7 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[List[List[Any]]] = None,
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnLine:
         """
         Update a line column. Changing the `default` value will not update already existing rows.
@@ -2652,12 +2625,11 @@ class TablesDB(Service):
             Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnLine
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2668,34 +2640,33 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnLine)
-
 
     def create_longtext_column(
         self,
@@ -2705,11 +2676,10 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None
+        encrypt: Optional[bool] = None,
     ) -> ColumnLongtext:
         """
         Create a longtext column.
-        
 
         Parameters
         ----------
@@ -2727,12 +2697,11 @@ class TablesDB(Service):
             Is column an array?
         encrypt : Optional[bool]
             Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
-        
         Returns
         -------
         ColumnLongtext
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2743,19 +2712,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if default is not None:
@@ -2765,14 +2729,18 @@ class TablesDB(Service):
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnLongtext)
-
 
     def update_longtext_column(
         self,
@@ -2781,11 +2749,10 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnLongtext:
         """
         Update a longtext column. Changing the `default` value will not update already existing rows.
-        
 
         Parameters
         ----------
@@ -2801,12 +2768,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnLongtext
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2817,33 +2783,32 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnLongtext)
-
 
     def create_mediumtext_column(
         self,
@@ -2853,11 +2818,10 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None
+        encrypt: Optional[bool] = None,
     ) -> ColumnMediumtext:
         """
         Create a mediumtext column.
-        
 
         Parameters
         ----------
@@ -2875,12 +2839,11 @@ class TablesDB(Service):
             Is column an array?
         encrypt : Optional[bool]
             Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
-        
         Returns
         -------
         ColumnMediumtext
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2891,19 +2854,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if default is not None:
@@ -2913,14 +2871,18 @@ class TablesDB(Service):
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnMediumtext)
-
 
     def update_mediumtext_column(
         self,
@@ -2929,11 +2891,10 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnMediumtext:
         """
         Update a mediumtext column. Changing the `default` value will not update already existing rows.
-        
 
         Parameters
         ----------
@@ -2949,12 +2910,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnMediumtext
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2965,33 +2925,32 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnMediumtext)
-
 
     def create_point_column(
         self,
@@ -2999,7 +2958,7 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[float]] = None
+        default: Optional[List[float]] = None,
     ) -> ColumnPoint:
         """
         Create a geometric point column.
@@ -3016,12 +2975,11 @@ class TablesDB(Service):
             Is column required?
         default : Optional[List[float]]
             Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
-        
         Returns
         -------
         ColumnPoint
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3032,32 +2990,31 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnPoint)
-
 
     def update_point_column(
         self,
@@ -3066,7 +3023,7 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[List[float]] = None,
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnPoint:
         """
         Update a point column. Changing the `default` value will not update already existing rows.
@@ -3085,12 +3042,11 @@ class TablesDB(Service):
             Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnPoint
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3101,34 +3057,33 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnPoint)
-
 
     def create_polygon_column(
         self,
@@ -3136,7 +3091,7 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         required: bool,
-        default: Optional[List[List[Any]]] = None
+        default: Optional[List[List[Any]]] = None,
     ) -> ColumnPolygon:
         """
         Create a geometric polygon column.
@@ -3153,12 +3108,11 @@ class TablesDB(Service):
             Is column required?
         default : Optional[List[List[Any]]]
             Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
-        
         Returns
         -------
         ColumnPolygon
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3169,32 +3123,31 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnPolygon)
-
 
     def update_polygon_column(
         self,
@@ -3203,7 +3156,7 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[List[List[Any]]] = None,
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnPolygon:
         """
         Update a polygon column. Changing the `default` value will not update already existing rows.
@@ -3222,12 +3175,11 @@ class TablesDB(Service):
             Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnPolygon
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3238,34 +3190,33 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnPolygon)
-
 
     def create_relationship_column(
         self,
@@ -3276,11 +3227,10 @@ class TablesDB(Service):
         two_way: Optional[bool] = None,
         key: Optional[str] = None,
         two_way_key: Optional[str] = None,
-        on_delete: Optional[RelationMutate] = None
+        on_delete: Optional[RelationMutate] = None,
     ) -> ColumnRelationship:
         """
         Create relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
-        
 
         Parameters
         ----------
@@ -3300,12 +3250,11 @@ class TablesDB(Service):
             Two Way Column Key.
         on_delete : Optional[RelationMutate]
             Delete constraint. Possible values are: cascade, restrict, setNull.
-        
         Returns
         -------
         ColumnRelationship
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3316,19 +3265,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if related_table_id is None:
             raise AppwriteException('Missing required parameter: "related_table_id"')
-
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['relatedTableId'] = self._normalize_value(related_table_id)
         api_params['type'] = self._normalize_value(type)
         if two_way is not None:
@@ -3340,14 +3284,18 @@ class TablesDB(Service):
         if on_delete is not None:
             api_params['onDelete'] = self._normalize_value(on_delete)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnRelationship)
-
 
     @deprecated("This API has been deprecated since 1.9.0. Please use `tablesDB.create_text_column` instead.")
     def create_string_column(
@@ -3359,11 +3307,10 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None
+        encrypt: Optional[bool] = None,
     ) -> ColumnString:
         """
         Create a string column.
-        
 
         .. deprecated::1.9.0
             This API has been deprecated since 1.9.0. Please use `tablesDB.create_text_column` instead.
@@ -3385,12 +3332,11 @@ class TablesDB(Service):
             Is column an array?
         encrypt : Optional[bool]
             Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
-        
         Returns
         -------
         ColumnString
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3401,22 +3347,16 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if size is None:
             raise AppwriteException('Missing required parameter: "size"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['size'] = self._normalize_value(size)
         api_params['required'] = self._normalize_value(required)
@@ -3427,14 +3367,18 @@ class TablesDB(Service):
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnString)
-
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_text_column` instead.")
     def update_string_column(
@@ -3445,11 +3389,10 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         size: Optional[float] = None,
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnString:
         """
         Update a string column. Changing the `default` value will not update already existing rows.
-        
 
         .. deprecated::1.8.0
             This API has been deprecated since 1.8.0. Please use `tablesDB.update_text_column` instead.
@@ -3469,12 +3412,11 @@ class TablesDB(Service):
             Maximum size of the string column.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnString
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3485,20 +3427,15 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
         if size is not None:
@@ -3506,14 +3443,18 @@ class TablesDB(Service):
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnString)
-
 
     def create_text_column(
         self,
@@ -3523,11 +3464,10 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None
+        encrypt: Optional[bool] = None,
     ) -> ColumnText:
         """
         Create a text column.
-        
 
         Parameters
         ----------
@@ -3545,12 +3485,11 @@ class TablesDB(Service):
             Is column an array?
         encrypt : Optional[bool]
             Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
-        
         Returns
         -------
         ColumnText
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3561,19 +3500,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if default is not None:
@@ -3583,14 +3517,18 @@ class TablesDB(Service):
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnText)
-
 
     def update_text_column(
         self,
@@ -3599,11 +3537,10 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnText:
         """
         Update a text column. Changing the `default` value will not update already existing rows.
-        
 
         Parameters
         ----------
@@ -3619,12 +3556,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnText
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3635,33 +3571,32 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnText)
-
 
     def create_url_column(
         self,
@@ -3670,11 +3605,10 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str] = None,
-        array: Optional[bool] = None
+        array: Optional[bool] = None,
     ) -> ColumnUrl:
         """
         Create a URL column.
-        
 
         Parameters
         ----------
@@ -3690,12 +3624,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
-        
         Returns
         -------
         ColumnUrl
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3706,19 +3639,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['required'] = self._normalize_value(required)
         if default is not None:
@@ -3726,14 +3654,18 @@ class TablesDB(Service):
         if array is not None:
             api_params['array'] = self._normalize_value(array)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnUrl)
-
 
     def update_url_column(
         self,
@@ -3742,11 +3674,10 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[str],
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnUrl:
         """
         Update an url column. Changing the `default` value will not update already existing rows.
-        
 
         Parameters
         ----------
@@ -3762,12 +3693,11 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnUrl
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3778,33 +3708,32 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnUrl)
-
 
     def create_varchar_column(
         self,
@@ -3815,11 +3744,10 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
-        encrypt: Optional[bool] = None
+        encrypt: Optional[bool] = None,
     ) -> ColumnVarchar:
         """
         Create a varchar column.
-        
 
         Parameters
         ----------
@@ -3839,12 +3767,11 @@ class TablesDB(Service):
             Is column an array?
         encrypt : Optional[bool]
             Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
-        
         Returns
         -------
         ColumnVarchar
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3855,22 +3782,16 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if size is None:
             raise AppwriteException('Missing required parameter: "size"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['size'] = self._normalize_value(size)
         api_params['required'] = self._normalize_value(required)
@@ -3881,14 +3802,18 @@ class TablesDB(Service):
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnVarchar)
-
 
     def update_varchar_column(
         self,
@@ -3898,11 +3823,10 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         size: Optional[float] = None,
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnVarchar:
         """
         Update a varchar column. Changing the `default` value will not update already existing rows.
-        
 
         Parameters
         ----------
@@ -3920,12 +3844,11 @@ class TablesDB(Service):
             Maximum size of the varchar column.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnVarchar
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3936,20 +3859,15 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if required is None:
             raise AppwriteException('Missing required parameter: "required"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         api_params['required'] = self._normalize_value(required)
         api_params['default'] = self._normalize_value(default)
         if size is not None:
@@ -3957,21 +3875,36 @@ class TablesDB(Service):
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnVarchar)
-
 
     def get_column(
         self,
         database_id: str,
         table_id: str,
-        key: str
-    ) -> Union[ColumnBoolean, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnString]:
+        key: str,
+    ) -> Union[
+        ColumnBoolean,
+        ColumnInteger,
+        ColumnFloat,
+        ColumnEmail,
+        ColumnEnum,
+        ColumnUrl,
+        ColumnIp,
+        ColumnDatetime,
+        ColumnRelationship,
+        ColumnString,
+    ]:
         """
         Get column by ID.
 
@@ -3983,12 +3916,11 @@ class TablesDB(Service):
             Table ID.
         key : str
             Column Key.
-        
         Returns
         -------
         Union[ColumnBoolean, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnString]
             API response as one of the typed response models
-        
+
         Raises
         ------
         AppwriteException
@@ -3999,22 +3931,23 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
         if not isinstance(response, dict):
             raise AppwriteException('Expected object response when hydrating a response model')
 
@@ -4050,12 +3983,11 @@ class TablesDB(Service):
 
         raise AppwriteException('Unable to match response to any known model')
 
-
     def delete_column(
         self,
         database_id: str,
         table_id: str,
-        key: str
+        key: str,
     ) -> Dict[str, Any]:
         """
         Deletes a column.
@@ -4068,12 +4000,11 @@ class TablesDB(Service):
             Table ID.
         key : str
             Column Key.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -4084,25 +4015,25 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def update_relationship_column(
         self,
@@ -4110,11 +4041,10 @@ class TablesDB(Service):
         table_id: str,
         key: str,
         on_delete: Optional[RelationMutate] = None,
-        new_key: Optional[str] = None
+        new_key: Optional[str] = None,
     ) -> ColumnRelationship:
         """
         Update relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
-        
 
         Parameters
         ----------
@@ -4128,12 +4058,11 @@ class TablesDB(Service):
             Delete constraint. Possible values are: cascade, restrict, setNull.
         new_key : Optional[str]
             New Column Key.
-        
         Returns
         -------
         ColumnRelationship
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4144,37 +4073,37 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
-
         if on_delete is not None:
             api_params['onDelete'] = self._normalize_value(on_delete)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnRelationship)
-
 
     def list_indexes(
         self,
         database_id: str,
         table_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> ColumnIndexList:
         """
         List indexes on the table.
@@ -4189,12 +4118,11 @@ class TablesDB(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: key, type, status, attributes, error
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         ColumnIndexList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4205,25 +4133,26 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnIndexList)
-
 
     def create_index(
         self,
@@ -4233,7 +4162,7 @@ class TablesDB(Service):
         type: TablesDBIndexType,
         columns: List[str],
         orders: Optional[List[OrderBy]] = None,
-        lengths: Optional[List[float]] = None
+        lengths: Optional[List[float]] = None,
     ) -> ColumnIndex:
         """
         Creates an index on the columns listed. Your index should include all the columns you will query in a single request.
@@ -4255,12 +4184,11 @@ class TablesDB(Service):
             Array of index orders. Maximum of 100 orders are allowed.
         lengths : Optional[List[float]]
             Length of index. Maximum of 100
-        
         Returns
         -------
         ColumnIndex
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4271,22 +4199,16 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
-
         if columns is None:
             raise AppwriteException('Missing required parameter: "columns"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['key'] = self._normalize_value(key)
         api_params['type'] = self._normalize_value(type)
         api_params['columns'] = self._normalize_value(columns)
@@ -4295,20 +4217,24 @@ class TablesDB(Service):
         if lengths is not None:
             api_params['lengths'] = self._normalize_value(lengths)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnIndex)
-
 
     def get_index(
         self,
         database_id: str,
         table_id: str,
-        key: str
+        key: str,
     ) -> ColumnIndex:
         """
         Get index by ID.
@@ -4321,12 +4247,11 @@ class TablesDB(Service):
             Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
         key : str
             Index Key.
-        
         Returns
         -------
         ColumnIndex
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4337,31 +4262,31 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ColumnIndex)
-
 
     def delete_index(
         self,
         database_id: str,
         table_id: str,
-        key: str
+        key: str,
     ) -> Dict[str, Any]:
         """
         Delete an index.
@@ -4374,12 +4299,11 @@ class TablesDB(Service):
             Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
         key : str
             Index Key.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -4390,25 +4314,25 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def list_rows(
         self,
@@ -4418,7 +4342,7 @@ class TablesDB(Service):
         transaction_id: Optional[str] = None,
         total: Optional[bool] = None,
         ttl: Optional[float] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> RowList[T]:
         """
         Get a list of all the user's rows in a given table. You can use the query params to filter your results.
@@ -4437,15 +4361,14 @@ class TablesDB(Service):
             When set to false, the total count returned will be 0 and will not be calculated.
         ttl : Optional[float]
             TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         RowList[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4456,13 +4379,10 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if transaction_id is not None:
@@ -4472,13 +4392,17 @@ class TablesDB(Service):
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return RowList.with_data(response, model_type)
-
 
     def create_row(
         self,
@@ -4488,7 +4412,7 @@ class TablesDB(Service):
         data: Dict[str, Any],
         permissions: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> Row[T]:
         """
         Create a new Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
@@ -4507,15 +4431,14 @@ class TablesDB(Service):
             An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         Row[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4526,19 +4449,14 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if row_id is None:
             raise AppwriteException('Missing required parameter: "row_id"')
-
         if data is None:
             raise AppwriteException('Missing required parameter: "data"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['rowId'] = self._normalize_value(row_id)
         api_params['data'] = self._normalize_value(data)
         if permissions is not None:
@@ -4546,14 +4464,18 @@ class TablesDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return Row.with_data(response, model_type)
-
 
     def create_rows(
         self,
@@ -4561,7 +4483,7 @@ class TablesDB(Service):
         table_id: str,
         rows: List[Dict[str, Any]],
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> RowList[T]:
         """
         Create new Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
@@ -4576,15 +4498,14 @@ class TablesDB(Service):
             Array of rows data as JSON objects.
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         RowList[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4595,28 +4516,28 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if rows is None:
             raise AppwriteException('Missing required parameter: "rows"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['rows'] = self._normalize_value(rows)
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return RowList.with_data(response, model_type)
-
 
     def upsert_rows(
         self,
@@ -4624,11 +4545,10 @@ class TablesDB(Service):
         table_id: str,
         rows: List[Dict[str, Any]],
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> RowList[T]:
         """
         Create or update Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
-        
 
         Parameters
         ----------
@@ -4640,15 +4560,14 @@ class TablesDB(Service):
             Array of row data as JSON objects. May contain partial rows.
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         RowList[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4659,28 +4578,28 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if rows is None:
             raise AppwriteException('Missing required parameter: "rows"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         api_params['rows'] = self._normalize_value(rows)
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return RowList.with_data(response, model_type)
-
 
     def update_rows(
         self,
@@ -4689,7 +4608,7 @@ class TablesDB(Service):
         data: Optional[Dict[str, Any]] = None,
         queries: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> RowList[T]:
         """
         Update all rows that match your queries, if no queries are submitted then all rows are updated. You can pass only specific fields to be updated.
@@ -4706,15 +4625,14 @@ class TablesDB(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         RowList[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4725,13 +4643,10 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         if data is not None:
             api_params['data'] = self._normalize_value(data)
         if queries is not None:
@@ -4739,14 +4654,18 @@ class TablesDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return RowList.with_data(response, model_type)
-
 
     def delete_rows(
         self,
@@ -4754,7 +4673,7 @@ class TablesDB(Service):
         table_id: str,
         queries: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> RowList[T]:
         """
         Bulk delete rows using queries, if no queries are passed then all rows are deleted.
@@ -4769,15 +4688,14 @@ class TablesDB(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         RowList[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4788,26 +4706,27 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return RowList.with_data(response, model_type)
-
 
     def get_row(
         self,
@@ -4816,7 +4735,7 @@ class TablesDB(Service):
         row_id: str,
         queries: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> Row[T]:
         """
         Get a row by its unique ID. This endpoint response returns a JSON object with the row data.
@@ -4833,15 +4752,14 @@ class TablesDB(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         transaction_id : Optional[str]
             Transaction ID to read uncommitted changes within the transaction.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         Row[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4852,29 +4770,29 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if row_id is None:
             raise AppwriteException('Missing required parameter: "row_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return Row.with_data(response, model_type)
-
 
     def upsert_row(
         self,
@@ -4884,7 +4802,7 @@ class TablesDB(Service):
         data: Optional[Dict[str, Any]] = None,
         permissions: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> Row[T]:
         """
         Create or update a Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
@@ -4903,15 +4821,14 @@ class TablesDB(Service):
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         Row[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4922,17 +4839,13 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if row_id is None:
             raise AppwriteException('Missing required parameter: "row_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
-
         if data is not None:
             api_params['data'] = self._normalize_value(data)
         if permissions is not None:
@@ -4940,14 +4853,18 @@ class TablesDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return Row.with_data(response, model_type)
-
 
     def update_row(
         self,
@@ -4957,7 +4874,7 @@ class TablesDB(Service):
         data: Optional[Dict[str, Any]] = None,
         permissions: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> Row[T]:
         """
         Update a row by its unique ID. Using the patch method you can pass only specific fields that will get updated.
@@ -4976,15 +4893,14 @@ class TablesDB(Service):
             An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         Row[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -4995,17 +4911,13 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if row_id is None:
             raise AppwriteException('Missing required parameter: "row_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
-
         if data is not None:
             api_params['data'] = self._normalize_value(data)
         if permissions is not None:
@@ -5013,21 +4925,25 @@ class TablesDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return Row.with_data(response, model_type)
-
 
     def delete_row(
         self,
         database_id: str,
         table_id: str,
         row_id: str,
-        transaction_id: Optional[str] = None
+        transaction_id: Optional[str] = None,
     ) -> Dict[str, Any]:
         """
         Delete a row by its unique ID.
@@ -5042,12 +4958,11 @@ class TablesDB(Service):
             Row ID.
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -5058,27 +4973,27 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if row_id is None:
             raise AppwriteException('Missing required parameter: "row_id"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
-
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def decrement_row_column(
         self,
@@ -5089,7 +5004,7 @@ class TablesDB(Service):
         value: Optional[float] = None,
         min: Optional[float] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> Row[T]:
         """
         Decrement a specific column of a row by a given value.
@@ -5110,15 +5025,14 @@ class TablesDB(Service):
             Minimum value for the column. If the current value is lesser than this value, an exception will be thrown.
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         Row[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -5129,21 +5043,16 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if row_id is None:
             raise AppwriteException('Missing required parameter: "row_id"')
-
         if column is None:
             raise AppwriteException('Missing required parameter: "column"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
         api_path = api_path.replace('{column}', str(self._normalize_value(column)))
-
         if value is not None:
             api_params['value'] = self._normalize_value(value)
         if min is not None:
@@ -5151,14 +5060,18 @@ class TablesDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return Row.with_data(response, model_type)
-
 
     def increment_row_column(
         self,
@@ -5169,7 +5082,7 @@ class TablesDB(Service):
         value: Optional[float] = None,
         max: Optional[float] = None,
         transaction_id: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> Row[T]:
         """
         Increment a specific column of a row by a given value.
@@ -5190,15 +5103,14 @@ class TablesDB(Service):
             Maximum value for the column. If the current value is greater than this value, an error will be thrown.
         transaction_id : Optional[str]
             Transaction ID for staging the operation.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         Row[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -5209,21 +5121,16 @@ class TablesDB(Service):
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')
-
         if table_id is None:
             raise AppwriteException('Missing required parameter: "table_id"')
-
         if row_id is None:
             raise AppwriteException('Missing required parameter: "row_id"')
-
         if column is None:
             raise AppwriteException('Missing required parameter: "column"')
-
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_path = api_path.replace('{rowId}', str(self._normalize_value(row_id)))
         api_path = api_path.replace('{column}', str(self._normalize_value(column)))
-
         if value is not None:
             api_params['value'] = self._normalize_value(value)
         if max is not None:
@@ -5231,11 +5138,15 @@ class TablesDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return Row.with_data(response, model_type)
-

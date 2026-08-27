@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Region(Enum):
     FRA = "fra"
     NYC = "nyc"

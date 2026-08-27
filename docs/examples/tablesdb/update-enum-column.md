@@ -13,11 +13,11 @@ tables_db = TablesDB(client)
 result: ColumnEnum = tables_db.update_enum_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
-    elements = [],
+    key = '<KEY>',
+    elements = ["active", "inactive"],
     required = False,
-    default = '<DEFAULT>',
-    new_key = '' # optional
+    default = 'active',
+    new_key = '<NEW_KEY>' # optional
 )
 
 print(result.model_dump())

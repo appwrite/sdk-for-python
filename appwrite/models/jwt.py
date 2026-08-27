@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Jwt(AppwriteModel):
     """
     JWT
@@ -12,4 +13,5 @@ class Jwt(AppwriteModel):
     jwt : str
         JWT encoded string.
     """
+
     jwt: str = Field(..., alias='jwt')

@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .variable import Variable
 
+
 class Site(AppwriteModel):
     """
     Site
@@ -42,6 +43,8 @@ class Site(AppwriteModel):
         Latest deployment creation date in ISO 8601 format.
     latestdeploymentstatus : str
         Status of latest deployment. Possible values are &quot;waiting&quot;, &quot;processing&quot;, &quot;building&quot;, &quot;ready&quot;, and &quot;failed&quot;.
+    scopes : List[Any]
+        Allowed permission scopes.
     vars : List[Variable]
         Site variables.
     timeout : float
@@ -79,6 +82,7 @@ class Site(AppwriteModel):
     fallbackfile : str
         Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
@@ -95,6 +99,7 @@ class Site(AppwriteModel):
     latestdeploymentid: str = Field(..., alias='latestDeploymentId')
     latestdeploymentcreatedat: str = Field(..., alias='latestDeploymentCreatedAt')
     latestdeploymentstatus: str = Field(..., alias='latestDeploymentStatus')
+    scopes: List[Any] = Field(..., alias='scopes')
     vars: List[Variable] = Field(..., alias='vars')
     timeout: float = Field(..., alias='timeout')
     installcommand: str = Field(..., alias='installCommand')

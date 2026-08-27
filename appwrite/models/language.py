@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Language(AppwriteModel):
     """
     Language
@@ -16,6 +17,7 @@ class Language(AppwriteModel):
     nativename : str
         Language native name.
     """
+
     name: str = Field(..., alias='name')
     code: str = Field(..., alias='code')
     nativename: str = Field(..., alias='nativeName')

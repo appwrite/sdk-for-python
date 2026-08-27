@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .locale_code import LocaleCode
 
+
 class LocaleCodeList(AppwriteModel):
     """
     Locale codes list
@@ -15,5 +16,6 @@ class LocaleCodeList(AppwriteModel):
     localecodes : List[LocaleCode]
         List of localeCodes.
     """
+
     total: float = Field(..., alias='total')
     localecodes: List[LocaleCode] = Field(..., alias='localeCodes')

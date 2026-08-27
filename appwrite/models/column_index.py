@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class ColumnIndex(AppwriteModel):
     """
     Index
@@ -30,6 +31,7 @@ class ColumnIndex(AppwriteModel):
     orders : Optional[List[Any]]
         Index orders.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

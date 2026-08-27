@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .variable import Variable
 
+
 class VariableList(AppwriteModel):
     """
     Variables List
@@ -15,5 +16,6 @@ class VariableList(AppwriteModel):
     variables : List[Variable]
         List of variables.
     """
+
     total: float = Field(..., alias='total')
     variables: List[Variable] = Field(..., alias='variables')

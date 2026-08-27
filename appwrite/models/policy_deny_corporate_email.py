@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class PolicyDenyCorporateEmail(AppwriteModel):
     """
     Policy Deny Corporate Email
@@ -14,5 +15,6 @@ class PolicyDenyCorporateEmail(AppwriteModel):
     enabled : bool
         Whether the deny non-corporate email policy is enabled.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')

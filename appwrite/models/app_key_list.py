@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .app_key import AppKey
 
+
 class AppKeyList(AppwriteModel):
     """
     App keys list
@@ -15,5 +16,6 @@ class AppKeyList(AppwriteModel):
     keys : List[AppKey]
         List of keys.
     """
+
     total: float = Field(..., alias='total')
     keys: List[AppKey] = Field(..., alias='keys')

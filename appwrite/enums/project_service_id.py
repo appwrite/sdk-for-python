@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ProjectServiceId(Enum):
     ACCOUNT = "account"
     AVATARS = "avatars"

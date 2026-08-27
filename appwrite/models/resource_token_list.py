@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .resource_token import ResourceToken
 
+
 class ResourceTokenList(AppwriteModel):
     """
     Resource Tokens List
@@ -15,5 +16,6 @@ class ResourceTokenList(AppwriteModel):
     tokens : List[ResourceToken]
         List of tokens.
     """
+
     total: float = Field(..., alias='total')
     tokens: List[ResourceToken] = Field(..., alias='tokens')

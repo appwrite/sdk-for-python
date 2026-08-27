@@ -13,11 +13,11 @@ tables_db = TablesDB(client)
 result: ColumnFloat = tables_db.create_float_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
-    min = None, # optional
-    max = None, # optional
-    default = None, # optional
+    min = 0, # optional
+    max = 100, # optional
+    default = 10.5, # optional
     array = False # optional
 )
 

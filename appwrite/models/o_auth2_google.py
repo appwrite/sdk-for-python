@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.o_auth2_google_prompt import OAuth2GooglePrompt
 
+
 class OAuth2Google(AppwriteModel):
     """
     OAuth2Google
@@ -21,6 +22,7 @@ class OAuth2Google(AppwriteModel):
     prompt : List[OAuth2GooglePrompt]
         Google OAuth2 prompt values.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')

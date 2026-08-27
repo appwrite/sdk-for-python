@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Oauth2PAR(AppwriteModel):
     """
     OAuth2 PAR
@@ -14,5 +15,6 @@ class Oauth2PAR(AppwriteModel):
     expires_in : float
         Lifetime of the authorization request handle in seconds.
     """
+
     request_uri: str = Field(..., alias='request_uri')
     expires_in: float = Field(..., alias='expires_in')

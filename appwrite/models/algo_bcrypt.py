@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class AlgoBcrypt(AppwriteModel):
     """
     AlgoBcrypt
@@ -12,4 +13,5 @@ class AlgoBcrypt(AppwriteModel):
     type : str
         Algo type.
     """
+
     type: str = Field(..., alias='type')

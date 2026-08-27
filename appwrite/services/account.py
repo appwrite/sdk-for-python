@@ -24,6 +24,7 @@ from ..enums.o_auth_provider import OAuthProvider
 
 T = TypeVar('T')
 
+
 class Account(Service):
 
     def __init__(self, client) -> None:
@@ -31,22 +32,21 @@ class Account(Service):
 
     def get(
         self,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> User[T]:
         """
         Get the currently logged in user.
 
         Parameters
         ----------
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         User[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -56,13 +56,17 @@ class Account(Service):
         api_path = '/account'
         api_params = {}
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return User.with_data(response, model_type)
-
 
     def create(
         self,
@@ -70,7 +74,7 @@ class Account(Service):
         email: str,
         password: str,
         name: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> User[T]:
         """
         Use this endpoint to allow a new user to register a new account in your project. After the user registration completes successfully, you can use the [/account/verfication](https://appwrite.io/docs/references/cloud/client-web/account#createVerification) route to start verifying the user email address. To allow the new user to login to their new account, you need to create a new [account session](https://appwrite.io/docs/references/cloud/client-web/account#createEmailSession).
@@ -85,15 +89,14 @@ class Account(Service):
             New user password. Must be between 8 and 256 chars.
         name : Optional[str]
             User name. Max length: 128 chars.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         User[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -104,33 +107,33 @@ class Account(Service):
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
-
         if email is None:
             raise AppwriteException('Missing required parameter: "email"')
-
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
-
-
         api_params['userId'] = self._normalize_value(user_id)
         api_params['email'] = self._normalize_value(email)
         api_params['password'] = self._normalize_value(password)
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return User.with_data(response, model_type)
-
 
     def list_consents(
         self,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> Oauth2ConsentList:
         """
         Get a list of the OAuth2 consents the current user has given to third-party apps.
@@ -141,12 +144,11 @@ class Account(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         Oauth2ConsentList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -155,23 +157,26 @@ class Account(Service):
 
         api_path = '/account/consents'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Oauth2ConsentList)
 
-
     def get_consent(
         self,
-        consent_id: str
+        consent_id: str,
     ) -> Oauth2Consent:
         """
         Get an OAuth2 consent the current user has given to a third-party app by its unique ID.
@@ -180,12 +185,11 @@ class Account(Service):
         ----------
         consent_id : str
             Consent unique ID.
-        
         Returns
         -------
         Oauth2Consent
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -196,21 +200,23 @@ class Account(Service):
         api_params = {}
         if consent_id is None:
             raise AppwriteException('Missing required parameter: "consent_id"')
-
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Oauth2Consent)
 
-
     def delete_consent(
         self,
-        consent_id: str
+        consent_id: str,
     ) -> Dict[str, Any]:
         """
         Delete an OAuth2 consent by its unique ID. All token families issued under the consent are revoked, and the app must ask for consent again to regain access.
@@ -219,12 +225,11 @@ class Account(Service):
         ----------
         consent_id : str
             Consent unique ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -235,24 +240,26 @@ class Account(Service):
         api_params = {}
         if consent_id is None:
             raise AppwriteException('Missing required parameter: "consent_id"')
-
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def list_consent_tokens(
         self,
         consent_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> Oauth2ConsentTokenList:
         """
         Get a list of the token families issued under an OAuth2 consent. Each entry represents one authorized device or session; the token secrets themselves are never returned.
@@ -265,12 +272,11 @@ class Account(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         Oauth2ConsentTokenList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -281,26 +287,28 @@ class Account(Service):
         api_params = {}
         if consent_id is None:
             raise AppwriteException('Missing required parameter: "consent_id"')
-
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Oauth2ConsentTokenList)
-
 
     def get_consent_token(
         self,
         consent_id: str,
-        token_id: str
+        token_id: str,
     ) -> Oauth2ConsentToken:
         """
         Get a token family issued under an OAuth2 consent by its unique ID. The token secrets themselves are never returned.
@@ -311,12 +319,11 @@ class Account(Service):
             Consent unique ID.
         token_id : str
             Token unique ID.
-        
         Returns
         -------
         Oauth2ConsentToken
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -327,26 +334,27 @@ class Account(Service):
         api_params = {}
         if consent_id is None:
             raise AppwriteException('Missing required parameter: "consent_id"')
-
         if token_id is None:
             raise AppwriteException('Missing required parameter: "token_id"')
-
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
         api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Oauth2ConsentToken)
-
 
     def delete_consent_token(
         self,
         consent_id: str,
-        token_id: str
+        token_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a token family issued under an OAuth2 consent by its unique ID. The access and refresh tokens of the family stop working immediately; other token families and the consent itself are unaffected.
@@ -357,12 +365,11 @@ class Account(Service):
             Consent unique ID.
         token_id : str
             Token unique ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -373,33 +380,33 @@ class Account(Service):
         api_params = {}
         if consent_id is None:
             raise AppwriteException('Missing required parameter: "consent_id"')
-
         if token_id is None:
             raise AppwriteException('Missing required parameter: "token_id"')
-
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
         api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def update_email(
         self,
         email: str,
         password: str,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> User[T]:
         """
         Update currently logged in user account email address. After changing user address, the user confirmation status will get reset. A new confirmation email is not sent automatically however you can use the send confirmation email endpoint again to send the confirmation email. For security measures, user password is required to complete this request.
         This endpoint can also be used to convert an anonymous account to a normal one, by passing an email address and a new password.
-        
 
         Parameters
         ----------
@@ -407,15 +414,14 @@ class Account(Service):
             User email.
         password : str
             User password. Must be at least 8 chars.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         User[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -426,27 +432,28 @@ class Account(Service):
         api_params = {}
         if email is None:
             raise AppwriteException('Missing required parameter: "email"')
-
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
-
-
         api_params['email'] = self._normalize_value(email)
         api_params['password'] = self._normalize_value(password)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return User.with_data(response, model_type)
-
 
     def list_identities(
         self,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> IdentityList:
         """
         Get the list of identities for the currently logged in user.
@@ -457,12 +464,11 @@ class Account(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, provider, providerUid, providerEmail, providerAccessTokenExpiry
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         IdentityList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -471,23 +477,26 @@ class Account(Service):
 
         api_path = '/account/identities'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=IdentityList)
 
-
     def delete_identity(
         self,
-        identity_id: str
+        identity_id: str,
     ) -> Dict[str, Any]:
         """
         Delete an identity by its unique ID.
@@ -496,12 +505,11 @@ class Account(Service):
         ----------
         identity_id : str
             Identity ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -512,22 +520,24 @@ class Account(Service):
         api_params = {}
         if identity_id is None:
             raise AppwriteException('Missing required parameter: "identity_id"')
-
         api_path = api_path.replace('{identityId}', str(self._normalize_value(identity_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def list_logs(
         self,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> LogList:
         """
         Get the list of latest security activity logs for the currently logged in user. Each log returns user IP address, location and date and time of log.
@@ -538,12 +548,11 @@ class Account(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         LogList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -552,24 +561,27 @@ class Account(Service):
 
         api_path = '/account/logs'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=LogList)
-
 
     def update_mfa(
         self,
         mfa: bool,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> User[T]:
         """
         Enable or disable MFA on an account.
@@ -578,15 +590,14 @@ class Account(Service):
         ----------
         mfa : bool
             Enable or disable MFA.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         User[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -597,22 +608,24 @@ class Account(Service):
         api_params = {}
         if mfa is None:
             raise AppwriteException('Missing required parameter: "mfa"')
-
-
         api_params['mfa'] = self._normalize_value(mfa)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return User.with_data(response, model_type)
 
-
     def create_mfa_authenticator(
         self,
-        type: AuthenticatorType
+        type: AuthenticatorType,
     ) -> MfaType:
         """
         Add an authenticator app to be used as an MFA factor. Verify the authenticator using the [verify authenticator](/docs/references/cloud/client-web/account#updateMfaAuthenticator) method.
@@ -621,12 +634,11 @@ class Account(Service):
         ----------
         type : AuthenticatorType
             Type of authenticator. Must be `totp`
-        
         Returns
         -------
         MfaType
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -637,24 +649,26 @@ class Account(Service):
         api_params = {}
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
-
         api_path = api_path.replace('{type}', str(self._normalize_value(type)))
 
-
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=MfaType)
-
 
     def update_mfa_authenticator(
         self,
         type: AuthenticatorType,
         otp: str,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> User[T]:
         """
         Verify an authenticator app after adding it using the [add authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator) method.
@@ -665,15 +679,14 @@ class Account(Service):
             Type of authenticator.
         otp : str
             Valid verification token.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         User[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -684,26 +697,27 @@ class Account(Service):
         api_params = {}
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
-
         if otp is None:
             raise AppwriteException('Missing required parameter: "otp"')
-
         api_path = api_path.replace('{type}', str(self._normalize_value(type)))
-
         api_params['otp'] = self._normalize_value(otp)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return User.with_data(response, model_type)
 
-
     def delete_mfa_authenticator(
         self,
-        type: AuthenticatorType
+        type: AuthenticatorType,
     ) -> Dict[str, Any]:
         """
         Delete an authenticator for a user by ID.
@@ -712,12 +726,11 @@ class Account(Service):
         ----------
         type : AuthenticatorType
             Type of authenticator.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -728,21 +741,23 @@ class Account(Service):
         api_params = {}
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
-
         api_path = api_path.replace('{type}', str(self._normalize_value(type)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
 
-
     def create_mfa_challenge(
         self,
-        factor: AuthenticationFactor
+        factor: AuthenticationFactor,
     ) -> MfaChallenge:
         """
         Begin the process of MFA verification after sign-in. Finish the flow with [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge) method.
@@ -751,12 +766,11 @@ class Account(Service):
         ----------
         factor : AuthenticationFactor
             Factor used for verification. Must be one of following: `email`, `phone`, `totp`, `recoveryCode`, `custom`.
-        
         Returns
         -------
         MfaChallenge
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -767,23 +781,25 @@ class Account(Service):
         api_params = {}
         if factor is None:
             raise AppwriteException('Missing required parameter: "factor"')
-
-
         api_params['factor'] = self._normalize_value(factor)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=MfaChallenge)
-
 
     def update_mfa_challenge(
         self,
         challenge_id: str,
-        otp: str
+        otp: str,
     ) -> Session:
         """
         Complete the MFA challenge by providing the one-time password. Finish the process of MFA verification by providing the one-time password. To begin the flow, use [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method.
@@ -794,12 +810,11 @@ class Account(Service):
             ID of the challenge.
         otp : str
             Valid verification token.
-        
         Returns
         -------
         Session
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -810,34 +825,34 @@ class Account(Service):
         api_params = {}
         if challenge_id is None:
             raise AppwriteException('Missing required parameter: "challenge_id"')
-
         if otp is None:
             raise AppwriteException('Missing required parameter: "otp"')
-
-
         api_params['challengeId'] = self._normalize_value(challenge_id)
         api_params['otp'] = self._normalize_value(otp)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Session)
 
-
     def list_mfa_factors(
-        self
+        self,
     ) -> MfaFactors:
         """
         List the factors available on the account to be used as a MFA challange.
-
         Returns
         -------
         MfaFactors
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -847,25 +862,28 @@ class Account(Service):
         api_path = '/account/mfa/factors'
         api_params = {}
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=MfaFactors)
 
-
     def get_mfa_recovery_codes(
-        self
+        self,
     ) -> MfaRecoveryCodes:
         """
         Get recovery codes that can be used as backup for MFA flow. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method. An OTP challenge is required to read recovery codes.
-
         Returns
         -------
         MfaRecoveryCodes
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -875,25 +893,28 @@ class Account(Service):
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=MfaRecoveryCodes)
 
-
     def create_mfa_recovery_codes(
-        self
+        self,
     ) -> MfaRecoveryCodes:
         """
         Generate recovery codes as backup for MFA flow. It's recommended to generate and show then immediately after user successfully adds their authehticator. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method.
-
         Returns
         -------
         MfaRecoveryCodes
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -903,26 +924,29 @@ class Account(Service):
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=MfaRecoveryCodes)
 
-
     def update_mfa_recovery_codes(
-        self
+        self,
     ) -> MfaRecoveryCodes:
         """
         Regenerate recovery codes that can be used as backup for MFA flow. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method. An OTP challenge is required to regenreate recovery codes.
-
         Returns
         -------
         MfaRecoveryCodes
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -932,19 +956,23 @@ class Account(Service):
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=MfaRecoveryCodes)
-
 
     def update_name(
         self,
         name: str,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> User[T]:
         """
         Update currently logged in user account name.
@@ -953,15 +981,14 @@ class Account(Service):
         ----------
         name : str
             User name. Max length: 128 chars.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         User[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -972,24 +999,26 @@ class Account(Service):
         api_params = {}
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return User.with_data(response, model_type)
-
 
     def update_password(
         self,
         password: str,
         old_password: Optional[str] = None,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> User[T]:
         """
         Update currently logged in user password. For validation, user is required to pass in the new password, and the old password. For users created with OAuth, Team Invites and Magic URL, oldPassword is optional.
@@ -1000,15 +1029,14 @@ class Account(Service):
             New user password. Must be at least 8 chars.
         old_password : Optional[str]
             Current user password. Max length: 256 chars.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         User[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1019,26 +1047,28 @@ class Account(Service):
         api_params = {}
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
-
-
         api_params['password'] = self._normalize_value(password)
         if old_password is not None:
             api_params['oldPassword'] = self._normalize_value(old_password)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return User.with_data(response, model_type)
-
 
     def update_phone(
         self,
         phone: str,
         password: str,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> User[T]:
         """
         Update the currently logged in user's phone number. After updating the phone number, the phone verification status will be reset. A confirmation SMS is not sent automatically, however you can use the [POST /account/verification/phone](https://appwrite.io/docs/references/cloud/client-web/account#createPhoneVerification) endpoint to send a confirmation SMS.
@@ -1049,15 +1079,14 @@ class Account(Service):
             Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
         password : str
             User password. Must be at least 8 chars.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         User[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1068,41 +1097,41 @@ class Account(Service):
         api_params = {}
         if phone is None:
             raise AppwriteException('Missing required parameter: "phone"')
-
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
-
-
         api_params['phone'] = self._normalize_value(phone)
         api_params['password'] = self._normalize_value(password)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return User.with_data(response, model_type)
 
-
     def get_prefs(
         self,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> Preferences[T]:
         """
         Get the preferences as a key-value object for the currently logged in user.
 
         Parameters
         ----------
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         Preferences[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1112,18 +1141,22 @@ class Account(Service):
         api_path = '/account/prefs'
         api_params = {}
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return Preferences.with_data(response, model_type)
-
 
     def update_prefs(
         self,
         prefs: Dict[str, Any],
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> User[T]:
         """
         Update currently logged in user account preferences. The object you pass is stored as is, and replaces any previous value. The maximum allowed prefs size is 64kB and throws error if exceeded.
@@ -1132,15 +1165,14 @@ class Account(Service):
         ----------
         prefs : Dict[str, Any]
             Prefs key-value JSON object.
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         User[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1151,23 +1183,25 @@ class Account(Service):
         api_params = {}
         if prefs is None:
             raise AppwriteException('Missing required parameter: "prefs"')
-
-
         api_params['prefs'] = self._normalize_value(prefs)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return User.with_data(response, model_type)
-
 
     def create_recovery(
         self,
         email: str,
-        url: str
+        url: str,
     ) -> Token:
         """
         Sends the user an email with a temporary secret key for password reset. When the user clicks the confirmation link he is redirected back to your app password reset URL with the secret key and email address values attached to the URL query string. Use the query string params to submit a request to the [PUT /account/recovery](https://appwrite.io/docs/references/cloud/client-web/account#updateRecovery) endpoint to complete the process. The verification link sent to the user's email address is valid for 1 hour.
@@ -1178,12 +1212,11 @@ class Account(Service):
             User email.
         url : str
             URL to redirect the user back to your app from the recovery email. Only URLs from hostnames in your project platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
-        
         Returns
         -------
         Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1194,32 +1227,33 @@ class Account(Service):
         api_params = {}
         if email is None:
             raise AppwriteException('Missing required parameter: "email"')
-
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
-
-
         api_params['email'] = self._normalize_value(email)
         api_params['url'] = self._normalize_value(url)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Token)
-
 
     def update_recovery(
         self,
         user_id: str,
         secret: str,
-        password: str
+        password: str,
     ) -> Token:
         """
         Use this endpoint to complete the user account password reset. Both the **userId** and **secret** arguments will be passed as query parameters to the redirect URL you have provided when sending your request to the [POST /account/recovery](https://appwrite.io/docs/references/cloud/client-web/account#createRecovery) endpoint.
-        
+
         Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md) the only valid redirect URLs are the ones from domains you have set when adding your platforms in the console interface.
 
         Parameters
@@ -1230,12 +1264,11 @@ class Account(Service):
             Valid reset token.
         password : str
             New user password. Must be between 8 and 256 chars.
-        
         Returns
         -------
         Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1246,38 +1279,37 @@ class Account(Service):
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
-
         if secret is None:
             raise AppwriteException('Missing required parameter: "secret"')
-
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
-
-
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
         api_params['password'] = self._normalize_value(password)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Token)
 
-
     def list_sessions(
-        self
+        self,
     ) -> SessionList:
         """
         Get the list of active sessions across different devices for the currently logged in user.
-
         Returns
         -------
         SessionList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1287,25 +1319,28 @@ class Account(Service):
         api_path = '/account/sessions'
         api_params = {}
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=SessionList)
 
-
     def delete_sessions(
-        self
+        self,
     ) -> Dict[str, Any]:
         """
         Delete all sessions from the user account and remove any sessions cookies from the end client.
-
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -1315,25 +1350,28 @@ class Account(Service):
         api_path = '/account/sessions'
         api_params = {}
 
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
 
-
     def create_anonymous_session(
-        self
+        self,
     ) -> Session:
         """
         Use this endpoint to allow a new user to register an anonymous account in your project. This route will also create a new session for the user. To allow the new user to convert an anonymous account to a normal account, you need to update its [email and password](https://appwrite.io/docs/references/cloud/client-web/account#updateEmail) or create an [OAuth2 session](https://appwrite.io/docs/references/cloud/client-web/account#CreateOAuth2Session).
-
         Returns
         -------
         Session
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1343,23 +1381,27 @@ class Account(Service):
         api_path = '/account/sessions/anonymous'
         api_params = {}
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Session)
-
 
     def create_email_password_session(
         self,
         email: str,
-        password: str
+        password: str,
     ) -> Session:
         """
         Allow the user to login into their account by providing a valid email and password combination. This route will create a new session for the user.
-        
+
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
 
         Parameters
@@ -1368,12 +1410,11 @@ class Account(Service):
             User email.
         password : str
             User password. Must be at least 8 chars.
-        
         Returns
         -------
         Session
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1384,28 +1425,29 @@ class Account(Service):
         api_params = {}
         if email is None:
             raise AppwriteException('Missing required parameter: "email"')
-
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
-
-
         api_params['email'] = self._normalize_value(email)
         api_params['password'] = self._normalize_value(password)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Session)
-
 
     @deprecated("This API has been deprecated since 1.6.0. Please use `account.create_session` instead.")
     def update_magic_url_session(
         self,
         user_id: str,
-        secret: str
+        secret: str,
     ) -> Session:
         """
         Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
@@ -1418,12 +1460,11 @@ class Account(Service):
             User ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         secret : str
             Valid verification token.
-        
         Returns
         -------
         Session
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1434,28 +1475,29 @@ class Account(Service):
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
-
         if secret is None:
             raise AppwriteException('Missing required parameter: "secret"')
-
-
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Session)
-
 
     @deprecated("This API has been deprecated since 1.6.0. Please use `account.create_session` instead.")
     def update_phone_session(
         self,
         user_id: str,
-        secret: str
+        secret: str,
     ) -> Session:
         """
         Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
@@ -1468,12 +1510,11 @@ class Account(Service):
             User ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         secret : str
             Valid verification token.
-        
         Returns
         -------
         Session
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1484,27 +1525,28 @@ class Account(Service):
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
-
         if secret is None:
             raise AppwriteException('Missing required parameter: "secret"')
-
-
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Session)
-
 
     def create_session(
         self,
         user_id: str,
-        secret: str
+        secret: str,
     ) -> Session:
         """
         Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
@@ -1515,12 +1557,11 @@ class Account(Service):
             User ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         secret : str
             Secret of a token generated by login methods. For example, the `createMagicURLToken` or `createPhoneToken` methods.
-        
         Returns
         -------
         Session
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1531,26 +1572,27 @@ class Account(Service):
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
-
         if secret is None:
             raise AppwriteException('Missing required parameter: "secret"')
-
-
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Session)
 
-
     def get_session(
         self,
-        session_id: str
+        session_id: str,
     ) -> Session:
         """
         Use this endpoint to get a logged in user's session using a Session ID. Inputting 'current' will return the current session being used.
@@ -1559,12 +1601,11 @@ class Account(Service):
         ----------
         session_id : str
             Session ID. Use the string 'current' to get the current device session.
-        
         Returns
         -------
         Session
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1575,21 +1616,23 @@ class Account(Service):
         api_params = {}
         if session_id is None:
             raise AppwriteException('Missing required parameter: "session_id"')
-
         api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Session)
 
-
     def update_session(
         self,
-        session_id: str
+        session_id: str,
     ) -> Session:
         """
         Use this endpoint to extend a session's length. Extending a session is useful when session expiry is short. If the session was created using an OAuth provider, this endpoint refreshes the access token from the provider.
@@ -1598,12 +1641,11 @@ class Account(Service):
         ----------
         session_id : str
             Session ID. Use the string 'current' to update the current device session.
-        
         Returns
         -------
         Session
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1614,22 +1656,24 @@ class Account(Service):
         api_params = {}
         if session_id is None:
             raise AppwriteException('Missing required parameter: "session_id"')
-
         api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
 
-
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Session)
 
-
     def delete_session(
         self,
-        session_id: str
+        session_id: str,
     ) -> Dict[str, Any]:
         """
         Logout the user. Use 'current' as the session ID to logout on this device, use a session ID to logout on another device. If you're looking to logout the user on all devices, use [Delete Sessions](https://appwrite.io/docs/references/cloud/client-web/account#deleteSessions) instead.
@@ -1638,12 +1682,11 @@ class Account(Service):
         ----------
         session_id : str
             Session ID. Use the string 'current' to delete the current device session.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -1654,36 +1697,37 @@ class Account(Service):
         api_params = {}
         if session_id is None:
             raise AppwriteException('Missing required parameter: "session_id"')
-
         api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
 
-
     def update_status(
         self,
-        model_type: Type[T] = dict
+        model_type: Type[T] = dict,
     ) -> User[T]:
         """
         Block the currently logged in user account. Behind the scene, the user record is not deleted but permanently blocked from any access. To completely delete a user, use the Users API instead.
 
         Parameters
         ----------
-        
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
-        
+
         Returns
         -------
         User[T]
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1693,26 +1737,29 @@ class Account(Service):
         api_path = '/account/status'
         api_params = {}
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return User.with_data(response, model_type)
-
 
     def create_email_token(
         self,
         user_id: str,
         email: str,
-        phrase: Optional[bool] = None
+        phrase: Optional[bool] = None,
     ) -> Token:
         """
         Sends the user an email with a secret key for creating a session. If the email address has never been used, a **new account is created** using the provided `userId`. Otherwise, if the email address is already attached to an account, the **user ID is ignored**. Then, the user will receive an email with the one-time password. Use the returned user ID and secret and submit a request to the [POST /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process. The secret sent to the user's email is valid for 15 minutes.
-        
+
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
-        
 
         Parameters
         ----------
@@ -1722,12 +1769,11 @@ class Account(Service):
             User email.
         phrase : Optional[bool]
             Toggle for security phrase. If enabled, email will be send with a randomly generated phrase and the phrase will also be included in the response. Confirming phrases match increases the security of your authentication flow.
-        
         Returns
         -------
         Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1738,37 +1784,37 @@ class Account(Service):
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
-
         if email is None:
             raise AppwriteException('Missing required parameter: "email"')
-
-
         api_params['userId'] = self._normalize_value(user_id)
         api_params['email'] = self._normalize_value(email)
         if phrase is not None:
             api_params['phrase'] = self._normalize_value(phrase)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Token)
-
 
     def create_magic_url_token(
         self,
         user_id: str,
         email: str,
         url: Optional[str] = None,
-        phrase: Optional[bool] = None
+        phrase: Optional[bool] = None,
     ) -> Token:
         """
         Sends the user an email with a secret key for creating a session. If the provided user ID has not been registered, a new user will be created. When the user clicks the link in the email, the user is redirected back to the URL you provided with the secret key and userId values attached to the URL query string. Use the query string parameters to submit a request to the [POST /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process. The link sent to the user's email address is valid for 1 hour.
-        
+
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
-        
 
         Parameters
         ----------
@@ -1780,12 +1826,11 @@ class Account(Service):
             URL to redirect the user back to your app from the magic URL login. Only URLs from hostnames in your project platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
         phrase : Optional[bool]
             Toggle for security phrase. If enabled, email will be send with a randomly generated phrase and the phrase will also be included in the response. Confirming phrases match increases the security of your authentication flow.
-        
         Returns
         -------
         Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1796,11 +1841,8 @@ class Account(Service):
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
-
         if email is None:
             raise AppwriteException('Missing required parameter: "email"')
-
-
         api_params['userId'] = self._normalize_value(user_id)
         api_params['email'] = self._normalize_value(email)
         if url is not None:
@@ -1808,45 +1850,48 @@ class Account(Service):
         if phrase is not None:
             api_params['phrase'] = self._normalize_value(phrase)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Token)
-
 
     def create_o_auth2_token(
         self,
         provider: OAuthProvider,
         success: Optional[str] = None,
         failure: Optional[str] = None,
-        scopes: Optional[List[str]] = None
+        scopes: Optional[List[str]] = None,
     ) -> str:
         """
-        Allow the user to login to their account using the OAuth2 provider of their choice. Each OAuth2 provider should be enabled from the Appwrite console first. Use the success and failure arguments to provide a redirect URL's back to your app when login is completed. 
-        
+        Allow the user to login to their account using the OAuth2 provider of their choice. Each OAuth2 provider should be enabled from the Appwrite console first. Use the success and failure arguments to provide a redirect URL's back to your app when login is completed.
+
         If authentication succeeds, `userId` and `secret` of a token will be appended to the success URL as query parameters. These can be used to create a new session using the [Create session](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint.
-        
+
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
 
         Parameters
         ----------
         provider : OAuthProvider
-            OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
+            OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
         success : Optional[str]
             URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
         failure : Optional[str]
             URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
         scopes : Optional[List[str]]
             A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
-        
         Returns
         -------
         str
             Authentication response as a string
-        
+
         Raises
         ------
         AppwriteException
@@ -1857,9 +1902,7 @@ class Account(Service):
         api_params = {}
         if provider is None:
             raise AppwriteException('Missing required parameter: "provider"')
-
         api_path = api_path.replace('{provider}', str(self._normalize_value(provider)))
-
         if success is not None:
             api_params['success'] = self._normalize_value(success)
         if failure is not None:
@@ -1867,22 +1910,27 @@ class Account(Service):
         if scopes is not None:
             api_params['scopes'] = self._normalize_value(scopes)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'text/html',
-        }, api_params, response_type='location')
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'text/html',
+            },
+            api_params,
+            response_type='location',
+        )
 
         return response
-
 
     def create_phone_token(
         self,
         user_id: str,
-        phone: str
+        phone: str,
     ) -> Token:
         """
         Sends the user an SMS with a secret key for creating a session. If the provided user ID has not be registered, a new user will be created. Use the returned user ID and secret and submit a request to the [POST /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process. The secret sent to the user's phone is valid for 15 minutes.
-        
+
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
 
         Parameters
@@ -1891,12 +1939,11 @@ class Account(Service):
             Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars. If the phone number has never been used, a new account is created using the provided userId. Otherwise, if the phone number is already attached to an account, the user ID is ignored.
         phone : str
             Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
-        
         Returns
         -------
         Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1907,43 +1954,42 @@ class Account(Service):
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
-
         if phone is None:
             raise AppwriteException('Missing required parameter: "phone"')
-
-
         api_params['userId'] = self._normalize_value(user_id)
         api_params['phone'] = self._normalize_value(phone)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Token)
 
-
     def create_email_verification(
         self,
-        url: str
+        url: str,
     ) -> Token:
         """
         Use this endpoint to send a verification message to your user email address to confirm they are the valid owners of that address. Both the **userId** and **secret** arguments will be passed as query parameters to the URL you have provided to be attached to the verification email. The provided URL should redirect the user back to your app and allow you to complete the verification process by verifying both the **userId** and **secret** parameters. Learn more about how to [complete the verification process](https://appwrite.io/docs/references/cloud/client-web/account#updateVerification). The verification link sent to the user's email address is valid for 7 days.
-        
+
         Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md), the only valid redirect URLs are the ones from domains you have set when adding your platforms in the console interface.
-        
 
         Parameters
         ----------
         url : str
             URL to redirect the user back to your app from the verification email. Only URLs from hostnames in your project platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
-        
         Returns
         -------
         Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1954,29 +2000,30 @@ class Account(Service):
         api_params = {}
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
-
-
         api_params['url'] = self._normalize_value(url)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Token)
-
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `account.create_email_verification` instead.")
     def create_verification(
         self,
-        url: str
+        url: str,
     ) -> Token:
         """
         Use this endpoint to send a verification message to your user email address to confirm they are the valid owners of that address. Both the **userId** and **secret** arguments will be passed as query parameters to the URL you have provided to be attached to the verification email. The provided URL should redirect the user back to your app and allow you to complete the verification process by verifying both the **userId** and **secret** parameters. Learn more about how to [complete the verification process](https://appwrite.io/docs/references/cloud/client-web/account#updateVerification). The verification link sent to the user's email address is valid for 7 days.
-        
+
         Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md), the only valid redirect URLs are the ones from domains you have set when adding your platforms in the console interface.
-        
 
         .. deprecated::1.8.0
             This API has been deprecated since 1.8.0. Please use `account.create_email_verification` instead.
@@ -1984,12 +2031,11 @@ class Account(Service):
         ----------
         url : str
             URL to redirect the user back to your app from the verification email. Only URLs from hostnames in your project platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
-        
         Returns
         -------
         Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2000,23 +2046,25 @@ class Account(Service):
         api_params = {}
         if url is None:
             raise AppwriteException('Missing required parameter: "url"')
-
-
         api_params['url'] = self._normalize_value(url)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Token)
-
 
     def update_email_verification(
         self,
         user_id: str,
-        secret: str
+        secret: str,
     ) -> Token:
         """
         Use this endpoint to complete the user email verification process. Use both the **userId** and **secret** parameters that were attached to your app URL to verify the user email ownership. If confirmed this route will return a 200 status code.
@@ -2027,12 +2075,11 @@ class Account(Service):
             User ID.
         secret : str
             Valid verification token.
-        
         Returns
         -------
         Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2043,28 +2090,29 @@ class Account(Service):
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
-
         if secret is None:
             raise AppwriteException('Missing required parameter: "secret"')
-
-
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Token)
-
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `account.update_email_verification` instead.")
     def update_verification(
         self,
         user_id: str,
-        secret: str
+        secret: str,
     ) -> Token:
         """
         Use this endpoint to complete the user email verification process. Use both the **userId** and **secret** parameters that were attached to your app URL to verify the user email ownership. If confirmed this route will return a 200 status code.
@@ -2077,12 +2125,11 @@ class Account(Service):
             User ID.
         secret : str
             Valid verification token.
-        
         Returns
         -------
         Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2093,34 +2140,34 @@ class Account(Service):
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
-
         if secret is None:
             raise AppwriteException('Missing required parameter: "secret"')
-
-
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Token)
 
-
     def create_phone_verification(
-        self
+        self,
     ) -> Token:
         """
         Use this endpoint to send a verification SMS to the currently logged in user. This endpoint is meant for use after updating a user's phone number using the [accountUpdatePhone](https://appwrite.io/docs/references/cloud/client-web/account#updatePhone) endpoint. Learn more about how to [complete the verification process](https://appwrite.io/docs/references/cloud/client-web/account#updatePhoneVerification). The verification code sent to the user's phone number is valid for 15 minutes.
-
         Returns
         -------
         Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2130,19 +2177,23 @@ class Account(Service):
         api_path = '/account/verifications/phone'
         api_params = {}
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Token)
-
 
     def update_phone_verification(
         self,
         user_id: str,
-        secret: str
+        secret: str,
     ) -> Token:
         """
         Use this endpoint to complete the user phone verification process. Use the **userId** and **secret** that were sent to your user's phone number to verify the user email ownership. If confirmed this route will return a 200 status code.
@@ -2153,12 +2204,11 @@ class Account(Service):
             User ID.
         secret : str
             Valid verification token.
-        
         Returns
         -------
         Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2169,19 +2219,20 @@ class Account(Service):
         api_params = {}
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
-
         if secret is None:
             raise AppwriteException('Missing required parameter: "secret"')
-
-
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Token)
-

@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .oauth2_project import Oauth2Project
 
+
 class Oauth2ProjectList(AppwriteModel):
     """
     OAuth2 accessible projects list
@@ -15,5 +16,6 @@ class Oauth2ProjectList(AppwriteModel):
     projects : List[Oauth2Project]
         List of projects.
     """
+
     total: float = Field(..., alias='total')
     projects: List[Oauth2Project] = Field(..., alias='projects')

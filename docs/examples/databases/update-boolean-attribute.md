@@ -13,10 +13,10 @@ databases = Databases(client)
 result: AttributeBoolean = databases.update_boolean_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
     default = False,
-    new_key = '' # optional
+    new_key = '<NEW_KEY>' # optional
 )
 
 print(result.model_dump())

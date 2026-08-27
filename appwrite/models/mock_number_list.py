@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .mock_number import MockNumber
 
+
 class MockNumberList(AppwriteModel):
     """
     Mock Numbers List
@@ -15,5 +16,6 @@ class MockNumberList(AppwriteModel):
     mocknumbers : List[MockNumber]
         List of mockNumbers.
     """
+
     total: float = Field(..., alias='total')
     mocknumbers: List[MockNumber] = Field(..., alias='mockNumbers')

@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.column_status import ColumnStatus
 
+
 class ColumnLongtext(AppwriteModel):
     """
     ColumnLongtext
@@ -31,6 +32,7 @@ class ColumnLongtext(AppwriteModel):
     encrypt : Optional[bool]
         Defines whether this column is encrypted or not.
     """
+
     key: str = Field(..., alias='key')
     type: str = Field(..., alias='type')
     status: ColumnStatus = Field(..., alias='status')

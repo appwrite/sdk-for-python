@@ -14,9 +14,9 @@ result: Row = tables_db.increment_row_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
     row_id = '<ROW_ID>',
-    column = '',
-    value = None, # optional
-    max = None, # optional
+    column = '<COLUMN>',
+    value = 1, # optional
+    max = 100, # optional
     transaction_id = '<TRANSACTION_ID>' # optional
 )
 

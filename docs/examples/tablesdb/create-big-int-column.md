@@ -13,11 +13,11 @@ tables_db = TablesDB(client)
 result: ColumnBigint = tables_db.create_big_int_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
-    min = None, # optional
-    max = None, # optional
-    default = None, # optional
+    min = 0, # optional
+    max = 1000000, # optional
+    default = 0, # optional
     array = False # optional
 )
 

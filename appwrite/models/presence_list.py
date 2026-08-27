@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .presence import Presence
 
+
 class PresenceList(AppwriteModel):
     """
     Presences List
@@ -15,5 +16,6 @@ class PresenceList(AppwriteModel):
     presences : List[Presence]
         List of presences.
     """
+
     total: float = Field(..., alias='total')
     presences: List[Presence] = Field(..., alias='presences')

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ProjectOAuth2OidcPrompt(Enum):
     NONE = "none"
     LOGIN = "login"

@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .additional_resource import AdditionalResource
 
+
 class UsageBillingPlan(AppwriteModel):
     """
     usageBillingPlan
@@ -33,6 +34,7 @@ class UsageBillingPlan(AppwriteModel):
     credits : Optional[AdditionalResource]
         Credits additional resources
     """
+
     bandwidth: AdditionalResource = Field(..., alias='bandwidth')
     executions: AdditionalResource = Field(..., alias='executions')
     member: Optional[AdditionalResource] = Field(default=None, alias='member')

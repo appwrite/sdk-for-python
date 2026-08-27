@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .backup_policy import BackupPolicy
 
+
 class BackupPolicyList(AppwriteModel):
     """
     Backup policy list
@@ -15,5 +16,6 @@ class BackupPolicyList(AppwriteModel):
     policies : List[BackupPolicy]
         List of policies.
     """
+
     total: float = Field(..., alias='total')
     policies: List[BackupPolicy] = Field(..., alias='policies')

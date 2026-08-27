@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class MfaType(AppwriteModel):
     """
     MFAType
@@ -14,5 +15,6 @@ class MfaType(AppwriteModel):
     uri : str
         URI for authenticator apps.
     """
+
     secret: str = Field(..., alias='secret')
     uri: str = Field(..., alias='uri')

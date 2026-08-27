@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .email_template import EmailTemplate
 
+
 class EmailTemplateList(AppwriteModel):
     """
     Email Templates List
@@ -15,5 +16,6 @@ class EmailTemplateList(AppwriteModel):
     templates : List[EmailTemplate]
         List of templates.
     """
+
     total: float = Field(..., alias='total')
     templates: List[EmailTemplate] = Field(..., alias='templates')

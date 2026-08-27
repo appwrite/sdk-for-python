@@ -12,6 +12,7 @@ from ..models.file import File
 from ..enums.image_gravity import ImageGravity
 from ..enums.image_format import ImageFormat
 
+
 class Storage(Service):
 
     def __init__(self, client) -> None:
@@ -21,7 +22,7 @@ class Storage(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> BucketList:
         """
         Get a list of all the storage buckets. You can use the query params to filter your results.
@@ -34,12 +35,11 @@ class Storage(Service):
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         BucketList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -48,7 +48,6 @@ class Storage(Service):
 
         api_path = '/storage/buckets'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -56,13 +55,17 @@ class Storage(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=BucketList)
-
 
     def create_bucket(
         self,
@@ -76,7 +79,7 @@ class Storage(Service):
         compression: Optional[Compression] = None,
         encryption: Optional[bool] = None,
         antivirus: Optional[bool] = None,
-        transformations: Optional[bool] = None
+        transformations: Optional[bool] = None,
     ) -> Bucket:
         """
         Create a new storage bucket.
@@ -105,12 +108,11 @@ class Storage(Service):
             Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
         transformations : Optional[bool]
             Are image transformations enabled?
-        
         Returns
         -------
         Bucket
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -121,11 +123,8 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['bucketId'] = self._normalize_value(bucket_id)
         api_params['name'] = self._normalize_value(name)
         if permissions is not None:
@@ -147,18 +146,22 @@ class Storage(Service):
         if transformations is not None:
             api_params['transformations'] = self._normalize_value(transformations)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Bucket)
 
-
     def get_bucket(
         self,
-        bucket_id: str
+        bucket_id: str,
     ) -> Bucket:
         """
         Get a storage bucket by its unique ID. This endpoint response returns a JSON object with the storage bucket metadata.
@@ -167,12 +170,11 @@ class Storage(Service):
         ----------
         bucket_id : str
             Bucket unique ID.
-        
         Returns
         -------
         Bucket
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -183,17 +185,19 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Bucket)
-
 
     def update_bucket(
         self,
@@ -207,7 +211,7 @@ class Storage(Service):
         compression: Optional[Compression] = None,
         encryption: Optional[bool] = None,
         antivirus: Optional[bool] = None,
-        transformations: Optional[bool] = None
+        transformations: Optional[bool] = None,
     ) -> Bucket:
         """
         Update a storage bucket by its unique ID.
@@ -236,12 +240,11 @@ class Storage(Service):
             Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
         transformations : Optional[bool]
             Are image transformations enabled?
-        
         Returns
         -------
         Bucket
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -252,12 +255,9 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
-
         api_params['name'] = self._normalize_value(name)
         if permissions is not None:
             api_params['permissions'] = self._normalize_value(permissions)
@@ -278,18 +278,22 @@ class Storage(Service):
         if transformations is not None:
             api_params['transformations'] = self._normalize_value(transformations)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Bucket)
 
-
     def delete_bucket(
         self,
-        bucket_id: str
+        bucket_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a storage bucket by its unique ID.
@@ -298,12 +302,11 @@ class Storage(Service):
         ----------
         bucket_id : str
             Bucket unique ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -314,24 +317,26 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def list_files(
         self,
         bucket_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> FileList:
         """
         Get a list of all the user files. You can use the query params to filter your results.
@@ -346,12 +351,11 @@ class Storage(Service):
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         FileList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -362,9 +366,7 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -372,13 +374,17 @@ class Storage(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=FileList)
-
 
     def create_file(
         self,
@@ -387,17 +393,16 @@ class Storage(Service):
         file: InputFile,
         permissions: Optional[List[str]] = None,
         folder: Optional[str] = None,
-        on_progress = None
+        on_progress=None,
     ) -> File:
         """
         Create a new file. Before using this route, you should create a new bucket resource using either a [server integration](https://appwrite.io/docs/server/storage#storageCreateBucket) API or directly from your Appwrite console.
-        
+
         Larger files should be uploaded using multiple requests with the [content-range](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Range) header to send a partial request with a maximum supported chunk of `5MB`. The `content-range` header values should always be in bytes.
-        
+
         When the first request is sent, the server will return the **File** object, and the subsequent part request must include the file's **id** in `x-appwrite-id` header to allow the server to know that the partial upload is for the existing file and not for a new one.
-        
+
         If you're creating a new file using one of the Appwrite SDKs, all the chunking logic will be managed by the SDK internally.
-        
 
         Parameters
         ----------
@@ -411,14 +416,14 @@ class Storage(Service):
             An array of permission strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
         folder : Optional[str]
             Virtual folder to place the file in, for example "photos/2026". Nest folders with `/`. Defaults to the bucket root.
-                on_progress : callable, optional
+        on_progress : callable, optional
             Optional callback for upload progress
-        
+
         Returns
         -------
         File
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -429,15 +434,11 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
-
         if file is None:
             raise AppwriteException('Missing required parameter: "file"')
-
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
-
         api_params['fileId'] = self._normalize_value(file_id)
         api_params['file'] = self._normalize_value(file)
         if permissions is not None:
@@ -447,23 +448,28 @@ class Storage(Service):
 
         param_name = 'file'
 
-
         upload_id = ''
         upload_id = file_id
 
-        response = self.client.chunked_upload(api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'multipart/form-data',
-            'accept': 'application/json',
-        }, api_params, param_name, on_progress, upload_id)
+        response = self.client.chunked_upload(
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'multipart/form-data',
+                'accept': 'application/json',
+            },
+            api_params,
+            param_name,
+            on_progress,
+            upload_id,
+        )
 
         return self._parse_response(response, model=File)
-
 
     def get_file(
         self,
         bucket_id: str,
-        file_id: str
+        file_id: str,
     ) -> File:
         """
         Get a file by its unique ID. This endpoint response returns a JSON object with the file metadata.
@@ -474,12 +480,11 @@ class Storage(Service):
             Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
         file_id : str
             File ID.
-        
         Returns
         -------
         File
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -490,28 +495,29 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
-
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=File)
-
 
     def update_file(
         self,
         bucket_id: str,
         file_id: str,
         name: Optional[str] = None,
-        permissions: Optional[List[str]] = None
+        permissions: Optional[List[str]] = None,
     ) -> File:
         """
         Update a file by its unique ID. Only users with write permissions have access to update this resource.
@@ -526,12 +532,11 @@ class Storage(Service):
             File name.
         permissions : Optional[List[str]]
             An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
-        
         Returns
         -------
         File
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -542,31 +547,32 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
-
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if permissions is not None:
             api_params['permissions'] = self._normalize_value(permissions)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=File)
-
 
     def delete_file(
         self,
         bucket_id: str,
-        file_id: str
+        file_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a file by its unique ID. Only users with write permissions have access to delete this resource.
@@ -577,12 +583,11 @@ class Storage(Service):
             Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
         file_id : str
             File ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -593,27 +598,28 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
-
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def get_file_download(
         self,
         bucket_id: str,
         file_id: str,
-        token: Optional[str] = None
+        token: Optional[str] = None,
     ) -> bytes:
         """
         Get a file content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
@@ -626,12 +632,11 @@ class Storage(Service):
             File ID.
         token : Optional[str]
             File token for accessing this file.
-        
         Returns
         -------
         bytes
             Response as bytes
-        
+
         Raises
         ------
         AppwriteException
@@ -642,23 +647,24 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
-
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
-
         if token is not None:
             api_params['token'] = self._normalize_value(token)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': '*/*',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': '*/*',
+            },
+            api_params,
+        )
 
         return response
-
 
     def get_file_preview(
         self,
@@ -675,7 +681,7 @@ class Storage(Service):
         rotation: Optional[float] = None,
         background: Optional[str] = None,
         output: Optional[ImageFormat] = None,
-        token: Optional[str] = None
+        token: Optional[str] = None,
     ) -> bytes:
         """
         Get a file preview image. Currently, this method supports preview for image files (jpg, png, and gif), other supported formats, like pdf, docs, slides, and spreadsheets, will return the file icon image. You can also pass query string arguments for cutting and resizing your preview image. Preview is supported only for image files smaller than 10MB.
@@ -710,12 +716,11 @@ class Storage(Service):
             Output format type (jpeg, jpg, png, gif and webp).
         token : Optional[str]
             File token for accessing this file.
-        
         Returns
         -------
         bytes
             Response as bytes
-        
+
         Raises
         ------
         AppwriteException
@@ -726,13 +731,10 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
-
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
-
         if width is not None:
             api_params['width'] = self._normalize_value(width)
         if height is not None:
@@ -758,19 +760,23 @@ class Storage(Service):
         if token is not None:
             api_params['token'] = self._normalize_value(token)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'image/*',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'image/*',
+            },
+            api_params,
+        )
 
         return response
-
 
     def get_file_view(
         self,
         bucket_id: str,
         file_id: str,
-        token: Optional[str] = None
+        token: Optional[str] = None,
     ) -> bytes:
         """
         Get a file content by its unique ID. This endpoint is similar to the download method but returns with no  'Content-Disposition: attachment' header.
@@ -783,12 +789,11 @@ class Storage(Service):
             File ID.
         token : Optional[str]
             File token for accessing this file.
-        
         Returns
         -------
         bytes
             Response as bytes
-        
+
         Raises
         ------
         AppwriteException
@@ -799,20 +804,21 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None:
             raise AppwriteException('Missing required parameter: "bucket_id"')
-
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
-
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
-
         if token is not None:
             api_params['token'] = self._normalize_value(token)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': '*/*',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': '*/*',
+            },
+            api_params,
+        )
 
         return response
-

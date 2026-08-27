@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .activity_event import ActivityEvent
 
+
 class ActivityEventList(AppwriteModel):
     """
     Activity event list
@@ -15,5 +16,6 @@ class ActivityEventList(AppwriteModel):
     events : List[ActivityEvent]
         List of events.
     """
+
     total: float = Field(..., alias='total')
     events: List[ActivityEvent] = Field(..., alias='events')

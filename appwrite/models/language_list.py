@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .language import Language
 
+
 class LanguageList(AppwriteModel):
     """
     Languages List
@@ -15,5 +16,6 @@ class LanguageList(AppwriteModel):
     languages : List[Language]
         List of languages.
     """
+
     total: float = Field(..., alias='total')
     languages: List[Language] = Field(..., alias='languages')

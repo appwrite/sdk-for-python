@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class AlgoScrypt(AppwriteModel):
     """
     AlgoScrypt
@@ -20,6 +21,7 @@ class AlgoScrypt(AppwriteModel):
     length : float
         Length used to compute hash.
     """
+
     type: str = Field(..., alias='type')
     costcpu: float = Field(..., alias='costCpu')
     costmemory: float = Field(..., alias='costMemory')

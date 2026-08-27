@@ -13,9 +13,9 @@ databases = Databases(client)
 result: AttributeIp = databases.create_ip_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
-    default = '', # optional
+    default = '192.0.2.0', # optional
     array = False # optional
 )
 

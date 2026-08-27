@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Topic(AppwriteModel):
     """
     Topic
@@ -26,6 +27,7 @@ class Topic(AppwriteModel):
     subscribe : List[Any]
         Subscribe permissions.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

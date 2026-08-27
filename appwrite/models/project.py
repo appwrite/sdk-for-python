@@ -9,6 +9,7 @@ from .project_protocol import ProjectProtocol
 from .block import Block
 from .billing_limits import BillingLimits
 
+
 class Project(AppwriteModel):
     """
     Project
@@ -69,7 +70,7 @@ class Project(AppwriteModel):
         Project blocks information
     consoleaccessedat : str
         Last time the project was accessed via console. Used with plan&#039;s projectInactivityDays to determine if project is paused.
-    wafenabled : bool
+    wafenabled : Optional[bool]
         Whether WAF enforcement is enabled for the project.
     billinglimits : Optional[BillingLimits]
         Billing limits reached
@@ -108,6 +109,7 @@ class Project(AppwriteModel):
     oauth2serverdiscoveryurl : Optional[str]
         OAuth2 server discovery URL
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
@@ -135,19 +137,31 @@ class Project(AppwriteModel):
     protocols: List[ProjectProtocol] = Field(..., alias='protocols')
     blocks: List[Block] = Field(..., alias='blocks')
     consoleaccessedat: str = Field(..., alias='consoleAccessedAt')
-    wafenabled: bool = Field(..., alias='wafEnabled')
+    wafenabled: Optional[bool] = Field(default=None, alias='wafEnabled')
     billinglimits: Optional[BillingLimits] = Field(default=None, alias='billingLimits')
     oauth2serverenabled: Optional[bool] = Field(default=None, alias='oAuth2ServerEnabled')
     oauth2serverauthorizationurl: Optional[str] = Field(default=None, alias='oAuth2ServerAuthorizationUrl')
     oauth2serverscopes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerScopes')
     oauth2serverdefaultscopes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerDefaultScopes')
     oauth2serverinstallationscopes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerInstallationScopes')
-    oauth2serverauthorizationdetailstypes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerAuthorizationDetailsTypes')
+    oauth2serverauthorizationdetailstypes: Optional[List[Any]] = Field(
+        default=None,
+        alias='oAuth2ServerAuthorizationDetailsTypes',
+    )
     oauth2serveraccesstokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerAccessTokenDuration')
     oauth2serverrefreshtokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerRefreshTokenDuration')
-    oauth2serverpublicaccesstokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerPublicAccessTokenDuration')
-    oauth2serverpublicrefreshtokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerPublicRefreshTokenDuration')
-    oauth2serverinstallationaccesstokenduration: Optional[float] = Field(default=None, alias='oAuth2ServerInstallationAccessTokenDuration')
+    oauth2serverpublicaccesstokenduration: Optional[float] = Field(
+        default=None,
+        alias='oAuth2ServerPublicAccessTokenDuration',
+    )
+    oauth2serverpublicrefreshtokenduration: Optional[float] = Field(
+        default=None,
+        alias='oAuth2ServerPublicRefreshTokenDuration',
+    )
+    oauth2serverinstallationaccesstokenduration: Optional[float] = Field(
+        default=None,
+        alias='oAuth2ServerInstallationAccessTokenDuration',
+    )
     oauth2serverconfidentialpkce: Optional[bool] = Field(default=None, alias='oAuth2ServerConfidentialPkce')
     oauth2serververificationurl: Optional[str] = Field(default=None, alias='oAuth2ServerVerificationUrl')
     oauth2serverusercodelength: Optional[float] = Field(default=None, alias='oAuth2ServerUserCodeLength')

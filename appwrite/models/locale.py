@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Locale(AppwriteModel):
     """
     Locale
@@ -46,6 +47,7 @@ class Locale(AppwriteModel):
     connectionorganization : Optional[str]
         Registered organization of the IP
     """
+
     ip: str = Field(..., alias='ip')
     countrycode: str = Field(..., alias='countryCode')
     country: str = Field(..., alias='country')

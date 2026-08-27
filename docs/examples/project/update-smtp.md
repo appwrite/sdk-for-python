@@ -12,8 +12,8 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 project = Project(client)
 
 result: ProjectModel = project.update_smtp(
-    host = '', # optional
-    port = None, # optional
+    host = 'example.com', # optional
+    port = 587, # optional
     username = '<USERNAME>', # optional
     password = 'password', # optional
     sender_email = 'email@example.com', # optional

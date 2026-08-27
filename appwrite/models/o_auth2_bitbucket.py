@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class OAuth2Bitbucket(AppwriteModel):
     """
     OAuth2Bitbucket
@@ -18,6 +19,7 @@ class OAuth2Bitbucket(AppwriteModel):
     secret : str
         Bitbucket OAuth2 secret.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     key: str = Field(..., alias='key')

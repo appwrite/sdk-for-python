@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class OAuth2Etsy(AppwriteModel):
     """
     OAuth2Etsy
@@ -18,6 +19,7 @@ class OAuth2Etsy(AppwriteModel):
     sharedsecret : str
         Etsy OAuth2 shared secret.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     keystring: str = Field(..., alias='keyString')

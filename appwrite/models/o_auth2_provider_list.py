@@ -43,6 +43,8 @@ from .o_auth2_apple import OAuth2Apple
 from .o_auth2_okta import OAuth2Okta
 from .o_auth2_kick import OAuth2Kick
 from .o_auth2_microsoft import OAuth2Microsoft
+from .o_auth2_hugging_face import OAuth2HuggingFace
+
 
 class OAuth2ProviderList(AppwriteModel):
     """
@@ -52,8 +54,54 @@ class OAuth2ProviderList(AppwriteModel):
     ----------
     total : float
         Total number of OAuth2 providers in the given project.
-    providers : List[Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Appwrite, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft]]
+    providers : List[Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Appwrite, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2HuggingFace]]
         List of OAuth2 providers.
     """
+
     total: float = Field(..., alias='total')
-    providers: List[Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Appwrite, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft]] = Field(..., alias='providers')
+    providers: List[
+        Union[
+            OAuth2Github,
+            OAuth2Discord,
+            OAuth2Figma,
+            OAuth2Dropbox,
+            OAuth2Dailymotion,
+            OAuth2Bitbucket,
+            OAuth2Bitly,
+            OAuth2Box,
+            OAuth2Autodesk,
+            OAuth2Google,
+            OAuth2Zoom,
+            OAuth2Zoho,
+            OAuth2Yandex,
+            OAuth2X,
+            OAuth2WordPress,
+            OAuth2Twitch,
+            OAuth2Stripe,
+            OAuth2Spotify,
+            OAuth2Slack,
+            OAuth2Podio,
+            OAuth2Notion,
+            OAuth2Salesforce,
+            OAuth2Yahoo,
+            OAuth2Linkedin,
+            OAuth2Disqus,
+            OAuth2Amazon,
+            OAuth2Etsy,
+            OAuth2Facebook,
+            OAuth2Tradeshift,
+            OAuth2Paypal,
+            OAuth2Gitlab,
+            OAuth2Appwrite,
+            OAuth2Authentik,
+            OAuth2Auth0,
+            OAuth2FusionAuth,
+            OAuth2Keycloak,
+            OAuth2Oidc,
+            OAuth2Apple,
+            OAuth2Okta,
+            OAuth2Kick,
+            OAuth2Microsoft,
+            OAuth2HuggingFace,
+        ]
+    ] = Field(..., alias='providers')

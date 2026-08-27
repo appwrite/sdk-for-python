@@ -13,9 +13,9 @@ databases = Databases(client)
 result: AttributeText = databases.create_text_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
-    default = '<DEFAULT>', # optional
+    default = 'Hello World', # optional
     array = False, # optional
     encrypt = False # optional
 )

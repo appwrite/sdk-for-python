@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class BillingPlanSupportedAddons(AppwriteModel):
     """
     BillingPlanSupportedAddons
@@ -16,6 +17,7 @@ class BillingPlanSupportedAddons(AppwriteModel):
     premiumgeodborg : bool
         Whether the plan supports Premium Geo DB addon (organization-level)
     """
+
     baa: bool = Field(..., alias='baa')
     premiumgeodb: bool = Field(..., alias='premiumGeoDB')
     premiumgeodborg: bool = Field(..., alias='premiumGeoDBOrg')

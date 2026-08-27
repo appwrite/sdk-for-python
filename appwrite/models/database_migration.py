@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class DatabaseMigration(AppwriteModel):
     """
     Database Migration
@@ -29,6 +30,8 @@ class DatabaseMigration(AppwriteModel):
         Reason the most recent migration step failed, empty while none has.
     lagdocuments : float
         Number of documents still pending replication to the target.
+    changelogwatermark : float
+        Highest source changelog sequence applied to the target so far.
     verifiedat : str
         Time the migrated data was verified against the source in ISO 8601 format.
     cutoverat : str
@@ -42,6 +45,7 @@ class DatabaseMigration(AppwriteModel):
     paused : bool
         Whether the migration is paused.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
@@ -52,6 +56,7 @@ class DatabaseMigration(AppwriteModel):
     attempt: float = Field(..., alias='attempt')
     lasterror: str = Field(..., alias='lastError')
     lagdocuments: float = Field(..., alias='lagDocuments')
+    changelogwatermark: float = Field(..., alias='changelogWatermark')
     verifiedat: str = Field(..., alias='verifiedAt')
     cutoverat: str = Field(..., alias='cutoverAt')
     soakuntil: str = Field(..., alias='soakUntil')

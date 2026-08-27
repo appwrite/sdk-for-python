@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Phone(AppwriteModel):
     """
     Phone
@@ -16,6 +17,7 @@ class Phone(AppwriteModel):
     countryname : str
         Country name.
     """
+
     code: str = Field(..., alias='code')
     countrycode: str = Field(..., alias='countryCode')
     countryname: str = Field(..., alias='countryName')

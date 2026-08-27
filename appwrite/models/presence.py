@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Presence(AppwriteModel):
     """
     Presence
@@ -28,6 +29,7 @@ class Presence(AppwriteModel):
     metadata : Optional[Dict[str, Any]]
         Presence metadata.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class AdditionalResource(AppwriteModel):
     """
     AdditionalResource
@@ -22,6 +23,7 @@ class AdditionalResource(AppwriteModel):
     invoicedesc : str
         Description on invoice
     """
+
     name: str = Field(..., alias='name')
     unit: str = Field(..., alias='unit')
     currency: str = Field(..., alias='currency')

@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class LocaleCode(AppwriteModel):
     """
     LocaleCode
@@ -14,5 +15,6 @@ class LocaleCode(AppwriteModel):
     name : str
         Locale name
     """
+
     code: str = Field(..., alias='code')
     name: str = Field(..., alias='name')

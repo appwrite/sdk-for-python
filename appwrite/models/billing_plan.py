@@ -10,6 +10,7 @@ from ..enums.billing_plan_group import BillingPlanGroup
 from .program import Program
 from .billing_plan_dedicated_database_limits import BillingPlanDedicatedDatabaseLimits
 
+
 class BillingPlan(AppwriteModel):
     """
     billingPlan
@@ -122,6 +123,8 @@ class BillingPlan(AppwriteModel):
         Does plan support organization roles
     supportscredits : bool
         Does plan support credit
+    supportsdedicateddatabases : bool
+        Does plan support dedicated databases.
     supportsdisposableemailvalidation : bool
         Does plan support blocking disposable email addresses.
     supportscanonicalemailvalidation : bool
@@ -152,9 +155,12 @@ class BillingPlan(AppwriteModel):
         Group of this billing plan for variants
     program : Optional[Program]
         Details of the program this plan is a part of.
+    databasecomputecredit : float
+        Included monthly dedicated-database compute credit in USD. Resets each billing cycle with no roll-over.
     dedicateddatabases : Optional[BillingPlanDedicatedDatabaseLimits]
         Dedicated database limits available to this plan.
     """
+
     id: str = Field(..., alias='$id')
     name: str = Field(..., alias='name')
     desc: str = Field(..., alias='desc')
@@ -208,6 +214,7 @@ class BillingPlan(AppwriteModel):
     supportsmocknumbers: bool = Field(..., alias='supportsMockNumbers')
     supportsorganizationroles: bool = Field(..., alias='supportsOrganizationRoles')
     supportscredits: bool = Field(..., alias='supportsCredits')
+    supportsdedicateddatabases: bool = Field(..., alias='supportsDedicatedDatabases')
     supportsdisposableemailvalidation: bool = Field(..., alias='supportsDisposableEmailValidation')
     supportscanonicalemailvalidation: bool = Field(..., alias='supportsCanonicalEmailValidation')
     supportsfreeemailvalidation: bool = Field(..., alias='supportsFreeEmailValidation')
@@ -223,4 +230,5 @@ class BillingPlan(AppwriteModel):
     limits: Optional[BillingPlanLimits] = Field(default=None, alias='limits')
     group: BillingPlanGroup = Field(..., alias='group')
     program: Optional[Program] = Field(default=None, alias='program')
+    databasecomputecredit: float = Field(..., alias='databaseComputeCredit')
     dedicateddatabases: Optional[BillingPlanDedicatedDatabaseLimits] = Field(default=None, alias='dedicatedDatabases')

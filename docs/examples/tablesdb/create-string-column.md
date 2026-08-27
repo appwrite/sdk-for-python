@@ -13,10 +13,10 @@ tables_db = TablesDB(client)
 result: ColumnString = tables_db.create_string_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
+    key = '<KEY>',
     size = 1,
     required = False,
-    default = '<DEFAULT>', # optional
+    default = 'Hello World', # optional
     array = False, # optional
     encrypt = False # optional
 )

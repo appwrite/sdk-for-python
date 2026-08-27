@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class OrganizationKeyScopes(Enum):
     PROJECTS_READ = "projects.read"
     PROJECTS_WRITE = "projects.write"

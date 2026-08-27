@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .project import Project
 
+
 class ProjectList(AppwriteModel):
     """
     Projects List
@@ -15,5 +16,6 @@ class ProjectList(AppwriteModel):
     projects : List[Project]
         List of projects.
     """
+
     total: float = Field(..., alias='total')
     projects: List[Project] = Field(..., alias='projects')

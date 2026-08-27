@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .backup_archive import BackupArchive
 
+
 class BackupArchiveList(AppwriteModel):
     """
     Backup archive list
@@ -15,5 +16,6 @@ class BackupArchiveList(AppwriteModel):
     archives : List[BackupArchive]
         List of archives.
     """
+
     total: float = Field(..., alias='total')
     archives: List[BackupArchive] = Field(..., alias='archives')

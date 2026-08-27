@@ -13,10 +13,10 @@ databases = Databases(client)
 result: AttributePoint = databases.update_point_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
     default = [1, 2], # optional
-    new_key = '' # optional
+    new_key = '<NEW_KEY>' # optional
 )
 
 print(result.model_dump())

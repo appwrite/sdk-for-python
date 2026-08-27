@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Framework(Enum):
     ANALOG = "analog"
     ANGULAR = "angular"

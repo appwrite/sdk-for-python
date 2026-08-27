@@ -14,9 +14,9 @@ result: Document = databases.increment_document_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
     document_id = '<DOCUMENT_ID>',
-    attribute = '',
-    value = None, # optional
-    max = None, # optional
+    attribute = '<ATTRIBUTE>',
+    value = 1, # optional
+    max = 100, # optional
     transaction_id = '<TRANSACTION_ID>' # optional
 )
 

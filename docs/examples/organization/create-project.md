@@ -12,7 +12,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 organization = Organization(client)
 
 result: Project = organization.create_project(
-    project_id = '',
+    project_id = '<PROJECT_ID>',
     name = '<NAME>',
     region = Region.FRA # optional
 )

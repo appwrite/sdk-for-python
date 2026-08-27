@@ -18,7 +18,7 @@ result: File = storage.create_file(
     file_id = '<FILE_ID>',
     file = InputFile.from_path('file.png'),
     permissions = [Permission.read(Role.any())], # optional
-    folder = '' # optional
+    folder = 'photos/2026' # optional
 )
 
 print(result.model_dump())

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ImageGravity(Enum):
     CENTER = "center"
     TOP_LEFT = "top-left"

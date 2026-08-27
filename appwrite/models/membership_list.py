@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .membership import Membership
 
+
 class MembershipList(AppwriteModel):
     """
     Memberships List
@@ -15,5 +16,6 @@ class MembershipList(AppwriteModel):
     memberships : List[Membership]
         List of memberships.
     """
+
     total: float = Field(..., alias='total')
     memberships: List[Membership] = Field(..., alias='memberships')

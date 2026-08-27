@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class PasswordHash(Enum):
     SHA1 = "sha1"
     SHA224 = "sha224"

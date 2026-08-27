@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class OAuth2Notion(AppwriteModel):
     """
     OAuth2Notion
@@ -18,6 +19,7 @@ class OAuth2Notion(AppwriteModel):
     oauthclientsecret : str
         Notion OAuth2 client secret.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     oauthclientid: str = Field(..., alias='oauthClientId')

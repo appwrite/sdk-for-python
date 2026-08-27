@@ -6,6 +6,7 @@ from appwrite.utils.deprecated import deprecated
 from ..enums.embedding_model import EmbeddingModel
 from ..models.embedding_list import EmbeddingList
 
+
 class Embeddings(Service):
 
     def __init__(self, client) -> None:
@@ -14,11 +15,10 @@ class Embeddings(Service):
     def create_text_embeddings(
         self,
         texts: List[str],
-        model: Optional[EmbeddingModel] = None
+        model: Optional[EmbeddingModel] = None,
     ) -> EmbeddingList:
         """
         Generate vector embeddings for an array of text using the selected embedding model. Use the returned vectors to power semantic search and similarity queries against your vector collections.
-        
 
         Parameters
         ----------
@@ -26,12 +26,11 @@ class Embeddings(Service):
             Array of text to generate embeddings.
         model : Optional[EmbeddingModel]
             The embedding model to use for generating vector embeddings.
-        
         Returns
         -------
         EmbeddingList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -42,17 +41,19 @@ class Embeddings(Service):
         api_params = {}
         if texts is None:
             raise AppwriteException('Missing required parameter: "texts"')
-
-
         api_params['texts'] = self._normalize_value(texts)
         if model is not None:
             api_params['model'] = self._normalize_value(model)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=EmbeddingList)
-

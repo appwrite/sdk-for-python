@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Headers(AppwriteModel):
     """
     Headers
@@ -14,5 +15,6 @@ class Headers(AppwriteModel):
     value : str
         Header value.
     """
+
     name: str = Field(..., alias='name')
     value: str = Field(..., alias='value')

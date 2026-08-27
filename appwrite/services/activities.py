@@ -6,6 +6,7 @@ from appwrite.utils.deprecated import deprecated
 from ..models.activity_event_list import ActivityEventList
 from ..models.activity_event import ActivityEvent
 
+
 class Activities(Service):
 
     def __init__(self, client) -> None:
@@ -13,7 +14,7 @@ class Activities(Service):
 
     def list_events(
         self,
-        queries: Optional[List[str]] = None
+        queries: Optional[List[str]] = None,
     ) -> ActivityEventList:
         """
         List all events for selected filters.
@@ -22,12 +23,11 @@ class Activities(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on attributes such as userId, teamId, etc.
-        
         Returns
         -------
         ActivityEventList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -36,36 +36,37 @@ class Activities(Service):
 
         api_path = '/activities/events'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ActivityEventList)
 
-
     def get_event(
         self,
-        event_id: str
+        event_id: str,
     ) -> ActivityEvent:
         """
         Get event by ID.
-        
 
         Parameters
         ----------
         event_id : str
             Event ID.
-        
         Returns
         -------
         ActivityEvent
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -76,14 +77,16 @@ class Activities(Service):
         api_params = {}
         if event_id is None:
             raise AppwriteException('Missing required parameter: "event_id"')
-
         api_path = api_path.replace('{eventId}', str(self._normalize_value(event_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ActivityEvent)
-

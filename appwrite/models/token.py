@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Token(AppwriteModel):
     """
     Token
@@ -22,6 +23,7 @@ class Token(AppwriteModel):
     phrase : str
         Security phrase of a token. Empty if security phrase was not requested when creating a token. It includes randomly generated phrase which is also sent in the external resource such as email.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     userid: str = Field(..., alias='userId')

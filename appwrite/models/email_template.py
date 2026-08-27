@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class EmailTemplate(AppwriteModel):
     """
     EmailTemplate
@@ -26,6 +27,7 @@ class EmailTemplate(AppwriteModel):
     subject : str
         Email subject
     """
+
     templateid: str = Field(..., alias='templateId')
     locale: str = Field(..., alias='locale')
     message: str = Field(..., alias='message')

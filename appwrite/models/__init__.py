@@ -43,6 +43,7 @@ from .subscriber_list import SubscriberList
 from .target_list import TargetList
 from .transaction_list import TransactionList
 from .specification_list import SpecificationList
+from .vectorsdb_collection_list import VectorsdbCollectionList
 from .embedding_list import EmbeddingList
 from .insight_list import InsightList
 from .report_list import ReportList
@@ -68,6 +69,9 @@ from .attribute_varchar import AttributeVarchar
 from .attribute_text import AttributeText
 from .attribute_mediumtext import AttributeMediumtext
 from .attribute_longtext import AttributeLongtext
+from .vectorsdb_collection import VectorsdbCollection
+from .attribute_object import AttributeObject
+from .attribute_vector import AttributeVector
 from .table import Table
 from .column_list import ColumnList
 from .column_string import ColumnString
@@ -153,6 +157,7 @@ from .o_auth2_podio import OAuth2Podio
 from .o_auth2_notion import OAuth2Notion
 from .o_auth2_salesforce import OAuth2Salesforce
 from .o_auth2_yahoo import OAuth2Yahoo
+from .o_auth2_hugging_face import OAuth2HuggingFace
 from .o_auth2_linkedin import OAuth2Linkedin
 from .o_auth2_disqus import OAuth2Disqus
 from .o_auth2_amazon import OAuth2Amazon
@@ -216,6 +221,9 @@ from .report import Report
 from .activity_event import ActivityEvent
 from .additional_resource import AdditionalResource
 from .backup_archive import BackupArchive
+from .dedicated_database_backup import DedicatedDatabaseBackup
+from .dedicated_database_backup_list import DedicatedDatabaseBackupList
+from .dedicated_database_backup_storage import DedicatedDatabaseBackupStorage
 from .billing_limits import BillingLimits
 from .billing_plan import BillingPlan
 from .billing_plan_addon import BillingPlanAddon
@@ -224,22 +232,32 @@ from .billing_plan_limits import BillingPlanLimits
 from .billing_plan_dedicated_database_limits import BillingPlanDedicatedDatabaseLimits
 from .billing_plan_supported_addons import BillingPlanSupportedAddons
 from .block import Block
+from .dedicated_database_branch import DedicatedDatabaseBranch
+from .dedicated_database_branch_list import DedicatedDatabaseBranchList
 from .database_migration import DatabaseMigration
 from .dedicated_database import DedicatedDatabase
+from .dedicated_database_execution import DedicatedDatabaseExecution
+from .dedicated_database_execution_column import DedicatedDatabaseExecutionColumn
+from .dedicated_database_restoration import DedicatedDatabaseRestoration
 from .database_status import DatabaseStatus
+from .dedicated_database_extensions import DedicatedDatabaseExtensions
 from .dedicated_database_member import DedicatedDatabaseMember
 from .dedicated_database_operation import DedicatedDatabaseOperation
 from .dedicated_database_operation_list import DedicatedDatabaseOperationList
 from .dedicated_database_replicas import DedicatedDatabaseReplicas
 from .proxy_invalidation import ProxyInvalidation
 from .organization import Organization
+from .dedicated_database_pitr_windows import DedicatedDatabasePITRWindows
 from .backup_policy import BackupPolicy
 from .policy_deny_aliased_email import PolicyDenyAliasedEmail
 from .policy_deny_disposable_email import PolicyDenyDisposableEmail
 from .policy_deny_free_email import PolicyDenyFreeEmail
 from .policy_deny_corporate_email import PolicyDenyCorporateEmail
+from .dedicated_database_pooler import DedicatedDatabasePooler
+from .postgres_extension import PostgresExtension
 from .program import Program
 from .backup_restoration import BackupRestoration
+from .dedicated_database_restoration_list import DedicatedDatabaseRestorationList
 from .dedicated_database_specification import DedicatedDatabaseSpecification
 from .dedicated_database_specification_list import DedicatedDatabaseSpecificationList
 from .dedicated_database_specification_pricing import DedicatedDatabaseSpecificationPricing
@@ -273,6 +291,7 @@ from .backup_archive_list import BackupArchiveList
 from .backup_policy_list import BackupPolicyList
 from .backup_restoration_list import BackupRestorationList
 from .database_migration_list import DatabaseMigrationList
+from .dedicated_database_list import DedicatedDatabaseList
 from .apps_list import AppsList
 from .app_secret_list import AppSecretList
 from .app_scope_list import AppScopeList
@@ -325,6 +344,7 @@ __all__ = [
     'TargetList',
     'TransactionList',
     'SpecificationList',
+    'VectorsdbCollectionList',
     'EmbeddingList',
     'InsightList',
     'ReportList',
@@ -350,6 +370,9 @@ __all__ = [
     'AttributeText',
     'AttributeMediumtext',
     'AttributeLongtext',
+    'VectorsdbCollection',
+    'AttributeObject',
+    'AttributeVector',
     'Table',
     'ColumnList',
     'ColumnString',
@@ -435,6 +458,7 @@ __all__ = [
     'OAuth2Notion',
     'OAuth2Salesforce',
     'OAuth2Yahoo',
+    'OAuth2HuggingFace',
     'OAuth2Linkedin',
     'OAuth2Disqus',
     'OAuth2Amazon',
@@ -498,6 +522,9 @@ __all__ = [
     'ActivityEvent',
     'AdditionalResource',
     'BackupArchive',
+    'DedicatedDatabaseBackup',
+    'DedicatedDatabaseBackupList',
+    'DedicatedDatabaseBackupStorage',
     'BillingLimits',
     'BillingPlan',
     'BillingPlanAddon',
@@ -506,22 +533,32 @@ __all__ = [
     'BillingPlanDedicatedDatabaseLimits',
     'BillingPlanSupportedAddons',
     'Block',
+    'DedicatedDatabaseBranch',
+    'DedicatedDatabaseBranchList',
     'DatabaseMigration',
     'DedicatedDatabase',
+    'DedicatedDatabaseExecution',
+    'DedicatedDatabaseExecutionColumn',
+    'DedicatedDatabaseRestoration',
     'DatabaseStatus',
+    'DedicatedDatabaseExtensions',
     'DedicatedDatabaseMember',
     'DedicatedDatabaseOperation',
     'DedicatedDatabaseOperationList',
     'DedicatedDatabaseReplicas',
     'ProxyInvalidation',
     'Organization',
+    'DedicatedDatabasePITRWindows',
     'BackupPolicy',
     'PolicyDenyAliasedEmail',
     'PolicyDenyDisposableEmail',
     'PolicyDenyFreeEmail',
     'PolicyDenyCorporateEmail',
+    'DedicatedDatabasePooler',
+    'PostgresExtension',
     'Program',
     'BackupRestoration',
+    'DedicatedDatabaseRestorationList',
     'DedicatedDatabaseSpecification',
     'DedicatedDatabaseSpecificationList',
     'DedicatedDatabaseSpecificationPricing',
@@ -555,6 +592,7 @@ __all__ = [
     'BackupPolicyList',
     'BackupRestorationList',
     'DatabaseMigrationList',
+    'DedicatedDatabaseList',
     'AppsList',
     'AppSecretList',
     'AppScopeList',

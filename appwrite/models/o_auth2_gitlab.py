@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class OAuth2Gitlab(AppwriteModel):
     """
     OAuth2Gitlab
@@ -20,6 +21,7 @@ class OAuth2Gitlab(AppwriteModel):
     endpoint : str
         GitLab OAuth2 endpoint URL. Defaults to https://gitlab.com for self-hosted instances.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     applicationid: str = Field(..., alias='applicationId')

@@ -14,9 +14,9 @@ result: Row = tables_db.decrement_row_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
     row_id = '<ROW_ID>',
-    column = '',
-    value = None, # optional
-    min = None, # optional
+    column = '<COLUMN>',
+    value = 1, # optional
+    min = 0, # optional
     transaction_id = '<TRANSACTION_ID>' # optional
 )
 

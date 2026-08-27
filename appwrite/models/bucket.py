@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Bucket(AppwriteModel):
     """
     Bucket
@@ -38,6 +39,7 @@ class Bucket(AppwriteModel):
     totalsize : float
         Total size of this bucket in bytes.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

@@ -7,6 +7,7 @@ T = TypeVar('T')
 
 _PAYLOAD_ADAPTER = TypeAdapter(Dict[str, Any])
 
+
 class Row(AppwriteModel, Generic[T]):
     """
     Row
@@ -28,6 +29,7 @@ class Row(AppwriteModel, Generic[T]):
     permissions : List[Any]
         Row permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
     """
+
     id: str = Field(..., alias='$id')
     sequence: str = Field(..., alias='$sequence')
     tableid: str = Field(..., alias='$tableId')
@@ -39,7 +41,15 @@ class Row(AppwriteModel, Generic[T]):
     @classmethod
     def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'Row[T]':
         """Create Row instance with typed data."""
-        internal_aliases = {'$id', '$sequence', '$tableId', '$databaseId', '$createdAt', '$updatedAt', '$permissions'}
+        internal_aliases = {
+            '$id',
+            '$sequence',
+            '$tableId',
+            '$databaseId',
+            '$createdAt',
+            '$updatedAt',
+            '$permissions',
+        }
         internal_fields = {k: v for k, v in data.items() if k in internal_aliases}
         user_data = {k: v for k, v in data.items() if k not in internal_aliases and k != 'data'}
         nested = data.get('data')

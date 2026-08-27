@@ -23,7 +23,7 @@ databases = Databases(client)
 result: Union[AttributeBoolean, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributeString] = databases.get_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    key = ''
+    key = '<KEY>'
 )
 
 print(result.model_dump())

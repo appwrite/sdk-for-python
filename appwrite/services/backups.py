@@ -11,6 +11,7 @@ from ..models.backup_policy import BackupPolicy
 from ..models.backup_restoration import BackupRestoration
 from ..models.backup_restoration_list import BackupRestorationList
 
+
 class Backups(Service):
 
     def __init__(self, client) -> None:
@@ -18,7 +19,7 @@ class Backups(Service):
 
     def list_archives(
         self,
-        queries: Optional[List[str]] = None
+        queries: Optional[List[str]] = None,
     ) -> BackupArchiveList:
         """
         List all archives for a project.
@@ -27,12 +28,11 @@ class Backups(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-        
         Returns
         -------
         BackupArchiveList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -41,22 +41,25 @@ class Backups(Service):
 
         api_path = '/backups/archives'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=BackupArchiveList)
-
 
     def create_archive(
         self,
         services: List[BackupServices],
-        resource_id: Optional[str] = None
+        resource_id: Optional[str] = None,
     ) -> BackupArchive:
         """
         Create a new archive asynchronously for a project.
@@ -67,12 +70,11 @@ class Backups(Service):
             Array of services to backup
         resource_id : Optional[str]
             Resource ID. When set, only this single resource will be backed up.
-        
         Returns
         -------
         BackupArchive
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -83,24 +85,26 @@ class Backups(Service):
         api_params = {}
         if services is None:
             raise AppwriteException('Missing required parameter: "services"')
-
-
         api_params['services'] = self._normalize_value(services)
         if resource_id is not None:
             api_params['resourceId'] = self._normalize_value(resource_id)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=BackupArchive)
 
-
     def get_archive(
         self,
-        archive_id: str
+        archive_id: str,
     ) -> BackupArchive:
         """
         Get a backup archive using it's ID.
@@ -109,12 +113,11 @@ class Backups(Service):
         ----------
         archive_id : str
             Archive ID. Choose a custom ID`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        
         Returns
         -------
         BackupArchive
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -125,21 +128,23 @@ class Backups(Service):
         api_params = {}
         if archive_id is None:
             raise AppwriteException('Missing required parameter: "archive_id"')
-
         api_path = api_path.replace('{archiveId}', str(self._normalize_value(archive_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=BackupArchive)
 
-
     def delete_archive(
         self,
-        archive_id: str
+        archive_id: str,
     ) -> Dict[str, Any]:
         """
         Delete an existing archive for a project.
@@ -148,12 +153,11 @@ class Backups(Service):
         ----------
         archive_id : str
             Policy ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -164,22 +168,24 @@ class Backups(Service):
         api_params = {}
         if archive_id is None:
             raise AppwriteException('Missing required parameter: "archive_id"')
-
         api_path = api_path.replace('{archiveId}', str(self._normalize_value(archive_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return response
 
-
     def list_policies(
         self,
-        queries: Optional[List[str]] = None
+        queries: Optional[List[str]] = None,
     ) -> BackupPolicyList:
         """
         List all policies for a project.
@@ -188,12 +194,11 @@ class Backups(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-        
         Returns
         -------
         BackupPolicyList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -202,17 +207,20 @@ class Backups(Service):
 
         api_path = '/backups/policies'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=BackupPolicyList)
-
 
     def create_policy(
         self,
@@ -222,7 +230,7 @@ class Backups(Service):
         schedule: str,
         name: Optional[str] = None,
         resource_id: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> BackupPolicy:
         """
         Create a new backup policy.
@@ -243,12 +251,11 @@ class Backups(Service):
             Resource ID. When set, only this single resource will be backed up.
         enabled : Optional[bool]
             Is policy enabled? When set to 'disabled', no backups will be taken
-        
         Returns
         -------
         BackupPolicy
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -259,17 +266,12 @@ class Backups(Service):
         api_params = {}
         if policy_id is None:
             raise AppwriteException('Missing required parameter: "policy_id"')
-
         if services is None:
             raise AppwriteException('Missing required parameter: "services"')
-
         if retention is None:
             raise AppwriteException('Missing required parameter: "retention"')
-
         if schedule is None:
             raise AppwriteException('Missing required parameter: "schedule"')
-
-
         api_params['policyId'] = self._normalize_value(policy_id)
         if name is not None:
             api_params['name'] = self._normalize_value(name)
@@ -281,18 +283,22 @@ class Backups(Service):
         api_params['retention'] = self._normalize_value(retention)
         api_params['schedule'] = self._normalize_value(schedule)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=BackupPolicy)
 
-
     def get_policy(
         self,
-        policy_id: str
+        policy_id: str,
     ) -> BackupPolicy:
         """
         Get a backup policy using it's ID.
@@ -301,12 +307,11 @@ class Backups(Service):
         ----------
         policy_id : str
             Policy ID. Choose a custom ID`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        
         Returns
         -------
         BackupPolicy
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -317,17 +322,19 @@ class Backups(Service):
         api_params = {}
         if policy_id is None:
             raise AppwriteException('Missing required parameter: "policy_id"')
-
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=BackupPolicy)
-
 
     def update_policy(
         self,
@@ -335,7 +342,7 @@ class Backups(Service):
         name: Optional[str] = None,
         retention: Optional[float] = None,
         schedule: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> BackupPolicy:
         """
         Update an existing policy using it's ID.
@@ -352,12 +359,11 @@ class Backups(Service):
             Cron expression
         enabled : Optional[bool]
             Is Backup enabled? When set to 'disabled', No backup will be taken
-        
         Returns
         -------
         BackupPolicy
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -368,9 +374,7 @@ class Backups(Service):
         api_params = {}
         if policy_id is None:
             raise AppwriteException('Missing required parameter: "policy_id"')
-
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if retention is not None:
@@ -380,18 +384,22 @@ class Backups(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=BackupPolicy)
 
-
     def delete_policy(
         self,
-        policy_id: str
+        policy_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a policy using it's ID.
@@ -400,12 +408,11 @@ class Backups(Service):
         ----------
         policy_id : str
             Policy ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -416,37 +423,38 @@ class Backups(Service):
         api_params = {}
         if policy_id is None:
             raise AppwriteException('Missing required parameter: "policy_id"')
-
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def create_restoration(
         self,
         archive_id: str,
         services: List[BackupServices],
         new_resource_id: Optional[str] = None,
-        new_resource_name: Optional[str] = None
+        new_resource_name: Optional[str] = None,
     ) -> BackupRestoration:
         """
         Create and trigger a new restoration for a backup on a project.
-        
+
         For a backup of one database, the restoration resolves its destination before it is queued. When `newResourceId` is omitted, the archived database is restored in place and its own ID is returned in `options`. Pass a different `newResourceId` to restore alongside it as a new database instead.
-        
+
         The restoration migration records the archived database in `resourceId` and `resourceType`, and the resolved database in `destinationResourceId` and `destinationResourceType`. Database types are stored canonically as `database`, `documentsdb`, or `vectorsdb`. Project-wide restorations leave these fields empty because they do not have a single source or destination database.
-        
+
         To list every migration related to one database, use its canonical type in a nested `OR(AND(...), AND(...), AND(...))` across the root, parent, and destination relation pairs: `(resourceType, resourceId)`, `(parentResourceType, parentResourceId)`, and `(destinationResourceType, destinationResourceId)`. Legacy and TablesDB databases use `database`; the operational `resourceType` of a table migration is not rewritten to `tablesdb`.
-        
+
         When restoring a DocumentsDB or VectorsDB database from a dedicated source, the restore provisions a fresh dedicated backing database at the source database's own specification and lands the data there. An in-place restore swaps the database onto that backing only once the restore has succeeded, and retires the backing it displaced only once that swap is confirmed, so the source keeps serving its own data until the restored data is in place and any failure leaves it untouched. A serverless source has no dedicated backing to clone and restores onto the archived database instead.
-        
 
         Parameters
         ----------
@@ -458,12 +466,11 @@ class Backups(Service):
             Destination resource ID. Omit to restore the archived resource in place, or pass a different ID to restore alongside it as a new resource. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         new_resource_name : Optional[str]
             Database name. Max length: 128 chars.
-        
         Returns
         -------
         BackupRestoration
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -474,11 +481,8 @@ class Backups(Service):
         api_params = {}
         if archive_id is None:
             raise AppwriteException('Missing required parameter: "archive_id"')
-
         if services is None:
             raise AppwriteException('Missing required parameter: "services"')
-
-
         api_params['archiveId'] = self._normalize_value(archive_id)
         api_params['services'] = self._normalize_value(services)
         if new_resource_id is not None:
@@ -486,18 +490,22 @@ class Backups(Service):
         if new_resource_name is not None:
             api_params['newResourceName'] = self._normalize_value(new_resource_name)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=BackupRestoration)
 
-
     def list_restorations(
         self,
-        queries: Optional[List[str]] = None
+        queries: Optional[List[str]] = None,
     ) -> BackupRestorationList:
         """
         List all backup restorations for a project.
@@ -506,12 +514,11 @@ class Backups(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-        
         Returns
         -------
         BackupRestorationList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -520,21 +527,24 @@ class Backups(Service):
 
         api_path = '/backups/restorations'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=BackupRestorationList)
 
-
     def get_restoration(
         self,
-        restoration_id: str
+        restoration_id: str,
     ) -> BackupRestoration:
         """
         Get the current status of a backup restoration.
@@ -543,12 +553,11 @@ class Backups(Service):
         ----------
         restoration_id : str
             Restoration ID. Choose a custom ID`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        
         Returns
         -------
         BackupRestoration
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -559,14 +568,16 @@ class Backups(Service):
         api_params = {}
         if restoration_id is None:
             raise AppwriteException('Missing required parameter: "restoration_id"')
-
         api_path = api_path.replace('{restorationId}', str(self._normalize_value(restoration_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=BackupRestoration)
-

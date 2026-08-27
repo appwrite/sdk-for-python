@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .collection import Collection
 
+
 class CollectionList(AppwriteModel):
     """
     Collections List
@@ -15,5 +16,6 @@ class CollectionList(AppwriteModel):
     collections : List[Collection]
         List of collections.
     """
+
     total: float = Field(..., alias='total')
     collections: List[Collection] = Field(..., alias='collections')

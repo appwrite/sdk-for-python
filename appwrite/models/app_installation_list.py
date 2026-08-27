@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .app_installation import AppInstallation
 
+
 class AppInstallationList(AppwriteModel):
     """
     App installations list
@@ -15,5 +16,6 @@ class AppInstallationList(AppwriteModel):
     installations : List[AppInstallation]
         List of installations.
     """
+
     total: float = Field(..., alias='total')
     installations: List[AppInstallation] = Field(..., alias='installations')

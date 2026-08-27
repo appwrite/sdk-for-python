@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .topic import Topic
 
+
 class TopicList(AppwriteModel):
     """
     Topic list
@@ -15,5 +16,6 @@ class TopicList(AppwriteModel):
     topics : List[Topic]
         List of topics.
     """
+
     total: float = Field(..., alias='total')
     topics: List[Topic] = Field(..., alias='topics')

@@ -13,11 +13,11 @@ tables_db = TablesDB(client)
 result: ColumnInteger = tables_db.create_integer_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
-    min = None, # optional
-    max = None, # optional
-    default = None, # optional
+    min = 0, # optional
+    max = 100, # optional
+    default = 10, # optional
     array = False # optional
 )
 

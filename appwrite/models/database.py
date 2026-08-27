@@ -7,6 +7,7 @@ from ..enums.database_status import DatabaseStatus
 from .backup_policy import BackupPolicy
 from .backup_archive import BackupArchive
 
+
 class Database(AppwriteModel):
     """
     Database
@@ -33,11 +34,18 @@ class Database(AppwriteModel):
         Compute specification identifier of the dedicated backing, e.g. s-2vcpu-2gb. Null when the database has no dedicated backing.
     replicas : Optional[float]
         Number of secondary high availability replicas, excluding the primary. Null when backing configuration is unavailable.
+    error : Optional[str]
+        Error message when the dedicated backing failed. Null when the database has no dedicated backing or has not failed.
+    containerstatus : Optional[str]
+        Container status of the dedicated backing: active or inactive. Null when the database has no dedicated backing or the runtime has not reported one.
+    lifecyclestate : Optional[str]
+        Idle-lifecycle state of the dedicated backing: active, warm, cold, or hibernated. Null when the database has no dedicated backing or the runtime has not reported one.
     policies : Optional[List[BackupPolicy]]
         Database backup policies.
     archives : Optional[List[BackupArchive]]
         Database backup archives.
     """
+
     id: str = Field(..., alias='$id')
     name: str = Field(..., alias='name')
     createdat: str = Field(..., alias='$createdAt')
@@ -48,5 +56,8 @@ class Database(AppwriteModel):
     engine: Optional[str] = Field(default=None, alias='engine')
     specification: Optional[str] = Field(default=None, alias='specification')
     replicas: Optional[float] = Field(default=None, alias='replicas')
+    error: Optional[str] = Field(default=None, alias='error')
+    containerstatus: Optional[str] = Field(default=None, alias='containerStatus')
+    lifecyclestate: Optional[str] = Field(default=None, alias='lifecycleState')
     policies: Optional[List[BackupPolicy]] = Field(default=None, alias='policies')
     archives: Optional[List[BackupArchive]] = Field(default=None, alias='archives')

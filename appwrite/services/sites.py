@@ -7,6 +7,7 @@ from ..models.site_list import SiteList
 from ..enums.framework import Framework
 from ..enums.build_runtime import BuildRuntime
 from ..enums.adapter import Adapter
+from ..enums.project_key_scopes import ProjectKeyScopes
 from ..models.site import Site
 from ..models.framework_list import FrameworkList
 from ..models.specification_list import SpecificationList
@@ -21,6 +22,7 @@ from ..models.execution import Execution
 from ..models.variable_list import VariableList
 from ..models.variable import Variable
 
+
 class Sites(Service):
 
     def __init__(self, client) -> None:
@@ -30,7 +32,7 @@ class Sites(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> SiteList:
         """
         Get a list of all the project's sites. You can use the query params to filter your results.
@@ -43,12 +45,11 @@ class Sites(Service):
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         SiteList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -57,7 +58,6 @@ class Sites(Service):
 
         api_path = '/sites'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -65,13 +65,17 @@ class Sites(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=SiteList)
-
 
     def create(
         self,
@@ -97,7 +101,8 @@ class Sites(Service):
         provider_paths: Optional[List[str]] = None,
         build_specification: Optional[str] = None,
         runtime_specification: Optional[str] = None,
-        deployment_retention: Optional[float] = None
+        deployment_retention: Optional[float] = None,
+        scopes: Optional[List[ProjectKeyScopes]] = None,
     ) -> Site:
         """
         Create a new site.
@@ -150,12 +155,13 @@ class Sites(Service):
             Runtime specification for the SSR executions.
         deployment_retention : Optional[float]
             Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
-        
+        scopes : Optional[List[ProjectKeyScopes]]
+            List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
         Returns
         -------
         Site
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -166,17 +172,12 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
         if framework is None:
             raise AppwriteException('Missing required parameter: "framework"')
-
         if build_runtime is None:
             raise AppwriteException('Missing required parameter: "build_runtime"')
-
-
         api_params['siteId'] = self._normalize_value(site_id)
         api_params['name'] = self._normalize_value(name)
         api_params['framework'] = self._normalize_value(framework)
@@ -219,27 +220,32 @@ class Sites(Service):
             api_params['runtimeSpecification'] = self._normalize_value(runtime_specification)
         if deployment_retention is not None:
             api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
+        if scopes is not None:
+            api_params['scopes'] = self._normalize_value(scopes)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Site)
 
-
     def list_frameworks(
-        self
+        self,
     ) -> FrameworkList:
         """
         Get a list of all frameworks that are currently available on the server instance.
-
         Returns
         -------
         FrameworkList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -249,17 +255,21 @@ class Sites(Service):
         api_path = '/sites/frameworks'
         api_params = {}
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=FrameworkList)
 
-
     def list_specifications(
         self,
-        type: Optional[str] = None
+        type: Optional[str] = None,
     ) -> SpecificationList:
         """
         List allowed site specifications for this instance.
@@ -268,12 +278,11 @@ class Sites(Service):
         ----------
         type : Optional[str]
             Specification type to list. Can be one of: runtimes, builds. Defaults to runtimes.
-        
         Returns
         -------
         SpecificationList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -282,21 +291,24 @@ class Sites(Service):
 
         api_path = '/sites/specifications'
         api_params = {}
-
         if type is not None:
             api_params['type'] = self._normalize_value(type)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=SpecificationList)
 
-
     def get(
         self,
-        site_id: str
+        site_id: str,
     ) -> Site:
         """
         Get a site by its unique ID.
@@ -305,12 +317,11 @@ class Sites(Service):
         ----------
         site_id : str
             Site ID.
-        
         Returns
         -------
         Site
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -321,17 +332,19 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Site)
-
 
     def update(
         self,
@@ -357,7 +370,8 @@ class Sites(Service):
         provider_paths: Optional[List[str]] = None,
         build_specification: Optional[str] = None,
         runtime_specification: Optional[str] = None,
-        deployment_retention: Optional[float] = None
+        deployment_retention: Optional[float] = None,
+        scopes: Optional[List[ProjectKeyScopes]] = None,
     ) -> Site:
         """
         Update site by its unique ID.
@@ -410,12 +424,13 @@ class Sites(Service):
             Runtime specification for the SSR executions.
         deployment_retention : Optional[float]
             Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
-        
+        scopes : Optional[List[ProjectKeyScopes]]
+            List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
         Returns
         -------
         Site
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -426,15 +441,11 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
         if framework is None:
             raise AppwriteException('Missing required parameter: "framework"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
-
         api_params['name'] = self._normalize_value(name)
         api_params['framework'] = self._normalize_value(framework)
         if enabled is not None:
@@ -477,19 +488,25 @@ class Sites(Service):
             api_params['runtimeSpecification'] = self._normalize_value(runtime_specification)
         if deployment_retention is not None:
             api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
+        if scopes is not None:
+            api_params['scopes'] = self._normalize_value(scopes)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Site)
 
-
     def delete(
         self,
-        site_id: str
+        site_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a site by its unique ID.
@@ -498,12 +515,11 @@ class Sites(Service):
         ----------
         site_id : str
             Site ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -514,22 +530,24 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def update_site_deployment(
         self,
         site_id: str,
-        deployment_id: str
+        deployment_id: str,
     ) -> Site:
         """
         Update the site active deployment. Use this endpoint to switch the code deployment that should be used when visitor opens your site.
@@ -540,12 +558,11 @@ class Sites(Service):
             Site ID.
         deployment_id : str
             Deployment ID.
-        
         Returns
         -------
         Site
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -556,29 +573,30 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
-
         api_params['deploymentId'] = self._normalize_value(deployment_id)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Site)
-
 
     def list_deployments(
         self,
         site_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> DeploymentList:
         """
         Get a list of all the site's code deployments. You can use the query params to filter your results.
@@ -593,12 +611,11 @@ class Sites(Service):
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         DeploymentList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -609,9 +626,7 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -619,13 +634,17 @@ class Sites(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=DeploymentList)
-
 
     def create_deployment(
         self,
@@ -635,7 +654,7 @@ class Sites(Service):
         build_command: Optional[str] = None,
         output_directory: Optional[str] = None,
         activate: Optional[bool] = None,
-        on_progress = None
+        on_progress=None,
     ) -> Deployment:
         """
         Create a new site code deployment. Use this endpoint to upload a new version of your site code. To activate your newly uploaded code, you'll need to update the site's deployment to use your new deployment ID.
@@ -654,14 +673,14 @@ class Sites(Service):
             Output Directory.
         activate : Optional[bool]
             Automatically activate the deployment when it is finished building.
-                on_progress : callable, optional
+        on_progress : callable, optional
             Optional callback for upload progress
-        
+
         Returns
         -------
         Deployment
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -672,12 +691,9 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
-
         if install_command is not None:
             api_params['installCommand'] = self._normalize_value(install_command)
         if build_command is not None:
@@ -686,26 +702,33 @@ class Sites(Service):
             api_params['outputDirectory'] = self._normalize_value(output_directory)
         api_params['code'] = self._normalize_value(code)
         if activate is not None:
-            api_params['activate'] = self._normalize_value(str(activate).lower() if type(activate) is bool else activate)
+            api_params['activate'] = self._normalize_value(
+                str(activate).lower() if type(activate) is bool else activate,
+            )
 
         param_name = 'code'
 
-
         upload_id = ''
 
-        response = self.client.chunked_upload(api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'multipart/form-data',
-            'accept': 'application/json',
-        }, api_params, param_name, on_progress, upload_id)
+        response = self.client.chunked_upload(
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'multipart/form-data',
+                'accept': 'application/json',
+            },
+            api_params,
+            param_name,
+            on_progress,
+            upload_id,
+        )
 
         return self._parse_response(response, model=Deployment)
-
 
     def create_duplicate_deployment(
         self,
         site_id: str,
-        deployment_id: str
+        deployment_id: str,
     ) -> Deployment:
         """
         Create a new build for an existing site deployment. This endpoint allows you to rebuild a deployment with the updated site configuration, including its commands and output directory if they have been modified. The build process will be queued and executed asynchronously. The original deployment's code will be preserved and used for the new build.
@@ -716,12 +739,11 @@ class Sites(Service):
             Site ID.
         deployment_id : str
             Deployment ID.
-        
         Returns
         -------
         Deployment
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -732,22 +754,23 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
-
         api_params['deploymentId'] = self._normalize_value(deployment_id)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Deployment)
-
 
     def create_template_deployment(
         self,
@@ -757,11 +780,11 @@ class Sites(Service):
         root_directory: str,
         type: TemplateReferenceType,
         reference: str,
-        activate: Optional[bool] = None
+        activate: Optional[bool] = None,
     ) -> Deployment:
         """
         Create a deployment based on a template.
-        
+
         Use this endpoint with combination of [listTemplates](https://appwrite.io/docs/products/sites/templates) to find the template details.
 
         Parameters
@@ -780,12 +803,11 @@ class Sites(Service):
             Reference value, can be a commit hash, branch name, or release tag
         activate : Optional[bool]
             Automatically activate the deployment when it is finished building.
-        
         Returns
         -------
         Deployment
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -796,24 +818,17 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if repository is None:
             raise AppwriteException('Missing required parameter: "repository"')
-
         if owner is None:
             raise AppwriteException('Missing required parameter: "owner"')
-
         if root_directory is None:
             raise AppwriteException('Missing required parameter: "root_directory"')
-
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
-
         if reference is None:
             raise AppwriteException('Missing required parameter: "reference"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
-
         api_params['repository'] = self._normalize_value(repository)
         api_params['owner'] = self._normalize_value(owner)
         api_params['rootDirectory'] = self._normalize_value(root_directory)
@@ -822,25 +837,29 @@ class Sites(Service):
         if activate is not None:
             api_params['activate'] = self._normalize_value(activate)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Deployment)
-
 
     def create_vcs_deployment(
         self,
         site_id: str,
         type: VCSReferenceType,
         reference: str,
-        activate: Optional[bool] = None
+        activate: Optional[bool] = None,
     ) -> Deployment:
         """
         Create a deployment when a site is connected to VCS.
-        
+
         This endpoint lets you create deployment from a branch, commit, or a tag.
 
         Parameters
@@ -853,12 +872,11 @@ class Sites(Service):
             VCS reference to create deployment from. Depending on type this can be: branch name, commit hash
         activate : Optional[bool]
             Automatically activate the deployment when it is finished building.
-        
         Returns
         -------
         Deployment
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -869,33 +887,33 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
-
         if reference is None:
             raise AppwriteException('Missing required parameter: "reference"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
-
         api_params['type'] = self._normalize_value(type)
         api_params['reference'] = self._normalize_value(reference)
         if activate is not None:
             api_params['activate'] = self._normalize_value(activate)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Deployment)
-
 
     def get_deployment(
         self,
         site_id: str,
-        deployment_id: str
+        deployment_id: str,
     ) -> Deployment:
         """
         Get a site deployment by its unique ID.
@@ -906,12 +924,11 @@ class Sites(Service):
             Site ID.
         deployment_id : str
             Deployment ID.
-        
         Returns
         -------
         Deployment
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -922,26 +939,27 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Deployment)
-
 
     def delete_deployment(
         self,
         site_id: str,
-        deployment_id: str
+        deployment_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a site deployment by its unique ID.
@@ -952,12 +970,11 @@ class Sites(Service):
             Site ID.
         deployment_id : str
             Deployment ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -968,28 +985,29 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def get_deployment_download(
         self,
         site_id: str,
         deployment_id: str,
         type: Optional[DeploymentDownloadType] = None,
-        token: Optional[str] = None
+        token: Optional[str] = None,
     ) -> bytes:
         """
         Get a site deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
@@ -1004,12 +1022,11 @@ class Sites(Service):
             Deployment file to download. Can be: "source", "output".
         token : Optional[str]
             Presigned source-download token for accessing this deployment without a session (jobs-service).
-        
         Returns
         -------
         bytes
             Response as bytes
-        
+
         Raises
         ------
         AppwriteException
@@ -1020,30 +1037,31 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
-
         if type is not None:
             api_params['type'] = self._normalize_value(type)
         if token is not None:
             api_params['token'] = self._normalize_value(token)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': '*/*',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': '*/*',
+            },
+            api_params,
+        )
 
         return response
-
 
     def update_deployment_status(
         self,
         site_id: str,
-        deployment_id: str
+        deployment_id: str,
     ) -> Deployment:
         """
         Cancel an ongoing site deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn't started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status 'ready') or failed. The response includes the final build status and details.
@@ -1054,12 +1072,11 @@ class Sites(Service):
             Site ID.
         deployment_id : str
             Deployment ID.
-        
         Returns
         -------
         Deployment
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1070,28 +1087,29 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
 
-
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Deployment)
-
 
     def list_logs(
         self,
         site_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> ExecutionList:
         """
         Get a list of all site logs. You can use the query params to filter your results.
@@ -1104,12 +1122,11 @@ class Sites(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: trigger, status, responseStatusCode, duration, requestMethod, requestPath, deploymentId
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         ExecutionList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1120,26 +1137,28 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ExecutionList)
-
 
     def get_log(
         self,
         site_id: str,
-        log_id: str
+        log_id: str,
     ) -> Execution:
         """
         Get a site request log by its unique ID.
@@ -1150,12 +1169,11 @@ class Sites(Service):
             Site ID.
         log_id : str
             Log ID.
-        
         Returns
         -------
         Execution
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1166,26 +1184,27 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if log_id is None:
             raise AppwriteException('Missing required parameter: "log_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{logId}', str(self._normalize_value(log_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Execution)
-
 
     def delete_log(
         self,
         site_id: str,
-        log_id: str
+        log_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a site log by its unique ID.
@@ -1196,12 +1215,11 @@ class Sites(Service):
             Site ID.
         log_id : str
             Log ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -1212,28 +1230,29 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if log_id is None:
             raise AppwriteException('Missing required parameter: "log_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{logId}', str(self._normalize_value(log_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def list_variables(
         self,
         site_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> VariableList:
         """
         Get a list of all variables of a specific site.
@@ -1246,12 +1265,11 @@ class Sites(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: key, resourceType, resourceId, secret
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         VariableList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1262,21 +1280,23 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=VariableList)
-
 
     def create_variable(
         self,
@@ -1284,7 +1304,7 @@ class Sites(Service):
         variable_id: str,
         key: str,
         value: str,
-        secret: Optional[bool] = None
+        secret: Optional[bool] = None,
     ) -> Variable:
         """
         Create a new site variable. These variables can be accessed during build and runtime (server-side rendering) as environment variables.
@@ -1296,17 +1316,16 @@ class Sites(Service):
         variable_id : str
             Variable ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         key : str
-            Variable key. Max length: 255 chars.
+            Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
         value : str
             Variable value. Max length: 8192 chars.
         secret : Optional[bool]
             Secret variables can be updated or deleted, but only sites can read them during build and runtime.
-        
         Returns
         -------
         Variable
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1317,37 +1336,36 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if variable_id is None:
             raise AppwriteException('Missing required parameter: "variable_id"')
-
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
-
         if value is None:
             raise AppwriteException('Missing required parameter: "value"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
-
         api_params['variableId'] = self._normalize_value(variable_id)
         api_params['key'] = self._normalize_value(key)
         api_params['value'] = self._normalize_value(value)
         if secret is not None:
             api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Variable)
-
 
     def get_variable(
         self,
         site_id: str,
-        variable_id: str
+        variable_id: str,
     ) -> Variable:
         """
         Get a variable by its unique ID.
@@ -1358,12 +1376,11 @@ class Sites(Service):
             Site unique ID.
         variable_id : str
             Variable unique ID.
-        
         Returns
         -------
         Variable
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1374,21 +1391,22 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if variable_id is None:
             raise AppwriteException('Missing required parameter: "variable_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Variable)
-
 
     def update_variable(
         self,
@@ -1396,7 +1414,7 @@ class Sites(Service):
         variable_id: str,
         key: Optional[str] = None,
         value: Optional[str] = None,
-        secret: Optional[bool] = None
+        secret: Optional[bool] = None,
     ) -> Variable:
         """
         Update variable by its unique ID.
@@ -1408,17 +1426,16 @@ class Sites(Service):
         variable_id : str
             Variable unique ID.
         key : Optional[str]
-            Variable key. Max length: 255 chars.
+            Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
         value : Optional[str]
             Variable value. Max length: 8192 chars.
         secret : Optional[bool]
             Secret variables can be updated or deleted, but only sites can read them during build and runtime.
-        
         Returns
         -------
         Variable
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1429,13 +1446,10 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if variable_id is None:
             raise AppwriteException('Missing required parameter: "variable_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
-
         if key is not None:
             api_params['key'] = self._normalize_value(key)
         if value is not None:
@@ -1443,19 +1457,23 @@ class Sites(Service):
         if secret is not None:
             api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Variable)
-
 
     def delete_variable(
         self,
         site_id: str,
-        variable_id: str
+        variable_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a variable by its unique ID.
@@ -1466,12 +1484,11 @@ class Sites(Service):
             Site unique ID.
         variable_id : str
             Variable unique ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -1482,18 +1499,19 @@ class Sites(Service):
         api_params = {}
         if site_id is None:
             raise AppwriteException('Missing required parameter: "site_id"')
-
         if variable_id is None:
             raise AppwriteException('Missing required parameter: "variable_id"')
-
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-

@@ -18,8 +18,8 @@ result: AttributeRelationship = databases.create_relationship_attribute(
     related_collection_id = '<RELATED_COLLECTION_ID>',
     type = RelationshipType.ONETOONE,
     two_way = False, # optional
-    key = '', # optional
-    two_way_key = '', # optional
+    key = '<KEY>', # optional
+    two_way_key = '<TWO_WAY_KEY>', # optional
     on_delete = RelationMutate.CASCADE # optional
 )
 

@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .provider import Provider
 
+
 class ProviderList(AppwriteModel):
     """
     Provider list
@@ -15,5 +16,6 @@ class ProviderList(AppwriteModel):
     providers : List[Provider]
         List of providers.
     """
+
     total: float = Field(..., alias='total')
     providers: List[Provider] = Field(..., alias='providers')

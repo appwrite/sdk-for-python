@@ -12,7 +12,7 @@ users = Users(client)
 
 result: Jwt = users.create_jwt(
     user_id = '<USER_ID>',
-    session_id = '<SESSION_ID>', # optional
+    session_id = 'recent()', # optional
     duration = 0 # optional
 )
 
