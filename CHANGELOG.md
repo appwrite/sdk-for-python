@@ -1,7 +1,11 @@
 # Change Log
 
-## 23.1.0rc1
+## 24.0.0rc1
 
+* Breaking: `Execution.functionId` is replaced by `resourceId` and `resourceType`, now that executions cover both functions and sites
+* Breaking: `AppInstallation.authorizationDetails` is now an array instead of an object
+* Breaking: removed `dedicatedDatabases.execute` from `ProjectKeyScopes`
+* Breaking: `EmbeddingModel` no longer offers `embedding-gemma` or `bge-small`
 * Added: `documentsDB`, `vectorsDB`, `mysql`, `postgresql`, and `mongo` services, no longer hidden from server SDKs
 * Added: `DocumentsDBIndexType` and `VectorsDBIndexType` enums
 * Added: dedicated database models for branches, backups, restorations, poolers, PITR windows, extensions, and executions
