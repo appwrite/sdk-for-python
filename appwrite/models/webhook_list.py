@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .webhook import Webhook
 
+
 class WebhookList(AppwriteModel):
     """
     Webhooks List
@@ -15,5 +16,6 @@ class WebhookList(AppwriteModel):
     webhooks : List[Webhook]
         List of webhooks.
     """
+
     total: float = Field(..., alias='total')
     webhooks: List[Webhook] = Field(..., alias='webhooks')

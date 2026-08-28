@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .database_migration import DatabaseMigration
 
+
 class DatabaseMigrationList(AppwriteModel):
     """
     Database Migrations List
@@ -15,5 +16,6 @@ class DatabaseMigrationList(AppwriteModel):
     migrations : List[DatabaseMigration]
         List of migrations.
     """
+
     total: float = Field(..., alias='total')
     migrations: List[DatabaseMigration] = Field(..., alias='migrations')

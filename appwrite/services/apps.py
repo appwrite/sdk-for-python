@@ -15,6 +15,7 @@ from ..models.app_secret_list import AppSecretList
 from ..models.app_secret_plaintext import AppSecretPlaintext
 from ..models.app_secret import AppSecret
 
+
 class Apps(Service):
 
     def __init__(self, client) -> None:
@@ -23,7 +24,7 @@ class Apps(Service):
     def list(
         self,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> AppsList:
         """
         List applications.
@@ -34,12 +35,11 @@ class Apps(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         AppsList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -48,19 +48,22 @@ class Apps(Service):
 
         api_path = '/apps'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=AppsList)
-
 
     def create(
         self,
@@ -82,7 +85,7 @@ class Apps(Service):
         enabled: Optional[bool] = None,
         type: Optional[str] = None,
         device_flow: Optional[bool] = None,
-        team_id: Optional[str] = None
+        team_id: Optional[str] = None,
     ) -> App:
         """
         Create a new application.
@@ -127,12 +130,11 @@ class Apps(Service):
             Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
         team_id : Optional[str]
             Team unique ID.
-        
         Returns
         -------
         App
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -143,14 +145,10 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
         if redirect_uris is None:
             raise AppwriteException('Missing required parameter: "redirect_uris"')
-
-
         api_params['appId'] = self._normalize_value(app_id)
         api_params['name'] = self._normalize_value(name)
         if description is not None:
@@ -187,26 +185,29 @@ class Apps(Service):
         if team_id is not None:
             api_params['teamId'] = self._normalize_value(team_id)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=App)
 
-
     def list_installation_scopes(
-        self
+        self,
     ) -> AppScopeList:
         """
         List scopes an application can request when installed on a team.
-
         Returns
         -------
         AppScopeList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -216,25 +217,28 @@ class Apps(Service):
         api_path = '/apps/scopes/installations'
         api_params = {}
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=AppScopeList)
 
-
     def list_o_auth2_scopes(
-        self
+        self,
     ) -> AppScopeList:
         """
         List scopes an application can request during the OAuth2 flow.
-
         Returns
         -------
         AppScopeList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -244,17 +248,21 @@ class Apps(Service):
         api_path = '/apps/scopes/oauth2'
         api_params = {}
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=AppScopeList)
 
-
     def get(
         self,
-        app_id: str
+        app_id: str,
     ) -> App:
         """
         Get an application by its unique ID.
@@ -263,12 +271,11 @@ class Apps(Service):
         ----------
         app_id : str
             Application unique ID.
-        
         Returns
         -------
         App
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -279,17 +286,19 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=App)
-
 
     def update(
         self,
@@ -312,7 +321,7 @@ class Apps(Service):
         type: Optional[str] = None,
         device_flow: Optional[bool] = None,
         installation_scopes: Optional[List[str]] = None,
-        installation_redirect_url: Optional[str] = None
+        installation_redirect_url: Optional[str] = None,
     ) -> App:
         """
         Update an application by its unique ID.
@@ -359,12 +368,11 @@ class Apps(Service):
             Scopes the application requests when installed on a team. Only scopes allowed by the project's OAuth2 server installation scopes configuration are accepted; use the list installation scopes endpoint to discover available values. Maximum of 100 scopes are allowed.
         installation_redirect_url : Optional[str]
             URL users are redirected to after creating or updating an installation of this application. Must be an https URL, an http loopback URL (localhost, 127.0.0.1, [::1]), or a private-use scheme URI, and must not contain a fragment. Leave empty for no redirect.
-        
         Returns
         -------
         App
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -375,12 +383,9 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-
         api_params['name'] = self._normalize_value(name)
         if description is not None:
             api_params['description'] = self._normalize_value(description)
@@ -419,18 +424,22 @@ class Apps(Service):
         if installation_redirect_url is not None:
             api_params['installationRedirectUrl'] = self._normalize_value(installation_redirect_url)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=App)
 
-
     def delete(
         self,
-        app_id: str
+        app_id: str,
     ) -> Dict[str, Any]:
         """
         Delete an application by its unique ID.
@@ -439,12 +448,11 @@ class Apps(Service):
         ----------
         app_id : str
             Application unique ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -455,24 +463,26 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def list_installations(
         self,
         app_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> AppInstallationList:
         """
         List installations of an application. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app.
@@ -485,12 +495,11 @@ class Apps(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         AppInstallationList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -501,26 +510,28 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=AppInstallationList)
-
 
     def get_installation(
         self,
         app_id: str,
-        installation_id: str
+        installation_id: str,
     ) -> AppInstallation:
         """
         Get an installation of an application by its unique ID. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app.
@@ -531,12 +542,11 @@ class Apps(Service):
             Application unique ID.
         installation_id : str
             Installation unique ID.
-        
         Returns
         -------
         AppInstallation
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -547,26 +557,27 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         if installation_id is None:
             raise AppwriteException('Missing required parameter: "installation_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=AppInstallation)
-
 
     def delete_installation(
         self,
         app_id: str,
-        installation_id: str
+        installation_id: str,
     ) -> Dict[str, Any]:
         """
         Delete an installation of an application by its unique ID. Requires a caller with update access to the app. Previously issued installation access tokens are revoked.
@@ -577,12 +588,11 @@ class Apps(Service):
             Application unique ID.
         installation_id : str
             Installation unique ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -593,27 +603,28 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         if installation_id is None:
             raise AppwriteException('Missing required parameter: "installation_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def create_installation_token(
         self,
         app_id: str,
-        installation_id: str
+        installation_id: str,
     ) -> Oauth2Token:
         """
         Create a token for an installation of an application. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app. The returned token carries the scopes and authorization details granted to the installation, and can be used as an `Authorization: Bearer` header everywhere OAuth2 access tokens are accepted. Multiple tokens can be active for the same installation at once; each token stays valid until it expires or the installation is updated or deleted.
@@ -624,12 +635,11 @@ class Apps(Service):
             Application unique ID.
         installation_id : str
             Installation unique ID.
-        
         Returns
         -------
         Oauth2Token
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -640,28 +650,29 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         if installation_id is None:
             raise AppwriteException('Missing required parameter: "installation_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
 
-
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Oauth2Token)
-
 
     def list_keys(
         self,
         app_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> AppKeyList:
         """
         List app keys for an application.
@@ -674,12 +685,11 @@ class Apps(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         AppKeyList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -690,25 +700,27 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=AppKeyList)
 
-
     def create_key(
         self,
-        app_id: str
+        app_id: str,
     ) -> AppKey:
         """
         Create a new app key for an application. App keys carry no scopes; send one in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header to list the application's installations and create installation access tokens.
@@ -717,12 +729,11 @@ class Apps(Service):
         ----------
         app_id : str
             Application unique ID.
-        
         Returns
         -------
         AppKey
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -733,23 +744,25 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
-
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=AppKey)
-
 
     def get_key(
         self,
         app_id: str,
-        key_id: str
+        key_id: str,
     ) -> AppKey:
         """
         Get an app key by its unique ID.
@@ -760,12 +773,11 @@ class Apps(Service):
             Application unique ID.
         key_id : str
             App key unique ID.
-        
         Returns
         -------
         AppKey
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -776,26 +788,27 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         if key_id is None:
             raise AppwriteException('Missing required parameter: "key_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=AppKey)
-
 
     def delete_key(
         self,
         app_id: str,
-        key_id: str
+        key_id: str,
     ) -> Dict[str, Any]:
         """
         Delete an app key by its unique ID.
@@ -806,12 +819,11 @@ class Apps(Service):
             Application unique ID.
         key_id : str
             App key unique ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -822,27 +834,28 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         if key_id is None:
             raise AppwriteException('Missing required parameter: "key_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def update_labels(
         self,
         app_id: str,
-        labels: List[str]
+        labels: List[str],
     ) -> App:
         """
         Update the labels of an application. Labels are read-only for clients; only a server SDK using a project API key can set them. Replaces the previous labels.
@@ -853,12 +866,11 @@ class Apps(Service):
             Application unique ID.
         labels : List[str]
             Array of application labels. Replaces the previous labels. Maximum of 1000 labels are allowed, each up to 36 alphanumeric characters long.
-        
         Returns
         -------
         App
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -869,28 +881,29 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         if labels is None:
             raise AppwriteException('Missing required parameter: "labels"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-
         api_params['labels'] = self._normalize_value(labels)
 
-        response = self.client.call('put', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=App)
-
 
     def list_secrets(
         self,
         app_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> AppSecretList:
         """
         List client secrets for an application.
@@ -903,12 +916,11 @@ class Apps(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         AppSecretList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -919,25 +931,27 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=AppSecretList)
 
-
     def create_secret(
         self,
-        app_id: str
+        app_id: str,
     ) -> AppSecretPlaintext:
         """
         Create a new client secret for an application.
@@ -946,12 +960,11 @@ class Apps(Service):
         ----------
         app_id : str
             Application unique ID.
-        
         Returns
         -------
         AppSecretPlaintext
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -962,23 +975,25 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
-
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=AppSecretPlaintext)
-
 
     def get_secret(
         self,
         app_id: str,
-        secret_id: str
+        secret_id: str,
     ) -> AppSecret:
         """
         Get an application client secret by its unique ID.
@@ -989,12 +1004,11 @@ class Apps(Service):
             Application unique ID.
         secret_id : str
             Secret unique ID.
-        
         Returns
         -------
         AppSecret
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1005,26 +1019,27 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         if secret_id is None:
             raise AppwriteException('Missing required parameter: "secret_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{secretId}', str(self._normalize_value(secret_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=AppSecret)
-
 
     def delete_secret(
         self,
         app_id: str,
-        secret_id: str
+        secret_id: str,
     ) -> Dict[str, Any]:
         """
         Delete an application client secret by its unique ID.
@@ -1035,12 +1050,11 @@ class Apps(Service):
             Application unique ID.
         secret_id : str
             Secret unique ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -1051,27 +1065,28 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         if secret_id is None:
             raise AppwriteException('Missing required parameter: "secret_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{secretId}', str(self._normalize_value(secret_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def update_team(
         self,
         app_id: str,
-        team_id: str
+        team_id: str,
     ) -> App:
         """
         Transfer an application to another team by its unique ID.
@@ -1082,12 +1097,11 @@ class Apps(Service):
             Application unique ID.
         team_id : str
             Team ID of the team to transfer application to.
-        
         Returns
         -------
         App
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1098,26 +1112,27 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-
         api_params['teamId'] = self._normalize_value(team_id)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=App)
 
-
     def delete_tokens(
         self,
-        app_id: str
+        app_id: str,
     ) -> Dict[str, Any]:
         """
         Revoke all tokens for an application by its unique ID.
@@ -1126,12 +1141,11 @@ class Apps(Service):
         ----------
         app_id : str
             Application unique ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -1142,15 +1156,17 @@ class Apps(Service):
         api_params = {}
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
-
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-

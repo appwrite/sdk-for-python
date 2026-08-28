@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class PolicySessionAlert(AppwriteModel):
     """
     Policy Session Alert
@@ -14,5 +15,6 @@ class PolicySessionAlert(AppwriteModel):
     enabled : bool
         Whether session alert policy is enabled.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')

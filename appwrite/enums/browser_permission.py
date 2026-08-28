@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class BrowserPermission(Enum):
     GEOLOCATION = "geolocation"
     CAMERA = "camera"

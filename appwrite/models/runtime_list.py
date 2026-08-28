@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .runtime import Runtime
 
+
 class RuntimeList(AppwriteModel):
     """
     Runtimes List
@@ -15,5 +16,6 @@ class RuntimeList(AppwriteModel):
     runtimes : List[Runtime]
         List of runtimes.
     """
+
     total: float = Field(..., alias='total')
     runtimes: List[Runtime] = Field(..., alias='runtimes')

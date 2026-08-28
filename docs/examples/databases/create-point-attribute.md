@@ -13,7 +13,7 @@ databases = Databases(client)
 result: AttributePoint = databases.create_point_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
     default = [1, 2] # optional
 )

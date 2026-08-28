@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Oauth2Consent(AppwriteModel):
     """
     OAuth2 Consent
@@ -30,6 +31,7 @@ class Oauth2Consent(AppwriteModel):
     expire : str
         Consent expiration time in ISO 8601 format. Empty when the consent has no token-bound expiry yet.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

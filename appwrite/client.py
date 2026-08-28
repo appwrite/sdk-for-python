@@ -10,19 +10,20 @@ from .input_file import InputFile
 from .exception import AppwriteException
 from .encoders.value_class_encoder import ValueClassEncoder
 
+
 class Client:
     def __init__(self):
-        self._chunk_size = 5*1024*1024
+        self._chunk_size = 5 * 1024 * 1024
         self._self_signed = False
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent' : f'AppwritePythonSDK/23.0.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
+            'user-agent': f'AppwritePythonSDK/24.0.0rc1 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '23.0.0',
-            'X-Appwrite-Response-Format' : '1.9.6',
+            'x-sdk-version': '24.0.0rc1',
+            'X-Appwrite-Response-Format': '1.9.6',
         }
         self._config = {}
 
@@ -174,7 +175,7 @@ class Client:
                 files=files,
                 headers=headers,
                 verify=(not self._self_signed),
-                allow_redirects=False if response_type == 'location' else True
+                allow_redirects=False if response_type == 'location' else True,
             )
 
             response.raise_for_status()
@@ -197,7 +198,9 @@ class Client:
             if response != None:
                 content_type = response.headers['Content-Type']
                 if content_type.startswith('application/json'):
-                    raise AppwriteException(response.json()['message'], response.status_code, response.json().get('type'), response.text)
+                    raise AppwriteException(
+                        response.json()['message'], response.status_code, response.json().get('type'), response.text
+                    )
                 else:
                     raise AppwriteException(response.text, response.status_code, None, response.text)
             else:
@@ -206,11 +209,11 @@ class Client:
     def chunked_upload(
         self,
         path,
-        headers = None,
-        params = None,
-        param_name = '',
-        on_progress = None,
-        upload_id = ''
+        headers=None,
+        params=None,
+        param_name='',
+        on_progress=None,
+        upload_id='',
     ):
         input_file = params[param_name]
 
@@ -227,21 +230,17 @@ class Client:
                     input_file.data = input.read()
 
             params[param_name] = input_file
-            return self.call(
-                'post',
-                path,
-                headers,
-                params
-            )
+            return self.call('post', path, headers, params)
 
         offset = 0
         counter = 0
 
-        try:
-            result = self.call('get', path + '/' + upload_id, headers)
-            counter = result['chunksUploaded']
-        except:
-            pass
+        if upload_id:
+            try:
+                result = self.call('get', path + '/' + upload_id, headers)
+                counter = result['chunksUploaded']
+            except:
+                pass
 
         if counter > 0:
             offset = counter * self._chunk_size
@@ -250,11 +249,13 @@ class Client:
         chunks = []
         while offset < size:
             end = min(offset + self._chunk_size, size)
-            chunks.append({
-                'index': counter,
-                'start': offset,
-                'end': end,
-            })
+            chunks.append(
+                {
+                    'index': counter,
+                    'start': offset,
+                    'end': end,
+                }
+            )
             offset = end
             counter = counter + 1
 
@@ -286,7 +287,7 @@ class Client:
             chunk_input = InputFile.from_bytes(
                 read_chunk(chunk['start'], chunk['end']),
                 input_file.filename,
-                getattr(input_file, 'mime_type', None)
+                getattr(input_file, 'mime_type', None),
             )
             chunk_params = {**params, param_name: chunk_input}
             chunk_headers = {**headers}
@@ -310,13 +311,15 @@ class Client:
         uploaded_size = chunks[0]['end']
 
         if on_progress is not None:
-            on_progress({
-                "$id": result.get("$id"),
-                "progress": uploaded_size / size * 100,
-                "sizeUploaded": uploaded_size,
-                "chunksTotal": total_chunks,
-                "chunksUploaded": completed_count,
-            })
+            on_progress(
+                {
+                    "$id": result.get("$id"),
+                    "progress": uploaded_size / size * 100,
+                    "sizeUploaded": uploaded_size,
+                    "chunksTotal": total_chunks,
+                    "chunksUploaded": completed_count,
+                }
+            )
 
         def upload_remaining_chunk(chunk):
             nonlocal completed_count, uploaded_size, last_result, final_result
@@ -328,13 +331,15 @@ class Client:
                 if is_upload_complete(chunk_result):
                     final_result = chunk_result
                 if on_progress is not None:
-                    on_progress({
-                        "$id": upload_id_header,
-                        "progress": uploaded_size / size * 100,
-                        "sizeUploaded": uploaded_size,
-                        "chunksTotal": total_chunks,
-                        "chunksUploaded": completed_count,
-                    })
+                    on_progress(
+                        {
+                            "$id": upload_id_header,
+                            "progress": uploaded_size / size * 100,
+                            "sizeUploaded": uploaded_size,
+                            "chunksTotal": total_chunks,
+                            "chunksUploaded": completed_count,
+                        }
+                    )
 
         with ThreadPoolExecutor(max_workers=8) as executor:
             futures = [executor.submit(upload_remaining_chunk, chunk) for chunk in chunks[1:]]
@@ -349,8 +354,8 @@ class Client:
 
         for key in data:
             value = data[key] if isinstance(data, dict) else key
-            finalKey = prefix + '[' + key +']' if prefix else key
-            finalKey = prefix + '[' + str(i) +']' if isinstance(data, list) else finalKey
+            finalKey = prefix + '[' + key + ']' if prefix else key
+            finalKey = prefix + '[' + str(i) + ']' if isinstance(data, list) else finalKey
             i += 1
 
             if isinstance(value, list) or isinstance(value, dict):

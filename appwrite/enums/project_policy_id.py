@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ProjectPolicyId(Enum):
     PASSWORD_DICTIONARY = "password-dictionary"
     PASSWORD_HISTORY = "password-history"

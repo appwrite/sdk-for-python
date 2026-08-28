@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .app_scope import AppScope
 
+
 class AppScopeList(AppwriteModel):
     """
     App scopes list
@@ -15,5 +16,6 @@ class AppScopeList(AppwriteModel):
     scopes : List[AppScope]
         List of scopes.
     """
+
     total: float = Field(..., alias='total')
     scopes: List[AppScope] = Field(..., alias='scopes')

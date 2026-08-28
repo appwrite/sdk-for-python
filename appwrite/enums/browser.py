@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Browser(Enum):
     AVANT_BROWSER = "aa"
     ANDROID_WEBVIEW_BETA = "an"

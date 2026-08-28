@@ -13,10 +13,10 @@ databases = Databases(client)
 result: AttributeDatetime = databases.update_datetime_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
     default = '2020-10-15T06:38:00.000+00:00',
-    new_key = '' # optional
+    new_key = '<NEW_KEY>' # optional
 )
 
 print(result.model_dump())

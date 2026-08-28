@@ -7,10 +7,12 @@ T = TypeVar('T')
 
 _PAYLOAD_ADAPTER = TypeAdapter(Dict[str, Any])
 
+
 class Preferences(AppwriteModel, Generic[T]):
     """
     Preferences
     """
+
     pass
 
     @classmethod

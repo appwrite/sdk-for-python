@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Oauth2DeviceAuthorization(AppwriteModel):
     """
     OAuth2 Device Authorization
@@ -22,6 +23,7 @@ class Oauth2DeviceAuthorization(AppwriteModel):
     interval : float
         Minimum polling interval for the token endpoint in seconds.
     """
+
     device_code: str = Field(..., alias='device_code')
     user_code: str = Field(..., alias='user_code')
     verification_uri: str = Field(..., alias='verification_uri')

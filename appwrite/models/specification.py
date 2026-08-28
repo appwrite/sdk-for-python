@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Specification(AppwriteModel):
     """
     Specification
@@ -18,6 +19,7 @@ class Specification(AppwriteModel):
     slug : str
         Size slug.
     """
+
     memory: float = Field(..., alias='memory')
     cpus: float = Field(..., alias='cpus')
     enabled: bool = Field(..., alias='enabled')

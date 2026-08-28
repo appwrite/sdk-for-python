@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class OAuth2Paypal(AppwriteModel):
     """
     OAuth2Paypal
@@ -18,6 +19,7 @@ class OAuth2Paypal(AppwriteModel):
     secretkey : str
         PayPal OAuth2 secret key.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')

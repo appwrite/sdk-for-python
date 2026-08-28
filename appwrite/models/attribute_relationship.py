@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.attribute_status import AttributeStatus
 
+
 class AttributeRelationship(AppwriteModel):
     """
     AttributeRelationship
@@ -39,6 +40,7 @@ class AttributeRelationship(AppwriteModel):
     side : str
         Whether this is the parent or child side of the relationship
     """
+
     key: str = Field(..., alias='key')
     type: str = Field(..., alias='type')
     status: AttributeStatus = Field(..., alias='status')

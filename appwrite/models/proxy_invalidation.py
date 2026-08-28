@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class ProxyInvalidation(AppwriteModel):
     """
     Invalidation
@@ -18,6 +19,7 @@ class ProxyInvalidation(AppwriteModel):
     status : str
         Invalidation status.
     """
+
     domain: str = Field(..., alias='domain')
     type: str = Field(..., alias='type')
     reference: str = Field(..., alias='reference')

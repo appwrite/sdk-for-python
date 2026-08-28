@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Log(AppwriteModel):
     """
     Log
@@ -54,6 +55,7 @@ class Log(AppwriteModel):
     countryname : str
         Country name.
     """
+
     event: str = Field(..., alias='event')
     userid: str = Field(..., alias='userId')
     useremail: str = Field(..., alias='userEmail')

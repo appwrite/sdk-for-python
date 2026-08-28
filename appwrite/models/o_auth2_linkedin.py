@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class OAuth2Linkedin(AppwriteModel):
     """
     OAuth2Linkedin
@@ -18,6 +19,7 @@ class OAuth2Linkedin(AppwriteModel):
     primaryclientsecret : str
         LinkedIn OAuth2 primary client secret.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')

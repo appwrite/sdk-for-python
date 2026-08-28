@@ -8,6 +8,7 @@ from .platform_android import PlatformAndroid
 from .platform_windows import PlatformWindows
 from .platform_linux import PlatformLinux
 
+
 class PlatformList(AppwriteModel):
     """
     Platforms List
@@ -19,5 +20,14 @@ class PlatformList(AppwriteModel):
     platforms : List[Union[PlatformWeb, PlatformApple, PlatformAndroid, PlatformWindows, PlatformLinux]]
         List of platforms.
     """
+
     total: float = Field(..., alias='total')
-    platforms: List[Union[PlatformWeb, PlatformApple, PlatformAndroid, PlatformWindows, PlatformLinux]] = Field(..., alias='platforms')
+    platforms: List[
+        Union[
+            PlatformWeb,
+            PlatformApple,
+            PlatformAndroid,
+            PlatformWindows,
+            PlatformLinux,
+        ]
+    ] = Field(..., alias='platforms')

@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class ResourceToken(AppwriteModel):
     """
     ResourceToken
@@ -24,6 +25,7 @@ class ResourceToken(AppwriteModel):
     accessedat : str
         Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     resourceid: str = Field(..., alias='resourceId')

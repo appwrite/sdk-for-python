@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.index_status import IndexStatus
 
+
 class Index(AppwriteModel):
     """
     Index
@@ -31,6 +32,7 @@ class Index(AppwriteModel):
     orders : Optional[List[Any]]
         Index orders.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

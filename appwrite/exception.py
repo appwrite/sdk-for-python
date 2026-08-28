@@ -1,5 +1,5 @@
 class AppwriteException(Exception):
-    def __init__(self, message, code = 0, type = None, response = None):
+    def __init__(self, message, code=0, type=None, response=None):
         self.message = message
         self.code = code
         self.type = type

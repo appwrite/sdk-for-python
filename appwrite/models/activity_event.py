@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class ActivityEvent(AppwriteModel):
     """
     ActivityEvent
@@ -68,6 +69,7 @@ class ActivityEvent(AppwriteModel):
     sdkversion : str
         Version of the SDK that triggered the event.
     """
+
     id: str = Field(..., alias='$id')
     actortype: str = Field(..., alias='actorType')
     actorid: str = Field(..., alias='actorId')

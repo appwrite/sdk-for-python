@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Webhook(AppwriteModel):
     """
     Webhook
@@ -36,6 +37,7 @@ class Webhook(AppwriteModel):
     attempts : float
         Number of consecutive failed webhook attempts.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

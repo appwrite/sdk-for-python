@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Flag(Enum):
     AFGHANISTAN = "af"
     ANGOLA = "ao"

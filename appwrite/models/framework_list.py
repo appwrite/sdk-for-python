@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .framework import Framework
 
+
 class FrameworkList(AppwriteModel):
     """
     Frameworks List
@@ -15,5 +16,6 @@ class FrameworkList(AppwriteModel):
     frameworks : List[Framework]
         List of frameworks.
     """
+
     total: float = Field(..., alias='total')
     frameworks: List[Framework] = Field(..., alias='frameworks')

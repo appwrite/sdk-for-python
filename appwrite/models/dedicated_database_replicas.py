@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .dedicated_database_member import DedicatedDatabaseMember
 
+
 class DedicatedDatabaseReplicas(AppwriteModel):
     """
     Replicas
@@ -27,6 +28,7 @@ class DedicatedDatabaseReplicas(AppwriteModel):
     members : List[DedicatedDatabaseMember]
         Per-pod statuses for the primary and every replica.
     """
+
     replicas: float = Field(..., alias='replicas')
     syncmode: str = Field(..., alias='syncMode')
     effectivesyncmode: Optional[str] = Field(default=None, alias='effectiveSyncMode')

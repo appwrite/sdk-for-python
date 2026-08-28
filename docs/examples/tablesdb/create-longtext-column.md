@@ -13,9 +13,9 @@ tables_db = TablesDB(client)
 result: ColumnLongtext = tables_db.create_longtext_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
-    default = '<DEFAULT>', # optional
+    default = 'Hello World', # optional
     array = False, # optional
     encrypt = False # optional
 )

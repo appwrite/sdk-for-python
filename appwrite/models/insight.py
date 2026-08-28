@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .insight_cta import InsightCTA
 
+
 class Insight(AppwriteModel):
     """
     Insight
@@ -45,6 +46,7 @@ class Insight(AppwriteModel):
     dismissedby : Optional[str]
         User ID that dismissed the insight. Empty when not dismissed.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

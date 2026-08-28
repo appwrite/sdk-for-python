@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .currency import Currency
 
+
 class CurrencyList(AppwriteModel):
     """
     Currencies List
@@ -15,5 +16,6 @@ class CurrencyList(AppwriteModel):
     currencies : List[Currency]
         List of currencies.
     """
+
     total: float = Field(..., alias='total')
     currencies: List[Currency] = Field(..., alias='currencies')

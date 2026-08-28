@@ -21,6 +21,7 @@ from .column_mediumtext import ColumnMediumtext
 from .column_longtext import ColumnLongtext
 from .column_string import ColumnString
 
+
 class ColumnList(AppwriteModel):
     """
     Columns List
@@ -32,5 +33,27 @@ class ColumnList(AppwriteModel):
     columns : List[Union[ColumnBoolean, ColumnBigint, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnPoint, ColumnLine, ColumnPolygon, ColumnVarchar, ColumnText, ColumnMediumtext, ColumnLongtext, ColumnString]]
         List of columns.
     """
+
     total: float = Field(..., alias='total')
-    columns: List[Union[ColumnBoolean, ColumnBigint, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnPoint, ColumnLine, ColumnPolygon, ColumnVarchar, ColumnText, ColumnMediumtext, ColumnLongtext, ColumnString]] = Field(..., alias='columns')
+    columns: List[
+        Union[
+            ColumnBoolean,
+            ColumnBigint,
+            ColumnInteger,
+            ColumnFloat,
+            ColumnEmail,
+            ColumnEnum,
+            ColumnUrl,
+            ColumnIp,
+            ColumnDatetime,
+            ColumnRelationship,
+            ColumnPoint,
+            ColumnLine,
+            ColumnPolygon,
+            ColumnVarchar,
+            ColumnText,
+            ColumnMediumtext,
+            ColumnLongtext,
+            ColumnString,
+        ]
+    ] = Field(..., alias='columns')

@@ -13,10 +13,10 @@ tables_db = TablesDB(client)
 result: ColumnIp = tables_db.update_ip_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
-    default = '',
-    new_key = '' # optional
+    default = '192.0.2.0',
+    new_key = '<NEW_KEY>' # optional
 )
 
 print(result.model_dump())

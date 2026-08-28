@@ -23,7 +23,7 @@ tables_db = TablesDB(client)
 result: Union[ColumnBoolean, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnString] = tables_db.get_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = ''
+    key = '<KEY>'
 )
 
 print(result.model_dump())

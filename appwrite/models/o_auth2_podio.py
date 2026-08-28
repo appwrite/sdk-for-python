@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class OAuth2Podio(AppwriteModel):
     """
     OAuth2Podio
@@ -18,6 +19,7 @@ class OAuth2Podio(AppwriteModel):
     clientsecret : str
         Podio OAuth2 client secret.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')

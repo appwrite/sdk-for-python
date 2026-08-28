@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.platform_type import PlatformType
 
+
 class PlatformAndroid(AppwriteModel):
     """
     Platform Android
@@ -23,6 +24,7 @@ class PlatformAndroid(AppwriteModel):
     applicationid : str
         Android application ID.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

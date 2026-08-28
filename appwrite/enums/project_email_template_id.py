@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ProjectEmailTemplateId(Enum):
     VERIFICATION = "verification"
     MAGICSESSION = "magicSession"

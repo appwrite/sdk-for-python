@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .function import Function
 
+
 class FunctionList(AppwriteModel):
     """
     Functions List
@@ -15,5 +16,6 @@ class FunctionList(AppwriteModel):
     functions : List[Function]
         List of functions.
     """
+
     total: float = Field(..., alias='total')
     functions: List[Function] = Field(..., alias='functions')

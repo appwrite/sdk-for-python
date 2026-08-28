@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .oauth2_organization import Oauth2Organization
 
+
 class Oauth2OrganizationList(AppwriteModel):
     """
     OAuth2 accessible organizations list
@@ -15,5 +16,6 @@ class Oauth2OrganizationList(AppwriteModel):
     organizations : List[Oauth2Organization]
         List of organizations.
     """
+
     total: float = Field(..., alias='total')
     organizations: List[Oauth2Organization] = Field(..., alias='organizations')

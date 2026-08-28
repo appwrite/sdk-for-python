@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class DedicatedDatabaseOperation(AppwriteModel):
     """
     Operation
@@ -18,7 +19,7 @@ class DedicatedDatabaseOperation(AppwriteModel):
     type : str
         Operation type, such as provision, update, restore, pausing, resuming, failover, backup-create or cross-region-enable.
     status : str
-        Operation status. Possible values: running (in progress), completed (finished successfully), failed (ended in an error).
+        Operation status. Possible values: queued (accepted and waiting to resume), running (in progress), completed (finished successfully), failed (ended in an error).
     attempts : float
         Number of times this operation has been attempted.
     requestedat : Optional[str]
@@ -32,6 +33,7 @@ class DedicatedDatabaseOperation(AppwriteModel):
     errormessage : str
         Failure message if the operation failed.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     databaseid: str = Field(..., alias='databaseId')

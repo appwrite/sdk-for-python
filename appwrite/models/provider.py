@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Provider(AppwriteModel):
     """
     Provider
@@ -28,6 +29,7 @@ class Provider(AppwriteModel):
     options : Optional[Dict[str, Any]]
         Provider options.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

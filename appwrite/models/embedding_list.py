@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .embedding import Embedding
 
+
 class EmbeddingList(AppwriteModel):
     """
     Embedding list
@@ -15,5 +16,6 @@ class EmbeddingList(AppwriteModel):
     embeddings : List[Embedding]
         List of embeddings.
     """
+
     total: float = Field(..., alias='total')
     embeddings: List[Embedding] = Field(..., alias='embeddings')

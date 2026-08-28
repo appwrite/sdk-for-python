@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Oauth2Grant(AppwriteModel):
     """
     OAuth2 Grant
@@ -34,6 +35,7 @@ class Oauth2Grant(AppwriteModel):
     expire : str
         Grant expiration time in ISO 8601 format.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

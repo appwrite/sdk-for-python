@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .country import Country
 
+
 class CountryList(AppwriteModel):
     """
     Countries List
@@ -15,5 +16,6 @@ class CountryList(AppwriteModel):
     countries : List[Country]
         List of countries.
     """
+
     total: float = Field(..., alias='total')
     countries: List[Country] = Field(..., alias='countries')

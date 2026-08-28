@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class AlgoArgon2(AppwriteModel):
     """
     AlgoArgon2
@@ -18,6 +19,7 @@ class AlgoArgon2(AppwriteModel):
     threads : float
         Number of threads used to compute hash.
     """
+
     type: str = Field(..., alias='type')
     memorycost: float = Field(..., alias='memoryCost')
     timecost: float = Field(..., alias='timeCost')

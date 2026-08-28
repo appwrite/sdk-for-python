@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .specification import Specification
 
+
 class SpecificationList(AppwriteModel):
     """
     Specifications List
@@ -15,5 +16,6 @@ class SpecificationList(AppwriteModel):
     specifications : List[Specification]
         List of specifications.
     """
+
     total: float = Field(..., alias='total')
     specifications: List[Specification] = Field(..., alias='specifications')

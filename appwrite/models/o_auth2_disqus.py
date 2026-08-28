@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class OAuth2Disqus(AppwriteModel):
     """
     OAuth2Disqus
@@ -18,6 +19,7 @@ class OAuth2Disqus(AppwriteModel):
     secretkey : str
         Disqus OAuth2 secret key.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     publickey: str = Field(..., alias='publicKey')

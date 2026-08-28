@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class PolicyPasswordStrength(AppwriteModel):
     """
     Policy Password Strength
@@ -22,6 +23,7 @@ class PolicyPasswordStrength(AppwriteModel):
     symbols : bool
         Whether passwords must include at least one symbol.
     """
+
     id: str = Field(..., alias='$id')
     min: float = Field(..., alias='min')
     uppercase: bool = Field(..., alias='uppercase')

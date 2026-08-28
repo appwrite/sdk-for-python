@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.attribute_status import AttributeStatus
 
+
 class AttributeLongtext(AppwriteModel):
     """
     AttributeLongtext
@@ -31,6 +32,7 @@ class AttributeLongtext(AppwriteModel):
     encrypt : Optional[bool]
         Defines whether this attribute is encrypted or not.
     """
+
     key: str = Field(..., alias='key')
     type: str = Field(..., alias='type')
     status: AttributeStatus = Field(..., alias='status')

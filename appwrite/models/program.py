@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Program(AppwriteModel):
     """
     Program
@@ -28,6 +29,7 @@ class Program(AppwriteModel):
     billingplanid : str
         Billing plan ID that this is program is associated with.
     """
+
     id: str = Field(..., alias='$id')
     title: str = Field(..., alias='title')
     description: str = Field(..., alias='description')

@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .bucket import Bucket
 
+
 class BucketList(AppwriteModel):
     """
     Buckets List
@@ -15,5 +16,6 @@ class BucketList(AppwriteModel):
     buckets : List[Bucket]
         List of buckets.
     """
+
     total: float = Field(..., alias='total')
     buckets: List[Bucket] = Field(..., alias='buckets')

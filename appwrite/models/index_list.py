@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .index import Index
 
+
 class IndexList(AppwriteModel):
     """
     Indexes List
@@ -15,5 +16,6 @@ class IndexList(AppwriteModel):
     indexes : List[Index]
         List of indexes.
     """
+
     total: float = Field(..., alias='total')
     indexes: List[Index] = Field(..., alias='indexes')

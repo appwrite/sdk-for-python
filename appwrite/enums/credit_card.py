@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class CreditCard(Enum):
     AMERICAN_EXPRESS = "amex"
     ARGENCARD = "argencard"

@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .oauth2_consent_token import Oauth2ConsentToken
 
+
 class Oauth2ConsentTokenList(AppwriteModel):
     """
     OAuth2 consent tokens list
@@ -15,5 +16,6 @@ class Oauth2ConsentTokenList(AppwriteModel):
     tokens : List[Oauth2ConsentToken]
         List of tokens.
     """
+
     total: float = Field(..., alias='total')
     tokens: List[Oauth2ConsentToken] = Field(..., alias='tokens')

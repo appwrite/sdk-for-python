@@ -13,7 +13,7 @@ tables_db = TablesDB(client)
 result: ColumnIndex = tables_db.get_index(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = ''
+    key = '<KEY>'
 )
 
 print(result.model_dump())

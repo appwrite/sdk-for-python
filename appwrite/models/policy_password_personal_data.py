@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class PolicyPasswordPersonalData(AppwriteModel):
     """
     Policy Password Personal Data
@@ -14,5 +15,6 @@ class PolicyPasswordPersonalData(AppwriteModel):
     enabled : bool
         Whether password personal data policy is enabled.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')

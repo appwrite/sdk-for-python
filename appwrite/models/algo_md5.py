@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class AlgoMd5(AppwriteModel):
     """
     AlgoMD5
@@ -12,4 +13,5 @@ class AlgoMd5(AppwriteModel):
     type : str
         Algo type.
     """
+
     type: str = Field(..., alias='type')

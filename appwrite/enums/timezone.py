@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Timezone(Enum):
     AFRICA_ABIDJAN = "africa/abidjan"
     AFRICA_ACCRA = "africa/accra"

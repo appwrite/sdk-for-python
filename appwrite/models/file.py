@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class File(AppwriteModel):
     """
     File
@@ -42,6 +43,7 @@ class File(AppwriteModel):
     compression : str
         Compression algorithm used for the file. Will be one of none, [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd).
     """
+
     id: str = Field(..., alias='$id')
     bucketid: str = Field(..., alias='bucketId')
     createdat: str = Field(..., alias='$createdAt')

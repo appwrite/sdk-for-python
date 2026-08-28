@@ -13,7 +13,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 proxy = Proxy(client)
 
 result: ProxyRule = proxy.create_redirect_rule(
-    domain = '',
+    domain = 'example.com',
     url = 'https://example.com',
     status_code = StatusCode.MOVEDPERMANENTLY,
     resource_id = '<RESOURCE_ID>',

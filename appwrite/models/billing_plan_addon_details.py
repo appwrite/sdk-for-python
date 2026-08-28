@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class BillingPlanAddonDetails(AppwriteModel):
     """
     Details
@@ -26,6 +27,7 @@ class BillingPlanAddonDetails(AppwriteModel):
     invoicedesc : str
         Description on invoice
     """
+
     supported: bool = Field(..., alias='supported')
     planincluded: float = Field(..., alias='planIncluded')
     limit: float = Field(..., alias='limit')

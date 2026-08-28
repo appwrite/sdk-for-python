@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Continent(AppwriteModel):
     """
     Continent
@@ -14,5 +15,6 @@ class Continent(AppwriteModel):
     code : str
         Continent two letter code.
     """
+
     name: str = Field(..., alias='name')
     code: str = Field(..., alias='code')

@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .session import Session
 
+
 class SessionList(AppwriteModel):
     """
     Sessions List
@@ -15,5 +16,6 @@ class SessionList(AppwriteModel):
     sessions : List[Session]
         List of sessions.
     """
+
     total: float = Field(..., alias='total')
     sessions: List[Session] = Field(..., alias='sessions')

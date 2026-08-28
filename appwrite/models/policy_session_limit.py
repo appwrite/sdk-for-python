@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class PolicySessionLimit(AppwriteModel):
     """
     Policy Session Limit
@@ -14,5 +15,6 @@ class PolicySessionLimit(AppwriteModel):
     total : float
         Maximum number of sessions allowed per user. A value of 0 means the policy is disabled.
     """
+
     id: str = Field(..., alias='$id')
     total: float = Field(..., alias='total')

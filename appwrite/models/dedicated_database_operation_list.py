@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .dedicated_database_operation import DedicatedDatabaseOperation
 
+
 class DedicatedDatabaseOperationList(AppwriteModel):
     """
     OperationList
@@ -15,5 +16,6 @@ class DedicatedDatabaseOperationList(AppwriteModel):
     operations : List[DedicatedDatabaseOperation]
         List of operations.
     """
+
     total: float = Field(..., alias='total')
     operations: List[DedicatedDatabaseOperation] = Field(..., alias='operations')

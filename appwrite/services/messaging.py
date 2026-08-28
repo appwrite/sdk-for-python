@@ -15,6 +15,7 @@ from ..models.topic import Topic
 from ..models.subscriber_list import SubscriberList
 from ..models.subscriber import Subscriber
 
+
 class Messaging(Service):
 
     def __init__(self, client) -> None:
@@ -24,7 +25,7 @@ class Messaging(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> MessageList:
         """
         Get a list of all messages from the current Appwrite project.
@@ -37,12 +38,11 @@ class Messaging(Service):
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         MessageList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -51,7 +51,6 @@ class Messaging(Service):
 
         api_path = '/messaging/messages'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -59,13 +58,17 @@ class Messaging(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=MessageList)
-
 
     def create_email(
         self,
@@ -80,7 +83,7 @@ class Messaging(Service):
         attachments: Optional[List[str]] = None,
         draft: Optional[bool] = None,
         html: Optional[bool] = None,
-        scheduled_at: Optional[str] = None
+        scheduled_at: Optional[str] = None,
     ) -> Message:
         """
         Create a new email message.
@@ -111,12 +114,11 @@ class Messaging(Service):
             Is content of type HTML
         scheduled_at : Optional[str]
             Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
-        
         Returns
         -------
         Message
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -127,14 +129,10 @@ class Messaging(Service):
         api_params = {}
         if message_id is None:
             raise AppwriteException('Missing required parameter: "message_id"')
-
         if subject is None:
             raise AppwriteException('Missing required parameter: "subject"')
-
         if content is None:
             raise AppwriteException('Missing required parameter: "content"')
-
-
         api_params['messageId'] = self._normalize_value(message_id)
         api_params['subject'] = self._normalize_value(subject)
         api_params['content'] = self._normalize_value(content)
@@ -157,14 +155,18 @@ class Messaging(Service):
         if scheduled_at is not None:
             api_params['scheduledAt'] = self._normalize_value(scheduled_at)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Message)
-
 
     def update_email(
         self,
@@ -179,11 +181,10 @@ class Messaging(Service):
         cc: Optional[List[str]] = None,
         bcc: Optional[List[str]] = None,
         scheduled_at: Optional[str] = None,
-        attachments: Optional[List[str]] = None
+        attachments: Optional[List[str]] = None,
     ) -> Message:
         """
         Update an email message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-        
 
         Parameters
         ----------
@@ -211,12 +212,11 @@ class Messaging(Service):
             Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
         attachments : Optional[List[str]]
             Array of compound ID strings of bucket IDs and file IDs to be attached to the email. They should be formatted as <BUCKET_ID>:<FILE_ID>.
-        
         Returns
         -------
         Message
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -227,9 +227,7 @@ class Messaging(Service):
         api_params = {}
         if message_id is None:
             raise AppwriteException('Missing required parameter: "message_id"')
-
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
-
         if topics is not None:
             api_params['topics'] = self._normalize_value(topics)
         if users is not None:
@@ -253,14 +251,18 @@ class Messaging(Service):
         if attachments is not None:
             api_params['attachments'] = self._normalize_value(attachments)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Message)
-
 
     def create_push(
         self,
@@ -282,7 +284,7 @@ class Messaging(Service):
         scheduled_at: Optional[str] = None,
         content_available: Optional[bool] = None,
         critical: Optional[bool] = None,
-        priority: Optional[MessagePriority] = None
+        priority: Optional[MessagePriority] = None,
     ) -> Message:
         """
         Create a new push notification.
@@ -327,12 +329,11 @@ class Messaging(Service):
             If set to true, the notification will be marked as critical. This requires the app to have the critical notification entitlement. Available only for iOS Platform.
         priority : Optional[MessagePriority]
             Set the notification priority. "normal" will consider device state and may not deliver notifications immediately. "high" will always attempt to immediately deliver the notification.
-        
         Returns
         -------
         Message
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -343,8 +344,6 @@ class Messaging(Service):
         api_params = {}
         if message_id is None:
             raise AppwriteException('Missing required parameter: "message_id"')
-
-
         api_params['messageId'] = self._normalize_value(message_id)
         if title is not None:
             api_params['title'] = self._normalize_value(title)
@@ -383,14 +382,18 @@ class Messaging(Service):
         if priority is not None:
             api_params['priority'] = self._normalize_value(priority)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Message)
-
 
     def update_push(
         self,
@@ -412,11 +415,10 @@ class Messaging(Service):
         scheduled_at: Optional[str] = None,
         content_available: Optional[bool] = None,
         critical: Optional[bool] = None,
-        priority: Optional[MessagePriority] = None
+        priority: Optional[MessagePriority] = None,
     ) -> Message:
         """
         Update a push notification by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-        
 
         Parameters
         ----------
@@ -458,12 +460,11 @@ class Messaging(Service):
             If set to true, the notification will be marked as critical. This requires the app to have the critical notification entitlement. Available only for iOS Platform.
         priority : Optional[MessagePriority]
             Set the notification priority. "normal" will consider device battery state and may send notifications later. "high" will always attempt to immediately deliver the notification.
-        
         Returns
         -------
         Message
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -474,9 +475,7 @@ class Messaging(Service):
         api_params = {}
         if message_id is None:
             raise AppwriteException('Missing required parameter: "message_id"')
-
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
-
         if topics is not None:
             api_params['topics'] = self._normalize_value(topics)
         if users is not None:
@@ -514,14 +513,18 @@ class Messaging(Service):
         if priority is not None:
             api_params['priority'] = self._normalize_value(priority)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Message)
-
 
     def create_sms(
         self,
@@ -531,7 +534,7 @@ class Messaging(Service):
         users: Optional[List[str]] = None,
         targets: Optional[List[str]] = None,
         draft: Optional[bool] = None,
-        scheduled_at: Optional[str] = None
+        scheduled_at: Optional[str] = None,
     ) -> Message:
         """
         Create a new SMS message.
@@ -552,12 +555,11 @@ class Messaging(Service):
             Is message a draft
         scheduled_at : Optional[str]
             Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
-        
         Returns
         -------
         Message
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -568,11 +570,8 @@ class Messaging(Service):
         api_params = {}
         if message_id is None:
             raise AppwriteException('Missing required parameter: "message_id"')
-
         if content is None:
             raise AppwriteException('Missing required parameter: "content"')
-
-
         api_params['messageId'] = self._normalize_value(message_id)
         api_params['content'] = self._normalize_value(content)
         if topics is not None:
@@ -586,14 +585,18 @@ class Messaging(Service):
         if scheduled_at is not None:
             api_params['scheduledAt'] = self._normalize_value(scheduled_at)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Message)
-
 
     def update_sms(
         self,
@@ -603,11 +606,10 @@ class Messaging(Service):
         targets: Optional[List[str]] = None,
         content: Optional[str] = None,
         draft: Optional[bool] = None,
-        scheduled_at: Optional[str] = None
+        scheduled_at: Optional[str] = None,
     ) -> Message:
         """
         Update an SMS message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-        
 
         Parameters
         ----------
@@ -625,12 +627,11 @@ class Messaging(Service):
             Is message a draft
         scheduled_at : Optional[str]
             Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
-        
         Returns
         -------
         Message
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -641,9 +642,7 @@ class Messaging(Service):
         api_params = {}
         if message_id is None:
             raise AppwriteException('Missing required parameter: "message_id"')
-
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
-
         if topics is not None:
             api_params['topics'] = self._normalize_value(topics)
         if users is not None:
@@ -657,33 +656,35 @@ class Messaging(Service):
         if scheduled_at is not None:
             api_params['scheduledAt'] = self._normalize_value(scheduled_at)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Message)
 
-
     def get_message(
         self,
-        message_id: str
+        message_id: str,
     ) -> Message:
         """
         Get a message by its unique ID.
-        
 
         Parameters
         ----------
         message_id : str
             Message ID.
-        
         Returns
         -------
         Message
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -694,21 +695,23 @@ class Messaging(Service):
         api_params = {}
         if message_id is None:
             raise AppwriteException('Missing required parameter: "message_id"')
-
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Message)
 
-
     def delete(
         self,
-        message_id: str
+        message_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a message. If the message is not a draft or scheduled, but has been sent, this will not recall the message.
@@ -717,12 +720,11 @@ class Messaging(Service):
         ----------
         message_id : str
             Message ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -733,23 +735,25 @@ class Messaging(Service):
         api_params = {}
         if message_id is None:
             raise AppwriteException('Missing required parameter: "message_id"')
-
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def list_targets(
         self,
         message_id: str,
         queries: Optional[List[str]] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> TargetList:
         """
         Get a list of the targets associated with a message.
@@ -762,12 +766,11 @@ class Messaging(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, providerId, identifier, providerType
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         TargetList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -778,27 +781,29 @@ class Messaging(Service):
         api_params = {}
         if message_id is None:
             raise AppwriteException('Missing required parameter: "message_id"')
-
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=TargetList)
-
 
     def list_providers(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> ProviderList:
         """
         Get a list of all providers from the current Appwrite project.
@@ -811,12 +816,11 @@ class Messaging(Service):
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         ProviderList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -825,7 +829,6 @@ class Messaging(Service):
 
         api_path = '/messaging/providers'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -833,13 +836,17 @@ class Messaging(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=ProviderList)
-
 
     def create_apns_provider(
         self,
@@ -850,7 +857,7 @@ class Messaging(Service):
         team_id: Optional[str] = None,
         bundle_id: Optional[str] = None,
         sandbox: Optional[bool] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new Apple Push Notification service provider.
@@ -873,12 +880,11 @@ class Messaging(Service):
             Use APNS sandbox environment.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -889,11 +895,8 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         if auth_key is not None:
@@ -909,14 +912,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_apns_provider(
         self,
@@ -927,7 +934,7 @@ class Messaging(Service):
         auth_key_id: Optional[str] = None,
         team_id: Optional[str] = None,
         bundle_id: Optional[str] = None,
-        sandbox: Optional[bool] = None
+        sandbox: Optional[bool] = None,
     ) -> Provider:
         """
         Update a Apple Push Notification service provider by its unique ID.
@@ -950,12 +957,11 @@ class Messaging(Service):
             APNS bundle ID.
         sandbox : Optional[bool]
             Use APNS sandbox environment.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -966,9 +972,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -984,21 +988,25 @@ class Messaging(Service):
         if sandbox is not None:
             api_params['sandbox'] = self._normalize_value(sandbox)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def create_fcm_provider(
         self,
         provider_id: str,
         name: str,
         service_account_json: Optional[Dict[str, Any]] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new Firebase Cloud Messaging provider.
@@ -1013,12 +1021,11 @@ class Messaging(Service):
             FCM service account JSON.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1029,11 +1036,8 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         if service_account_json is not None:
@@ -1041,21 +1045,25 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_fcm_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
         enabled: Optional[bool] = None,
-        service_account_json: Optional[Dict[str, Any]] = None
+        service_account_json: Optional[Dict[str, Any]] = None,
     ) -> Provider:
         """
         Update a Firebase Cloud Messaging provider by its unique ID.
@@ -1070,12 +1078,11 @@ class Messaging(Service):
             Set as enabled.
         service_account_json : Optional[Dict[str, Any]]
             FCM service account JSON.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1086,9 +1093,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -1096,14 +1101,18 @@ class Messaging(Service):
         if service_account_json is not None:
             api_params['serviceAccountJSON'] = self._normalize_value(service_account_json)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def create_mailgun_provider(
         self,
@@ -1116,7 +1125,7 @@ class Messaging(Service):
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new Mailgun provider.
@@ -1143,12 +1152,11 @@ class Messaging(Service):
             Email set in the reply to field for the mail. Default value is sender email. Reply to email must have reply to name as well.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1159,11 +1167,8 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         if api_key is not None:
@@ -1183,14 +1188,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_mailgun_provider(
         self,
@@ -1203,7 +1212,7 @@ class Messaging(Service):
         from_name: Optional[str] = None,
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
-        reply_to_email: Optional[str] = None
+        reply_to_email: Optional[str] = None,
     ) -> Provider:
         """
         Update a Mailgun provider by its unique ID.
@@ -1230,12 +1239,11 @@ class Messaging(Service):
             Name set in the reply to field for the mail. Default value is sender name.
         reply_to_email : Optional[str]
             Email set in the reply to field for the mail. Default value is sender email.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1246,9 +1254,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if api_key is not None:
@@ -1268,14 +1274,18 @@ class Messaging(Service):
         if reply_to_email is not None:
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def create_msg91_provider(
         self,
@@ -1284,7 +1294,7 @@ class Messaging(Service):
         template_id: Optional[str] = None,
         sender_id: Optional[str] = None,
         auth_key: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new MSG91 provider.
@@ -1303,12 +1313,11 @@ class Messaging(Service):
             Msg91 auth key.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1319,11 +1328,8 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         if template_id is not None:
@@ -1335,14 +1341,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_msg91_provider(
         self,
@@ -1351,7 +1361,7 @@ class Messaging(Service):
         enabled: Optional[bool] = None,
         template_id: Optional[str] = None,
         sender_id: Optional[str] = None,
-        auth_key: Optional[str] = None
+        auth_key: Optional[str] = None,
     ) -> Provider:
         """
         Update a MSG91 provider by its unique ID.
@@ -1370,12 +1380,11 @@ class Messaging(Service):
             Msg91 sender ID.
         auth_key : Optional[str]
             Msg91 auth key.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1386,9 +1395,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -1400,14 +1407,18 @@ class Messaging(Service):
         if auth_key is not None:
             api_params['authKey'] = self._normalize_value(auth_key)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def create_resend_provider(
         self,
@@ -1418,7 +1429,7 @@ class Messaging(Service):
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new Resend provider.
@@ -1441,12 +1452,11 @@ class Messaging(Service):
             Email set in the reply to field for the mail. Default value is sender email.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1457,11 +1467,8 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         if api_key is not None:
@@ -1477,14 +1484,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_resend_provider(
         self,
@@ -1495,7 +1506,7 @@ class Messaging(Service):
         from_name: Optional[str] = None,
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
-        reply_to_email: Optional[str] = None
+        reply_to_email: Optional[str] = None,
     ) -> Provider:
         """
         Update a Resend provider by its unique ID.
@@ -1518,12 +1529,11 @@ class Messaging(Service):
             Name set in the Reply To field for the mail. Default value is Sender Name.
         reply_to_email : Optional[str]
             Email set in the Reply To field for the mail. Default value is Sender Email.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1534,9 +1544,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -1552,14 +1560,18 @@ class Messaging(Service):
         if reply_to_email is not None:
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def create_sendgrid_provider(
         self,
@@ -1570,7 +1582,7 @@ class Messaging(Service):
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new Sendgrid provider.
@@ -1593,12 +1605,11 @@ class Messaging(Service):
             Email set in the reply to field for the mail. Default value is sender email.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1609,11 +1620,8 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         if api_key is not None:
@@ -1629,14 +1637,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_sendgrid_provider(
         self,
@@ -1647,7 +1659,7 @@ class Messaging(Service):
         from_name: Optional[str] = None,
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
-        reply_to_email: Optional[str] = None
+        reply_to_email: Optional[str] = None,
     ) -> Provider:
         """
         Update a Sendgrid provider by its unique ID.
@@ -1670,12 +1682,11 @@ class Messaging(Service):
             Name set in the Reply To field for the mail. Default value is Sender Name.
         reply_to_email : Optional[str]
             Email set in the Reply To field for the mail. Default value is Sender Email.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1686,9 +1697,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -1704,14 +1713,18 @@ class Messaging(Service):
         if reply_to_email is not None:
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def create_ses_provider(
         self,
@@ -1724,7 +1737,7 @@ class Messaging(Service):
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new Amazon SES provider.
@@ -1751,12 +1764,11 @@ class Messaging(Service):
             Email set in the reply to field for the mail. Default value is sender email.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1767,11 +1779,8 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         if access_key is not None:
@@ -1791,14 +1800,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_ses_provider(
         self,
@@ -1811,7 +1824,7 @@ class Messaging(Service):
         from_name: Optional[str] = None,
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
-        reply_to_email: Optional[str] = None
+        reply_to_email: Optional[str] = None,
     ) -> Provider:
         """
         Update an Amazon SES provider by its unique ID.
@@ -1838,12 +1851,11 @@ class Messaging(Service):
             Name set in the Reply To field for the mail. Default value is Sender Name.
         reply_to_email : Optional[str]
             Email set in the Reply To field for the mail. Default value is Sender Email.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1854,9 +1866,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -1876,14 +1886,18 @@ class Messaging(Service):
         if reply_to_email is not None:
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def create_smtp_provider(
         self,
@@ -1900,7 +1914,7 @@ class Messaging(Service):
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new SMTP provider.
@@ -1935,12 +1949,11 @@ class Messaging(Service):
             Email set in the reply to field for the mail. Default value is sender email.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -1951,14 +1964,10 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
         if host is None:
             raise AppwriteException('Missing required parameter: "host"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         api_params['host'] = self._normalize_value(host)
@@ -1985,14 +1994,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_smtp_provider(
         self,
@@ -2009,7 +2022,7 @@ class Messaging(Service):
         from_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
         reply_to_email: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Update a SMTP provider by its unique ID.
@@ -2044,12 +2057,11 @@ class Messaging(Service):
             Email set in the Reply To field for the mail. Default value is Sender Email.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2060,9 +2072,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if host is not None:
@@ -2090,14 +2100,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def create_telesign_provider(
         self,
@@ -2106,7 +2120,7 @@ class Messaging(Service):
         xfrom: Optional[str] = None,
         customer_id: Optional[str] = None,
         api_key: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new Telesign provider.
@@ -2125,12 +2139,11 @@ class Messaging(Service):
             Telesign API key.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2141,11 +2154,8 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         if xfrom is not None:
@@ -2157,14 +2167,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_telesign_provider(
         self,
@@ -2173,7 +2187,7 @@ class Messaging(Service):
         enabled: Optional[bool] = None,
         customer_id: Optional[str] = None,
         api_key: Optional[str] = None,
-        xfrom: Optional[str] = None
+        xfrom: Optional[str] = None,
     ) -> Provider:
         """
         Update a Telesign provider by its unique ID.
@@ -2192,12 +2206,11 @@ class Messaging(Service):
             Telesign API key.
         xfrom : Optional[str]
             Sender number.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2208,9 +2221,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -2222,14 +2233,18 @@ class Messaging(Service):
         if xfrom is not None:
             api_params['from'] = self._normalize_value(xfrom)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def create_textmagic_provider(
         self,
@@ -2238,7 +2253,7 @@ class Messaging(Service):
         xfrom: Optional[str] = None,
         username: Optional[str] = None,
         api_key: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new Textmagic provider.
@@ -2257,12 +2272,11 @@ class Messaging(Service):
             Textmagic apiKey.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2273,11 +2287,8 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         if xfrom is not None:
@@ -2289,14 +2300,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_textmagic_provider(
         self,
@@ -2305,7 +2320,7 @@ class Messaging(Service):
         enabled: Optional[bool] = None,
         username: Optional[str] = None,
         api_key: Optional[str] = None,
-        xfrom: Optional[str] = None
+        xfrom: Optional[str] = None,
     ) -> Provider:
         """
         Update a Textmagic provider by its unique ID.
@@ -2324,12 +2339,11 @@ class Messaging(Service):
             Textmagic apiKey.
         xfrom : Optional[str]
             Sender number.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2340,9 +2354,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -2354,14 +2366,18 @@ class Messaging(Service):
         if xfrom is not None:
             api_params['from'] = self._normalize_value(xfrom)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def create_twilio_provider(
         self,
@@ -2370,7 +2386,7 @@ class Messaging(Service):
         xfrom: Optional[str] = None,
         account_sid: Optional[str] = None,
         auth_token: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new Twilio provider.
@@ -2389,12 +2405,11 @@ class Messaging(Service):
             Twilio authentication token.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2405,11 +2420,8 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         if xfrom is not None:
@@ -2421,14 +2433,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_twilio_provider(
         self,
@@ -2437,7 +2453,7 @@ class Messaging(Service):
         enabled: Optional[bool] = None,
         account_sid: Optional[str] = None,
         auth_token: Optional[str] = None,
-        xfrom: Optional[str] = None
+        xfrom: Optional[str] = None,
     ) -> Provider:
         """
         Update a Twilio provider by its unique ID.
@@ -2456,12 +2472,11 @@ class Messaging(Service):
             Twilio authentication token.
         xfrom : Optional[str]
             Sender number.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2472,9 +2487,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -2486,14 +2499,18 @@ class Messaging(Service):
         if xfrom is not None:
             api_params['from'] = self._normalize_value(xfrom)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def create_vonage_provider(
         self,
@@ -2502,7 +2519,7 @@ class Messaging(Service):
         xfrom: Optional[str] = None,
         api_key: Optional[str] = None,
         api_secret: Optional[str] = None,
-        enabled: Optional[bool] = None
+        enabled: Optional[bool] = None,
     ) -> Provider:
         """
         Create a new Vonage provider.
@@ -2521,12 +2538,11 @@ class Messaging(Service):
             Vonage API secret.
         enabled : Optional[bool]
             Set as enabled.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2537,11 +2553,8 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['providerId'] = self._normalize_value(provider_id)
         api_params['name'] = self._normalize_value(name)
         if xfrom is not None:
@@ -2553,14 +2566,18 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
-
 
     def update_vonage_provider(
         self,
@@ -2569,7 +2586,7 @@ class Messaging(Service):
         enabled: Optional[bool] = None,
         api_key: Optional[str] = None,
         api_secret: Optional[str] = None,
-        xfrom: Optional[str] = None
+        xfrom: Optional[str] = None,
     ) -> Provider:
         """
         Update a Vonage provider by its unique ID.
@@ -2588,12 +2605,11 @@ class Messaging(Service):
             Vonage API secret.
         xfrom : Optional[str]
             Sender number.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2604,9 +2620,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -2618,33 +2632,35 @@ class Messaging(Service):
         if xfrom is not None:
             api_params['from'] = self._normalize_value(xfrom)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
 
-
     def get_provider(
         self,
-        provider_id: str
+        provider_id: str,
     ) -> Provider:
         """
         Get a provider by its unique ID.
-        
 
         Parameters
         ----------
         provider_id : str
             Provider ID.
-        
         Returns
         -------
         Provider
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2655,21 +2671,23 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Provider)
 
-
     def delete_provider(
         self,
-        provider_id: str
+        provider_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a provider by its unique ID.
@@ -2678,12 +2696,11 @@ class Messaging(Service):
         ----------
         provider_id : str
             Provider ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -2694,23 +2711,25 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def list_topics(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> TopicList:
         """
         Get a list of all topics from the current Appwrite project.
@@ -2723,12 +2742,11 @@ class Messaging(Service):
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         TopicList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2737,7 +2755,6 @@ class Messaging(Service):
 
         api_path = '/messaging/topics'
         api_params = {}
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -2745,19 +2762,23 @@ class Messaging(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=TopicList)
-
 
     def create_topic(
         self,
         topic_id: str,
         name: str,
-        subscribe: Optional[List[str]] = None
+        subscribe: Optional[List[str]] = None,
     ) -> Topic:
         """
         Create a new topic.
@@ -2770,12 +2791,11 @@ class Messaging(Service):
             Topic Name.
         subscribe : Optional[List[str]]
             An array of role strings with subscribe permission. By default all users are granted with any subscribe permission. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
-        
         Returns
         -------
         Topic
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2786,43 +2806,42 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None:
             raise AppwriteException('Missing required parameter: "topic_id"')
-
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-
-
         api_params['topicId'] = self._normalize_value(topic_id)
         api_params['name'] = self._normalize_value(name)
         if subscribe is not None:
             api_params['subscribe'] = self._normalize_value(subscribe)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Topic)
 
-
     def get_topic(
         self,
-        topic_id: str
+        topic_id: str,
     ) -> Topic:
         """
         Get a topic by its unique ID.
-        
 
         Parameters
         ----------
         topic_id : str
             Topic ID.
-        
         Returns
         -------
         Topic
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2833,27 +2852,28 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None:
             raise AppwriteException('Missing required parameter: "topic_id"')
-
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Topic)
-
 
     def update_topic(
         self,
         topic_id: str,
         name: Optional[str] = None,
-        subscribe: Optional[List[str]] = None
+        subscribe: Optional[List[str]] = None,
     ) -> Topic:
         """
         Update a topic by its unique ID.
-        
 
         Parameters
         ----------
@@ -2863,12 +2883,11 @@ class Messaging(Service):
             Topic Name.
         subscribe : Optional[List[str]]
             An array of role strings with subscribe permission. By default all users are granted with any subscribe permission. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
-        
         Returns
         -------
         Topic
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2879,26 +2898,28 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None:
             raise AppwriteException('Missing required parameter: "topic_id"')
-
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
-
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if subscribe is not None:
             api_params['subscribe'] = self._normalize_value(subscribe)
 
-        response = self.client.call('patch', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Topic)
 
-
     def delete_topic(
         self,
-        topic_id: str
+        topic_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a topic by its unique ID.
@@ -2907,12 +2928,11 @@ class Messaging(Service):
         ----------
         topic_id : str
             Topic ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -2923,24 +2943,26 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None:
             raise AppwriteException('Missing required parameter: "topic_id"')
-
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-
 
     def list_subscribers(
         self,
         topic_id: str,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
-        total: Optional[bool] = None
+        total: Optional[bool] = None,
     ) -> SubscriberList:
         """
         Get a list of all subscribers from the current Appwrite project.
@@ -2955,12 +2977,11 @@ class Messaging(Service):
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
-        
         Returns
         -------
         SubscriberList
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -2971,9 +2992,7 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None:
             raise AppwriteException('Missing required parameter: "topic_id"')
-
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
-
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -2981,19 +3000,23 @@ class Messaging(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=SubscriberList)
-
 
     def create_subscriber(
         self,
         topic_id: str,
         subscriber_id: str,
-        target_id: str
+        target_id: str,
     ) -> Subscriber:
         """
         Create a new subscriber.
@@ -3006,12 +3029,11 @@ class Messaging(Service):
             Subscriber ID. Choose a custom Subscriber ID or a new Subscriber ID.
         target_id : str
             Target ID. The target ID to link to the specified Topic ID.
-        
         Returns
         -------
         Subscriber
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3022,35 +3044,34 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None:
             raise AppwriteException('Missing required parameter: "topic_id"')
-
         if subscriber_id is None:
             raise AppwriteException('Missing required parameter: "subscriber_id"')
-
         if target_id is None:
             raise AppwriteException('Missing required parameter: "target_id"')
-
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
-
         api_params['subscriberId'] = self._normalize_value(subscriber_id)
         api_params['targetId'] = self._normalize_value(target_id)
 
-        response = self.client.call('post', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Subscriber)
-
 
     def get_subscriber(
         self,
         topic_id: str,
-        subscriber_id: str
+        subscriber_id: str,
     ) -> Subscriber:
         """
         Get a subscriber by its unique ID.
-        
 
         Parameters
         ----------
@@ -3058,12 +3079,11 @@ class Messaging(Service):
             Topic ID. The topic ID subscribed to.
         subscriber_id : str
             Subscriber ID.
-        
         Returns
         -------
         Subscriber
             API response as a typed Pydantic model
-        
+
         Raises
         ------
         AppwriteException
@@ -3074,26 +3094,27 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None:
             raise AppwriteException('Missing required parameter: "topic_id"')
-
         if subscriber_id is None:
             raise AppwriteException('Missing required parameter: "subscriber_id"')
-
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         api_path = api_path.replace('{subscriberId}', str(self._normalize_value(subscriber_id)))
 
-
-        response = self.client.call('get', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'accept': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
 
         return self._parse_response(response, model=Subscriber)
-
 
     def delete_subscriber(
         self,
         topic_id: str,
-        subscriber_id: str
+        subscriber_id: str,
     ) -> Dict[str, Any]:
         """
         Delete a subscriber by its unique ID.
@@ -3104,12 +3125,11 @@ class Messaging(Service):
             Topic ID. The topic ID subscribed to.
         subscriber_id : str
             Subscriber ID.
-        
         Returns
         -------
         Dict[str, Any]
             API response as a dictionary
-        
+
         Raises
         ------
         AppwriteException
@@ -3120,18 +3140,19 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None:
             raise AppwriteException('Missing required parameter: "topic_id"')
-
         if subscriber_id is None:
             raise AppwriteException('Missing required parameter: "subscriber_id"')
-
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         api_path = api_path.replace('{subscriberId}', str(self._normalize_value(subscriber_id)))
 
-
-        response = self.client.call('delete', api_path, {
-            'X-Appwrite-Project': self.client.get_config('project'),
-            'content-type': 'application/json',
-        }, api_params)
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+            },
+            api_params,
+        )
 
         return response
-

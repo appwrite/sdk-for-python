@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class DeploymentStatus(Enum):
     WAITING = "waiting"
     PROCESSING = "processing"

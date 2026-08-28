@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .target import Target
 
+
 class TargetList(AppwriteModel):
     """
     Target list
@@ -15,5 +16,6 @@ class TargetList(AppwriteModel):
     targets : List[Target]
         List of targets.
     """
+
     total: float = Field(..., alias='total')
     targets: List[Target] = Field(..., alias='targets')

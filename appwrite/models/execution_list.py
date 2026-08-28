@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .execution import Execution
 
+
 class ExecutionList(AppwriteModel):
     """
     Executions List
@@ -15,5 +16,6 @@ class ExecutionList(AppwriteModel):
     executions : List[Execution]
         List of executions.
     """
+
     total: float = Field(..., alias='total')
     executions: List[Execution] = Field(..., alias='executions')

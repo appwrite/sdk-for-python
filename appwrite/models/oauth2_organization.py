@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Oauth2Organization(AppwriteModel):
     """
     OAuth2 Organization
@@ -12,4 +13,5 @@ class Oauth2Organization(AppwriteModel):
     id : str
         Organization ID.
     """
+
     id: str = Field(..., alias='$id')

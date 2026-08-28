@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class DevKey(AppwriteModel):
     """
     DevKey
@@ -26,6 +27,7 @@ class DevKey(AppwriteModel):
     sdks : List[Any]
         List of SDK user agents that used this key.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

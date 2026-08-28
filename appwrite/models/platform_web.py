@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.platform_type import PlatformType
 
+
 class PlatformWeb(AppwriteModel):
     """
     Platform Web
@@ -23,6 +24,7 @@ class PlatformWeb(AppwriteModel):
     hostname : str
         Web app hostname. Empty string for other platforms.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

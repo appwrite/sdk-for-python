@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.project_service_id import ProjectServiceId
 
+
 class ProjectService(AppwriteModel):
     """
     ProjectService
@@ -15,5 +16,6 @@ class ProjectService(AppwriteModel):
     enabled : bool
         Service status.
     """
+
     id: ProjectServiceId = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')

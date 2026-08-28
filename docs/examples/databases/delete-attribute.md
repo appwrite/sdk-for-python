@@ -12,6 +12,6 @@ databases = Databases(client)
 result = databases.delete_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    key = ''
+    key = '<KEY>'
 )
 ```

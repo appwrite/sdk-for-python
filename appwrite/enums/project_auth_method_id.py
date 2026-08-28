@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ProjectAuthMethodId(Enum):
     EMAIL_PASSWORD = "email-password"
     MAGIC_URL = "magic-url"

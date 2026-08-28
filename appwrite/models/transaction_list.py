@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from .transaction import Transaction
 
+
 class TransactionList(AppwriteModel):
     """
     Transaction List
@@ -15,5 +16,6 @@ class TransactionList(AppwriteModel):
     transactions : List[Transaction]
         List of transactions.
     """
+
     total: float = Field(..., alias='total')
     transactions: List[Transaction] = Field(..., alias='transactions')

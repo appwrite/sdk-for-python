@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class BillingPlanLimits(AppwriteModel):
     """
     PlanLimits
@@ -14,5 +15,6 @@ class BillingPlanLimits(AppwriteModel):
     dailycredits : Optional[float]
         Daily credits limit (if applicable)
     """
+
     credits: Optional[float] = Field(default=None, alias='credits')
     dailycredits: Optional[float] = Field(default=None, alias='dailyCredits')

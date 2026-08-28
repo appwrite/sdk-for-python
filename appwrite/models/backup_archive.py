@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class BackupArchive(AppwriteModel):
     """
     Archive
@@ -34,6 +35,7 @@ class BackupArchive(AppwriteModel):
     resourcetype : Optional[str]
         The resource type to backup. Set only if this archive should backup a single resource.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

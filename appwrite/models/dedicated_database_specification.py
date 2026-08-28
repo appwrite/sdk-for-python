@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class DedicatedDatabaseSpecification(AppwriteModel):
     """
     Specification
@@ -28,6 +29,7 @@ class DedicatedDatabaseSpecification(AppwriteModel):
     enabled : bool
         Whether the specification is available on the current plan.
     """
+
     slug: str = Field(..., alias='slug')
     name: str = Field(..., alias='name')
     price: float = Field(..., alias='price')

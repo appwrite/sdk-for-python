@@ -2,9 +2,11 @@ from typing import Any, Dict, List, Optional, Union, cast
 from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
+from ..enums.execution_resource_type import ExecutionResourceType
 from ..enums.execution_trigger import ExecutionTrigger
 from ..enums.execution_status import ExecutionStatus
 from .headers import Headers
+
 
 class Execution(AppwriteModel):
     """
@@ -20,14 +22,16 @@ class Execution(AppwriteModel):
         Execution update date in ISO 8601 format.
     permissions : List[Any]
         Execution roles.
-    functionid : str
-        Function ID.
+    resourceid : str
+        Function or site ID.
+    resourcetype : ExecutionResourceType
+        Execution resource type.
     deploymentid : str
-        Function&#039;s deployment ID used to create the execution.
+        Deployment ID used to create the execution.
     trigger : ExecutionTrigger
-        The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
+        The trigger that caused the resource to execute. Possible values can be: `http`, `schedule`, or `event`.
     status : ExecutionStatus
-        The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, `failed`, or `scheduled`.
+        The status of the resource execution. Possible values can be: `waiting`, `processing`, `completed`, `failed`, or `scheduled`.
     requestmethod : str
         HTTP request method type.
     requestpath : str
@@ -41,19 +45,21 @@ class Execution(AppwriteModel):
     responseheaders : List[Headers]
         HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
     logs : str
-        Function logs. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
+        Resource logs. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     errors : str
-        Function errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
+        Resource errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     duration : float
         Resource(function/site) execution duration in seconds.
     scheduledat : Optional[str]
         The scheduled time for execution. If left empty, execution will be queued immediately.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     permissions: List[Any] = Field(..., alias='$permissions')
-    functionid: str = Field(..., alias='functionId')
+    resourceid: str = Field(..., alias='resourceId')
+    resourcetype: ExecutionResourceType = Field(..., alias='resourceType')
     deploymentid: str = Field(..., alias='deploymentId')
     trigger: ExecutionTrigger = Field(..., alias='trigger')
     status: ExecutionStatus = Field(..., alias='status')

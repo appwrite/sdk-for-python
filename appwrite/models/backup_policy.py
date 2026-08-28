@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class BackupPolicy(AppwriteModel):
     """
     backup
@@ -34,6 +35,7 @@ class BackupPolicy(AppwriteModel):
     enabled : bool
         Is this policy enabled.
     """
+
     id: str = Field(..., alias='$id')
     name: str = Field(..., alias='name')
     createdat: str = Field(..., alias='$createdAt')

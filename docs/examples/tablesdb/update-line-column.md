@@ -13,10 +13,10 @@ tables_db = TablesDB(client)
 result: ColumnLine = tables_db.update_line_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
     default = [[1, 2], [3, 4], [5, 6]], # optional
-    new_key = '' # optional
+    new_key = '<NEW_KEY>' # optional
 )
 
 print(result.model_dump())

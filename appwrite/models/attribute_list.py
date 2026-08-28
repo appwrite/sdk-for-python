@@ -21,6 +21,7 @@ from .attribute_mediumtext import AttributeMediumtext
 from .attribute_longtext import AttributeLongtext
 from .attribute_string import AttributeString
 
+
 class AttributeList(AppwriteModel):
     """
     Attributes List
@@ -32,5 +33,27 @@ class AttributeList(AppwriteModel):
     attributes : List[Union[AttributeBoolean, AttributeBigint, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributePoint, AttributeLine, AttributePolygon, AttributeVarchar, AttributeText, AttributeMediumtext, AttributeLongtext, AttributeString]]
         List of attributes.
     """
+
     total: float = Field(..., alias='total')
-    attributes: List[Union[AttributeBoolean, AttributeBigint, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributePoint, AttributeLine, AttributePolygon, AttributeVarchar, AttributeText, AttributeMediumtext, AttributeLongtext, AttributeString]] = Field(..., alias='attributes')
+    attributes: List[
+        Union[
+            AttributeBoolean,
+            AttributeBigint,
+            AttributeInteger,
+            AttributeFloat,
+            AttributeEmail,
+            AttributeEnum,
+            AttributeUrl,
+            AttributeIp,
+            AttributeDatetime,
+            AttributeRelationship,
+            AttributePoint,
+            AttributeLine,
+            AttributePolygon,
+            AttributeVarchar,
+            AttributeText,
+            AttributeMediumtext,
+            AttributeLongtext,
+            AttributeString,
+        ]
+    ] = Field(..., alias='attributes')

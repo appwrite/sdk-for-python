@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Block(AppwriteModel):
     """
     Block
@@ -32,6 +33,7 @@ class Block(AppwriteModel):
     billingplan : str
         Billing plan of the organization that owns the project.
     """
+
     createdat: str = Field(..., alias='$createdAt')
     resourcetype: str = Field(..., alias='resourceType')
     resourceid: str = Field(..., alias='resourceId')

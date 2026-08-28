@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Runtime(AppwriteModel):
     """
     Runtime
@@ -26,6 +27,7 @@ class Runtime(AppwriteModel):
     supports : List[Any]
         List of supported architectures.
     """
+
     id: str = Field(..., alias='$id')
     key: str = Field(..., alias='key')
     name: str = Field(..., alias='name')

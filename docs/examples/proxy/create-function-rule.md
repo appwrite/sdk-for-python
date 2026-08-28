@@ -11,7 +11,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 proxy = Proxy(client)
 
 result: ProxyRule = proxy.create_function_rule(
-    domain = '',
+    domain = 'example.com',
     function_id = '<FUNCTION_ID>',
     branch = '<BRANCH>' # optional
 )

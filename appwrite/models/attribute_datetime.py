@@ -4,6 +4,7 @@ from pydantic import Field, PrivateAttr
 from .base_model import AppwriteModel
 from ..enums.attribute_status import AttributeStatus
 
+
 class AttributeDatetime(AppwriteModel):
     """
     AttributeDatetime
@@ -31,6 +32,7 @@ class AttributeDatetime(AppwriteModel):
     default : Optional[str]
         Default value for attribute when not provided. Only null is optional
     """
+
     key: str = Field(..., alias='key')
     type: str = Field(..., alias='type')
     status: AttributeStatus = Field(..., alias='status')

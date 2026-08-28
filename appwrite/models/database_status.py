@@ -6,6 +6,7 @@ from .database_status_connections import DatabaseStatusConnections
 from .database_status_replica import DatabaseStatusReplica
 from .database_status_volume import DatabaseStatusVolume
 
+
 class DatabaseStatus(AppwriteModel):
     """
     Status
@@ -41,6 +42,7 @@ class DatabaseStatus(AppwriteModel):
     volumes : List[DatabaseStatusVolume]
         Storage volume information.
     """
+
     health: str = Field(..., alias='health')
     ready: bool = Field(..., alias='ready')
     engine: str = Field(..., alias='engine')

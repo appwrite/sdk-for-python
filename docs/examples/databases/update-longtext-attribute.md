@@ -13,10 +13,10 @@ databases = Databases(client)
 result: AttributeLongtext = databases.update_longtext_attribute(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
-    default = '<DEFAULT>',
-    new_key = '' # optional
+    default = 'Hello World',
+    new_key = '<NEW_KEY>' # optional
 )
 
 print(result.model_dump())

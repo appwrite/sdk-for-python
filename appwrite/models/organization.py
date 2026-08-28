@@ -8,6 +8,7 @@ from .billing_limits import BillingLimits
 
 T = TypeVar('T')
 
+
 class Organization(AppwriteModel, Generic[T]):
     """
     Organization
@@ -85,6 +86,7 @@ class Organization(AppwriteModel, Generic[T]):
     projects : List[Any]
         Selected projects
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
@@ -126,7 +128,5 @@ class Organization(AppwriteModel, Generic[T]):
         """Create Organization instance with typed data."""
         instance = cls.model_validate(data)
         if 'prefs' in data and data['prefs'] is not None:
-            instance.prefs = Preferences.with_data(
-                data['prefs'], model_type
-            )
+            instance.prefs = Preferences.with_data(data['prefs'], model_type)
         return instance

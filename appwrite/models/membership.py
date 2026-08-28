@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class Membership(AppwriteModel):
     """
     Membership
@@ -40,6 +41,7 @@ class Membership(AppwriteModel):
     roles : List[Any]
         User list of roles
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class AppSecretPlaintext(AppwriteModel):
     """
     AppSecretPlaintext
@@ -28,6 +29,7 @@ class AppSecretPlaintext(AppwriteModel):
     lastaccessedat : Optional[str]
         Time the secret was last used for authentication in ISO 8601 format. Null if never used.
     """
+
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')

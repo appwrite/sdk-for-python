@@ -13,10 +13,10 @@ tables_db = TablesDB(client)
 result: ColumnLongtext = tables_db.update_longtext_column(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    key = '',
+    key = '<KEY>',
     required = False,
-    default = '<DEFAULT>',
-    new_key = '' # optional
+    default = 'Hello World',
+    new_key = '<NEW_KEY>' # optional
 )
 
 print(result.model_dump())

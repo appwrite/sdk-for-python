@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class AppScope(AppwriteModel):
     """
     AppScope
@@ -20,6 +21,7 @@ class AppScope(AppwriteModel):
     deprecated : bool
         Whether the scope is deprecated. Deprecated scopes can still be requested but should not be offered for new grants.
     """
+
     value: str = Field(..., alias='value')
     description: str = Field(..., alias='description')
     type: str = Field(..., alias='type')

@@ -1,5 +1,23 @@
 # Change Log
 
+## 24.0.0rc1
+
+* Breaking: `Execution.functionId` is replaced by `resourceId` and `resourceType`, now that executions cover both functions and sites
+* Breaking: `AppInstallation.authorizationDetails` is now an array instead of an object
+* Breaking: removed `dedicatedDatabases.execute` from `ProjectKeyScopes`
+* Breaking: `EmbeddingModel` no longer offers `embedding-gemma` or `bge-small`
+* Added: `documentsDB`, `vectorsDB`, `mysql`, `postgresql`, and `mongo` services, no longer hidden from server SDKs
+* Added: `DocumentsDBIndexType` and `VectorsDBIndexType` enums
+* Added: dedicated database models for branches, backups, restorations, poolers, PITR windows, extensions, and executions
+* Added: `PostgresExtension`, `VectorsdbCollection`, `AttributeObject`, and `AttributeVector` models
+* Added: `ExecutionResourceType` enum and `resourceType` on the `Execution` model
+* Added: `OAuth2HuggingFace` model and the `huggingface` OAuth provider
+* Added: `userId`, `emailHash`, and `name` parameters to `avatars.getPhoto`
+* Added: `error`, `containerStatus`, and `lifecycleState` on the `Database` model
+* Added: `changelogWatermark` on the `DatabaseMigration` model
+* Added: `total` on the `DedicatedDatabaseBranchList` model
+* Updated: `DedicatedDatabaseOperation.status` documents the new `queued` state
+
 ## 23.0.0
 
 * Breaking: removed `account.createJWT`; use `users.createJWT` instead. A leaked JWT could mint further JWTs, letting a credential outlive its own expiry — a session cannot duplicate itself to live forever either

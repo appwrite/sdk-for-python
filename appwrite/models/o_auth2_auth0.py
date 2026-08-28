@@ -3,6 +3,7 @@ from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
 
+
 class OAuth2Auth0(AppwriteModel):
     """
     OAuth2Auth0
@@ -20,6 +21,7 @@ class OAuth2Auth0(AppwriteModel):
     endpoint : str
         Auth0 OAuth2 endpoint domain.
     """
+
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')
