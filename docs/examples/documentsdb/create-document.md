@@ -23,7 +23,8 @@ result: Document = documents_db.create_document(
         "age": 30,
         "isAdmin": False
     },
-    permissions = [Permission.read(Role.any())] # optional
+    permissions = [Permission.read(Role.any())], # optional
+    transaction_id = '<TRANSACTION_ID>' # optional
 )
 
 print(result.model_dump())

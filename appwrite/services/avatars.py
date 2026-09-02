@@ -356,7 +356,7 @@ class Avatars(Service):
         """
         Returns the best available profile photo for a user. The endpoint tries each source in priority order and returns the first successful result: OAuth2 identity photo, Gravatar, Libravatar, Appwrite Initials, built-in static fallback.
 
-        The photo resolves for the currently authenticated user unless `userId` points at another user. Passing `emailHash` and/or `name` resolves the avatar from those values alone: the hash is looked up on Gravatar and Libravatar, the name is rendered as initials, and the user's own identity photos, email, and name leave the chain so they never shadow the avatar being asked for. Emails are only ever accepted pre-hashed, so no address ends up in a URL.
+        Passing `userId` — `current()` for the authenticated user — resolves the photo from everything known about that user: identity photos, email, and name. An explicit `emailHash` or `name` then overrides just that value, and the user's remaining sources stay in the chain. Without `userId`, passing `emailHash` and/or `name` resolves the avatar from those values alone: the hash is looked up on Gravatar and Libravatar, the name is rendered as initials, and the session user stays out of the chain so their own photo never shadows the avatar being asked for. When nothing is passed, the photo resolves for the currently authenticated user. Emails are only ever accepted pre-hashed, so no address ends up in a URL.
 
         Parameters
         ----------
@@ -371,11 +371,11 @@ class Avatars(Service):
         rating : Optional[str]
             Maximum image rating to fetch from Gravatar/Libravatar. Defaults to 'g'.
         user_id : Optional[str]
-            User ID to resolve the photo for. Defaults to 'current()' for the currently authenticated user.
+            User ID to resolve the photo for. Pass 'current()' for the currently authenticated user. When omitted, the session user is used only if no emailHash and no name is passed.
         email_hash : Optional[str]
-            SHA256 hash of the lowercase, trimmed email address to look up on Gravatar and Libravatar instead of the user's own photo sources. Pass the hash, never the address itself.
+            SHA256 hash of the lowercase, trimmed email address to look up on Gravatar and Libravatar instead of the user's own email. Pass the hash, never the address itself.
         name : Optional[str]
-            Name to render initials from instead of the user's own photo sources. Max length: 128 chars.
+            Name to render initials from instead of the user's own name. Max length: 128 chars.
         Returns
         -------
         bytes

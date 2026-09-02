@@ -18,7 +18,7 @@ class FrameworkAdapter(AppwriteModel):
         Default command to build site into output directory.
     outputdirectory : str
         Default output directory of build.
-    fallbackfile : str
+    fallbackfile : Optional[str]
         Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
     """
 
@@ -26,4 +26,4 @@ class FrameworkAdapter(AppwriteModel):
     installcommand: str = Field(..., alias='installCommand')
     buildcommand: str = Field(..., alias='buildCommand')
     outputdirectory: str = Field(..., alias='outputDirectory')
-    fallbackfile: str = Field(..., alias='fallbackFile')
+    fallbackfile: Optional[str] = Field(default=None, alias='fallbackFile')

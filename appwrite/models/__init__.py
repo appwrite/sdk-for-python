@@ -157,6 +157,7 @@ from .o_auth2_podio import OAuth2Podio
 from .o_auth2_notion import OAuth2Notion
 from .o_auth2_salesforce import OAuth2Salesforce
 from .o_auth2_yahoo import OAuth2Yahoo
+from .o_auth2_cloudflare import OAuth2Cloudflare
 from .o_auth2_hugging_face import OAuth2HuggingFace
 from .o_auth2_linkedin import OAuth2Linkedin
 from .o_auth2_disqus import OAuth2Disqus
@@ -176,6 +177,7 @@ from .o_auth2_okta import OAuth2Okta
 from .o_auth2_kick import OAuth2Kick
 from .o_auth2_apple import OAuth2Apple
 from .o_auth2_microsoft import OAuth2Microsoft
+from .o_auth2_resend import OAuth2Resend
 from .o_auth2_provider_list import OAuth2ProviderList
 from .policy_password_dictionary import PolicyPasswordDictionary
 from .policy_password_history import PolicyPasswordHistory
@@ -458,6 +460,7 @@ __all__ = [
     'OAuth2Notion',
     'OAuth2Salesforce',
     'OAuth2Yahoo',
+    'OAuth2Cloudflare',
     'OAuth2HuggingFace',
     'OAuth2Linkedin',
     'OAuth2Disqus',
@@ -477,6 +480,7 @@ __all__ = [
     'OAuth2Kick',
     'OAuth2Apple',
     'OAuth2Microsoft',
+    'OAuth2Resend',
     'OAuth2ProviderList',
     'PolicyPasswordDictionary',
     'PolicyPasswordHistory',

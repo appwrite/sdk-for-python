@@ -1,5 +1,16 @@
 # Change Log
 
+## 24.0.0
+
+* Stable release of the dedicated database APIs: `mysql`, `postgresql`, `mongo`, `documentsDB`, and `vectorsDB` services, previously released as release candidates
+* Breaking: `tablesDB.cutoverMigration` is renamed to `tablesDB.createCutover`
+* Breaking: `Execution.functionId` is replaced by `resourceId` and `resourceType`, covering function and site executions
+* Added: Cloudflare, Resend, and Hugging Face OAuth providers
+* Added: `usageAggregateOnlyMetrics` on the `BillingPlan` model
+* Fixed: `transactionId` is accepted again by `documentsDB` and `vectorsDB` `createDocument` and `createDocuments`
+* Updated: `X-Appwrite-Response-Format` is now `2.0.0`
+* Updated: `FrameworkAdapter.fallbackFile` is now optional
+
 ## 24.0.0rc1
 
 * Breaking: `Execution.functionId` is replaced by `resourceId` and `resourceType`, now that executions cover both functions and sites
