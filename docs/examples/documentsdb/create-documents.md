@@ -13,7 +13,8 @@ documents_db = DocumentsDB(client)
 result: DocumentList = documents_db.create_documents(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    documents = []
+    documents = [],
+    transaction_id = '<TRANSACTION_ID>' # optional
 )
 
 print(result.model_dump())

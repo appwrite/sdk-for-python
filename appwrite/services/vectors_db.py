@@ -945,6 +945,7 @@ class VectorsDB(Service):
         document_id: str,
         data: Dict[str, Any],
         permissions: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
         model_type: Type[T] = dict,
     ) -> Document[T]:
         """
@@ -962,6 +963,8 @@ class VectorsDB(Service):
             Document data as JSON object.
         permissions : Optional[List[str]]
             An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+        transaction_id : Optional[str]
+            Transaction ID for staging the operation.
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
 
@@ -992,6 +995,8 @@ class VectorsDB(Service):
         api_params['data'] = self._normalize_value(data)
         if permissions is not None:
             api_params['permissions'] = self._normalize_value(permissions)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call(
             'post',
@@ -1011,6 +1016,7 @@ class VectorsDB(Service):
         database_id: str,
         collection_id: str,
         documents: List[Dict[str, Any]],
+        transaction_id: Optional[str] = None,
         model_type: Type[T] = dict,
     ) -> DocumentList[T]:
         """
@@ -1024,6 +1030,8 @@ class VectorsDB(Service):
             Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection). Make sure to define attributes before creating documents.
         documents : List[Dict[str, Any]]
             Array of documents data as JSON objects.
+        transaction_id : Optional[str]
+            Transaction ID for staging the operation.
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
 
@@ -1049,6 +1057,8 @@ class VectorsDB(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
         api_params['documents'] = self._normalize_value(documents)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
 
         response = self.client.call(
             'post',

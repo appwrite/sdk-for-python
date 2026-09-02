@@ -757,6 +757,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "connectionPort": 5432.0,
             "connectionUser": "appwrite_user",
             "connectionPassword": "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+            "credentialGeneration": 1.0,
             "connectionString": "postgresql:\/\/user:pass@db-myproject-mydb.fra.appwrite.center:5432\/postgres?sslmode=require",
             "ssl": True,
             "status": "ready",

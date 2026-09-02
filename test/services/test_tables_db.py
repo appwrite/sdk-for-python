@@ -268,6 +268,7 @@ class TablesDBServiceTest(unittest.TestCase):
             "connectionPort": 5432.0,
             "connectionUser": "appwrite_user",
             "connectionPassword": "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+            "credentialGeneration": 1.0,
             "connectionString": "postgresql:\/\/user:pass@db-myproject-mydb.fra.appwrite.center:5432\/postgres?sslmode=require",
             "ssl": True,
             "status": "ready",
@@ -416,7 +417,7 @@ class TablesDBServiceTest(unittest.TestCase):
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
-    def test_cutover_migration(self, m):
+    def test_create_cutover(self, m):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -443,7 +444,7 @@ class TablesDBServiceTest(unittest.TestCase):
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.tables_db.cutover_migration(
+        response = self.tables_db.create_cutover(
             '<DATABASE_ID>',
             '<MIGRATION_ID>',
         )

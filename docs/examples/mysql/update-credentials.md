@@ -1,7 +1,7 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.mysql import Mysql
-from appwrite.models import DedicatedDatabase
+from appwrite.models import DedicatedDatabaseOperation
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -10,7 +10,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 mysql = Mysql(client)
 
-result: DedicatedDatabase = mysql.update_credentials(
+result: DedicatedDatabaseOperation = mysql.update_credentials(
     database_id = '<DATABASE_ID>'
 )
 

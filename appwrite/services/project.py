@@ -21,6 +21,7 @@ from ..models.o_auth2_autodesk import OAuth2Autodesk
 from ..models.o_auth2_bitbucket import OAuth2Bitbucket
 from ..models.o_auth2_bitly import OAuth2Bitly
 from ..models.o_auth2_box import OAuth2Box
+from ..models.o_auth2_cloudflare import OAuth2Cloudflare
 from ..models.o_auth2_dailymotion import OAuth2Dailymotion
 from ..models.o_auth2_discord import OAuth2Discord
 from ..models.o_auth2_disqus import OAuth2Disqus
@@ -44,6 +45,7 @@ from ..models.o_auth2_oidc import OAuth2Oidc
 from ..models.o_auth2_okta import OAuth2Okta
 from ..models.o_auth2_paypal import OAuth2Paypal
 from ..models.o_auth2_podio import OAuth2Podio
+from ..models.o_auth2_resend import OAuth2Resend
 from ..models.o_auth2_salesforce import OAuth2Salesforce
 from ..models.o_auth2_slack import OAuth2Slack
 from ..models.o_auth2_spotify import OAuth2Spotify
@@ -1325,6 +1327,56 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Box)
 
+    def update_o_auth2_cloudflare(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Cloudflare:
+        """
+        Update the project OAuth2 Cloudflare configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Cloudflare OAuth2 app. For example: 4b866000000000000000000000c9e4e2
+        client_secret : Optional[str]
+            'Client Secret' of Cloudflare OAuth2 app. For example: cfoc_5Q6YRl0000000000000000000000000000000000003d214f
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Cloudflare
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/cloudflare'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Cloudflare)
+
     def update_o_auth2_dailymotion(
         self,
         api_key: Optional[str] = None,
@@ -2495,6 +2547,56 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Podio)
 
+    def update_o_auth2_resend(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Resend:
+        """
+        Update the project OAuth2 Resend configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Resend OAuth2 app. For example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        client_secret : Optional[str]
+            'Client Secret' of Resend OAuth2 app. For example: 9c1e4b00000000000000000000000000000000000000000000000000a72d5f4
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Resend
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/resend'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Resend)
+
     def update_o_auth2_salesforce(
         self,
         customer_key: Optional[str] = None,
@@ -3173,6 +3275,8 @@ class Project(Service):
         OAuth2Salesforce,
         OAuth2Yahoo,
         OAuth2HuggingFace,
+        OAuth2Resend,
+        OAuth2Cloudflare,
         OAuth2Linkedin,
         OAuth2Disqus,
         OAuth2Amazon,
@@ -3200,7 +3304,7 @@ class Project(Service):
             OAuth2 provider key. For example: github, google, apple.
         Returns
         -------
-        Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2HuggingFace, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft]
+        Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2HuggingFace, OAuth2Resend, OAuth2Cloudflare, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft]
             API response as one of the typed response models
 
         Raises
@@ -3298,6 +3402,12 @@ class Project(Service):
 
         if response.get('$id') == 'huggingface':
             return self._parse_response(response, model=OAuth2HuggingFace)
+
+        if response.get('$id') == 'resend':
+            return self._parse_response(response, model=OAuth2Resend)
+
+        if response.get('$id') == 'cloudflare':
+            return self._parse_response(response, model=OAuth2Cloudflare)
 
         if response.get('$id') == 'linkedin':
             return self._parse_response(response, model=OAuth2Linkedin)

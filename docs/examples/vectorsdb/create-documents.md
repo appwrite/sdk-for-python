@@ -13,7 +13,8 @@ vectors_db = VectorsDB(client)
 result: DocumentList = vectors_db.create_documents(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    documents = []
+    documents = [],
+    transaction_id = '<TRANSACTION_ID>' # optional
 )
 
 print(result.model_dump())

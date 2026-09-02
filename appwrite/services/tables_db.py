@@ -832,7 +832,7 @@ class TablesDB(Service):
 
         return response
 
-    def cutover_migration(
+    def create_cutover(
         self,
         database_id: str,
         migration_id: str,
@@ -857,7 +857,7 @@ class TablesDB(Service):
             If API request fails
         """
 
-        api_path = '/tablesdb/{databaseId}/migrations/{migrationId}/cutover'
+        api_path = '/tablesdb/{databaseId}/migrations/{migrationId}/cutovers'
         api_params = {}
         if database_id is None:
             raise AppwriteException('Missing required parameter: "database_id"')

@@ -29,7 +29,7 @@ class DedicatedDatabase(AppwriteModel):
     specification : str
         Specification identifier.
     backend : str
-        Database backend provider. Possible values: prisma, edge.
+        Database backend provider. Possible values: edge.
     hostname : str
         Database hostname for connections.
     connectionport : float
@@ -38,6 +38,8 @@ class DedicatedDatabase(AppwriteModel):
         Database username for connections.
     connectionpassword : str
         Database password for connections.
+    credentialgeneration : float
+        Committed generation of the primary connection credentials. Null until the rotation contract has been initialized.
     connectionstring : str
         Full database connection string (URI format).
     ssl : bool
@@ -122,6 +124,7 @@ class DedicatedDatabase(AppwriteModel):
     connectionport: float = Field(..., alias='connectionPort')
     connectionuser: str = Field(..., alias='connectionUser')
     connectionpassword: str = Field(..., alias='connectionPassword')
+    credentialgeneration: float = Field(..., alias='credentialGeneration')
     connectionstring: str = Field(..., alias='connectionString')
     ssl: bool = Field(..., alias='ssl')
     status: str = Field(..., alias='status')

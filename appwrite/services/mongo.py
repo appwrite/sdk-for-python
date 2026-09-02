@@ -12,6 +12,7 @@ from ..models.backup_policy_list import BackupPolicyList
 from ..models.backup_policy import BackupPolicy
 from ..models.dedicated_database_backup_storage import DedicatedDatabaseBackupStorage
 from ..models.dedicated_database_branch_list import DedicatedDatabaseBranchList
+from ..models.dedicated_database_operation import DedicatedDatabaseOperation
 from ..models.dedicated_database_operation_list import DedicatedDatabaseOperationList
 from ..models.dedicated_database_pitr_windows import DedicatedDatabasePITRWindows
 from ..models.dedicated_database_replicas import DedicatedDatabaseReplicas
@@ -1113,9 +1114,9 @@ class Mongo(Service):
     def update_credentials(
         self,
         database_id: str,
-    ) -> DedicatedDatabase:
+    ) -> DedicatedDatabaseOperation:
         """
-        Rotate the primary connection credentials for a dedicated database. Generates a new password and updates the database atomically. Previous credentials stop working immediately. Returns the database with a refreshed connection string carrying the new password.
+        Queue a rotation of the primary connection credentials for a dedicated database. A hibernated database is woken by the worker before rotation. List database operations until the returned operation reaches a terminal status, then fetch the database again for the refreshed connection string.
 
         Parameters
         ----------
@@ -1123,7 +1124,7 @@ class Mongo(Service):
             Database ID.
         Returns
         -------
-        DedicatedDatabase
+        DedicatedDatabaseOperation
             API response as a typed Pydantic model
 
         Raises
@@ -1149,7 +1150,7 @@ class Mongo(Service):
             api_params,
         )
 
-        return self._parse_response(response, model=DedicatedDatabase)
+        return self._parse_response(response, model=DedicatedDatabaseOperation)
 
     def create_failover(
         self,

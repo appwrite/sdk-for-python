@@ -584,6 +584,24 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_update_o_auth2_cloudflare(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "4b866000000000000000000000c9e4e2",
+            "clientSecret": "cfoc_5Q6YRl0000000000000000000000000000000000003d214f",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_cloudflare()
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_o_auth2_dailymotion(self, m):
         data = {
             "$id": "github",
@@ -990,6 +1008,24 @@ class ProjectServiceTest(unittest.TestCase):
             headers=headers,
         )
         response = self.project.update_o_auth2_podio()
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_o_auth2_resend(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+            "clientSecret": "9c1e4b00000000000000000000000000000000000000000000000000a72d5f4",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_resend()
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
