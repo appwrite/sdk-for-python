@@ -1869,6 +1869,7 @@ class Account(Service):
         success: Optional[str] = None,
         failure: Optional[str] = None,
         scopes: Optional[List[str]] = None,
+        state: Optional[str] = None,
     ) -> str:
         """
         Allow the user to login to their account using the OAuth2 provider of their choice. Each OAuth2 provider should be enabled from the Appwrite console first. Use the success and failure arguments to provide a redirect URL's back to your app when login is completed.
@@ -1887,6 +1888,8 @@ class Account(Service):
             URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
         scopes : Optional[List[str]]
             A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
+        state : Optional[str]
+            An opaque value your app generates and keeps, for example in a cookie. It is returned unchanged as the `state` query parameter on the success and failure URLs, so your app can check that the sign-in it receives is one it started. Printable ASCII only (RFC 6749 Appendix A.5). Max length: 256 chars.
         Returns
         -------
         str
@@ -1909,6 +1912,8 @@ class Account(Service):
             api_params['failure'] = self._normalize_value(failure)
         if scopes is not None:
             api_params['scopes'] = self._normalize_value(scopes)
+        if state is not None:
+            api_params['state'] = self._normalize_value(state)
 
         response = self.client.call(
             'get',

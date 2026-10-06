@@ -1,5 +1,9 @@
 # Change Log
 
+## 24.1.0
+
+* Added: optional `state` parameter on `createOAuth2Token`, returned unchanged on the success and failure URLs
+
 ## 24.0.0
 
 * Stable release of the dedicated database APIs: `mysql`, `postgresql`, `mongo`, `documentsDB`, and `vectorsDB` services, previously released as release candidates
