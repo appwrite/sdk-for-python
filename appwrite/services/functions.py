@@ -100,6 +100,7 @@ class Functions(Service):
         build_specification: Optional[str] = None,
         runtime_specification: Optional[str] = None,
         deployment_retention: Optional[float] = None,
+        interval: Optional[float] = None,
     ) -> Function:
         """
         Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
@@ -117,7 +118,7 @@ class Functions(Service):
         events : Optional[List[str]]
             Events list. Maximum of 100 events are allowed.
         schedule : Optional[str]
-            Schedule CRON syntax.
+            Schedule CRON syntax. Cannot be combined with interval.
         timeout : Optional[float]
             Function maximum execution time in seconds.
         enabled : Optional[bool]
@@ -150,6 +151,8 @@ class Functions(Service):
             Runtime specification for the function executions.
         deployment_retention : Optional[float]
             Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+        interval : Optional[float]
+            Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule.
         Returns
         -------
         Function
@@ -210,6 +213,8 @@ class Functions(Service):
             api_params['runtimeSpecification'] = self._normalize_value(runtime_specification)
         if deployment_retention is not None:
             api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
+        if interval is not None:
+            api_params['interval'] = self._normalize_value(interval)
 
         response = self.client.call(
             'post',
@@ -358,6 +363,7 @@ class Functions(Service):
         build_specification: Optional[str] = None,
         runtime_specification: Optional[str] = None,
         deployment_retention: Optional[float] = None,
+        interval: Optional[float] = None,
     ) -> Function:
         """
         Update function by its unique ID.
@@ -375,7 +381,7 @@ class Functions(Service):
         events : Optional[List[str]]
             Events list. Maximum of 100 events are allowed.
         schedule : Optional[str]
-            Schedule CRON syntax.
+            Schedule CRON syntax. Cannot be combined with interval.
         timeout : Optional[float]
             Maximum execution time in seconds.
         enabled : Optional[bool]
@@ -408,6 +414,8 @@ class Functions(Service):
             Runtime specification for the function executions.
         deployment_retention : Optional[float]
             Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+        interval : Optional[float]
+            Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule. When omitted, the current interval is kept unless schedule is set.
         Returns
         -------
         Function
@@ -467,6 +475,8 @@ class Functions(Service):
             api_params['runtimeSpecification'] = self._normalize_value(runtime_specification)
         if deployment_retention is not None:
             api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
+        if interval is not None:
+            api_params['interval'] = self._normalize_value(interval)
 
         response = self.client.call(
             'put',

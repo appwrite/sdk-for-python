@@ -49,6 +49,8 @@ class Function(AppwriteModel):
         Function trigger events.
     schedule : str
         Function execution schedule in CRON format.
+    interval : Optional[float]
+        Minutes between scheduled executions. 0 when the function has no interval.
     timeout : float
         Function execution timeout in seconds.
     entrypoint : str
@@ -96,6 +98,7 @@ class Function(AppwriteModel):
     vars: List[Variable] = Field(..., alias='vars')
     events: List[Any] = Field(..., alias='events')
     schedule: str = Field(..., alias='schedule')
+    interval: Optional[float] = Field(default=None, alias='interval')
     timeout: float = Field(..., alias='timeout')
     entrypoint: str = Field(..., alias='entrypoint')
     commands: str = Field(..., alias='commands')

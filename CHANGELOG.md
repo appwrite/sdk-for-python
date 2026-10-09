@@ -1,5 +1,10 @@
 # Change Log
 
+## 24.2.0
+
+* Added: optional `interval` parameter on `functions.create` and `functions.update` to run a function every N minutes
+* Added: `interval` on the `Function` model and `functionsIntervalMinimum` on the `BillingPlan` model
+
 ## 24.1.0
 
 * Added: optional `state` parameter on `createOAuth2Token`, returned unchanged on the success and failure URLs
