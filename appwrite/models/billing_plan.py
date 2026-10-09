@@ -149,6 +149,8 @@ class BillingPlan(AppwriteModel):
         Maximum function and site deployment size in MB
     buildsize : float
         Maximum function and site deployment size in MB
+    functionsintervalminimum : float
+        Shortest function schedule interval allowed, in minutes. 0 allows every interval.
     databasesallowencrypt : bool
         Does the plan support encrypted string attributes or not.
     limits : Optional[BillingPlanLimits]
@@ -229,6 +231,7 @@ class BillingPlan(AppwriteModel):
     backuppolicies: Optional[float] = Field(default=None, alias='backupPolicies')
     deploymentsize: float = Field(..., alias='deploymentSize')
     buildsize: float = Field(..., alias='buildSize')
+    functionsintervalminimum: float = Field(..., alias='functionsIntervalMinimum')
     databasesallowencrypt: bool = Field(..., alias='databasesAllowEncrypt')
     limits: Optional[BillingPlanLimits] = Field(default=None, alias='limits')
     group: BillingPlanGroup = Field(..., alias='group')
