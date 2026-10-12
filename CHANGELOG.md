@@ -1,5 +1,41 @@
 # Change Log
 
+## 25.0.0
+
+* Breaking: `account.list_logs`, `users.list_logs`, `Log` and `LogList` removed
+* Breaking: `organization` key methods renamed to `create_ephemeral_project_key`, `get_project_key`, `list_project_keys`, `update_project_key` and `delete_project_key`; `OrganizationKeyScopes` removed
+* Breaking: `set_dev_key` client method, `DevKey` model and `Project.devKeys` removed
+* Breaking: `projectName`, `region`, `organizationId`, `organizationName`, `billingPlan` and `reason` removed from `Block`
+* Breaking: `DedicatedDatabaseSpecificationList.pricing` and `DedicatedDatabaseSpecificationPricing` removed; rates now live on `DedicatedDatabaseSpecification`
+* Breaking: `BillingPlanGroup` `starter` replaced by `free` and `start`
+* Breaking: `resource` is now an array on `oauth2.authorize`, `oauth2.create_par`, `oauth2.create_token` and `oauth2.create_device_authorization`
+* Breaking: `BackupRestoration.options` is now a key-value object instead of a string
+* Breaking: optional parameters reordered in `messaging.update_email`, `messaging.update_push` and `messaging.update_sms`; new ones inserted mid-list in `messaging.create_email`, `teams.create_membership` and `project` OAuth2 provider updates; use named arguments
+* Added: passkey methods `account.list_passkeys`, `account.create_passkey`, `account.get_passkey`, `account.update_passkey`, `account.delete_passkey`, `account.update_passkey_verification`, `account.create_passkey_token` and `account.update_passkey_token`
+* Added: `users.list_passkeys`, `users.get_passkey`, `users.update_passkey`, `users.delete_passkey`, plus `project.update_passkey_policy`
+* Added: `Passkey`, `PasskeyList`, `PasskeyChallenge`, `PolicyPasskey` and `TokenSecret` models
+* Added: `fingerprints` on Android platforms for passkeys
+* Added: `domains` service for domains, DNS records, email presets, prices and transfers
+* Added: `waf` service for bypass, challenge, deny, rate-limit and redirect rules
+* Added: `account.create_id_token_session` for native Apple and Google sign-in, with native client IDs on those providers
+* Added: email verification and recovery OTP methods on `account`
+* Added: `oauth2.introspect` for RFC 7662 token introspection, returning `Oauth2Introspection`
+* Added: `avatars.update_photo` and `avatars.delete_photo`
+* Added: `messaging.create_appwrite_provider` and `messaging.update_appwrite_provider`
+* Added: `project.update_password_pwned_policy`, `PolicyPasswordPwned` model and `User.passwordPwned`
+* Added: Kakao, TikTok and Webflow OAuth2 providers
+* Added: `prompt` on Auth0, Discord, GitHub, Microsoft, Okta, Salesforce and Zoho providers, with prompt enums
+* Added: `Topic` and `ResolvedTopic` helpers for building MQTT push topics
+* Added: reply-to on email messages, `channelId` on push messages, `qos` and `expiry` on topics
+* Added: `membershipId` on `teams.create_membership`, and `total` on locale and other list endpoints
+* Added: `storageStatus` and `storageTargetGb` on `DedicatedDatabase`; `eligibleCountries` on `BillingPlan`
+* Added: `auto` image gravity, `jaspr` framework, `dart-3.13` and `flutter-3.47` runtimes
+* Added: `project.update_password_rotation_policy` and the `PolicyPasswordRotation` model
+* Fixed: response models fill missing fields from spec defaults instead of throwing
+* Fixed: multipart requests without a file are sent as multipart instead of URL-encoded
+* Updated: several model fields are now optional and may be `None`, e.g. `DedicatedDatabase.engine`, `Organization.billingStartDate`, `BillingPlan.usage`, `BackupArchive.size`
+* Updated: requests send `X-Appwrite-Response-Format` `2.4.0`
+
 ## 24.2.0
 
 * Added: optional `interval` parameter on `functions.create` and `functions.update` to run a function every N minutes

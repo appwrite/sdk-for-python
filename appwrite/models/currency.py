@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -33,3 +33,26 @@ class Currency(AppwriteModel):
     rounding: float = Field(..., alias='rounding')
     code: str = Field(..., alias='code')
     nameplural: str = Field(..., alias='namePlural')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'symbol' not in data:
+            data['symbol'] = ''
+        if 'name' not in data:
+            data['name'] = ''
+        if 'symbolNative' not in data and 'symbolnative' not in data:
+            data['symbolNative'] = ''
+        if 'decimalDigits' not in data and 'decimaldigits' not in data:
+            data['decimalDigits'] = 0
+        if 'rounding' not in data:
+            data['rounding'] = 0
+        if 'code' not in data:
+            data['code'] = ''
+        if 'namePlural' not in data and 'nameplural' not in data:
+            data['namePlural'] = ''
+        return data

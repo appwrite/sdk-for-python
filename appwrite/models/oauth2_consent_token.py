@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -45,3 +45,34 @@ class Oauth2ConsentToken(AppwriteModel):
     resources: List[Any] = Field(..., alias='resources')
     authorizationdetails: str = Field(..., alias='authorizationDetails')
     expire: str = Field(..., alias='expire')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'consentId' not in data and 'consentid' not in data:
+            data['consentId'] = ''
+        if 'userId' not in data and 'userid' not in data:
+            data['userId'] = ''
+        if 'appId' not in data and 'appid' not in data:
+            data['appId'] = ''
+        if 'cimdUrl' not in data and 'cimdurl' not in data:
+            data['cimdUrl'] = ''
+        if 'scopes' not in data:
+            data['scopes'] = []
+        if 'resources' not in data:
+            data['resources'] = []
+        if 'authorizationDetails' not in data and 'authorizationdetails' not in data:
+            data['authorizationDetails'] = '[]'
+        if 'expire' not in data:
+            data['expire'] = ''
+        return data

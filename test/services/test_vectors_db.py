@@ -58,12 +58,6 @@ class VectorsDBServiceTest(unittest.TestCase):
         data = {
             "specifications": [],
             "total": 9.0,
-            "pricing": {
-                "storageOverageRate": 0.125,
-                "bandwidthOverageRate": 0.08,
-                "replicaRate": 1,
-                "pitrRate": 0.2,
-            },
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -717,16 +711,12 @@ class VectorsDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "projectId": "5e5ea5c16897e",
             "name": "My Production Database",
-            "api": "postgresql",
-            "engine": "postgresql",
             "version": "16",
             "specification": "s-2vcpu-2gb",
             "backend": "edge",
             "hostname": "db-myproject-mydb.fra.appwrite.center",
-            "connectionPort": 5432.0,
             "connectionUser": "appwrite_user",
             "connectionPassword": "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
-            "credentialGeneration": 1.0,
             "connectionString": "postgresql:\/\/user:pass@db-myproject-mydb.fra.appwrite.center:5432\/postgres?sslmode=require",
             "ssl": True,
             "status": "ready",
@@ -736,6 +726,8 @@ class VectorsDBServiceTest(unittest.TestCase):
             "cpu": 2000.0,
             "memory": 4096.0,
             "storage": 100.0,
+            "storageStatus": "resizing",
+            "storageTargetGb": 120.0,
             "storageClass": "ssd",
             "storageMaxGb": 100.0,
             "nodePool": "db-pool-4vcpu-8gb",
@@ -749,7 +741,7 @@ class VectorsDBServiceTest(unittest.TestCase):
             "pitrRetentionDays": 14.0,
             "storageAutoscaling": True,
             "storageAutoscalingThresholdPercent": 85.0,
-            "storageAutoscalingMaxGb": 500.0,
+            "storageAutoscalingMaxGb": 30.0,
             "maintenanceWindowDay": "sun",
             "maintenanceWindowHourUtc": 3.0,
             "metricsEnabled": True,
@@ -820,10 +812,6 @@ class VectorsDBServiceTest(unittest.TestCase):
             "engine": "postgresql",
             "version": "17",
             "uptime": 86400.0,
-            "connections": {
-                "current": 12.0,
-                "max": 100.0,
-            },
             "syncMode": "async",
             "syncDegraded": True,
             "syncAcknowledgements": 1.0,

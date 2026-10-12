@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .variable import Variable
@@ -112,3 +112,74 @@ class Function(AppwriteModel):
     providerpaths: List[Any] = Field(..., alias='providerPaths')
     buildspecification: str = Field(..., alias='buildSpecification')
     runtimespecification: str = Field(..., alias='runtimeSpecification')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'execute' not in data:
+            data['execute'] = []
+        if 'name' not in data:
+            data['name'] = ''
+        if 'enabled' not in data:
+            data['enabled'] = True
+        if 'live' not in data:
+            data['live'] = True
+        if 'logging' not in data:
+            data['logging'] = True
+        if 'runtime' not in data:
+            data['runtime'] = ''
+        if 'deploymentRetention' not in data and 'deploymentretention' not in data:
+            data['deploymentRetention'] = 0
+        if 'deploymentId' not in data and 'deploymentid' not in data:
+            data['deploymentId'] = ''
+        if 'deploymentCreatedAt' not in data and 'deploymentcreatedat' not in data:
+            data['deploymentCreatedAt'] = ''
+        if 'latestDeploymentId' not in data and 'latestdeploymentid' not in data:
+            data['latestDeploymentId'] = ''
+        if 'latestDeploymentCreatedAt' not in data and 'latestdeploymentcreatedat' not in data:
+            data['latestDeploymentCreatedAt'] = ''
+        if 'latestDeploymentStatus' not in data and 'latestdeploymentstatus' not in data:
+            data['latestDeploymentStatus'] = ''
+        if 'scopes' not in data:
+            data['scopes'] = []
+        if 'events' not in data:
+            data['events'] = []
+        if 'schedule' not in data:
+            data['schedule'] = ''
+        if 'timeout' not in data:
+            data['timeout'] = 15
+        if 'entrypoint' not in data:
+            data['entrypoint'] = ''
+        if 'commands' not in data:
+            data['commands'] = ''
+        if 'version' not in data:
+            data['version'] = 'v5'
+        if 'installationId' not in data and 'installationid' not in data:
+            data['installationId'] = ''
+        if 'providerRepositoryId' not in data and 'providerrepositoryid' not in data:
+            data['providerRepositoryId'] = ''
+        if 'providerBranch' not in data and 'providerbranch' not in data:
+            data['providerBranch'] = ''
+        if 'providerRootDirectory' not in data and 'providerrootdirectory' not in data:
+            data['providerRootDirectory'] = ''
+        if 'providerSilentMode' not in data and 'providersilentmode' not in data:
+            data['providerSilentMode'] = False
+        if 'providerBranches' not in data and 'providerbranches' not in data:
+            data['providerBranches'] = []
+        if 'providerPaths' not in data and 'providerpaths' not in data:
+            data['providerPaths'] = []
+        if 'buildSpecification' not in data and 'buildspecification' not in data:
+            data['buildSpecification'] = 's-1vcpu-512mb'
+        if 'runtimeSpecification' not in data and 'runtimespecification' not in data:
+            data['runtimeSpecification'] = 's-1vcpu-512mb'
+        return data

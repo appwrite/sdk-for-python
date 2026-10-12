@@ -11,7 +11,8 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 functions = Functions(client)
 
 result: SpecificationList = functions.list_specifications(
-    type = 'runtimes' # optional
+    type = 'runtimes', # optional
+    total = False # optional
 )
 
 print(result.model_dump())

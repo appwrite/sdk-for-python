@@ -10,7 +10,6 @@ from .column_index_list import ColumnIndexList
 from .user_list import UserList
 from .session_list import SessionList
 from .identity_list import IdentityList
-from .log_list import LogList
 from .file_list import FileList
 from .bucket_list import BucketList
 from .resource_token_list import ResourceTokenList
@@ -97,7 +96,6 @@ from .column_index import ColumnIndex
 from .row import Row
 from .document import Document
 from .presence import Presence
-from .log import Log
 from .user import User
 from .algo_md5 import AlgoMd5
 from .algo_sha import AlgoSha
@@ -106,6 +104,7 @@ from .algo_bcrypt import AlgoBcrypt
 from .algo_scrypt import AlgoScrypt
 from .algo_scrypt_modified import AlgoScryptModified
 from .algo_argon2 import AlgoArgon2
+from .account import Account
 from .preferences import Preferences
 from .session import Session
 from .identity import Identity
@@ -132,7 +131,6 @@ from .project_protocol import ProjectProtocol
 from .webhook import Webhook
 from .key import Key
 from .ephemeral_key import EphemeralKey
-from .dev_key import DevKey
 from .mock_number import MockNumber
 from .o_auth2_github import OAuth2Github
 from .o_auth2_discord import OAuth2Discord
@@ -149,6 +147,7 @@ from .o_auth2_zoho import OAuth2Zoho
 from .o_auth2_yandex import OAuth2Yandex
 from .o_auth2_x import OAuth2X
 from .o_auth2_word_press import OAuth2WordPress
+from .o_auth2_webflow import OAuth2Webflow
 from .o_auth2_twitch import OAuth2Twitch
 from .o_auth2_stripe import OAuth2Stripe
 from .o_auth2_spotify import OAuth2Spotify
@@ -178,11 +177,15 @@ from .o_auth2_kick import OAuth2Kick
 from .o_auth2_apple import OAuth2Apple
 from .o_auth2_microsoft import OAuth2Microsoft
 from .o_auth2_resend import OAuth2Resend
+from .o_auth2_tik_tok import OAuth2TikTok
+from .o_auth2_kakao import OAuth2Kakao
 from .o_auth2_provider_list import OAuth2ProviderList
 from .policy_password_dictionary import PolicyPasswordDictionary
 from .policy_password_history import PolicyPasswordHistory
 from .policy_password_strength import PolicyPasswordStrength
 from .policy_password_personal_data import PolicyPasswordPersonalData
+from .policy_password_pwned import PolicyPasswordPwned
+from .policy_password_rotation import PolicyPasswordRotation
 from .policy_session_alert import PolicySessionAlert
 from .policy_session_duration import PolicySessionDuration
 from .policy_session_invalidation import PolicySessionInvalidation
@@ -190,6 +193,11 @@ from .policy_session_limit import PolicySessionLimit
 from .policy_user_limit import PolicyUserLimit
 from .policy_membership_privacy import PolicyMembershipPrivacy
 from .policy_mfa_factors import PolicyMfaFactors
+from .policy_passkey import PolicyPasskey
+from .policy_deny_aliased_email import PolicyDenyAliasedEmail
+from .policy_deny_disposable_email import PolicyDenyDisposableEmail
+from .policy_deny_free_email import PolicyDenyFreeEmail
+from .policy_deny_corporate_email import PolicyDenyCorporateEmail
 from .platform_web import PlatformWeb
 from .platform_apple import PlatformApple
 from .platform_android import PlatformAndroid
@@ -208,6 +216,10 @@ from .proxy_rule import ProxyRule
 from .email_template import EmailTemplate
 from .mfa_challenge import MfaChallenge
 from .mfa_challenge_secret import MfaChallengeSecret
+from .token_secret import TokenSecret
+from .passkey import Passkey
+from .passkey_challenge import PasskeyChallenge
+from .passkey_list import PasskeyList
 from .mfa_recovery_codes import MfaRecoveryCodes
 from .mfa_type import MfaType
 from .mfa_factors import MfaFactors
@@ -242,6 +254,10 @@ from .dedicated_database_execution import DedicatedDatabaseExecution
 from .dedicated_database_execution_column import DedicatedDatabaseExecutionColumn
 from .dedicated_database_restoration import DedicatedDatabaseRestoration
 from .database_status import DatabaseStatus
+from .dns_record import DnsRecord
+from .domain import Domain
+from .domain_price import DomainPrice
+from .domain_transfer_status import DomainTransferStatus
 from .dedicated_database_extensions import DedicatedDatabaseExtensions
 from .dedicated_database_member import DedicatedDatabaseMember
 from .dedicated_database_operation import DedicatedDatabaseOperation
@@ -251,10 +267,6 @@ from .proxy_invalidation import ProxyInvalidation
 from .organization import Organization
 from .dedicated_database_pitr_windows import DedicatedDatabasePITRWindows
 from .backup_policy import BackupPolicy
-from .policy_deny_aliased_email import PolicyDenyAliasedEmail
-from .policy_deny_disposable_email import PolicyDenyDisposableEmail
-from .policy_deny_free_email import PolicyDenyFreeEmail
-from .policy_deny_corporate_email import PolicyDenyCorporateEmail
 from .dedicated_database_pooler import DedicatedDatabasePooler
 from .postgres_extension import PostgresExtension
 from .program import Program
@@ -262,7 +274,6 @@ from .backup_restoration import BackupRestoration
 from .dedicated_database_restoration_list import DedicatedDatabaseRestorationList
 from .dedicated_database_specification import DedicatedDatabaseSpecification
 from .dedicated_database_specification_list import DedicatedDatabaseSpecificationList
-from .dedicated_database_specification_pricing import DedicatedDatabaseSpecificationPricing
 from .database_status_connections import DatabaseStatusConnections
 from .database_status_replica import DatabaseStatusReplica
 from .database_status_volume import DatabaseStatusVolume
@@ -280,8 +291,15 @@ from .oauth2_grant import Oauth2Grant
 from .oauth2_device_authorization import Oauth2DeviceAuthorization
 from .oauth2_par import Oauth2PAR
 from .oauth2_token import Oauth2Token
+from .oauth2_introspection import Oauth2Introspection
 from .oauth2_consent import Oauth2Consent
 from .oauth2_consent_token import Oauth2ConsentToken
+from .waf_rule_bypass import WafRuleBypass
+from .waf_rule_deny import WafRuleDeny
+from .waf_rule_challenge import WafRuleChallenge
+from .waf_rule_rate_limit import WafRuleRateLimit
+from .waf_rule_redirect import WafRuleRedirect
+from .waf_rule_list import WafRuleList
 from .oauth2_project import Oauth2Project
 from .oauth2_organization import Oauth2Organization
 from .oauth2_project_list import Oauth2ProjectList
@@ -294,6 +312,9 @@ from .backup_policy_list import BackupPolicyList
 from .backup_restoration_list import BackupRestorationList
 from .database_migration_list import DatabaseMigrationList
 from .dedicated_database_list import DedicatedDatabaseList
+from .dns_records_list import DnsRecordsList
+from .domain_prices_list import DomainPricesList
+from .domains_list import DomainsList
 from .apps_list import AppsList
 from .app_secret_list import AppSecretList
 from .app_scope_list import AppScopeList
@@ -313,7 +334,6 @@ __all__ = [
     'UserList',
     'SessionList',
     'IdentityList',
-    'LogList',
     'FileList',
     'BucketList',
     'ResourceTokenList',
@@ -400,7 +420,6 @@ __all__ = [
     'Row',
     'Document',
     'Presence',
-    'Log',
     'User',
     'AlgoMd5',
     'AlgoSha',
@@ -409,6 +428,7 @@ __all__ = [
     'AlgoScrypt',
     'AlgoScryptModified',
     'AlgoArgon2',
+    'Account',
     'Preferences',
     'Session',
     'Identity',
@@ -435,7 +455,6 @@ __all__ = [
     'Webhook',
     'Key',
     'EphemeralKey',
-    'DevKey',
     'MockNumber',
     'OAuth2Github',
     'OAuth2Discord',
@@ -452,6 +471,7 @@ __all__ = [
     'OAuth2Yandex',
     'OAuth2X',
     'OAuth2WordPress',
+    'OAuth2Webflow',
     'OAuth2Twitch',
     'OAuth2Stripe',
     'OAuth2Spotify',
@@ -481,11 +501,15 @@ __all__ = [
     'OAuth2Apple',
     'OAuth2Microsoft',
     'OAuth2Resend',
+    'OAuth2TikTok',
+    'OAuth2Kakao',
     'OAuth2ProviderList',
     'PolicyPasswordDictionary',
     'PolicyPasswordHistory',
     'PolicyPasswordStrength',
     'PolicyPasswordPersonalData',
+    'PolicyPasswordPwned',
+    'PolicyPasswordRotation',
     'PolicySessionAlert',
     'PolicySessionDuration',
     'PolicySessionInvalidation',
@@ -493,6 +517,11 @@ __all__ = [
     'PolicyUserLimit',
     'PolicyMembershipPrivacy',
     'PolicyMfaFactors',
+    'PolicyPasskey',
+    'PolicyDenyAliasedEmail',
+    'PolicyDenyDisposableEmail',
+    'PolicyDenyFreeEmail',
+    'PolicyDenyCorporateEmail',
     'PlatformWeb',
     'PlatformApple',
     'PlatformAndroid',
@@ -511,6 +540,10 @@ __all__ = [
     'EmailTemplate',
     'MfaChallenge',
     'MfaChallengeSecret',
+    'TokenSecret',
+    'Passkey',
+    'PasskeyChallenge',
+    'PasskeyList',
     'MfaRecoveryCodes',
     'MfaType',
     'MfaFactors',
@@ -545,6 +578,10 @@ __all__ = [
     'DedicatedDatabaseExecutionColumn',
     'DedicatedDatabaseRestoration',
     'DatabaseStatus',
+    'DnsRecord',
+    'Domain',
+    'DomainPrice',
+    'DomainTransferStatus',
     'DedicatedDatabaseExtensions',
     'DedicatedDatabaseMember',
     'DedicatedDatabaseOperation',
@@ -554,10 +591,6 @@ __all__ = [
     'Organization',
     'DedicatedDatabasePITRWindows',
     'BackupPolicy',
-    'PolicyDenyAliasedEmail',
-    'PolicyDenyDisposableEmail',
-    'PolicyDenyFreeEmail',
-    'PolicyDenyCorporateEmail',
     'DedicatedDatabasePooler',
     'PostgresExtension',
     'Program',
@@ -565,7 +598,6 @@ __all__ = [
     'DedicatedDatabaseRestorationList',
     'DedicatedDatabaseSpecification',
     'DedicatedDatabaseSpecificationList',
-    'DedicatedDatabaseSpecificationPricing',
     'DatabaseStatusConnections',
     'DatabaseStatusReplica',
     'DatabaseStatusVolume',
@@ -583,8 +615,15 @@ __all__ = [
     'Oauth2DeviceAuthorization',
     'Oauth2PAR',
     'Oauth2Token',
+    'Oauth2Introspection',
     'Oauth2Consent',
     'Oauth2ConsentToken',
+    'WafRuleBypass',
+    'WafRuleDeny',
+    'WafRuleChallenge',
+    'WafRuleRateLimit',
+    'WafRuleRedirect',
+    'WafRuleList',
     'Oauth2Project',
     'Oauth2Organization',
     'Oauth2ProjectList',
@@ -597,6 +636,9 @@ __all__ = [
     'BackupRestorationList',
     'DatabaseMigrationList',
     'DedicatedDatabaseList',
+    'DnsRecordsList',
+    'DomainPricesList',
+    'DomainsList',
     'AppsList',
     'AppSecretList',
     'AppScopeList',

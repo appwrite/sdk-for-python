@@ -10,7 +10,9 @@ client.set_session('') # The user session to authenticate with
 
 locale = Locale(client)
 
-result: LanguageList = locale.list_languages()
+result: LanguageList = locale.list_languages(
+    total = False # optional
+)
 
 print(result.model_dump())
 ```

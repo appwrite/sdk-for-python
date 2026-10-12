@@ -10,7 +10,9 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 sites = Sites(client)
 
-result: FrameworkList = sites.list_frameworks()
+result: FrameworkList = sites.list_frameworks(
+    total = False # optional
+)
 
 print(result.model_dump())
 ```

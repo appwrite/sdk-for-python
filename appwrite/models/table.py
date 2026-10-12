@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .column_boolean import ColumnBoolean
@@ -88,3 +88,30 @@ class Table(AppwriteModel):
     indexes: List[ColumnIndex] = Field(..., alias='indexes')
     bytesmax: float = Field(..., alias='bytesMax')
     bytesused: float = Field(..., alias='bytesUsed')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'databaseId' not in data and 'databaseid' not in data:
+            data['databaseId'] = ''
+        if 'name' not in data:
+            data['name'] = ''
+        if 'enabled' not in data:
+            data['enabled'] = True
+        if 'rowSecurity' not in data and 'rowsecurity' not in data:
+            data['rowSecurity'] = False
+        if 'bytesMax' not in data and 'bytesmax' not in data:
+            data['bytesMax'] = 0
+        if 'bytesUsed' not in data and 'bytesused' not in data:
+            data['bytesUsed'] = 0
+        return data

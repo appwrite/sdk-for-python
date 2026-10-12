@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -33,3 +33,26 @@ class ResourceToken(AppwriteModel):
     expire: str = Field(..., alias='expire')
     secret: str = Field(..., alias='secret')
     accessedat: str = Field(..., alias='accessedAt')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if 'resourceId' not in data and 'resourceid' not in data:
+            data['resourceId'] = ''
+        if 'resourceType' not in data and 'resourcetype' not in data:
+            data['resourceType'] = ''
+        if 'expire' not in data:
+            data['expire'] = ''
+        if 'secret' not in data:
+            data['secret'] = ''
+        if 'accessedAt' not in data and 'accessedat' not in data:
+            data['accessedAt'] = ''
+        return data

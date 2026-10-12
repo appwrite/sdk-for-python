@@ -1,11 +1,13 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .policy_password_dictionary import PolicyPasswordDictionary
 from .policy_password_history import PolicyPasswordHistory
 from .policy_password_strength import PolicyPasswordStrength
 from .policy_password_personal_data import PolicyPasswordPersonalData
+from .policy_password_pwned import PolicyPasswordPwned
+from .policy_password_rotation import PolicyPasswordRotation
 from .policy_session_alert import PolicySessionAlert
 from .policy_session_duration import PolicySessionDuration
 from .policy_session_invalidation import PolicySessionInvalidation
@@ -17,6 +19,7 @@ from .policy_deny_aliased_email import PolicyDenyAliasedEmail
 from .policy_deny_disposable_email import PolicyDenyDisposableEmail
 from .policy_deny_free_email import PolicyDenyFreeEmail
 from .policy_deny_corporate_email import PolicyDenyCorporateEmail
+from .policy_passkey import PolicyPasskey
 
 
 class PolicyList(AppwriteModel):
@@ -27,7 +30,7 @@ class PolicyList(AppwriteModel):
     ----------
     total : float
         Total number of policies in the given project.
-    policies : List[Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail]]
+    policies : List[Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicyPasswordPwned, PolicyPasswordRotation, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail, PolicyPasskey]]
         List of policies.
     """
 
@@ -38,6 +41,8 @@ class PolicyList(AppwriteModel):
             PolicyPasswordHistory,
             PolicyPasswordStrength,
             PolicyPasswordPersonalData,
+            PolicyPasswordPwned,
+            PolicyPasswordRotation,
             PolicySessionAlert,
             PolicySessionDuration,
             PolicySessionInvalidation,
@@ -49,5 +54,17 @@ class PolicyList(AppwriteModel):
             PolicyDenyDisposableEmail,
             PolicyDenyFreeEmail,
             PolicyDenyCorporateEmail,
+            PolicyPasskey,
         ]
     ] = Field(..., alias='policies')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'total' not in data:
+            data['total'] = 0
+        return data

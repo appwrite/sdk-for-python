@@ -6,14 +6,15 @@ from appwrite.utils.deprecated import deprecated
 from ..models.organization import Organization as OrganizationModel
 from ..models.app_installation_list import AppInstallationList
 from ..models.app_installation import AppInstallation
-from ..models.key_list import KeyList
-from ..enums.organization_key_scopes import OrganizationKeyScopes
-from ..models.key import Key
 from ..models.membership_list import MembershipList
 from ..models.membership import Membership
 from ..models.project_list import ProjectList
 from ..enums.region import Region
 from ..models.project import Project
+from ..models.key_list import KeyList
+from ..enums.project_key_scopes import ProjectKeyScopes
+from ..models.ephemeral_key import EphemeralKey
+from ..models.key import Key
 
 T = TypeVar('T')
 
@@ -131,6 +132,7 @@ class Organization(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -251,7 +253,7 @@ class Organization(Service):
 
         api_path = '/organization/installations/{installationId}'
         api_params = {}
-        if installation_id is None:
+        if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
 
@@ -294,7 +296,7 @@ class Organization(Service):
 
         api_path = '/organization/installations/{installationId}'
         api_params = {}
-        if installation_id is None:
+        if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
         if authorization_details is not None:
@@ -337,7 +339,7 @@ class Organization(Service):
 
         api_path = '/organization/installations/{installationId}'
         api_params = {}
-        if installation_id is None:
+        if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
 
@@ -348,246 +350,6 @@ class Organization(Service):
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
                 'accept': 'application/json',
-            },
-            api_params,
-        )
-
-        return response
-
-    def list_keys(
-        self,
-        queries: Optional[List[str]] = None,
-        total: Optional[bool] = None,
-    ) -> KeyList:
-        """
-        Get a list of all API keys from the current organization.
-
-        Parameters
-        ----------
-        queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: expire, accessedAt, name, scopes
-        total : Optional[bool]
-            When set to false, the total count returned will be 0 and will not be calculated.
-        Returns
-        -------
-        KeyList
-            API response as a typed Pydantic model
-
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/organization/keys'
-        api_params = {}
-        if queries is not None:
-            api_params['queries'] = self._normalize_value(queries)
-        if total is not None:
-            api_params['total'] = self._normalize_value(total)
-
-        response = self.client.call(
-            'get',
-            api_path,
-            {
-                'X-Appwrite-Project': self.client.get_config('project'),
-                'accept': 'application/json',
-            },
-            api_params,
-        )
-
-        return self._parse_response(response, model=KeyList)
-
-    def create_key(
-        self,
-        key_id: str,
-        name: str,
-        scopes: List[OrganizationKeyScopes],
-        expire: Optional[str] = None,
-    ) -> Key:
-        """
-        Create a new organization API key.
-
-        Parameters
-        ----------
-        key_id : str
-            Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-        name : str
-            Key name. Max length: 128 chars.
-        scopes : List[OrganizationKeyScopes]
-            Key scopes list. Maximum of 200 scopes are allowed.
-        expire : Optional[str]
-            Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
-        Returns
-        -------
-        Key
-            API response as a typed Pydantic model
-
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/organization/keys'
-        api_params = {}
-        if key_id is None:
-            raise AppwriteException('Missing required parameter: "key_id"')
-        if name is None:
-            raise AppwriteException('Missing required parameter: "name"')
-        if scopes is None:
-            raise AppwriteException('Missing required parameter: "scopes"')
-        api_params['keyId'] = self._normalize_value(key_id)
-        api_params['name'] = self._normalize_value(name)
-        api_params['scopes'] = self._normalize_value(scopes)
-        if expire is not None:
-            api_params['expire'] = self._normalize_value(expire)
-
-        response = self.client.call(
-            'post',
-            api_path,
-            {
-                'X-Appwrite-Project': self.client.get_config('project'),
-                'content-type': 'application/json',
-                'accept': 'application/json',
-            },
-            api_params,
-        )
-
-        return self._parse_response(response, model=Key)
-
-    def get_key(
-        self,
-        key_id: str,
-    ) -> Key:
-        """
-        Get a key by its unique ID. This endpoint returns details about a specific API key in your organization including its scopes.
-
-        Parameters
-        ----------
-        key_id : str
-            Key unique ID.
-        Returns
-        -------
-        Key
-            API response as a typed Pydantic model
-
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/organization/keys/{keyId}'
-        api_params = {}
-        if key_id is None:
-            raise AppwriteException('Missing required parameter: "key_id"')
-        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
-
-        response = self.client.call(
-            'get',
-            api_path,
-            {
-                'X-Appwrite-Project': self.client.get_config('project'),
-                'accept': 'application/json',
-            },
-            api_params,
-        )
-
-        return self._parse_response(response, model=Key)
-
-    def update_key(
-        self,
-        key_id: str,
-        name: str,
-        scopes: List[OrganizationKeyScopes],
-        expire: Optional[str] = None,
-    ) -> Key:
-        """
-        Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
-
-        Parameters
-        ----------
-        key_id : str
-            Key unique ID.
-        name : str
-            Key name. Max length: 128 chars.
-        scopes : List[OrganizationKeyScopes]
-            Key scopes list. Maximum of 200 scopes are allowed.
-        expire : Optional[str]
-            Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
-        Returns
-        -------
-        Key
-            API response as a typed Pydantic model
-
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/organization/keys/{keyId}'
-        api_params = {}
-        if key_id is None:
-            raise AppwriteException('Missing required parameter: "key_id"')
-        if name is None:
-            raise AppwriteException('Missing required parameter: "name"')
-        if scopes is None:
-            raise AppwriteException('Missing required parameter: "scopes"')
-        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
-        api_params['name'] = self._normalize_value(name)
-        api_params['scopes'] = self._normalize_value(scopes)
-        if expire is not None:
-            api_params['expire'] = self._normalize_value(expire)
-
-        response = self.client.call(
-            'put',
-            api_path,
-            {
-                'X-Appwrite-Project': self.client.get_config('project'),
-                'content-type': 'application/json',
-                'accept': 'application/json',
-            },
-            api_params,
-        )
-
-        return self._parse_response(response, model=Key)
-
-    def delete_key(
-        self,
-        key_id: str,
-    ) -> Dict[str, Any]:
-        """
-        Delete a key by its unique ID. Once deleted, the key can no longer be used to authenticate API calls.
-
-        Parameters
-        ----------
-        key_id : str
-            Key unique ID.
-        Returns
-        -------
-        Dict[str, Any]
-            API response as a dictionary
-
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/organization/keys/{keyId}'
-        api_params = {}
-        if key_id is None:
-            raise AppwriteException('Missing required parameter: "key_id"')
-        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
-
-        response = self.client.call(
-            'delete',
-            api_path,
-            {
-                'X-Appwrite-Project': self.client.get_config('project'),
-                'content-type': 'application/json',
             },
             api_params,
         )
@@ -733,7 +495,7 @@ class Organization(Service):
 
         api_path = '/organization/memberships/{membershipId}'
         api_params = {}
-        if membership_id is None:
+        if membership_id is None or membership_id == '':
             raise AppwriteException('Missing required parameter: "membership_id"')
         api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
 
@@ -776,7 +538,7 @@ class Organization(Service):
 
         api_path = '/organization/memberships/{membershipId}'
         api_params = {}
-        if membership_id is None:
+        if membership_id is None or membership_id == '':
             raise AppwriteException('Missing required parameter: "membership_id"')
         if roles is None:
             raise AppwriteException('Missing required parameter: "roles"')
@@ -820,7 +582,7 @@ class Organization(Service):
 
         api_path = '/organization/memberships/{membershipId}'
         api_params = {}
-        if membership_id is None:
+        if membership_id is None or membership_id == '':
             raise AppwriteException('Missing required parameter: "membership_id"')
         api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
 
@@ -830,6 +592,7 @@ class Organization(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -961,7 +724,7 @@ class Organization(Service):
 
         api_path = '/organization/projects/{projectId}'
         api_params = {}
-        if project_id is None:
+        if project_id is None or project_id == '':
             raise AppwriteException('Missing required parameter: "project_id"')
         api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
 
@@ -970,6 +733,7 @@ class Organization(Service):
             api_path,
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -1003,7 +767,7 @@ class Organization(Service):
 
         api_path = '/organization/projects/{projectId}'
         api_params = {}
-        if project_id is None:
+        if project_id is None or project_id == '':
             raise AppwriteException('Missing required parameter: "project_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -1047,7 +811,7 @@ class Organization(Service):
 
         api_path = '/organization/projects/{projectId}'
         api_params = {}
-        if project_id is None:
+        if project_id is None or project_id == '':
             raise AppwriteException('Missing required parameter: "project_id"')
         api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
 
@@ -1057,6 +821,269 @@ class Organization(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return response
+
+    def list_project_keys(
+        self,
+        project_id: str,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
+    ) -> KeyList:
+        """
+        Get a list of all API keys of a project in your organization.
+
+        Parameters
+        ----------
+        project_id : str
+            Project unique ID.
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: expire, accessedAt, name, scopes
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        Returns
+        -------
+        KeyList
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/projects/{projectId}/keys'
+        api_params = {}
+        if project_id is None or project_id == '':
+            raise AppwriteException('Missing required parameter: "project_id"')
+        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=KeyList)
+
+    def create_ephemeral_project_key(
+        self,
+        project_id: str,
+        scopes: List[ProjectKeyScopes],
+        duration: float,
+    ) -> EphemeralKey:
+        """
+        Create a new ephemeral API key for a project in your organization. It's recommended to have multiple API keys with strict scopes for separate functions within your project.
+
+        You can also create a standard API key if you need a longer-lived key instead.
+
+        Parameters
+        ----------
+        project_id : str
+            Project unique ID.
+        scopes : List[ProjectKeyScopes]
+            Key scopes list. Maximum of 200 scopes are allowed.
+        duration : float
+            Time in seconds before ephemeral key expires. Maximum duration is 3600 seconds.
+        Returns
+        -------
+        EphemeralKey
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/projects/{projectId}/keys/ephemeral'
+        api_params = {}
+        if project_id is None or project_id == '':
+            raise AppwriteException('Missing required parameter: "project_id"')
+        if scopes is None:
+            raise AppwriteException('Missing required parameter: "scopes"')
+        if duration is None:
+            raise AppwriteException('Missing required parameter: "duration"')
+        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
+        api_params['scopes'] = self._normalize_value(scopes)
+        api_params['duration'] = self._normalize_value(duration)
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=EphemeralKey)
+
+    def get_project_key(
+        self,
+        project_id: str,
+        key_id: str,
+    ) -> Key:
+        """
+        Get a project key by its unique ID.
+
+        Parameters
+        ----------
+        project_id : str
+            Project unique ID.
+        key_id : str
+            Key ID.
+        Returns
+        -------
+        Key
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/projects/{projectId}/keys/{keyId}'
+        api_params = {}
+        if project_id is None or project_id == '':
+            raise AppwriteException('Missing required parameter: "project_id"')
+        if key_id is None or key_id == '':
+            raise AppwriteException('Missing required parameter: "key_id"')
+        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
+        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Key)
+
+    def update_project_key(
+        self,
+        project_id: str,
+        key_id: str,
+        name: str,
+        scopes: List[ProjectKeyScopes],
+        expire: Optional[str] = None,
+    ) -> Key:
+        """
+        Update a project key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
+
+        Parameters
+        ----------
+        project_id : str
+            Project unique ID.
+        key_id : str
+            Key ID.
+        name : str
+            Key name. Max length: 128 chars.
+        scopes : List[ProjectKeyScopes]
+            Key scopes list. Maximum of 200 scopes are allowed.
+        expire : Optional[str]
+            Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+        Returns
+        -------
+        Key
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/projects/{projectId}/keys/{keyId}'
+        api_params = {}
+        if project_id is None or project_id == '':
+            raise AppwriteException('Missing required parameter: "project_id"')
+        if key_id is None or key_id == '':
+            raise AppwriteException('Missing required parameter: "key_id"')
+        if name is None:
+            raise AppwriteException('Missing required parameter: "name"')
+        if scopes is None:
+            raise AppwriteException('Missing required parameter: "scopes"')
+        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
+        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
+        api_params['name'] = self._normalize_value(name)
+        api_params['scopes'] = self._normalize_value(scopes)
+        if expire is not None:
+            api_params['expire'] = self._normalize_value(expire)
+
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Key)
+
+    def delete_project_key(
+        self,
+        project_id: str,
+        key_id: str,
+    ) -> Dict[str, Any]:
+        """
+        Delete a project key by its unique ID. Once deleted, the key can no longer be used to authenticate API calls.
+
+        Parameters
+        ----------
+        project_id : str
+            Project unique ID.
+        key_id : str
+            Key ID.
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/projects/{projectId}/keys/{keyId}'
+        api_params = {}
+        if project_id is None or project_id == '':
+            raise AppwriteException('Missing required parameter: "project_id"')
+        if key_id is None or key_id == '':
+            raise AppwriteException('Missing required parameter: "key_id"')
+        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
+        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
+
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )

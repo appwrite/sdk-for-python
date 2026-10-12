@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from ..enums.message_status import MessageStatus
@@ -52,3 +52,26 @@ class Message(AppwriteModel):
     deliveredtotal: float = Field(..., alias='deliveredTotal')
     data: Dict[str, Any] = Field(..., alias='data')
     status: MessageStatus = Field(..., alias='status')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'providerType' not in data and 'providertype' not in data:
+            data['providerType'] = ''
+        if 'deliveredTotal' not in data and 'deliveredtotal' not in data:
+            data['deliveredTotal'] = 0
+        if 'data' not in data:
+            data['data'] = []
+        if 'status' not in data:
+            data['status'] = 'draft'
+        return data

@@ -52,9 +52,15 @@ class Locale(Service):
 
     def list_codes(
         self,
+        total: Optional[bool] = None,
     ) -> LocaleCodeList:
         """
         List of all locale codes in [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes).
+
+        Parameters
+        ----------
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         LocaleCodeList
@@ -68,6 +74,8 @@ class Locale(Service):
 
         api_path = '/locale/codes'
         api_params = {}
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -83,9 +91,15 @@ class Locale(Service):
 
     def list_continents(
         self,
+        total: Optional[bool] = None,
     ) -> ContinentList:
         """
         List of all continents. You can use the locale header to get the data in a supported language.
+
+        Parameters
+        ----------
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         ContinentList
@@ -99,6 +113,8 @@ class Locale(Service):
 
         api_path = '/locale/continents'
         api_params = {}
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -114,9 +130,15 @@ class Locale(Service):
 
     def list_countries(
         self,
+        total: Optional[bool] = None,
     ) -> CountryList:
         """
         List of all countries. You can use the locale header to get the data in a supported language.
+
+        Parameters
+        ----------
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         CountryList
@@ -130,6 +152,8 @@ class Locale(Service):
 
         api_path = '/locale/countries'
         api_params = {}
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -145,9 +169,15 @@ class Locale(Service):
 
     def list_countries_eu(
         self,
+        total: Optional[bool] = None,
     ) -> CountryList:
         """
         List of all countries that are currently members of the EU. You can use the locale header to get the data in a supported language.
+
+        Parameters
+        ----------
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         CountryList
@@ -161,6 +191,8 @@ class Locale(Service):
 
         api_path = '/locale/countries/eu'
         api_params = {}
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -176,9 +208,15 @@ class Locale(Service):
 
     def list_countries_phones(
         self,
+        total: Optional[bool] = None,
     ) -> PhoneList:
         """
         List of all countries phone codes. You can use the locale header to get the data in a supported language.
+
+        Parameters
+        ----------
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         PhoneList
@@ -192,6 +230,8 @@ class Locale(Service):
 
         api_path = '/locale/countries/phones'
         api_params = {}
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -207,9 +247,15 @@ class Locale(Service):
 
     def list_currencies(
         self,
+        total: Optional[bool] = None,
     ) -> CurrencyList:
         """
         List of all currencies, including currency symbol, name, plural, and decimal digits for all major and minor currencies. You can use the locale header to get the data in a supported language.
+
+        Parameters
+        ----------
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         CurrencyList
@@ -223,6 +269,8 @@ class Locale(Service):
 
         api_path = '/locale/currencies'
         api_params = {}
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -238,9 +286,15 @@ class Locale(Service):
 
     def list_languages(
         self,
+        total: Optional[bool] = None,
     ) -> LanguageList:
         """
         List of all languages classified by ISO 639-1 including 2-letter code, name in English, and name in the respective language.
+
+        Parameters
+        ----------
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         LanguageList
@@ -254,6 +308,8 @@ class Locale(Service):
 
         api_path = '/locale/languages'
         api_params = {}
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',

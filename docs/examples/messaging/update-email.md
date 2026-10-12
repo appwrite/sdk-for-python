@@ -12,17 +12,19 @@ messaging = Messaging(client)
 
 result: Message = messaging.update_email(
     message_id = '<MESSAGE_ID>',
+    subject = '<SUBJECT>', # optional
+    content = '<CONTENT>', # optional
     topics = [], # optional
     users = [], # optional
     targets = [], # optional
-    subject = '<SUBJECT>', # optional
-    content = '<CONTENT>', # optional
-    draft = False, # optional
-    html = False, # optional
     cc = [], # optional
     bcc = [], # optional
-    scheduled_at = '2020-10-15T06:38:00.000+00:00', # optional
-    attachments = [] # optional
+    attachments = [], # optional
+    reply_to_email = 'email@example.com', # optional
+    reply_to_name = '<REPLY_TO_NAME>', # optional
+    draft = False, # optional
+    html = False, # optional
+    scheduled_at = '2020-10-15T06:38:00.000+00:00' # optional
 )
 
 print(result.model_dump())

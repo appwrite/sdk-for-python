@@ -82,7 +82,7 @@ class Advisor(Service):
 
         api_path = '/reports/{reportId}'
         api_params = {}
-        if report_id is None:
+        if report_id is None or report_id == '':
             raise AppwriteException('Missing required parameter: "report_id"')
         api_path = api_path.replace('{reportId}', str(self._normalize_value(report_id)))
 
@@ -122,7 +122,7 @@ class Advisor(Service):
 
         api_path = '/reports/{reportId}'
         api_params = {}
-        if report_id is None:
+        if report_id is None or report_id == '':
             raise AppwriteException('Missing required parameter: "report_id"')
         api_path = api_path.replace('{reportId}', str(self._normalize_value(report_id)))
 
@@ -132,6 +132,7 @@ class Advisor(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -168,7 +169,7 @@ class Advisor(Service):
 
         api_path = '/reports/{reportId}/insights'
         api_params = {}
-        if report_id is None:
+        if report_id is None or report_id == '':
             raise AppwriteException('Missing required parameter: "report_id"')
         api_path = api_path.replace('{reportId}', str(self._normalize_value(report_id)))
         if queries is not None:
@@ -215,9 +216,9 @@ class Advisor(Service):
 
         api_path = '/reports/{reportId}/insights/{insightId}'
         api_params = {}
-        if report_id is None:
+        if report_id is None or report_id == '':
             raise AppwriteException('Missing required parameter: "report_id"')
-        if insight_id is None:
+        if insight_id is None or insight_id == '':
             raise AppwriteException('Missing required parameter: "insight_id"')
         api_path = api_path.replace('{reportId}', str(self._normalize_value(report_id)))
         api_path = api_path.replace('{insightId}', str(self._normalize_value(insight_id)))

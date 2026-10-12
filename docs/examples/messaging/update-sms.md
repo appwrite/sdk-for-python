@@ -12,10 +12,10 @@ messaging = Messaging(client)
 
 result: Message = messaging.update_sms(
     message_id = '<MESSAGE_ID>',
+    content = '<CONTENT>', # optional
     topics = [], # optional
     users = [], # optional
     targets = [], # optional
-    content = '<CONTENT>', # optional
     draft = False, # optional
     scheduled_at = '2020-10-15T06:38:00.000+00:00' # optional
 )

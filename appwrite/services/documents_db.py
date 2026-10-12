@@ -144,7 +144,7 @@ class DocumentsDB(Service):
         self,
     ) -> DedicatedDatabaseSpecificationList:
         """
-        List the dedicated database specifications available on the current plan. Each specification reports its resource limits, pricing, and whether it is enabled for the organization.
+        List the dedicated database specifications available on the current plan. Each specification reports its resource limits, its own prices and overage rates, and whether it is enabled for the organization.
         Returns
         -------
         DedicatedDatabaseSpecificationList
@@ -174,6 +174,7 @@ class DocumentsDB(Service):
     def list_transactions(
         self,
         queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
     ) -> TransactionList:
         """
         List transactions across all databases.
@@ -182,6 +183,8 @@ class DocumentsDB(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         TransactionList
@@ -197,6 +200,8 @@ class DocumentsDB(Service):
         api_params = {}
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -274,7 +279,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/transactions/{transactionId}'
         api_params = {}
-        if transaction_id is None:
+        if transaction_id is None or transaction_id == '':
             raise AppwriteException('Missing required parameter: "transaction_id"')
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
@@ -320,7 +325,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/transactions/{transactionId}'
         api_params = {}
-        if transaction_id is None:
+        if transaction_id is None or transaction_id == '':
             raise AppwriteException('Missing required parameter: "transaction_id"')
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
         if commit is not None:
@@ -365,7 +370,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/transactions/{transactionId}'
         api_params = {}
-        if transaction_id is None:
+        if transaction_id is None or transaction_id == '':
             raise AppwriteException('Missing required parameter: "transaction_id"')
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
@@ -375,6 +380,7 @@ class DocumentsDB(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -408,7 +414,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/transactions/{transactionId}/operations'
         api_params = {}
-        if transaction_id is None:
+        if transaction_id is None or transaction_id == '':
             raise AppwriteException('Missing required parameter: "transaction_id"')
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
         if operations is not None:
@@ -451,7 +457,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
@@ -506,7 +512,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -558,7 +564,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
@@ -568,6 +574,7 @@ class DocumentsDB(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -607,7 +614,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if queries is not None:
@@ -674,7 +681,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         if collection_id is None:
             raise AppwriteException('Missing required parameter: "collection_id"')
@@ -734,9 +741,9 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -795,9 +802,9 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -853,9 +860,9 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -866,6 +873,7 @@ class DocumentsDB(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -915,9 +923,9 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -985,9 +993,9 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
         if document_id is None:
             raise AppwriteException('Missing required parameter: "document_id"')
@@ -1052,9 +1060,9 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
         if documents is None:
             raise AppwriteException('Missing required parameter: "documents"')
@@ -1114,9 +1122,9 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
         if documents is None:
             raise AppwriteException('Missing required parameter: "documents"')
@@ -1179,9 +1187,9 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -1242,9 +1250,9 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -1306,11 +1314,11 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
-        if document_id is None:
+        if document_id is None or document_id == '':
             raise AppwriteException('Missing required parameter: "document_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -1375,11 +1383,11 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
-        if document_id is None:
+        if document_id is None or document_id == '':
             raise AppwriteException('Missing required parameter: "document_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -1447,11 +1455,11 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
-        if document_id is None:
+        if document_id is None or document_id == '':
             raise AppwriteException('Missing required parameter: "document_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -1509,11 +1517,11 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
-        if document_id is None:
+        if document_id is None or document_id == '':
             raise AppwriteException('Missing required parameter: "document_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -1527,6 +1535,7 @@ class DocumentsDB(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -1579,13 +1588,13 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/decrement'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
-        if document_id is None:
+        if document_id is None or document_id == '':
             raise AppwriteException('Missing required parameter: "document_id"')
-        if attribute is None:
+        if attribute is None or attribute == '':
             raise AppwriteException('Missing required parameter: "attribute"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -1657,13 +1666,13 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/increment'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
-        if document_id is None:
+        if document_id is None or document_id == '':
             raise AppwriteException('Missing required parameter: "document_id"')
-        if attribute is None:
+        if attribute is None or attribute == '':
             raise AppwriteException('Missing required parameter: "attribute"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -1722,9 +1731,9 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/indexes'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -1788,9 +1797,9 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/indexes'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
         if key is None:
             raise AppwriteException('Missing required parameter: "key"')
@@ -1851,11 +1860,11 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/indexes/{key}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
-        if key is None:
+        if key is None or key == '':
             raise AppwriteException('Missing required parameter: "key"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -1903,11 +1912,11 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/collections/{collectionId}/indexes/{key}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if collection_id is None:
+        if collection_id is None or collection_id == '':
             raise AppwriteException('Missing required parameter: "collection_id"')
-        if key is None:
+        if key is None or key == '':
             raise AppwriteException('Missing required parameter: "key"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
@@ -1919,6 +1928,7 @@ class DocumentsDB(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -1952,7 +1962,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/failovers'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if target_replica_id is not None:
@@ -2004,7 +2014,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/operations'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if status is not None:
@@ -2050,7 +2060,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/replicas'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
@@ -2090,7 +2100,7 @@ class DocumentsDB(Service):
 
         api_path = '/documentsdb/{databaseId}/status'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 

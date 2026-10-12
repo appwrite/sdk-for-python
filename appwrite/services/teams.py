@@ -89,7 +89,7 @@ class Teams(Service):
         name : str
             Team name. Max length: 128 chars.
         roles : Optional[List[str]]
-            Array of strings. Use this param to set the roles in the team for the user who created it. The default role is **owner**. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 32 characters long.
+            Array of strings. Use this param to set the roles in the team for the user who created it. The default role is **owner**. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 81 characters long.
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
 
@@ -156,7 +156,7 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
         api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
 
@@ -203,7 +203,7 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -247,7 +247,7 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
         api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
 
@@ -257,6 +257,7 @@ class Teams(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -293,7 +294,7 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/installations'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
         api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
         if queries is not None:
@@ -343,7 +344,7 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/installations'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
         if app_id is None:
             raise AppwriteException('Missing required parameter: "app_id"')
@@ -392,9 +393,9 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/installations/{installationId}'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
-        if installation_id is None:
+        if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
         api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
@@ -441,9 +442,9 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/installations/{installationId}'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
-        if installation_id is None:
+        if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
         api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
@@ -490,9 +491,9 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/installations/{installationId}'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
-        if installation_id is None:
+        if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
         api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
@@ -543,7 +544,7 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/memberships'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
         api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
         if queries is not None:
@@ -569,6 +570,7 @@ class Teams(Service):
         self,
         team_id: str,
         roles: List[str],
+        membership_id: Optional[str] = None,
         email: Optional[str] = None,
         user_id: Optional[str] = None,
         phone: Optional[str] = None,
@@ -590,6 +592,8 @@ class Teams(Service):
             Team ID.
         roles : List[str]
             Array of strings. Use this param to set the user roles in the team. A role can be any string. Learn more about [roles and permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 81 characters long.
+        membership_id : Optional[str]
+            Membership ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         email : Optional[str]
             Email of the new team member.
         user_id : Optional[str]
@@ -613,11 +617,13 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/memberships'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
         if roles is None:
             raise AppwriteException('Missing required parameter: "roles"')
         api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
+        if membership_id is not None:
+            api_params['membershipId'] = self._normalize_value(membership_id)
         if email is not None:
             api_params['email'] = self._normalize_value(email)
         if user_id is not None:
@@ -670,9 +676,9 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/memberships/{membershipId}'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
-        if membership_id is None:
+        if membership_id is None or membership_id == '':
             raise AppwriteException('Missing required parameter: "membership_id"')
         api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
         api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
@@ -719,9 +725,9 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/memberships/{membershipId}'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
-        if membership_id is None:
+        if membership_id is None or membership_id == '':
             raise AppwriteException('Missing required parameter: "membership_id"')
         if roles is None:
             raise AppwriteException('Missing required parameter: "roles"')
@@ -769,9 +775,9 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/memberships/{membershipId}'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
-        if membership_id is None:
+        if membership_id is None or membership_id == '':
             raise AppwriteException('Missing required parameter: "membership_id"')
         api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
         api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
@@ -782,6 +788,7 @@ class Teams(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -823,9 +830,9 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/memberships/{membershipId}/status'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
-        if membership_id is None:
+        if membership_id is None or membership_id == '':
             raise AppwriteException('Missing required parameter: "membership_id"')
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -877,7 +884,7 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/prefs'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
         api_path = api_path.replace('{teamId}', str(self._normalize_value(team_id)))
 
@@ -924,7 +931,7 @@ class Teams(Service):
 
         api_path = '/teams/{teamId}/prefs'
         api_params = {}
-        if team_id is None:
+        if team_id is None or team_id == '':
             raise AppwriteException('Missing required parameter: "team_id"')
         if prefs is None:
             raise AppwriteException('Missing required parameter: "prefs"')

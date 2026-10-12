@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -36,3 +36,26 @@ class Runtime(AppwriteModel):
     image: str = Field(..., alias='image')
     logo: str = Field(..., alias='logo')
     supports: List[Any] = Field(..., alias='supports')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if 'key' not in data:
+            data['key'] = ''
+        if 'name' not in data:
+            data['name'] = ''
+        if 'version' not in data:
+            data['version'] = ''
+        if 'base' not in data:
+            data['base'] = ''
+        if 'image' not in data:
+            data['image'] = ''
+        if 'logo' not in data:
+            data['logo'] = ''
+        return data

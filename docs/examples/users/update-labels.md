@@ -12,7 +12,7 @@ users = Users(client)
 
 result: User = users.update_labels(
     user_id = '<USER_ID>',
-    labels = []
+    labels = ["subscriber"]
 )
 
 print(result.model_dump())

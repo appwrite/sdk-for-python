@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .dedicated_database_member import DedicatedDatabaseMember
@@ -37,3 +37,22 @@ class DedicatedDatabaseReplicas(AppwriteModel):
     syncstandbycount: float = Field(..., alias='syncStandbyCount')
     syncstateconfirmed: Optional[bool] = Field(default=None, alias='syncStateConfirmed')
     members: List[DedicatedDatabaseMember] = Field(..., alias='members')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'replicas' not in data:
+            data['replicas'] = 0
+        if 'syncMode' not in data and 'syncmode' not in data:
+            data['syncMode'] = 'async'
+        if 'syncDegraded' not in data and 'syncdegraded' not in data:
+            data['syncDegraded'] = False
+        if 'syncAcknowledgements' not in data and 'syncacknowledgements' not in data:
+            data['syncAcknowledgements'] = 0
+        if 'syncStandbyCount' not in data and 'syncstandbycount' not in data:
+            data['syncStandbyCount'] = 0
+        return data

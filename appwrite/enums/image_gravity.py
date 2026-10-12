@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class ImageGravity(Enum):
+    AUTO = "auto"
     CENTER = "center"
     TOP_LEFT = "top-left"
     TOP = "top"

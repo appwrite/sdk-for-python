@@ -63,72 +63,6 @@ class OrganizationServiceTest(unittest.TestCase):
                 "usageLogs": 30.0,
                 "projectInactivityDays": 7.0,
                 "alertLimit": 80.0,
-                "usage": {
-                    "bandwidth": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "executions": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "realtime": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "realtimeMessages": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "storage": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "users": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "GBHours": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "imageTransformations": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                },
                 "addons": {},
                 "budgetCapEnabled": True,
                 "customSmtp": True,
@@ -162,13 +96,6 @@ class OrganizationServiceTest(unittest.TestCase):
                 "databaseComputeCredit": 10,
             },
             "billingEmail": "billing@org.example",
-            "billingStartDate": "2020-10-15T06:38:00.000+00:00",
-            "billingCurrentInvoiceDate": "2020-10-15T06:38:00.000+00:00",
-            "billingNextInvoiceDate": "2020-10-15T06:38:00.000+00:00",
-            "billingTrialDays": 14.0,
-            "billingAggregationId": "adbc3de4rddfsd",
-            "billingInvoiceId": "adbc3de4rddfsd",
-            "paymentMethodId": "adbc3de4rddfsd",
             "status": "active",
             "markedForDeletion": True,
             "platform": "imagine",
@@ -233,72 +160,6 @@ class OrganizationServiceTest(unittest.TestCase):
                 "usageLogs": 30.0,
                 "projectInactivityDays": 7.0,
                 "alertLimit": 80.0,
-                "usage": {
-                    "bandwidth": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "executions": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "realtime": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "realtimeMessages": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "storage": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "users": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "GBHours": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                    "imageTransformations": {
-                        "name": "",
-                        "unit": "GB",
-                        "currency": "USD",
-                        "price": 5,
-                        "value": 25.0,
-                        "invoiceDesc": "",
-                    },
-                },
                 "addons": {},
                 "budgetCapEnabled": True,
                 "customSmtp": True,
@@ -332,13 +193,6 @@ class OrganizationServiceTest(unittest.TestCase):
                 "databaseComputeCredit": 10,
             },
             "billingEmail": "billing@org.example",
-            "billingStartDate": "2020-10-15T06:38:00.000+00:00",
-            "billingCurrentInvoiceDate": "2020-10-15T06:38:00.000+00:00",
-            "billingNextInvoiceDate": "2020-10-15T06:38:00.000+00:00",
-            "billingTrialDays": 14.0,
-            "billingAggregationId": "adbc3de4rddfsd",
-            "billingInvoiceId": "adbc3de4rddfsd",
-            "paymentMethodId": "adbc3de4rddfsd",
             "status": "active",
             "markedForDeletion": True,
             "platform": "imagine",
@@ -472,116 +326,6 @@ class OrganizationServiceTest(unittest.TestCase):
         )
         response = self.organization.delete_installation(
             '<INSTALLATION_ID>',
-        )
-        self.assertEqual(response, data)
-
-    @requests_mock.Mocker()
-    def test_list_keys(self, m):
-        data = {
-            "total": 5.0,
-            "keys": [],
-        }
-        headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
-        )
-        response = self.organization.list_keys()
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
-    def test_create_key(self, m):
-        data = {
-            "$id": "5e5ea5c16897e",
-            "$createdAt": "2020-10-15T06:38:00.000+00:00",
-            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
-            "name": "My API Key",
-            "expire": "2020-10-15T06:38:00.000+00:00",
-            "scopes": [],
-            "secret": "919c2d18fb5d4...a2ae413da83346ad2",
-            "accessedAt": "2020-10-15T06:38:00.000+00:00",
-            "sdks": [],
-        }
-        headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
-        )
-        response = self.organization.create_key(
-            '<KEY_ID>',
-            '<NAME>',
-            [],
-        )
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
-    def test_get_key(self, m):
-        data = {
-            "$id": "5e5ea5c16897e",
-            "$createdAt": "2020-10-15T06:38:00.000+00:00",
-            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
-            "name": "My API Key",
-            "expire": "2020-10-15T06:38:00.000+00:00",
-            "scopes": [],
-            "secret": "919c2d18fb5d4...a2ae413da83346ad2",
-            "accessedAt": "2020-10-15T06:38:00.000+00:00",
-            "sdks": [],
-        }
-        headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
-        )
-        response = self.organization.get_key(
-            '<KEY_ID>',
-        )
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
-    def test_update_key(self, m):
-        data = {
-            "$id": "5e5ea5c16897e",
-            "$createdAt": "2020-10-15T06:38:00.000+00:00",
-            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
-            "name": "My API Key",
-            "expire": "2020-10-15T06:38:00.000+00:00",
-            "scopes": [],
-            "secret": "919c2d18fb5d4...a2ae413da83346ad2",
-            "accessedAt": "2020-10-15T06:38:00.000+00:00",
-            "sdks": [],
-        }
-        headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
-        )
-        response = self.organization.update_key(
-            '<KEY_ID>',
-            '<NAME>',
-            [],
-        )
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
-    def test_delete_key(self, m):
-        data = ''
-        headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
-        )
-        response = self.organization.delete_key(
-            '<KEY_ID>',
         )
         self.assertEqual(response, data)
 
@@ -735,7 +479,6 @@ class OrganizationServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -779,7 +522,6 @@ class OrganizationServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -822,7 +564,6 @@ class OrganizationServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -869,5 +610,120 @@ class OrganizationServiceTest(unittest.TestCase):
         )
         response = self.organization.delete_project(
             '<PROJECT_ID>',
+        )
+        self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
+    def test_list_project_keys(self, m):
+        data = {
+            "total": 5.0,
+            "keys": [],
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.organization.list_project_keys(
+            '<PROJECT_ID>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_ephemeral_project_key(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "My API Key",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "scopes": [],
+            "secret": "919c2d18fb5d4...a2ae413da83346ad2",
+            "accessedAt": "2020-10-15T06:38:00.000+00:00",
+            "sdks": [],
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.organization.create_ephemeral_project_key(
+            '<PROJECT_ID>',
+            [],
+            1,
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_project_key(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "My API Key",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "scopes": [],
+            "secret": "919c2d18fb5d4...a2ae413da83346ad2",
+            "accessedAt": "2020-10-15T06:38:00.000+00:00",
+            "sdks": [],
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.organization.get_project_key(
+            '<PROJECT_ID>',
+            '<KEY_ID>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_project_key(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "My API Key",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "scopes": [],
+            "secret": "919c2d18fb5d4...a2ae413da83346ad2",
+            "accessedAt": "2020-10-15T06:38:00.000+00:00",
+            "sdks": [],
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.organization.update_project_key(
+            '<PROJECT_ID>',
+            '<KEY_ID>',
+            '<NAME>',
+            [],
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_delete_project_key(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.organization.delete_project_key(
+            '<PROJECT_ID>',
+            '<KEY_ID>',
         )
         self.assertEqual(response, data)

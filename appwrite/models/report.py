@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .insight import Insight
@@ -49,3 +49,32 @@ class Report(AppwriteModel):
     categories: List[Any] = Field(..., alias='categories')
     insights: List[Insight] = Field(..., alias='insights')
     analyzedat: Optional[str] = Field(default=None, alias='analyzedAt')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'appId' not in data and 'appid' not in data:
+            data['appId'] = ''
+        if 'type' not in data:
+            data['type'] = ''
+        if 'title' not in data:
+            data['title'] = ''
+        if 'summary' not in data:
+            data['summary'] = ''
+        if 'targetType' not in data and 'targettype' not in data:
+            data['targetType'] = ''
+        if 'target' not in data:
+            data['target'] = ''
+        if 'categories' not in data:
+            data['categories'] = []
+        return data

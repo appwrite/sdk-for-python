@@ -503,24 +503,6 @@ class UsersServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
-    def test_list_logs(self, m):
-        data = {
-            "total": 5.0,
-            "logs": [],
-        }
-        headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
-        )
-        response = self.users.list_logs(
-            '<USER_ID>',
-        )
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
     def test_list_memberships(self, m):
         data = {
             "total": 5.0,
@@ -834,6 +816,85 @@ class UsersServiceTest(unittest.TestCase):
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_list_passkeys(self, m):
+        data = {
+            "total": 5.0,
+            "passkeys": [],
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.users.list_passkeys(
+            '<USER_ID>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_passkey(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "My laptop",
+            "accessedAt": "2020-10-15T06:38:00.000+00:00",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.users.get_passkey(
+            '<USER_ID>',
+            '<PASSKEY_ID>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_passkey(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "My laptop",
+            "accessedAt": "2020-10-15T06:38:00.000+00:00",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.users.update_passkey(
+            '<USER_ID>',
+            '<PASSKEY_ID>',
+            '<NAME>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_delete_passkey(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.users.delete_passkey(
+            '<USER_ID>',
+            '<PASSKEY_ID>',
+        )
+        self.assertEqual(response, data)
 
     @requests_mock.Mocker()
     def test_update_password(self, m):

@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -27,3 +27,22 @@ class MfaFactors(AppwriteModel):
     email: bool = Field(..., alias='email')
     recoverycode: bool = Field(..., alias='recoveryCode')
     custom: bool = Field(..., alias='custom')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'totp' not in data:
+            data['totp'] = False
+        if 'phone' not in data:
+            data['phone'] = False
+        if 'email' not in data:
+            data['email'] = False
+        if 'recoveryCode' not in data and 'recoverycode' not in data:
+            data['recoveryCode'] = False
+        if 'custom' not in data:
+            data['custom'] = False
+        return data

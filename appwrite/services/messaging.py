@@ -33,7 +33,7 @@ class Messaging(Service):
         Parameters
         ----------
         queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: scheduledAt, deliveredAt, deliveredTotal, status, description, providerType
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: scheduledAt, deliveredAt, deliveredTotal, status, description, providerType, users, targets
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
@@ -81,6 +81,8 @@ class Messaging(Service):
         cc: Optional[List[str]] = None,
         bcc: Optional[List[str]] = None,
         attachments: Optional[List[str]] = None,
+        reply_to_email: Optional[str] = None,
+        reply_to_name: Optional[str] = None,
         draft: Optional[bool] = None,
         html: Optional[bool] = None,
         scheduled_at: Optional[str] = None,
@@ -108,6 +110,10 @@ class Messaging(Service):
             Array of target IDs to be added as BCC.
         attachments : Optional[List[str]]
             Array of compound ID strings of bucket IDs and file IDs to be attached to the email. They should be formatted as <BUCKET_ID>:<FILE_ID>.
+        reply_to_email : Optional[str]
+            Email address to reply to. If not set, defaults to the sender email address.
+        reply_to_name : Optional[str]
+            Name of the reply to recipient. If not set, defaults to the sender name.
         draft : Optional[bool]
             Is message a draft
         html : Optional[bool]
@@ -148,6 +154,10 @@ class Messaging(Service):
             api_params['bcc'] = self._normalize_value(bcc)
         if attachments is not None:
             api_params['attachments'] = self._normalize_value(attachments)
+        if reply_to_email is not None:
+            api_params['replyToEmail'] = self._normalize_value(reply_to_email)
+        if reply_to_name is not None:
+            api_params['replyToName'] = self._normalize_value(reply_to_name)
         if draft is not None:
             api_params['draft'] = self._normalize_value(draft)
         if html is not None:
@@ -171,17 +181,19 @@ class Messaging(Service):
     def update_email(
         self,
         message_id: str,
+        subject: Optional[str] = None,
+        content: Optional[str] = None,
         topics: Optional[List[str]] = None,
         users: Optional[List[str]] = None,
         targets: Optional[List[str]] = None,
-        subject: Optional[str] = None,
-        content: Optional[str] = None,
-        draft: Optional[bool] = None,
-        html: Optional[bool] = None,
         cc: Optional[List[str]] = None,
         bcc: Optional[List[str]] = None,
-        scheduled_at: Optional[str] = None,
         attachments: Optional[List[str]] = None,
+        reply_to_email: Optional[str] = None,
+        reply_to_name: Optional[str] = None,
+        draft: Optional[bool] = None,
+        html: Optional[bool] = None,
+        scheduled_at: Optional[str] = None,
     ) -> Message:
         """
         Update an email message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
@@ -190,28 +202,32 @@ class Messaging(Service):
         ----------
         message_id : str
             Message ID.
+        subject : Optional[str]
+            Email Subject.
+        content : Optional[str]
+            Email Content.
         topics : Optional[List[str]]
             List of Topic IDs.
         users : Optional[List[str]]
             List of User IDs.
         targets : Optional[List[str]]
             List of Targets IDs.
-        subject : Optional[str]
-            Email Subject.
-        content : Optional[str]
-            Email Content.
-        draft : Optional[bool]
-            Is message a draft
-        html : Optional[bool]
-            Is content of type HTML
         cc : Optional[List[str]]
             Array of target IDs to be added as CC.
         bcc : Optional[List[str]]
             Array of target IDs to be added as BCC.
-        scheduled_at : Optional[str]
-            Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
         attachments : Optional[List[str]]
             Array of compound ID strings of bucket IDs and file IDs to be attached to the email. They should be formatted as <BUCKET_ID>:<FILE_ID>.
+        reply_to_email : Optional[str]
+            Email address to reply to. Pass an empty string to restore the provider or sender default.
+        reply_to_name : Optional[str]
+            Name of the reply to recipient. Pass an empty string to restore the provider or sender default.
+        draft : Optional[bool]
+            Is message a draft
+        html : Optional[bool]
+            Is content of type HTML
+        scheduled_at : Optional[str]
+            Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
         Returns
         -------
         Message
@@ -225,31 +241,35 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/email/{messageId}'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
+        if subject is not None:
+            api_params['subject'] = self._normalize_value(subject)
+        if content is not None:
+            api_params['content'] = self._normalize_value(content)
         if topics is not None:
             api_params['topics'] = self._normalize_value(topics)
         if users is not None:
             api_params['users'] = self._normalize_value(users)
         if targets is not None:
             api_params['targets'] = self._normalize_value(targets)
-        if subject is not None:
-            api_params['subject'] = self._normalize_value(subject)
-        if content is not None:
-            api_params['content'] = self._normalize_value(content)
-        if draft is not None:
-            api_params['draft'] = self._normalize_value(draft)
-        if html is not None:
-            api_params['html'] = self._normalize_value(html)
         if cc is not None:
             api_params['cc'] = self._normalize_value(cc)
         if bcc is not None:
             api_params['bcc'] = self._normalize_value(bcc)
-        if scheduled_at is not None:
-            api_params['scheduledAt'] = self._normalize_value(scheduled_at)
         if attachments is not None:
             api_params['attachments'] = self._normalize_value(attachments)
+        if reply_to_email is not None:
+            api_params['replyToEmail'] = self._normalize_value(reply_to_email)
+        if reply_to_name is not None:
+            api_params['replyToName'] = self._normalize_value(reply_to_name)
+        if draft is not None:
+            api_params['draft'] = self._normalize_value(draft)
+        if html is not None:
+            api_params['html'] = self._normalize_value(html)
+        if scheduled_at is not None:
+            api_params['scheduledAt'] = self._normalize_value(scheduled_at)
 
         response = self.client.call(
             'patch',
@@ -285,6 +305,7 @@ class Messaging(Service):
         content_available: Optional[bool] = None,
         critical: Optional[bool] = None,
         priority: Optional[MessagePriority] = None,
+        channel_id: Optional[str] = None,
     ) -> Message:
         """
         Create a new push notification.
@@ -329,6 +350,8 @@ class Messaging(Service):
             If set to true, the notification will be marked as critical. This requires the app to have the critical notification entitlement. Available only for iOS Platform.
         priority : Optional[MessagePriority]
             Set the notification priority. "normal" will consider device state and may not deliver notifications immediately. "high" will always attempt to immediately deliver the notification.
+        channel_id : Optional[str]
+            ID of the notification channel to deliver the notification on. The app must have already created a channel with this ID, otherwise the channel from the app manifest is used. Available only for Android Platform.
         Returns
         -------
         Message
@@ -381,6 +404,8 @@ class Messaging(Service):
             api_params['critical'] = self._normalize_value(critical)
         if priority is not None:
             api_params['priority'] = self._normalize_value(priority)
+        if channel_id is not None:
+            api_params['channelId'] = self._normalize_value(channel_id)
 
         response = self.client.call(
             'post',
@@ -398,11 +423,11 @@ class Messaging(Service):
     def update_push(
         self,
         message_id: str,
+        title: Optional[str] = None,
+        body: Optional[str] = None,
         topics: Optional[List[str]] = None,
         users: Optional[List[str]] = None,
         targets: Optional[List[str]] = None,
-        title: Optional[str] = None,
-        body: Optional[str] = None,
         data: Optional[Dict[str, Any]] = None,
         action: Optional[str] = None,
         image: Optional[str] = None,
@@ -416,6 +441,7 @@ class Messaging(Service):
         content_available: Optional[bool] = None,
         critical: Optional[bool] = None,
         priority: Optional[MessagePriority] = None,
+        channel_id: Optional[str] = None,
     ) -> Message:
         """
         Update a push notification by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
@@ -424,16 +450,16 @@ class Messaging(Service):
         ----------
         message_id : str
             Message ID.
+        title : Optional[str]
+            Title for push notification.
+        body : Optional[str]
+            Body for push notification.
         topics : Optional[List[str]]
             List of Topic IDs.
         users : Optional[List[str]]
             List of User IDs.
         targets : Optional[List[str]]
             List of Targets IDs.
-        title : Optional[str]
-            Title for push notification.
-        body : Optional[str]
-            Body for push notification.
         data : Optional[Dict[str, Any]]
             Additional Data for push notification.
         action : Optional[str]
@@ -460,6 +486,8 @@ class Messaging(Service):
             If set to true, the notification will be marked as critical. This requires the app to have the critical notification entitlement. Available only for iOS Platform.
         priority : Optional[MessagePriority]
             Set the notification priority. "normal" will consider device battery state and may send notifications later. "high" will always attempt to immediately deliver the notification.
+        channel_id : Optional[str]
+            ID of the notification channel to deliver the notification on. The app must have already created a channel with this ID, otherwise the channel from the app manifest is used. Pass an empty string to clear it. Available only for Android platforms.
         Returns
         -------
         Message
@@ -473,19 +501,19 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/push/{messageId}'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
+        if title is not None:
+            api_params['title'] = self._normalize_value(title)
+        if body is not None:
+            api_params['body'] = self._normalize_value(body)
         if topics is not None:
             api_params['topics'] = self._normalize_value(topics)
         if users is not None:
             api_params['users'] = self._normalize_value(users)
         if targets is not None:
             api_params['targets'] = self._normalize_value(targets)
-        if title is not None:
-            api_params['title'] = self._normalize_value(title)
-        if body is not None:
-            api_params['body'] = self._normalize_value(body)
         if data is not None:
             api_params['data'] = self._normalize_value(data)
         if action is not None:
@@ -512,6 +540,8 @@ class Messaging(Service):
             api_params['critical'] = self._normalize_value(critical)
         if priority is not None:
             api_params['priority'] = self._normalize_value(priority)
+        if channel_id is not None:
+            api_params['channelId'] = self._normalize_value(channel_id)
 
         response = self.client.call(
             'patch',
@@ -601,10 +631,10 @@ class Messaging(Service):
     def update_sms(
         self,
         message_id: str,
+        content: Optional[str] = None,
         topics: Optional[List[str]] = None,
         users: Optional[List[str]] = None,
         targets: Optional[List[str]] = None,
-        content: Optional[str] = None,
         draft: Optional[bool] = None,
         scheduled_at: Optional[str] = None,
     ) -> Message:
@@ -615,14 +645,14 @@ class Messaging(Service):
         ----------
         message_id : str
             Message ID.
+        content : Optional[str]
+            Email Content.
         topics : Optional[List[str]]
             List of Topic IDs.
         users : Optional[List[str]]
             List of User IDs.
         targets : Optional[List[str]]
             List of Targets IDs.
-        content : Optional[str]
-            Email Content.
         draft : Optional[bool]
             Is message a draft
         scheduled_at : Optional[str]
@@ -640,17 +670,17 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/sms/{messageId}'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
+        if content is not None:
+            api_params['content'] = self._normalize_value(content)
         if topics is not None:
             api_params['topics'] = self._normalize_value(topics)
         if users is not None:
             api_params['users'] = self._normalize_value(users)
         if targets is not None:
             api_params['targets'] = self._normalize_value(targets)
-        if content is not None:
-            api_params['content'] = self._normalize_value(content)
         if draft is not None:
             api_params['draft'] = self._normalize_value(draft)
         if scheduled_at is not None:
@@ -693,7 +723,7 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/{messageId}'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
 
@@ -733,7 +763,7 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/{messageId}'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
 
@@ -743,6 +773,7 @@ class Messaging(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -779,7 +810,7 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/{messageId}/targets'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
         if queries is not None:
@@ -970,7 +1001,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/apns/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -987,6 +1018,129 @@ class Messaging(Service):
             api_params['bundleId'] = self._normalize_value(bundle_id)
         if sandbox is not None:
             api_params['sandbox'] = self._normalize_value(sandbox)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Provider)
+
+    def create_appwrite_provider(
+        self,
+        provider_id: str,
+        name: str,
+        enabled: Optional[bool] = None,
+        qos: Optional[float] = None,
+        expiry: Optional[float] = None,
+    ) -> Provider:
+        """
+        Create a new Appwrite push provider.
+
+        Parameters
+        ----------
+        provider_id : str
+            Provider ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+        name : str
+            Provider name.
+        enabled : Optional[bool]
+            Set as enabled.
+        qos : Optional[float]
+            Default QoS for topics on this provider (0 or 1). Null lets the subscriber choose.
+        expiry : Optional[float]
+            Default message retention in seconds for offline delivery. Max 7 days (604800).
+        Returns
+        -------
+        Provider
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/messaging/providers/appwrite'
+        api_params = {}
+        if provider_id is None:
+            raise AppwriteException('Missing required parameter: "provider_id"')
+        if name is None:
+            raise AppwriteException('Missing required parameter: "name"')
+        api_params['providerId'] = self._normalize_value(provider_id)
+        api_params['name'] = self._normalize_value(name)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+        if qos is not None:
+            api_params['qos'] = self._normalize_value(qos)
+        if expiry is not None:
+            api_params['expiry'] = self._normalize_value(expiry)
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Provider)
+
+    def update_appwrite_provider(
+        self,
+        provider_id: str,
+        name: Optional[str] = None,
+        enabled: Optional[bool] = None,
+        qos: Optional[float] = None,
+        expiry: Optional[float] = None,
+    ) -> Provider:
+        """
+        Update an Appwrite push provider by its unique ID.
+
+        Parameters
+        ----------
+        provider_id : str
+            Provider ID.
+        name : Optional[str]
+            Provider name.
+        enabled : Optional[bool]
+            Set as enabled.
+        qos : Optional[float]
+            Default QoS for topics on this provider (0 or 1). Null lets the subscriber choose.
+        expiry : Optional[float]
+            Default message retention in seconds for offline delivery. Max 7 days (604800).
+        Returns
+        -------
+        Provider
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/messaging/providers/appwrite/{providerId}'
+        api_params = {}
+        if provider_id is None or provider_id == '':
+            raise AppwriteException('Missing required parameter: "provider_id"')
+        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        if name is not None:
+            api_params['name'] = self._normalize_value(name)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+        if qos is not None:
+            api_params['qos'] = self._normalize_value(qos)
+        if expiry is not None:
+            api_params['expiry'] = self._normalize_value(expiry)
 
         response = self.client.call(
             'patch',
@@ -1091,7 +1245,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/fcm/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -1252,7 +1406,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/mailgun/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -1393,7 +1547,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/msg91/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -1542,7 +1696,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/resend/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -1695,7 +1849,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/sendgrid/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -1864,7 +2018,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/ses/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2070,7 +2224,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/smtp/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2219,7 +2373,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/telesign/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2352,7 +2506,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/textmagic/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2398,7 +2552,7 @@ class Messaging(Service):
         name : str
             Provider name.
         xfrom : Optional[str]
-            Sender Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
+            Sender phone number or alphanumeric sender ID. Format phone numbers with a leading '+' and a country code, e.g., +16175551212.
         account_sid : Optional[str]
             Twilio account secret ID.
         auth_token : Optional[str]
@@ -2471,7 +2625,7 @@ class Messaging(Service):
         auth_token : Optional[str]
             Twilio authentication token.
         xfrom : Optional[str]
-            Sender number.
+            Sender phone number or alphanumeric sender ID. Format phone numbers with a leading '+' and a country code, e.g., +16175551212.
         Returns
         -------
         Provider
@@ -2485,7 +2639,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/twilio/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2618,7 +2772,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/vonage/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2669,7 +2823,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
 
@@ -2709,7 +2863,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
 
@@ -2719,6 +2873,7 @@ class Messaging(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -2779,6 +2934,8 @@ class Messaging(Service):
         topic_id: str,
         name: str,
         subscribe: Optional[List[str]] = None,
+        qos: Optional[float] = None,
+        expiry: Optional[float] = None,
     ) -> Topic:
         """
         Create a new topic.
@@ -2791,6 +2948,10 @@ class Messaging(Service):
             Topic Name.
         subscribe : Optional[List[str]]
             An array of role strings with subscribe permission. By default all users are granted with any subscribe permission. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
+        qos : Optional[float]
+            MQTT delivery quality of service for this topic. 0 is fire-and-forget (delivered only to clients connected at publish time). 1 persists each message and replays it when a client reconnects without having acknowledged it. Null lets the subscriber choose.
+        expiry : Optional[float]
+            Message retention in seconds for offline delivery. Max 7 days (604800).
         Returns
         -------
         Topic
@@ -2812,6 +2973,10 @@ class Messaging(Service):
         api_params['name'] = self._normalize_value(name)
         if subscribe is not None:
             api_params['subscribe'] = self._normalize_value(subscribe)
+        if qos is not None:
+            api_params['qos'] = self._normalize_value(qos)
+        if expiry is not None:
+            api_params['expiry'] = self._normalize_value(expiry)
 
         response = self.client.call(
             'post',
@@ -2850,7 +3015,7 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
 
@@ -2871,6 +3036,8 @@ class Messaging(Service):
         topic_id: str,
         name: Optional[str] = None,
         subscribe: Optional[List[str]] = None,
+        qos: Optional[float] = None,
+        expiry: Optional[float] = None,
     ) -> Topic:
         """
         Update a topic by its unique ID.
@@ -2883,6 +3050,10 @@ class Messaging(Service):
             Topic Name.
         subscribe : Optional[List[str]]
             An array of role strings with subscribe permission. By default all users are granted with any subscribe permission. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
+        qos : Optional[float]
+            MQTT delivery quality of service for this topic. 0 is fire-and-forget (delivered only to clients connected at publish time). 1 persists each message and replays it when a client reconnects without having acknowledged it. Null lets the subscriber choose.
+        expiry : Optional[float]
+            Message retention in seconds for offline delivery. Max 7 days (604800).
         Returns
         -------
         Topic
@@ -2896,13 +3067,17 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if subscribe is not None:
             api_params['subscribe'] = self._normalize_value(subscribe)
+        if qos is not None:
+            api_params['qos'] = self._normalize_value(qos)
+        if expiry is not None:
+            api_params['expiry'] = self._normalize_value(expiry)
 
         response = self.client.call(
             'patch',
@@ -2941,7 +3116,7 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
 
@@ -2951,6 +3126,7 @@ class Messaging(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -2990,7 +3166,7 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}/subscribers'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         if queries is not None:
@@ -3042,7 +3218,7 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}/subscribers'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
         if subscriber_id is None:
             raise AppwriteException('Missing required parameter: "subscriber_id"')
@@ -3092,9 +3268,9 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
-        if subscriber_id is None:
+        if subscriber_id is None or subscriber_id == '':
             raise AppwriteException('Missing required parameter: "subscriber_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         api_path = api_path.replace('{subscriberId}', str(self._normalize_value(subscriber_id)))
@@ -3138,9 +3314,9 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
-        if subscriber_id is None:
+        if subscriber_id is None or subscriber_id == '':
             raise AppwriteException('Missing required parameter: "subscriber_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         api_path = api_path.replace('{subscriberId}', str(self._normalize_value(subscriber_id)))
@@ -3151,6 +3327,7 @@ class Messaging(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )

@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .o_auth2_github import OAuth2Github
@@ -17,6 +17,7 @@ from .o_auth2_zoho import OAuth2Zoho
 from .o_auth2_yandex import OAuth2Yandex
 from .o_auth2_x import OAuth2X
 from .o_auth2_word_press import OAuth2WordPress
+from .o_auth2_webflow import OAuth2Webflow
 from .o_auth2_twitch import OAuth2Twitch
 from .o_auth2_stripe import OAuth2Stripe
 from .o_auth2_spotify import OAuth2Spotify
@@ -46,6 +47,8 @@ from .o_auth2_microsoft import OAuth2Microsoft
 from .o_auth2_hugging_face import OAuth2HuggingFace
 from .o_auth2_resend import OAuth2Resend
 from .o_auth2_cloudflare import OAuth2Cloudflare
+from .o_auth2_tik_tok import OAuth2TikTok
+from .o_auth2_kakao import OAuth2Kakao
 
 
 class OAuth2ProviderList(AppwriteModel):
@@ -56,7 +59,7 @@ class OAuth2ProviderList(AppwriteModel):
     ----------
     total : float
         Total number of OAuth2 providers in the given project.
-    providers : List[Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Appwrite, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2HuggingFace, OAuth2Resend, OAuth2Cloudflare]]
+    providers : List[Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Webflow, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Appwrite, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2HuggingFace, OAuth2Resend, OAuth2Cloudflare, OAuth2TikTok, OAuth2Kakao]]
         List of OAuth2 providers.
     """
 
@@ -78,6 +81,7 @@ class OAuth2ProviderList(AppwriteModel):
             OAuth2Yandex,
             OAuth2X,
             OAuth2WordPress,
+            OAuth2Webflow,
             OAuth2Twitch,
             OAuth2Stripe,
             OAuth2Spotify,
@@ -107,5 +111,18 @@ class OAuth2ProviderList(AppwriteModel):
             OAuth2HuggingFace,
             OAuth2Resend,
             OAuth2Cloudflare,
+            OAuth2TikTok,
+            OAuth2Kakao,
         ]
     ] = Field(..., alias='providers')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'total' not in data:
+            data['total'] = 0
+        return data

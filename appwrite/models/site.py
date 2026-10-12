@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .variable import Variable
@@ -118,3 +118,76 @@ class Site(AppwriteModel):
     buildruntime: str = Field(..., alias='buildRuntime')
     adapter: str = Field(..., alias='adapter')
     fallbackfile: str = Field(..., alias='fallbackFile')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'name' not in data:
+            data['name'] = ''
+        if 'enabled' not in data:
+            data['enabled'] = True
+        if 'live' not in data:
+            data['live'] = True
+        if 'logging' not in data:
+            data['logging'] = True
+        if 'framework' not in data:
+            data['framework'] = ''
+        if 'deploymentRetention' not in data and 'deploymentretention' not in data:
+            data['deploymentRetention'] = 0
+        if 'deploymentId' not in data and 'deploymentid' not in data:
+            data['deploymentId'] = ''
+        if 'deploymentCreatedAt' not in data and 'deploymentcreatedat' not in data:
+            data['deploymentCreatedAt'] = ''
+        if 'deploymentScreenshotLight' not in data and 'deploymentscreenshotlight' not in data:
+            data['deploymentScreenshotLight'] = ''
+        if 'deploymentScreenshotDark' not in data and 'deploymentscreenshotdark' not in data:
+            data['deploymentScreenshotDark'] = ''
+        if 'latestDeploymentId' not in data and 'latestdeploymentid' not in data:
+            data['latestDeploymentId'] = ''
+        if 'latestDeploymentCreatedAt' not in data and 'latestdeploymentcreatedat' not in data:
+            data['latestDeploymentCreatedAt'] = ''
+        if 'latestDeploymentStatus' not in data and 'latestdeploymentstatus' not in data:
+            data['latestDeploymentStatus'] = ''
+        if 'scopes' not in data:
+            data['scopes'] = []
+        if 'timeout' not in data:
+            data['timeout'] = 15
+        if 'installCommand' not in data and 'installcommand' not in data:
+            data['installCommand'] = ''
+        if 'buildCommand' not in data and 'buildcommand' not in data:
+            data['buildCommand'] = ''
+        if 'startCommand' not in data and 'startcommand' not in data:
+            data['startCommand'] = ''
+        if 'outputDirectory' not in data and 'outputdirectory' not in data:
+            data['outputDirectory'] = ''
+        if 'installationId' not in data and 'installationid' not in data:
+            data['installationId'] = ''
+        if 'providerRepositoryId' not in data and 'providerrepositoryid' not in data:
+            data['providerRepositoryId'] = ''
+        if 'providerBranch' not in data and 'providerbranch' not in data:
+            data['providerBranch'] = ''
+        if 'providerRootDirectory' not in data and 'providerrootdirectory' not in data:
+            data['providerRootDirectory'] = ''
+        if 'providerSilentMode' not in data and 'providersilentmode' not in data:
+            data['providerSilentMode'] = False
+        if 'providerBranches' not in data and 'providerbranches' not in data:
+            data['providerBranches'] = []
+        if 'providerPaths' not in data and 'providerpaths' not in data:
+            data['providerPaths'] = []
+        if 'buildSpecification' not in data and 'buildspecification' not in data:
+            data['buildSpecification'] = 's-1vcpu-512mb'
+        if 'runtimeSpecification' not in data and 'runtimespecification' not in data:
+            data['runtimeSpecification'] = 's-1vcpu-512mb'
+        if 'buildRuntime' not in data and 'buildruntime' not in data:
+            data['buildRuntime'] = ''
+        return data

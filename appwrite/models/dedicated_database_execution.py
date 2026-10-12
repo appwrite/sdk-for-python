@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .dedicated_database_execution_column import DedicatedDatabaseExecutionColumn
@@ -31,3 +31,22 @@ class DedicatedDatabaseExecution(AppwriteModel):
     durationms: float = Field(..., alias='durationMs')
     truncated: bool = Field(..., alias='truncated')
     bytes: float = Field(..., alias='bytes')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'rows' not in data:
+            data['rows'] = []
+        if 'rowCount' not in data and 'rowcount' not in data:
+            data['rowCount'] = 0
+        if 'durationMs' not in data and 'durationms' not in data:
+            data['durationMs'] = 0
+        if 'truncated' not in data:
+            data['truncated'] = False
+        if 'bytes' not in data:
+            data['bytes'] = 0
+        return data

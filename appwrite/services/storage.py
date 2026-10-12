@@ -183,7 +183,7 @@ class Storage(Service):
 
         api_path = '/storage/buckets/{bucketId}'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
@@ -253,7 +253,7 @@ class Storage(Service):
 
         api_path = '/storage/buckets/{bucketId}'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -315,7 +315,7 @@ class Storage(Service):
 
         api_path = '/storage/buckets/{bucketId}'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
@@ -325,6 +325,7 @@ class Storage(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -364,7 +365,7 @@ class Storage(Service):
 
         api_path = '/storage/buckets/{bucketId}/files'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         if queries is not None:
@@ -432,7 +433,7 @@ class Storage(Service):
 
         api_path = '/storage/buckets/{bucketId}/files'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
         if file_id is None:
             raise AppwriteException('Missing required parameter: "file_id"')
@@ -462,6 +463,7 @@ class Storage(Service):
             param_name,
             on_progress,
             upload_id,
+            method='post',
         )
 
         return self._parse_response(response, model=File)
@@ -493,9 +495,9 @@ class Storage(Service):
 
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
-        if file_id is None:
+        if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
@@ -545,9 +547,9 @@ class Storage(Service):
 
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
-        if file_id is None:
+        if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
@@ -596,9 +598,9 @@ class Storage(Service):
 
         api_path = '/storage/buckets/{bucketId}/files/{fileId}'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
-        if file_id is None:
+        if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
@@ -609,6 +611,7 @@ class Storage(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -645,9 +648,9 @@ class Storage(Service):
 
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/download'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
-        if file_id is None:
+        if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
@@ -697,7 +700,7 @@ class Storage(Service):
         height : Optional[float]
             Resize preview image height, Pass an integer between 0 to 4000.
         gravity : Optional[ImageGravity]
-            Image crop gravity. Can be one of center,top-left,top,top-right,left,right,bottom-left,bottom,bottom-right
+            Image crop gravity. Can be one of auto,center,top-left,top,top-right,left,right,bottom-left,bottom,bottom-right
         quality : Optional[float]
             Preview image quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
         border_width : Optional[float]
@@ -729,9 +732,9 @@ class Storage(Service):
 
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/preview'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
-        if file_id is None:
+        if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
@@ -802,9 +805,9 @@ class Storage(Service):
 
         api_path = '/storage/buckets/{bucketId}/files/{fileId}/view'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
-        if file_id is None:
+        if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))

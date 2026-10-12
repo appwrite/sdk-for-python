@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -99,3 +99,70 @@ class ActivityEvent(AppwriteModel):
     hostname: str = Field(..., alias='hostname')
     sdk: str = Field(..., alias='sdk')
     sdkversion: str = Field(..., alias='sdkVersion')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if 'actorType' not in data and 'actortype' not in data:
+            data['actorType'] = ''
+        if 'actorId' not in data and 'actorid' not in data:
+            data['actorId'] = ''
+        if 'actorEmail' not in data and 'actoremail' not in data:
+            data['actorEmail'] = ''
+        if 'actorName' not in data and 'actorname' not in data:
+            data['actorName'] = ''
+        if 'resourceParent' not in data and 'resourceparent' not in data:
+            data['resourceParent'] = ''
+        if 'resourceType' not in data and 'resourcetype' not in data:
+            data['resourceType'] = ''
+        if 'resourceId' not in data and 'resourceid' not in data:
+            data['resourceId'] = ''
+        if 'resource' not in data:
+            data['resource'] = ''
+        if 'event' not in data:
+            data['event'] = ''
+        if 'userAgent' not in data and 'useragent' not in data:
+            data['userAgent'] = ''
+        if 'ip' not in data:
+            data['ip'] = ''
+        if 'mode' not in data:
+            data['mode'] = ''
+        if 'country' not in data:
+            data['country'] = ''
+        if 'continentCode' not in data and 'continentcode' not in data:
+            data['continentCode'] = ''
+        if 'city' not in data:
+            data['city'] = ''
+        if 'subdivisions' not in data:
+            data['subdivisions'] = ''
+        if 'isp' not in data:
+            data['isp'] = ''
+        if 'autonomousSystemNumber' not in data and 'autonomoussystemnumber' not in data:
+            data['autonomousSystemNumber'] = ''
+        if 'autonomousSystemOrganization' not in data and 'autonomoussystemorganization' not in data:
+            data['autonomousSystemOrganization'] = ''
+        if 'connectionType' not in data and 'connectiontype' not in data:
+            data['connectionType'] = ''
+        if 'connectionUsageType' not in data and 'connectionusagetype' not in data:
+            data['connectionUsageType'] = ''
+        if 'connectionOrganization' not in data and 'connectionorganization' not in data:
+            data['connectionOrganization'] = ''
+        if 'time' not in data:
+            data['time'] = ''
+        if 'projectId' not in data and 'projectid' not in data:
+            data['projectId'] = ''
+        if 'teamId' not in data and 'teamid' not in data:
+            data['teamId'] = ''
+        if 'hostname' not in data:
+            data['hostname'] = ''
+        if 'sdk' not in data:
+            data['sdk'] = ''
+        if 'sdkVersion' not in data and 'sdkversion' not in data:
+            data['sdkVersion'] = ''
+        return data

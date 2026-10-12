@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .app_secret import AppSecret
@@ -91,3 +91,62 @@ class App(AppwriteModel):
     installationscopes: List[Any] = Field(..., alias='installationScopes')
     installationredirecturl: str = Field(..., alias='installationRedirectUrl')
     secrets: List[AppSecret] = Field(..., alias='secrets')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'name' not in data:
+            data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
+        if 'clientUri' not in data and 'clienturi' not in data:
+            data['clientUri'] = ''
+        if 'logoUri' not in data and 'logouri' not in data:
+            data['logoUri'] = ''
+        if 'privacyPolicyUrl' not in data and 'privacypolicyurl' not in data:
+            data['privacyPolicyUrl'] = ''
+        if 'termsUrl' not in data and 'termsurl' not in data:
+            data['termsUrl'] = ''
+        if 'contacts' not in data:
+            data['contacts'] = []
+        if 'tagline' not in data:
+            data['tagline'] = ''
+        if 'tags' not in data:
+            data['tags'] = []
+        if 'labels' not in data:
+            data['labels'] = []
+        if 'images' not in data:
+            data['images'] = []
+        if 'supportUrl' not in data and 'supporturl' not in data:
+            data['supportUrl'] = ''
+        if 'dataDeletionUrl' not in data and 'datadeletionurl' not in data:
+            data['dataDeletionUrl'] = ''
+        if 'redirectUris' not in data and 'redirecturis' not in data:
+            data['redirectUris'] = []
+        if 'postLogoutRedirectUris' not in data and 'postlogoutredirecturis' not in data:
+            data['postLogoutRedirectUris'] = []
+        if 'enabled' not in data:
+            data['enabled'] = True
+        if 'type' not in data:
+            data['type'] = 'confidential'
+        if 'deviceFlow' not in data and 'deviceflow' not in data:
+            data['deviceFlow'] = False
+        if 'teamId' not in data and 'teamid' not in data:
+            data['teamId'] = ''
+        if 'userId' not in data and 'userid' not in data:
+            data['userId'] = ''
+        if 'installationScopes' not in data and 'installationscopes' not in data:
+            data['installationScopes'] = []
+        if 'installationRedirectUrl' not in data and 'installationredirecturl' not in data:
+            data['installationRedirectUrl'] = ''
+        return data

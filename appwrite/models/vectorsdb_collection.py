@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .attribute_object import AttributeObject
@@ -59,3 +59,32 @@ class VectorsdbCollection(AppwriteModel):
     bytesmax: float = Field(..., alias='bytesMax')
     bytesused: float = Field(..., alias='bytesUsed')
     dimension: float = Field(..., alias='dimension')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'databaseId' not in data and 'databaseid' not in data:
+            data['databaseId'] = ''
+        if 'name' not in data:
+            data['name'] = ''
+        if 'enabled' not in data:
+            data['enabled'] = True
+        if 'documentSecurity' not in data and 'documentsecurity' not in data:
+            data['documentSecurity'] = False
+        if 'bytesMax' not in data and 'bytesmax' not in data:
+            data['bytesMax'] = 0
+        if 'bytesUsed' not in data and 'bytesused' not in data:
+            data['bytesUsed'] = 0
+        if 'dimension' not in data:
+            data['dimension'] = 0
+        return data

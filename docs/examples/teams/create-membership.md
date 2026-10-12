@@ -12,7 +12,8 @@ teams = Teams(client)
 
 result: Membership = teams.create_membership(
     team_id = '<TEAM_ID>',
-    roles = [],
+    roles = ["editor"],
+    membership_id = '<MEMBERSHIP_ID>', # optional
     email = 'email@example.com', # optional
     user_id = '<USER_ID>', # optional
     phone = '+12065550100', # optional

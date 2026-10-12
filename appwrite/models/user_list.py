@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast, Generic, TypeVar, Type
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .user import User
@@ -21,6 +21,17 @@ class UserList(AppwriteModel, Generic[T]):
 
     total: float = Field(..., alias='total')
     users: List[User[T]] = Field(..., alias='users')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'total' not in data:
+            data['total'] = 0
+        return data
 
     @classmethod
     def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'UserList[T]':

@@ -126,7 +126,7 @@ class Backups(Service):
 
         api_path = '/backups/archives/{archiveId}'
         api_params = {}
-        if archive_id is None:
+        if archive_id is None or archive_id == '':
             raise AppwriteException('Missing required parameter: "archive_id"')
         api_path = api_path.replace('{archiveId}', str(self._normalize_value(archive_id)))
 
@@ -166,7 +166,7 @@ class Backups(Service):
 
         api_path = '/backups/archives/{archiveId}'
         api_params = {}
-        if archive_id is None:
+        if archive_id is None or archive_id == '':
             raise AppwriteException('Missing required parameter: "archive_id"')
         api_path = api_path.replace('{archiveId}', str(self._normalize_value(archive_id)))
 
@@ -320,7 +320,7 @@ class Backups(Service):
 
         api_path = '/backups/policies/{policyId}'
         api_params = {}
-        if policy_id is None:
+        if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
@@ -372,7 +372,7 @@ class Backups(Service):
 
         api_path = '/backups/policies/{policyId}'
         api_params = {}
-        if policy_id is None:
+        if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
         if name is not None:
@@ -421,7 +421,7 @@ class Backups(Service):
 
         api_path = '/backups/policies/{policyId}'
         api_params = {}
-        if policy_id is None:
+        if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
@@ -566,7 +566,7 @@ class Backups(Service):
 
         api_path = '/backups/restorations/{restorationId}'
         api_params = {}
-        if restoration_id is None:
+        if restoration_id is None or restoration_id == '':
             raise AppwriteException('Missing required parameter: "restoration_id"')
         api_path = api_path.replace('{restorationId}', str(self._normalize_value(restoration_id)))
 

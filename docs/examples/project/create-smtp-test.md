@@ -10,6 +10,6 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 project = Project(client)
 
 result = project.create_smtp_test(
-    emails = []
+    emails = ["recipient@example.com"]
 )
 ```

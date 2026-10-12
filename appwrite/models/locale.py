@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -66,3 +66,26 @@ class Locale(AppwriteModel):
     connectiontype: Optional[str] = Field(default=None, alias='connectionType')
     connectionusagetype: Optional[str] = Field(default=None, alias='connectionUsageType')
     connectionorganization: Optional[str] = Field(default=None, alias='connectionOrganization')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'ip' not in data:
+            data['ip'] = ''
+        if 'countryCode' not in data and 'countrycode' not in data:
+            data['countryCode'] = ''
+        if 'country' not in data:
+            data['country'] = ''
+        if 'continentCode' not in data and 'continentcode' not in data:
+            data['continentCode'] = ''
+        if 'continent' not in data:
+            data['continent'] = ''
+        if 'eu' not in data:
+            data['eu'] = False
+        if 'currency' not in data:
+            data['currency'] = ''
+        return data

@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -42,3 +42,32 @@ class DedicatedDatabasePooler(AppwriteModel):
     poolercpulimit: str = Field(..., alias='poolerCpuLimit')
     poolermemoryrequest: str = Field(..., alias='poolerMemoryRequest')
     poolermemorylimit: str = Field(..., alias='poolerMemoryLimit')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'enabled' not in data:
+            data['enabled'] = False
+        if 'mode' not in data:
+            data['mode'] = 'transaction'
+        if 'maxConnections' not in data and 'maxconnections' not in data:
+            data['maxConnections'] = 100
+        if 'defaultPoolSize' not in data and 'defaultpoolsize' not in data:
+            data['defaultPoolSize'] = 20
+        if 'port' not in data:
+            data['port'] = 6432
+        if 'readWriteSplitting' not in data and 'readwritesplitting' not in data:
+            data['readWriteSplitting'] = False
+        if 'poolerCpuRequest' not in data and 'poolercpurequest' not in data:
+            data['poolerCpuRequest'] = ''
+        if 'poolerCpuLimit' not in data and 'poolercpulimit' not in data:
+            data['poolerCpuLimit'] = ''
+        if 'poolerMemoryRequest' not in data and 'poolermemoryrequest' not in data:
+            data['poolerMemoryRequest'] = ''
+        if 'poolerMemoryLimit' not in data and 'poolermemorylimit' not in data:
+            data['poolerMemoryLimit'] = ''
+        return data
