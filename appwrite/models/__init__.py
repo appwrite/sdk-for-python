@@ -190,6 +190,7 @@ from .policy_session_limit import PolicySessionLimit
 from .policy_user_limit import PolicyUserLimit
 from .policy_membership_privacy import PolicyMembershipPrivacy
 from .policy_mfa_factors import PolicyMfaFactors
+from .policy_passkey import PolicyPasskey
 from .platform_web import PlatformWeb
 from .platform_apple import PlatformApple
 from .platform_android import PlatformAndroid
@@ -497,6 +498,7 @@ __all__ = [
     'PolicyUserLimit',
     'PolicyMembershipPrivacy',
     'PolicyMfaFactors',
+    'PolicyPasskey',
     'PlatformWeb',
     'PlatformApple',
     'PlatformAndroid',

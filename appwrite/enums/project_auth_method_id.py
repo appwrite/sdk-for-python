@@ -9,3 +9,4 @@ class ProjectAuthMethodId(Enum):
     INVITES = "invites"
     JWT = "jwt"
     PHONE = "phone"
+    PASSKEY = "passkey"
