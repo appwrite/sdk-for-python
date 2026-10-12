@@ -3,6 +3,7 @@ from urllib.parse import quote
 from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
+from appwrite.utils.validator import validate_row_data
 from ..models.database_list import DatabaseList
 from ..models.database import Database
 from ..models.dedicated_database_specification_list import DedicatedDatabaseSpecificationList
@@ -4413,6 +4414,7 @@ class TablesDB(Service):
         permissions: Optional[List[str]] = None,
         transaction_id: Optional[str] = None,
         model_type: Type[T] = dict,
+        schema: Optional[Any] = None,
     ) -> Row[T]:
         """
         Create a new Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
@@ -4433,6 +4435,8 @@ class TablesDB(Service):
             Transaction ID for staging the operation.
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+        schema : Optional[Any], optional
+            Optional table schema (ColumnList or list of column definitions) to validate row data client-side before submission.
 
         Returns
         -------
@@ -4442,7 +4446,7 @@ class TablesDB(Service):
         Raises
         ------
         AppwriteException
-            If API request fails
+            If API request fails or client-side schema validation fails
         """
 
         api_path = '/tablesdb/{databaseId}/tables/{tableId}/rows'
@@ -4455,6 +4459,9 @@ class TablesDB(Service):
             raise AppwriteException('Missing required parameter: "row_id"')
         if data is None:
             raise AppwriteException('Missing required parameter: "data"')
+
+        if schema is not None:
+            validate_row_data(data, schema)
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
         api_params['rowId'] = self._normalize_value(row_id)
