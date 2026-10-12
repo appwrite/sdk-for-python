@@ -1846,6 +1846,49 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_update_passkey_policy(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "New Project",
+            "teamId": "1592981250",
+            "region": "fra",
+            "devKeys": [],
+            "smtpEnabled": True,
+            "smtpSenderName": "John Appwrite",
+            "smtpSenderEmail": "john@appwrite.io",
+            "smtpReplyToName": "Support Team",
+            "smtpReplyToEmail": "support@appwrite.io",
+            "smtpHost": "mail.appwrite.io",
+            "smtpPort": 25.0,
+            "smtpUsername": "emailuser",
+            "smtpPassword": "smtp-password",
+            "smtpSecure": "tls",
+            "pingCount": 1.0,
+            "pingedAt": "2020-10-15T06:38:00.000+00:00",
+            "labels": [],
+            "status": "active",
+            "onboarding": {},
+            "authMethods": [],
+            "services": [],
+            "protocols": [],
+            "blocks": [],
+            "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_passkey_policy(
+            '<RP_ID>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_password_dictionary_policy(self, m):
         data = {
             "$id": "5e5ea5c16897e",

@@ -734,6 +734,121 @@ class AccountServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_list_passkeys(self, m):
+        data = {
+            "total": 5.0,
+            "passkeys": [],
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.list_passkeys()
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_passkey(self, m):
+        data = {
+            "$id": "bb8ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "passkeyId": "5e5ea5c16897e",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "publicKey": {},
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.create_passkey()
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_passkey(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "My laptop",
+            "accessedAt": "2020-10-15T06:38:00.000+00:00",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.get_passkey(
+            '<PASSKEY_ID>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_passkey(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "My laptop",
+            "accessedAt": "2020-10-15T06:38:00.000+00:00",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.update_passkey(
+            '<PASSKEY_ID>',
+            '<NAME>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_delete_passkey(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.delete_passkey(
+            '<PASSKEY_ID>',
+        )
+        self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
+    def test_update_passkey_verification(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "My laptop",
+            "accessedAt": "2020-10-15T06:38:00.000+00:00",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.update_passkey_verification(
+            '<PASSKEY_ID>',
+            {},
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_password(self, m):
         data = {
             "$id": "5e5ea5c16897e",
@@ -1341,6 +1456,48 @@ class AccountServiceTest(unittest.TestCase):
             'amazon',
         )
         self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
+    def test_create_passkey_token(self, m):
+        data = {
+            "$id": "bb8ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "passkeyId": "5e5ea5c16897e",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "publicKey": {},
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.create_passkey_token()
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_passkey_token(self, m):
+        data = {
+            "$id": "bb8ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "userId": "5e5ea5c168bb8",
+            "secret": "",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "phrase": "Golden Fox",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.update_passkey_token(
+            '<CHALLENGE_ID>',
+            {},
+        )
+        self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
     def test_create_phone_token(self, m):
