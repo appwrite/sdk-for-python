@@ -208,6 +208,10 @@ from .proxy_rule import ProxyRule
 from .email_template import EmailTemplate
 from .mfa_challenge import MfaChallenge
 from .mfa_challenge_secret import MfaChallengeSecret
+from .token_secret import TokenSecret
+from .passkey import Passkey
+from .passkey_challenge import PasskeyChallenge
+from .passkey_list import PasskeyList
 from .mfa_recovery_codes import MfaRecoveryCodes
 from .mfa_type import MfaType
 from .mfa_factors import MfaFactors
@@ -511,6 +515,10 @@ __all__ = [
     'EmailTemplate',
     'MfaChallenge',
     'MfaChallengeSecret',
+    'TokenSecret',
+    'Passkey',
+    'PasskeyChallenge',
+    'PasskeyList',
     'MfaRecoveryCodes',
     'MfaType',
     'MfaFactors',

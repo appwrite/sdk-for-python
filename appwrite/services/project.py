@@ -4467,6 +4467,47 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
+    def update_passkey_policy(
+        self,
+        rp_id: str,
+    ) -> ProjectModel:
+        """
+        Set the relying party ID passkeys are bound to: the domain of your application. Passkeys work on the project's web platforms on that domain or its subdomains, and on the domain itself for Apple apps. A localhost web platform enables passkeys for local development without a relying party ID. The relying party ID cannot change while users have passkeys, and any change invalidates ceremonies in progress.
+
+        Parameters
+        ----------
+        rp_id : str
+            Relying party ID: the domain of your application, such as `example.com`. Use `localhost` for local development, or an empty string to unset it.
+        Returns
+        -------
+        ProjectModel
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/policies/passkey'
+        api_params = {}
+        if rp_id is None:
+            raise AppwriteException('Missing required parameter: "rp_id"')
+        api_params['rpId'] = self._normalize_value(rp_id)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=ProjectModel)
+
     def update_password_dictionary_policy(
         self,
         enabled: bool,

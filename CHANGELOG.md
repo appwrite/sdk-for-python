@@ -1,5 +1,13 @@
 # Change Log
 
+## 24.3.0
+
+* Added: `account` passkey methods `listPasskeys`, `createPasskey`, `getPasskey`, `updatePasskey`, `deletePasskey` and `updatePasskeyVerification`
+* Added: `account.createPasskeyToken` and `account.updatePasskeyToken` for passkey sign-in
+* Added: `users.listPasskeys`, `users.getPasskey`, `users.updatePasskey` and `users.deletePasskey`
+* Added: `project.updatePasskeyPolicy` to configure passkey sign-in
+* Added: `Passkey`, `PasskeyList`, `PasskeyChallenge` and `TokenSecret` models
+
 ## 24.2.0
 
 * Added: optional `interval` parameter on `functions.create` and `functions.update` to run a function every N minutes

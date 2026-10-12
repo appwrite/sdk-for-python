@@ -17,10 +17,14 @@ from ..models.mfa_challenge import MfaChallenge
 from ..models.session import Session
 from ..models.mfa_factors import MfaFactors
 from ..models.mfa_recovery_codes import MfaRecoveryCodes
+from ..models.passkey_list import PasskeyList
+from ..models.passkey_challenge import PasskeyChallenge
+from ..models.passkey import Passkey
 from ..models.preferences import Preferences
 from ..models.token import Token
 from ..models.session_list import SessionList
 from ..enums.o_auth_provider import OAuthProvider
+from ..models.token_secret import TokenSecret
 
 T = TypeVar('T')
 
@@ -1014,6 +1018,270 @@ class Account(Service):
 
         return User.with_data(response, model_type)
 
+    def list_passkeys(
+        self,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
+    ) -> PasskeyList:
+        """
+        Get the list of verified passkeys registered by the currently logged in user.
+
+        Parameters
+        ----------
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter and order on the following attributes: $id, $createdAt, $updatedAt, name, accessedAt
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        Returns
+        -------
+        PasskeyList
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/passkeys'
+        api_params = {}
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=PasskeyList)
+
+    def create_passkey(
+        self,
+        passkey_id: Optional[str] = None,
+        name: Optional[str] = None,
+    ) -> PasskeyChallenge:
+        """
+        Start registering a passkey for the currently logged in user. The session must have signed in or completed an MFA challenge within the last 10 minutes. Pass the returned `publicKey` options to `navigator.credentials.create()`, then complete the registration with [Update passkey verification](/docs/references/cloud/client-web/account#updatePasskeyVerification). The passkey stays pending until verified, and the challenge expires after 5 minutes.
+
+        Parameters
+        ----------
+        passkey_id : Optional[str]
+            Passkey ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+        name : Optional[str]
+            Passkey name, shown when listing passkeys. Max length: 128 chars.
+        Returns
+        -------
+        PasskeyChallenge
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/passkeys'
+        api_params = {}
+        if passkey_id is not None:
+            api_params['passkeyId'] = self._normalize_value(passkey_id)
+        if name is not None:
+            api_params['name'] = self._normalize_value(name)
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=PasskeyChallenge)
+
+    def get_passkey(
+        self,
+        passkey_id: str,
+    ) -> Passkey:
+        """
+        Get a verified passkey of the currently logged in user by its unique ID.
+
+        Parameters
+        ----------
+        passkey_id : str
+            Passkey ID.
+        Returns
+        -------
+        Passkey
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/passkeys/{passkeyId}'
+        api_params = {}
+        if passkey_id is None or passkey_id == '':
+            raise AppwriteException('Missing required parameter: "passkey_id"')
+        api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Passkey)
+
+    def update_passkey(
+        self,
+        passkey_id: str,
+        name: str,
+    ) -> Passkey:
+        """
+        Rename a passkey of the currently logged in user.
+
+        Parameters
+        ----------
+        passkey_id : str
+            Passkey ID.
+        name : str
+            Passkey name. Max length: 128 chars.
+        Returns
+        -------
+        Passkey
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/passkeys/{passkeyId}'
+        api_params = {}
+        if passkey_id is None or passkey_id == '':
+            raise AppwriteException('Missing required parameter: "passkey_id"')
+        if name is None:
+            raise AppwriteException('Missing required parameter: "name"')
+        api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
+        api_params['name'] = self._normalize_value(name)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Passkey)
+
+    def delete_passkey(
+        self,
+        passkey_id: str,
+    ) -> Dict[str, Any]:
+        """
+        Delete a passkey from the currently logged in user. The passkey can no longer be used to sign in, although it may remain stored on the user's device. The session must have signed in or completed an MFA challenge within the last 10 minutes.
+
+        Parameters
+        ----------
+        passkey_id : str
+            Passkey ID.
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/passkeys/{passkeyId}'
+        api_params = {}
+        if passkey_id is None or passkey_id == '':
+            raise AppwriteException('Missing required parameter: "passkey_id"')
+        api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
+
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return response
+
+    def update_passkey_verification(
+        self,
+        passkey_id: str,
+        credential: Dict[str, Any],
+    ) -> Passkey:
+        """
+        Complete a passkey registration started with [Create passkey](/docs/references/cloud/client-web/account#createPasskey). Pass the JSON form of the credential returned by `navigator.credentials.create()`, for example `credential.toJSON()`. Each registration can be verified once; a failed attempt requires starting it again.
+
+        Parameters
+        ----------
+        passkey_id : str
+            Passkey ID.
+        credential : Dict[str, Any]
+            Registration credential returned by the authenticator, in the JSON form produced by `PublicKeyCredential.toJSON()`.
+        Returns
+        -------
+        Passkey
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/passkeys/{passkeyId}/verification'
+        api_params = {}
+        if passkey_id is None or passkey_id == '':
+            raise AppwriteException('Missing required parameter: "passkey_id"')
+        if credential is None:
+            raise AppwriteException('Missing required parameter: "credential"')
+        api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
+        api_params['credential'] = self._normalize_value(credential)
+
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Passkey)
+
     def update_password(
         self,
         password: str,
@@ -1927,6 +2195,85 @@ class Account(Service):
         )
 
         return response
+
+    def create_passkey_token(
+        self,
+    ) -> PasskeyChallenge:
+        """
+        Start signing in with a passkey. No email or user ID is needed: pass the returned `publicKey` options to `navigator.credentials.get()` and the user picks one of their passkeys. Then call [Update passkey token](/docs/references/cloud/client-web/account#updatePasskeyToken) with the credential to receive a token, and exchange it with [Create session](/docs/references/cloud/client-web/account#createSession). The challenge expires after 5 minutes.
+        Returns
+        -------
+        PasskeyChallenge
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/tokens/passkey'
+        api_params = {}
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=PasskeyChallenge)
+
+    def update_passkey_token(
+        self,
+        challenge_id: str,
+        credential: Dict[str, Any],
+    ) -> TokenSecret:
+        """
+        Complete a passkey sign-in started with [Create passkey token](/docs/references/cloud/client-web/account#createPasskeyToken). Pass the challenge ID and the JSON form of the credential returned by `navigator.credentials.get()`, for example `credential.toJSON()`. The returned token includes its secret and expires after 1 minute: exchange it for a session with [Create session](/docs/references/cloud/client-web/account#createSession). Passkeys require user verification, so the session also satisfies MFA. Each challenge can only be used once.
+
+        Parameters
+        ----------
+        challenge_id : str
+            Challenge ID returned by createPasskeyToken.
+        credential : Dict[str, Any]
+            Authentication credential returned by the authenticator, in the JSON form produced by `PublicKeyCredential.toJSON()`.
+        Returns
+        -------
+        TokenSecret
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/tokens/passkey'
+        api_params = {}
+        if challenge_id is None:
+            raise AppwriteException('Missing required parameter: "challenge_id"')
+        if credential is None:
+            raise AppwriteException('Missing required parameter: "credential"')
+        api_params['challengeId'] = self._normalize_value(challenge_id)
+        api_params['credential'] = self._normalize_value(credential)
+
+        response = self.client.call(
+            'put',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=TokenSecret)
 
     def create_phone_token(
         self,

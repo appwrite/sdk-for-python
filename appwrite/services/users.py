@@ -14,6 +14,8 @@ from ..enums.authenticator_type import AuthenticatorType
 from ..models.mfa_challenge_secret import MfaChallengeSecret
 from ..models.mfa_factors import MfaFactors
 from ..models.mfa_recovery_codes import MfaRecoveryCodes
+from ..models.passkey_list import PasskeyList
+from ..models.passkey import Passkey
 from ..models.preferences import Preferences
 from ..models.session_list import SessionList
 from ..models.session import Session
@@ -1474,6 +1476,202 @@ class Users(Service):
         )
 
         return User.with_data(response, model_type)
+
+    def list_passkeys(
+        self,
+        user_id: str,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
+    ) -> PasskeyList:
+        """
+        Get the list of verified passkeys registered by a user.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter and order on the following attributes: $id, $createdAt, $updatedAt, name, accessedAt
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        Returns
+        -------
+        PasskeyList
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/passkeys'
+        api_params = {}
+        if user_id is None or user_id == '':
+            raise AppwriteException('Missing required parameter: "user_id"')
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=PasskeyList)
+
+    def get_passkey(
+        self,
+        user_id: str,
+        passkey_id: str,
+    ) -> Passkey:
+        """
+        Get a verified passkey of a user by its unique ID.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        passkey_id : str
+            Passkey ID.
+        Returns
+        -------
+        Passkey
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/passkeys/{passkeyId}'
+        api_params = {}
+        if user_id is None or user_id == '':
+            raise AppwriteException('Missing required parameter: "user_id"')
+        if passkey_id is None or passkey_id == '':
+            raise AppwriteException('Missing required parameter: "passkey_id"')
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
+        api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Passkey)
+
+    def update_passkey(
+        self,
+        user_id: str,
+        passkey_id: str,
+        name: str,
+    ) -> Passkey:
+        """
+        Rename a passkey of a user.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        passkey_id : str
+            Passkey ID.
+        name : str
+            Passkey name. Max length: 128 chars.
+        Returns
+        -------
+        Passkey
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/passkeys/{passkeyId}'
+        api_params = {}
+        if user_id is None or user_id == '':
+            raise AppwriteException('Missing required parameter: "user_id"')
+        if passkey_id is None or passkey_id == '':
+            raise AppwriteException('Missing required parameter: "passkey_id"')
+        if name is None:
+            raise AppwriteException('Missing required parameter: "name"')
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
+        api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
+        api_params['name'] = self._normalize_value(name)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Passkey)
+
+    def delete_passkey(
+        self,
+        user_id: str,
+        passkey_id: str,
+    ) -> Dict[str, Any]:
+        """
+        Delete a passkey from a user, for example when a device is lost. The passkey can no longer be used to sign in.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID.
+        passkey_id : str
+            Passkey ID.
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/users/{userId}/passkeys/{passkeyId}'
+        api_params = {}
+        if user_id is None or user_id == '':
+            raise AppwriteException('Missing required parameter: "user_id"')
+        if passkey_id is None or passkey_id == '':
+            raise AppwriteException('Missing required parameter: "passkey_id"')
+        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
+        api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
+
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return response
 
     def update_password(
         self,
