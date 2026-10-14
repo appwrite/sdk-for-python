@@ -2,7 +2,7 @@
 
 ## 24.4.0
 
-* Added: `domains` service to register, transfer and manage domains, DNS records, email presets and zones
+* Added: `domains` service to manage domains, DNS records, email presets, prices, transfer status and zones
 * Added: `waf` service with bypass, challenge, deny, rate-limit and redirect rules
 * Added: `account.createEmailVerificationOTP`, `updateEmailVerificationOTP`, `createRecoveryOTP` and `updateRecoveryOTP`
 * Added: `account.createIdTokenSession` and `Identity.providerIdToken`
