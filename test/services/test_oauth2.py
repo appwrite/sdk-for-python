@@ -140,6 +140,23 @@ class Oauth2ServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_introspect(self, m):
+        data = {
+            "active": True,
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.oauth2.introspect(
+            '<TOKEN>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_list_organizations(self, m):
         data = {
             "total": 5.0,

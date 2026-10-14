@@ -2,6 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.project import Project
 from appwrite.models import OAuth2Okta
+from appwrite.enums.project_o_auth2_okta_prompt import ProjectOAuth2OktaPrompt
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -15,7 +16,8 @@ result: OAuth2Okta = project.update_o_auth2_okta(
     client_secret = '<CLIENT_SECRET>', # optional
     domain = 'example.com', # optional
     authorization_server_id = '<AUTHORIZATION_SERVER_ID>', # optional
-    enabled = False # optional
+    enabled = False, # optional
+    prompt = [ProjectOAuth2OktaPrompt.NONE] # optional
 )
 
 print(result.model_dump())

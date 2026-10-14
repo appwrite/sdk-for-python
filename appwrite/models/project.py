@@ -72,8 +72,14 @@ class Project(AppwriteModel):
         Last time the project was accessed via console. Used with plan&#039;s projectInactivityDays to determine if project is paused.
     wafenabled : Optional[bool]
         Whether WAF enforcement is enabled for the project.
+    parentid : Optional[str]
+        ID of the project this environment belongs to. Null when the project is not an environment.
     billinglimits : Optional[BillingLimits]
         Billing limits reached
+    firstaccessedat : Optional[str]
+        First time the project received a non-console API request. Empty until the project is used.
+    mcpaccessedat : Optional[str]
+        Last time the project was accessed through the MCP server. Empty if it was never accessed via MCP.
     oauth2serverenabled : Optional[bool]
         OAuth2 server status
     oauth2serverauthorizationurl : Optional[str]
@@ -138,7 +144,10 @@ class Project(AppwriteModel):
     blocks: List[Block] = Field(..., alias='blocks')
     consoleaccessedat: str = Field(..., alias='consoleAccessedAt')
     wafenabled: Optional[bool] = Field(default=None, alias='wafEnabled')
+    parentid: Optional[str] = Field(default=None, alias='parentId')
     billinglimits: Optional[BillingLimits] = Field(default=None, alias='billingLimits')
+    firstaccessedat: Optional[str] = Field(default=None, alias='firstAccessedAt')
+    mcpaccessedat: Optional[str] = Field(default=None, alias='mcpAccessedAt')
     oauth2serverenabled: Optional[bool] = Field(default=None, alias='oAuth2ServerEnabled')
     oauth2serverauthorizationurl: Optional[str] = Field(default=None, alias='oAuth2ServerAuthorizationUrl')
     oauth2serverscopes: Optional[List[Any]] = Field(default=None, alias='oAuth2ServerScopes')

@@ -18,11 +18,11 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent': f'AppwritePythonSDK/24.3.1 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
+            'user-agent': f'AppwritePythonSDK/24.4.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '24.3.1',
+            'x-sdk-version': '24.4.0',
             'X-Appwrite-Response-Format': '2.0.0',
         }
         self._config = {}
@@ -190,6 +190,9 @@ class Client:
             if response_type == 'location':
                 return response.headers.get('Location')
 
+            if response_type == 'text':
+                return response.content.decode('utf-8')
+
             if content_type.startswith('application/json'):
                 return response.json()
 
@@ -214,6 +217,7 @@ class Client:
         param_name='',
         on_progress=None,
         upload_id='',
+        method='post',
     ):
         input_file = params[param_name]
 
@@ -230,7 +234,7 @@ class Client:
                     input_file.data = input.read()
 
             params[param_name] = input_file
-            return self.call('post', path, headers, params)
+            return self.call(method, path, headers, params)
 
         offset = 0
         counter = 0
@@ -296,7 +300,7 @@ class Client:
                 chunk_headers["x-appwrite-id"] = current_upload_id
 
             return self.call(
-                'post',
+                method,
                 path,
                 chunk_headers,
                 chunk_params,

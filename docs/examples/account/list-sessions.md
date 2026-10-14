@@ -10,7 +10,9 @@ client.set_session('') # The user session to authenticate with
 
 account = Account(client)
 
-result: SessionList = account.list_sessions()
+result: SessionList = account.list_sessions(
+    total = False # optional
+)
 
 print(result.model_dump())
 ```

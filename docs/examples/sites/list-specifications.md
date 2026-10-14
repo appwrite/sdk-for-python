@@ -11,7 +11,8 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 sites = Sites(client)
 
 result: SpecificationList = sites.list_specifications(
-    type = 'runtimes' # optional
+    type = 'runtimes', # optional
+    total = False # optional
 )
 
 print(result.model_dump())

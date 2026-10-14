@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Optional, Union, cast
 from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
+from ..enums.o_auth2_microsoft_prompt import OAuth2MicrosoftPrompt
 
 
 class OAuth2Microsoft(AppwriteModel):
@@ -18,6 +19,8 @@ class OAuth2Microsoft(AppwriteModel):
         Microsoft OAuth2 application ID.
     applicationsecret : str
         Microsoft OAuth2 application secret.
+    prompt : Optional[List[OAuth2MicrosoftPrompt]]
+        Microsoft OAuth2 prompt values.
     tenant : str
         Microsoft Entra ID tenant identifier. Use &#039;common&#039;, &#039;organizations&#039;, &#039;consumers&#039; or a specific tenant ID.
     """
@@ -26,4 +29,5 @@ class OAuth2Microsoft(AppwriteModel):
     enabled: bool = Field(..., alias='enabled')
     applicationid: str = Field(..., alias='applicationId')
     applicationsecret: str = Field(..., alias='applicationSecret')
+    prompt: Optional[List[OAuth2MicrosoftPrompt]] = Field(default=None, alias='prompt')
     tenant: str = Field(..., alias='tenant')

@@ -10,7 +10,9 @@ client.set_session('') # The user session to authenticate with
 
 locale = Locale(client)
 
-result: PhoneList = locale.list_countries_phones()
+result: PhoneList = locale.list_countries_phones(
+    total = False # optional
+)
 
 print(result.model_dump())
 ```

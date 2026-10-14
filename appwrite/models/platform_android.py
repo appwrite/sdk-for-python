@@ -23,6 +23,8 @@ class PlatformAndroid(AppwriteModel):
         Platform type. Possible values are: windows, apple, android, linux, web.
     applicationid : str
         Android application ID.
+    fingerprints : Optional[List[Any]]
+        SHA-256 fingerprints of the certificates the app is signed with. Passkeys created in the app are accepted when its signature matches one.
     """
 
     id: str = Field(..., alias='$id')
@@ -31,3 +33,4 @@ class PlatformAndroid(AppwriteModel):
     name: str = Field(..., alias='name')
     type: PlatformType = Field(..., alias='type')
     applicationid: str = Field(..., alias='applicationId')
+    fingerprints: Optional[List[Any]] = Field(default=None, alias='fingerprints')

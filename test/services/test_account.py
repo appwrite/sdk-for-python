@@ -1006,6 +1006,52 @@ class AccountServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_create_recovery_otp(self, m):
+        data = {
+            "$id": "bb8ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "userId": "5e5ea5c168bb8",
+            "secret": "",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "phrase": "Golden Fox",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.create_recovery_otp(
+            'email@example.com',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_recovery_otp(self, m):
+        data = {
+            "$id": "bb8ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "userId": "5e5ea5c168bb8",
+            "secret": "",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "phrase": "Golden Fox",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.update_recovery_otp(
+            '<USER_ID>',
+            '<SECRET>',
+            'password',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_list_sessions(self, m):
         data = {
             "total": 5.0,
@@ -1120,6 +1166,52 @@ class AccountServiceTest(unittest.TestCase):
         response = self.account.create_email_password_session(
             'email@example.com',
             'password',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_id_token_session(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "userId": "5e5bb8c16897e",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "provider": "email",
+            "providerUid": "user@example.com",
+            "providerAccessToken": "MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3",
+            "providerAccessTokenExpiry": "2020-10-15T06:38:00.000+00:00",
+            "providerRefreshToken": "MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3",
+            "ip": "127.0.0.1",
+            "osCode": "Mac",
+            "osName": "Mac",
+            "osVersion": "Mac",
+            "clientType": "browser",
+            "clientCode": "CM",
+            "clientName": "Chrome Mobile iOS",
+            "clientVersion": "84.0",
+            "clientEngine": "WebKit",
+            "clientEngineVersion": "605.1.15",
+            "deviceName": "smartphone",
+            "deviceBrand": "Google",
+            "deviceModel": "Nexus 5",
+            "countryCode": "US",
+            "countryName": "United States",
+            "current": True,
+            "factors": [],
+            "secret": "5e5bb8c16897e",
+            "mfaUpdatedAt": "2020-10-15T06:38:00.000+00:00",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.create_id_token_session(
+            'apple',
+            '<ID_TOKEN>',
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1607,6 +1699,49 @@ class AccountServiceTest(unittest.TestCase):
             headers=headers,
         )
         response = self.account.update_verification(
+            '<USER_ID>',
+            '<SECRET>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_email_verification_otp(self, m):
+        data = {
+            "$id": "bb8ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "userId": "5e5ea5c168bb8",
+            "secret": "",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "phrase": "Golden Fox",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.create_email_verification_otp()
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_email_verification_otp(self, m):
+        data = {
+            "$id": "bb8ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "userId": "5e5ea5c168bb8",
+            "secret": "",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "phrase": "Golden Fox",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.update_email_verification_otp(
             '<USER_ID>',
             '<SECRET>',
         )

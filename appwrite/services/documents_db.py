@@ -174,6 +174,7 @@ class DocumentsDB(Service):
     def list_transactions(
         self,
         queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
     ) -> TransactionList:
         """
         List transactions across all databases.
@@ -182,6 +183,8 @@ class DocumentsDB(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         TransactionList
@@ -197,6 +200,8 @@ class DocumentsDB(Service):
         api_params = {}
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',

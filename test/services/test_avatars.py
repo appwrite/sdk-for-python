@@ -116,6 +116,51 @@ class AvatarsServiceTest(unittest.TestCase):
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
+    def test_update_photo(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "John Doe",
+            "registration": "2020-10-15T06:38:00.000+00:00",
+            "status": True,
+            "labels": [],
+            "passwordUpdate": "2020-10-15T06:38:00.000+00:00",
+            "email": "john@appwrite.io",
+            "phone": "+4930901820",
+            "emailVerification": True,
+            "phoneVerification": True,
+            "mfa": True,
+            "prefs": {},
+            "targets": [],
+            "accessedAt": "2020-10-15T06:38:00.000+00:00",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.avatars.update_photo(
+            InputFile.from_bytes(bytearray(), "example.file"),
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_delete_photo(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.avatars.delete_photo()
+        self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
     def test_get_qr(self, m):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}

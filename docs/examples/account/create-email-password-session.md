@@ -12,7 +12,8 @@ account = Account(client)
 
 result: Session = account.create_email_password_session(
     email = 'email@example.com',
-    password = 'password'
+    password = 'password',
+    duration = 60 # optional
 )
 
 print(result.model_dump())

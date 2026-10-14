@@ -59,6 +59,8 @@ class User(AppwriteModel, Generic[T]):
         Whether the user email is from a corporate domain.
     emailiscanonical : Optional[bool]
         Whether the user email is in its canonical form.
+    passwordpwned : Optional[bool]
+        Whether the password was found in a known data breach the last time it was checked. Null when the password has never been checked.
     phoneverification : bool
         Phone verification status.
     mfa : bool
@@ -104,6 +106,7 @@ class User(AppwriteModel, Generic[T]):
     emailisdisposable: Optional[bool] = Field(default=None, alias='emailIsDisposable')
     emailiscorporate: Optional[bool] = Field(default=None, alias='emailIsCorporate')
     emailiscanonical: Optional[bool] = Field(default=None, alias='emailIsCanonical')
+    passwordpwned: Optional[bool] = Field(default=None, alias='passwordPwned')
     phoneverification: bool = Field(..., alias='phoneVerification')
     mfa: bool = Field(..., alias='mfa')
     prefs: Preferences[T] = Field(..., alias='prefs')

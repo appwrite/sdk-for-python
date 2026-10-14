@@ -62,6 +62,12 @@ class DedicatedDatabase(AppwriteModel):
         Memory allocated in MB.
     storage : float
         Storage allocated in GB.
+    storagestatus : Optional[str]
+        Storage resize status. Possible values: idle (no resize in flight), resizing (the volume is growing towards storageTargetGb).
+    storagetargetgb : Optional[float]
+        Size in GB the volume is growing towards while storageStatus is resizing. 0 when no resize is in flight.
+    storageresizestartedat : Optional[str]
+        Time the in-flight storage resize started, in ISO 8601 format.
     storageclass : str
         Storage class. Currently always &#039;ssd&#039;; DigitalOcean exposes a single block-storage class.
     storagemaxgb : float
@@ -136,6 +142,9 @@ class DedicatedDatabase(AppwriteModel):
     cpu: float = Field(..., alias='cpu')
     memory: float = Field(..., alias='memory')
     storage: float = Field(..., alias='storage')
+    storagestatus: Optional[str] = Field(default=None, alias='storageStatus')
+    storagetargetgb: Optional[float] = Field(default=None, alias='storageTargetGb')
+    storageresizestartedat: Optional[str] = Field(default=None, alias='storageResizeStartedAt')
     storageclass: str = Field(..., alias='storageClass')
     storagemaxgb: float = Field(..., alias='storageMaxGb')
     nodepool: str = Field(..., alias='nodePool')

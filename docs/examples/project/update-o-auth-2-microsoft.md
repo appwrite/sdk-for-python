@@ -2,6 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.project import Project
 from appwrite.models import OAuth2Microsoft
+from appwrite.enums.project_o_auth2_microsoft_prompt import ProjectOAuth2MicrosoftPrompt
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -14,7 +15,8 @@ result: OAuth2Microsoft = project.update_o_auth2_microsoft(
     application_id = '<APPLICATION_ID>', # optional
     application_secret = '<APPLICATION_SECRET>', # optional
     tenant = '<TENANT>', # optional
-    enabled = False # optional
+    enabled = False, # optional
+    prompt = [ProjectOAuth2MicrosoftPrompt.NONE] # optional
 )
 
 print(result.model_dump())

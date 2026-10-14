@@ -43,6 +43,8 @@ class BillingPlan(AppwriteModel):
         Webhooks
     wafrules : float
         Maximum WAF rules per project
+    environments : Optional[float]
+        Maximum environments per project. 0 when the plan does not offer environments.
     projects : float
         Projects
     platforms : float
@@ -111,6 +113,8 @@ class BillingPlan(AppwriteModel):
         Does plan require payment method
     requiresbillingaddress : bool
         Does plan require billing address
+    eligiblecountries : Optional[List[Any]]
+        ISO country codes eligible for this regional plan. Empty means no restriction.
     isavailable : bool
         Is the billing plan available
     selfservice : bool
@@ -178,6 +182,7 @@ class BillingPlan(AppwriteModel):
     members: Optional[float] = Field(default=None, alias='members')
     webhooks: float = Field(..., alias='webhooks')
     wafrules: float = Field(..., alias='wafRules')
+    environments: Optional[float] = Field(default=None, alias='environments')
     projects: float = Field(..., alias='projects')
     platforms: float = Field(..., alias='platforms')
     users: float = Field(..., alias='users')
@@ -212,6 +217,7 @@ class BillingPlan(AppwriteModel):
     emailbranding: bool = Field(..., alias='emailBranding')
     requirespaymentmethod: bool = Field(..., alias='requiresPaymentMethod')
     requiresbillingaddress: bool = Field(..., alias='requiresBillingAddress')
+    eligiblecountries: Optional[List[Any]] = Field(default=None, alias='eligibleCountries')
     isavailable: bool = Field(..., alias='isAvailable')
     selfservice: bool = Field(..., alias='selfService')
     premiumsupport: bool = Field(..., alias='premiumSupport')

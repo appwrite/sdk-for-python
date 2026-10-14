@@ -30,7 +30,8 @@ result: Message = messaging.create_push(
     scheduled_at = '2020-10-15T06:38:00.000+00:00', # optional
     content_available = False, # optional
     critical = False, # optional
-    priority = MessagePriority.NORMAL # optional
+    priority = MessagePriority.NORMAL, # optional
+    channel_id = '<CHANNEL_ID>' # optional
 )
 
 print(result.model_dump())
