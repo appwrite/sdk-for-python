@@ -13,7 +13,7 @@ tables_db = TablesDB(client)
 result: RowList = tables_db.delete_rows(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    queries = [], # optional
+    queries = ["{\"method\":\"equal\", \"attribute\":\"$id\", \"values\":[\"<ROW_ID>\"]}"], # optional
     transaction_id = '<TRANSACTION_ID>' # optional
 )
 

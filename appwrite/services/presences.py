@@ -85,7 +85,7 @@ class Presences(Service):
 
         api_path = '/presences/{presenceId}'
         api_params = {}
-        if presence_id is None:
+        if presence_id is None or presence_id == '':
             raise AppwriteException('Missing required parameter: "presence_id"')
         api_path = api_path.replace('{presenceId}', str(self._normalize_value(presence_id)))
 
@@ -140,7 +140,7 @@ class Presences(Service):
 
         api_path = '/presences/{presenceId}'
         api_params = {}
-        if presence_id is None:
+        if presence_id is None or presence_id == '':
             raise AppwriteException('Missing required parameter: "presence_id"')
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -211,7 +211,7 @@ class Presences(Service):
 
         api_path = '/presences/{presenceId}'
         api_params = {}
-        if presence_id is None:
+        if presence_id is None or presence_id == '':
             raise AppwriteException('Missing required parameter: "presence_id"')
         if user_id is None:
             raise AppwriteException('Missing required parameter: "user_id"')
@@ -265,7 +265,7 @@ class Presences(Service):
 
         api_path = '/presences/{presenceId}'
         api_params = {}
-        if presence_id is None:
+        if presence_id is None or presence_id == '':
             raise AppwriteException('Missing required parameter: "presence_id"')
         api_path = api_path.replace('{presenceId}', str(self._normalize_value(presence_id)))
 
@@ -275,6 +275,7 @@ class Presences(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )

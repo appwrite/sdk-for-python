@@ -13,7 +13,7 @@ teams = Teams(client)
 result: Membership = teams.update_membership(
     team_id = '<TEAM_ID>',
     membership_id = '<MEMBERSHIP_ID>',
-    roles = []
+    roles = ["editor"]
 )
 
 print(result.model_dump())

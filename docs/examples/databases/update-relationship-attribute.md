@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.databases import Databases
 from appwrite.models import AttributeRelationship
-from appwrite.enums import RelationMutate
+from appwrite.enums.relation_mutate import RelationMutate
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint

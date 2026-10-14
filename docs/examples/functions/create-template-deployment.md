@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.functions import Functions
 from appwrite.models import Deployment
-from appwrite.enums import TemplateReferenceType
+from appwrite.enums.template_reference_type import TemplateReferenceType
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint

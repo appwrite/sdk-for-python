@@ -27,7 +27,6 @@ from ..enums.deployment_download_type import DeploymentDownloadType
 from ..enums.execution_method import ExecutionMethod
 from ..enums.message_priority import MessagePriority
 from ..enums.smtp_encryption import SmtpEncryption
-from ..enums.organization_key_scopes import OrganizationKeyScopes
 from ..enums.region import Region
 from ..enums.project_auth_method_id import ProjectAuthMethodId
 from ..enums.project_o_auth2_auth0_prompt import ProjectOAuth2Auth0Prompt
@@ -171,9 +170,6 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, SmtpEncryption):
-            return o.value
-
-        if isinstance(o, OrganizationKeyScopes):
             return o.value
 
         if isinstance(o, Region):

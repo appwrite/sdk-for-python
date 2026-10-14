@@ -2,8 +2,8 @@
 from appwrite.client import Client
 from appwrite.services.documents_db import DocumentsDB
 from appwrite.models import Index
-from appwrite.enums import DocumentsDBIndexType
-from appwrite.enums import OrderBy
+from appwrite.enums.documents_db_index_type import DocumentsDBIndexType
+from appwrite.enums.order_by import OrderBy
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -17,7 +17,7 @@ result: Index = documents_db.create_index(
     collection_id = '<COLLECTION_ID>',
     key = '<KEY>',
     type = DocumentsDBIndexType.KEY,
-    attributes = [],
+    attributes = ["username"],
     orders = [OrderBy.ASC], # optional
     lengths = [] # optional
 )

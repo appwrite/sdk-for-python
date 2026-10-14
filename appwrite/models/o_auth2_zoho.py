@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from ..enums.o_auth2_zoho_prompt import OAuth2ZohoPrompt
@@ -19,7 +19,7 @@ class OAuth2Zoho(AppwriteModel):
         Zoho OAuth2 client ID.
     clientsecret : str
         Zoho OAuth2 client secret.
-    prompt : Optional[List[OAuth2ZohoPrompt]]
+    prompt : List[OAuth2ZohoPrompt]
         Zoho OAuth2 prompt values.
     """
 
@@ -27,4 +27,23 @@ class OAuth2Zoho(AppwriteModel):
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')
     clientsecret: str = Field(..., alias='clientSecret')
-    prompt: Optional[List[OAuth2ZohoPrompt]] = Field(default=None, alias='prompt')
+    prompt: List[OAuth2ZohoPrompt] = Field(..., alias='prompt')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if 'enabled' not in data:
+            data['enabled'] = False
+        if 'clientId' not in data and 'clientid' not in data:
+            data['clientId'] = ''
+        if 'clientSecret' not in data and 'clientsecret' not in data:
+            data['clientSecret'] = ''
+        if 'prompt' not in data:
+            data['prompt'] = []
+        return data

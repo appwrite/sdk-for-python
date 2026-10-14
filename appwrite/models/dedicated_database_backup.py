@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -63,3 +63,36 @@ class DedicatedDatabaseBackup(AppwriteModel):
     expiresat: Optional[str] = Field(default=None, alias='expiresAt')
     logposition: Optional[str] = Field(default=None, alias='logPosition')
     error: str = Field(..., alias='error')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if 'databaseId' not in data and 'databaseid' not in data:
+            data['databaseId'] = ''
+        if 'projectId' not in data and 'projectid' not in data:
+            data['projectId'] = ''
+        if 'policyId' not in data and 'policyid' not in data:
+            data['policyId'] = ''
+        if 'trigger' not in data:
+            data['trigger'] = 'manual'
+        if 'type' not in data:
+            data['type'] = 'full'
+        if 'requestedType' not in data and 'requestedtype' not in data:
+            data['requestedType'] = ''
+        if 'fallbackReason' not in data and 'fallbackreason' not in data:
+            data['fallbackReason'] = ''
+        if 'status' not in data:
+            data['status'] = 'pending'
+        if 'sizeBytes' not in data and 'sizebytes' not in data:
+            data['sizeBytes'] = 0
+        if 'error' not in data:
+            data['error'] = ''
+        return data

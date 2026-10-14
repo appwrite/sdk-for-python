@@ -1,5 +1,20 @@
 # Change Log
 
+## 25.0.0
+
+* Breaking: requests send `X-Appwrite-Response-Format: 2.5.0`; responses follow the 2.5 shapes
+* Breaking: removed `account.list_logs`, `users.list_logs` and the `Log`/`LogList` models
+* Breaking: removed `organization.create_key`, `list_keys`, `update_key` and `OrganizationKeyScopes`; use project keys
+* Breaking: removed `Client.set_dev_key`, the `DevKey` model and `Project.dev_keys`
+* Breaking: removed `BillingPlanGroup.STARTER`
+* Breaking: removed `DedicatedDatabaseSpecificationPricing` and `DedicatedDatabaseSpecificationList.pricing`
+* Breaking: removed `Block` fields `reason`, `project_name`, `region`, `organization_name`, `organization_id` and `billing_plan`
+* Breaking: OAuth2 `resource` params now take `List[str]`
+* Breaking: `project.update_o_auth2_kakao` takes `enabled` before `prompt`
+* Breaking: `BackupRestoration.options` is now a dict
+* Breaking: some response fields became `Optional`, such as `BillingPlan.usage` and `DedicatedDatabase.engine`
+* Updated: missing response fields fall back to their documented defaults
+
 ## 24.4.0
 
 * Added: `domains` service to manage domains, DNS records, email presets, prices, transfer status and zones

@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.users import Users
 from appwrite.models import Target
-from appwrite.enums import MessagingProviderType
+from appwrite.enums.messaging_provider_type import MessagingProviderType
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint

@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -45,3 +45,28 @@ class DedicatedDatabaseOperation(AppwriteModel):
     completedat: Optional[str] = Field(default=None, alias='completedAt')
     errorcode: str = Field(..., alias='errorCode')
     errormessage: str = Field(..., alias='errorMessage')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if 'databaseId' not in data and 'databaseid' not in data:
+            data['databaseId'] = ''
+        if 'type' not in data:
+            data['type'] = ''
+        if 'status' not in data:
+            data['status'] = ''
+        if 'attempts' not in data:
+            data['attempts'] = 0
+        if 'errorCode' not in data and 'errorcode' not in data:
+            data['errorCode'] = ''
+        if 'errorMessage' not in data and 'errormessage' not in data:
+            data['errorMessage'] = ''
+        return data

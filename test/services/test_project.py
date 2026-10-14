@@ -23,7 +23,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -77,7 +76,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -137,7 +135,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -181,7 +178,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -224,7 +220,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -392,7 +387,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -544,7 +538,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -606,6 +599,8 @@ class ProjectServiceTest(unittest.TestCase):
             "keyId": "P4000000N8",
             "teamId": "D4000000R6",
             "p8File": "-----BEGIN PRIVATE KEY-----MIGTAg...jy2Xbna-----END PRIVATE KEY-----",
+            "nativeEnabled": True,
+            "nativeClientIds": [],
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -642,6 +637,7 @@ class ProjectServiceTest(unittest.TestCase):
             "enabled": True,
             "clientId": "OaOkIA000000000000000000005KLSYq",
             "clientSecret": "zXz0000-00000000000000000000000000000-00000000000000000000PJafnF",
+            "prompt": [],
             "endpoint": "example.us.auth0.com",
         }
         headers = {'Content-Type': 'application/json'}
@@ -788,6 +784,7 @@ class ProjectServiceTest(unittest.TestCase):
             "enabled": True,
             "clientId": "950722000000343754",
             "clientSecret": "YmPXnM000000000000000000002zFg5D",
+            "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -915,6 +912,7 @@ class ProjectServiceTest(unittest.TestCase):
             "enabled": True,
             "clientId": "e4d87900000000540733",
             "clientSecret": "5e07c00000000000000000000000000000198bcc",
+            "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -953,6 +951,8 @@ class ProjectServiceTest(unittest.TestCase):
             "clientId": "120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com",
             "clientSecret": "GOCSPX-2k8gsR0000000000000000VNahJj",
             "prompt": [],
+            "nativeEnabled": True,
+            "nativeClientIds": [],
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -1064,6 +1064,7 @@ class ProjectServiceTest(unittest.TestCase):
             "enabled": True,
             "applicationId": "00001111-aaaa-2222-bbbb-3333cccc4444",
             "applicationSecret": "A1bC2dE3fH4iJ5kL6mN7oP8qR9sT0u",
+            "prompt": [],
             "tenant": "common",
         }
         headers = {'Content-Type': 'application/json'}
@@ -1101,11 +1102,11 @@ class ProjectServiceTest(unittest.TestCase):
             "enabled": True,
             "clientId": "qibI2x0000000000000000000000000006L2YFoG",
             "clientSecret": "Ah68ed000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003qpcHV",
+            "prompt": [],
             "wellKnownURL": "https:\/\/myoauth.com\/.well-known\/openid-configuration",
             "authorizationURL": "https:\/\/myoauth.com\/oauth2\/authorize",
             "tokenURL": "https:\/\/myoauth.com\/oauth2\/token",
             "userInfoURL": "https:\/\/myoauth.com\/oauth2\/userinfo",
-            "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -1124,6 +1125,7 @@ class ProjectServiceTest(unittest.TestCase):
             "enabled": True,
             "clientId": "0oa00000000000000698",
             "clientSecret": "Kiq0000000000000000000000000000000000000-00000000000H2L5-3SJ-vRV",
+            "prompt": [],
             "domain": "trial-6400025.okta.com",
             "authorizationServerId": "aus000000000000000h7z",
         }
@@ -1216,6 +1218,7 @@ class ProjectServiceTest(unittest.TestCase):
             "enabled": True,
             "customerKey": "3MVG9I0000000000000000000000000000000000000000000000000000000000000000000000000C5Aejq",
             "customerSecret": "3w000000000000e2",
+            "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -1450,6 +1453,7 @@ class ProjectServiceTest(unittest.TestCase):
             "enabled": True,
             "clientId": "1000.83C178000000000000000000RPNX0B",
             "clientSecret": "fb5cac000000000000000000000000000000a68f6e",
+            "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -1486,6 +1490,7 @@ class ProjectServiceTest(unittest.TestCase):
             "enabled": True,
             "clientId": "e4d87900000000540733",
             "clientSecret": "5e07c00000000000000000000000000000198bcc",
+            "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -1524,6 +1529,7 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "My Web App",
             "type": "web",
             "applicationId": "com.company.appname",
+            "fingerprints": [],
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -1548,6 +1554,7 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "My Web App",
             "type": "web",
             "applicationId": "com.company.appname",
+            "fingerprints": [],
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -1817,7 +1824,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -1860,7 +1866,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -1903,7 +1908,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -1946,7 +1950,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -1989,7 +1992,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2030,7 +2032,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2071,7 +2072,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2114,7 +2114,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2157,7 +2156,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2200,7 +2198,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2243,7 +2240,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2284,7 +2280,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2345,7 +2340,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2388,7 +2382,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2431,7 +2424,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2474,7 +2466,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2517,7 +2508,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2578,7 +2568,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2622,7 +2611,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",
@@ -2666,7 +2654,6 @@ class ProjectServiceTest(unittest.TestCase):
             "name": "New Project",
             "teamId": "1592981250",
             "region": "fra",
-            "devKeys": [],
             "smtpEnabled": True,
             "smtpSenderName": "John Appwrite",
             "smtpSenderEmail": "john@appwrite.io",

@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from ..enums.attribute_status import AttributeStatus
@@ -46,3 +46,24 @@ class AttributeFloat(AppwriteModel):
     min: Optional[float] = Field(default=None, alias='min')
     max: Optional[float] = Field(default=None, alias='max')
     default: Optional[float] = Field(default=None, alias='default')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'key' not in data:
+            data['key'] = ''
+        if 'type' not in data:
+            data['type'] = ''
+        if 'error' not in data:
+            data['error'] = ''
+        if 'required' not in data:
+            data['required'] = False
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        return data

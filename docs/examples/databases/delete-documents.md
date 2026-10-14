@@ -13,7 +13,7 @@ databases = Databases(client)
 result: DocumentList = databases.delete_documents(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    queries = [], # optional
+    queries = ["{\"method\":\"equal\", \"attribute\":\"$id\", \"values\":[\"<DOCUMENT_ID>\"]}"], # optional
     transaction_id = '<TRANSACTION_ID>' # optional
 )
 

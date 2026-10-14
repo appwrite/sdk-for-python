@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from ..enums.attribute_status import AttributeStatus
@@ -55,3 +55,34 @@ class AttributeRelationship(AppwriteModel):
     twowaykey: str = Field(..., alias='twoWayKey')
     ondelete: str = Field(..., alias='onDelete')
     side: str = Field(..., alias='side')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'key' not in data:
+            data['key'] = ''
+        if 'type' not in data:
+            data['type'] = ''
+        if 'error' not in data:
+            data['error'] = ''
+        if 'required' not in data:
+            data['required'] = False
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'relationType' not in data and 'relationtype' not in data:
+            data['relationType'] = ''
+        if 'twoWay' not in data and 'twoway' not in data:
+            data['twoWay'] = False
+        if 'twoWayKey' not in data and 'twowaykey' not in data:
+            data['twoWayKey'] = ''
+        if 'onDelete' not in data and 'ondelete' not in data:
+            data['onDelete'] = 'restrict'
+        if 'side' not in data:
+            data['side'] = ''
+        return data
