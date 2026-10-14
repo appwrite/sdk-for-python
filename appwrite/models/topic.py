@@ -26,6 +26,10 @@ class Topic(AppwriteModel):
         Total count of push subscribers subscribed to the topic.
     subscribe : List[Any]
         Subscribe permissions.
+    qos : Optional[float]
+        MQTT QoS for delivery on this topic. Null lets the subscriber choose their level.
+    expiry : Optional[float]
+        Message retention in seconds for offline delivery.
     """
 
     id: str = Field(..., alias='$id')
@@ -36,3 +40,5 @@ class Topic(AppwriteModel):
     smstotal: float = Field(..., alias='smsTotal')
     pushtotal: float = Field(..., alias='pushTotal')
     subscribe: List[Any] = Field(..., alias='subscribe')
+    qos: Optional[float] = Field(default=None, alias='qos')
+    expiry: Optional[float] = Field(default=None, alias='expiry')

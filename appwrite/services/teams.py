@@ -574,6 +574,7 @@ class Teams(Service):
         phone: Optional[str] = None,
         url: Optional[str] = None,
         name: Optional[str] = None,
+        membership_id: Optional[str] = None,
     ) -> Membership:
         """
         Invite a new member to join your team. Provide an ID for existing users, or invite unregistered users using an email or phone number. If initiated from a Client SDK, Appwrite will send an email or sms with a link to join the team to the invited user, and an account will be created for them if one doesn't exist. If initiated from a Server SDK, the new member will be added automatically to the team.
@@ -600,6 +601,8 @@ class Teams(Service):
             URL to redirect the user back to your app from the invitation email. This parameter is not required when an API key is supplied. Only URLs from hostnames in your project platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
         name : Optional[str]
             Name of the new team member. Max length: 128 chars.
+        membership_id : Optional[str]
+            Membership ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
         Returns
         -------
         Membership
@@ -629,6 +632,8 @@ class Teams(Service):
             api_params['url'] = self._normalize_value(url)
         if name is not None:
             api_params['name'] = self._normalize_value(name)
+        if membership_id is not None:
+            api_params['membershipId'] = self._normalize_value(membership_id)
 
         response = self.client.call(
             'post',

@@ -2,6 +2,7 @@ import json
 from ..models.base_model import AppwriteModel
 from ..enums.authenticator_type import AuthenticatorType
 from ..enums.authentication_factor import AuthenticationFactor
+from ..enums.id_token_provider import IdTokenProvider
 from ..enums.o_auth_provider import OAuthProvider
 from ..enums.browser import Browser
 from ..enums.credit_card import CreditCard
@@ -16,6 +17,7 @@ from ..enums.relation_mutate import RelationMutate
 from ..enums.databases_index_type import DatabasesIndexType
 from ..enums.order_by import OrderBy
 from ..enums.documents_db_index_type import DocumentsDBIndexType
+from ..enums.domain_registration_type import DomainRegistrationType
 from ..enums.embedding_model import EmbeddingModel
 from ..enums.runtime import Runtime
 from ..enums.project_key_scopes import ProjectKeyScopes
@@ -28,8 +30,16 @@ from ..enums.smtp_encryption import SmtpEncryption
 from ..enums.organization_key_scopes import OrganizationKeyScopes
 from ..enums.region import Region
 from ..enums.project_auth_method_id import ProjectAuthMethodId
+from ..enums.project_o_auth2_auth0_prompt import ProjectOAuth2Auth0Prompt
+from ..enums.project_o_auth2_discord_prompt import ProjectOAuth2DiscordPrompt
+from ..enums.project_o_auth2_git_hub_prompt import ProjectOAuth2GitHubPrompt
 from ..enums.project_o_auth2_google_prompt import ProjectOAuth2GooglePrompt
+from ..enums.project_o_auth2_kakao_prompt import ProjectOAuth2KakaoPrompt
+from ..enums.project_o_auth2_microsoft_prompt import ProjectOAuth2MicrosoftPrompt
 from ..enums.project_o_auth2_oidc_prompt import ProjectOAuth2OidcPrompt
+from ..enums.project_o_auth2_okta_prompt import ProjectOAuth2OktaPrompt
+from ..enums.project_o_auth2_salesforce_prompt import ProjectOAuth2SalesforcePrompt
+from ..enums.project_o_auth2_zoho_prompt import ProjectOAuth2ZohoPrompt
 from ..enums.project_o_auth_provider_id import ProjectOAuthProviderId
 from ..enums.project_policy_id import ProjectPolicyId
 from ..enums.project_protocol_id import ProjectProtocolId
@@ -58,13 +68,23 @@ from ..enums.deployment_status import DeploymentStatus
 from ..enums.execution_resource_type import ExecutionResourceType
 from ..enums.execution_trigger import ExecutionTrigger
 from ..enums.execution_status import ExecutionStatus
+from ..enums.o_auth2_github_prompt import OAuth2GithubPrompt
+from ..enums.o_auth2_discord_prompt import OAuth2DiscordPrompt
 from ..enums.o_auth2_google_prompt import OAuth2GooglePrompt
+from ..enums.o_auth2_zoho_prompt import OAuth2ZohoPrompt
+from ..enums.o_auth2_salesforce_prompt import OAuth2SalesforcePrompt
+from ..enums.o_auth2_auth0_prompt import OAuth2Auth0Prompt
 from ..enums.o_auth2_oidc_prompt import OAuth2OidcPrompt
+from ..enums.o_auth2_okta_prompt import OAuth2OktaPrompt
+from ..enums.o_auth2_microsoft_prompt import OAuth2MicrosoftPrompt
+from ..enums.o_auth2_kakao_prompt import OAuth2KakaoPrompt
 from ..enums.platform_type import PlatformType
 from ..enums.proxy_rule_deployment_resource_type import ProxyRuleDeploymentResourceType
 from ..enums.proxy_rule_status import ProxyRuleStatus
 from ..enums.message_status import MessageStatus
 from ..enums.billing_plan_group import BillingPlanGroup
+from ..enums.domain_transfer_status_enum import DomainTransferStatusEnum
+from ..enums.waf_rule_action import WafRuleAction
 
 
 class ValueClassEncoder(json.JSONEncoder):
@@ -76,6 +96,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, AuthenticationFactor):
+            return o.value
+
+        if isinstance(o, IdTokenProvider):
             return o.value
 
         if isinstance(o, OAuthProvider):
@@ -120,6 +143,9 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, DocumentsDBIndexType):
             return o.value
 
+        if isinstance(o, DomainRegistrationType):
+            return o.value
+
         if isinstance(o, EmbeddingModel):
             return o.value
 
@@ -156,10 +182,34 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, ProjectAuthMethodId):
             return o.value
 
+        if isinstance(o, ProjectOAuth2Auth0Prompt):
+            return o.value
+
+        if isinstance(o, ProjectOAuth2DiscordPrompt):
+            return o.value
+
+        if isinstance(o, ProjectOAuth2GitHubPrompt):
+            return o.value
+
         if isinstance(o, ProjectOAuth2GooglePrompt):
             return o.value
 
+        if isinstance(o, ProjectOAuth2KakaoPrompt):
+            return o.value
+
+        if isinstance(o, ProjectOAuth2MicrosoftPrompt):
+            return o.value
+
         if isinstance(o, ProjectOAuth2OidcPrompt):
+            return o.value
+
+        if isinstance(o, ProjectOAuth2OktaPrompt):
+            return o.value
+
+        if isinstance(o, ProjectOAuth2SalesforcePrompt):
+            return o.value
+
+        if isinstance(o, ProjectOAuth2ZohoPrompt):
             return o.value
 
         if isinstance(o, ProjectOAuthProviderId):
@@ -246,10 +296,34 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, ExecutionStatus):
             return o.value
 
+        if isinstance(o, OAuth2GithubPrompt):
+            return o.value
+
+        if isinstance(o, OAuth2DiscordPrompt):
+            return o.value
+
         if isinstance(o, OAuth2GooglePrompt):
             return o.value
 
+        if isinstance(o, OAuth2ZohoPrompt):
+            return o.value
+
+        if isinstance(o, OAuth2SalesforcePrompt):
+            return o.value
+
+        if isinstance(o, OAuth2Auth0Prompt):
+            return o.value
+
         if isinstance(o, OAuth2OidcPrompt):
+            return o.value
+
+        if isinstance(o, OAuth2OktaPrompt):
+            return o.value
+
+        if isinstance(o, OAuth2MicrosoftPrompt):
+            return o.value
+
+        if isinstance(o, OAuth2KakaoPrompt):
             return o.value
 
         if isinstance(o, PlatformType):
@@ -265,6 +339,12 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, BillingPlanGroup):
+            return o.value
+
+        if isinstance(o, DomainTransferStatusEnum):
+            return o.value
+
+        if isinstance(o, WafRuleAction):
             return o.value
 
         return super().default(o)

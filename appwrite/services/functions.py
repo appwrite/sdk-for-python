@@ -231,9 +231,15 @@ class Functions(Service):
 
     def list_runtimes(
         self,
+        total: Optional[bool] = None,
     ) -> RuntimeList:
         """
         Get a list of all runtimes that are currently active on your instance.
+
+        Parameters
+        ----------
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         RuntimeList
@@ -247,6 +253,8 @@ class Functions(Service):
 
         api_path = '/functions/runtimes'
         api_params = {}
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -263,6 +271,7 @@ class Functions(Service):
     def list_specifications(
         self,
         type: Optional[str] = None,
+        total: Optional[bool] = None,
     ) -> SpecificationList:
         """
         List allowed function specifications for this instance.
@@ -271,6 +280,8 @@ class Functions(Service):
         ----------
         type : Optional[str]
             Specification type to list. Can be one of: runtimes, builds. Defaults to runtimes.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         SpecificationList
@@ -286,6 +297,8 @@ class Functions(Service):
         api_params = {}
         if type is not None:
             api_params['type'] = self._normalize_value(type)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',

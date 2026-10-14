@@ -2,6 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.project import Project
 from appwrite.models import OAuth2Discord
+from appwrite.enums.project_o_auth2_discord_prompt import ProjectOAuth2DiscordPrompt
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -13,7 +14,8 @@ project = Project(client)
 result: OAuth2Discord = project.update_o_auth2_discord(
     client_id = '<CLIENT_ID>', # optional
     client_secret = '<CLIENT_SECRET>', # optional
-    enabled = False # optional
+    enabled = False, # optional
+    prompt = [ProjectOAuth2DiscordPrompt.NONE] # optional
 )
 
 print(result.model_dump())

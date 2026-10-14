@@ -11,7 +11,8 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 databases = Databases(client)
 
 result: TransactionList = databases.list_transactions(
-    queries = [] # optional
+    queries = [], # optional
+    total = False # optional
 )
 
 print(result.model_dump())

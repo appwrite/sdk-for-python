@@ -15,7 +15,9 @@ result: OAuth2Google = project.update_o_auth2_google(
     client_id = '<CLIENT_ID>', # optional
     client_secret = '<CLIENT_SECRET>', # optional
     prompt = [ProjectOAuth2GooglePrompt.NONE], # optional
-    enabled = False # optional
+    enabled = False, # optional
+    native_client_ids = [], # optional
+    native_enabled = False # optional
 )
 
 print(result.model_dump())

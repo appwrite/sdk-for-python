@@ -238,9 +238,15 @@ class Sites(Service):
 
     def list_frameworks(
         self,
+        total: Optional[bool] = None,
     ) -> FrameworkList:
         """
         Get a list of all frameworks that are currently available on the server instance.
+
+        Parameters
+        ----------
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         FrameworkList
@@ -254,6 +260,8 @@ class Sites(Service):
 
         api_path = '/sites/frameworks'
         api_params = {}
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -270,6 +278,7 @@ class Sites(Service):
     def list_specifications(
         self,
         type: Optional[str] = None,
+        total: Optional[bool] = None,
     ) -> SpecificationList:
         """
         List allowed site specifications for this instance.
@@ -278,6 +287,8 @@ class Sites(Service):
         ----------
         type : Optional[str]
             Specification type to list. Can be one of: runtimes, builds. Defaults to runtimes.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         SpecificationList
@@ -293,6 +304,8 @@ class Sites(Service):
         api_params = {}
         if type is not None:
             api_params['type'] = self._normalize_value(type)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',

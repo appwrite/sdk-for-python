@@ -10,7 +10,9 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 functions = Functions(client)
 
-result: RuntimeList = functions.list_runtimes()
+result: RuntimeList = functions.list_runtimes(
+    total = False # optional
+)
 
 print(result.model_dump())
 ```

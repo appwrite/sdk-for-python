@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Optional, Union, cast
 from pydantic import Field, PrivateAttr
 
 from .base_model import AppwriteModel
+from ..enums.o_auth2_auth0_prompt import OAuth2Auth0Prompt
 
 
 class OAuth2Auth0(AppwriteModel):
@@ -18,6 +19,8 @@ class OAuth2Auth0(AppwriteModel):
         Auth0 OAuth2 client ID.
     clientsecret : str
         Auth0 OAuth2 client secret.
+    prompt : Optional[List[OAuth2Auth0Prompt]]
+        Auth0 OAuth2 prompt values.
     endpoint : str
         Auth0 OAuth2 endpoint domain.
     """
@@ -26,4 +29,5 @@ class OAuth2Auth0(AppwriteModel):
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')
     clientsecret: str = Field(..., alias='clientSecret')
+    prompt: Optional[List[OAuth2Auth0Prompt]] = Field(default=None, alias='prompt')
     endpoint: str = Field(..., alias='endpoint')

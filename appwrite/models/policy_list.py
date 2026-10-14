@@ -6,6 +6,8 @@ from .policy_password_dictionary import PolicyPasswordDictionary
 from .policy_password_history import PolicyPasswordHistory
 from .policy_password_strength import PolicyPasswordStrength
 from .policy_password_personal_data import PolicyPasswordPersonalData
+from .policy_password_pwned import PolicyPasswordPwned
+from .policy_password_rotation import PolicyPasswordRotation
 from .policy_session_alert import PolicySessionAlert
 from .policy_session_duration import PolicySessionDuration
 from .policy_session_invalidation import PolicySessionInvalidation
@@ -28,7 +30,7 @@ class PolicyList(AppwriteModel):
     ----------
     total : float
         Total number of policies in the given project.
-    policies : List[Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail, PolicyPasskey]]
+    policies : List[Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicyPasswordPwned, PolicyPasswordRotation, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail, PolicyPasskey]]
         List of policies.
     """
 
@@ -39,6 +41,8 @@ class PolicyList(AppwriteModel):
             PolicyPasswordHistory,
             PolicyPasswordStrength,
             PolicyPasswordPersonalData,
+            PolicyPasswordPwned,
+            PolicyPasswordRotation,
             PolicySessionAlert,
             PolicySessionDuration,
             PolicySessionInvalidation,

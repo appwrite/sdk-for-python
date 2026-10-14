@@ -7,6 +7,7 @@ from ..models.oauth2_approve import Oauth2Approve
 from ..models.oauth2_authorize import Oauth2Authorize
 from ..models.oauth2_device_authorization import Oauth2DeviceAuthorization
 from ..models.oauth2_grant import Oauth2Grant
+from ..models.oauth2_introspection import Oauth2Introspection
 from ..models.oauth2_organization_list import Oauth2OrganizationList
 from ..models.oauth2_par import Oauth2PAR
 from ..models.oauth2_project_list import Oauth2ProjectList
@@ -419,6 +420,62 @@ class Oauth2(Service):
         )
 
         return self._parse_response(response, model=Oauth2Grant)
+
+    def introspect(
+        self,
+        token: str,
+        token_type_hint: Optional[str] = None,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+    ) -> Oauth2Introspection:
+        """
+        Introspect an OAuth2 access token or refresh token. Authenticate with an API key holding the `oauth2.introspect` scope to introspect any token in the project, or with the client credentials of the app the token was issued to.
+
+        Parameters
+        ----------
+        token : str
+            The access token or refresh token to introspect.
+        token_type_hint : Optional[str]
+            Type of token to introspect. Can be one of: `access_token` or `refresh_token`.
+        client_id : Optional[str]
+            OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
+        client_secret : Optional[str]
+            OAuth2 client secret.
+        Returns
+        -------
+        Oauth2Introspection
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/oauth2/{project_id}/introspect'
+        api_params = {}
+        if token is None:
+            raise AppwriteException('Missing required parameter: "token"')
+        api_path = api_path.replace('{project_id}', str(self._normalize_value(self.client.get_config('project'))))
+        api_params['token'] = self._normalize_value(token)
+        if token_type_hint is not None:
+            api_params['token_type_hint'] = self._normalize_value(token_type_hint)
+        if client_id is not None:
+            api_params['client_id'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['client_secret'] = self._normalize_value(client_secret)
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Oauth2Introspection)
 
     def list_organizations(
         self,

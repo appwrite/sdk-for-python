@@ -6,3 +6,4 @@ class TablesDBIndexType(Enum):
     FULLTEXT = "fulltext"
     UNIQUE = "unique"
     SPATIAL = "spatial"
+    TRIGRAM = "trigram"

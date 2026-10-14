@@ -30,6 +30,8 @@ class Identity(AppwriteModel):
         The date of when the access token expires in ISO 8601 format.
     providerrefreshtoken : str
         Identity Provider Refresh Token.
+    provideridtoken : Optional[str]
+        Identity Provider ID token (JWT) from the most recent native sign-in. Empty for identities created through the browser OAuth2 flow.
     """
 
     id: str = Field(..., alias='$id')
@@ -42,3 +44,4 @@ class Identity(AppwriteModel):
     provideraccesstoken: str = Field(..., alias='providerAccessToken')
     provideraccesstokenexpiry: str = Field(..., alias='providerAccessTokenExpiry')
     providerrefreshtoken: str = Field(..., alias='providerRefreshToken')
+    provideridtoken: Optional[str] = Field(default=None, alias='providerIdToken')

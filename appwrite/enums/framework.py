@@ -14,6 +14,7 @@ class Framework(Enum):
     REMIX = "remix"
     LYNX = "lynx"
     FLUTTER = "flutter"
+    JASPR = "jaspr"
     REACT_NATIVE = "react-native"
     VITE = "vite"
     OTHER = "other"

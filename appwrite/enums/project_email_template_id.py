@@ -9,3 +9,5 @@ class ProjectEmailTemplateId(Enum):
     MFACHALLENGE = "mfaChallenge"
     SESSIONALERT = "sessionAlert"
     OTPSESSION = "otpSession"
+    OTPVERIFICATION = "otpVerification"
+    OTPRECOVERY = "otpRecovery"

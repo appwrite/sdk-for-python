@@ -21,6 +21,10 @@ class OAuth2Google(AppwriteModel):
         Google OAuth2 client secret.
     prompt : List[OAuth2GooglePrompt]
         Google OAuth2 prompt values.
+    nativeenabled : Optional[bool]
+        Native Google sign-in is active and can be used to create sessions from an ID token. Independent of enabled, which only controls the browser-based flow.
+    nativeclientids : Optional[List[Any]]
+        Additional OAuth2 client IDs accepted as ID token audiences for native sign-in, next to the client ID.
     """
 
     id: str = Field(..., alias='$id')
@@ -28,3 +32,5 @@ class OAuth2Google(AppwriteModel):
     clientid: str = Field(..., alias='clientId')
     clientsecret: str = Field(..., alias='clientSecret')
     prompt: List[OAuth2GooglePrompt] = Field(..., alias='prompt')
+    nativeenabled: Optional[bool] = Field(default=None, alias='nativeEnabled')
+    nativeclientids: Optional[List[Any]] = Field(default=None, alias='nativeClientIds')
