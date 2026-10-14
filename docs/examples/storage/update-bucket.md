@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.storage import Storage
 from appwrite.models import Bucket
-from appwrite.enums import Compression
+from appwrite.enums.compression import Compression
 from appwrite.permission import Permission
 from appwrite.role import Role
 

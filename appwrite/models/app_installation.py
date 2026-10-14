@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -42,3 +42,30 @@ class AppInstallation(AppwriteModel):
     createdbyid: str = Field(..., alias='createdById')
     createdbyname: str = Field(..., alias='createdByName')
     lastaccessedat: Optional[str] = Field(default=None, alias='lastAccessedAt')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'appId' not in data and 'appid' not in data:
+            data['appId'] = ''
+        if 'teamId' not in data and 'teamid' not in data:
+            data['teamId'] = ''
+        if 'scopes' not in data:
+            data['scopes'] = []
+        if 'authorizationDetails' not in data and 'authorizationdetails' not in data:
+            data['authorizationDetails'] = []
+        if 'createdById' not in data and 'createdbyid' not in data:
+            data['createdById'] = ''
+        if 'createdByName' not in data and 'createdbyname' not in data:
+            data['createdByName'] = ''
+        return data

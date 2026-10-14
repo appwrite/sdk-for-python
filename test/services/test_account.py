@@ -262,22 +262,6 @@ class AccountServiceTest(unittest.TestCase):
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
-    def test_list_logs(self, m):
-        data = {
-            "total": 5.0,
-            "logs": [],
-        }
-        headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
-        )
-        response = self.account.list_logs()
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
     def test_update_mfa(self, m):
         data = {
             "$id": "5e5ea5c16897e",

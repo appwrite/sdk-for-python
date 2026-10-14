@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -27,3 +27,22 @@ class DedicatedDatabaseBackupStorage(AppwriteModel):
     region: str = Field(..., alias='region')
     prefix: str = Field(..., alias='prefix')
     endpoint: str = Field(..., alias='endpoint')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'provider' not in data:
+            data['provider'] = ''
+        if 'bucket' not in data:
+            data['bucket'] = ''
+        if 'region' not in data:
+            data['region'] = ''
+        if 'prefix' not in data:
+            data['prefix'] = 'backups/'
+        if 'endpoint' not in data:
+            data['endpoint'] = ''
+        return data

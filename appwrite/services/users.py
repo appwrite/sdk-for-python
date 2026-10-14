@@ -8,7 +8,6 @@ from ..models.user import User
 from ..models.identity_list import IdentityList
 from ..enums.password_hash import PasswordHash
 from ..models.jwt import Jwt
-from ..models.log_list import LogList
 from ..models.membership_list import MembershipList
 from ..enums.authenticator_type import AuthenticatorType
 from ..models.mfa_challenge_secret import MfaChallengeSecret
@@ -45,7 +44,7 @@ class Users(Service):
         Parameters
         ----------
         queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, email, phone, status, passwordUpdate, registration, emailVerification, phoneVerification, labels, impersonator, accessedAt
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, email, phone, status, passwordUpdate, registration, emailVerification, phoneVerification, passwordPwned, labels, impersonator, accessedAt
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
@@ -347,7 +346,7 @@ class Users(Service):
 
         api_path = '/users/identities/{identityId}'
         api_params = {}
-        if identity_id is None:
+        if identity_id is None or identity_id == '':
             raise AppwriteException('Missing required parameter: "identity_id"')
         api_path = api_path.replace('{identityId}', str(self._normalize_value(identity_id)))
 
@@ -357,6 +356,7 @@ class Users(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -754,7 +754,7 @@ class Users(Service):
 
         api_path = '/users/{userId}'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
@@ -794,7 +794,7 @@ class Users(Service):
 
         api_path = '/users/{userId}'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
@@ -804,6 +804,7 @@ class Users(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -841,7 +842,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/email'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if email is None:
             raise AppwriteException('Missing required parameter: "email"')
@@ -868,7 +869,7 @@ class Users(Service):
         model_type: Type[T] = dict,
     ) -> User[T]:
         """
-        Enable or disable whether a user can impersonate other users. When impersonation headers are used, the request runs as the target user for API behavior, while internal audit logs still attribute the action to the original impersonator and store the impersonated target details only in internal audit payload data.
+        Enable or disable whether a user can impersonate other users. When impersonation headers are used, the request runs as the target user for API behavior, while internal audit logs still attribute the action to the original impersonator and store the impersonated target details only in internal audit payload data. Account endpoints are read-only while impersonating: they report the target's account, and anything that would change it is refused, so an impersonator cannot alter the target's credentials or delete their account.
 
         Parameters
         ----------
@@ -892,7 +893,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/impersonator'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if impersonator is None:
             raise AppwriteException('Missing required parameter: "impersonator"')
@@ -942,7 +943,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/jwts'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         if session_id is not None:
@@ -996,7 +997,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/labels'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if labels is None:
             raise AppwriteException('Missing required parameter: "labels"')
@@ -1015,56 +1016,6 @@ class Users(Service):
         )
 
         return User.with_data(response, model_type)
-
-    def list_logs(
-        self,
-        user_id: str,
-        queries: Optional[List[str]] = None,
-        total: Optional[bool] = None,
-    ) -> LogList:
-        """
-        Get the user activity logs list by its unique ID.
-
-        Parameters
-        ----------
-        user_id : str
-            User ID.
-        queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-        total : Optional[bool]
-            When set to false, the total count returned will be 0 and will not be calculated.
-        Returns
-        -------
-        LogList
-            API response as a typed Pydantic model
-
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/users/{userId}/logs'
-        api_params = {}
-        if user_id is None:
-            raise AppwriteException('Missing required parameter: "user_id"')
-        api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
-        if queries is not None:
-            api_params['queries'] = self._normalize_value(queries)
-        if total is not None:
-            api_params['total'] = self._normalize_value(total)
-
-        response = self.client.call(
-            'get',
-            api_path,
-            {
-                'X-Appwrite-Project': self.client.get_config('project'),
-                'accept': 'application/json',
-            },
-            api_params,
-        )
-
-        return self._parse_response(response, model=LogList)
 
     def list_memberships(
         self,
@@ -1099,7 +1050,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/memberships'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         if queries is not None:
@@ -1152,7 +1103,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/mfa'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if mfa is None:
             raise AppwriteException('Missing required parameter: "mfa"')
@@ -1199,7 +1150,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/mfa/authenticators/{type}'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
@@ -1212,6 +1163,7 @@ class Users(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -1245,9 +1197,9 @@ class Users(Service):
 
         api_path = '/users/{userId}/mfa/challenges/{challengeId}'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
-        if challenge_id is None:
+        if challenge_id is None or challenge_id == '':
             raise AppwriteException('Missing required parameter: "challenge_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{challengeId}', str(self._normalize_value(challenge_id)))
@@ -1288,7 +1240,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/mfa/factors'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
@@ -1328,7 +1280,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
@@ -1368,7 +1320,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
@@ -1409,7 +1361,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/mfa/recovery-codes'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
@@ -1457,7 +1409,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/name'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -1704,7 +1656,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/password'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if password is None:
             raise AppwriteException('Missing required parameter: "password"')
@@ -1755,7 +1707,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/phone'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if number is None:
             raise AppwriteException('Missing required parameter: "number"')
@@ -1803,7 +1755,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/prefs'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
@@ -1850,7 +1802,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/prefs'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if prefs is None:
             raise AppwriteException('Missing required parameter: "prefs"')
@@ -1897,7 +1849,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/sessions'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         if total is not None:
@@ -1941,7 +1893,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/sessions'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
@@ -1982,7 +1934,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/sessions'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
@@ -1992,6 +1944,7 @@ class Users(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -2025,9 +1978,9 @@ class Users(Service):
 
         api_path = '/users/{userId}/sessions/{sessionId}'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
-        if session_id is None:
+        if session_id is None or session_id == '':
             raise AppwriteException('Missing required parameter: "session_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
@@ -2038,6 +1991,7 @@ class Users(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -2075,7 +2029,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/status'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if status is None:
             raise AppwriteException('Missing required parameter: "status"')
@@ -2125,7 +2079,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/targets'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         if queries is not None:
@@ -2184,7 +2138,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/targets'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if target_id is None:
             raise AppwriteException('Missing required parameter: "target_id"')
@@ -2241,9 +2195,9 @@ class Users(Service):
 
         api_path = '/users/{userId}/targets/{targetId}'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
-        if target_id is None:
+        if target_id is None or target_id == '':
             raise AppwriteException('Missing required parameter: "target_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{targetId}', str(self._normalize_value(target_id)))
@@ -2296,9 +2250,9 @@ class Users(Service):
 
         api_path = '/users/{userId}/targets/{targetId}'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
-        if target_id is None:
+        if target_id is None or target_id == '':
             raise AppwriteException('Missing required parameter: "target_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{targetId}', str(self._normalize_value(target_id)))
@@ -2349,9 +2303,9 @@ class Users(Service):
 
         api_path = '/users/{userId}/targets/{targetId}'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
-        if target_id is None:
+        if target_id is None or target_id == '':
             raise AppwriteException('Missing required parameter: "target_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{targetId}', str(self._normalize_value(target_id)))
@@ -2362,6 +2316,7 @@ class Users(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -2398,7 +2353,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/tokens'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         if length is not None:
@@ -2450,7 +2405,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/verification'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if email_verification is None:
             raise AppwriteException('Missing required parameter: "email_verification"')
@@ -2501,7 +2456,7 @@ class Users(Service):
 
         api_path = '/users/{userId}/verification/phone'
         api_params = {}
-        if user_id is None:
+        if user_id is None or user_id == '':
             raise AppwriteException('Missing required parameter: "user_id"')
         if phone_verification is None:
             raise AppwriteException('Missing required parameter: "phone_verification"')

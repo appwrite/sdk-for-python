@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -27,3 +27,18 @@ class DatabaseStatusReplica(AppwriteModel):
     healthy: bool = Field(..., alias='healthy')
     replicating: Optional[bool] = Field(default=None, alias='replicating')
     lagseconds: Optional[float] = Field(default=None, alias='lagSeconds')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'index' not in data:
+            data['index'] = 0
+        if 'role' not in data:
+            data['role'] = 'unknown'
+        if 'healthy' not in data:
+            data['healthy'] = False
+        return data

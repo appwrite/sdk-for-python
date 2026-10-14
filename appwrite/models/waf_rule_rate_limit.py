@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from ..enums.waf_rule_action import WafRuleAction
@@ -70,3 +70,48 @@ class WafRuleRateLimit(AppwriteModel):
     key: str = Field(..., alias='key')
     strategy: str = Field(..., alias='strategy')
     maxbucketsize: float = Field(..., alias='maxBucketSize')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'name' not in data:
+            data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
+        if 'teamId' not in data and 'teamid' not in data:
+            data['teamId'] = ''
+        if 'projectId' not in data and 'projectid' not in data:
+            data['projectId'] = ''
+        if 'resourceType' not in data and 'resourcetype' not in data:
+            data['resourceType'] = 'api'
+        if 'resourceId' not in data and 'resourceid' not in data:
+            data['resourceId'] = ''
+        if 'priority' not in data:
+            data['priority'] = 0
+        if 'enabled' not in data:
+            data['enabled'] = True
+        if 'conditions' not in data:
+            data['conditions'] = []
+        if 'config' not in data:
+            data['config'] = []
+        if 'limit' not in data:
+            data['limit'] = 100
+        if 'interval' not in data:
+            data['interval'] = 3600
+        if 'key' not in data:
+            data['key'] = 'ip'
+        if 'strategy' not in data:
+            data['strategy'] = 'fixedWindow'
+        if 'maxBucketSize' not in data and 'maxbucketsize' not in data:
+            data['maxBucketSize'] = 0
+        return data

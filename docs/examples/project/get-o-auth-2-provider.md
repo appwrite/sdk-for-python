@@ -48,7 +48,7 @@ from appwrite.models import OAuth2Microsoft
 from appwrite.models import OAuth2TikTok
 from appwrite.models import OAuth2Kakao
 from typing import Union
-from appwrite.enums import ProjectOAuthProviderId
+from appwrite.enums.project_o_auth_provider_id import ProjectOAuthProviderId
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint

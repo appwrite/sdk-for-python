@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -60,3 +60,44 @@ class File(AppwriteModel):
     chunksuploaded: float = Field(..., alias='chunksUploaded')
     encryption: bool = Field(..., alias='encryption')
     compression: str = Field(..., alias='compression')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if 'bucketId' not in data and 'bucketid' not in data:
+            data['bucketId'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if '$permissions' not in data and 'permissions' not in data:
+            data['$permissions'] = []
+        if 'name' not in data:
+            data['name'] = ''
+        if 'folder' not in data:
+            data['folder'] = ''
+        if 'key' not in data:
+            data['key'] = ''
+        if 'signature' not in data:
+            data['signature'] = ''
+        if 'mimeType' not in data and 'mimetype' not in data:
+            data['mimeType'] = ''
+        if 'sizeOriginal' not in data and 'sizeoriginal' not in data:
+            data['sizeOriginal'] = 0
+        if 'sizeActual' not in data and 'sizeactual' not in data:
+            data['sizeActual'] = 0
+        if 'chunksTotal' not in data and 'chunkstotal' not in data:
+            data['chunksTotal'] = 0
+        if 'chunksUploaded' not in data and 'chunksuploaded' not in data:
+            data['chunksUploaded'] = 0
+        if 'encryption' not in data:
+            data['encryption'] = False
+        if 'compression' not in data:
+            data['compression'] = 'none'
+        return data

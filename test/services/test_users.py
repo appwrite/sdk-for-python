@@ -503,24 +503,6 @@ class UsersServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
-    def test_list_logs(self, m):
-        data = {
-            "total": 5.0,
-            "logs": [],
-        }
-        headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
-        )
-        response = self.users.list_logs(
-            '<USER_ID>',
-        )
-        self.assertEqual(response.to_dict(), data)
-
-    @requests_mock.Mocker()
     def test_list_memberships(self, m):
         data = {
             "total": 5.0,

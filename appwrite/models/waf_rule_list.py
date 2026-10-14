@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .waf_rule_bypass import WafRuleBypass
@@ -31,3 +31,16 @@ class WafRuleList(AppwriteModel):
             WafRuleRedirect,
         ]
     ] = Field(..., alias='rules')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'total' not in data:
+            data['total'] = 0
+        if 'rules' not in data:
+            data['rules'] = []
+        return data

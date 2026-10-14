@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -54,3 +54,40 @@ class Bucket(AppwriteModel):
     antivirus: bool = Field(..., alias='antivirus')
     transformations: bool = Field(..., alias='transformations')
     totalsize: float = Field(..., alias='totalSize')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if '$permissions' not in data and 'permissions' not in data:
+            data['$permissions'] = []
+        if 'fileSecurity' not in data and 'filesecurity' not in data:
+            data['fileSecurity'] = False
+        if 'name' not in data:
+            data['name'] = ''
+        if 'enabled' not in data:
+            data['enabled'] = True
+        if 'maximumFileSize' not in data and 'maximumfilesize' not in data:
+            data['maximumFileSize'] = 0
+        if 'allowedFileExtensions' not in data and 'allowedfileextensions' not in data:
+            data['allowedFileExtensions'] = []
+        if 'compression' not in data:
+            data['compression'] = ''
+        if 'encryption' not in data:
+            data['encryption'] = True
+        if 'antivirus' not in data:
+            data['antivirus'] = True
+        if 'transformations' not in data:
+            data['transformations'] = True
+        if 'totalSize' not in data and 'totalsize' not in data:
+            data['totalSize'] = 0
+        return data

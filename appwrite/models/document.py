@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast, Generic, TypeVar, Type
-from pydantic import Field, PrivateAttr, TypeAdapter, model_serializer
+from pydantic import Field, PrivateAttr, TypeAdapter, model_validator, model_serializer
 
 from .base_model import AppwriteModel
 
@@ -37,6 +37,29 @@ class Document(AppwriteModel, Generic[T]):
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     permissions: List[Any] = Field(..., alias='$permissions')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$sequence' not in data and 'sequence' not in data:
+            data['$sequence'] = ''
+        if '$collectionId' not in data and 'collectionid' not in data:
+            data['$collectionId'] = ''
+        if '$databaseId' not in data and 'databaseid' not in data:
+            data['$databaseId'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if '$permissions' not in data and 'permissions' not in data:
+            data['$permissions'] = []
+        return data
 
     @classmethod
     def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'Document[T]':

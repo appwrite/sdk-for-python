@@ -11,38 +11,38 @@ class UsageBillingPlan(AppwriteModel):
 
     Attributes
     ----------
-    bandwidth : AdditionalResource
+    bandwidth : Optional[AdditionalResource]
         Bandwidth additional resources
-    executions : AdditionalResource
+    executions : Optional[AdditionalResource]
         Executions additional resources
     member : Optional[AdditionalResource]
         Member additional resources
-    realtime : AdditionalResource
+    realtime : Optional[AdditionalResource]
         Realtime additional resources
-    realtimemessages : AdditionalResource
+    realtimemessages : Optional[AdditionalResource]
         Realtime messages additional resources
     realtimebandwidth : Optional[AdditionalResource]
         Realtime bandwidth additional resources
-    storage : AdditionalResource
+    storage : Optional[AdditionalResource]
         Storage additional resources
-    users : AdditionalResource
+    users : Optional[AdditionalResource]
         User additional resources
-    gbhours : AdditionalResource
+    gbhours : Optional[AdditionalResource]
         GBHour additional resources
-    imagetransformations : AdditionalResource
+    imagetransformations : Optional[AdditionalResource]
         Image transformation additional resources
     credits : Optional[AdditionalResource]
         Credits additional resources
     """
 
-    bandwidth: AdditionalResource = Field(..., alias='bandwidth')
-    executions: AdditionalResource = Field(..., alias='executions')
+    bandwidth: Optional[AdditionalResource] = Field(default=None, alias='bandwidth')
+    executions: Optional[AdditionalResource] = Field(default=None, alias='executions')
     member: Optional[AdditionalResource] = Field(default=None, alias='member')
-    realtime: AdditionalResource = Field(..., alias='realtime')
-    realtimemessages: AdditionalResource = Field(..., alias='realtimeMessages')
+    realtime: Optional[AdditionalResource] = Field(default=None, alias='realtime')
+    realtimemessages: Optional[AdditionalResource] = Field(default=None, alias='realtimeMessages')
     realtimebandwidth: Optional[AdditionalResource] = Field(default=None, alias='realtimeBandwidth')
-    storage: AdditionalResource = Field(..., alias='storage')
-    users: AdditionalResource = Field(..., alias='users')
-    gbhours: AdditionalResource = Field(..., alias='GBHours')
-    imagetransformations: AdditionalResource = Field(..., alias='imageTransformations')
+    storage: Optional[AdditionalResource] = Field(default=None, alias='storage')
+    users: Optional[AdditionalResource] = Field(default=None, alias='users')
+    gbhours: Optional[AdditionalResource] = Field(default=None, alias='GBHours')
+    imagetransformations: Optional[AdditionalResource] = Field(default=None, alias='imageTransformations')
     credits: Optional[AdditionalResource] = Field(default=None, alias='credits')

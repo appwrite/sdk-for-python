@@ -27,6 +27,8 @@ class Proxy(Service):
 
         Depending on type, the invalidation purges a single cache tag, a single URL path, or all cached content for the domain.
 
+        Domains that route to a function do not support cache invalidation.
+
         Parameters
         ----------
         domain : str
@@ -356,7 +358,7 @@ class Proxy(Service):
 
         api_path = '/proxy/rules/{ruleId}'
         api_params = {}
-        if rule_id is None:
+        if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
         api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
 
@@ -396,7 +398,7 @@ class Proxy(Service):
 
         api_path = '/proxy/rules/{ruleId}'
         api_params = {}
-        if rule_id is None:
+        if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
         api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
 
@@ -406,6 +408,7 @@ class Proxy(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -436,7 +439,7 @@ class Proxy(Service):
 
         api_path = '/proxy/rules/{ruleId}/status'
         api_params = {}
-        if rule_id is None:
+        if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
         api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
 

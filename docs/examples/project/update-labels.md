@@ -11,7 +11,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 project = Project(client)
 
 result: ProjectModel = project.update_labels(
-    labels = []
+    labels = ["production"]
 )
 
 print(result.model_dump())

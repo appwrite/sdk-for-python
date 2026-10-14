@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -24,3 +24,20 @@ class ProxyInvalidation(AppwriteModel):
     type: str = Field(..., alias='type')
     reference: str = Field(..., alias='reference')
     status: str = Field(..., alias='status')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'domain' not in data:
+            data['domain'] = ''
+        if 'type' not in data:
+            data['type'] = ''
+        if 'reference' not in data:
+            data['reference'] = ''
+        if 'status' not in data:
+            data['status'] = ''
+        return data

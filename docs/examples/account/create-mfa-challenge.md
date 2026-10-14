@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.account import Account
 from appwrite.models import MfaChallenge
-from appwrite.enums import AuthenticationFactor
+from appwrite.enums.authentication_factor import AuthenticationFactor
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
