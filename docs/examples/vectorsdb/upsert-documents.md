@@ -13,7 +13,20 @@ vectors_db = VectorsDB(client)
 result: DocumentList = vectors_db.upsert_documents(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    documents = [],
+    documents = [
+	    {
+	        "$id": "example1",
+	        "embeddings": [
+	            0.12,
+	            -0.55,
+	            0.88,
+	            1.02
+	        ],
+	        "metadata": {
+	            "name": "First document"
+	        }
+	    }
+	],
     transaction_id = '<TRANSACTION_ID>' # optional
 )
 

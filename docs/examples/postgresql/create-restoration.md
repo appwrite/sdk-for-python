@@ -15,7 +15,10 @@ result: DedicatedDatabaseRestoration = postgresql.create_restoration(
     type = 'backup', # optional
     backup_id = '<BACKUP_ID>', # optional
     target_database_id = '<TARGET_DATABASE_ID>', # optional
-    target_time = '2020-10-15T06:38:00.000+00:00' # optional
+    target_time = '2020-10-15T06:38:00.000+00:00', # optional
+    restore_mode = 'in_place', # optional
+    target_name = '<TARGET_NAME>', # optional
+    auto_promote = False # optional
 )
 
 print(result.model_dump())

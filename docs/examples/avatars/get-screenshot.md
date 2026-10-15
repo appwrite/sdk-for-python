@@ -1,10 +1,10 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.avatars import Avatars
-from appwrite.enums import BrowserTheme
-from appwrite.enums import Timezone
-from appwrite.enums import BrowserPermission
-from appwrite.enums import ImageFormat
+from appwrite.enums.browser_theme import BrowserTheme
+from appwrite.enums.timezone import Timezone
+from appwrite.enums.browser_permission import BrowserPermission
+from appwrite.enums.image_format import ImageFormat
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -16,8 +16,7 @@ avatars = Avatars(client)
 result: bytes = avatars.get_screenshot(
     url = 'https://example.com',
     headers = {
-        "Authorization": "Bearer token123",
-        "X-Custom-Header": "value"
+        "Accept-Language": "en-US,en;q=0.9"
     }, # optional
     viewport_width = 1920, # optional
     viewport_height = 1080, # optional

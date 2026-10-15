@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -48,3 +48,36 @@ class Oauth2Grant(AppwriteModel):
     redirecturi: str = Field(..., alias='redirectUri')
     authtime: float = Field(..., alias='authTime')
     expire: str = Field(..., alias='expire')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'userId' not in data and 'userid' not in data:
+            data['userId'] = ''
+        if 'appId' not in data and 'appid' not in data:
+            data['appId'] = ''
+        if 'scopes' not in data:
+            data['scopes'] = []
+        if 'resources' not in data:
+            data['resources'] = []
+        if 'authorizationDetails' not in data and 'authorizationdetails' not in data:
+            data['authorizationDetails'] = '[]'
+        if 'prompt' not in data:
+            data['prompt'] = ''
+        if 'redirectUri' not in data and 'redirecturi' not in data:
+            data['redirectUri'] = ''
+        if 'authTime' not in data and 'authtime' not in data:
+            data['authTime'] = 0
+        if 'expire' not in data:
+            data['expire'] = ''
+        return data

@@ -2,8 +2,8 @@
 from appwrite.client import Client
 from appwrite.services.vectors_db import VectorsDB
 from appwrite.models import Index
-from appwrite.enums import VectorsDBIndexType
-from appwrite.enums import OrderBy
+from appwrite.enums.vectors_db_index_type import VectorsDBIndexType
+from appwrite.enums.order_by import OrderBy
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -17,7 +17,7 @@ result: Index = vectors_db.create_index(
     collection_id = '<COLLECTION_ID>',
     key = '<KEY>',
     type = VectorsDBIndexType.HNSW_EUCLIDEAN,
-    attributes = [],
+    attributes = ["embeddings"],
     orders = [OrderBy.ASC], # optional
     lengths = [] # optional
 )

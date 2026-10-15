@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.project import Project
 from appwrite.models import OAuth2Oidc
-from appwrite.enums import ProjectOAuth2OidcPrompt
+from appwrite.enums.project_o_auth2_oidc_prompt import ProjectOAuth2OidcPrompt
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint

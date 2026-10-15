@@ -358,7 +358,7 @@ class Avatars(Service):
         name: Optional[str] = None,
     ) -> bytes:
         """
-        Returns the best available profile photo for a user. The endpoint tries each source in priority order and returns the first successful result: OAuth2 identity photo, Gravatar, Libravatar, Appwrite Initials, built-in static fallback.
+        Returns the best available profile photo for a user. The endpoint tries each source in priority order and returns the first successful result: a custom uploaded photo (see avatars.updatePhoto), OAuth2 identity photo, Gravatar, Libravatar, Appwrite Initials, built-in static fallback.
 
         Passing `userId` — `current()` for the authenticated user — resolves the photo from everything known about that user: identity photos, email, and name. An explicit `emailHash` or `name` then overrides just that value, and the user's remaining sources stay in the chain. Without `userId`, passing `emailHash` and/or `name` resolves the avatar from those values alone: the hash is looked up on Gravatar and Libravatar, the name is rendered as initials, and the session user stays out of the chain so their own photo never shadows the avatar being asked for. When nothing is passed, the photo resolves for the currently authenticated user. Emails are only ever accepted pre-hashed, so no address ends up in a URL.
 
@@ -600,7 +600,7 @@ class Avatars(Service):
         url : str
             Website URL which you want to capture.
         headers : Optional[Dict[str, Any]]
-            HTTP headers to send with the browser request. Defaults to empty.
+            HTTP headers to send with the browser request. Only Accept and Accept-Language are allowed. Defaults to empty.
         viewport_width : Optional[float]
             Browser viewport width. Pass an integer between 1 to 1920. Defaults to 1280.
         viewport_height : Optional[float]

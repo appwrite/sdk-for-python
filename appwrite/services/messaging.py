@@ -33,7 +33,7 @@ class Messaging(Service):
         Parameters
         ----------
         queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: scheduledAt, deliveredAt, deliveredTotal, status, description, providerType
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: scheduledAt, deliveredAt, deliveredTotal, status, description, providerType, users, targets
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
@@ -241,7 +241,7 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/email/{messageId}'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
         if topics is not None:
@@ -501,7 +501,7 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/push/{messageId}'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
         if topics is not None:
@@ -670,7 +670,7 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/sms/{messageId}'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
         if topics is not None:
@@ -723,7 +723,7 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/{messageId}'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
 
@@ -763,7 +763,7 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/{messageId}'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
 
@@ -773,6 +773,7 @@ class Messaging(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -809,7 +810,7 @@ class Messaging(Service):
 
         api_path = '/messaging/messages/{messageId}/targets'
         api_params = {}
-        if message_id is None:
+        if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
         if queries is not None:
@@ -1000,7 +1001,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/apns/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -1053,7 +1054,7 @@ class Messaging(Service):
         qos : Optional[float]
             Default QoS for topics on this provider (0 or 1). Null lets the subscriber choose.
         expiry : Optional[float]
-            Default message retention in seconds for offline delivery. Max 7 days (604800).
+            Default message retention in seconds for offline delivery. Max 7 days (604800). Applies to topics with a null expiry; the lowest across enabled Appwrite providers wins.
         Returns
         -------
         Provider
@@ -1115,7 +1116,7 @@ class Messaging(Service):
         qos : Optional[float]
             Default QoS for topics on this provider (0 or 1). Null lets the subscriber choose.
         expiry : Optional[float]
-            Default message retention in seconds for offline delivery. Max 7 days (604800).
+            Default message retention in seconds for offline delivery. Max 7 days (604800). Applies to topics with a null expiry; the lowest across enabled Appwrite providers wins.
         Returns
         -------
         Provider
@@ -1244,7 +1245,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/fcm/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -1405,7 +1406,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/mailgun/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -1546,7 +1547,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/msg91/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -1695,7 +1696,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/resend/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -1848,7 +1849,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/sendgrid/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2017,7 +2018,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/ses/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2223,7 +2224,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/smtp/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2372,7 +2373,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/telesign/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2505,7 +2506,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/textmagic/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2551,7 +2552,7 @@ class Messaging(Service):
         name : str
             Provider name.
         xfrom : Optional[str]
-            Sender Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
+            Sender phone number or alphanumeric sender ID. Format phone numbers with a leading '+' and a country code, e.g., +16175551212.
         account_sid : Optional[str]
             Twilio account secret ID.
         auth_token : Optional[str]
@@ -2624,7 +2625,7 @@ class Messaging(Service):
         auth_token : Optional[str]
             Twilio authentication token.
         xfrom : Optional[str]
-            Sender number.
+            Sender phone number or alphanumeric sender ID. Format phone numbers with a leading '+' and a country code, e.g., +16175551212.
         Returns
         -------
         Provider
@@ -2638,7 +2639,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/twilio/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2771,7 +2772,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/vonage/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
         if name is not None:
@@ -2822,7 +2823,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
 
@@ -2862,7 +2863,7 @@ class Messaging(Service):
 
         api_path = '/messaging/providers/{providerId}'
         api_params = {}
-        if provider_id is None:
+        if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
 
@@ -2872,6 +2873,7 @@ class Messaging(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -2949,7 +2951,7 @@ class Messaging(Service):
         qos : Optional[float]
             MQTT delivery quality of service for this topic. 0 is fire-and-forget (delivered only to clients connected at publish time). 1 persists each message and replays it when a client reconnects without having acknowledged it. Null lets the subscriber choose.
         expiry : Optional[float]
-            Message retention in seconds for offline delivery. Max 7 days (604800).
+            Message retention in seconds for offline delivery. Max 7 days (604800). Null inherits the lowest expiry of the project's enabled Appwrite providers, or the 7-day ledger window if none sets one.
         Returns
         -------
         Topic
@@ -3013,7 +3015,7 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
 
@@ -3051,7 +3053,7 @@ class Messaging(Service):
         qos : Optional[float]
             MQTT delivery quality of service for this topic. 0 is fire-and-forget (delivered only to clients connected at publish time). 1 persists each message and replays it when a client reconnects without having acknowledged it. Null lets the subscriber choose.
         expiry : Optional[float]
-            Message retention in seconds for offline delivery. Max 7 days (604800).
+            Message retention in seconds for offline delivery. Max 7 days (604800). Null inherits the lowest expiry of the project's enabled Appwrite providers, or the 7-day ledger window if none sets one.
         Returns
         -------
         Topic
@@ -3065,7 +3067,7 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         if name is not None:
@@ -3114,7 +3116,7 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
 
@@ -3124,6 +3126,7 @@ class Messaging(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -3163,7 +3166,7 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}/subscribers'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         if queries is not None:
@@ -3215,7 +3218,7 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}/subscribers'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
         if subscriber_id is None:
             raise AppwriteException('Missing required parameter: "subscriber_id"')
@@ -3265,9 +3268,9 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
-        if subscriber_id is None:
+        if subscriber_id is None or subscriber_id == '':
             raise AppwriteException('Missing required parameter: "subscriber_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         api_path = api_path.replace('{subscriberId}', str(self._normalize_value(subscriber_id)))
@@ -3311,9 +3314,9 @@ class Messaging(Service):
 
         api_path = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
         api_params = {}
-        if topic_id is None:
+        if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
-        if subscriber_id is None:
+        if subscriber_id is None or subscriber_id == '':
             raise AppwriteException('Missing required parameter: "subscriber_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         api_path = api_path.replace('{subscriberId}', str(self._normalize_value(subscriber_id)))
@@ -3324,6 +3327,7 @@ class Messaging(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )

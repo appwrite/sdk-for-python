@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast, Generic, TypeVar, Type
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .algo_argon2 import AlgoArgon2
@@ -114,6 +114,45 @@ class User(AppwriteModel, Generic[T]):
     accessedat: str = Field(..., alias='accessedAt')
     impersonator: Optional[bool] = Field(default=None, alias='impersonator')
     impersonatoruserid: Optional[str] = Field(default=None, alias='impersonatorUserId')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'name' not in data:
+            data['name'] = ''
+        if 'registration' not in data:
+            data['registration'] = ''
+        if 'status' not in data:
+            data['status'] = True
+        if 'labels' not in data:
+            data['labels'] = []
+        if 'passwordUpdate' not in data and 'passwordupdate' not in data:
+            data['passwordUpdate'] = ''
+        if 'email' not in data:
+            data['email'] = ''
+        if 'phone' not in data:
+            data['phone'] = ''
+        if 'emailVerification' not in data and 'emailverification' not in data:
+            data['emailVerification'] = False
+        if 'phoneVerification' not in data and 'phoneverification' not in data:
+            data['phoneVerification'] = False
+        if 'mfa' not in data:
+            data['mfa'] = False
+        if 'targets' not in data:
+            data['targets'] = []
+        if 'accessedAt' not in data and 'accessedat' not in data:
+            data['accessedAt'] = ''
+        return data
 
     @classmethod
     def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'User[T]':

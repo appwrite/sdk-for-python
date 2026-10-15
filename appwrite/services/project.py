@@ -137,6 +137,7 @@ class Project(Service):
             api_path,
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -168,6 +169,7 @@ class Project(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -185,7 +187,7 @@ class Project(Service):
         Parameters
         ----------
         method_id : ProjectAuthMethodId
-            Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone
+            Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone,passkey
         enabled : bool
             Auth method status.
         Returns
@@ -557,7 +559,7 @@ class Project(Service):
 
         api_path = '/project/keys/{keyId}'
         api_params = {}
-        if key_id is None:
+        if key_id is None or key_id == '':
             raise AppwriteException('Missing required parameter: "key_id"')
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
 
@@ -606,7 +608,7 @@ class Project(Service):
 
         api_path = '/project/keys/{keyId}'
         api_params = {}
-        if key_id is None:
+        if key_id is None or key_id == '':
             raise AppwriteException('Missing required parameter: "key_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -655,7 +657,7 @@ class Project(Service):
 
         api_path = '/project/keys/{keyId}'
         api_params = {}
-        if key_id is None:
+        if key_id is None or key_id == '':
             raise AppwriteException('Missing required parameter: "key_id"')
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
 
@@ -665,6 +667,7 @@ class Project(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -827,7 +830,7 @@ class Project(Service):
 
         api_path = '/project/mock-phones/{number}'
         api_params = {}
-        if number is None:
+        if number is None or number == '':
             raise AppwriteException('Missing required parameter: "number"')
         api_path = api_path.replace('{number}', str(self._normalize_value(number)))
 
@@ -870,7 +873,7 @@ class Project(Service):
 
         api_path = '/project/mock-phones/{number}'
         api_params = {}
-        if number is None:
+        if number is None or number == '':
             raise AppwriteException('Missing required parameter: "number"')
         if otp is None:
             raise AppwriteException('Missing required parameter: "otp"')
@@ -914,7 +917,7 @@ class Project(Service):
 
         api_path = '/project/mock-phones/{number}'
         api_params = {}
-        if number is None:
+        if number is None or number == '':
             raise AppwriteException('Missing required parameter: "number"')
         api_path = api_path.replace('{number}', str(self._normalize_value(number)))
 
@@ -924,6 +927,7 @@ class Project(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -2265,8 +2269,8 @@ class Project(Service):
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
-        prompt: Optional[List[ProjectOAuth2KakaoPrompt]] = None,
         enabled: Optional[bool] = None,
+        prompt: Optional[List[ProjectOAuth2KakaoPrompt]] = None,
     ) -> OAuth2Kakao:
         """
         Update the project OAuth2 Kakao configuration.
@@ -2277,10 +2281,10 @@ class Project(Service):
             'REST API key' of Kakao OAuth2 app. For example: 839ff5000000000000000000013206de
         client_secret : Optional[str]
             'Client Secret' of Kakao OAuth2 app. For example: jLNVOK00000000000000000000yJebea. Generate it under Kakao Login > Security and set its status to enabled
-        prompt : Optional[List[ProjectOAuth2KakaoPrompt]]
-            Array of Kakao OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "create" means: prompt the user to sign up. "select_account" means: prompt the user to select an account. Pass an empty array to use the Kakao default.
         enabled : Optional[bool]
             OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        prompt : Optional[List[ProjectOAuth2KakaoPrompt]]
+            Array of Kakao OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "create" means: prompt the user to sign up. "select_account" means: prompt the user to select an account. Pass an empty array to use the Kakao default.
         Returns
         -------
         OAuth2Kakao
@@ -2298,10 +2302,10 @@ class Project(Service):
             api_params['clientId'] = self._normalize_value(client_id)
         if client_secret is not None:
             api_params['clientSecret'] = self._normalize_value(client_secret)
-        if prompt is not None:
-            api_params['prompt'] = self._normalize_value(prompt)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if prompt is not None:
+            api_params['prompt'] = self._normalize_value(prompt)
 
         response = self.client.call(
             'patch',
@@ -4028,7 +4032,7 @@ class Project(Service):
         fingerprints: Optional[List[str]] = None,
     ) -> PlatformAndroid:
         """
-        Update an Android platform by its unique ID. Use this endpoint to update the platform's name or application ID.
+        Update an Android platform by its unique ID. Use this endpoint to update the platform's name, application ID or signing certificate fingerprints.
 
         Parameters
         ----------
@@ -4053,7 +4057,7 @@ class Project(Service):
 
         api_path = '/project/platforms/android/{platformId}'
         api_params = {}
-        if platform_id is None:
+        if platform_id is None or platform_id == '':
             raise AppwriteException('Missing required parameter: "platform_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -4161,7 +4165,7 @@ class Project(Service):
 
         api_path = '/project/platforms/apple/{platformId}'
         api_params = {}
-        if platform_id is None:
+        if platform_id is None or platform_id == '':
             raise AppwriteException('Missing required parameter: "platform_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -4267,7 +4271,7 @@ class Project(Service):
 
         api_path = '/project/platforms/linux/{platformId}'
         api_params = {}
-        if platform_id is None:
+        if platform_id is None or platform_id == '':
             raise AppwriteException('Missing required parameter: "platform_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -4373,7 +4377,7 @@ class Project(Service):
 
         api_path = '/project/platforms/web/{platformId}'
         api_params = {}
-        if platform_id is None:
+        if platform_id is None or platform_id == '':
             raise AppwriteException('Missing required parameter: "platform_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -4479,7 +4483,7 @@ class Project(Service):
 
         api_path = '/project/platforms/windows/{platformId}'
         api_params = {}
-        if platform_id is None:
+        if platform_id is None or platform_id == '':
             raise AppwriteException('Missing required parameter: "platform_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -4532,7 +4536,7 @@ class Project(Service):
 
         api_path = '/project/platforms/{platformId}'
         api_params = {}
-        if platform_id is None:
+        if platform_id is None or platform_id == '':
             raise AppwriteException('Missing required parameter: "platform_id"')
         api_path = api_path.replace('{platformId}', str(self._normalize_value(platform_id)))
 
@@ -4589,7 +4593,7 @@ class Project(Service):
 
         api_path = '/project/platforms/{platformId}'
         api_params = {}
-        if platform_id is None:
+        if platform_id is None or platform_id == '':
             raise AppwriteException('Missing required parameter: "platform_id"')
         api_path = api_path.replace('{platformId}', str(self._normalize_value(platform_id)))
 
@@ -4599,6 +4603,7 @@ class Project(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -5484,7 +5489,7 @@ class Project(Service):
         Parameters
         ----------
         policy_id : ProjectPolicyId
-            Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
+            Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, password-pwned, password-rotation, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email, passkey.
         Returns
         -------
         Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicyPasswordPwned, PolicyPasswordRotation, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail, PolicyPasskey]
@@ -5783,6 +5788,7 @@ class Project(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -5850,7 +5856,7 @@ class Project(Service):
         Parameters
         ----------
         template_id : ProjectEmailTemplateId
-            Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+            Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession, otpVerification, otpRecovery
         locale : Optional[ProjectEmailTemplateLocale]
             Custom email template locale. If left empty, the fallback locale (en) will be used.
         subject : Optional[str]
@@ -5920,7 +5926,7 @@ class Project(Service):
         Parameters
         ----------
         template_id : ProjectEmailTemplateId
-            Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+            Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession, otpVerification, otpRecovery
         locale : Optional[ProjectEmailTemplateLocale]
             Custom email template locale. If left empty, the fallback locale (en) will be used.
         Returns
@@ -6080,7 +6086,7 @@ class Project(Service):
 
         api_path = '/project/variables/{variableId}'
         api_params = {}
-        if variable_id is None:
+        if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
@@ -6129,7 +6135,7 @@ class Project(Service):
 
         api_path = '/project/variables/{variableId}'
         api_params = {}
-        if variable_id is None:
+        if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
         if key is not None:
@@ -6176,7 +6182,7 @@ class Project(Service):
 
         api_path = '/project/variables/{variableId}'
         api_params = {}
-        if variable_id is None:
+        if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
@@ -6186,6 +6192,7 @@ class Project(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )

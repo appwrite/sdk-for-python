@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .insight_cta import InsightCTA
@@ -64,3 +64,40 @@ class Insight(AppwriteModel):
     analyzedat: Optional[str] = Field(default=None, alias='analyzedAt')
     dismissedat: Optional[str] = Field(default=None, alias='dismissedAt')
     dismissedby: Optional[str] = Field(default=None, alias='dismissedBy')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'reportId' not in data and 'reportid' not in data:
+            data['reportId'] = ''
+        if 'type' not in data:
+            data['type'] = ''
+        if 'severity' not in data:
+            data['severity'] = 'info'
+        if 'status' not in data:
+            data['status'] = 'active'
+        if 'resourceType' not in data and 'resourcetype' not in data:
+            data['resourceType'] = ''
+        if 'resourceId' not in data and 'resourceid' not in data:
+            data['resourceId'] = ''
+        if 'parentResourceType' not in data and 'parentresourcetype' not in data:
+            data['parentResourceType'] = ''
+        if 'parentResourceId' not in data and 'parentresourceid' not in data:
+            data['parentResourceId'] = ''
+        if 'title' not in data:
+            data['title'] = ''
+        if 'summary' not in data:
+            data['summary'] = ''
+        if 'ctas' not in data:
+            data['ctas'] = []
+        return data

@@ -644,7 +644,7 @@ class SitesServiceTest(unittest.TestCase):
             "responseHeaders": [],
             "logs": "",
             "errors": "",
-            "duration": 0.4,
+            "duration": 1.23,
         }
         headers = {'Content-Type': 'application/json'}
         m.request(

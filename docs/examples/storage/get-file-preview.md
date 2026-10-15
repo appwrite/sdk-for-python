@@ -1,8 +1,8 @@
 ```python
 from appwrite.client import Client
 from appwrite.services.storage import Storage
-from appwrite.enums import ImageGravity
-from appwrite.enums import ImageFormat
+from appwrite.enums.image_gravity import ImageGravity
+from appwrite.enums.image_format import ImageFormat
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -16,7 +16,7 @@ result: bytes = storage.get_file_preview(
     file_id = '<FILE_ID>',
     width = 0, # optional
     height = 0, # optional
-    gravity = ImageGravity.CENTER, # optional
+    gravity = ImageGravity.AUTO, # optional
     quality = -1, # optional
     border_width = 0, # optional
     border_color = 'FFFFFF', # optional

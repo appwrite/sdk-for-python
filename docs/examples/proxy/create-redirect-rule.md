@@ -2,8 +2,8 @@
 from appwrite.client import Client
 from appwrite.services.proxy import Proxy
 from appwrite.models import ProxyRule
-from appwrite.enums import StatusCode
-from appwrite.enums import ProxyResourceType
+from appwrite.enums.status_code import StatusCode
+from appwrite.enums.proxy_resource_type import ProxyResourceType
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint

@@ -45,9 +45,9 @@ class Tokens(Service):
 
         api_path = '/tokens/buckets/{bucketId}/files/{fileId}'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
-        if file_id is None:
+        if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
@@ -98,9 +98,9 @@ class Tokens(Service):
 
         api_path = '/tokens/buckets/{bucketId}/files/{fileId}'
         api_params = {}
-        if bucket_id is None:
+        if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
-        if file_id is None:
+        if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
@@ -144,7 +144,7 @@ class Tokens(Service):
 
         api_path = '/tokens/{tokenId}'
         api_params = {}
-        if token_id is None:
+        if token_id is None or token_id == '':
             raise AppwriteException('Missing required parameter: "token_id"')
         api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
 
@@ -187,7 +187,7 @@ class Tokens(Service):
 
         api_path = '/tokens/{tokenId}'
         api_params = {}
-        if token_id is None:
+        if token_id is None or token_id == '':
             raise AppwriteException('Missing required parameter: "token_id"')
         api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
         if expire is not None:
@@ -230,7 +230,7 @@ class Tokens(Service):
 
         api_path = '/tokens/{tokenId}'
         api_params = {}
-        if token_id is None:
+        if token_id is None or token_id == '':
             raise AppwriteException('Missing required parameter: "token_id"')
         api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
 
@@ -240,6 +240,7 @@ class Tokens(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )

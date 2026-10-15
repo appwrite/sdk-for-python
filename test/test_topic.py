@@ -1,0 +1,33 @@
+import unittest
+
+from appwrite.topic import Topic
+
+
+class TestTopicMethods(unittest.TestCase):
+
+    def test_path(self):
+        self.assertEqual(str(Topic.path(['user'])), 'user')
+        self.assertEqual(str(Topic.path(['user', 'notification'])), 'user/notification')
+        self.assertEqual(str(Topic.path(['user']).path(['notification'])), 'user/notification')
+        self.assertEqual(str(Topic.path(['org', '42']).path(['logs'])), 'org/42/logs')
+
+    def test_errors(self):
+        cases = [
+            ('user', TypeError),
+            ([], ValueError),
+            (['user', 42], TypeError),
+            (['user', None], TypeError),
+            (['user', ''], ValueError),
+            (['user/123'], ValueError),
+            (['user', '+'], ValueError),
+            (['user', 'a+b'], ValueError),
+            (['user', '#'], ValueError),
+            (['user', 'a#b'], ValueError),
+            (['user', 'a\x00b'], ValueError),
+        ]
+        for levels, error in cases:
+            with self.subTest(levels=levels):
+                with self.assertRaises(error):
+                    Topic.path(levels)
+                with self.assertRaises(error):
+                    Topic.path(['user']).path(levels)

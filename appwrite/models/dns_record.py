@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -48,3 +48,36 @@ class DnsRecord(AppwriteModel):
     weight: float = Field(..., alias='weight')
     port: float = Field(..., alias='port')
     comment: str = Field(..., alias='comment')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'type' not in data:
+            data['type'] = ''
+        if 'name' not in data:
+            data['name'] = ''
+        if 'value' not in data:
+            data['value'] = ''
+        if 'ttl' not in data:
+            data['ttl'] = 3600
+        if 'priority' not in data:
+            data['priority'] = 0
+        if 'lock' not in data:
+            data['lock'] = False
+        if 'weight' not in data:
+            data['weight'] = 0
+        if 'port' not in data:
+            data['port'] = 0
+        if 'comment' not in data:
+            data['comment'] = ''
+        return data

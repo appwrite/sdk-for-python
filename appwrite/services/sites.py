@@ -343,7 +343,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
 
@@ -452,7 +452,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -541,7 +541,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
 
@@ -551,6 +551,7 @@ class Sites(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -584,7 +585,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/deployment'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
@@ -637,7 +638,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/deployments'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         if queries is not None:
@@ -702,7 +703,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/deployments'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
@@ -734,6 +735,7 @@ class Sites(Service):
             param_name,
             on_progress,
             upload_id,
+            method='post',
         )
 
         return self._parse_response(response, model=Deployment)
@@ -765,7 +767,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/deployments/duplicate'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
@@ -829,7 +831,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/deployments/template'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         if repository is None:
             raise AppwriteException('Missing required parameter: "repository"')
@@ -898,7 +900,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/deployments/vcs'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         if type is None:
             raise AppwriteException('Missing required parameter: "type"')
@@ -950,9 +952,9 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/deployments/{deploymentId}'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
-        if deployment_id is None:
+        if deployment_id is None or deployment_id == '':
             raise AppwriteException('Missing required parameter: "deployment_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
@@ -996,9 +998,9 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/deployments/{deploymentId}'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
-        if deployment_id is None:
+        if deployment_id is None or deployment_id == '':
             raise AppwriteException('Missing required parameter: "deployment_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
@@ -1009,6 +1011,7 @@ class Sites(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -1048,9 +1051,9 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/deployments/{deploymentId}/download'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
-        if deployment_id is None:
+        if deployment_id is None or deployment_id == '':
             raise AppwriteException('Missing required parameter: "deployment_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
@@ -1098,9 +1101,9 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/deployments/{deploymentId}/status'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
-        if deployment_id is None:
+        if deployment_id is None or deployment_id == '':
             raise AppwriteException('Missing required parameter: "deployment_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
@@ -1148,7 +1151,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/logs'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         if queries is not None:
@@ -1195,9 +1198,9 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/logs/{logId}'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
-        if log_id is None:
+        if log_id is None or log_id == '':
             raise AppwriteException('Missing required parameter: "log_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{logId}', str(self._normalize_value(log_id)))
@@ -1241,9 +1244,9 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/logs/{logId}'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
-        if log_id is None:
+        if log_id is None or log_id == '':
             raise AppwriteException('Missing required parameter: "log_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{logId}', str(self._normalize_value(log_id)))
@@ -1291,7 +1294,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/variables'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         if queries is not None:
@@ -1347,7 +1350,7 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/variables'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
         if variable_id is None:
             raise AppwriteException('Missing required parameter: "variable_id"')
@@ -1402,9 +1405,9 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/variables/{variableId}'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
-        if variable_id is None:
+        if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
@@ -1457,9 +1460,9 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/variables/{variableId}'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
-        if variable_id is None:
+        if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
@@ -1510,9 +1513,9 @@ class Sites(Service):
 
         api_path = '/sites/{siteId}/variables/{variableId}'
         api_params = {}
-        if site_id is None:
+        if site_id is None or site_id == '':
             raise AppwriteException('Missing required parameter: "site_id"')
-        if variable_id is None:
+        if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
@@ -1523,6 +1526,7 @@ class Sites(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )

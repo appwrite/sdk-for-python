@@ -65,6 +65,7 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
             "runtimeSpecification": "s-1vcpu-512mb",
+            "emailEnabled": True,
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -147,6 +148,7 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
             "runtimeSpecification": "s-1vcpu-512mb",
+            "emailEnabled": True,
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -195,6 +197,7 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
             "runtimeSpecification": "s-1vcpu-512mb",
+            "emailEnabled": True,
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -259,6 +262,7 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
             "runtimeSpecification": "s-1vcpu-512mb",
+            "emailEnabled": True,
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -631,7 +635,7 @@ class FunctionsServiceTest(unittest.TestCase):
             "responseHeaders": [],
             "logs": "",
             "errors": "",
-            "duration": 0.4,
+            "duration": 1.23,
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -665,7 +669,7 @@ class FunctionsServiceTest(unittest.TestCase):
             "responseHeaders": [],
             "logs": "",
             "errors": "",
-            "duration": 0.4,
+            "duration": 1.23,
         }
         headers = {'Content-Type': 'application/json'}
         m.request(

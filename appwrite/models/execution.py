@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from ..enums.execution_resource_type import ExecutionResourceType
@@ -29,7 +29,7 @@ class Execution(AppwriteModel):
     deploymentid : str
         Deployment ID used to create the execution.
     trigger : ExecutionTrigger
-        The trigger that caused the resource to execute. Possible values can be: `http`, `schedule`, or `event`.
+        The trigger that caused the resource to execute. Possible values can be: `http`, `schedule`, `event`, or `email`.
     status : ExecutionStatus
         The status of the resource execution. Possible values can be: `waiting`, `processing`, `completed`, `failed`, or `scheduled`.
     requestmethod : str
@@ -49,7 +49,7 @@ class Execution(AppwriteModel):
     errors : str
         Resource errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     duration : float
-        Resource(function/site) execution duration in seconds.
+        Total time the resource(function/site) took to respond, in seconds.
     scheduledat : Optional[str]
         The scheduled time for execution. If left empty, execution will be queued immediately.
     """
@@ -73,3 +73,44 @@ class Execution(AppwriteModel):
     errors: str = Field(..., alias='errors')
     duration: float = Field(..., alias='duration')
     scheduledat: Optional[str] = Field(default=None, alias='scheduledAt')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if '$permissions' not in data and 'permissions' not in data:
+            data['$permissions'] = []
+        if 'resourceId' not in data and 'resourceid' not in data:
+            data['resourceId'] = ''
+        if 'resourceType' not in data and 'resourcetype' not in data:
+            data['resourceType'] = 'functions'
+        if 'deploymentId' not in data and 'deploymentid' not in data:
+            data['deploymentId'] = ''
+        if 'requestMethod' not in data and 'requestmethod' not in data:
+            data['requestMethod'] = ''
+        if 'requestPath' not in data and 'requestpath' not in data:
+            data['requestPath'] = ''
+        if 'requestHeaders' not in data and 'requestheaders' not in data:
+            data['requestHeaders'] = []
+        if 'responseStatusCode' not in data and 'responsestatuscode' not in data:
+            data['responseStatusCode'] = 0
+        if 'responseBody' not in data and 'responsebody' not in data:
+            data['responseBody'] = ''
+        if 'responseHeaders' not in data and 'responseheaders' not in data:
+            data['responseHeaders'] = []
+        if 'logs' not in data:
+            data['logs'] = ''
+        if 'errors' not in data:
+            data['errors'] = ''
+        if 'duration' not in data:
+            data['duration'] = 0
+        return data
