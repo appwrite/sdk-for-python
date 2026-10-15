@@ -13,7 +13,16 @@ documents_db = DocumentsDB(client)
 result: DocumentList = documents_db.upsert_documents(
     database_id = '<DATABASE_ID>',
     collection_id = '<COLLECTION_ID>',
-    documents = [],
+    documents = [
+	    {
+	        "$id": "example1",
+	        "username": "walter.obrien",
+	        "email": "walter.obrien@example.com",
+	        "fullName": "Walter O'Brien",
+	        "age": 30,
+	        "isAdmin": false
+	    }
+	],
     transaction_id = '<TRANSACTION_ID>' # optional
 )
 

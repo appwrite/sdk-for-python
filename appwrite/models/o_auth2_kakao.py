@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from ..enums.o_auth2_kakao_prompt import OAuth2KakaoPrompt
@@ -28,3 +28,22 @@ class OAuth2Kakao(AppwriteModel):
     clientid: str = Field(..., alias='clientId')
     clientsecret: str = Field(..., alias='clientSecret')
     prompt: List[OAuth2KakaoPrompt] = Field(..., alias='prompt')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if 'enabled' not in data:
+            data['enabled'] = False
+        if 'clientId' not in data and 'clientid' not in data:
+            data['clientId'] = ''
+        if 'clientSecret' not in data and 'clientsecret' not in data:
+            data['clientSecret'] = ''
+        if 'prompt' not in data:
+            data['prompt'] = []
+        return data

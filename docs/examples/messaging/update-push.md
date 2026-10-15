@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.messaging import Messaging
 from appwrite.models import Message
-from appwrite.enums import MessagePriority
+from appwrite.enums.message_priority import MessagePriority
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint

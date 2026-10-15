@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -30,3 +30,24 @@ class Token(AppwriteModel):
     secret: str = Field(..., alias='secret')
     expire: str = Field(..., alias='expire')
     phrase: str = Field(..., alias='phrase')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if 'userId' not in data and 'userid' not in data:
+            data['userId'] = ''
+        if 'secret' not in data:
+            data['secret'] = ''
+        if 'expire' not in data:
+            data['expire'] = ''
+        if 'phrase' not in data:
+            data['phrase'] = ''
+        return data

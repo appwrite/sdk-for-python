@@ -284,7 +284,7 @@ class Apps(Service):
 
         api_path = '/apps/{appId}'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
@@ -381,7 +381,7 @@ class Apps(Service):
 
         api_path = '/apps/{appId}'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -461,7 +461,7 @@ class Apps(Service):
 
         api_path = '/apps/{appId}'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
@@ -508,7 +508,7 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/installations'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         if queries is not None:
@@ -555,9 +555,9 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/installations/{installationId}'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        if installation_id is None:
+        if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
@@ -601,9 +601,9 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/installations/{installationId}'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        if installation_id is None:
+        if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
@@ -648,9 +648,9 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/installations/{installationId}/tokens'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        if installation_id is None:
+        if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
@@ -698,7 +698,7 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/keys'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         if queries is not None:
@@ -742,7 +742,7 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/keys'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
@@ -786,9 +786,9 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/keys/{keyId}'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        if key_id is None:
+        if key_id is None or key_id == '':
             raise AppwriteException('Missing required parameter: "key_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
@@ -832,9 +832,9 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/keys/{keyId}'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        if key_id is None:
+        if key_id is None or key_id == '':
             raise AppwriteException('Missing required parameter: "key_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
@@ -865,7 +865,7 @@ class Apps(Service):
         app_id : str
             Application unique ID.
         labels : List[str]
-            Array of application labels. Replaces the previous labels. Maximum of 1000 labels are allowed, each up to 36 alphanumeric characters long.
+            Array of application labels. Replaces the previous labels. Maximum of 1000 labels are allowed, each up to 36 alphanumeric characters long. Reserved labels are rejected.
         Returns
         -------
         App
@@ -879,7 +879,7 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/labels'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
         if labels is None:
             raise AppwriteException('Missing required parameter: "labels"')
@@ -929,7 +929,7 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/secrets'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         if queries is not None:
@@ -973,7 +973,7 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/secrets'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
@@ -1017,9 +1017,9 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/secrets/{secretId}'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        if secret_id is None:
+        if secret_id is None or secret_id == '':
             raise AppwriteException('Missing required parameter: "secret_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{secretId}', str(self._normalize_value(secret_id)))
@@ -1063,9 +1063,9 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/secrets/{secretId}'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        if secret_id is None:
+        if secret_id is None or secret_id == '':
             raise AppwriteException('Missing required parameter: "secret_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{secretId}', str(self._normalize_value(secret_id)))
@@ -1110,7 +1110,7 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/team'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
@@ -1154,7 +1154,7 @@ class Apps(Service):
 
         api_path = '/apps/{appId}/tokens'
         api_params = {}
-        if app_id is None:
+        if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 

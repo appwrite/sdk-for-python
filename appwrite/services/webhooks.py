@@ -86,9 +86,9 @@ class Webhooks(Service):
         tls : Optional[bool]
             Certificate verification, false for disabled or true for enabled.
         auth_username : Optional[str]
-            Webhook HTTP user. Max length: 256 chars.
+            Webhook HTTP user. Max length: 255 chars.
         auth_password : Optional[str]
-            Webhook HTTP password. Max length: 256 chars.
+            Webhook HTTP password. Max length: 2048 chars.
         secret : Optional[str]
             Webhook secret key. If not provided, a new key will be generated automatically. Key must be at least 8 characters long, and at max 256 characters.
         Returns
@@ -164,7 +164,7 @@ class Webhooks(Service):
 
         api_path = '/webhooks/{webhookId}'
         api_params = {}
-        if webhook_id is None:
+        if webhook_id is None or webhook_id == '':
             raise AppwriteException('Missing required parameter: "webhook_id"')
         api_path = api_path.replace('{webhookId}', str(self._normalize_value(webhook_id)))
 
@@ -209,9 +209,9 @@ class Webhooks(Service):
         tls : Optional[bool]
             Certificate verification, false for disabled or true for enabled.
         auth_username : Optional[str]
-            Webhook HTTP user. Max length: 256 chars.
+            Webhook HTTP user. Max length: 255 chars.
         auth_password : Optional[str]
-            Webhook HTTP password. Max length: 256 chars.
+            Webhook HTTP password. Max length: 2048 chars. Omit to keep the current password; it is cleared when the URL changes or TLS verification is disabled.
         Returns
         -------
         Webhook
@@ -225,7 +225,7 @@ class Webhooks(Service):
 
         api_path = '/webhooks/{webhookId}'
         api_params = {}
-        if webhook_id is None:
+        if webhook_id is None or webhook_id == '':
             raise AppwriteException('Missing required parameter: "webhook_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
@@ -283,7 +283,7 @@ class Webhooks(Service):
 
         api_path = '/webhooks/{webhookId}'
         api_params = {}
-        if webhook_id is None:
+        if webhook_id is None or webhook_id == '':
             raise AppwriteException('Missing required parameter: "webhook_id"')
         api_path = api_path.replace('{webhookId}', str(self._normalize_value(webhook_id)))
 
@@ -293,6 +293,7 @@ class Webhooks(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -326,7 +327,7 @@ class Webhooks(Service):
 
         api_path = '/webhooks/{webhookId}/secret'
         api_params = {}
-        if webhook_id is None:
+        if webhook_id is None or webhook_id == '':
             raise AppwriteException('Missing required parameter: "webhook_id"')
         api_path = api_path.replace('{webhookId}', str(self._normalize_value(webhook_id)))
         if secret is not None:

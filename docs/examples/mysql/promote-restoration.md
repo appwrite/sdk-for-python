@@ -1,19 +1,18 @@
 ```python
 from appwrite.client import Client
-from appwrite.services.users import Users
-from appwrite.models import LogList
+from appwrite.services.mysql import Mysql
+from appwrite.models import DedicatedDatabaseRestoration
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
 client.set_project('<YOUR_PROJECT_ID>') # Your project ID
 client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-users = Users(client)
+mysql = Mysql(client)
 
-result: LogList = users.list_logs(
-    user_id = '<USER_ID>',
-    queries = [], # optional
-    total = False # optional
+result: DedicatedDatabaseRestoration = mysql.promote_restoration(
+    database_id = '<DATABASE_ID>',
+    restoration_id = '<RESTORATION_ID>'
 )
 
 print(result.model_dump())

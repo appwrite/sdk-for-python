@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -27,3 +27,18 @@ class DedicatedDatabaseMember(AppwriteModel):
     status: str = Field(..., alias='status')
     replicating: Optional[bool] = Field(default=None, alias='replicating')
     lagseconds: Optional[float] = Field(default=None, alias='lagSeconds')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if 'role' not in data:
+            data['role'] = 'unknown'
+        if 'status' not in data:
+            data['status'] = ''
+        return data

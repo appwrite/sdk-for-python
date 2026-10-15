@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -30,3 +30,24 @@ class Oauth2DeviceAuthorization(AppwriteModel):
     verification_uri_complete: str = Field(..., alias='verification_uri_complete')
     expires_in: float = Field(..., alias='expires_in')
     interval: float = Field(..., alias='interval')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'device_code' not in data:
+            data['device_code'] = ''
+        if 'user_code' not in data:
+            data['user_code'] = ''
+        if 'verification_uri' not in data:
+            data['verification_uri'] = ''
+        if 'verification_uri_complete' not in data:
+            data['verification_uri_complete'] = ''
+        if 'expires_in' not in data:
+            data['expires_in'] = 0
+        if 'interval' not in data:
+            data['interval'] = 0
+        return data

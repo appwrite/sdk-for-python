@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -36,3 +36,24 @@ class DomainPrice(AppwriteModel):
     premium: bool = Field(..., alias='premium')
     renewalprice: Optional[float] = Field(default=None, alias='renewalPrice')
     renewalperiodyears: float = Field(..., alias='renewalPeriodYears')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'domain' not in data:
+            data['domain'] = ''
+        if 'tld' not in data:
+            data['tld'] = ''
+        if 'available' not in data:
+            data['available'] = False
+        if 'periodYears' not in data and 'periodyears' not in data:
+            data['periodYears'] = 1
+        if 'premium' not in data:
+            data['premium'] = False
+        if 'renewalPeriodYears' not in data and 'renewalperiodyears' not in data:
+            data['renewalPeriodYears'] = 1
+        return data

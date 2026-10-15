@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -24,3 +24,20 @@ class Embedding(AppwriteModel):
     dimension: float = Field(..., alias='dimension')
     embedding: List[Any] = Field(..., alias='embedding')
     error: str = Field(..., alias='error')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'model' not in data:
+            data['model'] = ''
+        if 'dimension' not in data:
+            data['dimension'] = 0
+        if 'embedding' not in data:
+            data['embedding'] = []
+        if 'error' not in data:
+            data['error'] = ''
+        return data

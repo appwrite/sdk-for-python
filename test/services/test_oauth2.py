@@ -68,8 +68,8 @@ class Oauth2ServiceTest(unittest.TestCase):
         data = {
             "device_code": "5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a",
             "user_code": "ABCD-EFGH",
-            "verification_uri": "https:\/\/cloud.appwrite.io\/console\/oauth2\/device",
-            "verification_uri_complete": "https:\/\/cloud.appwrite.io\/console\/oauth2\/device?user_code=ABCD-EFGH",
+            "verification_uri": "https:\/\/appwrite.io\/oauth2\/device",
+            "verification_uri_complete": "https:\/\/appwrite.io\/oauth2\/device?user_code=ABCD-EFGH",
             "expires_in": 900.0,
             "interval": 5.0,
         }

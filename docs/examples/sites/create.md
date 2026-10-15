@@ -2,10 +2,10 @@
 from appwrite.client import Client
 from appwrite.services.sites import Sites
 from appwrite.models import Site
-from appwrite.enums import Framework
-from appwrite.enums import BuildRuntime
-from appwrite.enums import Adapter
-from appwrite.enums import ProjectKeyScopes
+from appwrite.enums.framework import Framework
+from appwrite.enums.build_runtime import BuildRuntime
+from appwrite.enums.adapter import Adapter
+from appwrite.enums.project_key_scopes import ProjectKeyScopes
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint

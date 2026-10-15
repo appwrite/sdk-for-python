@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -63,3 +63,46 @@ class DatabaseMigration(AppwriteModel):
     autocutover: bool = Field(..., alias='autoCutover')
     cutoverrequested: bool = Field(..., alias='cutoverRequested')
     paused: bool = Field(..., alias='paused')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'projectId' not in data and 'projectid' not in data:
+            data['projectId'] = ''
+        if 'databaseId' not in data and 'databaseid' not in data:
+            data['databaseId'] = ''
+        if 'specification' not in data:
+            data['specification'] = ''
+        if 'phase' not in data:
+            data['phase'] = 'pending'
+        if 'attempt' not in data:
+            data['attempt'] = 0
+        if 'lastError' not in data and 'lasterror' not in data:
+            data['lastError'] = ''
+        if 'lagDocuments' not in data and 'lagdocuments' not in data:
+            data['lagDocuments'] = 0
+        if 'changelogWatermark' not in data and 'changelogwatermark' not in data:
+            data['changelogWatermark'] = 0
+        if 'verifiedAt' not in data and 'verifiedat' not in data:
+            data['verifiedAt'] = ''
+        if 'cutoverAt' not in data and 'cutoverat' not in data:
+            data['cutoverAt'] = ''
+        if 'soakUntil' not in data and 'soakuntil' not in data:
+            data['soakUntil'] = ''
+        if 'autoCutover' not in data and 'autocutover' not in data:
+            data['autoCutover'] = True
+        if 'cutoverRequested' not in data and 'cutoverrequested' not in data:
+            data['cutoverRequested'] = False
+        if 'paused' not in data:
+            data['paused'] = False
+        return data

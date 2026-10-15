@@ -116,7 +116,7 @@ class Mysql(Service):
         storage_autoscaling_threshold_percent : Optional[float]
             Storage usage percentage (50-95) that triggers automatic expansion.
         storage_autoscaling_max_gb : Optional[float]
-            Maximum storage size in GB for autoscaling. 0 means no limit.
+            Maximum storage size in GB for autoscaling. Defaults to 3 times the specification's storage. 0 means no limit.
         Returns
         -------
         DedicatedDatabase
@@ -180,7 +180,7 @@ class Mysql(Service):
         self,
     ) -> DedicatedDatabaseSpecificationList:
         """
-        List the dedicated database specifications available on the current plan. Each specification reports its resource limits, pricing, and whether it is enabled for the organization.
+        List the dedicated database specifications available on the current plan. Each specification reports its resource limits, its own prices and overage rates, and whether it is enabled for the organization.
         Returns
         -------
         DedicatedDatabaseSpecificationList
@@ -231,7 +231,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
@@ -331,7 +331,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if name is not None:
@@ -414,7 +414,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
@@ -458,7 +458,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/backups'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if queries is not None:
@@ -503,7 +503,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/backups'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if type is not None:
@@ -549,7 +549,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/backups/policies'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if queries is not None:
@@ -609,7 +609,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/backups/policies'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         if policy_id is None:
             raise AppwriteException('Missing required parameter: "policy_id"')
@@ -669,9 +669,9 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/backups/policies/{policyId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if policy_id is None:
+        if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
@@ -727,9 +727,9 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/backups/policies/{policyId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if policy_id is None:
+        if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
@@ -782,9 +782,9 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/backups/policies/{policyId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if policy_id is None:
+        if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
@@ -847,7 +847,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/backups/storage'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         if provider is None:
             raise AppwriteException('Missing required parameter: "provider"')
@@ -909,9 +909,9 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/backups/{backupId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if backup_id is None:
+        if backup_id is None or backup_id == '':
             raise AppwriteException('Missing required parameter: "backup_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{backupId}', str(self._normalize_value(backup_id)))
@@ -955,9 +955,9 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/backups/{backupId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if backup_id is None:
+        if backup_id is None or backup_id == '':
             raise AppwriteException('Missing required parameter: "backup_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{backupId}', str(self._normalize_value(backup_id)))
@@ -999,7 +999,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/branches'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
@@ -1045,7 +1045,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/branches'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if branch_id is not None:
@@ -1093,9 +1093,9 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/branches/{branchId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if branch_id is None:
+        if branch_id is None or branch_id == '':
             raise AppwriteException('Missing required parameter: "branch_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{branchId}', str(self._normalize_value(branch_id)))
@@ -1137,7 +1137,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/credentials'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
@@ -1162,7 +1162,7 @@ class Mysql(Service):
         timeout_seconds: Optional[float] = None,
     ) -> DedicatedDatabaseExecution:
         """
-        Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/executions` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database's configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings.
+        Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/executions` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database's configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings. Long-running statements (for example CREATE INDEX) can outlive the HTTP request: if the request ends before a result is returned, check the database before retrying, and prefer a direct connection for work that may take minutes.
 
         Parameters
         ----------
@@ -1173,7 +1173,7 @@ class Mysql(Service):
         bindings : Optional[Dict[str, Any]]
             Optional bound parameters. Pass either a positional list or a name => value map matching the placeholder style used in the SQL.
         timeout_seconds : Optional[float]
-            Per-call execution timeout override. Must be less than or equal to the database's configured sqlApiTimeoutSeconds.
+            Per-call execution timeout override. Must be less than or equal to the database's configured sqlApiTimeoutSeconds. Statements that may exceed this — or the HTTP request timeout in front of Cloud — should use a direct connection instead.
         Returns
         -------
         DedicatedDatabaseExecution
@@ -1187,7 +1187,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/executions'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         if sql is None:
             raise AppwriteException('Missing required parameter: "sql"')
@@ -1238,7 +1238,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/failovers'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if target_replica_id is not None:
@@ -1287,7 +1287,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/maintenance'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         if day is None:
             raise AppwriteException('Missing required parameter: "day"')
@@ -1340,7 +1340,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/migrations'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         if target_type is None:
             raise AppwriteException('Missing required parameter: "target_type"')
@@ -1395,7 +1395,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/operations'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if status is not None:
@@ -1441,7 +1441,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/pitr'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
@@ -1481,7 +1481,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/pooler'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
@@ -1523,7 +1523,7 @@ class Mysql(Service):
         default_pool_size : Optional[float]
             Default pool size per user.
         read_write_splitting : Optional[bool]
-            Route SELECTs to HA replicas, writes and locked reads to the primary. Defaults to true when HA is enabled.
+            Route SELECTs to HA replicas, writes and locked reads to the primary. Off by default, and only takes effect while HA is enabled. Replication is asynchronous, so a read issued immediately after a write may not observe it.
         pooler_cpu_request : Optional[str]
             Pooler sidecar CPU request override (Kubernetes quantity, e.g. "250m" or "1"). Leave null for the proportional default (5% of DB CPU, floor 100m).
         pooler_cpu_limit : Optional[str]
@@ -1545,7 +1545,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/pooler'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if mode is not None:
@@ -1602,7 +1602,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/replicas'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
@@ -1654,7 +1654,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/restorations'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if status is not None:
@@ -1685,9 +1685,14 @@ class Mysql(Service):
         backup_id: Optional[str] = None,
         target_database_id: Optional[str] = None,
         target_time: Optional[str] = None,
+        restore_mode: Optional[str] = None,
+        target_name: Optional[str] = None,
+        auto_promote: Optional[bool] = None,
     ) -> DedicatedDatabaseRestoration:
         """
         Restore a database from a backup or to a specific point in time (PITR). For backup restoration, provide a backupId. For PITR, provide a targetTime as an ISO 8601 datetime. PITR requires the database to have PITR enabled and is only available for enterprise databases.
+
+        By default the backup is replayed over the database it was taken from. Pass `restoreMode` as `clone` to recover it onto a second workload beside this database instead: this database keeps serving its own data while the clone is filled, and the switch happens as soon as the clone is ready, on the endpoint and credentials it already had. Pass `autoPromote` as false to hold the clone until you promote it yourself. Pass `restoreMode` as `copy` to recover onto a separate database with its own endpoint, either one you name with `targetDatabaseId` or one provisioned as a copy of this database's engine, version, specification and replicas. Neither mode is available for a point-in-time recovery or an incremental backup.
 
         Parameters
         ----------
@@ -1698,9 +1703,15 @@ class Mysql(Service):
         backup_id : Optional[str]
             Backup ID to restore from (required for backup type).
         target_database_id : Optional[str]
-            Existing database ID to restore into. The target must be distinct, ready, and use the same engine and version.
+            Existing database ID to restore into. The target must be distinct, ready, and use the same engine and version. Omit it on a copy restoration to have one provisioned. Not accepted for a clone, which is recovered inside this database.
         target_time : Optional[str]
             Target time for PITR (required for pitr type) as an [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) datetime.
+        restore_mode : Optional[str]
+            Where the backup is restored. Allowed values: in_place, clone, copy. Use "clone" to recover onto a second workload beside this database and leave it serving until you promote — the endpoint and credentials do not change. Use "copy" to recover onto a separate database with its own endpoint, either one you name with targetDatabaseId or one Cloud provisions. Use "in_place" to replay the backup over this database. Defaults to "copy" when a targetDatabaseId is given, "in_place" otherwise.
+        target_name : Optional[str]
+            Display name for the database a copy restoration provisions. Defaults to this database's name followed by "(restored)". Max length: 128 chars.
+        auto_promote : Optional[bool]
+            Whether a clone restoration switches the database over as soon as the recovery is ready. Default true: the restore finishes with the database serving the recovery point on the endpoint it already had, and the side it replaced kept briefly so the switch can be reversed. Pass false to hold the recovery until you call the promotion endpoint yourself.
         Returns
         -------
         DedicatedDatabaseRestoration
@@ -1714,7 +1725,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/restorations'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if type is not None:
@@ -1725,6 +1736,12 @@ class Mysql(Service):
             api_params['targetDatabaseId'] = self._normalize_value(target_database_id)
         if target_time is not None:
             api_params['targetTime'] = self._normalize_value(target_time)
+        if restore_mode is not None:
+            api_params['restoreMode'] = self._normalize_value(restore_mode)
+        if target_name is not None:
+            api_params['targetName'] = self._normalize_value(target_name)
+        if auto_promote is not None:
+            api_params['autoPromote'] = self._normalize_value(auto_promote)
 
         response = self.client.call(
             'post',
@@ -1766,9 +1783,9 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/restorations/{restorationId}'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        if restoration_id is None:
+        if restoration_id is None or restoration_id == '':
             raise AppwriteException('Missing required parameter: "restoration_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{restorationId}', str(self._normalize_value(restoration_id)))
@@ -1778,6 +1795,56 @@ class Mysql(Service):
             api_path,
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=DedicatedDatabaseRestoration)
+
+    def promote_restoration(
+        self,
+        database_id: str,
+        restoration_id: str,
+    ) -> DedicatedDatabaseRestoration:
+        """
+        Switch the database over to the clone a restoration recovered. The database keeps
+        its endpoint and credentials; clients reconnect once. Writes made after the
+        recovery point are discarded, and the side being replaced is retained briefly so
+        the switch can be reversed.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        restoration_id : str
+            Restoration ID.
+        Returns
+        -------
+        DedicatedDatabaseRestoration
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/mysql/{databaseId}/restorations/{restorationId}/promotions'
+        api_params = {}
+        if database_id is None or database_id == '':
+            raise AppwriteException('Missing required parameter: "database_id"')
+        if restoration_id is None or restoration_id == '':
+            raise AppwriteException('Missing required parameter: "restoration_id"')
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{restorationId}', str(self._normalize_value(restoration_id)))
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
                 'accept': 'application/json',
             },
             api_params,
@@ -1809,7 +1876,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/status'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
@@ -1852,7 +1919,7 @@ class Mysql(Service):
 
         api_path = '/mysql/{databaseId}/upgrades'
         api_params = {}
-        if database_id is None:
+        if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
         if target_version is None:
             raise AppwriteException('Missing required parameter: "target_version"')

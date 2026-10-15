@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -24,3 +24,20 @@ class InsightCTA(AppwriteModel):
     service: str = Field(..., alias='service')
     method: str = Field(..., alias='method')
     params: Dict[str, Any] = Field(..., alias='params')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'label' not in data:
+            data['label'] = ''
+        if 'service' not in data:
+            data['service'] = ''
+        if 'method' not in data:
+            data['method'] = ''
+        if 'params' not in data:
+            data['params'] = {}
+        return data

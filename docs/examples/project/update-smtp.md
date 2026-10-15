@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.project import Project
 from appwrite.models import Project as ProjectModel
-from appwrite.enums import ProjectSMTPSecure
+from appwrite.enums.project_smtp_secure import ProjectSMTPSecure
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint

@@ -68,6 +68,7 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -98,6 +99,7 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -129,6 +131,7 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -163,6 +166,7 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -174,6 +178,38 @@ class ProxyServiceTest(unittest.TestCase):
         response = self.proxy.create_site_rule(
             'example.com',
             '<SITE_ID>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_smtp_rule(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "domain": "appwrite.company.com",
+            "type": "deployment",
+            "trigger": "manual",
+            "redirectUrl": "https:\/\/appwrite.io\/docs",
+            "redirectStatusCode": 301.0,
+            "deploymentId": "n3u9feiwmf",
+            "deploymentResourceId": "n3u9feiwmf",
+            "deploymentVcsProviderBranch": "main",
+            "status": "verified",
+            "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
+            "renewAt": "datetime",
+            "protocol": "http",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.proxy.create_smtp_rule(
+            'example.com',
+            '<FUNCTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -194,6 +230,7 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -239,6 +276,7 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
         m.request(

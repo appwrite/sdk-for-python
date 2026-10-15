@@ -27,7 +27,6 @@ from ..enums.deployment_download_type import DeploymentDownloadType
 from ..enums.execution_method import ExecutionMethod
 from ..enums.message_priority import MessagePriority
 from ..enums.smtp_encryption import SmtpEncryption
-from ..enums.organization_key_scopes import OrganizationKeyScopes
 from ..enums.region import Region
 from ..enums.project_auth_method_id import ProjectAuthMethodId
 from ..enums.project_o_auth2_auth0_prompt import ProjectOAuth2Auth0Prompt
@@ -81,6 +80,7 @@ from ..enums.o_auth2_kakao_prompt import OAuth2KakaoPrompt
 from ..enums.platform_type import PlatformType
 from ..enums.proxy_rule_deployment_resource_type import ProxyRuleDeploymentResourceType
 from ..enums.proxy_rule_status import ProxyRuleStatus
+from ..enums.proxy_rule_protocol import ProxyRuleProtocol
 from ..enums.message_status import MessageStatus
 from ..enums.billing_plan_group import BillingPlanGroup
 from ..enums.domain_transfer_status_enum import DomainTransferStatusEnum
@@ -171,9 +171,6 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, SmtpEncryption):
-            return o.value
-
-        if isinstance(o, OrganizationKeyScopes):
             return o.value
 
         if isinstance(o, Region):
@@ -333,6 +330,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, ProxyRuleStatus):
+            return o.value
+
+        if isinstance(o, ProxyRuleProtocol):
             return o.value
 
         if isinstance(o, MessageStatus):

@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -33,3 +33,22 @@ class Oauth2Token(AppwriteModel):
     scope: str = Field(..., alias='scope')
     authorization_details: Optional[str] = Field(default=None, alias='authorization_details')
     id_token: Optional[str] = Field(default=None, alias='id_token')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if 'access_token' not in data:
+            data['access_token'] = ''
+        if 'token_type' not in data:
+            data['token_type'] = 'Bearer'
+        if 'expires_in' not in data:
+            data['expires_in'] = 0
+        if 'refresh_token' not in data:
+            data['refresh_token'] = ''
+        if 'scope' not in data:
+            data['scope'] = ''
+        return data

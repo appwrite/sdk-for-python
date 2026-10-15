@@ -1,0 +1,67 @@
+from types import MethodType
+
+
+def _levels_of(levels):
+    """
+    Validate the levels passed to `path()`: a non-empty list of non-empty strings, none holding
+    the level separator `/` or the MQTT wildcards `+` and `#`.
+    """
+    if not isinstance(levels, (list, tuple)):
+        raise TypeError("path() expects an array, e.g. path(['user'])")
+    if len(levels) == 0:
+        raise ValueError("path() needs at least one level")
+    for index, level in enumerate(levels):
+        if not isinstance(level, str):
+            kind = "null" if level is None else type(level).__name__
+            raise TypeError(f"level at index {index} must be a string, got {kind}")
+        if level == "":
+            raise ValueError(f"empty level at index {index}")
+        if "/" in level:
+            parts = ", ".join(f"'{part}'" for part in level.split("/"))
+            raise ValueError(f'"{level}" contains "/", split it: path([{parts}])')
+        if "+" in level:
+            raise ValueError(f'"{level}" contains "+", not allowed in a topic')
+        if "#" in level:
+            raise ValueError(f'"{level}" contains "#", not allowed in a topic')
+        if "\0" in level:
+            raise ValueError(f"level at index {index} contains a NUL character")
+    return tuple(levels)
+
+
+class _builder:
+    """
+    Bind a Topic method to the instance it is read from, or to an empty topic when it is read
+    from the class, so `Topic.path([...])` starts a topic and `topic.path([...])` extends one.
+    """
+
+    def __init__(self, func):
+        self.__func__ = func
+        self.__doc__ = func.__doc__
+
+    def __get__(self, instance, owner=None):
+        target = instance if instance is not None else owner(())
+        return MethodType(self.__func__, target)
+
+
+class Topic:
+    """
+    Helper to build MQTT topics for `Push`, level by level.
+
+        Topic.path(['user', user_id, 'notification'])  # "user/123/notification"
+        Topic.path(['org', org_id]).path(['logs'])  # "org/42/logs"
+    """
+
+    def __init__(self, levels):
+        # Internal: build topics with `Topic.path()`.
+        self._levels = tuple(levels)
+
+    @_builder
+    def path(self, levels):
+        """Start a topic with the given levels, or append them, e.g. `Topic.path(['user', user_id])`."""
+        return Topic(self._levels + _levels_of(levels))
+
+    def __str__(self):
+        return "/".join(self._levels)
+
+    def __repr__(self):
+        return f"Topic({str(self)!r})"
