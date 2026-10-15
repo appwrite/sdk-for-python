@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast, Generic, TypeVar, Type
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from .preferences import Preferences
@@ -39,21 +39,21 @@ class Organization(AppwriteModel, Generic[T]):
         Organization&#039;s billing plan.
     billingemail : str
         Billing email set for the organization.
-    billingstartdate : str
+    billingstartdate : Optional[str]
         Billing cycle start date.
-    billingcurrentinvoicedate : str
+    billingcurrentinvoicedate : Optional[str]
         Current invoice cycle start date.
-    billingnextinvoicedate : str
+    billingnextinvoicedate : Optional[str]
         Next invoice cycle start date.
     billingtrialstartdate : Optional[str]
         Start date of trial.
-    billingtrialdays : float
+    billingtrialdays : Optional[float]
         Number of trial days.
-    billingaggregationid : str
+    billingaggregationid : Optional[str]
         Current active aggregation id.
-    billinginvoiceid : str
+    billinginvoiceid : Optional[str]
         Current active aggregation id.
-    paymentmethodid : str
+    paymentmethodid : Optional[str]
         Default payment method.
     billingaddressid : Optional[str]
         Default payment method.
@@ -99,14 +99,14 @@ class Organization(AppwriteModel, Generic[T]):
     billingplanid: str = Field(..., alias='billingPlanId')
     billingplandetails: BillingPlan = Field(..., alias='billingPlanDetails')
     billingemail: str = Field(..., alias='billingEmail')
-    billingstartdate: str = Field(..., alias='billingStartDate')
-    billingcurrentinvoicedate: str = Field(..., alias='billingCurrentInvoiceDate')
-    billingnextinvoicedate: str = Field(..., alias='billingNextInvoiceDate')
+    billingstartdate: Optional[str] = Field(default=None, alias='billingStartDate')
+    billingcurrentinvoicedate: Optional[str] = Field(default=None, alias='billingCurrentInvoiceDate')
+    billingnextinvoicedate: Optional[str] = Field(default=None, alias='billingNextInvoiceDate')
     billingtrialstartdate: Optional[str] = Field(default=None, alias='billingTrialStartDate')
-    billingtrialdays: float = Field(..., alias='billingTrialDays')
-    billingaggregationid: str = Field(..., alias='billingAggregationId')
-    billinginvoiceid: str = Field(..., alias='billingInvoiceId')
-    paymentmethodid: str = Field(..., alias='paymentMethodId')
+    billingtrialdays: Optional[float] = Field(default=None, alias='billingTrialDays')
+    billingaggregationid: Optional[str] = Field(default=None, alias='billingAggregationId')
+    billinginvoiceid: Optional[str] = Field(default=None, alias='billingInvoiceId')
+    paymentmethodid: Optional[str] = Field(default=None, alias='paymentMethodId')
     billingaddressid: Optional[str] = Field(default=None, alias='billingAddressId')
     backuppaymentmethodid: Optional[str] = Field(default=None, alias='backupPaymentMethodId')
     status: str = Field(..., alias='status')
@@ -122,6 +122,41 @@ class Organization(AppwriteModel, Generic[T]):
     markedfordeletion: bool = Field(..., alias='markedForDeletion')
     platform: str = Field(..., alias='platform')
     projects: List[Any] = Field(..., alias='projects')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'name' not in data:
+            data['name'] = ''
+        if 'total' not in data:
+            data['total'] = 0
+        if 'budgetAlerts' not in data and 'budgetalerts' not in data:
+            data['budgetAlerts'] = [75]
+        if 'billingPlan' not in data and 'billingplan' not in data:
+            data['billingPlan'] = 'tier-0'
+        if 'billingPlanId' not in data and 'billingplanid' not in data:
+            data['billingPlanId'] = 'tier-0'
+        if 'billingEmail' not in data and 'billingemail' not in data:
+            data['billingEmail'] = ''
+        if 'status' not in data:
+            data['status'] = 'draft'
+        if 'markedForDeletion' not in data and 'markedfordeletion' not in data:
+            data['markedForDeletion'] = False
+        if 'platform' not in data:
+            data['platform'] = 'appwrite'
+        if 'projects' not in data:
+            data['projects'] = []
+        return data
 
     @classmethod
     def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'Organization[T]':

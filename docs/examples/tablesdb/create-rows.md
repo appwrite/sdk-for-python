@@ -13,7 +13,16 @@ tables_db = TablesDB(client)
 result: RowList = tables_db.create_rows(
     database_id = '<DATABASE_ID>',
     table_id = '<TABLE_ID>',
-    rows = [],
+    rows = [
+	    {
+	        "$id": "example1",
+	        "username": "walter.obrien",
+	        "email": "walter.obrien@example.com",
+	        "fullName": "Walter O'Brien",
+	        "age": 30,
+	        "isAdmin": false
+	    }
+	],
     transaction_id = '<TRANSACTION_ID>' # optional
 )
 

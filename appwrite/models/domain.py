@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 from ..enums.domain_transfer_status_enum import DomainTransferStatusEnum
@@ -53,3 +53,36 @@ class Domain(AppwriteModel):
     transferstatus: Optional[DomainTransferStatusEnum] = Field(default=None, alias='transferStatus')
     teamid: str = Field(..., alias='teamId')
     dnsrecords: List[DnsRecord] = Field(..., alias='dnsRecords')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if '$createdAt' not in data and 'createdat' not in data:
+            data['$createdAt'] = ''
+        if '$updatedAt' not in data and 'updatedat' not in data:
+            data['$updatedAt'] = ''
+        if 'domain' not in data:
+            data['domain'] = ''
+        if 'registrar' not in data:
+            data['registrar'] = ''
+        if 'nameservers' not in data:
+            data['nameservers'] = ''
+        if 'expire' not in data:
+            data['expire'] = ''
+        if 'renewal' not in data:
+            data['renewal'] = ''
+        if 'autoRenewal' not in data and 'autorenewal' not in data:
+            data['autoRenewal'] = False
+        if 'renewalPrice' not in data and 'renewalprice' not in data:
+            data['renewalPrice'] = 0
+        if 'teamId' not in data and 'teamid' not in data:
+            data['teamId'] = ''
+        if 'dnsRecords' not in data and 'dnsrecords' not in data:
+            data['dnsRecords'] = []
+        return data

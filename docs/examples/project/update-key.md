@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.project import Project
 from appwrite.models import Key
-from appwrite.enums import ProjectKeyScopes
+from appwrite.enums.project_key_scopes import ProjectKeyScopes
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -14,7 +14,7 @@ project = Project(client)
 result: Key = project.update_key(
     key_id = '<KEY_ID>',
     name = '<NAME>',
-    scopes = [ProjectKeyScopes.PROJECT_READ],
+    scopes = [ProjectKeyScopes.USERS_READ],
     expire = '2020-10-15T06:38:00.000+00:00' # optional
 )
 

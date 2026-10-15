@@ -2,8 +2,8 @@
 from appwrite.client import Client
 from appwrite.services.tables_db import TablesDB
 from appwrite.models import ColumnIndex
-from appwrite.enums import TablesDBIndexType
-from appwrite.enums import OrderBy
+from appwrite.enums.tables_db_index_type import TablesDBIndexType
+from appwrite.enums.order_by import OrderBy
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
@@ -17,7 +17,7 @@ result: ColumnIndex = tables_db.create_index(
     table_id = '<TABLE_ID>',
     key = '<KEY>',
     type = TablesDBIndexType.KEY,
-    columns = [],
+    columns = ["username"],
     orders = [OrderBy.ASC], # optional
     lengths = [] # optional
 )

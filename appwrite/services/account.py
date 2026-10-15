@@ -9,7 +9,6 @@ from ..models.oauth2_consent import Oauth2Consent
 from ..models.oauth2_consent_token_list import Oauth2ConsentTokenList
 from ..models.oauth2_consent_token import Oauth2ConsentToken
 from ..models.identity_list import IdentityList
-from ..models.log_list import LogList
 from ..enums.authenticator_type import AuthenticatorType
 from ..models.mfa_type import MfaType
 from ..enums.authentication_factor import AuthenticationFactor
@@ -203,7 +202,7 @@ class Account(Service):
 
         api_path = '/account/consents/{consentId}'
         api_params = {}
-        if consent_id is None:
+        if consent_id is None or consent_id == '':
             raise AppwriteException('Missing required parameter: "consent_id"')
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
 
@@ -243,7 +242,7 @@ class Account(Service):
 
         api_path = '/account/consents/{consentId}'
         api_params = {}
-        if consent_id is None:
+        if consent_id is None or consent_id == '':
             raise AppwriteException('Missing required parameter: "consent_id"')
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
 
@@ -290,7 +289,7 @@ class Account(Service):
 
         api_path = '/account/consents/{consentId}/tokens'
         api_params = {}
-        if consent_id is None:
+        if consent_id is None or consent_id == '':
             raise AppwriteException('Missing required parameter: "consent_id"')
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
         if queries is not None:
@@ -337,9 +336,9 @@ class Account(Service):
 
         api_path = '/account/consents/{consentId}/tokens/{tokenId}'
         api_params = {}
-        if consent_id is None:
+        if consent_id is None or consent_id == '':
             raise AppwriteException('Missing required parameter: "consent_id"')
-        if token_id is None:
+        if token_id is None or token_id == '':
             raise AppwriteException('Missing required parameter: "token_id"')
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
         api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
@@ -383,9 +382,9 @@ class Account(Service):
 
         api_path = '/account/consents/{consentId}/tokens/{tokenId}'
         api_params = {}
-        if consent_id is None:
+        if consent_id is None or consent_id == '':
             raise AppwriteException('Missing required parameter: "consent_id"')
-        if token_id is None:
+        if token_id is None or token_id == '':
             raise AppwriteException('Missing required parameter: "token_id"')
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
         api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
@@ -523,7 +522,7 @@ class Account(Service):
 
         api_path = '/account/identities/{identityId}'
         api_params = {}
-        if identity_id is None:
+        if identity_id is None or identity_id == '':
             raise AppwriteException('Missing required parameter: "identity_id"')
         api_path = api_path.replace('{identityId}', str(self._normalize_value(identity_id)))
 
@@ -533,55 +532,12 @@ class Account(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
-            },
-            api_params,
-        )
-
-        return response
-
-    def list_logs(
-        self,
-        queries: Optional[List[str]] = None,
-        total: Optional[bool] = None,
-    ) -> LogList:
-        """
-        Get the list of latest security activity logs for the currently logged in user. Each log returns user IP address, location and date and time of log.
-
-        Parameters
-        ----------
-        queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-        total : Optional[bool]
-            When set to false, the total count returned will be 0 and will not be calculated.
-        Returns
-        -------
-        LogList
-            API response as a typed Pydantic model
-
-        Raises
-        ------
-        AppwriteException
-            If API request fails
-        """
-
-        api_path = '/account/logs'
-        api_params = {}
-        if queries is not None:
-            api_params['queries'] = self._normalize_value(queries)
-        if total is not None:
-            api_params['total'] = self._normalize_value(total)
-
-        response = self.client.call(
-            'get',
-            api_path,
-            {
-                'X-Appwrite-Project': self.client.get_config('project'),
                 'accept': 'application/json',
             },
             api_params,
         )
 
-        return self._parse_response(response, model=LogList)
+        return response
 
     def update_mfa(
         self,
@@ -754,6 +710,7 @@ class Account(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -1742,6 +1699,7 @@ class Account(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -1787,7 +1745,7 @@ class Account(Service):
         duration: Optional[float] = None,
     ) -> Session:
         """
-        Allow the user to login into their account by providing a valid email and password combination. This route will create a new session for the user.
+        Allow the user to login into their account by providing a valid email and password combination. This route will create a new session for the user. Use the optional `duration` parameter to create a shorter session, for example when the user doesn't choose "remember me". It must be at least 60 seconds and cannot exceed the project maximum session length.
 
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
 
@@ -2082,7 +2040,7 @@ class Account(Service):
 
         api_path = '/account/sessions/{sessionId}'
         api_params = {}
-        if session_id is None:
+        if session_id is None or session_id == '':
             raise AppwriteException('Missing required parameter: "session_id"')
         api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
 
@@ -2122,7 +2080,7 @@ class Account(Service):
 
         api_path = '/account/sessions/{sessionId}'
         api_params = {}
-        if session_id is None:
+        if session_id is None or session_id == '':
             raise AppwriteException('Missing required parameter: "session_id"')
         api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
 
@@ -2163,7 +2121,7 @@ class Account(Service):
 
         api_path = '/account/sessions/{sessionId}'
         api_params = {}
-        if session_id is None:
+        if session_id is None or session_id == '':
             raise AppwriteException('Missing required parameter: "session_id"')
         api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
 
@@ -2173,6 +2131,7 @@ class Account(Service):
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
                 'content-type': 'application/json',
+                'accept': 'application/json',
             },
             api_params,
         )
@@ -2344,12 +2303,14 @@ class Account(Service):
 
         If authentication succeeds, `userId` and `secret` of a token will be appended to the success URL as query parameters. These can be used to create a new session using the [Create session](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint.
 
+        If there is already an active session, the OAuth2 identity is attached to the logged-in account and that session stays active until the token is exchanged for a new one.
+
         A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
 
         Parameters
         ----------
         provider : OAuthProvider
-            OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
+            OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
         success : Optional[str]
             URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
         failure : Optional[str]

@@ -1,5 +1,27 @@
 # Change Log
 
+## 25.0.0
+
+* Breaking: requests send `X-Appwrite-Response-Format: 2.5.0`; responses follow the 2.5 shapes
+* Breaking: removed `account.list_logs`, `users.list_logs` and the `Log`/`LogList` models
+* Breaking: removed `organization.create_key`, `get_key`, `list_keys`, `update_key` and `delete_key`, and `OrganizationKeyScopes`; use `organization.list_project_keys`, `get_project_key`, `update_project_key` and `delete_project_key` instead
+* Breaking: removed `Client.set_dev_key`, the `DevKey` model and `Project.dev_keys`
+* Breaking: removed `BillingPlanGroup.STARTER`; use `BillingPlanGroup.FREE`
+* Breaking: `list_specifications` returns each specification's prices and overage rates on the row itself. Removed the list-level `pricing` field and the `DedicatedDatabaseSpecificationPricing` model
+* Breaking: removed `Block` fields `reason`, `project_name`, `region`, `organization_name`, `organization_id` and `billing_plan`
+* Breaking: OAuth2 `resource` params now take `List[str]`
+* Breaking: `project.update_o_auth2_kakao` takes `enabled` before `prompt`
+* Breaking: `BackupRestoration.options` is now a dict
+* Breaking: some response fields became `Optional`, such as `BillingPlan.usage` and `DedicatedDatabase.engine`
+* Added: `Topic` helper to build MQTT topics for push messages
+* Added: `mongo`, `mysql` and `postgresql` `promote_restoration`, `restore_mode`, `target_name` and `auto_promote` on `create_restoration`, and `DedicatedDatabaseRestoration.restore_mode`
+* Added: `proxy.create_smtp_rule`, the `ProxyRuleProtocol` enum and `ProxyRule.protocol`
+* Added: `email_enabled` on `functions.update` and `Function`, and `ExecutionTrigger.EMAIL`
+* Added: `Query` aggregates (`count`, `count_distinct`, `sum`, `avg`, `min`, `max` and more), `group_by`, `having`, `distinct`, joins, `relationship`, `covers`, `spatial_equals` and `page`
+* Added: `Query.builder()` to chain queries; `build()` returns the query list
+* Updated: missing response fields fall back to their documented defaults
+* Fixed: map fields missing from a response default to `{}` instead of `[]`
+
 ## 24.4.0
 
 * Added: `domains` service to manage domains, DNS records, email presets, prices, transfer status and zones

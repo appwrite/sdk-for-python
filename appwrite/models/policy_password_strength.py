@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
-from pydantic import Field, PrivateAttr
+from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
 
@@ -30,3 +30,24 @@ class PolicyPasswordStrength(AppwriteModel):
     lowercase: bool = Field(..., alias='lowercase')
     number: bool = Field(..., alias='number')
     symbols: bool = Field(..., alias='symbols')
+
+    @model_validator(mode='before')
+    @classmethod
+    def _apply_defaults(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+
+        data = dict(data)
+        if '$id' not in data and 'id' not in data:
+            data['$id'] = ''
+        if 'min' not in data:
+            data['min'] = 8
+        if 'uppercase' not in data:
+            data['uppercase'] = False
+        if 'lowercase' not in data:
+            data['lowercase'] = False
+        if 'number' not in data:
+            data['number'] = False
+        if 'symbols' not in data:
+            data['symbols'] = False
+        return data

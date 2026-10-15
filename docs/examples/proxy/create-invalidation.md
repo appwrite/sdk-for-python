@@ -2,7 +2,7 @@
 from appwrite.client import Client
 from appwrite.services.proxy import Proxy
 from appwrite.models import ProxyInvalidation
-from appwrite.enums import InvalidationType
+from appwrite.enums.invalidation_type import InvalidationType
 
 client = Client()
 client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint

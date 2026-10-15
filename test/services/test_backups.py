@@ -37,9 +37,7 @@ class BackupsServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "policyId": "did8jx6ws45jana098ab7",
-            "size": 100000.0,
             "status": "completed",
-            "startedAt": "2020-10-15T06:38:00.000+00:00",
             "migrationId": "did8jx6ws45jana098ab7",
             "services": [],
             "resources": [],
@@ -63,9 +61,7 @@ class BackupsServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "policyId": "did8jx6ws45jana098ab7",
-            "size": 100000.0,
             "status": "completed",
-            "startedAt": "2020-10-15T06:38:00.000+00:00",
             "migrationId": "did8jx6ws45jana098ab7",
             "services": [],
             "resources": [],
@@ -138,7 +134,7 @@ class BackupsServiceTest(unittest.TestCase):
             '<POLICY_ID>',
             [],
             1,
-            '',
+            'schedule',
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -218,11 +214,10 @@ class BackupsServiceTest(unittest.TestCase):
             "archiveId": "did8jx6ws45jana098ab7",
             "policyId": "did8jx6ws45jana098ab7",
             "status": "completed",
-            "startedAt": "2020-10-15T06:38:00.000+00:00",
             "migrationId": "did8jx6ws45jana098ab7",
             "services": [],
             "resources": [],
-            "options": "{databases.database[{oldId, newId, newName}]}",
+            "options": {},
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -262,11 +257,10 @@ class BackupsServiceTest(unittest.TestCase):
             "archiveId": "did8jx6ws45jana098ab7",
             "policyId": "did8jx6ws45jana098ab7",
             "status": "completed",
-            "startedAt": "2020-10-15T06:38:00.000+00:00",
             "migrationId": "did8jx6ws45jana098ab7",
             "services": [],
             "resources": [],
-            "options": "{databases.database[{oldId, newId, newName}]}",
+            "options": {},
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
