@@ -29,15 +29,15 @@ uv add appwrite
 
 ### Initialize the client
 
-Create a client with your Appwrite endpoint, project ID and an [API key](https://appwrite.io/docs/partners/project/api-keys). Find the endpoint and project ID in your project&#039;s **Settings** page, and create an API key with only the scopes you need under **API keys** in the project sidebar.
+Create a client with your Appwrite endpoint, project ID and an [API key](https://appwrite.io/docs/partners/project/api-keys). Find the endpoint and project ID in your project's **Settings** page, and create an API key with only the scopes you need under **API keys** in the project sidebar.
 
 ```python
 from appwrite.client import Client
 
 client = Client()
-client.set_endpoint(&#039;https://&lt;REGION&gt;.cloud.appwrite.io/v1&#039;)
-client.set_project(&#039;&lt;PROJECT_ID&gt;&#039;)
-client.set_key(&#039;&lt;API_KEY&gt;&#039;)
+client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1')
+client.set_project('<PROJECT_ID>')
+client.set_key('<API_KEY>')
 ```
 
 API keys grant server-level access to your project. Keep them out of client-side code and version control.
@@ -54,9 +54,9 @@ users = Users(client)
 
 user = users.create(
     user_id=ID.unique(),
-    email=&#039;email@example.com&#039;,
-    password=&#039;password&#039;,
-    name=&quot;Walter O&#039;Brien&quot;,
+    email='email@example.com',
+    password='password',
+    name="Walter O'Brien",
 )
 
 print(user.id)
@@ -89,10 +89,10 @@ class Post(BaseModel):
 tables_db = TablesDB(client)
 
 row = tables_db.create_row(
-    database_id=&#039;&lt;DATABASE_ID&gt;&#039;,
-    table_id=&#039;&lt;TABLE_ID&gt;&#039;,
+    database_id='<DATABASE_ID>',
+    table_id='<TABLE_ID>',
     row_id=ID.unique(),
-    data={&#039;title&#039;: &#039;Hello, world&#039;, &#039;published&#039;: True},
+    data={'title': 'Hello, world', 'published': True},
     model_type=Post,
 )
 
@@ -100,9 +100,9 @@ print(row.id)
 print(row.data.title)
 
 result = tables_db.list_rows(
-    database_id=&#039;&lt;DATABASE_ID&gt;&#039;,
-    table_id=&#039;&lt;TABLE_ID&gt;&#039;,
-    queries=[Query.equal(&#039;published&#039;, True), Query.limit(25)],
+    database_id='<DATABASE_ID>',
+    table_id='<TABLE_ID>',
+    queries=[Query.equal('published', True), Query.limit(25)],
     model_type=Post,
 )
 
@@ -118,7 +118,7 @@ Failed requests raise `AppwriteException`, which carries `message`, `code`, `typ
 from appwrite.exception import AppwriteException
 
 try:
-    user = users.get(user_id=&#039;&lt;USER_ID&gt;&#039;)
+    user = users.get(user_id='<USER_ID>')
 except AppwriteException as error:
     print(error.code, error.type, error.message)
 ```
@@ -128,7 +128,7 @@ except AppwriteException as error:
 Point the client at your own instance instead of Appwrite Cloud. Call `set_self_signed()` only in development, when the server uses a self-signed TLS certificate.
 
 ```python
-client.set_endpoint(&#039;https://appwrite.example.com/v1&#039;)
+client.set_endpoint('https://appwrite.example.com/v1')
 client.set_self_signed()
 ```
 
