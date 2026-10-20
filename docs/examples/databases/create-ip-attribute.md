@@ -16,7 +16,8 @@ result: AttributeIp = databases.create_ip_attribute(
     key = '<KEY>',
     required = False,
     default = '192.0.2.0', # optional
-    array = False # optional
+    array = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

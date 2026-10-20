@@ -15,7 +15,8 @@ result: Variable = functions.update_variable(
     variable_id = '<VARIABLE_ID>',
     key = '<KEY>', # optional
     value = '<VALUE>', # optional
-    secret = False # optional
+    secret = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

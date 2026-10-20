@@ -18,7 +18,8 @@ result: Webhook = webhooks.update(
     enabled = False, # optional
     tls = False, # optional
     auth_username = '<AUTH_USERNAME>', # optional
-    auth_password = 'password' # optional
+    auth_password = 'password', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

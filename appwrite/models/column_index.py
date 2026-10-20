@@ -18,6 +18,8 @@ class ColumnIndex(AppwriteModel):
         Index update date in ISO 8601 format.
     key : str
         Index Key.
+    description : str
+        Optional description for the index.
     type : str
         Index type.
     status : str
@@ -36,6 +38,7 @@ class ColumnIndex(AppwriteModel):
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     key: str = Field(..., alias='key')
+    description: str = Field(..., alias='description')
     type: str = Field(..., alias='type')
     status: str = Field(..., alias='status')
     error: str = Field(..., alias='error')
@@ -58,6 +61,8 @@ class ColumnIndex(AppwriteModel):
             data['$updatedAt'] = ''
         if 'key' not in data:
             data['key'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'type' not in data:
             data['type'] = ''
         if 'status' not in data:

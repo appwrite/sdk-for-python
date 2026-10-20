@@ -155,6 +155,8 @@ class BillingPlan(AppwriteModel):
         Maximum function and site deployment size in MB
     functionsintervalminimum : float
         Shortest function schedule interval allowed, in minutes. 0 allows every interval.
+    functionsallowcron : bool
+        Does the plan allow cron function schedules or only intervals.
     databasesallowencrypt : bool
         Does the plan support encrypted string attributes or not.
     limits : Optional[BillingPlanLimits]
@@ -238,6 +240,7 @@ class BillingPlan(AppwriteModel):
     deploymentsize: float = Field(..., alias='deploymentSize')
     buildsize: float = Field(..., alias='buildSize')
     functionsintervalminimum: float = Field(..., alias='functionsIntervalMinimum')
+    functionsallowcron: bool = Field(..., alias='functionsAllowCron')
     databasesallowencrypt: bool = Field(..., alias='databasesAllowEncrypt')
     limits: Optional[BillingPlanLimits] = Field(default=None, alias='limits')
     group: BillingPlanGroup = Field(..., alias='group')
@@ -370,6 +373,8 @@ class BillingPlan(AppwriteModel):
             data['buildSize'] = 0
         if 'functionsIntervalMinimum' not in data and 'functionsintervalminimum' not in data:
             data['functionsIntervalMinimum'] = 0
+        if 'functionsAllowCron' not in data and 'functionsallowcron' not in data:
+            data['functionsAllowCron'] = True
         if 'databasesAllowEncrypt' not in data and 'databasesallowencrypt' not in data:
             data['databasesAllowEncrypt'] = False
         if 'databaseComputeCredit' not in data and 'databasecomputecredit' not in data:

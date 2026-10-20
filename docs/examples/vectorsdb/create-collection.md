@@ -19,7 +19,8 @@ result: VectorsdbCollection = vectors_db.create_collection(
     dimension = 4,
     permissions = [Permission.read(Role.any())], # optional
     document_security = False, # optional
-    enabled = False # optional
+    enabled = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

@@ -18,7 +18,8 @@ result: ColumnInteger = tables_db.create_integer_column(
     min = 0, # optional
     max = 100, # optional
     default = 10, # optional
-    array = False # optional
+    array = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

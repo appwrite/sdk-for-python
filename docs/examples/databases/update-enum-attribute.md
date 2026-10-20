@@ -17,7 +17,8 @@ result: AttributeEnum = databases.update_enum_attribute(
     elements = ["active", "inactive"],
     required = False,
     default = 'active',
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

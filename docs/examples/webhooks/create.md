@@ -19,7 +19,8 @@ result: Webhook = webhooks.create(
     tls = False, # optional
     auth_username = '<AUTH_USERNAME>', # optional
     auth_password = 'password', # optional
-    secret = '<SECRET>' # optional
+    secret = '<SECRET>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

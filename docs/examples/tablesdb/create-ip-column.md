@@ -16,7 +16,8 @@ result: ColumnIp = tables_db.create_ip_column(
     key = '<KEY>',
     required = False,
     default = '192.0.2.0', # optional
-    array = False # optional
+    array = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

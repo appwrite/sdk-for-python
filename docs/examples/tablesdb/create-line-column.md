@@ -15,7 +15,8 @@ result: ColumnLine = tables_db.create_line_column(
     table_id = '<TABLE_ID>',
     key = '<KEY>',
     required = False,
-    default = [[1, 2], [3, 4], [5, 6]] # optional
+    default = [[1, 2], [3, 4], [5, 6]], # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

@@ -15,7 +15,8 @@ result: AttributeLine = databases.create_line_attribute(
     collection_id = '<COLLECTION_ID>',
     key = '<KEY>',
     required = False,
-    default = [[1, 2], [3, 4], [5, 6]] # optional
+    default = [[1, 2], [3, 4], [5, 6]], # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

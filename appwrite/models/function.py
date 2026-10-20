@@ -21,6 +21,8 @@ class Function(AppwriteModel):
         Execution permissions.
     name : str
         Function name.
+    description : str
+        Optional description for the function.
     enabled : bool
         Function enabled.
     live : bool
@@ -86,6 +88,7 @@ class Function(AppwriteModel):
     updatedat: str = Field(..., alias='$updatedAt')
     execute: List[Any] = Field(..., alias='execute')
     name: str = Field(..., alias='name')
+    description: str = Field(..., alias='description')
     enabled: bool = Field(..., alias='enabled')
     live: bool = Field(..., alias='live')
     logging: bool = Field(..., alias='logging')
@@ -133,6 +136,8 @@ class Function(AppwriteModel):
             data['execute'] = []
         if 'name' not in data:
             data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'enabled' not in data:
             data['enabled'] = True
         if 'live' not in data:

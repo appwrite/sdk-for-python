@@ -19,7 +19,8 @@ result: Index = databases.create_index(
     type = DatabasesIndexType.KEY,
     attributes = ["username"],
     orders = [OrderBy.ASC], # optional
-    lengths = [] # optional
+    lengths = [], # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

@@ -18,7 +18,8 @@ result: AttributeFloat = databases.create_float_attribute(
     min = 0, # optional
     max = 100, # optional
     default = 10.5, # optional
-    array = False # optional
+    array = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

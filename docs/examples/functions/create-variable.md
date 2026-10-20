@@ -15,7 +15,8 @@ result: Variable = functions.create_variable(
     variable_id = '<VARIABLE_ID>',
     key = '<KEY>',
     value = '<VALUE>',
-    secret = False # optional
+    secret = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

@@ -16,7 +16,8 @@ result: ColumnPoint = tables_db.update_point_column(
     key = '<KEY>',
     required = False,
     default = [1, 2], # optional
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

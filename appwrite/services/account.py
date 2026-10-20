@@ -9,6 +9,7 @@ from ..models.oauth2_consent import Oauth2Consent
 from ..models.oauth2_consent_token_list import Oauth2ConsentTokenList
 from ..models.oauth2_consent_token import Oauth2ConsentToken
 from ..models.identity_list import IdentityList
+from ..models.membership_list import MembershipList
 from ..enums.authenticator_type import AuthenticatorType
 from ..models.mfa_type import MfaType
 from ..enums.authentication_factor import AuthenticationFactor
@@ -538,6 +539,50 @@ class Account(Service):
         )
 
         return response
+
+    def list_memberships(
+        self,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
+    ) -> MembershipList:
+        """
+        Get the team memberships of the currently logged in user.
+
+        Parameters
+        ----------
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, teamId, invited, joined, confirm, roles
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        Returns
+        -------
+        MembershipList
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/memberships'
+        api_params = {}
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=MembershipList)
 
     def update_mfa(
         self,
@@ -1482,6 +1527,8 @@ class Account(Service):
 
         Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md) the only valid redirect URLs are the ones from domains you have set when adding your platforms in the console interface.
 
+        The new password must satisfy the project's enabled password policies, including custom deny lists. Dictionary entries match the entire password case-sensitively; personal-data terms match substrings case-insensitively. Personal-data validation runs after token verification against the recovered user's ID, name, email, and phone, closing the previous recovery gap for profile-based checks. A rejected password leaves the existing credentials unchanged and the recovery token usable.
+
         Parameters
         ----------
         user_id : str
@@ -1582,6 +1629,8 @@ class Account(Service):
     ) -> Token:
         """
         Use this endpoint to complete the user password recovery process using the 6-digit code that was emailed by [createRecoveryOTP](https://appwrite.io/docs/references/cloud/client-web/account#createRecoveryOTP). Pass the **userId** of the user along with the **secret** code from the email and the new **password** to set. If confirmed, this route will return a 200 status code, the code is consumed and the user's password is updated.
+
+        The new password must satisfy the project's enabled password policies, including custom deny lists. Dictionary entries match the entire password case-sensitively; personal-data terms match substrings case-insensitively. Personal-data validation runs after token verification against the recovered user's ID, name, email, and phone, closing the previous recovery gap for profile-based checks. A rejected password leaves the existing credentials unchanged and the recovery token usable.
 
         Parameters
         ----------

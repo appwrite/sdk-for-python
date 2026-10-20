@@ -18,6 +18,8 @@ class Topic(AppwriteModel):
         Topic update date in ISO 8601 format.
     name : str
         The name of the topic.
+    description : str
+        Optional description for the topic.
     emailtotal : float
         Total count of email subscribers subscribed to the topic.
     smstotal : float
@@ -36,6 +38,7 @@ class Topic(AppwriteModel):
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     name: str = Field(..., alias='name')
+    description: str = Field(..., alias='description')
     emailtotal: float = Field(..., alias='emailTotal')
     smstotal: float = Field(..., alias='smsTotal')
     pushtotal: float = Field(..., alias='pushTotal')
@@ -58,6 +61,8 @@ class Topic(AppwriteModel):
             data['$updatedAt'] = ''
         if 'name' not in data:
             data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'emailTotal' not in data and 'emailtotal' not in data:
             data['emailTotal'] = 0
         if 'smsTotal' not in data and 'smstotal' not in data:

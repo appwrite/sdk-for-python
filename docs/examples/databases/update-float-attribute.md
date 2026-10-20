@@ -18,7 +18,8 @@ result: AttributeFloat = databases.update_float_attribute(
     default = 10.5,
     min = 0, # optional
     max = 100, # optional
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

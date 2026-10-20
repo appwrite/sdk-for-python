@@ -13,7 +13,8 @@ databases = Databases(client)
 result: Database = databases.update(
     database_id = '<DATABASE_ID>',
     name = '<NAME>', # optional
-    enabled = False # optional
+    enabled = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

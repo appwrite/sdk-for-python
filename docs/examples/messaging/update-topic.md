@@ -15,7 +15,8 @@ result: Topic = messaging.update_topic(
     name = '<NAME>', # optional
     subscribe = ["any"], # optional
     qos = 0, # optional
-    expiry = 0 # optional
+    expiry = 0, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

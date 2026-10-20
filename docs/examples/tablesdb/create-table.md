@@ -20,7 +20,8 @@ result: Table = tables_db.create_table(
     row_security = False, # optional
     enabled = False, # optional
     columns = [], # optional
-    indexes = [] # optional
+    indexes = [], # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

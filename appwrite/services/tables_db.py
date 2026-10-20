@@ -106,6 +106,7 @@ class TablesDB(Service):
         database_id: str,
         name: str,
         enabled: Optional[bool] = None,
+        description: Optional[str] = None,
         specification: Optional[str] = None,
         replicas: Optional[float] = None,
         sync_mode: Optional[str] = None,
@@ -121,6 +122,8 @@ class TablesDB(Service):
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+        description : Optional[str]
+            Optional description for the database.
         specification : Optional[str]
             Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
         replicas : Optional[float]
@@ -148,6 +151,8 @@ class TablesDB(Service):
         api_params['name'] = self._normalize_value(name)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
         if specification is not None:
             api_params['specification'] = self._normalize_value(specification)
         if replicas is not None:
@@ -506,6 +511,7 @@ class TablesDB(Service):
         database_id: str,
         name: Optional[str] = None,
         enabled: Optional[bool] = None,
+        description: Optional[str] = None,
         specification: Optional[str] = None,
         replicas: Optional[float] = None,
         sync_mode: Optional[str] = None,
@@ -521,6 +527,8 @@ class TablesDB(Service):
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+        description : Optional[str]
+            Optional description for the database.
         specification : Optional[str]
             Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
         replicas : Optional[float]
@@ -547,6 +555,8 @@ class TablesDB(Service):
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
         if specification is not None:
             api_params['specification'] = self._normalize_value(specification)
         if replicas is not None:
@@ -1086,6 +1096,7 @@ class TablesDB(Service):
         enabled: Optional[bool] = None,
         columns: Optional[List[Dict[str, Any]]] = None,
         indexes: Optional[List[Dict[str, Any]]] = None,
+        description: Optional[str] = None,
     ) -> Table:
         """
         Create a new Table. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
@@ -1108,6 +1119,8 @@ class TablesDB(Service):
             Array of column definitions to create. Each column should contain: key (string), type (string: string, varchar, text, mediumtext, longtext, integer, bigint, double, boolean, datetime, point, linestring, polygon, email, url, ip, enum), size (integer, required for string and varchar types), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.
         indexes : Optional[List[Dict[str, Any]]]
             Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial, trigram), attributes (array of column keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
+        description : Optional[str]
+            Optional description for the table.
         Returns
         -------
         Table
@@ -1140,6 +1153,8 @@ class TablesDB(Service):
             api_params['columns'] = self._normalize_value(columns)
         if indexes is not None:
             api_params['indexes'] = self._normalize_value(indexes)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1209,6 +1224,7 @@ class TablesDB(Service):
         row_security: Optional[bool] = None,
         enabled: Optional[bool] = None,
         purge: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> Table:
         """
         Update a table by its unique ID.
@@ -1229,6 +1245,8 @@ class TablesDB(Service):
             Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
         purge : Optional[bool]
             When true, purge all cached list responses for this table as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
+        description : Optional[str]
+            Optional description for the table.
         Returns
         -------
         Table
@@ -1258,6 +1276,8 @@ class TablesDB(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if purge is not None:
             api_params['purge'] = self._normalize_value(purge)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'put',
@@ -1385,6 +1405,7 @@ class TablesDB(Service):
         max: Optional[float] = None,
         default: Optional[float] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnBigint:
         """
         Create a bigint column. Optionally, minimum and maximum values can be provided.
@@ -1407,6 +1428,8 @@ class TablesDB(Service):
             Default value. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnBigint
@@ -1440,6 +1463,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1464,6 +1489,7 @@ class TablesDB(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnBigint:
         """
         Update a bigint column. Changing the `default` value will not update already existing rows.
@@ -1486,6 +1512,8 @@ class TablesDB(Service):
             Maximum value
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnBigint
@@ -1518,6 +1546,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -1540,6 +1570,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[bool] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnBoolean:
         """
         Create a boolean column.
@@ -1558,6 +1589,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnBoolean
@@ -1587,6 +1620,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1609,6 +1644,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[bool],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnBoolean:
         """
         Update a boolean column. Changing the `default` value will not update already existing rows.
@@ -1627,6 +1663,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnBoolean
@@ -1655,6 +1693,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -1677,6 +1717,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnDatetime:
         """
         Create a date time column according to the ISO 8601 standard.
@@ -1695,6 +1736,8 @@ class TablesDB(Service):
             Default value for the column in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnDatetime
@@ -1724,6 +1767,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1746,6 +1791,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnDatetime:
         """
         Update a date time column. Changing the `default` value will not update already existing rows.
@@ -1764,6 +1810,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnDatetime
@@ -1792,6 +1840,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -1814,6 +1864,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnEmail:
         """
         Create an email column.
@@ -1832,6 +1883,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnEmail
@@ -1861,6 +1914,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1883,6 +1938,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnEmail:
         """
         Update an email column. Changing the `default` value will not update already existing rows.
@@ -1901,6 +1957,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnEmail
@@ -1929,6 +1987,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -1952,6 +2012,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnEnum:
         """
         Create an enumeration column. The `elements` param acts as a white-list of accepted values for this column.
@@ -1972,6 +2033,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnEnum
@@ -2004,6 +2067,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2027,6 +2092,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnEnum:
         """
         Update an enum column. Changing the `default` value will not update already existing rows.
@@ -2047,6 +2113,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnEnum
@@ -2078,6 +2146,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2102,6 +2172,7 @@ class TablesDB(Service):
         max: Optional[float] = None,
         default: Optional[float] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnFloat:
         """
         Create a float column. Optionally, minimum and maximum values can be provided.
@@ -2124,6 +2195,8 @@ class TablesDB(Service):
             Default value. Cannot be set when required.
         array : Optional[bool]
             Is column an array?
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnFloat
@@ -2157,6 +2230,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2181,6 +2256,7 @@ class TablesDB(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnFloat:
         """
         Update a float column. Changing the `default` value will not update already existing rows.
@@ -2203,6 +2279,8 @@ class TablesDB(Service):
             Maximum value
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnFloat
@@ -2235,6 +2313,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2259,6 +2339,7 @@ class TablesDB(Service):
         max: Optional[float] = None,
         default: Optional[float] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnInteger:
         """
         Create an integer column. Optionally, minimum and maximum values can be provided.
@@ -2281,6 +2362,8 @@ class TablesDB(Service):
             Default value. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnInteger
@@ -2314,6 +2397,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2338,6 +2423,7 @@ class TablesDB(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnInteger:
         """
         Update an integer column. Changing the `default` value will not update already existing rows.
@@ -2360,6 +2446,8 @@ class TablesDB(Service):
             Maximum value
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnInteger
@@ -2392,6 +2480,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2414,6 +2504,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnIp:
         """
         Create IP address column.
@@ -2432,6 +2523,8 @@ class TablesDB(Service):
             Default value. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnIp
@@ -2461,6 +2554,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2483,6 +2578,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnIp:
         """
         Update an ip column. Changing the `default` value will not update already existing rows.
@@ -2501,6 +2597,8 @@ class TablesDB(Service):
             Default value. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnIp
@@ -2529,6 +2627,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2550,6 +2650,7 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[List[List[Any]]] = None,
+        description: Optional[str] = None,
     ) -> ColumnLine:
         """
         Create a geometric line column.
@@ -2566,6 +2667,8 @@ class TablesDB(Service):
             Is column required?
         default : Optional[List[List[Any]]]
             Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnLine
@@ -2593,6 +2696,8 @@ class TablesDB(Service):
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2615,6 +2720,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[List[List[Any]]] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnLine:
         """
         Update a line column. Changing the `default` value will not update already existing rows.
@@ -2633,6 +2739,8 @@ class TablesDB(Service):
             Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnLine
@@ -2662,6 +2770,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2685,6 +2795,7 @@ class TablesDB(Service):
         default: Optional[str] = None,
         array: Optional[bool] = None,
         encrypt: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnLongtext:
         """
         Create a longtext column.
@@ -2705,6 +2816,8 @@ class TablesDB(Service):
             Is column an array?
         encrypt : Optional[bool]
             Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnLongtext
@@ -2736,6 +2849,8 @@ class TablesDB(Service):
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2758,6 +2873,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnLongtext:
         """
         Update a longtext column. Changing the `default` value will not update already existing rows.
@@ -2776,6 +2892,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnLongtext
@@ -2804,6 +2922,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2827,6 +2947,7 @@ class TablesDB(Service):
         default: Optional[str] = None,
         array: Optional[bool] = None,
         encrypt: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnMediumtext:
         """
         Create a mediumtext column.
@@ -2847,6 +2968,8 @@ class TablesDB(Service):
             Is column an array?
         encrypt : Optional[bool]
             Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnMediumtext
@@ -2878,6 +3001,8 @@ class TablesDB(Service):
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2900,6 +3025,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnMediumtext:
         """
         Update a mediumtext column. Changing the `default` value will not update already existing rows.
@@ -2918,6 +3044,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnMediumtext
@@ -2946,6 +3074,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2967,6 +3097,7 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[List[float]] = None,
+        description: Optional[str] = None,
     ) -> ColumnPoint:
         """
         Create a geometric point column.
@@ -2983,6 +3114,8 @@ class TablesDB(Service):
             Is column required?
         default : Optional[List[float]]
             Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnPoint
@@ -3010,6 +3143,8 @@ class TablesDB(Service):
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3032,6 +3167,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[List[float]] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnPoint:
         """
         Update a point column. Changing the `default` value will not update already existing rows.
@@ -3050,6 +3186,8 @@ class TablesDB(Service):
             Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnPoint
@@ -3079,6 +3217,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -3100,6 +3240,7 @@ class TablesDB(Service):
         key: str,
         required: bool,
         default: Optional[List[List[Any]]] = None,
+        description: Optional[str] = None,
     ) -> ColumnPolygon:
         """
         Create a geometric polygon column.
@@ -3116,6 +3257,8 @@ class TablesDB(Service):
             Is column required?
         default : Optional[List[List[Any]]]
             Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnPolygon
@@ -3143,6 +3286,8 @@ class TablesDB(Service):
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3165,6 +3310,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[List[List[Any]]] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnPolygon:
         """
         Update a polygon column. Changing the `default` value will not update already existing rows.
@@ -3183,6 +3329,8 @@ class TablesDB(Service):
             Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnPolygon
@@ -3212,6 +3360,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -3236,6 +3386,7 @@ class TablesDB(Service):
         key: Optional[str] = None,
         two_way_key: Optional[str] = None,
         on_delete: Optional[RelationMutate] = None,
+        description: Optional[str] = None,
     ) -> ColumnRelationship:
         """
         Create relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
@@ -3258,6 +3409,8 @@ class TablesDB(Service):
             Two Way Column Key.
         on_delete : Optional[RelationMutate]
             Delete constraint. Possible values are: cascade, restrict, setNull.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnRelationship
@@ -3291,6 +3444,8 @@ class TablesDB(Service):
             api_params['twoWayKey'] = self._normalize_value(two_way_key)
         if on_delete is not None:
             api_params['onDelete'] = self._normalize_value(on_delete)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3312,6 +3467,7 @@ class TablesDB(Service):
         key: str,
         on_delete: Optional[RelationMutate] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnRelationship:
         """
         Update relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
@@ -3328,6 +3484,8 @@ class TablesDB(Service):
             Delete constraint. Possible values are: cascade, restrict, setNull.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnRelationship
@@ -3354,6 +3512,8 @@ class TablesDB(Service):
             api_params['onDelete'] = self._normalize_value(on_delete)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -3379,6 +3539,7 @@ class TablesDB(Service):
         default: Optional[str] = None,
         array: Optional[bool] = None,
         encrypt: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnString:
         """
         Create a string column.
@@ -3403,6 +3564,8 @@ class TablesDB(Service):
             Is column an array?
         encrypt : Optional[bool]
             Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnString
@@ -3437,6 +3600,8 @@ class TablesDB(Service):
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3461,6 +3626,7 @@ class TablesDB(Service):
         default: Optional[str],
         size: Optional[float] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnString:
         """
         Update a string column. Changing the `default` value will not update already existing rows.
@@ -3483,6 +3649,8 @@ class TablesDB(Service):
             Maximum size of the string column.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnString
@@ -3513,6 +3681,8 @@ class TablesDB(Service):
             api_params['size'] = self._normalize_value(size)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -3536,6 +3706,7 @@ class TablesDB(Service):
         default: Optional[str] = None,
         array: Optional[bool] = None,
         encrypt: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnText:
         """
         Create a text column.
@@ -3556,6 +3727,8 @@ class TablesDB(Service):
             Is column an array?
         encrypt : Optional[bool]
             Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnText
@@ -3587,6 +3760,8 @@ class TablesDB(Service):
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3609,6 +3784,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnText:
         """
         Update a text column. Changing the `default` value will not update already existing rows.
@@ -3627,6 +3803,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnText
@@ -3655,6 +3833,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -3677,6 +3857,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnUrl:
         """
         Create a URL column.
@@ -3695,6 +3876,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         array : Optional[bool]
             Is column an array?
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnUrl
@@ -3724,6 +3907,8 @@ class TablesDB(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3746,6 +3931,7 @@ class TablesDB(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnUrl:
         """
         Update an url column. Changing the `default` value will not update already existing rows.
@@ -3764,6 +3950,8 @@ class TablesDB(Service):
             Default value for column when not provided. Cannot be set when column is required.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnUrl
@@ -3792,6 +3980,8 @@ class TablesDB(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -3816,6 +4006,7 @@ class TablesDB(Service):
         default: Optional[str] = None,
         array: Optional[bool] = None,
         encrypt: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> ColumnVarchar:
         """
         Create a varchar column.
@@ -3838,6 +4029,8 @@ class TablesDB(Service):
             Is column an array?
         encrypt : Optional[bool]
             Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnVarchar
@@ -3872,6 +4065,8 @@ class TablesDB(Service):
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3895,6 +4090,7 @@ class TablesDB(Service):
         default: Optional[str],
         size: Optional[float] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> ColumnVarchar:
         """
         Update a varchar column. Changing the `default` value will not update already existing rows.
@@ -3915,6 +4111,8 @@ class TablesDB(Service):
             Maximum size of the varchar column.
         new_key : Optional[str]
             New Column Key.
+        description : Optional[str]
+            Optional description for the column.
         Returns
         -------
         ColumnVarchar
@@ -3945,6 +4143,8 @@ class TablesDB(Service):
             api_params['size'] = self._normalize_value(size)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -4204,6 +4404,7 @@ class TablesDB(Service):
         columns: List[str],
         orders: Optional[List[OrderBy]] = None,
         lengths: Optional[List[float]] = None,
+        description: Optional[str] = None,
     ) -> ColumnIndex:
         """
         Creates an index on the columns listed. Your index should include all the columns you will query in a single request.
@@ -4225,6 +4426,8 @@ class TablesDB(Service):
             Array of index orders. Maximum of 100 orders are allowed.
         lengths : Optional[List[float]]
             Length of index. Maximum of 100
+        description : Optional[str]
+            Optional description for the index.
         Returns
         -------
         ColumnIndex
@@ -4257,6 +4460,8 @@ class TablesDB(Service):
             api_params['orders'] = self._normalize_value(orders)
         if lengths is not None:
             api_params['lengths'] = self._normalize_value(lengths)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -4389,6 +4594,8 @@ class TablesDB(Service):
         """
         Get a list of all the user's rows in a given table. You can use the query params to filter your results.
 
+        Rows returned by aggregate, groupBy or distinct queries hold only the columns they select, group or aggregate, typed as a row types them, with a joined column named by its join alias (`alias.column`). The response omits their `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` and `$tableId` unless they select or group it, and those of a right or full join row that no row of this table matched. SDK row models fill omitted system columns with empty values.
+
         Parameters
         ----------
         database_id : str
@@ -4402,7 +4609,7 @@ class TablesDB(Service):
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
         ttl : Optional[float]
-            TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
+            TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
 
@@ -4759,6 +4966,77 @@ class TablesDB(Service):
 
         response = self.client.call(
             'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return RowList.with_data(response, model_type)
+
+    def create_query(
+        self,
+        database_id: str,
+        table_id: str,
+        queries: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
+        total: Optional[bool] = None,
+        ttl: Optional[float] = None,
+        model_type: Type[T] = dict,
+    ) -> RowList[T]:
+        """
+        Get a list of all the user's rows in a given table using a POST request. This behaves identically to the list rows endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        table_id : str
+            Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        transaction_id : Optional[str]
+            Transaction ID to read uncommitted changes within the transaction.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        ttl : Optional[float]
+            TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+
+        Returns
+        -------
+        RowList[T]
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/tablesdb/{databaseId}/tables/{tableId}/rows/query'
+        api_params = {}
+        if database_id is None or database_id == '':
+            raise AppwriteException('Missing required parameter: "database_id"')
+        if table_id is None or table_id == '':
+            raise AppwriteException('Missing required parameter: "table_id"')
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{tableId}', str(self._normalize_value(table_id)))
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+        if ttl is not None:
+            api_params['ttl'] = self._normalize_value(ttl)
+
+        response = self.client.call(
+            'post',
             api_path,
             {
                 'X-Appwrite-Project': self.client.get_config('project'),

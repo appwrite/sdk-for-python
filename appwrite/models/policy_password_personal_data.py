@@ -14,10 +14,13 @@ class PolicyPasswordPersonalData(AppwriteModel):
         Policy ID.
     enabled : bool
         Whether password personal data policy is enabled.
+    denylist : List[Any]
+        Custom terms blocked by case-insensitive substring matching when enabled.
     """
 
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
+    denylist: List[Any] = Field(..., alias='denyList')
 
     @model_validator(mode='before')
     @classmethod
@@ -30,4 +33,6 @@ class PolicyPasswordPersonalData(AppwriteModel):
             data['$id'] = ''
         if 'enabled' not in data:
             data['enabled'] = False
+        if 'denyList' not in data and 'denylist' not in data:
+            data['denyList'] = []
         return data

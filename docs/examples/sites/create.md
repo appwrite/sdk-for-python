@@ -38,7 +38,8 @@ result: Site = sites.create(
     build_specification = 's-1vcpu-512mb', # optional
     runtime_specification = 's-1vcpu-512mb', # optional
     deployment_retention = 0, # optional
-    scopes = [ProjectKeyScopes.PROJECT_READ] # optional
+    scopes = [ProjectKeyScopes.PROJECT_READ], # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

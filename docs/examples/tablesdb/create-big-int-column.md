@@ -18,7 +18,8 @@ result: ColumnBigint = tables_db.create_big_int_column(
     min = 0, # optional
     max = 1000000, # optional
     default = 0, # optional
-    array = False # optional
+    array = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

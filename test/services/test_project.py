@@ -292,6 +292,7 @@ class ProjectServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "name": "My API Key",
+            "description": "Used by the nightly backup job.",
             "expire": "2020-10-15T06:38:00.000+00:00",
             "scopes": [],
             "secret": "919c2d18fb5d4...a2ae413da83346ad2",
@@ -318,6 +319,7 @@ class ProjectServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "name": "My API Key",
+            "description": "Used by the nightly backup job.",
             "expire": "2020-10-15T06:38:00.000+00:00",
             "scopes": [],
             "secret": "919c2d18fb5d4...a2ae413da83346ad2",
@@ -343,6 +345,7 @@ class ProjectServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "name": "My API Key",
+            "description": "Used by the nightly backup job.",
             "expire": "2020-10-15T06:38:00.000+00:00",
             "scopes": [],
             "secret": "919c2d18fb5d4...a2ae413da83346ad2",
@@ -2546,6 +2549,7 @@ class ProjectServiceTest(unittest.TestCase):
         data = {
             "$id": "password-dictionary",
             "enabled": True,
+            "denyList": [],
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -2787,6 +2791,7 @@ class ProjectServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "key": "API_KEY",
+            "description": "Stripe secret key used at checkout.",
             "value": "myPa$$word1",
             "secret": True,
             "resourceType": "function",
@@ -2813,6 +2818,7 @@ class ProjectServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "key": "API_KEY",
+            "description": "Stripe secret key used at checkout.",
             "value": "myPa$$word1",
             "secret": True,
             "resourceType": "function",
@@ -2837,6 +2843,7 @@ class ProjectServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "key": "API_KEY",
+            "description": "Stripe secret key used at checkout.",
             "value": "myPa$$word1",
             "secret": True,
             "resourceType": "function",

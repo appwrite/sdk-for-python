@@ -16,7 +16,8 @@ result: AttributeDatetime = databases.update_datetime_attribute(
     key = '<KEY>',
     required = False,
     default = '2020-10-15T06:38:00.000+00:00',
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

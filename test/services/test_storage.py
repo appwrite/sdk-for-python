@@ -39,6 +39,7 @@ class StorageServiceTest(unittest.TestCase):
             "$permissions": [],
             "fileSecurity": True,
             "name": "Documents",
+            "description": "Invoices and receipts uploaded by customers.",
             "enabled": True,
             "maximumFileSize": 100.0,
             "allowedFileExtensions": [],
@@ -46,6 +47,7 @@ class StorageServiceTest(unittest.TestCase):
             "encryption": True,
             "antivirus": True,
             "transformations": True,
+            "stripMetadata": True,
             "totalSize": 128.0,
         }
         headers = {'Content-Type': 'application/json'}
@@ -70,6 +72,7 @@ class StorageServiceTest(unittest.TestCase):
             "$permissions": [],
             "fileSecurity": True,
             "name": "Documents",
+            "description": "Invoices and receipts uploaded by customers.",
             "enabled": True,
             "maximumFileSize": 100.0,
             "allowedFileExtensions": [],
@@ -77,6 +80,7 @@ class StorageServiceTest(unittest.TestCase):
             "encryption": True,
             "antivirus": True,
             "transformations": True,
+            "stripMetadata": True,
             "totalSize": 128.0,
         }
         headers = {'Content-Type': 'application/json'}
@@ -100,6 +104,7 @@ class StorageServiceTest(unittest.TestCase):
             "$permissions": [],
             "fileSecurity": True,
             "name": "Documents",
+            "description": "Invoices and receipts uploaded by customers.",
             "enabled": True,
             "maximumFileSize": 100.0,
             "allowedFileExtensions": [],
@@ -107,6 +112,7 @@ class StorageServiceTest(unittest.TestCase):
             "encryption": True,
             "antivirus": True,
             "transformations": True,
+            "stripMetadata": True,
             "totalSize": 128.0,
         }
         headers = {'Content-Type': 'application/json'}
