@@ -103,6 +103,7 @@ class Databases(Service):
         database_id: str,
         name: str,
         enabled: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> Database:
         """
         Create a new Database.
@@ -117,6 +118,8 @@ class Databases(Service):
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+        description : Optional[str]
+            Optional description for the database.
         Returns
         -------
         Database
@@ -138,6 +141,8 @@ class Databases(Service):
         api_params['name'] = self._normalize_value(name)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -481,6 +486,7 @@ class Databases(Service):
         database_id: str,
         name: Optional[str] = None,
         enabled: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> Database:
         """
         Update a database by its unique ID.
@@ -495,6 +501,8 @@ class Databases(Service):
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+        description : Optional[str]
+            Optional description for the database.
         Returns
         -------
         Database
@@ -515,6 +523,8 @@ class Databases(Service):
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'put',
@@ -642,6 +652,7 @@ class Databases(Service):
         enabled: Optional[bool] = None,
         attributes: Optional[List[Dict[str, Any]]] = None,
         indexes: Optional[List[Dict[str, Any]]] = None,
+        description: Optional[str] = None,
     ) -> Collection:
         """
         Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
@@ -666,6 +677,8 @@ class Databases(Service):
             Array of attribute definitions to create. Each attribute should contain: key (string), type (string: string, varchar, text, mediumtext, longtext, integer, bigint, double, boolean, datetime, point, linestring, polygon, email, url, ip, enum), size (integer, required for string and varchar types), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.
         indexes : Optional[List[Dict[str, Any]]]
             Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial, trigram), attributes (array of attribute keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
+        description : Optional[str]
+            Optional description for the collection.
         Returns
         -------
         Collection
@@ -698,6 +711,8 @@ class Databases(Service):
             api_params['attributes'] = self._normalize_value(attributes)
         if indexes is not None:
             api_params['indexes'] = self._normalize_value(indexes)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -771,6 +786,7 @@ class Databases(Service):
         document_security: Optional[bool] = None,
         enabled: Optional[bool] = None,
         purge: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> Collection:
         """
         Update a collection by its unique ID.
@@ -793,6 +809,8 @@ class Databases(Service):
             Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
         purge : Optional[bool]
             When true, purge all cached list responses for this collection as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
+        description : Optional[str]
+            Optional description for the collection.
         Returns
         -------
         Collection
@@ -822,6 +840,8 @@ class Databases(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if purge is not None:
             api_params['purge'] = self._normalize_value(purge)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'put',
@@ -956,6 +976,7 @@ class Databases(Service):
         max: Optional[float] = None,
         default: Optional[float] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeBigint:
         """
         Create a bigint attribute. Optionally, minimum and maximum values can be provided.
@@ -980,6 +1001,8 @@ class Databases(Service):
             Default value. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeBigint
@@ -1013,6 +1036,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1038,6 +1063,7 @@ class Databases(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeBigint:
         """
         Update a bigint attribute. Changing the `default` value will not update already existing documents.
@@ -1062,6 +1088,8 @@ class Databases(Service):
             Maximum value
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeBigint
@@ -1094,6 +1122,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -1117,6 +1147,7 @@ class Databases(Service):
         required: bool,
         default: Optional[bool] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeBoolean:
         """
         Create a boolean attribute.
@@ -1137,6 +1168,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeBoolean
@@ -1166,6 +1199,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1189,6 +1224,7 @@ class Databases(Service):
         required: bool,
         default: Optional[bool],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeBoolean:
         """
         Update a boolean attribute. Changing the `default` value will not update already existing documents.
@@ -1209,6 +1245,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         new_key : Optional[str]
             New attribute key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeBoolean
@@ -1237,6 +1275,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -1260,6 +1300,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeDatetime:
         """
         Create a date time attribute according to the ISO 8601 standard.
@@ -1280,6 +1321,8 @@ class Databases(Service):
             Default value for the attribute in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeDatetime
@@ -1309,6 +1352,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1332,6 +1377,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeDatetime:
         """
         Update a date time attribute. Changing the `default` value will not update already existing documents.
@@ -1352,6 +1398,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         new_key : Optional[str]
             New attribute key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeDatetime
@@ -1380,6 +1428,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -1403,6 +1453,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeEmail:
         """
         Create an email attribute.
@@ -1423,6 +1474,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeEmail
@@ -1452,6 +1505,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1475,6 +1530,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeEmail:
         """
         Update an email attribute. Changing the `default` value will not update already existing documents.
@@ -1495,6 +1551,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeEmail
@@ -1523,6 +1581,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -1547,6 +1607,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeEnum:
         """
         Create an enum attribute. The `elements` param acts as a white-list of accepted values for this attribute.
@@ -1569,6 +1630,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeEnum
@@ -1601,6 +1664,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1625,6 +1690,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeEnum:
         """
         Update an enum attribute. Changing the `default` value will not update already existing documents.
@@ -1647,6 +1713,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeEnum
@@ -1678,6 +1746,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -1703,6 +1773,7 @@ class Databases(Service):
         max: Optional[float] = None,
         default: Optional[float] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeFloat:
         """
         Create a float attribute. Optionally, minimum and maximum values can be provided.
@@ -1727,6 +1798,8 @@ class Databases(Service):
             Default value. Cannot be set when required.
         array : Optional[bool]
             Is attribute an array?
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeFloat
@@ -1760,6 +1833,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1785,6 +1860,7 @@ class Databases(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeFloat:
         """
         Update a float attribute. Changing the `default` value will not update already existing documents.
@@ -1809,6 +1885,8 @@ class Databases(Service):
             Maximum value.
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeFloat
@@ -1841,6 +1919,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -1866,6 +1946,7 @@ class Databases(Service):
         max: Optional[float] = None,
         default: Optional[float] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeInteger:
         """
         Create an integer attribute. Optionally, minimum and maximum values can be provided.
@@ -1890,6 +1971,8 @@ class Databases(Service):
             Default value. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeInteger
@@ -1923,6 +2006,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1948,6 +2033,7 @@ class Databases(Service):
         min: Optional[float] = None,
         max: Optional[float] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeInteger:
         """
         Update an integer attribute. Changing the `default` value will not update already existing documents.
@@ -1972,6 +2058,8 @@ class Databases(Service):
             Maximum value
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeInteger
@@ -2004,6 +2092,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2027,6 +2117,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeIp:
         """
         Create IP address attribute.
@@ -2047,6 +2138,8 @@ class Databases(Service):
             Default value. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeIp
@@ -2076,6 +2169,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2099,6 +2194,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeIp:
         """
         Update an ip attribute. Changing the `default` value will not update already existing documents.
@@ -2119,6 +2215,8 @@ class Databases(Service):
             Default value. Cannot be set when attribute is required.
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeIp
@@ -2147,6 +2245,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2169,6 +2269,7 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[List[List[Any]]] = None,
+        description: Optional[str] = None,
     ) -> AttributeLine:
         """
         Create a geometric line attribute.
@@ -2187,6 +2288,8 @@ class Databases(Service):
             Is attribute required?
         default : Optional[List[List[Any]]]
             Default value for attribute when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when attribute is required.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeLine
@@ -2214,6 +2317,8 @@ class Databases(Service):
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2237,6 +2342,7 @@ class Databases(Service):
         required: bool,
         default: Optional[List[List[Any]]] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeLine:
         """
         Update a line attribute. Changing the `default` value will not update already existing documents.
@@ -2257,6 +2363,8 @@ class Databases(Service):
             Default value for attribute when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when attribute is required.
         new_key : Optional[str]
             New attribute key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeLine
@@ -2286,6 +2394,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2310,6 +2420,7 @@ class Databases(Service):
         default: Optional[str] = None,
         array: Optional[bool] = None,
         encrypt: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeLongtext:
         """
         Create a longtext attribute.
@@ -2332,6 +2443,8 @@ class Databases(Service):
             Is attribute an array?
         encrypt : Optional[bool]
             Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeLongtext
@@ -2363,6 +2476,8 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2386,6 +2501,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeLongtext:
         """
         Update a longtext attribute. Changing the `default` value will not update already existing documents.
@@ -2406,6 +2522,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeLongtext
@@ -2434,6 +2552,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2458,6 +2578,7 @@ class Databases(Service):
         default: Optional[str] = None,
         array: Optional[bool] = None,
         encrypt: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeMediumtext:
         """
         Create a mediumtext attribute.
@@ -2480,6 +2601,8 @@ class Databases(Service):
             Is attribute an array?
         encrypt : Optional[bool]
             Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeMediumtext
@@ -2511,6 +2634,8 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2534,6 +2659,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeMediumtext:
         """
         Update a mediumtext attribute. Changing the `default` value will not update already existing documents.
@@ -2554,6 +2680,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeMediumtext
@@ -2582,6 +2710,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2604,6 +2734,7 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[List[float]] = None,
+        description: Optional[str] = None,
     ) -> AttributePoint:
         """
         Create a geometric point attribute.
@@ -2622,6 +2753,8 @@ class Databases(Service):
             Is attribute required?
         default : Optional[List[float]]
             Default value for attribute when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when attribute is required.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributePoint
@@ -2649,6 +2782,8 @@ class Databases(Service):
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2672,6 +2807,7 @@ class Databases(Service):
         required: bool,
         default: Optional[List[float]] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributePoint:
         """
         Update a point attribute. Changing the `default` value will not update already existing documents.
@@ -2692,6 +2828,8 @@ class Databases(Service):
             Default value for attribute when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when attribute is required.
         new_key : Optional[str]
             New attribute key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributePoint
@@ -2721,6 +2859,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2743,6 +2883,7 @@ class Databases(Service):
         key: str,
         required: bool,
         default: Optional[List[List[Any]]] = None,
+        description: Optional[str] = None,
     ) -> AttributePolygon:
         """
         Create a geometric polygon attribute.
@@ -2761,6 +2902,8 @@ class Databases(Service):
             Is attribute required?
         default : Optional[List[List[Any]]]
             Default value for attribute when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when attribute is required.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributePolygon
@@ -2788,6 +2931,8 @@ class Databases(Service):
         api_params['required'] = self._normalize_value(required)
         if default is not None:
             api_params['default'] = self._normalize_value(default)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2811,6 +2956,7 @@ class Databases(Service):
         required: bool,
         default: Optional[List[List[Any]]] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributePolygon:
         """
         Update a polygon attribute. Changing the `default` value will not update already existing documents.
@@ -2831,6 +2977,8 @@ class Databases(Service):
             Default value for attribute when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when attribute is required.
         new_key : Optional[str]
             New attribute key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributePolygon
@@ -2860,6 +3008,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -2885,6 +3035,7 @@ class Databases(Service):
         key: Optional[str] = None,
         two_way_key: Optional[str] = None,
         on_delete: Optional[RelationMutate] = None,
+        description: Optional[str] = None,
     ) -> AttributeRelationship:
         """
         Create relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
@@ -2909,6 +3060,8 @@ class Databases(Service):
             Two Way Attribute Key.
         on_delete : Optional[RelationMutate]
             Delete constraint. Possible values are: cascade, restrict, setNull.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeRelationship
@@ -2942,6 +3095,8 @@ class Databases(Service):
             api_params['twoWayKey'] = self._normalize_value(two_way_key)
         if on_delete is not None:
             api_params['onDelete'] = self._normalize_value(on_delete)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -2964,6 +3119,7 @@ class Databases(Service):
         key: str,
         on_delete: Optional[RelationMutate] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeRelationship:
         """
         Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
@@ -2982,6 +3138,8 @@ class Databases(Service):
             Delete constraint. Possible values are: cascade, restrict, setNull.
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeRelationship
@@ -3008,6 +3166,8 @@ class Databases(Service):
             api_params['onDelete'] = self._normalize_value(on_delete)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -3033,6 +3193,7 @@ class Databases(Service):
         default: Optional[str] = None,
         array: Optional[bool] = None,
         encrypt: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeString:
         """
         Create a string attribute.
@@ -3057,6 +3218,8 @@ class Databases(Service):
             Is attribute an array?
         encrypt : Optional[bool]
             Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeString
@@ -3091,6 +3254,8 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3115,6 +3280,7 @@ class Databases(Service):
         default: Optional[str],
         size: Optional[float] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeString:
         """
         Update a string attribute. Changing the `default` value will not update already existing documents.
@@ -3137,6 +3303,8 @@ class Databases(Service):
             Maximum size of the string attribute.
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeString
@@ -3167,6 +3335,8 @@ class Databases(Service):
             api_params['size'] = self._normalize_value(size)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -3191,6 +3361,7 @@ class Databases(Service):
         default: Optional[str] = None,
         array: Optional[bool] = None,
         encrypt: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeText:
         """
         Create a text attribute.
@@ -3213,6 +3384,8 @@ class Databases(Service):
             Is attribute an array?
         encrypt : Optional[bool]
             Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeText
@@ -3244,6 +3417,8 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3267,6 +3442,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeText:
         """
         Update a text attribute. Changing the `default` value will not update already existing documents.
@@ -3287,6 +3463,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeText
@@ -3315,6 +3493,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -3338,6 +3518,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str] = None,
         array: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeUrl:
         """
         Create a URL attribute.
@@ -3358,6 +3539,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         array : Optional[bool]
             Is attribute an array?
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeUrl
@@ -3387,6 +3570,8 @@ class Databases(Service):
             api_params['default'] = self._normalize_value(default)
         if array is not None:
             api_params['array'] = self._normalize_value(array)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3410,6 +3595,7 @@ class Databases(Service):
         required: bool,
         default: Optional[str],
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeUrl:
         """
         Update an url attribute. Changing the `default` value will not update already existing documents.
@@ -3430,6 +3616,8 @@ class Databases(Service):
             Default value for attribute when not provided. Cannot be set when attribute is required.
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeUrl
@@ -3458,6 +3646,8 @@ class Databases(Service):
         api_params['default'] = self._normalize_value(default)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -3483,6 +3673,7 @@ class Databases(Service):
         default: Optional[str] = None,
         array: Optional[bool] = None,
         encrypt: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> AttributeVarchar:
         """
         Create a varchar attribute.
@@ -3507,6 +3698,8 @@ class Databases(Service):
             Is attribute an array?
         encrypt : Optional[bool]
             Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeVarchar
@@ -3541,6 +3734,8 @@ class Databases(Service):
             api_params['array'] = self._normalize_value(array)
         if encrypt is not None:
             api_params['encrypt'] = self._normalize_value(encrypt)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3565,6 +3760,7 @@ class Databases(Service):
         default: Optional[str],
         size: Optional[float] = None,
         new_key: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> AttributeVarchar:
         """
         Update a varchar attribute. Changing the `default` value will not update already existing documents.
@@ -3587,6 +3783,8 @@ class Databases(Service):
             Maximum size of the varchar attribute.
         new_key : Optional[str]
             New Attribute Key.
+        description : Optional[str]
+            Optional description for the attribute.
         Returns
         -------
         AttributeVarchar
@@ -3617,6 +3815,8 @@ class Databases(Service):
             api_params['size'] = self._normalize_value(size)
         if new_key is not None:
             api_params['newKey'] = self._normalize_value(new_key)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',
@@ -3831,6 +4031,8 @@ class Databases(Service):
         """
         Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
 
+        Documents returned by aggregate, groupBy or distinct queries hold only the attributes they select, group or aggregate, typed as a document types them, with a joined attribute named by its join alias (`alias.attribute`). They have no `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` or `$collectionId` unless they select or group it, and neither does a right or full join document that no document of this collection matched.
+
         .. deprecated::1.8.0
             This API has been deprecated since 1.8.0. Please use `tablesDB.list_rows` instead.
         Parameters
@@ -3846,7 +4048,7 @@ class Databases(Service):
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
         ttl : Optional[float]
-            TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
+            TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
         model_type : Type[T], optional
             Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
 
@@ -4218,6 +4420,80 @@ class Databases(Service):
 
         response = self.client.call(
             'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return DocumentList.with_data(response, model_type)
+
+    @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_query` instead.")
+    def create_query(
+        self,
+        database_id: str,
+        collection_id: str,
+        queries: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
+        total: Optional[bool] = None,
+        ttl: Optional[float] = None,
+        model_type: Type[T] = dict,
+    ) -> DocumentList[T]:
+        """
+        Get a list of all the user's documents in a given collection using a POST request. This behaves identically to the list documents endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
+
+        .. deprecated::1.8.0
+            This API has been deprecated since 1.8.0. Please use `tablesDB.create_query` instead.
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        transaction_id : Optional[str]
+            Transaction ID to read uncommitted changes within the transaction.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        ttl : Optional[float]
+            TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+
+        Returns
+        -------
+        DocumentList[T]
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/databases/{databaseId}/collections/{collectionId}/documents/query'
+        api_params = {}
+        if database_id is None or database_id == '':
+            raise AppwriteException('Missing required parameter: "database_id"')
+        if collection_id is None or collection_id == '':
+            raise AppwriteException('Missing required parameter: "collection_id"')
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+        if ttl is not None:
+            api_params['ttl'] = self._normalize_value(ttl)
+
+        response = self.client.call(
+            'post',
             api_path,
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
@@ -4740,6 +5016,7 @@ class Databases(Service):
         attributes: List[str],
         orders: Optional[List[OrderBy]] = None,
         lengths: Optional[List[float]] = None,
+        description: Optional[str] = None,
     ) -> Index:
         """
         Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
@@ -4763,6 +5040,8 @@ class Databases(Service):
             Array of index orders. Maximum of 100 orders are allowed.
         lengths : Optional[List[float]]
             Length of index. Maximum of 100
+        description : Optional[str]
+            Optional description for the index.
         Returns
         -------
         Index
@@ -4795,6 +5074,8 @@ class Databases(Service):
             api_params['orders'] = self._normalize_value(orders)
         if lengths is not None:
             api_params['lengths'] = self._normalize_value(lengths)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',

@@ -18,7 +18,8 @@ result: ColumnVarchar = tables_db.create_varchar_column(
     required = False,
     default = 'Hello World', # optional
     array = False, # optional
-    encrypt = False # optional
+    encrypt = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

@@ -16,7 +16,8 @@ result: AttributeRelationship = databases.update_relationship_attribute(
     collection_id = '<COLLECTION_ID>',
     key = '<KEY>',
     on_delete = RelationMutate.CASCADE, # optional
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

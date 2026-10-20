@@ -35,7 +35,8 @@ result: Function = functions.create(
     build_specification = 's-1vcpu-512mb', # optional
     runtime_specification = 's-1vcpu-512mb', # optional
     deployment_retention = 0, # optional
-    interval = 0 # optional
+    interval = 0, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

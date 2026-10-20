@@ -36,6 +36,7 @@ result: Function = functions.update(
     runtime_specification = 's-1vcpu-512mb', # optional
     deployment_retention = 0, # optional
     interval = 0, # optional
+    description = '<DESCRIPTION>', # optional
     email_enabled = False # optional
 )
 

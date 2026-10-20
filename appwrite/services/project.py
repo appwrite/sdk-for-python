@@ -581,6 +581,7 @@ class Project(Service):
         name: str,
         scopes: List[ProjectKeyScopes],
         expire: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> Key:
         """
         Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
@@ -595,6 +596,8 @@ class Project(Service):
             Key scopes list. Maximum of 200 scopes are allowed.
         expire : Optional[str]
             Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+        description : Optional[str]
+            Optional description for the key.
         Returns
         -------
         Key
@@ -619,6 +622,8 @@ class Project(Service):
         api_params['scopes'] = self._normalize_value(scopes)
         if expire is not None:
             api_params['expire'] = self._normalize_value(expire)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'put',
@@ -4982,14 +4987,19 @@ class Project(Service):
     def update_password_dictionary_policy(
         self,
         enabled: bool,
+        deny_list: Optional[List[str]] = None,
     ) -> ProjectModel:
         """
         Updating this policy allows you to control if new passwords are checked against most common passwords dictionary. When enabled, and user changes their password, password must not be contained in the dictionary.
+
+        Custom denyList entries use case-sensitive equality and apply only while this policy is enabled. Omit denyList or pass null to preserve it, pass an array to replace it, or pass [] to clear it. Entries are stored without trimming or deduplication. Existing passwords remain valid for sign-in and password confirmation. The combined serialized project authentication configuration must fit within 16,384 characters, even when each list meets its entry limits.
 
         Parameters
         ----------
         enabled : bool
             Toggle password dictionary policy. Set to true if you want password change to block passwords in the dictionary, or false to allow them. When changing this policy, existing passwords remain valid.
+        deny_list : Optional[List[str]]
+            Custom blocked values using case-sensitive equality. Up to 100 entries of 1 to 256 characters. Omit or pass null to preserve, an array to replace, or [] to clear. Combined authentication settings must fit within 16,384 characters.
         Returns
         -------
         ProjectModel
@@ -5006,6 +5016,8 @@ class Project(Service):
         if enabled is None:
             raise AppwriteException('Missing required parameter: "enabled"')
         api_params['enabled'] = self._normalize_value(enabled)
+        if deny_list is not None:
+            api_params['denyList'] = self._normalize_value(deny_list)
 
         response = self.client.call(
             'patch',
@@ -5064,14 +5076,20 @@ class Project(Service):
     def update_password_personal_data_policy(
         self,
         enabled: bool,
+        deny_list: Optional[List[str]] = None,
     ) -> ProjectModel:
         """
         Updating this policy allows you to control if password strength is checked against personal data. When enabled, and user sets or changes their password, the password must not contain user ID, name, email or phone number.
+
+        Custom denyList entries use case-insensitive substring matching and apply only while this policy is enabled. Omit denyList or pass null to preserve it, pass an array to replace it, or pass [] to clear it. Entries are stored without trimming or deduplication. Existing passwords remain valid for sign-in and password confirmation. The combined serialized project authentication configuration must fit within 16,384 characters, even when each list meets its entry limits.
+        Password recovery also checks the recovered user profile, closing the previous gap in profile-based personal-data validation.
 
         Parameters
         ----------
         enabled : bool
             Toggle password personal data policy. Set to true if you want to block passwords including user's personal data, or false to allow it. When changing this policy, existing passwords remain valid.
+        deny_list : Optional[List[str]]
+            Custom blocked values using case-insensitive substring matching. Up to 100 entries of 1 to 256 characters. Omit or pass null to preserve, an array to replace, or [] to clear. Combined authentication settings must fit within 16,384 characters.
         Returns
         -------
         ProjectModel
@@ -5088,6 +5106,8 @@ class Project(Service):
         if enabled is None:
             raise AppwriteException('Missing required parameter: "enabled"')
         api_params['enabled'] = self._normalize_value(enabled)
+        if deny_list is not None:
+            api_params['denyList'] = self._normalize_value(deny_list)
 
         response = self.client.call(
             'patch',
@@ -6010,6 +6030,7 @@ class Project(Service):
         key: str,
         value: str,
         secret: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> Variable:
         """
         Create a new project environment variable. These variables can be accessed by all functions and sites in the project.
@@ -6024,6 +6045,8 @@ class Project(Service):
             Variable value. Max length: 8192 chars.
         secret : Optional[bool]
             Secret variables can be updated or deleted, but only projects can read them during build and runtime.
+        description : Optional[str]
+            Optional description for the variable.
         Returns
         -------
         Variable
@@ -6048,6 +6071,8 @@ class Project(Service):
         api_params['value'] = self._normalize_value(value)
         if secret is not None:
             api_params['secret'] = self._normalize_value(secret)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -6108,6 +6133,7 @@ class Project(Service):
         key: Optional[str] = None,
         value: Optional[str] = None,
         secret: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> Variable:
         """
         Update variable by its unique ID.
@@ -6122,6 +6148,8 @@ class Project(Service):
             Variable value. Max length: 8192 chars.
         secret : Optional[bool]
             Secret variables can be updated or deleted, but only projects can read them during build and runtime.
+        description : Optional[str]
+            Optional description for the variable.
         Returns
         -------
         Variable
@@ -6144,6 +6172,8 @@ class Project(Service):
             api_params['value'] = self._normalize_value(value)
         if secret is not None:
             api_params['secret'] = self._normalize_value(secret)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'put',

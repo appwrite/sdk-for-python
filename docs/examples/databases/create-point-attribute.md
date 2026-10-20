@@ -15,7 +15,8 @@ result: AttributePoint = databases.create_point_attribute(
     collection_id = '<COLLECTION_ID>',
     key = '<KEY>',
     required = False,
-    default = [1, 2] # optional
+    default = [1, 2], # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

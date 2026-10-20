@@ -19,6 +19,8 @@ class Site(AppwriteModel):
         Site update date in ISO 8601 format.
     name : str
         Site name.
+    description : str
+        Optional description for the site.
     enabled : bool
         Site enabled.
     live : bool
@@ -87,6 +89,7 @@ class Site(AppwriteModel):
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     name: str = Field(..., alias='name')
+    description: str = Field(..., alias='description')
     enabled: bool = Field(..., alias='enabled')
     live: bool = Field(..., alias='live')
     logging: bool = Field(..., alias='logging')
@@ -134,6 +137,8 @@ class Site(AppwriteModel):
             data['$updatedAt'] = ''
         if 'name' not in data:
             data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'enabled' not in data:
             data['enabled'] = True
         if 'live' not in data:

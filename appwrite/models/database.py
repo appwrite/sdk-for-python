@@ -18,6 +18,8 @@ class Database(AppwriteModel):
         Database ID.
     name : str
         Database name.
+    description : str
+        Optional description for the database.
     createdat : str
         Database creation date in ISO 8601 format.
     updatedat : str
@@ -48,6 +50,7 @@ class Database(AppwriteModel):
 
     id: str = Field(..., alias='$id')
     name: str = Field(..., alias='name')
+    description: str = Field(..., alias='description')
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     enabled: bool = Field(..., alias='enabled')
@@ -73,6 +76,8 @@ class Database(AppwriteModel):
             data['$id'] = ''
         if 'name' not in data:
             data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if '$createdAt' not in data and 'createdat' not in data:
             data['$createdAt'] = ''
         if '$updatedAt' not in data and 'updatedat' not in data:

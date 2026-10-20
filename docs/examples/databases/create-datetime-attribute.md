@@ -16,7 +16,8 @@ result: AttributeDatetime = databases.create_datetime_attribute(
     key = '<KEY>',
     required = False,
     default = '2020-10-15T06:38:00.000+00:00', # optional
-    array = False # optional
+    array = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

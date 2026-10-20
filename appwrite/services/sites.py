@@ -103,6 +103,7 @@ class Sites(Service):
         runtime_specification: Optional[str] = None,
         deployment_retention: Optional[float] = None,
         scopes: Optional[List[ProjectKeyScopes]] = None,
+        description: Optional[str] = None,
     ) -> Site:
         """
         Create a new site.
@@ -157,6 +158,8 @@ class Sites(Service):
             Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
         scopes : Optional[List[ProjectKeyScopes]]
             List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
+        description : Optional[str]
+            Optional description for the site.
         Returns
         -------
         Site
@@ -222,6 +225,8 @@ class Sites(Service):
             api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
         if scopes is not None:
             api_params['scopes'] = self._normalize_value(scopes)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -385,6 +390,7 @@ class Sites(Service):
         runtime_specification: Optional[str] = None,
         deployment_retention: Optional[float] = None,
         scopes: Optional[List[ProjectKeyScopes]] = None,
+        description: Optional[str] = None,
     ) -> Site:
         """
         Update site by its unique ID.
@@ -439,6 +445,8 @@ class Sites(Service):
             Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
         scopes : Optional[List[ProjectKeyScopes]]
             List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
+        description : Optional[str]
+            Optional description for the site.
         Returns
         -------
         Site
@@ -503,6 +511,8 @@ class Sites(Service):
             api_params['deploymentRetention'] = self._normalize_value(deployment_retention)
         if scopes is not None:
             api_params['scopes'] = self._normalize_value(scopes)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'put',
@@ -1321,6 +1331,7 @@ class Sites(Service):
         key: str,
         value: str,
         secret: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> Variable:
         """
         Create a new site variable. These variables can be accessed during build and runtime (server-side rendering) as environment variables.
@@ -1337,6 +1348,8 @@ class Sites(Service):
             Variable value. Max length: 8192 chars.
         secret : Optional[bool]
             Secret variables can be updated or deleted, but only sites can read them during build and runtime.
+        description : Optional[str]
+            Optional description for the variable.
         Returns
         -------
         Variable
@@ -1364,6 +1377,8 @@ class Sites(Service):
         api_params['value'] = self._normalize_value(value)
         if secret is not None:
             api_params['secret'] = self._normalize_value(secret)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -1431,6 +1446,7 @@ class Sites(Service):
         key: Optional[str] = None,
         value: Optional[str] = None,
         secret: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> Variable:
         """
         Update variable by its unique ID.
@@ -1447,6 +1463,8 @@ class Sites(Service):
             Variable value. Max length: 8192 chars.
         secret : Optional[bool]
             Secret variables can be updated or deleted, but only sites can read them during build and runtime.
+        description : Optional[str]
+            Optional description for the variable.
         Returns
         -------
         Variable
@@ -1472,6 +1490,8 @@ class Sites(Service):
             api_params['value'] = self._normalize_value(value)
         if secret is not None:
             api_params['secret'] = self._normalize_value(secret)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'put',

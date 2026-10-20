@@ -11,7 +11,8 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 mongo = Mongo(client)
 
 result: DedicatedDatabaseList = mongo.list(
-    queries = [] # optional
+    queries = [], # optional
+    total = False # optional
 )
 
 print(result.model_dump())

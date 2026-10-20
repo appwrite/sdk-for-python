@@ -24,7 +24,8 @@ result: Bucket = storage.update_bucket(
     compression = Compression.NONE, # optional
     encryption = False, # optional
     antivirus = False, # optional
-    transformations = False # optional
+    transformations = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

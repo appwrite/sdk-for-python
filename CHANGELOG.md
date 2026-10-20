@@ -1,5 +1,19 @@
 # Change Log
 
+## 26.0.0
+
+* Breaking: `tables_db`, `documents_db` and `vectors_db` `create` and `update` take `description` before `specification`
+* Breaking: `functions.update` takes `description` before `email_enabled`
+* Added: `create_query` on `databases`, `documents_db` and `tables_db` to send list queries in the request body
+* Added: `account.list_memberships`
+* Added: optional `description` on create and update for databases, collections, tables, attributes, columns, indexes, buckets, functions, sites, variables, topics, webhooks and keys
+* Added: `description` on the matching models
+* Added: `total` on list methods in `activities`, `backups`, `domains`, `mongo`, `mysql` and `postgresql`
+* Added: `emails` on `messaging.create_email` and `messaging.update_email`
+* Added: `deny_list` on `project.update_password_dictionary_policy`, `update_password_personal_data_policy` and their policy models
+* Added: `BillingPlan.functions_allow_cron`
+* Updated: package classifiers list Python 3.13
+
 ## 25.0.0
 
 * Breaking: requests send `X-Appwrite-Response-Format: 2.5.0`; responses follow the 2.5 shapes

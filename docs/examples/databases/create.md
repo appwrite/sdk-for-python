@@ -13,7 +13,8 @@ databases = Databases(client)
 result: Database = databases.create(
     database_id = '<DATABASE_ID>',
     name = '<NAME>',
-    enabled = False # optional
+    enabled = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

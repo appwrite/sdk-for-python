@@ -78,6 +78,7 @@ class DocumentsDB(Service):
         database_id: str,
         name: str,
         enabled: Optional[bool] = None,
+        description: Optional[str] = None,
         specification: Optional[str] = None,
         replicas: Optional[float] = None,
         sync_mode: Optional[str] = None,
@@ -93,6 +94,8 @@ class DocumentsDB(Service):
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+        description : Optional[str]
+            Optional description for the database.
         specification : Optional[str]
             Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
         replicas : Optional[float]
@@ -120,6 +123,8 @@ class DocumentsDB(Service):
         api_params['name'] = self._normalize_value(name)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
         if specification is not None:
             api_params['specification'] = self._normalize_value(specification)
         if replicas is not None:
@@ -478,6 +483,7 @@ class DocumentsDB(Service):
         database_id: str,
         name: str,
         enabled: Optional[bool] = None,
+        description: Optional[str] = None,
         specification: Optional[str] = None,
         replicas: Optional[float] = None,
         sync_mode: Optional[str] = None,
@@ -493,6 +499,8 @@ class DocumentsDB(Service):
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+        description : Optional[str]
+            Optional description for the database.
         specification : Optional[str]
             Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
         replicas : Optional[float]
@@ -520,6 +528,8 @@ class DocumentsDB(Service):
         api_params['name'] = self._normalize_value(name)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
         if specification is not None:
             api_params['specification'] = self._normalize_value(specification)
         if replicas is not None:
@@ -646,6 +656,7 @@ class DocumentsDB(Service):
         enabled: Optional[bool] = None,
         attributes: Optional[List[Dict[str, Any]]] = None,
         indexes: Optional[List[Dict[str, Any]]] = None,
+        description: Optional[str] = None,
     ) -> Collection:
         """
         Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
@@ -668,6 +679,8 @@ class DocumentsDB(Service):
             Array of attribute definitions to create. Each attribute should contain: key (string), type (string: string, varchar, text, mediumtext, longtext, integer, bigint, double, boolean, datetime, point, linestring, polygon, email, url, ip, enum), size (integer, required for string and varchar types), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.
         indexes : Optional[List[Dict[str, Any]]]
             Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial), attributes (array of attribute keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
+        description : Optional[str]
+            Optional description for the collection.
         Returns
         -------
         Collection
@@ -700,6 +713,8 @@ class DocumentsDB(Service):
             api_params['attributes'] = self._normalize_value(attributes)
         if indexes is not None:
             api_params['indexes'] = self._normalize_value(indexes)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -769,6 +784,7 @@ class DocumentsDB(Service):
         document_security: Optional[bool] = None,
         enabled: Optional[bool] = None,
         purge: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> Collection:
         """
         Update a collection by its unique ID.
@@ -789,6 +805,8 @@ class DocumentsDB(Service):
             Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
         purge : Optional[bool]
             When true, purge all cached list responses for this collection as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
+        description : Optional[str]
+            Optional description for the collection.
         Returns
         -------
         Collection
@@ -819,6 +837,8 @@ class DocumentsDB(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if purge is not None:
             api_params['purge'] = self._normalize_value(purge)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'put',
@@ -1263,6 +1283,77 @@ class DocumentsDB(Service):
 
         response = self.client.call(
             'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return DocumentList.with_data(response, model_type)
+
+    def create_query(
+        self,
+        database_id: str,
+        collection_id: str,
+        queries: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
+        total: Optional[bool] = None,
+        ttl: Optional[float] = None,
+        model_type: Type[T] = dict,
+    ) -> DocumentList[T]:
+        """
+        Get a list of all the user's documents in a given collection using a POST request. This behaves identically to the list documents endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
+
+        Parameters
+        ----------
+        database_id : str
+            Database ID.
+        collection_id : str
+            Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        transaction_id : Optional[str]
+            Transaction ID to read uncommitted changes within the transaction.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        ttl : Optional[float]
+            TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+
+        Returns
+        -------
+        DocumentList[T]
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/documentsdb/{databaseId}/collections/{collectionId}/documents/query'
+        api_params = {}
+        if database_id is None or database_id == '':
+            raise AppwriteException('Missing required parameter: "database_id"')
+        if collection_id is None or collection_id == '':
+            raise AppwriteException('Missing required parameter: "collection_id"')
+        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if transaction_id is not None:
+            api_params['transactionId'] = self._normalize_value(transaction_id)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+        if ttl is not None:
+            api_params['ttl'] = self._normalize_value(ttl)
+
+        response = self.client.call(
+            'post',
             api_path,
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
@@ -1763,6 +1854,7 @@ class DocumentsDB(Service):
         attributes: List[str],
         orders: Optional[List[OrderBy]] = None,
         lengths: Optional[List[float]] = None,
+        description: Optional[str] = None,
     ) -> Index:
         """
         Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
@@ -1784,6 +1876,8 @@ class DocumentsDB(Service):
             Array of index orders. Maximum of 100 orders are allowed.
         lengths : Optional[List[float]]
             Length of index. Maximum of 100
+        description : Optional[str]
+            Optional description for the index.
         Returns
         -------
         Index
@@ -1816,6 +1910,8 @@ class DocumentsDB(Service):
             api_params['orders'] = self._normalize_value(orders)
         if lengths is not None:
             api_params['lengths'] = self._normalize_value(lengths)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',

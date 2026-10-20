@@ -78,6 +78,7 @@ class VectorsDB(Service):
         database_id: str,
         name: str,
         enabled: Optional[bool] = None,
+        description: Optional[str] = None,
         specification: Optional[str] = None,
         replicas: Optional[float] = None,
         sync_mode: Optional[str] = None,
@@ -93,6 +94,8 @@ class VectorsDB(Service):
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+        description : Optional[str]
+            Optional description for the database.
         specification : Optional[str]
             Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
         replicas : Optional[float]
@@ -120,6 +123,8 @@ class VectorsDB(Service):
         api_params['name'] = self._normalize_value(name)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
         if specification is not None:
             api_params['specification'] = self._normalize_value(specification)
         if replicas is not None:
@@ -478,6 +483,7 @@ class VectorsDB(Service):
         database_id: str,
         name: str,
         enabled: Optional[bool] = None,
+        description: Optional[str] = None,
         specification: Optional[str] = None,
         replicas: Optional[float] = None,
         sync_mode: Optional[str] = None,
@@ -493,6 +499,8 @@ class VectorsDB(Service):
             Database name. Max length: 128 chars.
         enabled : Optional[bool]
             Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+        description : Optional[str]
+            Optional description for the database.
         specification : Optional[str]
             Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
         replicas : Optional[float]
@@ -520,6 +528,8 @@ class VectorsDB(Service):
         api_params['name'] = self._normalize_value(name)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
         if specification is not None:
             api_params['specification'] = self._normalize_value(specification)
         if replicas is not None:
@@ -645,6 +655,7 @@ class VectorsDB(Service):
         permissions: Optional[List[str]] = None,
         document_security: Optional[bool] = None,
         enabled: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> VectorsdbCollection:
         """
         Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
@@ -665,6 +676,8 @@ class VectorsDB(Service):
             Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
         enabled : Optional[bool]
             Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+        description : Optional[str]
+            Optional description for the collection.
         Returns
         -------
         VectorsdbCollection
@@ -696,6 +709,8 @@ class VectorsDB(Service):
             api_params['documentSecurity'] = self._normalize_value(document_security)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -765,6 +780,7 @@ class VectorsDB(Service):
         permissions: Optional[List[str]] = None,
         document_security: Optional[bool] = None,
         enabled: Optional[bool] = None,
+        description: Optional[str] = None,
     ) -> VectorsdbCollection:
         """
         Update a collection by its unique ID.
@@ -785,6 +801,8 @@ class VectorsDB(Service):
             Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
         enabled : Optional[bool]
             Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+        description : Optional[str]
+            Optional description for the collection.
         Returns
         -------
         VectorsdbCollection
@@ -815,6 +833,8 @@ class VectorsDB(Service):
             api_params['documentSecurity'] = self._normalize_value(document_security)
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'put',
@@ -1674,6 +1694,7 @@ class VectorsDB(Service):
         attributes: List[str],
         orders: Optional[List[OrderBy]] = None,
         lengths: Optional[List[float]] = None,
+        description: Optional[str] = None,
     ) -> Index:
         """
         Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
@@ -1695,6 +1716,8 @@ class VectorsDB(Service):
             Array of index orders. Maximum of 100 orders are allowed.
         lengths : Optional[List[float]]
             Length of index. Maximum of 100
+        description : Optional[str]
+            Optional description for the index.
         Returns
         -------
         Index
@@ -1727,6 +1750,8 @@ class VectorsDB(Service):
             api_params['orders'] = self._normalize_value(orders)
         if lengths is not None:
             api_params['lengths'] = self._normalize_value(lengths)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',

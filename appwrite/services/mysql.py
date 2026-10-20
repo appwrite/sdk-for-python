@@ -31,6 +31,7 @@ class Mysql(Service):
     def list(
         self,
         queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
     ) -> DedicatedDatabaseList:
         """
         List all dedicated databases. Results support pagination.
@@ -39,6 +40,8 @@ class Mysql(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         DedicatedDatabaseList
@@ -54,6 +57,8 @@ class Mysql(Service):
         api_params = {}
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -435,6 +440,7 @@ class Mysql(Service):
         self,
         database_id: str,
         queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
     ) -> DedicatedDatabaseBackupList:
         """
         List all backups for a dedicated database. Results can be filtered by status and type.
@@ -445,6 +451,8 @@ class Mysql(Service):
             Database ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: status, type, databaseId
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         DedicatedDatabaseBackupList
@@ -463,6 +471,8 @@ class Mysql(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -526,6 +536,7 @@ class Mysql(Service):
         self,
         database_id: str,
         queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
     ) -> BackupPolicyList:
         """
         List scheduled backup policies for a dedicated database.
@@ -536,6 +547,8 @@ class Mysql(Service):
             Database ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         BackupPolicyList
@@ -554,6 +567,8 @@ class Mysql(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',

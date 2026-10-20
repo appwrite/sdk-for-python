@@ -41,6 +41,8 @@ class Collection(AppwriteModel):
         Database ID.
     name : str
         Collection name.
+    description : str
+        Optional description for the collection.
     enabled : bool
         Collection enabled. Can be &#039;enabled&#039; or &#039;disabled&#039;. When disabled, the collection is inaccessible to users, but remains accessible to Server SDKs using API keys.
     documentsecurity : bool
@@ -61,6 +63,7 @@ class Collection(AppwriteModel):
     permissions: List[Any] = Field(..., alias='$permissions')
     databaseid: str = Field(..., alias='databaseId')
     name: str = Field(..., alias='name')
+    description: str = Field(..., alias='description')
     enabled: bool = Field(..., alias='enabled')
     documentsecurity: bool = Field(..., alias='documentSecurity')
     attributes: List[
@@ -108,6 +111,8 @@ class Collection(AppwriteModel):
             data['databaseId'] = ''
         if 'name' not in data:
             data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'enabled' not in data:
             data['enabled'] = True
         if 'documentSecurity' not in data and 'documentsecurity' not in data:

@@ -20,7 +20,8 @@ result: ColumnRelationship = tables_db.create_relationship_column(
     two_way = False, # optional
     key = '<KEY>', # optional
     two_way_key = '<TWO_WAY_KEY>', # optional
-    on_delete = RelationMutate.CASCADE # optional
+    on_delete = RelationMutate.CASCADE, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

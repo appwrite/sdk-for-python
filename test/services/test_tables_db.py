@@ -35,6 +35,7 @@ class TablesDBServiceTest(unittest.TestCase):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
+            "description": "Customer orders and invoices.",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "enabled": True,
@@ -191,6 +192,7 @@ class TablesDBServiceTest(unittest.TestCase):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
+            "description": "Customer orders and invoices.",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "enabled": True,
@@ -213,6 +215,7 @@ class TablesDBServiceTest(unittest.TestCase):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
+            "description": "Customer orders and invoices.",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "enabled": True,
@@ -536,6 +539,7 @@ class TablesDBServiceTest(unittest.TestCase):
             "$permissions": [],
             "databaseId": "5e5ea5c16897e",
             "name": "My Table",
+            "description": "Movies available in the catalog.",
             "enabled": True,
             "rowSecurity": True,
             "columns": [],
@@ -566,6 +570,7 @@ class TablesDBServiceTest(unittest.TestCase):
             "$permissions": [],
             "databaseId": "5e5ea5c16897e",
             "name": "My Table",
+            "description": "Movies available in the catalog.",
             "enabled": True,
             "rowSecurity": True,
             "columns": [],
@@ -595,6 +600,7 @@ class TablesDBServiceTest(unittest.TestCase):
             "$permissions": [],
             "databaseId": "5e5ea5c16897e",
             "name": "My Table",
+            "description": "Movies available in the catalog.",
             "enabled": True,
             "rowSecurity": True,
             "columns": [],
@@ -654,6 +660,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_big_int_column(self, m):
         data = {
             "key": "count",
+            "description": "Name shown on the public profile.",
             "type": "bigint",
             "status": "available",
             "error": "string",
@@ -680,6 +687,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_big_int_column(self, m):
         data = {
             "key": "count",
+            "description": "Name shown on the public profile.",
             "type": "bigint",
             "status": "available",
             "error": "string",
@@ -707,6 +715,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_boolean_column(self, m):
         data = {
             "key": "isEnabled",
+            "description": "Name shown on the public profile.",
             "type": "boolean",
             "status": "available",
             "error": "string",
@@ -733,6 +742,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_boolean_column(self, m):
         data = {
             "key": "isEnabled",
+            "description": "Name shown on the public profile.",
             "type": "boolean",
             "status": "available",
             "error": "string",
@@ -760,6 +770,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_datetime_column(self, m):
         data = {
             "key": "birthDay",
+            "description": "Name shown on the public profile.",
             "type": "datetime",
             "status": "available",
             "error": "string",
@@ -787,6 +798,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_datetime_column(self, m):
         data = {
             "key": "birthDay",
+            "description": "Name shown on the public profile.",
             "type": "datetime",
             "status": "available",
             "error": "string",
@@ -815,6 +827,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_email_column(self, m):
         data = {
             "key": "userEmail",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -842,6 +855,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_email_column(self, m):
         data = {
             "key": "userEmail",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -870,6 +884,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_enum_column(self, m):
         data = {
             "key": "status",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -899,6 +914,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_enum_column(self, m):
         data = {
             "key": "status",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -929,6 +945,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_float_column(self, m):
         data = {
             "key": "percentageCompleted",
+            "description": "Name shown on the public profile.",
             "type": "double",
             "status": "available",
             "error": "string",
@@ -955,6 +972,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_float_column(self, m):
         data = {
             "key": "percentageCompleted",
+            "description": "Name shown on the public profile.",
             "type": "double",
             "status": "available",
             "error": "string",
@@ -982,6 +1000,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_integer_column(self, m):
         data = {
             "key": "count",
+            "description": "Name shown on the public profile.",
             "type": "integer",
             "status": "available",
             "error": "string",
@@ -1008,6 +1027,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_integer_column(self, m):
         data = {
             "key": "count",
+            "description": "Name shown on the public profile.",
             "type": "integer",
             "status": "available",
             "error": "string",
@@ -1035,6 +1055,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_ip_column(self, m):
         data = {
             "key": "ipAddress",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1062,6 +1083,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_ip_column(self, m):
         data = {
             "key": "ipAddress",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1090,6 +1112,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_line_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1116,6 +1139,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_line_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1142,6 +1166,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_longtext_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1168,6 +1193,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_longtext_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1195,6 +1221,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_mediumtext_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1221,6 +1248,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_mediumtext_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1248,6 +1276,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_point_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1274,6 +1303,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_point_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1300,6 +1330,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_polygon_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1326,6 +1357,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_polygon_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1352,6 +1384,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_relationship_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1384,6 +1417,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_relationship_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1415,6 +1449,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_string_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1443,6 +1478,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_string_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1471,6 +1507,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_text_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1497,6 +1534,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_text_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1524,6 +1562,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_url_column(self, m):
         data = {
             "key": "githubUrl",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1551,6 +1590,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_url_column(self, m):
         data = {
             "key": "githubUrl",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1579,6 +1619,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_create_varchar_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1607,6 +1648,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_update_varchar_column(self, m):
         data = {
             "key": "fullName",
+            "description": "Name shown on the public profile.",
             "type": "string",
             "status": "available",
             "error": "string",
@@ -1635,6 +1677,7 @@ class TablesDBServiceTest(unittest.TestCase):
     def test_get_column(self, m):
         data = {
             "key": "isEnabled",
+            "description": "Name shown on the public profile.",
             "type": "boolean",
             "status": "available",
             "error": "string",
@@ -1699,6 +1742,7 @@ class TablesDBServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "key": "index1",
+            "description": "Speeds up lookups by email.",
             "type": "primary",
             "status": "available",
             "error": "string",
@@ -1728,6 +1772,7 @@ class TablesDBServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "key": "index1",
+            "description": "Speeds up lookups by email.",
             "type": "primary",
             "status": "available",
             "error": "string",
@@ -1884,6 +1929,25 @@ class TablesDBServiceTest(unittest.TestCase):
             headers=headers,
         )
         response = self.tables_db.delete_rows(
+            '<DATABASE_ID>',
+            '<TABLE_ID>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_query(self, m):
+        data = {
+            "total": 5.0,
+            "rows": [],
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.tables_db.create_query(
             '<DATABASE_ID>',
             '<TABLE_ID>',
         )

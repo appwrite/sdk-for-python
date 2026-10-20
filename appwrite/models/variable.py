@@ -18,6 +18,8 @@ class Variable(AppwriteModel):
         Variable creation date in ISO 8601 format.
     key : str
         Variable key.
+    description : str
+        Optional description for the variable.
     value : str
         Variable value.
     secret : bool
@@ -32,6 +34,7 @@ class Variable(AppwriteModel):
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     key: str = Field(..., alias='key')
+    description: str = Field(..., alias='description')
     value: str = Field(..., alias='value')
     secret: bool = Field(..., alias='secret')
     resourcetype: str = Field(..., alias='resourceType')
@@ -52,6 +55,8 @@ class Variable(AppwriteModel):
             data['$updatedAt'] = ''
         if 'key' not in data:
             data['key'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'value' not in data:
             data['value'] = ''
         if 'secret' not in data:

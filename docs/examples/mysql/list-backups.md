@@ -12,7 +12,8 @@ mysql = Mysql(client)
 
 result: DedicatedDatabaseBackupList = mysql.list_backups(
     database_id = '<DATABASE_ID>',
-    queries = [] # optional
+    queries = [], # optional
+    total = False # optional
 )
 
 print(result.model_dump())

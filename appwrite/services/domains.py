@@ -22,6 +22,7 @@ class Domains(Service):
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
+        total: Optional[bool] = None,
     ) -> DomainsList:
         """
         List all domains registered for this project. This endpoint supports pagination.
@@ -32,6 +33,8 @@ class Domains(Service):
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on attributes such as domain name, teamInternalId, expiration, etc.
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         DomainsList
@@ -49,6 +52,8 @@ class Domains(Service):
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
             api_params['search'] = self._normalize_value(search)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -880,6 +885,7 @@ class Domains(Service):
         self,
         domain_id: str,
         queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
     ) -> DnsRecordsList:
         """
         List DNS records for a given domain. You can use this endpoint to list all the DNS records
@@ -891,6 +897,8 @@ class Domains(Service):
             Domain unique ID.
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. You may filter on attributes such as type, name, value, etc. Maximum of 100 queries are allowed, each 4096 characters long.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         DnsRecordsList
@@ -909,6 +917,8 @@ class Domains(Service):
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',

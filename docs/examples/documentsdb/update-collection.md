@@ -19,7 +19,8 @@ result: Collection = documents_db.update_collection(
     permissions = [Permission.read(Role.any())], # optional
     document_security = False, # optional
     enabled = False, # optional
-    purge = False # optional
+    purge = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

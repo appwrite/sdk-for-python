@@ -35,6 +35,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
+            "description": "Customer orders and invoices.",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "enabled": True,
@@ -191,6 +192,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
+            "description": "Customer orders and invoices.",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "enabled": True,
@@ -213,6 +215,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
+            "description": "Customer orders and invoices.",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "enabled": True,
@@ -273,6 +276,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "$permissions": [],
             "databaseId": "5e5ea5c16897e",
             "name": "My Collection",
+            "description": "Movies available in the catalog.",
             "enabled": True,
             "documentSecurity": True,
             "attributes": [],
@@ -303,6 +307,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "$permissions": [],
             "databaseId": "5e5ea5c16897e",
             "name": "My Collection",
+            "description": "Movies available in the catalog.",
             "enabled": True,
             "documentSecurity": True,
             "attributes": [],
@@ -332,6 +337,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "$permissions": [],
             "databaseId": "5e5ea5c16897e",
             "name": "My Collection",
+            "description": "Movies available in the catalog.",
             "enabled": True,
             "documentSecurity": True,
             "attributes": [],
@@ -488,6 +494,25 @@ class DocumentsDBServiceTest(unittest.TestCase):
             headers=headers,
         )
         response = self.documents_db.delete_documents(
+            '<DATABASE_ID>',
+            '<COLLECTION_ID>',
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_query(self, m):
+        data = {
+            "total": 5.0,
+            "documents": [],
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            requests_mock.ANY,
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.documents_db.create_query(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
@@ -668,6 +693,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "key": "index1",
+            "description": "Speeds up lookups by email.",
             "type": "primary",
             "status": "available",
             "error": "string",
@@ -697,6 +723,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
             "key": "index1",
+            "description": "Speeds up lookups by email.",
             "type": "primary",
             "status": "available",
             "error": "string",

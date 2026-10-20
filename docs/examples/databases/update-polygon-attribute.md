@@ -16,7 +16,8 @@ result: AttributePolygon = databases.update_polygon_attribute(
     key = '<KEY>',
     required = False,
     default = [[[1, 2], [3, 4], [5, 6], [1, 2]]], # optional
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

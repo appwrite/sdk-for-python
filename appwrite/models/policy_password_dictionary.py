@@ -14,10 +14,13 @@ class PolicyPasswordDictionary(AppwriteModel):
         Policy ID.
     enabled : bool
         Whether password dictionary policy is enabled.
+    denylist : List[Any]
+        Custom passwords blocked by case-sensitive equality when enabled.
     """
 
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
+    denylist: List[Any] = Field(..., alias='denyList')
 
     @model_validator(mode='before')
     @classmethod
@@ -30,4 +33,6 @@ class PolicyPasswordDictionary(AppwriteModel):
             data['$id'] = ''
         if 'enabled' not in data:
             data['enabled'] = False
+        if 'denyList' not in data and 'denylist' not in data:
+            data['denyList'] = []
         return data

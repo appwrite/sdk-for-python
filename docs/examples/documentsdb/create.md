@@ -14,6 +14,7 @@ result: Database = documents_db.create(
     database_id = '<DATABASE_ID>',
     name = '<NAME>',
     enabled = False, # optional
+    description = '<DESCRIPTION>', # optional
     specification = 'serverless', # optional
     replicas = 0, # optional
     sync_mode = 'async' # optional

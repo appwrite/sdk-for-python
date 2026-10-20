@@ -16,7 +16,8 @@ result: AttributeUrl = databases.create_url_attribute(
     key = '<KEY>',
     required = False,
     default = 'https://example.com', # optional
-    array = False # optional
+    array = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

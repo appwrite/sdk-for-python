@@ -22,6 +22,8 @@ class Bucket(AppwriteModel):
         Whether file-level security is enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
     name : str
         Bucket name.
+    description : str
+        Optional description for the bucket.
     enabled : bool
         Bucket enabled.
     maximumfilesize : float
@@ -46,6 +48,7 @@ class Bucket(AppwriteModel):
     permissions: List[Any] = Field(..., alias='$permissions')
     filesecurity: bool = Field(..., alias='fileSecurity')
     name: str = Field(..., alias='name')
+    description: str = Field(..., alias='description')
     enabled: bool = Field(..., alias='enabled')
     maximumfilesize: float = Field(..., alias='maximumFileSize')
     allowedfileextensions: List[Any] = Field(..., alias='allowedFileExtensions')
@@ -74,6 +77,8 @@ class Bucket(AppwriteModel):
             data['fileSecurity'] = False
         if 'name' not in data:
             data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'enabled' not in data:
             data['enabled'] = True
         if 'maximumFileSize' not in data and 'maximumfilesize' not in data:
