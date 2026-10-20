@@ -15,7 +15,8 @@ result: ColumnPoint = tables_db.create_point_column(
     table_id = '<TABLE_ID>',
     key = '<KEY>',
     required = False,
-    default = [1, 2] # optional
+    default = [1, 2], # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

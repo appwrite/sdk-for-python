@@ -17,7 +17,8 @@ result: ColumnVarchar = tables_db.update_varchar_column(
     required = False,
     default = 'Hello World',
     size = 1, # optional
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

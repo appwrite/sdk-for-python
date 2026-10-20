@@ -13,6 +13,8 @@ class AttributeRelationship(AppwriteModel):
     ----------
     key : str
         Attribute Key.
+    description : str
+        Optional description for the attribute.
     type : str
         Attribute type.
     status : AttributeStatus
@@ -42,6 +44,7 @@ class AttributeRelationship(AppwriteModel):
     """
 
     key: str = Field(..., alias='key')
+    description: str = Field(..., alias='description')
     type: str = Field(..., alias='type')
     status: AttributeStatus = Field(..., alias='status')
     error: str = Field(..., alias='error')
@@ -65,6 +68,8 @@ class AttributeRelationship(AppwriteModel):
         data = dict(data)
         if 'key' not in data:
             data['key'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'type' not in data:
             data['type'] = ''
         if 'error' not in data:

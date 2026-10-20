@@ -17,7 +17,8 @@ result: AttributeString = databases.update_string_attribute(
     required = False,
     default = 'Hello World',
     size = 1, # optional
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

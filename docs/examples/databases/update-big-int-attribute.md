@@ -18,7 +18,8 @@ result: AttributeBigint = databases.update_big_int_attribute(
     default = 0,
     min = 0, # optional
     max = 1000000, # optional
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

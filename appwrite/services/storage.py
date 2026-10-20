@@ -30,7 +30,7 @@ class Storage(Service):
         Parameters
         ----------
         queries : Optional[List[str]]
-            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: enabled, name, fileSecurity, maximumFileSize, encryption, antivirus, transformations
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: enabled, name, fileSecurity, maximumFileSize, encryption, antivirus, transformations, stripMetadata
         search : Optional[str]
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
@@ -80,6 +80,8 @@ class Storage(Service):
         encryption: Optional[bool] = None,
         antivirus: Optional[bool] = None,
         transformations: Optional[bool] = None,
+        description: Optional[str] = None,
+        strip_metadata: Optional[bool] = None,
     ) -> Bucket:
         """
         Create a new storage bucket.
@@ -108,6 +110,10 @@ class Storage(Service):
             Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
         transformations : Optional[bool]
             Are image transformations enabled?
+        description : Optional[str]
+            Optional description for the bucket.
+        strip_metadata : Optional[bool]
+            Remove metadata such as location, device and capture time from uploaded images. The color profile and orientation are kept. For file size above 20MB metadata is not removed even if it's enabled.
         Returns
         -------
         Bucket
@@ -145,6 +151,10 @@ class Storage(Service):
             api_params['antivirus'] = self._normalize_value(antivirus)
         if transformations is not None:
             api_params['transformations'] = self._normalize_value(transformations)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
+        if strip_metadata is not None:
+            api_params['stripMetadata'] = self._normalize_value(strip_metadata)
 
         response = self.client.call(
             'post',
@@ -212,6 +222,8 @@ class Storage(Service):
         encryption: Optional[bool] = None,
         antivirus: Optional[bool] = None,
         transformations: Optional[bool] = None,
+        description: Optional[str] = None,
+        strip_metadata: Optional[bool] = None,
     ) -> Bucket:
         """
         Update a storage bucket by its unique ID.
@@ -240,6 +252,10 @@ class Storage(Service):
             Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
         transformations : Optional[bool]
             Are image transformations enabled?
+        description : Optional[str]
+            Optional description for the bucket.
+        strip_metadata : Optional[bool]
+            Remove metadata such as location, device and capture time from uploaded images. The color profile and orientation are kept. For file size above 20MB metadata is not removed even if it's enabled. By default, the current setting is kept.
         Returns
         -------
         Bucket
@@ -277,6 +293,10 @@ class Storage(Service):
             api_params['antivirus'] = self._normalize_value(antivirus)
         if transformations is not None:
             api_params['transformations'] = self._normalize_value(transformations)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
+        if strip_metadata is not None:
+            api_params['stripMetadata'] = self._normalize_value(strip_metadata)
 
         response = self.client.call(
             'put',

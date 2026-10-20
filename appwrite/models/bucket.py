@@ -22,6 +22,8 @@ class Bucket(AppwriteModel):
         Whether file-level security is enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
     name : str
         Bucket name.
+    description : str
+        Optional description for the bucket.
     enabled : bool
         Bucket enabled.
     maximumfilesize : float
@@ -36,6 +38,8 @@ class Bucket(AppwriteModel):
         Virus scanning is enabled.
     transformations : bool
         Image transformations are enabled.
+    stripmetadata : bool
+        Metadata such as location, device and capture time is removed from uploaded images.
     totalsize : float
         Total size of this bucket in bytes.
     """
@@ -46,6 +50,7 @@ class Bucket(AppwriteModel):
     permissions: List[Any] = Field(..., alias='$permissions')
     filesecurity: bool = Field(..., alias='fileSecurity')
     name: str = Field(..., alias='name')
+    description: str = Field(..., alias='description')
     enabled: bool = Field(..., alias='enabled')
     maximumfilesize: float = Field(..., alias='maximumFileSize')
     allowedfileextensions: List[Any] = Field(..., alias='allowedFileExtensions')
@@ -53,6 +58,7 @@ class Bucket(AppwriteModel):
     encryption: bool = Field(..., alias='encryption')
     antivirus: bool = Field(..., alias='antivirus')
     transformations: bool = Field(..., alias='transformations')
+    stripmetadata: bool = Field(..., alias='stripMetadata')
     totalsize: float = Field(..., alias='totalSize')
 
     @model_validator(mode='before')
@@ -74,6 +80,8 @@ class Bucket(AppwriteModel):
             data['fileSecurity'] = False
         if 'name' not in data:
             data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'enabled' not in data:
             data['enabled'] = True
         if 'maximumFileSize' not in data and 'maximumfilesize' not in data:
@@ -88,6 +96,8 @@ class Bucket(AppwriteModel):
             data['antivirus'] = True
         if 'transformations' not in data:
             data['transformations'] = True
+        if 'stripMetadata' not in data and 'stripmetadata' not in data:
+            data['stripMetadata'] = False
         if 'totalSize' not in data and 'totalsize' not in data:
             data['totalSize'] = 0
         return data

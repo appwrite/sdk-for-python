@@ -13,6 +13,8 @@ class ColumnPoint(AppwriteModel):
     ----------
     key : str
         Column Key.
+    description : str
+        Optional description for the column.
     type : str
         Column type.
     status : ColumnStatus
@@ -32,6 +34,7 @@ class ColumnPoint(AppwriteModel):
     """
 
     key: str = Field(..., alias='key')
+    description: str = Field(..., alias='description')
     type: str = Field(..., alias='type')
     status: ColumnStatus = Field(..., alias='status')
     error: str = Field(..., alias='error')
@@ -50,6 +53,8 @@ class ColumnPoint(AppwriteModel):
         data = dict(data)
         if 'key' not in data:
             data['key'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'type' not in data:
             data['type'] = ''
         if 'error' not in data:

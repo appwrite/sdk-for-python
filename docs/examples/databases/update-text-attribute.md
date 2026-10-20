@@ -16,7 +16,8 @@ result: AttributeText = databases.update_text_attribute(
     key = '<KEY>',
     required = False,
     default = 'Hello World',
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

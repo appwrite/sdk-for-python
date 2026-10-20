@@ -16,7 +16,8 @@ result: AttributeBoolean = databases.create_boolean_attribute(
     key = '<KEY>',
     required = False,
     default = False, # optional
-    array = False # optional
+    array = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

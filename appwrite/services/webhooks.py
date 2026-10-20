@@ -67,6 +67,7 @@ class Webhooks(Service):
         auth_username: Optional[str] = None,
         auth_password: Optional[str] = None,
         secret: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> Webhook:
         """
         Create a new webhook. Use this endpoint to configure a URL that will receive events from Appwrite when specific events occur.
@@ -91,6 +92,8 @@ class Webhooks(Service):
             Webhook HTTP password. Max length: 2048 chars.
         secret : Optional[str]
             Webhook secret key. If not provided, a new key will be generated automatically. Key must be at least 8 characters long, and at max 256 characters.
+        description : Optional[str]
+            Optional description for the webhook.
         Returns
         -------
         Webhook
@@ -126,6 +129,8 @@ class Webhooks(Service):
             api_params['authPassword'] = self._normalize_value(auth_password)
         if secret is not None:
             api_params['secret'] = self._normalize_value(secret)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -190,6 +195,7 @@ class Webhooks(Service):
         tls: Optional[bool] = None,
         auth_username: Optional[str] = None,
         auth_password: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> Webhook:
         """
         Update a webhook by its unique ID. Use this endpoint to update the URL, events, or status of an existing webhook.
@@ -212,6 +218,8 @@ class Webhooks(Service):
             Webhook HTTP user. Max length: 255 chars.
         auth_password : Optional[str]
             Webhook HTTP password. Max length: 2048 chars. Omit to keep the current password; it is cleared when the URL changes or TLS verification is disabled.
+        description : Optional[str]
+            Optional description for the webhook.
         Returns
         -------
         Webhook
@@ -245,6 +253,8 @@ class Webhooks(Service):
             api_params['authUsername'] = self._normalize_value(auth_username)
         if auth_password is not None:
             api_params['authPassword'] = self._normalize_value(auth_password)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'put',

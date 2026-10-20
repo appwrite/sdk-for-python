@@ -19,7 +19,8 @@ result: Table = tables_db.update_table(
     permissions = [Permission.read(Role.any())], # optional
     row_security = False, # optional
     enabled = False, # optional
-    purge = False # optional
+    purge = False, # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

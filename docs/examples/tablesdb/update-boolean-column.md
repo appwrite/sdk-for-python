@@ -16,7 +16,8 @@ result: ColumnBoolean = tables_db.update_boolean_column(
     key = '<KEY>',
     required = False,
     default = False,
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

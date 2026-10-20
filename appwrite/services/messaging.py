@@ -86,6 +86,7 @@ class Messaging(Service):
         scheduled_at: Optional[str] = None,
         reply_to_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
+        emails: Optional[List[str]] = None,
     ) -> Message:
         """
         Create a new email message.
@@ -120,6 +121,8 @@ class Messaging(Service):
             Email address to reply to. If not set, defaults to the sender email address.
         reply_to_name : Optional[str]
             Name of the reply to recipient. If not set, defaults to the sender name.
+        emails : Optional[List[str]]
+            List of email addresses to send the message to. Use this to deliver to recipients that are not backed by an Appwrite user, target, or topic.
         Returns
         -------
         Message
@@ -164,6 +167,8 @@ class Messaging(Service):
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
         if reply_to_name is not None:
             api_params['replyToName'] = self._normalize_value(reply_to_name)
+        if emails is not None:
+            api_params['emails'] = self._normalize_value(emails)
 
         response = self.client.call(
             'post',
@@ -194,6 +199,7 @@ class Messaging(Service):
         attachments: Optional[List[str]] = None,
         reply_to_email: Optional[str] = None,
         reply_to_name: Optional[str] = None,
+        emails: Optional[List[str]] = None,
     ) -> Message:
         """
         Update an email message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
@@ -228,6 +234,8 @@ class Messaging(Service):
             Email address to reply to. Pass an empty string to restore the provider or sender default.
         reply_to_name : Optional[str]
             Name of the reply to recipient. Pass an empty string to restore the provider or sender default.
+        emails : Optional[List[str]]
+            List of email addresses to send the message to. Use this to deliver to recipients that are not backed by an Appwrite user, target, or topic.
         Returns
         -------
         Message
@@ -270,6 +278,8 @@ class Messaging(Service):
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
         if reply_to_name is not None:
             api_params['replyToName'] = self._normalize_value(reply_to_name)
+        if emails is not None:
+            api_params['emails'] = self._normalize_value(emails)
 
         response = self.client.call(
             'patch',
@@ -2936,6 +2946,7 @@ class Messaging(Service):
         subscribe: Optional[List[str]] = None,
         qos: Optional[float] = None,
         expiry: Optional[float] = None,
+        description: Optional[str] = None,
     ) -> Topic:
         """
         Create a new topic.
@@ -2952,6 +2963,8 @@ class Messaging(Service):
             MQTT delivery quality of service for this topic. 0 is fire-and-forget (delivered only to clients connected at publish time). 1 persists each message and replays it when a client reconnects without having acknowledged it. Null lets the subscriber choose.
         expiry : Optional[float]
             Message retention in seconds for offline delivery. Max 7 days (604800). Null inherits the lowest expiry of the project's enabled Appwrite providers, or the 7-day ledger window if none sets one.
+        description : Optional[str]
+            Optional description for the topic.
         Returns
         -------
         Topic
@@ -2977,6 +2990,8 @@ class Messaging(Service):
             api_params['qos'] = self._normalize_value(qos)
         if expiry is not None:
             api_params['expiry'] = self._normalize_value(expiry)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'post',
@@ -3038,6 +3053,7 @@ class Messaging(Service):
         subscribe: Optional[List[str]] = None,
         qos: Optional[float] = None,
         expiry: Optional[float] = None,
+        description: Optional[str] = None,
     ) -> Topic:
         """
         Update a topic by its unique ID.
@@ -3054,6 +3070,8 @@ class Messaging(Service):
             MQTT delivery quality of service for this topic. 0 is fire-and-forget (delivered only to clients connected at publish time). 1 persists each message and replays it when a client reconnects without having acknowledged it. Null lets the subscriber choose.
         expiry : Optional[float]
             Message retention in seconds for offline delivery. Max 7 days (604800). Null inherits the lowest expiry of the project's enabled Appwrite providers, or the 7-day ledger window if none sets one.
+        description : Optional[str]
+            Optional description for the topic.
         Returns
         -------
         Topic
@@ -3078,6 +3096,8 @@ class Messaging(Service):
             api_params['qos'] = self._normalize_value(qos)
         if expiry is not None:
             api_params['expiry'] = self._normalize_value(expiry)
+        if description is not None:
+            api_params['description'] = self._normalize_value(description)
 
         response = self.client.call(
             'patch',

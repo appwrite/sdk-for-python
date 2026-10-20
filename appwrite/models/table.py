@@ -41,6 +41,8 @@ class Table(AppwriteModel):
         Database ID.
     name : str
         Table name.
+    description : str
+        Optional description for the table.
     enabled : bool
         Table enabled. Can be &#039;enabled&#039; or &#039;disabled&#039;. When disabled, the table is inaccessible to users, but remains accessible to Server SDKs using API keys.
     rowsecurity : bool
@@ -61,6 +63,7 @@ class Table(AppwriteModel):
     permissions: List[Any] = Field(..., alias='$permissions')
     databaseid: str = Field(..., alias='databaseId')
     name: str = Field(..., alias='name')
+    description: str = Field(..., alias='description')
     enabled: bool = Field(..., alias='enabled')
     rowsecurity: bool = Field(..., alias='rowSecurity')
     columns: List[
@@ -108,6 +111,8 @@ class Table(AppwriteModel):
             data['databaseId'] = ''
         if 'name' not in data:
             data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'enabled' not in data:
             data['enabled'] = True
         if 'rowSecurity' not in data and 'rowsecurity' not in data:

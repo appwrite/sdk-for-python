@@ -17,7 +17,8 @@ result: ColumnEnum = tables_db.update_enum_column(
     elements = ["active", "inactive"],
     required = False,
     default = 'active',
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

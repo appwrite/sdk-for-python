@@ -18,6 +18,8 @@ class Webhook(AppwriteModel):
         Webhook update date in ISO 8601 format.
     name : str
         Webhook name.
+    description : str
+        Optional description for the webhook.
     url : str
         Webhook URL endpoint.
     events : List[Any]
@@ -42,6 +44,7 @@ class Webhook(AppwriteModel):
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     name: str = Field(..., alias='name')
+    description: str = Field(..., alias='description')
     url: str = Field(..., alias='url')
     events: List[Any] = Field(..., alias='events')
     tls: bool = Field(..., alias='tls')
@@ -67,6 +70,8 @@ class Webhook(AppwriteModel):
             data['$updatedAt'] = ''
         if 'name' not in data:
             data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'url' not in data:
             data['url'] = ''
         if 'events' not in data:

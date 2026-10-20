@@ -18,7 +18,8 @@ result: ColumnFloat = tables_db.update_float_column(
     default = 10.5,
     min = 0, # optional
     max = 100, # optional
-    new_key = '<NEW_KEY>' # optional
+    new_key = '<NEW_KEY>', # optional
+    description = '<DESCRIPTION>' # optional
 )
 
 print(result.model_dump())

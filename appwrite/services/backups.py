@@ -20,6 +20,7 @@ class Backups(Service):
     def list_archives(
         self,
         queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
     ) -> BackupArchiveList:
         """
         List all archives for a project.
@@ -28,6 +29,8 @@ class Backups(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         BackupArchiveList
@@ -43,6 +46,8 @@ class Backups(Service):
         api_params = {}
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -186,6 +191,7 @@ class Backups(Service):
     def list_policies(
         self,
         queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
     ) -> BackupPolicyList:
         """
         List all policies for a project.
@@ -194,6 +200,8 @@ class Backups(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         BackupPolicyList
@@ -209,6 +217,8 @@ class Backups(Service):
         api_params = {}
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',
@@ -506,6 +516,7 @@ class Backups(Service):
     def list_restorations(
         self,
         queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
     ) -> BackupRestorationList:
         """
         List all backup restorations for a project.
@@ -514,6 +525,8 @@ class Backups(Service):
         ----------
         queries : Optional[List[str]]
             Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
         Returns
         -------
         BackupRestorationList
@@ -529,6 +542,8 @@ class Backups(Service):
         api_params = {}
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
 
         response = self.client.call(
             'get',

@@ -18,6 +18,8 @@ class EphemeralKey(AppwriteModel):
         Key update date in ISO 8601 format.
     name : str
         Key name.
+    description : str
+        Optional description for the key.
     expire : str
         Key expiration date in ISO 8601 format.
     scopes : List[Any]
@@ -34,6 +36,7 @@ class EphemeralKey(AppwriteModel):
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     name: str = Field(..., alias='name')
+    description: str = Field(..., alias='description')
     expire: str = Field(..., alias='expire')
     scopes: List[Any] = Field(..., alias='scopes')
     secret: str = Field(..., alias='secret')
@@ -55,6 +58,8 @@ class EphemeralKey(AppwriteModel):
             data['$updatedAt'] = ''
         if 'name' not in data:
             data['name'] = ''
+        if 'description' not in data:
+            data['description'] = ''
         if 'expire' not in data:
             data['expire'] = ''
         if 'scopes' not in data:

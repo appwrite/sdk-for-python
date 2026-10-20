@@ -11,7 +11,8 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 project = Project(client)
 
 result: ProjectModel = project.update_password_dictionary_policy(
-    enabled = False
+    enabled = False,
+    deny_list = [] # optional
 )
 
 print(result.model_dump())
