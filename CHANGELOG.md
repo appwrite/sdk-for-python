@@ -2,8 +2,17 @@
 
 ## 27.0.0
 
-* Breaking: raised the minimum supported Python version from 3.9 to 3.10
-* Updated: required Requests >=2.34.2,<3 and urllib3 >=2.8.0,<3
+This release updates the HTTP dependency requirements and raises the minimum supported Python version.
+
+* **Breaking:** Python 3.9 is no longer supported. Upgrade to Python 3.10 or later before installing this release.
+* **Security:** required `requests>=2.34.2,<3` and `urllib3>=2.8.0,<3` to exclude older dependency versions with known advisories. Update application dependency pins or constraints that prevent these versions from being installed.
+* **Compatibility:** service methods, models, and response format `2.5.0` are unchanged from SDK 26.0.0. The SDK continues to target Appwrite 2.5.x.
+
+To upgrade, activate a Python 3.10+ environment and run:
+
+```sh
+python -m pip install --upgrade "appwrite==27.0.0"
+```
 
 ## 26.0.0
 
