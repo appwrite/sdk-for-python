@@ -1,5 +1,10 @@
 # Change Log
 
+## 27.0.0
+
+* Breaking: raised the minimum supported Python version from 3.9 to 3.10
+* Updated: required Requests >=2.34.2,<3 and urllib3 >=2.8.0,<3
+
 ## 26.0.0
 
 * Breaking: `tables_db`, `documents_db` and `vectors_db` `create` and `update` take `description` before `specification`

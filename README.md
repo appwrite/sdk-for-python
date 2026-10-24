@@ -13,7 +13,7 @@ Appwrite is an open-source backend as a service server that abstracts and simpli
 
 ## Installation
 
-Requires Python 3.9 or later. Install the [`appwrite`](https://pypi.org/project/appwrite/) package from PyPI:
+Requires Python 3.10 or later. Install the [`appwrite`](https://pypi.org/project/appwrite/) package from PyPI:
 
 ```bash
 pip install appwrite

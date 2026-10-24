@@ -23,7 +23,7 @@ class Client:
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '26.0.0',
+            'x-sdk-version': '27.0.0',
             'X-Appwrite-Response-Format': '2.5.0',
         }
         self._config = {}
