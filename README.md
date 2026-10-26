@@ -80,6 +80,7 @@ See the [API reference](https://appwrite.io/docs/references/cloud/server-python/
 Use `TablesDB` to read and write rows. Pass a Pydantic model as `model_type` to get typed row data back; without it, `row.data` is a `dict`.
 
 ```python
+import asyncio
 from typing import Optional
 
 from pydantic import BaseModel
@@ -118,6 +119,9 @@ async def main():
 
     for row in result.rows:
         print(row.data.title)
+
+
+asyncio.run(main())
 ```
 
 ### Handle errors
