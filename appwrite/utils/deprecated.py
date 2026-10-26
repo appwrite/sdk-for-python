@@ -18,17 +18,11 @@ _filter_lock = threading.RLock()
 
 
 def _warn_deprecated(message, stacklevel=3):
-    """
-    Emit a deprecation warning that is shown on every call.
-
-    The `always` filter is only installed while the warning is emitted and the
-    filters configured by the caller are restored right after, so concurrent
-    tasks and threads are never affected by it.
-
-    Args:
-        message (str): The warning message.
-        stacklevel (int): Stack level of the frame to blame for the warning.
-    """
+    # Emit a deprecation warning that is shown on every call. The `always` filter
+    # is only installed while the warning is emitted and the filters configured
+    # by the caller are restored right after, so concurrent tasks and threads are
+    # never affected by it. `stacklevel` blames the frame that called the
+    # deprecated function, which is two frames above this one.
     with _filter_lock:
         with warnings.catch_warnings():
             warnings.simplefilter('always', DeprecationWarning)  # show warning every time
