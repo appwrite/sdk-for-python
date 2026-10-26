@@ -476,7 +476,7 @@ class TestRealAppwriteCloud(unittest.IsolatedAsyncioTestCase):
             except TimeoutError:
                 self.skipTest('Appwrite Cloud did not answer within 20s')
 
-        if context.exception.code is None:
+        if not context.exception.code:
             self.skipTest(f'Appwrite Cloud is unreachable from this machine: {context.exception.message}')
 
         self.assertEqual(context.exception.code, 401)

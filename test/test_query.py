@@ -4,6 +4,12 @@ from urllib.parse import parse_qsl
 from urllib.parse import urlsplit
 
 import httpx2
+
+# respx patches `httpx` while the SDK talks HTTP through `httpx2`. Point
+# `import httpx` at `httpx2` before respx is imported, so the mocks cover the
+# transport the SDK actually uses. See `test/__init__.py`.
+httpx2.alias_httpx()
+
 import respx
 
 from appwrite.client import Client
