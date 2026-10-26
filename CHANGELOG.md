@@ -4,8 +4,13 @@
 
 * Breaking: `tables_db`, `documents_db` and `vectors_db` `create` and `update` take `description` before `specification`
 * Breaking: `functions.update` takes `description` before `email_enabled`
+* Breaking: every service method is now a coroutine and must be awaited; `Client.call` and `Client.chunked_upload` are async as well
+* Breaking: the SDK now requires Python 3.11 or later
+* Breaking: `requests` was replaced by `httpx2`, changing the transport and connection pooling behaviour
+* Breaking: `on_progress` callbacks may now be coroutine functions and are awaited when they are
 * Added: `create_query` on `databases`, `documents_db` and `tables_db` to send list queries in the request body
 * Added: `account.list_memberships`
+* Added: `Client.aclose()` and async context manager support for `Client`
 * Added: optional `description` on create and update for databases, collections, tables, attributes, columns, indexes, buckets, functions, sites, variables, topics, webhooks and keys
 * Added: `description` on the matching models
 * Added: `total` on list methods in `activities`, `backups`, `domains`, `mongo`, `mysql` and `postgresql`
