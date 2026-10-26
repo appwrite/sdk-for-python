@@ -7,7 +7,32 @@ Compatible with Python 2.7+ and Python 3.x.
 
 import functools
 import inspect
+import threading
 import warnings
+
+# `warnings.filters` is process global, so the temporary filter used to show the
+# deprecation warning on every call is guarded by a lock. Without it, two
+# threads calling a deprecated function at the same time could restore each
+# other's filters and leak the `always` filter into the process.
+_filter_lock = threading.RLock()
+
+
+def _warn_deprecated(message, stacklevel=3):
+    """
+    Emit a deprecation warning that is shown on every call.
+
+    The `always` filter is only installed while the warning is emitted and the
+    filters configured by the caller are restored right after, so concurrent
+    tasks and threads are never affected by it.
+
+    Args:
+        message (str): The warning message.
+        stacklevel (int): Stack level of the frame to blame for the warning.
+    """
+    with _filter_lock:
+        with warnings.catch_warnings():
+            warnings.simplefilter('always', DeprecationWarning)  # show warning every time
+            warnings.warn(message, category=DeprecationWarning, stacklevel=stacklevel)
 
 
 def deprecated(reason=None):
@@ -31,23 +56,15 @@ def deprecated(reason=None):
 
             @functools.wraps(func)
             async def wrapped(*args, **kwargs):
-                warnings.simplefilter('always', DeprecationWarning)  # show warning every time
-                try:
-                    warnings.warn(message, category=DeprecationWarning, stacklevel=2)
-                    return await func(*args, **kwargs)
-                finally:
-                    warnings.simplefilter('default', DeprecationWarning)  # reset filter
+                _warn_deprecated(message)
+                return await func(*args, **kwargs)
 
             return wrapped
 
         @functools.wraps(func)
         def wrapped(*args, **kwargs):
-            warnings.simplefilter('always', DeprecationWarning)  # show warning every time
-            try:
-                warnings.warn(message, category=DeprecationWarning, stacklevel=2)
-                return func(*args, **kwargs)
-            finally:
-                warnings.simplefilter('default', DeprecationWarning)  # reset filter
+            _warn_deprecated(message)
+            return func(*args, **kwargs)
 
         return wrapped
 
