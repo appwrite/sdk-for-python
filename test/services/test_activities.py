@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.activities import Activities
 
 
-class ActivitiesServiceTest(unittest.TestCase):
+class ActivitiesServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.activities = Activities(self.client)
 
-    @requests_mock.Mocker()
-    def test_list_events(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list_events(self):
         data = {
             "total": 5.0,
             "events": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.activities.list_events()
+        response = await self.activities.list_events()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_event(self, m):
+    @respx.mock
+    async def test_get_event(self):
         data = {
             "$id": "5e5ea5c16897e",
             "actorType": "user",
@@ -64,13 +65,10 @@ class ActivitiesServiceTest(unittest.TestCase):
             "sdkVersion": "14.0.0",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.activities.get_event(
+        response = await self.activities.get_event(
             '<EVENT_ID>',
         )
         self.assertEqual(response.to_dict(), data)

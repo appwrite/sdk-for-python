@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.functions import Functions
 
 
-class FunctionsServiceTest(unittest.TestCase):
+class FunctionsServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.functions = Functions(self.client)
 
-    @requests_mock.Mocker()
-    def test_list(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list(self):
         data = {
             "total": 5.0,
             "functions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.list()
+        response = await self.functions.list()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create(self, m):
+    @respx.mock
+    async def test_create(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -69,53 +70,44 @@ class FunctionsServiceTest(unittest.TestCase):
             "emailEnabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.create(
+        response = await self.functions.create(
             '<FUNCTION_ID>',
             '<NAME>',
             'node-14.5',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_runtimes(self, m):
+    @respx.mock
+    async def test_list_runtimes(self):
         data = {
             "total": 5.0,
             "runtimes": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.list_runtimes()
+        response = await self.functions.list_runtimes()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_specifications(self, m):
+    @respx.mock
+    async def test_list_specifications(self):
         data = {
             "total": 5.0,
             "specifications": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.list_specifications()
+        response = await self.functions.list_specifications()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    @respx.mock
+    async def test_get(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -153,19 +145,16 @@ class FunctionsServiceTest(unittest.TestCase):
             "emailEnabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.get(
+        response = await self.functions.get(
             '<FUNCTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update(self, m):
+    @respx.mock
+    async def test_update(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -203,35 +192,29 @@ class FunctionsServiceTest(unittest.TestCase):
             "emailEnabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.update(
+        response = await self.functions.update(
             '<FUNCTION_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete(self, m):
+    @respx.mock
+    async def test_delete(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.delete(
+        response = await self.functions.delete(
             '<FUNCTION_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_function_deployment(self, m):
+    @respx.mock
+    async def test_update_function_deployment(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -269,38 +252,32 @@ class FunctionsServiceTest(unittest.TestCase):
             "emailEnabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.update_function_deployment(
+        response = await self.functions.update_function_deployment(
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_deployments(self, m):
+    @respx.mock
+    async def test_list_deployments(self):
         data = {
             "total": 5.0,
             "deployments": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.list_deployments(
+        response = await self.functions.list_deployments(
             '<FUNCTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_deployment(self, m):
+    @respx.mock
+    async def test_create_deployment(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -331,21 +308,18 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerBranchUrl": "https:\/\/github.com\/vermakhushboo\/appwrite\/tree\/0.7.x",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.create_deployment(
+        response = await self.functions.create_deployment(
             '<FUNCTION_ID>',
             InputFile.from_bytes(bytearray(), "example.file"),
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_duplicate_deployment(self, m):
+    @respx.mock
+    async def test_create_duplicate_deployment(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -376,20 +350,17 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerBranchUrl": "https:\/\/github.com\/vermakhushboo\/appwrite\/tree\/0.7.x",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.create_duplicate_deployment(
+        response = await self.functions.create_duplicate_deployment(
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_template_deployment(self, m):
+    @respx.mock
+    async def test_create_template_deployment(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -420,13 +391,10 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerBranchUrl": "https:\/\/github.com\/vermakhushboo\/appwrite\/tree\/0.7.x",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.create_template_deployment(
+        response = await self.functions.create_template_deployment(
             '<FUNCTION_ID>',
             '<REPOSITORY>',
             '<OWNER>',
@@ -436,8 +404,8 @@ class FunctionsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_vcs_deployment(self, m):
+    @respx.mock
+    async def test_create_vcs_deployment(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -468,21 +436,18 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerBranchUrl": "https:\/\/github.com\/vermakhushboo\/appwrite\/tree\/0.7.x",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.create_vcs_deployment(
+        response = await self.functions.create_vcs_deployment(
             '<FUNCTION_ID>',
             'branch',
             '<REFERENCE>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_deployment(self, m):
+    @respx.mock
+    async def test_get_deployment(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -513,52 +478,43 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerBranchUrl": "https:\/\/github.com\/vermakhushboo\/appwrite\/tree\/0.7.x",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.get_deployment(
+        response = await self.functions.get_deployment(
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_deployment(self, m):
+    @respx.mock
+    async def test_delete_deployment(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.delete_deployment(
+        response = await self.functions.delete_deployment(
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_deployment_download(self, m):
+    @respx.mock
+    async def test_get_deployment_download(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.functions.get_deployment_download(
+        response = await self.functions.get_deployment_download(
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_deployment_status(self, m):
+    @respx.mock
+    async def test_update_deployment_status(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -589,38 +545,32 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerBranchUrl": "https:\/\/github.com\/vermakhushboo\/appwrite\/tree\/0.7.x",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.update_deployment_status(
+        response = await self.functions.update_deployment_status(
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_executions(self, m):
+    @respx.mock
+    async def test_list_executions(self):
         data = {
             "total": 5.0,
             "executions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.list_executions(
+        response = await self.functions.list_executions(
             '<FUNCTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_execution(self, m):
+    @respx.mock
+    async def test_create_execution(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -642,19 +592,16 @@ class FunctionsServiceTest(unittest.TestCase):
             "duration": 1.23,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.create_execution(
+        response = await self.functions.create_execution(
             '<FUNCTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_execution(self, m):
+    @respx.mock
+    async def test_get_execution(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -676,54 +623,45 @@ class FunctionsServiceTest(unittest.TestCase):
             "duration": 1.23,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.get_execution(
+        response = await self.functions.get_execution(
             '<FUNCTION_ID>',
             '<EXECUTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_execution(self, m):
+    @respx.mock
+    async def test_delete_execution(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.delete_execution(
+        response = await self.functions.delete_execution(
             '<FUNCTION_ID>',
             '<EXECUTION_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_variables(self, m):
+    @respx.mock
+    async def test_list_variables(self):
         data = {
             "total": 5.0,
             "variables": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.list_variables(
+        response = await self.functions.list_variables(
             '<FUNCTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_variable(self, m):
+    @respx.mock
+    async def test_create_variable(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -736,13 +674,10 @@ class FunctionsServiceTest(unittest.TestCase):
             "resourceId": "myAwesomeFunction",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.create_variable(
+        response = await self.functions.create_variable(
             '<FUNCTION_ID>',
             '<VARIABLE_ID>',
             '<KEY>',
@@ -750,8 +685,8 @@ class FunctionsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_variable(self, m):
+    @respx.mock
+    async def test_get_variable(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -764,20 +699,17 @@ class FunctionsServiceTest(unittest.TestCase):
             "resourceId": "myAwesomeFunction",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.get_variable(
+        response = await self.functions.get_variable(
             '<FUNCTION_ID>',
             '<VARIABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_variable(self, m):
+    @respx.mock
+    async def test_update_variable(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -790,29 +722,23 @@ class FunctionsServiceTest(unittest.TestCase):
             "resourceId": "myAwesomeFunction",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.update_variable(
+        response = await self.functions.update_variable(
             '<FUNCTION_ID>',
             '<VARIABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_variable(self, m):
+    @respx.mock
+    async def test_delete_variable(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.functions.delete_variable(
+        response = await self.functions.delete_variable(
             '<FUNCTION_ID>',
             '<VARIABLE_ID>',
         )

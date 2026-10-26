@@ -24,7 +24,7 @@ class Organization(Service):
     def __init__(self, client) -> None:
         super(Organization, self).__init__(client)
 
-    def get(
+    async def get(
         self,
         model_type: Type[T] = dict,
     ) -> OrganizationModel[T]:
@@ -50,7 +50,7 @@ class Organization(Service):
         api_path = '/organization'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -62,7 +62,7 @@ class Organization(Service):
 
         return OrganizationModel.with_data(response, model_type)
 
-    def update(
+    async def update(
         self,
         name: str,
         model_type: Type[T] = dict,
@@ -94,7 +94,7 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "name"')
         api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -107,7 +107,7 @@ class Organization(Service):
 
         return OrganizationModel.with_data(response, model_type)
 
-    def delete(
+    async def delete(
         self,
     ) -> Dict[str, Any]:
         """
@@ -126,7 +126,7 @@ class Organization(Service):
         api_path = '/organization'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -139,7 +139,7 @@ class Organization(Service):
 
         return response
 
-    def list_installations(
+    async def list_installations(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -171,7 +171,7 @@ class Organization(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -183,7 +183,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=AppInstallationList)
 
-    def create_installation(
+    async def create_installation(
         self,
         app_id: str,
         authorization_details: Optional[str] = None,
@@ -216,7 +216,7 @@ class Organization(Service):
         if authorization_details is not None:
             api_params['authorizationDetails'] = self._normalize_value(authorization_details)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -229,7 +229,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=AppInstallation)
 
-    def get_installation(
+    async def get_installation(
         self,
         installation_id: str,
     ) -> AppInstallation:
@@ -257,7 +257,7 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "installation_id"')
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -269,7 +269,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=AppInstallation)
 
-    def update_installation(
+    async def update_installation(
         self,
         installation_id: str,
         authorization_details: Optional[str] = None,
@@ -302,7 +302,7 @@ class Organization(Service):
         if authorization_details is not None:
             api_params['authorizationDetails'] = self._normalize_value(authorization_details)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -315,7 +315,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=AppInstallation)
 
-    def delete_installation(
+    async def delete_installation(
         self,
         installation_id: str,
     ) -> Dict[str, Any]:
@@ -343,7 +343,7 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "installation_id"')
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -356,7 +356,7 @@ class Organization(Service):
 
         return response
 
-    def list_memberships(
+    async def list_memberships(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -393,7 +393,7 @@ class Organization(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -405,7 +405,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=MembershipList)
 
-    def create_membership(
+    async def create_membership(
         self,
         roles: List[str],
         email: Optional[str] = None,
@@ -458,7 +458,7 @@ class Organization(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -471,7 +471,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=Membership)
 
-    def get_membership(
+    async def get_membership(
         self,
         membership_id: str,
     ) -> Membership:
@@ -499,7 +499,7 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "membership_id"')
         api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -511,7 +511,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=Membership)
 
-    def update_membership(
+    async def update_membership(
         self,
         membership_id: str,
         roles: List[str],
@@ -545,7 +545,7 @@ class Organization(Service):
         api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
         api_params['roles'] = self._normalize_value(roles)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -558,7 +558,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=Membership)
 
-    def delete_membership(
+    async def delete_membership(
         self,
         membership_id: str,
     ) -> Dict[str, Any]:
@@ -586,7 +586,7 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "membership_id"')
         api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -599,7 +599,7 @@ class Organization(Service):
 
         return response
 
-    def list_projects(
+    async def list_projects(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -636,7 +636,7 @@ class Organization(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -648,7 +648,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=ProjectList)
 
-    def create_project(
+    async def create_project(
         self,
         project_id: str,
         name: str,
@@ -687,7 +687,7 @@ class Organization(Service):
         if region is not None:
             api_params['region'] = self._normalize_value(region)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -700,7 +700,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=Project)
 
-    def get_project(
+    async def get_project(
         self,
         project_id: str,
     ) -> Project:
@@ -728,7 +728,7 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "project_id"')
         api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -740,7 +740,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=Project)
 
-    def update_project(
+    async def update_project(
         self,
         project_id: str,
         name: str,
@@ -774,7 +774,7 @@ class Organization(Service):
         api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
         api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -787,7 +787,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=Project)
 
-    def delete_project(
+    async def delete_project(
         self,
         project_id: str,
     ) -> Dict[str, Any]:
@@ -815,7 +815,7 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "project_id"')
         api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -828,7 +828,7 @@ class Organization(Service):
 
         return response
 
-    def list_project_keys(
+    async def list_project_keys(
         self,
         project_id: str,
         queries: Optional[List[str]] = None,
@@ -866,7 +866,7 @@ class Organization(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -878,7 +878,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=KeyList)
 
-    def create_ephemeral_project_key(
+    async def create_ephemeral_project_key(
         self,
         project_id: str,
         scopes: List[ProjectKeyScopes],
@@ -920,7 +920,7 @@ class Organization(Service):
         api_params['scopes'] = self._normalize_value(scopes)
         api_params['duration'] = self._normalize_value(duration)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -933,7 +933,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=EphemeralKey)
 
-    def get_project_key(
+    async def get_project_key(
         self,
         project_id: str,
         key_id: str,
@@ -967,7 +967,7 @@ class Organization(Service):
         api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -979,7 +979,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=Key)
 
-    def update_project_key(
+    async def update_project_key(
         self,
         project_id: str,
         key_id: str,
@@ -1035,7 +1035,7 @@ class Organization(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1048,7 +1048,7 @@ class Organization(Service):
 
         return self._parse_response(response, model=Key)
 
-    def delete_project_key(
+    async def delete_project_key(
         self,
         project_id: str,
         key_id: str,
@@ -1082,7 +1082,7 @@ class Organization(Service):
         api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {

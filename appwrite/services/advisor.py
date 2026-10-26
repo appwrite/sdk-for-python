@@ -14,7 +14,7 @@ class Advisor(Service):
     def __init__(self, client) -> None:
         super(Advisor, self).__init__(client)
 
-    def list_reports(
+    async def list_reports(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -46,7 +46,7 @@ class Advisor(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -58,7 +58,7 @@ class Advisor(Service):
 
         return self._parse_response(response, model=ReportList)
 
-    def get_report(
+    async def get_report(
         self,
         report_id: str,
     ) -> Report:
@@ -86,7 +86,7 @@ class Advisor(Service):
             raise AppwriteException('Missing required parameter: "report_id"')
         api_path = api_path.replace('{reportId}', str(self._normalize_value(report_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -98,7 +98,7 @@ class Advisor(Service):
 
         return self._parse_response(response, model=Report)
 
-    def delete_report(
+    async def delete_report(
         self,
         report_id: str,
     ) -> Dict[str, Any]:
@@ -126,7 +126,7 @@ class Advisor(Service):
             raise AppwriteException('Missing required parameter: "report_id"')
         api_path = api_path.replace('{reportId}', str(self._normalize_value(report_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -139,7 +139,7 @@ class Advisor(Service):
 
         return response
 
-    def list_insights(
+    async def list_insights(
         self,
         report_id: str,
         queries: Optional[List[str]] = None,
@@ -177,7 +177,7 @@ class Advisor(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -189,7 +189,7 @@ class Advisor(Service):
 
         return self._parse_response(response, model=InsightList)
 
-    def get_insight(
+    async def get_insight(
         self,
         report_id: str,
         insight_id: str,
@@ -223,7 +223,7 @@ class Advisor(Service):
         api_path = api_path.replace('{reportId}', str(self._normalize_value(report_id)))
         api_path = api_path.replace('{insightId}', str(self._normalize_value(insight_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {

@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.mysql import Mysql
 
 
-class MysqlServiceTest(unittest.TestCase):
+class MysqlServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.mysql = Mysql(self.client)
 
-    @requests_mock.Mocker()
-    def test_list(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list(self):
         data = {
             "total": 5.0,
             "databases": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.list()
+        response = await self.mysql.list()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create(self, m):
+    @respx.mock
+    async def test_create(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -80,36 +81,30 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.create(
+        response = await self.mysql.create(
             '<DATABASE_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_specifications(self, m):
+    @respx.mock
+    async def test_list_specifications(self):
         data = {
             "specifications": [],
             "total": 9.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.list_specifications()
+        response = await self.mysql.list_specifications()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    @respx.mock
+    async def test_get(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -158,19 +153,16 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.get(
+        response = await self.mysql.get(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update(self, m):
+    @respx.mock
+    async def test_update(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -219,52 +211,43 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.update(
+        response = await self.mysql.update(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete(self, m):
+    @respx.mock
+    async def test_delete(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.delete(
+        response = await self.mysql.delete(
             '<DATABASE_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_backups(self, m):
+    @respx.mock
+    async def test_list_backups(self):
         data = {
             "total": 5.0,
             "backups": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.list_backups(
+        response = await self.mysql.list_backups(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_backup(self, m):
+    @respx.mock
+    async def test_create_backup(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -280,37 +263,31 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.create_backup(
+        response = await self.mysql.create_backup(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_backup_policies(self, m):
+    @respx.mock
+    async def test_list_backup_policies(self):
         data = {
             "total": 5.0,
             "policies": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.list_backup_policies(
+        response = await self.mysql.list_backup_policies(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_backup_policy(self, m):
+    @respx.mock
+    async def test_create_backup_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -324,13 +301,10 @@ class MysqlServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.create_backup_policy(
+        response = await self.mysql.create_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
             '<NAME>',
@@ -339,8 +313,8 @@ class MysqlServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_backup_policy(self, m):
+    @respx.mock
+    async def test_get_backup_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -354,20 +328,17 @@ class MysqlServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.get_backup_policy(
+        response = await self.mysql.get_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_backup_policy(self, m):
+    @respx.mock
+    async def test_update_backup_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -381,36 +352,30 @@ class MysqlServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.update_backup_policy(
+        response = await self.mysql.update_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_backup_policy(self, m):
+    @respx.mock
+    async def test_delete_backup_policy(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.delete_backup_policy(
+        response = await self.mysql.delete_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_backup_storage(self, m):
+    @respx.mock
+    async def test_update_backup_storage(self):
         data = {
             "provider": "s3",
             "bucket": "my-backup-bucket",
@@ -419,13 +384,10 @@ class MysqlServiceTest(unittest.TestCase):
             "endpoint": "https:\/\/minio.example.com",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.update_backup_storage(
+        response = await self.mysql.update_backup_storage(
             '<DATABASE_ID>',
             's3',
             '<BUCKET>',
@@ -434,8 +396,8 @@ class MysqlServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_backup(self, m):
+    @respx.mock
+    async def test_get_backup(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -451,54 +413,45 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.get_backup(
+        response = await self.mysql.get_backup(
             '<DATABASE_ID>',
             '<BACKUP_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_backup(self, m):
+    @respx.mock
+    async def test_delete_backup(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.delete_backup(
+        response = await self.mysql.delete_backup(
             '<DATABASE_ID>',
             '<BACKUP_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_branches(self, m):
+    @respx.mock
+    async def test_list_branches(self):
         data = {
             "total": 2.0,
             "branches": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.list_branches(
+        response = await self.mysql.list_branches(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_branch(self, m):
+    @respx.mock
+    async def test_create_branch(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -547,19 +500,16 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.create_branch(
+        response = await self.mysql.create_branch(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_branch(self, m):
+    @respx.mock
+    async def test_delete_branch(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -608,20 +558,17 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.delete_branch(
+        response = await self.mysql.delete_branch(
             '<DATABASE_ID>',
             '<BRANCH_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_credentials(self, m):
+    @respx.mock
+    async def test_update_credentials(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -633,19 +580,16 @@ class MysqlServiceTest(unittest.TestCase):
             "errorMessage": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.update_credentials(
+        response = await self.mysql.update_credentials(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_execution(self, m):
+    @respx.mock
+    async def test_create_execution(self):
         data = {
             "rows": [],
             "rowCount": 1.0,
@@ -655,20 +599,17 @@ class MysqlServiceTest(unittest.TestCase):
             "bytes": 1024.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.create_execution(
+        response = await self.mysql.create_execution(
             '<DATABASE_ID>',
             '<SQL>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_failover(self, m):
+    @respx.mock
+    async def test_create_failover(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -717,19 +658,16 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.create_failover(
+        response = await self.mysql.create_failover(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_maintenance(self, m):
+    @respx.mock
+    async def test_update_maintenance(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -778,21 +716,18 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.update_maintenance(
+        response = await self.mysql.update_maintenance(
             '<DATABASE_ID>',
             'sun',
             1,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_migration(self, m):
+    @respx.mock
+    async def test_create_migration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -841,56 +776,47 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.create_migration(
+        response = await self.mysql.create_migration(
             '<DATABASE_ID>',
             'shared',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_operations(self, m):
+    @respx.mock
+    async def test_list_operations(self):
         data = {
             "total": 5.0,
             "operations": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.list_operations(
+        response = await self.mysql.list_operations(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_pitr(self, m):
+    @respx.mock
+    async def test_get_pitr(self):
         data = {
             "earliest": "2020-10-15T06:38:00.000+00:00",
             "latest": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.get_pitr(
+        response = await self.mysql.get_pitr(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_pooler(self, m):
+    @respx.mock
+    async def test_get_pooler(self):
         data = {
             "enabled": True,
             "mode": "transaction",
@@ -904,19 +830,16 @@ class MysqlServiceTest(unittest.TestCase):
             "poolerMemoryLimit": "128Mi",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.get_pooler(
+        response = await self.mysql.get_pooler(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_pooler(self, m):
+    @respx.mock
+    async def test_update_pooler(self):
         data = {
             "enabled": True,
             "mode": "transaction",
@@ -930,19 +853,16 @@ class MysqlServiceTest(unittest.TestCase):
             "poolerMemoryLimit": "128Mi",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.update_pooler(
+        response = await self.mysql.update_pooler(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_replicas(self, m):
+    @respx.mock
+    async def test_get_replicas(self):
         data = {
             "replicas": 2.0,
             "syncMode": "async",
@@ -952,37 +872,31 @@ class MysqlServiceTest(unittest.TestCase):
             "members": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.get_replicas(
+        response = await self.mysql.get_replicas(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_restorations(self, m):
+    @respx.mock
+    async def test_list_restorations(self):
         data = {
             "total": 5.0,
             "restorations": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.list_restorations(
+        response = await self.mysql.list_restorations(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_restoration(self, m):
+    @respx.mock
+    async def test_create_restoration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -994,19 +908,16 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.create_restoration(
+        response = await self.mysql.create_restoration(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_restoration(self, m):
+    @respx.mock
+    async def test_get_restoration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1018,20 +929,17 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.get_restoration(
+        response = await self.mysql.get_restoration(
             '<DATABASE_ID>',
             '<RESTORATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_promote_restoration(self, m):
+    @respx.mock
+    async def test_promote_restoration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1043,20 +951,17 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.promote_restoration(
+        response = await self.mysql.promote_restoration(
             '<DATABASE_ID>',
             '<RESTORATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_status(self, m):
+    @respx.mock
+    async def test_get_status(self):
         data = {
             "health": "healthy",
             "ready": True,
@@ -1071,19 +976,16 @@ class MysqlServiceTest(unittest.TestCase):
             "volumes": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.get_status(
+        response = await self.mysql.get_status(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_upgrade(self, m):
+    @respx.mock
+    async def test_create_upgrade(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1132,13 +1034,10 @@ class MysqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mysql.create_upgrade(
+        response = await self.mysql.create_upgrade(
             '<DATABASE_ID>',
             '<TARGET_VERSION>',
         )

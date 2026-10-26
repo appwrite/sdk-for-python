@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,14 +9,17 @@ from appwrite.models import *
 from appwrite.services.locale import Locale
 
 
-class LocaleServiceTest(unittest.TestCase):
+class LocaleServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.locale = Locale(self.client)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_get(self):
         data = {
             "ip": "127.0.0.1",
             "countryCode": "US",
@@ -26,123 +30,99 @@ class LocaleServiceTest(unittest.TestCase):
             "currency": "USD",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.locale.get()
+        response = await self.locale.get()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_codes(self, m):
+    @respx.mock
+    async def test_list_codes(self):
         data = {
             "total": 5.0,
             "localeCodes": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.locale.list_codes()
+        response = await self.locale.list_codes()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_continents(self, m):
+    @respx.mock
+    async def test_list_continents(self):
         data = {
             "total": 5.0,
             "continents": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.locale.list_continents()
+        response = await self.locale.list_continents()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_countries(self, m):
+    @respx.mock
+    async def test_list_countries(self):
         data = {
             "total": 5.0,
             "countries": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.locale.list_countries()
+        response = await self.locale.list_countries()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_countries_eu(self, m):
+    @respx.mock
+    async def test_list_countries_eu(self):
         data = {
             "total": 5.0,
             "countries": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.locale.list_countries_eu()
+        response = await self.locale.list_countries_eu()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_countries_phones(self, m):
+    @respx.mock
+    async def test_list_countries_phones(self):
         data = {
             "total": 5.0,
             "phones": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.locale.list_countries_phones()
+        response = await self.locale.list_countries_phones()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_currencies(self, m):
+    @respx.mock
+    async def test_list_currencies(self):
         data = {
             "total": 5.0,
             "currencies": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.locale.list_currencies()
+        response = await self.locale.list_currencies()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_languages(self, m):
+    @respx.mock
+    async def test_list_languages(self):
         data = {
             "total": 5.0,
             "languages": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.locale.list_languages()
+        response = await self.locale.list_languages()
         self.assertEqual(response.to_dict(), data)

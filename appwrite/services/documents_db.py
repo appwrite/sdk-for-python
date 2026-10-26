@@ -29,7 +29,7 @@ class DocumentsDB(Service):
     def __init__(self, client) -> None:
         super(DocumentsDB, self).__init__(client)
 
-    def list(
+    async def list(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -61,7 +61,7 @@ class DocumentsDB(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -73,7 +73,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=DatabaseList)
 
-    def create(
+    async def create(
         self,
         database_id: str,
         name: str,
@@ -132,7 +132,7 @@ class DocumentsDB(Service):
         if sync_mode is not None:
             api_params['syncMode'] = self._normalize_value(sync_mode)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -145,7 +145,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Database)
 
-    def list_specifications(
+    async def list_specifications(
         self,
     ) -> DedicatedDatabaseSpecificationList:
         """
@@ -164,7 +164,7 @@ class DocumentsDB(Service):
         api_path = '/documentsdb/specifications'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -176,7 +176,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseSpecificationList)
 
-    def list_transactions(
+    async def list_transactions(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -208,7 +208,7 @@ class DocumentsDB(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -220,7 +220,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=TransactionList)
 
-    def create_transaction(
+    async def create_transaction(
         self,
         ttl: Optional[float] = None,
     ) -> Transaction:
@@ -247,7 +247,7 @@ class DocumentsDB(Service):
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -260,7 +260,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Transaction)
 
-    def get_transaction(
+    async def get_transaction(
         self,
         transaction_id: str,
     ) -> Transaction:
@@ -288,7 +288,7 @@ class DocumentsDB(Service):
             raise AppwriteException('Missing required parameter: "transaction_id"')
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -300,7 +300,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Transaction)
 
-    def update_transaction(
+    async def update_transaction(
         self,
         transaction_id: str,
         commit: Optional[bool] = None,
@@ -338,7 +338,7 @@ class DocumentsDB(Service):
         if rollback is not None:
             api_params['rollback'] = self._normalize_value(rollback)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -351,7 +351,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Transaction)
 
-    def delete_transaction(
+    async def delete_transaction(
         self,
         transaction_id: str,
     ) -> Dict[str, Any]:
@@ -379,7 +379,7 @@ class DocumentsDB(Service):
             raise AppwriteException('Missing required parameter: "transaction_id"')
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -392,7 +392,7 @@ class DocumentsDB(Service):
 
         return response
 
-    def create_operations(
+    async def create_operations(
         self,
         transaction_id: str,
         operations: Optional[List[Dict[str, Any]]] = None,
@@ -425,7 +425,7 @@ class DocumentsDB(Service):
         if operations is not None:
             api_params['operations'] = self._normalize_value(operations)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -438,7 +438,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Transaction)
 
-    def get(
+    async def get(
         self,
         database_id: str,
     ) -> Database:
@@ -466,7 +466,7 @@ class DocumentsDB(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -478,7 +478,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Database)
 
-    def update(
+    async def update(
         self,
         database_id: str,
         name: str,
@@ -537,7 +537,7 @@ class DocumentsDB(Service):
         if sync_mode is not None:
             api_params['syncMode'] = self._normalize_value(sync_mode)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -550,7 +550,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Database)
 
-    def delete(
+    async def delete(
         self,
         database_id: str,
     ) -> Dict[str, Any]:
@@ -578,7 +578,7 @@ class DocumentsDB(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -591,7 +591,7 @@ class DocumentsDB(Service):
 
         return response
 
-    def list_collections(
+    async def list_collections(
         self,
         database_id: str,
         queries: Optional[List[str]] = None,
@@ -634,7 +634,7 @@ class DocumentsDB(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -646,7 +646,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=CollectionList)
 
-    def create_collection(
+    async def create_collection(
         self,
         database_id: str,
         collection_id: str,
@@ -716,7 +716,7 @@ class DocumentsDB(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -729,7 +729,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Collection)
 
-    def get_collection(
+    async def get_collection(
         self,
         database_id: str,
         collection_id: str,
@@ -763,7 +763,7 @@ class DocumentsDB(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -775,7 +775,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Collection)
 
-    def update_collection(
+    async def update_collection(
         self,
         database_id: str,
         collection_id: str,
@@ -840,7 +840,7 @@ class DocumentsDB(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -853,7 +853,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Collection)
 
-    def delete_collection(
+    async def delete_collection(
         self,
         database_id: str,
         collection_id: str,
@@ -887,7 +887,7 @@ class DocumentsDB(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -900,7 +900,7 @@ class DocumentsDB(Service):
 
         return response
 
-    def list_documents(
+    async def list_documents(
         self,
         database_id: str,
         collection_id: str,
@@ -958,7 +958,7 @@ class DocumentsDB(Service):
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -970,7 +970,7 @@ class DocumentsDB(Service):
 
         return DocumentList.with_data(response, model_type)
 
-    def create_document(
+    async def create_document(
         self,
         database_id: str,
         collection_id: str,
@@ -1030,7 +1030,7 @@ class DocumentsDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1043,7 +1043,7 @@ class DocumentsDB(Service):
 
         return Document.with_data(response, model_type)
 
-    def create_documents(
+    async def create_documents(
         self,
         database_id: str,
         collection_id: str,
@@ -1092,7 +1092,7 @@ class DocumentsDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1105,7 +1105,7 @@ class DocumentsDB(Service):
 
         return DocumentList.with_data(response, model_type)
 
-    def upsert_documents(
+    async def upsert_documents(
         self,
         database_id: str,
         collection_id: str,
@@ -1154,7 +1154,7 @@ class DocumentsDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1167,7 +1167,7 @@ class DocumentsDB(Service):
 
         return DocumentList.with_data(response, model_type)
 
-    def update_documents(
+    async def update_documents(
         self,
         database_id: str,
         collection_id: str,
@@ -1220,7 +1220,7 @@ class DocumentsDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1233,7 +1233,7 @@ class DocumentsDB(Service):
 
         return DocumentList.with_data(response, model_type)
 
-    def delete_documents(
+    async def delete_documents(
         self,
         database_id: str,
         collection_id: str,
@@ -1281,7 +1281,7 @@ class DocumentsDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1294,7 +1294,7 @@ class DocumentsDB(Service):
 
         return DocumentList.with_data(response, model_type)
 
-    def create_query(
+    async def create_query(
         self,
         database_id: str,
         collection_id: str,
@@ -1352,7 +1352,7 @@ class DocumentsDB(Service):
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1365,7 +1365,7 @@ class DocumentsDB(Service):
 
         return DocumentList.with_data(response, model_type)
 
-    def get_document(
+    async def get_document(
         self,
         database_id: str,
         collection_id: str,
@@ -1419,7 +1419,7 @@ class DocumentsDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1431,7 +1431,7 @@ class DocumentsDB(Service):
 
         return Document.with_data(response, model_type)
 
-    def upsert_document(
+    async def upsert_document(
         self,
         database_id: str,
         collection_id: str,
@@ -1490,7 +1490,7 @@ class DocumentsDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1503,7 +1503,7 @@ class DocumentsDB(Service):
 
         return Document.with_data(response, model_type)
 
-    def update_document(
+    async def update_document(
         self,
         database_id: str,
         collection_id: str,
@@ -1562,7 +1562,7 @@ class DocumentsDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1575,7 +1575,7 @@ class DocumentsDB(Service):
 
         return Document.with_data(response, model_type)
 
-    def delete_document(
+    async def delete_document(
         self,
         database_id: str,
         collection_id: str,
@@ -1620,7 +1620,7 @@ class DocumentsDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1633,7 +1633,7 @@ class DocumentsDB(Service):
 
         return response
 
-    def decrement_document_attribute(
+    async def decrement_document_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1698,7 +1698,7 @@ class DocumentsDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1711,7 +1711,7 @@ class DocumentsDB(Service):
 
         return Document.with_data(response, model_type)
 
-    def increment_document_attribute(
+    async def increment_document_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1776,7 +1776,7 @@ class DocumentsDB(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1789,7 +1789,7 @@ class DocumentsDB(Service):
 
         return Document.with_data(response, model_type)
 
-    def list_indexes(
+    async def list_indexes(
         self,
         database_id: str,
         collection_id: str,
@@ -1833,7 +1833,7 @@ class DocumentsDB(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1845,7 +1845,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=IndexList)
 
-    def create_index(
+    async def create_index(
         self,
         database_id: str,
         collection_id: str,
@@ -1913,7 +1913,7 @@ class DocumentsDB(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1926,7 +1926,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Index)
 
-    def get_index(
+    async def get_index(
         self,
         database_id: str,
         collection_id: str,
@@ -1966,7 +1966,7 @@ class DocumentsDB(Service):
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1978,7 +1978,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=Index)
 
-    def delete_index(
+    async def delete_index(
         self,
         database_id: str,
         collection_id: str,
@@ -2018,7 +2018,7 @@ class DocumentsDB(Service):
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -2031,7 +2031,7 @@ class DocumentsDB(Service):
 
         return response
 
-    def create_failover(
+    async def create_failover(
         self,
         database_id: str,
         target_replica_id: Optional[str] = None,
@@ -2064,7 +2064,7 @@ class DocumentsDB(Service):
         if target_replica_id is not None:
             api_params['targetReplicaId'] = self._normalize_value(target_replica_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2077,7 +2077,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=DedicatedDatabase)
 
-    def list_operations(
+    async def list_operations(
         self,
         database_id: str,
         status: Optional[str] = None,
@@ -2120,7 +2120,7 @@ class DocumentsDB(Service):
         if offset is not None:
             api_params['offset'] = self._normalize_value(offset)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -2132,7 +2132,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseOperationList)
 
-    def get_replicas(
+    async def get_replicas(
         self,
         database_id: str,
     ) -> DedicatedDatabaseReplicas:
@@ -2160,7 +2160,7 @@ class DocumentsDB(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -2172,7 +2172,7 @@ class DocumentsDB(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseReplicas)
 
-    def get_status(
+    async def get_status(
         self,
         database_id: str,
     ) -> DatabaseStatus:
@@ -2200,7 +2200,7 @@ class DocumentsDB(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {

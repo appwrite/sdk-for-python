@@ -28,7 +28,7 @@ class Sites(Service):
     def __init__(self, client) -> None:
         super(Sites, self).__init__(client)
 
-    def list(
+    async def list(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -65,7 +65,7 @@ class Sites(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -77,7 +77,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=SiteList)
 
-    def create(
+    async def create(
         self,
         site_id: str,
         name: str,
@@ -228,7 +228,7 @@ class Sites(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -241,7 +241,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Site)
 
-    def list_frameworks(
+    async def list_frameworks(
         self,
         total: Optional[bool] = None,
     ) -> FrameworkList:
@@ -268,7 +268,7 @@ class Sites(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -280,7 +280,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=FrameworkList)
 
-    def list_specifications(
+    async def list_specifications(
         self,
         type: Optional[str] = None,
         total: Optional[bool] = None,
@@ -312,7 +312,7 @@ class Sites(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -324,7 +324,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=SpecificationList)
 
-    def get(
+    async def get(
         self,
         site_id: str,
     ) -> Site:
@@ -352,7 +352,7 @@ class Sites(Service):
             raise AppwriteException('Missing required parameter: "site_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -364,7 +364,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Site)
 
-    def update(
+    async def update(
         self,
         site_id: str,
         name: str,
@@ -514,7 +514,7 @@ class Sites(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -527,7 +527,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Site)
 
-    def delete(
+    async def delete(
         self,
         site_id: str,
     ) -> Dict[str, Any]:
@@ -555,7 +555,7 @@ class Sites(Service):
             raise AppwriteException('Missing required parameter: "site_id"')
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -568,7 +568,7 @@ class Sites(Service):
 
         return response
 
-    def update_site_deployment(
+    async def update_site_deployment(
         self,
         site_id: str,
         deployment_id: str,
@@ -602,7 +602,7 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_params['deploymentId'] = self._normalize_value(deployment_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -615,7 +615,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Site)
 
-    def list_deployments(
+    async def list_deployments(
         self,
         site_id: str,
         queries: Optional[List[str]] = None,
@@ -658,7 +658,7 @@ class Sites(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -670,7 +670,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=DeploymentList)
 
-    def create_deployment(
+    async def create_deployment(
         self,
         site_id: str,
         code: InputFile,
@@ -734,7 +734,7 @@ class Sites(Service):
 
         upload_id = ''
 
-        response = self.client.chunked_upload(
+        response = await self.client.chunked_upload(
             api_path,
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
@@ -750,7 +750,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Deployment)
 
-    def create_duplicate_deployment(
+    async def create_duplicate_deployment(
         self,
         site_id: str,
         deployment_id: str,
@@ -784,7 +784,7 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_params['deploymentId'] = self._normalize_value(deployment_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -797,7 +797,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Deployment)
 
-    def create_template_deployment(
+    async def create_template_deployment(
         self,
         site_id: str,
         repository: str,
@@ -862,7 +862,7 @@ class Sites(Service):
         if activate is not None:
             api_params['activate'] = self._normalize_value(activate)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -875,7 +875,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Deployment)
 
-    def create_vcs_deployment(
+    async def create_vcs_deployment(
         self,
         site_id: str,
         type: VCSReferenceType,
@@ -922,7 +922,7 @@ class Sites(Service):
         if activate is not None:
             api_params['activate'] = self._normalize_value(activate)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -935,7 +935,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Deployment)
 
-    def get_deployment(
+    async def get_deployment(
         self,
         site_id: str,
         deployment_id: str,
@@ -969,7 +969,7 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -981,7 +981,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Deployment)
 
-    def delete_deployment(
+    async def delete_deployment(
         self,
         site_id: str,
         deployment_id: str,
@@ -1015,7 +1015,7 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1028,7 +1028,7 @@ class Sites(Service):
 
         return response
 
-    def get_deployment_download(
+    async def get_deployment_download(
         self,
         site_id: str,
         deployment_id: str,
@@ -1072,7 +1072,7 @@ class Sites(Service):
         if token is not None:
             api_params['token'] = self._normalize_value(token)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1084,7 +1084,7 @@ class Sites(Service):
 
         return response
 
-    def update_deployment_status(
+    async def update_deployment_status(
         self,
         site_id: str,
         deployment_id: str,
@@ -1118,7 +1118,7 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1131,7 +1131,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Deployment)
 
-    def list_logs(
+    async def list_logs(
         self,
         site_id: str,
         queries: Optional[List[str]] = None,
@@ -1169,7 +1169,7 @@ class Sites(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1181,7 +1181,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=ExecutionList)
 
-    def get_log(
+    async def get_log(
         self,
         site_id: str,
         log_id: str,
@@ -1215,7 +1215,7 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{logId}', str(self._normalize_value(log_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1227,7 +1227,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Execution)
 
-    def delete_log(
+    async def delete_log(
         self,
         site_id: str,
         log_id: str,
@@ -1261,7 +1261,7 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{logId}', str(self._normalize_value(log_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1274,7 +1274,7 @@ class Sites(Service):
 
         return response
 
-    def list_variables(
+    async def list_variables(
         self,
         site_id: str,
         queries: Optional[List[str]] = None,
@@ -1312,7 +1312,7 @@ class Sites(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1324,7 +1324,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=VariableList)
 
-    def create_variable(
+    async def create_variable(
         self,
         site_id: str,
         variable_id: str,
@@ -1380,7 +1380,7 @@ class Sites(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1393,7 +1393,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Variable)
 
-    def get_variable(
+    async def get_variable(
         self,
         site_id: str,
         variable_id: str,
@@ -1427,7 +1427,7 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1439,7 +1439,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Variable)
 
-    def update_variable(
+    async def update_variable(
         self,
         site_id: str,
         variable_id: str,
@@ -1493,7 +1493,7 @@ class Sites(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1506,7 +1506,7 @@ class Sites(Service):
 
         return self._parse_response(response, model=Variable)
 
-    def delete_variable(
+    async def delete_variable(
         self,
         site_id: str,
         variable_id: str,
@@ -1540,7 +1540,7 @@ class Sites(Service):
         api_path = api_path.replace('{siteId}', str(self._normalize_value(site_id)))
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {

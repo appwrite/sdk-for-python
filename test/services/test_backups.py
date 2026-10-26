@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.backups import Backups
 
 
-class BackupsServiceTest(unittest.TestCase):
+class BackupsServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.backups = Backups(self.client)
 
-    @requests_mock.Mocker()
-    def test_list_archives(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list_archives(self):
         data = {
             "total": 5.0,
             "archives": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.list_archives()
+        response = await self.backups.list_archives()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_archive(self, m):
+    @respx.mock
+    async def test_create_archive(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -43,19 +44,16 @@ class BackupsServiceTest(unittest.TestCase):
             "resources": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.create_archive(
+        response = await self.backups.create_archive(
             [],
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_archive(self, m):
+    @respx.mock
+    async def test_get_archive(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -67,50 +65,41 @@ class BackupsServiceTest(unittest.TestCase):
             "resources": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.get_archive(
+        response = await self.backups.get_archive(
             '<ARCHIVE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_archive(self, m):
+    @respx.mock
+    async def test_delete_archive(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.delete_archive(
+        response = await self.backups.delete_archive(
             '<ARCHIVE_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_policies(self, m):
+    @respx.mock
+    async def test_list_policies(self):
         data = {
             "total": 5.0,
             "policies": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.list_policies()
+        response = await self.backups.list_policies()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_policy(self, m):
+    @respx.mock
+    async def test_create_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -124,13 +113,10 @@ class BackupsServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.create_policy(
+        response = await self.backups.create_policy(
             '<POLICY_ID>',
             [],
             1,
@@ -138,8 +124,8 @@ class BackupsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_policy(self, m):
+    @respx.mock
+    async def test_get_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -153,19 +139,16 @@ class BackupsServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.get_policy(
+        response = await self.backups.get_policy(
             '<POLICY_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_policy(self, m):
+    @respx.mock
+    async def test_update_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -179,34 +162,28 @@ class BackupsServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.update_policy(
+        response = await self.backups.update_policy(
             '<POLICY_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_policy(self, m):
+    @respx.mock
+    async def test_delete_policy(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.delete_policy(
+        response = await self.backups.delete_policy(
             '<POLICY_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_create_restoration(self, m):
+    @respx.mock
+    async def test_create_restoration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -220,36 +197,30 @@ class BackupsServiceTest(unittest.TestCase):
             "options": {},
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.create_restoration(
+        response = await self.backups.create_restoration(
             '<ARCHIVE_ID>',
             [],
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_restorations(self, m):
+    @respx.mock
+    async def test_list_restorations(self):
         data = {
             "total": 5.0,
             "restorations": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.list_restorations()
+        response = await self.backups.list_restorations()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_restoration(self, m):
+    @respx.mock
+    async def test_get_restoration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -263,13 +234,10 @@ class BackupsServiceTest(unittest.TestCase):
             "options": {},
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.backups.get_restoration(
+        response = await self.backups.get_restoration(
             '<RESTORATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)

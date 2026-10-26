@@ -20,7 +20,7 @@ class Oauth2(Service):
     def __init__(self, client) -> None:
         super(Oauth2, self).__init__(client)
 
-    def approve(
+    async def approve(
         self,
         grant_id: str,
         authorization_details: Optional[str] = None,
@@ -59,7 +59,7 @@ class Oauth2(Service):
         if scope is not None:
             api_params['scope'] = self._normalize_value(scope)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -71,7 +71,7 @@ class Oauth2(Service):
 
         return self._parse_response(response, model=Oauth2Approve)
 
-    def authorize(
+    async def authorize(
         self,
         client_id: Optional[str] = None,
         redirect_uri: Optional[str] = None,
@@ -164,7 +164,7 @@ class Oauth2(Service):
         if request_uri is not None:
             api_params['request_uri'] = self._normalize_value(request_uri)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -175,7 +175,7 @@ class Oauth2(Service):
 
         return self._parse_response(response, model=Oauth2Authorize)
 
-    def authorize_post(
+    async def authorize_post(
         self,
         client_id: Optional[str] = None,
         redirect_uri: Optional[str] = None,
@@ -268,7 +268,7 @@ class Oauth2(Service):
         if request_uri is not None:
             api_params['request_uri'] = self._normalize_value(request_uri)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -280,7 +280,7 @@ class Oauth2(Service):
 
         return self._parse_response(response, model=Oauth2Authorize)
 
-    def create_device_authorization(
+    async def create_device_authorization(
         self,
         client_id: Optional[str] = None,
         scope: Optional[str] = None,
@@ -328,7 +328,7 @@ class Oauth2(Service):
         if audience is not None:
             api_params['audience'] = self._normalize_value(audience)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -340,7 +340,7 @@ class Oauth2(Service):
 
         return self._parse_response(response, model=Oauth2DeviceAuthorization)
 
-    def create_grant(
+    async def create_grant(
         self,
         user_code: str,
     ) -> Oauth2Grant:
@@ -369,7 +369,7 @@ class Oauth2(Service):
         api_path = api_path.replace('{project_id}', str(self._normalize_value(self.client.get_config('project'))))
         api_params['user_code'] = self._normalize_value(user_code)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -381,7 +381,7 @@ class Oauth2(Service):
 
         return self._parse_response(response, model=Oauth2Grant)
 
-    def get_grant(
+    async def get_grant(
         self,
         grant_id: str,
     ) -> Oauth2Grant:
@@ -410,7 +410,7 @@ class Oauth2(Service):
         api_path = api_path.replace('{project_id}', str(self._normalize_value(self.client.get_config('project'))))
         api_path = api_path.replace('{grant_id}', str(self._normalize_value(grant_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -421,7 +421,7 @@ class Oauth2(Service):
 
         return self._parse_response(response, model=Oauth2Grant)
 
-    def introspect(
+    async def introspect(
         self,
         token: str,
         token_type_hint: Optional[str] = None,
@@ -465,7 +465,7 @@ class Oauth2(Service):
         if client_secret is not None:
             api_params['client_secret'] = self._normalize_value(client_secret)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -477,7 +477,7 @@ class Oauth2(Service):
 
         return self._parse_response(response, model=Oauth2Introspection)
 
-    def list_organizations(
+    async def list_organizations(
         self,
         limit: Optional[float] = None,
         offset: Optional[float] = None,
@@ -515,7 +515,7 @@ class Oauth2(Service):
         if search is not None:
             api_params['search'] = self._normalize_value(search)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -526,7 +526,7 @@ class Oauth2(Service):
 
         return self._parse_response(response, model=Oauth2OrganizationList)
 
-    def create_par(
+    async def create_par(
         self,
         client_id: str,
         redirect_uri: str,
@@ -617,7 +617,7 @@ class Oauth2(Service):
         if audience is not None:
             api_params['audience'] = self._normalize_value(audience)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -629,7 +629,7 @@ class Oauth2(Service):
 
         return self._parse_response(response, model=Oauth2PAR)
 
-    def list_projects(
+    async def list_projects(
         self,
         limit: Optional[float] = None,
         offset: Optional[float] = None,
@@ -667,7 +667,7 @@ class Oauth2(Service):
         if search is not None:
             api_params['search'] = self._normalize_value(search)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -678,7 +678,7 @@ class Oauth2(Service):
 
         return self._parse_response(response, model=Oauth2ProjectList)
 
-    def reject(
+    async def reject(
         self,
         grant_id: str,
     ) -> Oauth2Reject:
@@ -707,7 +707,7 @@ class Oauth2(Service):
         api_path = api_path.replace('{project_id}', str(self._normalize_value(self.client.get_config('project'))))
         api_params['grant_id'] = self._normalize_value(grant_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -719,7 +719,7 @@ class Oauth2(Service):
 
         return self._parse_response(response, model=Oauth2Reject)
 
-    def revoke(
+    async def revoke(
         self,
         token: str,
         token_type_hint: Optional[str] = None,
@@ -763,7 +763,7 @@ class Oauth2(Service):
         if client_secret is not None:
             api_params['client_secret'] = self._normalize_value(client_secret)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -775,7 +775,7 @@ class Oauth2(Service):
 
         return response
 
-    def create_token(
+    async def create_token(
         self,
         grant_type: str,
         code: Optional[str] = None,
@@ -849,7 +849,7 @@ class Oauth2(Service):
         if audience is not None:
             api_params['audience'] = self._normalize_value(audience)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {

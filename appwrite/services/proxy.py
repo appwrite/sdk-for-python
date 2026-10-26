@@ -16,7 +16,7 @@ class Proxy(Service):
     def __init__(self, client) -> None:
         super(Proxy, self).__init__(client)
 
-    def create_invalidation(
+    async def create_invalidation(
         self,
         domain: str,
         type: InvalidationType,
@@ -59,7 +59,7 @@ class Proxy(Service):
         if reference is not None:
             api_params['reference'] = self._normalize_value(reference)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -72,7 +72,7 @@ class Proxy(Service):
 
         return self._parse_response(response, model=ProxyInvalidation)
 
-    def list_rules(
+    async def list_rules(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -104,7 +104,7 @@ class Proxy(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -116,7 +116,7 @@ class Proxy(Service):
 
         return self._parse_response(response, model=ProxyRuleList)
 
-    def create_api_rule(
+    async def create_api_rule(
         self,
         domain: str,
     ) -> ProxyRule:
@@ -146,7 +146,7 @@ class Proxy(Service):
             raise AppwriteException('Missing required parameter: "domain"')
         api_params['domain'] = self._normalize_value(domain)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -159,7 +159,7 @@ class Proxy(Service):
 
         return self._parse_response(response, model=ProxyRule)
 
-    def create_function_rule(
+    async def create_function_rule(
         self,
         domain: str,
         function_id: str,
@@ -200,7 +200,7 @@ class Proxy(Service):
         if branch is not None:
             api_params['branch'] = self._normalize_value(branch)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -213,7 +213,7 @@ class Proxy(Service):
 
         return self._parse_response(response, model=ProxyRule)
 
-    def create_redirect_rule(
+    async def create_redirect_rule(
         self,
         domain: str,
         url: str,
@@ -267,7 +267,7 @@ class Proxy(Service):
         api_params['resourceId'] = self._normalize_value(resource_id)
         api_params['resourceType'] = self._normalize_value(resource_type)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -280,7 +280,7 @@ class Proxy(Service):
 
         return self._parse_response(response, model=ProxyRule)
 
-    def create_site_rule(
+    async def create_site_rule(
         self,
         domain: str,
         site_id: str,
@@ -321,7 +321,7 @@ class Proxy(Service):
         if branch is not None:
             api_params['branch'] = self._normalize_value(branch)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -334,7 +334,7 @@ class Proxy(Service):
 
         return self._parse_response(response, model=ProxyRule)
 
-    def create_smtp_rule(
+    async def create_smtp_rule(
         self,
         domain: str,
         function_id: str,
@@ -373,7 +373,7 @@ class Proxy(Service):
         if branch is not None:
             api_params['branch'] = self._normalize_value(branch)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -386,7 +386,7 @@ class Proxy(Service):
 
         return self._parse_response(response, model=ProxyRule)
 
-    def get_rule(
+    async def get_rule(
         self,
         rule_id: str,
     ) -> ProxyRule:
@@ -414,7 +414,7 @@ class Proxy(Service):
             raise AppwriteException('Missing required parameter: "rule_id"')
         api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -426,7 +426,7 @@ class Proxy(Service):
 
         return self._parse_response(response, model=ProxyRule)
 
-    def delete_rule(
+    async def delete_rule(
         self,
         rule_id: str,
     ) -> Dict[str, Any]:
@@ -454,7 +454,7 @@ class Proxy(Service):
             raise AppwriteException('Missing required parameter: "rule_id"')
         api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -467,7 +467,7 @@ class Proxy(Service):
 
         return response
 
-    def update_rule_status(
+    async def update_rule_status(
         self,
         rule_id: str,
     ) -> ProxyRule:
@@ -495,7 +495,7 @@ class Proxy(Service):
             raise AppwriteException('Missing required parameter: "rule_id"')
         api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {

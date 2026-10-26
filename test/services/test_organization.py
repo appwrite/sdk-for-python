@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,14 +9,17 @@ from appwrite.models import *
 from appwrite.services.organization import Organization
 
 
-class OrganizationServiceTest(unittest.TestCase):
+class OrganizationServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.organization = Organization(self.client)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_get(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -104,17 +108,14 @@ class OrganizationServiceTest(unittest.TestCase):
             "projects": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.get()
+        response = await self.organization.get()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update(self, m):
+    @respx.mock
+    async def test_update(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -203,48 +204,39 @@ class OrganizationServiceTest(unittest.TestCase):
             "projects": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.update(
+        response = await self.organization.update(
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete(self, m):
+    @respx.mock
+    async def test_delete(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.delete()
+        response = await self.organization.delete()
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_installations(self, m):
+    @respx.mock
+    async def test_list_installations(self):
         data = {
             "total": 5.0,
             "installations": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.list_installations()
+        response = await self.organization.list_installations()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_installation(self, m):
+    @respx.mock
+    async def test_create_installation(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -257,19 +249,16 @@ class OrganizationServiceTest(unittest.TestCase):
             "createdByName": "Walter White",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.create_installation(
+        response = await self.organization.create_installation(
             '<APP_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_installation(self, m):
+    @respx.mock
+    async def test_get_installation(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -282,19 +271,16 @@ class OrganizationServiceTest(unittest.TestCase):
             "createdByName": "Walter White",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.get_installation(
+        response = await self.organization.get_installation(
             '<INSTALLATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_installation(self, m):
+    @respx.mock
+    async def test_update_installation(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -307,50 +293,41 @@ class OrganizationServiceTest(unittest.TestCase):
             "createdByName": "Walter White",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.update_installation(
+        response = await self.organization.update_installation(
             '<INSTALLATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_installation(self, m):
+    @respx.mock
+    async def test_delete_installation(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.delete_installation(
+        response = await self.organization.delete_installation(
             '<INSTALLATION_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_memberships(self, m):
+    @respx.mock
+    async def test_list_memberships(self):
         data = {
             "total": 5.0,
             "memberships": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.list_memberships()
+        response = await self.organization.list_memberships()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_membership(self, m):
+    @respx.mock
+    async def test_create_membership(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -369,19 +346,16 @@ class OrganizationServiceTest(unittest.TestCase):
             "roles": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.create_membership(
+        response = await self.organization.create_membership(
             [],
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_membership(self, m):
+    @respx.mock
+    async def test_get_membership(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -400,19 +374,16 @@ class OrganizationServiceTest(unittest.TestCase):
             "roles": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.get_membership(
+        response = await self.organization.get_membership(
             '<MEMBERSHIP_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_membership(self, m):
+    @respx.mock
+    async def test_update_membership(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -431,51 +402,42 @@ class OrganizationServiceTest(unittest.TestCase):
             "roles": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.update_membership(
+        response = await self.organization.update_membership(
             '<MEMBERSHIP_ID>',
             [],
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_membership(self, m):
+    @respx.mock
+    async def test_delete_membership(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.delete_membership(
+        response = await self.organization.delete_membership(
             '<MEMBERSHIP_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_projects(self, m):
+    @respx.mock
+    async def test_list_projects(self):
         data = {
             "total": 5.0,
             "projects": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.list_projects()
+        response = await self.organization.list_projects()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_project(self, m):
+    @respx.mock
+    async def test_create_project(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -505,20 +467,17 @@ class OrganizationServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.create_project(
+        response = await self.organization.create_project(
             '<PROJECT_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_project(self, m):
+    @respx.mock
+    async def test_get_project(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -548,19 +507,16 @@ class OrganizationServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.get_project(
+        response = await self.organization.get_project(
             '<PROJECT_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_project(self, m):
+    @respx.mock
+    async def test_update_project(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -590,53 +546,44 @@ class OrganizationServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.update_project(
+        response = await self.organization.update_project(
             '<PROJECT_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_project(self, m):
+    @respx.mock
+    async def test_delete_project(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.delete_project(
+        response = await self.organization.delete_project(
             '<PROJECT_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_project_keys(self, m):
+    @respx.mock
+    async def test_list_project_keys(self):
         data = {
             "total": 5.0,
             "keys": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.list_project_keys(
+        response = await self.organization.list_project_keys(
             '<PROJECT_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_ephemeral_project_key(self, m):
+    @respx.mock
+    async def test_create_ephemeral_project_key(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -650,21 +597,18 @@ class OrganizationServiceTest(unittest.TestCase):
             "sdks": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.create_ephemeral_project_key(
+        response = await self.organization.create_ephemeral_project_key(
             '<PROJECT_ID>',
             [],
             1,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_project_key(self, m):
+    @respx.mock
+    async def test_get_project_key(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -678,20 +622,17 @@ class OrganizationServiceTest(unittest.TestCase):
             "sdks": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.get_project_key(
+        response = await self.organization.get_project_key(
             '<PROJECT_ID>',
             '<KEY_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_project_key(self, m):
+    @respx.mock
+    async def test_update_project_key(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -705,13 +646,10 @@ class OrganizationServiceTest(unittest.TestCase):
             "sdks": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.update_project_key(
+        response = await self.organization.update_project_key(
             '<PROJECT_ID>',
             '<KEY_ID>',
             '<NAME>',
@@ -719,17 +657,14 @@ class OrganizationServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_project_key(self, m):
+    @respx.mock
+    async def test_delete_project_key(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.organization.delete_project_key(
+        response = await self.organization.delete_project_key(
             '<PROJECT_ID>',
             '<KEY_ID>',
         )

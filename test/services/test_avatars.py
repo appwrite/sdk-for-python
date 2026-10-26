@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,115 +9,97 @@ from appwrite.models import *
 from appwrite.services.avatars import Avatars
 
 
-class AvatarsServiceTest(unittest.TestCase):
+class AvatarsServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.avatars = Avatars(self.client)
 
-    @requests_mock.Mocker()
-    def test_get_browser(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_get_browser(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.avatars.get_browser(
+        response = await self.avatars.get_browser(
             'aa',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_credit_card(self, m):
+    @respx.mock
+    async def test_get_credit_card(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.avatars.get_credit_card(
+        response = await self.avatars.get_credit_card(
             'amex',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_favicon(self, m):
+    @respx.mock
+    async def test_get_favicon(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.avatars.get_favicon(
+        response = await self.avatars.get_favicon(
             'https://example.com',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_flag(self, m):
+    @respx.mock
+    async def test_get_flag(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.avatars.get_flag(
+        response = await self.avatars.get_flag(
             'af',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_image(self, m):
+    @respx.mock
+    async def test_get_image(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.avatars.get_image(
+        response = await self.avatars.get_image(
             'https://example.com',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_initials(self, m):
+    @respx.mock
+    async def test_get_initials(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.avatars.get_initials()
+        response = await self.avatars.get_initials()
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_photo(self, m):
+    @respx.mock
+    async def test_get_photo(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.avatars.get_photo()
+        response = await self.avatars.get_photo()
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_photo(self, m):
+    @respx.mock
+    async def test_update_photo(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -136,56 +119,44 @@ class AvatarsServiceTest(unittest.TestCase):
             "accessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.avatars.update_photo(
+        response = await self.avatars.update_photo(
             InputFile.from_bytes(bytearray(), "example.file"),
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_photo(self, m):
+    @respx.mock
+    async def test_delete_photo(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.avatars.delete_photo()
+        response = await self.avatars.delete_photo()
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_qr(self, m):
+    @respx.mock
+    async def test_get_qr(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.avatars.get_qr(
+        response = await self.avatars.get_qr(
             '<TEXT>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_screenshot(self, m):
+    @respx.mock
+    async def test_get_screenshot(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.avatars.get_screenshot(
+        response = await self.avatars.get_screenshot(
             'https://example.com',
         )
         self.assertEqual(response, data)

@@ -21,7 +21,7 @@ class Apps(Service):
     def __init__(self, client) -> None:
         super(Apps, self).__init__(client)
 
-    def list(
+    async def list(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -53,7 +53,7 @@ class Apps(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -65,7 +65,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=AppsList)
 
-    def create(
+    async def create(
         self,
         app_id: str,
         name: str,
@@ -185,7 +185,7 @@ class Apps(Service):
         if team_id is not None:
             api_params['teamId'] = self._normalize_value(team_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -198,7 +198,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=App)
 
-    def list_installation_scopes(
+    async def list_installation_scopes(
         self,
     ) -> AppScopeList:
         """
@@ -217,7 +217,7 @@ class Apps(Service):
         api_path = '/apps/scopes/installations'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -229,7 +229,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=AppScopeList)
 
-    def list_o_auth2_scopes(
+    async def list_o_auth2_scopes(
         self,
     ) -> AppScopeList:
         """
@@ -248,7 +248,7 @@ class Apps(Service):
         api_path = '/apps/scopes/oauth2'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -260,7 +260,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=AppScopeList)
 
-    def get(
+    async def get(
         self,
         app_id: str,
     ) -> App:
@@ -288,7 +288,7 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -300,7 +300,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=App)
 
-    def update(
+    async def update(
         self,
         app_id: str,
         name: str,
@@ -424,7 +424,7 @@ class Apps(Service):
         if installation_redirect_url is not None:
             api_params['installationRedirectUrl'] = self._normalize_value(installation_redirect_url)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -437,7 +437,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=App)
 
-    def delete(
+    async def delete(
         self,
         app_id: str,
     ) -> Dict[str, Any]:
@@ -465,7 +465,7 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -478,7 +478,7 @@ class Apps(Service):
 
         return response
 
-    def list_installations(
+    async def list_installations(
         self,
         app_id: str,
         queries: Optional[List[str]] = None,
@@ -516,7 +516,7 @@ class Apps(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -528,7 +528,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=AppInstallationList)
 
-    def get_installation(
+    async def get_installation(
         self,
         app_id: str,
         installation_id: str,
@@ -562,7 +562,7 @@ class Apps(Service):
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -574,7 +574,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=AppInstallation)
 
-    def delete_installation(
+    async def delete_installation(
         self,
         app_id: str,
         installation_id: str,
@@ -608,7 +608,7 @@ class Apps(Service):
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -621,7 +621,7 @@ class Apps(Service):
 
         return response
 
-    def create_installation_token(
+    async def create_installation_token(
         self,
         app_id: str,
         installation_id: str,
@@ -655,7 +655,7 @@ class Apps(Service):
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -668,7 +668,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=Oauth2Token)
 
-    def list_keys(
+    async def list_keys(
         self,
         app_id: str,
         queries: Optional[List[str]] = None,
@@ -706,7 +706,7 @@ class Apps(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -718,7 +718,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=AppKeyList)
 
-    def create_key(
+    async def create_key(
         self,
         app_id: str,
     ) -> AppKey:
@@ -746,7 +746,7 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -759,7 +759,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=AppKey)
 
-    def get_key(
+    async def get_key(
         self,
         app_id: str,
         key_id: str,
@@ -793,7 +793,7 @@ class Apps(Service):
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -805,7 +805,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=AppKey)
 
-    def delete_key(
+    async def delete_key(
         self,
         app_id: str,
         key_id: str,
@@ -839,7 +839,7 @@ class Apps(Service):
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -852,7 +852,7 @@ class Apps(Service):
 
         return response
 
-    def update_labels(
+    async def update_labels(
         self,
         app_id: str,
         labels: List[str],
@@ -886,7 +886,7 @@ class Apps(Service):
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_params['labels'] = self._normalize_value(labels)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -899,7 +899,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=App)
 
-    def list_secrets(
+    async def list_secrets(
         self,
         app_id: str,
         queries: Optional[List[str]] = None,
@@ -937,7 +937,7 @@ class Apps(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -949,7 +949,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=AppSecretList)
 
-    def create_secret(
+    async def create_secret(
         self,
         app_id: str,
     ) -> AppSecretPlaintext:
@@ -977,7 +977,7 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -990,7 +990,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=AppSecretPlaintext)
 
-    def get_secret(
+    async def get_secret(
         self,
         app_id: str,
         secret_id: str,
@@ -1024,7 +1024,7 @@ class Apps(Service):
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{secretId}', str(self._normalize_value(secret_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1036,7 +1036,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=AppSecret)
 
-    def delete_secret(
+    async def delete_secret(
         self,
         app_id: str,
         secret_id: str,
@@ -1070,7 +1070,7 @@ class Apps(Service):
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_path = api_path.replace('{secretId}', str(self._normalize_value(secret_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1083,7 +1083,7 @@ class Apps(Service):
 
         return response
 
-    def update_team(
+    async def update_team(
         self,
         app_id: str,
         team_id: str,
@@ -1117,7 +1117,7 @@ class Apps(Service):
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
         api_params['teamId'] = self._normalize_value(team_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1130,7 +1130,7 @@ class Apps(Service):
 
         return self._parse_response(response, model=App)
 
-    def delete_tokens(
+    async def delete_tokens(
         self,
         app_id: str,
     ) -> Dict[str, Any]:
@@ -1158,7 +1158,7 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {

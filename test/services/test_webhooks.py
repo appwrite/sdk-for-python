@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.webhooks import Webhooks
 
 
-class WebhooksServiceTest(unittest.TestCase):
+class WebhooksServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.webhooks = Webhooks(self.client)
 
-    @requests_mock.Mocker()
-    def test_list(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list(self):
         data = {
             "total": 5.0,
             "webhooks": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.webhooks.list()
+        response = await self.webhooks.list()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create(self, m):
+    @respx.mock
+    async def test_create(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -49,13 +50,10 @@ class WebhooksServiceTest(unittest.TestCase):
             "attempts": 10.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.webhooks.create(
+        response = await self.webhooks.create(
             '<WEBHOOK_ID>',
             'https://example.com/webhook',
             '<NAME>',
@@ -63,8 +61,8 @@ class WebhooksServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    @respx.mock
+    async def test_get(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -82,19 +80,16 @@ class WebhooksServiceTest(unittest.TestCase):
             "attempts": 10.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.webhooks.get(
+        response = await self.webhooks.get(
             '<WEBHOOK_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update(self, m):
+    @respx.mock
+    async def test_update(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -112,13 +107,10 @@ class WebhooksServiceTest(unittest.TestCase):
             "attempts": 10.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.webhooks.update(
+        response = await self.webhooks.update(
             '<WEBHOOK_ID>',
             '<NAME>',
             'https://example.com/webhook',
@@ -126,23 +118,20 @@ class WebhooksServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete(self, m):
+    @respx.mock
+    async def test_delete(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.webhooks.delete(
+        response = await self.webhooks.delete(
             '<WEBHOOK_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_secret(self, m):
+    @respx.mock
+    async def test_update_secret(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -160,13 +149,10 @@ class WebhooksServiceTest(unittest.TestCase):
             "attempts": 10.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.webhooks.update_secret(
+        response = await self.webhooks.update_secret(
             '<WEBHOOK_ID>',
         )
         self.assertEqual(response.to_dict(), data)

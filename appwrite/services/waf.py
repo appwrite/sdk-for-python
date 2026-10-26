@@ -16,7 +16,7 @@ class Waf(Service):
     def __init__(self, client) -> None:
         super(Waf, self).__init__(client)
 
-    def list_rules(
+    async def list_rules(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -53,7 +53,7 @@ class Waf(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -65,7 +65,7 @@ class Waf(Service):
 
         return self._parse_response(response, model=WafRuleList)
 
-    def create_bypass_rule(
+    async def create_bypass_rule(
         self,
         rule_id: str,
         resource_type: str,
@@ -130,7 +130,7 @@ class Waf(Service):
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -143,7 +143,7 @@ class Waf(Service):
 
         return self._parse_response(response, model=WafRuleBypass)
 
-    def update_bypass_rule(
+    async def update_bypass_rule(
         self,
         rule_id: str,
         resource_type: Optional[str] = None,
@@ -206,7 +206,7 @@ class Waf(Service):
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -219,7 +219,7 @@ class Waf(Service):
 
         return self._parse_response(response, model=WafRuleBypass)
 
-    def create_challenge_rule(
+    async def create_challenge_rule(
         self,
         rule_id: str,
         resource_type: str,
@@ -299,7 +299,7 @@ class Waf(Service):
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -312,7 +312,7 @@ class Waf(Service):
 
         return self._parse_response(response, model=WafRuleChallenge)
 
-    def update_challenge_rule(
+    async def update_challenge_rule(
         self,
         rule_id: str,
         resource_type: Optional[str] = None,
@@ -390,7 +390,7 @@ class Waf(Service):
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -403,7 +403,7 @@ class Waf(Service):
 
         return self._parse_response(response, model=WafRuleChallenge)
 
-    def create_deny_rule(
+    async def create_deny_rule(
         self,
         rule_id: str,
         resource_type: str,
@@ -468,7 +468,7 @@ class Waf(Service):
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -481,7 +481,7 @@ class Waf(Service):
 
         return self._parse_response(response, model=WafRuleDeny)
 
-    def update_deny_rule(
+    async def update_deny_rule(
         self,
         rule_id: str,
         resource_type: Optional[str] = None,
@@ -544,7 +544,7 @@ class Waf(Service):
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -557,7 +557,7 @@ class Waf(Service):
 
         return self._parse_response(response, model=WafRuleDeny)
 
-    def create_rate_limit_rule(
+    async def create_rate_limit_rule(
         self,
         rule_id: str,
         resource_type: str,
@@ -649,7 +649,7 @@ class Waf(Service):
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -662,7 +662,7 @@ class Waf(Service):
 
         return self._parse_response(response, model=WafRuleRateLimit)
 
-    def update_rate_limit_rule(
+    async def update_rate_limit_rule(
         self,
         rule_id: str,
         resource_type: Optional[str] = None,
@@ -745,7 +745,7 @@ class Waf(Service):
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -758,7 +758,7 @@ class Waf(Service):
 
         return self._parse_response(response, model=WafRuleRateLimit)
 
-    def create_redirect_rule(
+    async def create_redirect_rule(
         self,
         rule_id: str,
         resource_type: str,
@@ -835,7 +835,7 @@ class Waf(Service):
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -848,7 +848,7 @@ class Waf(Service):
 
         return self._parse_response(response, model=WafRuleRedirect)
 
-    def update_redirect_rule(
+    async def update_redirect_rule(
         self,
         rule_id: str,
         resource_type: Optional[str] = None,
@@ -921,7 +921,7 @@ class Waf(Service):
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -934,7 +934,7 @@ class Waf(Service):
 
         return self._parse_response(response, model=WafRuleRedirect)
 
-    def get_rule(
+    async def get_rule(
         self,
         rule_id: str,
     ) -> Union[
@@ -968,7 +968,7 @@ class Waf(Service):
             raise AppwriteException('Missing required parameter: "rule_id"')
         api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -997,7 +997,7 @@ class Waf(Service):
 
         raise AppwriteException('Unable to match response to any known model')
 
-    def delete_rule(
+    async def delete_rule(
         self,
         rule_id: str,
     ) -> Dict[str, Any]:
@@ -1025,7 +1025,7 @@ class Waf(Service):
             raise AppwriteException('Missing required parameter: "rule_id"')
         api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {

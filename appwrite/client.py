@@ -1,15 +1,24 @@
-import io
+import asyncio
+import inspect
 import json
 import os
 import platform
 import sys
-import requests
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from threading import Lock
+import httpx2
 from .input_file import InputFile
 from .exception import AppwriteException
 from .encoders.value_class_encoder import ValueClassEncoder
 from .query import Query
+
+_ssl_context = None
+
+
+def _default_ssl_context():
+    """Build the TLS context once and reuse it across clients."""
+    global _ssl_context
+    if _ssl_context is None:
+        _ssl_context = httpx2.create_ssl_context()
+    return _ssl_context
 
 
 class Client:
@@ -27,10 +36,37 @@ class Client:
             'X-Appwrite-Response-Format': '2.5.0',
         }
         self._config = {}
+        self._http = self._new_http_client(verify=True)
+
+    def _new_http_client(self, verify):
+        context = _default_ssl_context() if verify else False
+        return httpx2.AsyncClient(verify=context, timeout=None)
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc_value, traceback):
+        await self.aclose()
+
+    async def aclose(self):
+        """Close the underlying HTTP connection pool."""
+        await self._http.aclose()
 
     def set_self_signed(self, status=True):
+        """Accept self-signed TLS certificates."""
         self._self_signed = status
+        previous = self._http
+        self._http = self._new_http_client(verify=not status)
+        self._dispose(previous)
         return self
+
+    @staticmethod
+    def _dispose(client):
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            return
+        loop.create_task(client.aclose())
 
     def set_endpoint(self, endpoint):
         if not endpoint.startswith('http://') and not endpoint.startswith('https://'):
@@ -130,7 +166,8 @@ class Client:
         self._config['impersonateuserphone'] = value
         return self
 
-    def call(self, method, path='', headers=None, params=None, response_type='json'):
+    async def call(self, method, path='', headers=None, params=None, response_type='json'):
+        """Perform a single API request."""
         if headers is None:
             headers = {}
 
@@ -141,6 +178,7 @@ class Client:
 
         data = {}
         files = {}
+        content = None
         stringify = False
 
         headers = {**self._global_headers, **headers}
@@ -150,37 +188,43 @@ class Client:
             params = {}
 
         if headers['content-type'].startswith('application/json'):
-            data = json.dumps(data, cls=ValueClassEncoder)
+            content = json.dumps(data, cls=ValueClassEncoder)
+            data = {}
 
         if headers['content-type'].startswith('multipart/form-data'):
             del headers['content-type']
             stringify = True
             for key in data.copy():
                 if isinstance(data[key], InputFile):
-                    files[key] = (data[key].filename, data[key].data)
+                    payload = data[key].data
+                    if isinstance(payload, str):
+                        payload = payload.encode('utf-8')
+                    elif not isinstance(payload, bytes):
+                        payload = bytes(payload)
+                    files[key] = (data[key].filename, payload)
                     del data[key]
             data = self.flatten(data, stringify=stringify)
             if not files and data:
-                # Without a file, requests would fall back to a URL-encoded body.
+                # Without a file, httpx2 would fall back to a URL-encoded body.
                 files = {key: (None, value) for key, value in data.items()}
                 data = {}
             elif not files:
-                # With no parts at all, requests would send a bare body, so close an empty multipart one.
+                # With no parts at all, httpx2 would send a bare body, so close an empty multipart one.
                 boundary = os.urandom(16).hex()
                 headers['content-type'] = f'multipart/form-data; boundary={boundary}'
-                data = f'--{boundary}--\r\n'
+                content = f'--{boundary}--\r\n'
 
         response = None
         try:
-            response = requests.request(  # call method dynamically https://stackoverflow.com/a/4246075/2299554
+            response = await self._http.request(  # call method dynamically https://stackoverflow.com/a/4246075/2299554
                 method=method,
                 url=self._endpoint + path,
                 params=self.flatten(params, stringify=stringify),
-                data=data,
-                files=files,
+                data=data or None,
+                files=files or None,
+                content=content,
                 headers=headers,
-                verify=(not self._self_signed),
-                allow_redirects=False if response_type == 'location' else True,
+                follow_redirects=False if response_type == 'location' else True,
             )
 
             response.raise_for_status()
@@ -190,7 +234,7 @@ class Client:
                 for warning in warnings.split(';'):
                     print(f'Warning: {warning}', file=sys.stderr)
 
-            content_type = response.headers['Content-Type']
+            content_type = response.headers.get('Content-Type', '')
 
             if response_type == 'location':
                 return response.headers.get('Location')
@@ -201,10 +245,10 @@ class Client:
             if content_type.startswith('application/json'):
                 return response.json()
 
-            return response._content
+            return response.content
         except Exception as e:
             if response != None:
-                content_type = response.headers['Content-Type']
+                content_type = response.headers.get('Content-Type', '')
                 if content_type.startswith('application/json'):
                     raise AppwriteException(
                         response.json()['message'], response.status_code, response.json().get('type'), response.text
@@ -214,7 +258,7 @@ class Client:
             else:
                 raise AppwriteException(e)
 
-    def chunked_upload(
+    async def chunked_upload(
         self,
         path,
         headers=None,
@@ -225,8 +269,9 @@ class Client:
         response_type='json',
         method='post',
     ):
+        """Upload a file in chunks, reporting progress as it goes."""
         if params.get(param_name) is None:
-            return self.call(method, path, headers, params, response_type=response_type)
+            return await self.call(method, path, headers, params, response_type=response_type)
 
         input_file = params[param_name]
 
@@ -243,14 +288,14 @@ class Client:
                     input_file.data = input.read()
 
             params[param_name] = input_file
-            return self.call(method, path, headers, params, response_type=response_type)
+            return await self.call(method, path, headers, params, response_type=response_type)
 
         offset = 0
         counter = 0
 
         if upload_id:
             try:
-                result = self.call('get', path + '/' + upload_id, headers)
+                result = await self.call('get', path + '/' + upload_id, headers)
                 counter = result['chunksUploaded']
             except:
                 pass
@@ -285,7 +330,6 @@ class Client:
         upload_id_header = upload_id
         completed_count = chunks[0]['index']
         uploaded_size = chunks[0]['start']
-        progress_lock = Lock()
         last_result = None
         final_result = None
 
@@ -298,9 +342,9 @@ class Client:
             chunks_total = chunk_result.get('chunksTotal', total_chunks)
             return int(chunks_uploaded) >= int(chunks_total)
 
-        def upload_chunk(chunk, current_upload_id):
+        async def upload_chunk(chunk, current_upload_id):
             chunk_input = InputFile.from_bytes(
-                read_chunk(chunk['start'], chunk['end']),
+                await asyncio.to_thread(read_chunk, chunk['start'], chunk['end']),
                 input_file.filename,
                 getattr(input_file, 'mime_type', None),
             )
@@ -310,7 +354,7 @@ class Client:
             if current_upload_id:
                 chunk_headers["x-appwrite-id"] = current_upload_id
 
-            return self.call(
+            return await self.call(
                 method,
                 path,
                 chunk_headers,
@@ -318,7 +362,7 @@ class Client:
                 response_type=response_type,
             )
 
-        result = upload_chunk(chunks[0], upload_id_header)
+        result = await upload_chunk(chunks[0], upload_id_header)
         last_result = result
         if isinstance(result, dict) and "$id" in result:
             upload_id_header = result["$id"]
@@ -326,43 +370,51 @@ class Client:
         completed_count = chunks[0]['index'] + 1
         uploaded_size = chunks[0]['end']
 
-        if on_progress is not None:
-            on_progress(
+        await self._report_progress(
+            on_progress,
+            {
+                "$id": result.get("$id") if isinstance(result, dict) else None,
+                "progress": uploaded_size / size * 100,
+                "sizeUploaded": uploaded_size,
+                "chunksTotal": total_chunks,
+                "chunksUploaded": completed_count,
+            },
+        )
+
+        semaphore = asyncio.Semaphore(8)
+
+        async def upload_remaining_chunk(chunk):
+            nonlocal completed_count, uploaded_size, last_result, final_result
+            async with semaphore:
+                chunk_result = await upload_chunk(chunk, upload_id_header)
+            completed_count = completed_count + 1
+            uploaded_size = uploaded_size + (chunk['end'] - chunk['start'])
+            last_result = chunk_result
+            if is_upload_complete(chunk_result):
+                final_result = chunk_result
+            await self._report_progress(
+                on_progress,
                 {
-                    "$id": result.get("$id") if isinstance(result, dict) else None,
+                    "$id": upload_id_header,
                     "progress": uploaded_size / size * 100,
                     "sizeUploaded": uploaded_size,
                     "chunksTotal": total_chunks,
                     "chunksUploaded": completed_count,
-                }
+                },
             )
 
-        def upload_remaining_chunk(chunk):
-            nonlocal completed_count, uploaded_size, last_result, final_result
-            chunk_result = upload_chunk(chunk, upload_id_header)
-            with progress_lock:
-                completed_count = completed_count + 1
-                uploaded_size = uploaded_size + (chunk['end'] - chunk['start'])
-                last_result = chunk_result
-                if is_upload_complete(chunk_result):
-                    final_result = chunk_result
-                if on_progress is not None:
-                    on_progress(
-                        {
-                            "$id": upload_id_header,
-                            "progress": uploaded_size / size * 100,
-                            "sizeUploaded": uploaded_size,
-                            "chunksTotal": total_chunks,
-                            "chunksUploaded": completed_count,
-                        }
-                    )
-
-        with ThreadPoolExecutor(max_workers=8) as executor:
-            futures = [executor.submit(upload_remaining_chunk, chunk) for chunk in chunks[1:]]
-            for future in as_completed(futures):
-                future.result()
+        await asyncio.gather(*(upload_remaining_chunk(chunk) for chunk in chunks[1:]))
 
         return final_result or last_result
+
+    @staticmethod
+    async def _report_progress(on_progress, payload):
+        """Invoke the progress callback, awaiting it when it is a coroutine."""
+        if on_progress is None:
+            return
+        result = on_progress(payload)
+        if inspect.isawaitable(result):
+            await result
 
     def flatten(self, data, prefix='', stringify=False):
         output = {}

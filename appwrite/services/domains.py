@@ -18,7 +18,7 @@ class Domains(Service):
     def __init__(self, client) -> None:
         super(Domains, self).__init__(client)
 
-    def list(
+    async def list(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -55,7 +55,7 @@ class Domains(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -67,7 +67,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DomainsList)
 
-    def create(
+    async def create(
         self,
         team_id: str,
         domain: str,
@@ -101,7 +101,7 @@ class Domains(Service):
         api_params['teamId'] = self._normalize_value(team_id)
         api_params['domain'] = self._normalize_value(domain)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -115,7 +115,7 @@ class Domains(Service):
         return self._parse_response(response, model=Domain)
 
     @deprecated("This API has been deprecated since 2.0.0. Please use `domains.list_prices` instead.")
-    def get_price(
+    async def get_price(
         self,
         domain: str,
         period_years: Optional[float] = None,
@@ -155,7 +155,7 @@ class Domains(Service):
         if registration_type is not None:
             api_params['registrationType'] = self._normalize_value(registration_type)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -167,7 +167,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DomainPrice)
 
-    def list_prices(
+    async def list_prices(
         self,
         domains: List[str],
         period_years: Optional[float] = None,
@@ -205,7 +205,7 @@ class Domains(Service):
         if registration_type is not None:
             api_params['registrationType'] = self._normalize_value(registration_type)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -217,7 +217,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DomainPricesList)
 
-    def get(
+    async def get(
         self,
         domain_id: str,
     ) -> Domain:
@@ -245,7 +245,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -257,7 +257,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=Domain)
 
-    def delete(
+    async def delete(
         self,
         domain_id: str,
     ) -> Dict[str, Any]:
@@ -286,7 +286,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -299,7 +299,7 @@ class Domains(Service):
 
         return response
 
-    def update_nameservers(
+    async def update_nameservers(
         self,
         domain_id: str,
         nameservers: Optional[List[str]] = None,
@@ -333,7 +333,7 @@ class Domains(Service):
         if nameservers is not None:
             api_params['nameservers'] = self._normalize_value(nameservers)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -346,7 +346,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=Domain)
 
-    def verify_nameservers(
+    async def verify_nameservers(
         self,
         domain_id: str,
     ) -> Domain:
@@ -376,7 +376,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -389,7 +389,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=Domain)
 
-    def get_preset_google_workspace(
+    async def get_preset_google_workspace(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -417,7 +417,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -429,7 +429,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def create_preset_google_workspace(
+    async def create_preset_google_workspace(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -458,7 +458,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -471,7 +471,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def get_preset_i_cloud(
+    async def get_preset_i_cloud(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -499,7 +499,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -511,7 +511,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def create_preset_i_cloud(
+    async def create_preset_i_cloud(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -540,7 +540,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -553,7 +553,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def get_preset_mailgun(
+    async def get_preset_mailgun(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -581,7 +581,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -593,7 +593,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def create_preset_mailgun(
+    async def create_preset_mailgun(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -622,7 +622,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -635,7 +635,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def get_preset_outlook(
+    async def get_preset_outlook(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -663,7 +663,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -675,7 +675,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def create_preset_outlook(
+    async def create_preset_outlook(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -704,7 +704,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -717,7 +717,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def get_preset_proton_mail(
+    async def get_preset_proton_mail(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -745,7 +745,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -757,7 +757,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def create_preset_proton_mail(
+    async def create_preset_proton_mail(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -786,7 +786,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -799,7 +799,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def get_preset_zoho(
+    async def get_preset_zoho(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -827,7 +827,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -839,7 +839,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def create_preset_zoho(
+    async def create_preset_zoho(
         self,
         domain_id: str,
     ) -> DnsRecordsList:
@@ -868,7 +868,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -881,7 +881,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def list_records(
+    async def list_records(
         self,
         domain_id: str,
         queries: Optional[List[str]] = None,
@@ -920,7 +920,7 @@ class Domains(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -932,7 +932,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecordsList)
 
-    def create_record_a(
+    async def create_record_a(
         self,
         domain_id: str,
         name: str,
@@ -984,7 +984,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -997,7 +997,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def update_record_a(
+    async def update_record_a(
         self,
         domain_id: str,
         record_id: str,
@@ -1056,7 +1056,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1069,7 +1069,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def create_record_aaaa(
+    async def create_record_aaaa(
         self,
         domain_id: str,
         name: str,
@@ -1121,7 +1121,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1134,7 +1134,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def update_record_aaaa(
+    async def update_record_aaaa(
         self,
         domain_id: str,
         record_id: str,
@@ -1193,7 +1193,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1206,7 +1206,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def create_record_alias(
+    async def create_record_alias(
         self,
         domain_id: str,
         name: str,
@@ -1259,7 +1259,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1272,7 +1272,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def update_record_alias(
+    async def update_record_alias(
         self,
         domain_id: str,
         record_id: str,
@@ -1333,7 +1333,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1346,7 +1346,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def create_record_caa(
+    async def create_record_caa(
         self,
         domain_id: str,
         name: str,
@@ -1398,7 +1398,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1411,7 +1411,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def update_record_caa(
+    async def update_record_caa(
         self,
         domain_id: str,
         record_id: str,
@@ -1470,7 +1470,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1483,7 +1483,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def create_record_cname(
+    async def create_record_cname(
         self,
         domain_id: str,
         name: str,
@@ -1538,7 +1538,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1551,7 +1551,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def update_record_cname(
+    async def update_record_cname(
         self,
         domain_id: str,
         record_id: str,
@@ -1608,7 +1608,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1621,7 +1621,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def create_record_https(
+    async def create_record_https(
         self,
         domain_id: str,
         name: str,
@@ -1673,7 +1673,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1686,7 +1686,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def update_record_https(
+    async def update_record_https(
         self,
         domain_id: str,
         record_id: str,
@@ -1745,7 +1745,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1758,7 +1758,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def create_record_mx(
+    async def create_record_mx(
         self,
         domain_id: str,
         name: str,
@@ -1818,7 +1818,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1831,7 +1831,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def update_record_mx(
+    async def update_record_mx(
         self,
         domain_id: str,
         record_id: str,
@@ -1894,7 +1894,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1907,7 +1907,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def create_record_ns(
+    async def create_record_ns(
         self,
         domain_id: str,
         name: str,
@@ -1959,7 +1959,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1972,7 +1972,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def update_record_ns(
+    async def update_record_ns(
         self,
         domain_id: str,
         record_id: str,
@@ -2032,7 +2032,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -2045,7 +2045,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def create_record_srv(
+    async def create_record_srv(
         self,
         domain_id: str,
         name: str,
@@ -2116,7 +2116,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2129,7 +2129,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def update_record_srv(
+    async def update_record_srv(
         self,
         domain_id: str,
         record_id: str,
@@ -2217,7 +2217,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -2230,7 +2230,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def create_record_txt(
+    async def create_record_txt(
         self,
         domain_id: str,
         name: str,
@@ -2282,7 +2282,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2295,7 +2295,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def update_record_txt(
+    async def update_record_txt(
         self,
         domain_id: str,
         record_id: str,
@@ -2355,7 +2355,7 @@ class Domains(Service):
         if comment is not None:
             api_params['comment'] = self._normalize_value(comment)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -2368,7 +2368,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def get_record(
+    async def get_record(
         self,
         domain_id: str,
         record_id: str,
@@ -2406,7 +2406,7 @@ class Domains(Service):
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
         api_path = api_path.replace('{recordId}', str(self._normalize_value(record_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -2418,7 +2418,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DnsRecord)
 
-    def delete_record(
+    async def delete_record(
         self,
         domain_id: str,
         record_id: str,
@@ -2453,7 +2453,7 @@ class Domains(Service):
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
         api_path = api_path.replace('{recordId}', str(self._normalize_value(record_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -2466,7 +2466,7 @@ class Domains(Service):
 
         return response
 
-    def update_team(
+    async def update_team(
         self,
         domain_id: str,
         team_id: str,
@@ -2504,7 +2504,7 @@ class Domains(Service):
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
         api_params['teamId'] = self._normalize_value(team_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2517,7 +2517,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=Domain)
 
-    def get_transfer_status(
+    async def get_transfer_status(
         self,
         domain_id: str,
     ) -> DomainTransferStatus:
@@ -2545,7 +2545,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -2557,7 +2557,7 @@ class Domains(Service):
 
         return self._parse_response(response, model=DomainTransferStatus)
 
-    def get_zone(
+    async def get_zone(
         self,
         domain_id: str,
     ) -> str:
@@ -2586,7 +2586,7 @@ class Domains(Service):
             raise AppwriteException('Missing required parameter: "domain_id"')
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -2599,7 +2599,7 @@ class Domains(Service):
 
         return response
 
-    def update_zone(
+    async def update_zone(
         self,
         domain_id: str,
         content: str,
@@ -2634,7 +2634,7 @@ class Domains(Service):
         api_path = api_path.replace('{domainId}', str(self._normalize_value(domain_id)))
         api_params['content'] = self._normalize_value(content)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {

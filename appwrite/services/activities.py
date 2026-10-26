@@ -12,7 +12,7 @@ class Activities(Service):
     def __init__(self, client) -> None:
         super(Activities, self).__init__(client)
 
-    def list_events(
+    async def list_events(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -44,7 +44,7 @@ class Activities(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -56,7 +56,7 @@ class Activities(Service):
 
         return self._parse_response(response, model=ActivityEventList)
 
-    def get_event(
+    async def get_event(
         self,
         event_id: str,
     ) -> ActivityEvent:
@@ -84,7 +84,7 @@ class Activities(Service):
             raise AppwriteException('Missing required parameter: "event_id"')
         api_path = api_path.replace('{eventId}', str(self._normalize_value(event_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {

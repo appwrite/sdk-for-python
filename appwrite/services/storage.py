@@ -18,7 +18,7 @@ class Storage(Service):
     def __init__(self, client) -> None:
         super(Storage, self).__init__(client)
 
-    def list_buckets(
+    async def list_buckets(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -55,7 +55,7 @@ class Storage(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -67,7 +67,7 @@ class Storage(Service):
 
         return self._parse_response(response, model=BucketList)
 
-    def create_bucket(
+    async def create_bucket(
         self,
         bucket_id: str,
         name: str,
@@ -156,7 +156,7 @@ class Storage(Service):
         if strip_metadata is not None:
             api_params['stripMetadata'] = self._normalize_value(strip_metadata)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -169,7 +169,7 @@ class Storage(Service):
 
         return self._parse_response(response, model=Bucket)
 
-    def get_bucket(
+    async def get_bucket(
         self,
         bucket_id: str,
     ) -> Bucket:
@@ -197,7 +197,7 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "bucket_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -209,7 +209,7 @@ class Storage(Service):
 
         return self._parse_response(response, model=Bucket)
 
-    def update_bucket(
+    async def update_bucket(
         self,
         bucket_id: str,
         name: str,
@@ -298,7 +298,7 @@ class Storage(Service):
         if strip_metadata is not None:
             api_params['stripMetadata'] = self._normalize_value(strip_metadata)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -311,7 +311,7 @@ class Storage(Service):
 
         return self._parse_response(response, model=Bucket)
 
-    def delete_bucket(
+    async def delete_bucket(
         self,
         bucket_id: str,
     ) -> Dict[str, Any]:
@@ -339,7 +339,7 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "bucket_id"')
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -352,7 +352,7 @@ class Storage(Service):
 
         return response
 
-    def list_files(
+    async def list_files(
         self,
         bucket_id: str,
         queries: Optional[List[str]] = None,
@@ -395,7 +395,7 @@ class Storage(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -407,7 +407,7 @@ class Storage(Service):
 
         return self._parse_response(response, model=FileList)
 
-    def create_file(
+    async def create_file(
         self,
         bucket_id: str,
         file_id: str,
@@ -472,7 +472,7 @@ class Storage(Service):
         upload_id = ''
         upload_id = file_id
 
-        response = self.client.chunked_upload(
+        response = await self.client.chunked_upload(
             api_path,
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
@@ -488,7 +488,7 @@ class Storage(Service):
 
         return self._parse_response(response, model=File)
 
-    def get_file(
+    async def get_file(
         self,
         bucket_id: str,
         file_id: str,
@@ -522,7 +522,7 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -534,7 +534,7 @@ class Storage(Service):
 
         return self._parse_response(response, model=File)
 
-    def update_file(
+    async def update_file(
         self,
         bucket_id: str,
         file_id: str,
@@ -578,7 +578,7 @@ class Storage(Service):
         if permissions is not None:
             api_params['permissions'] = self._normalize_value(permissions)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -591,7 +591,7 @@ class Storage(Service):
 
         return self._parse_response(response, model=File)
 
-    def delete_file(
+    async def delete_file(
         self,
         bucket_id: str,
         file_id: str,
@@ -625,7 +625,7 @@ class Storage(Service):
         api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
         api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -638,7 +638,7 @@ class Storage(Service):
 
         return response
 
-    def get_file_download(
+    async def get_file_download(
         self,
         bucket_id: str,
         file_id: str,
@@ -677,7 +677,7 @@ class Storage(Service):
         if token is not None:
             api_params['token'] = self._normalize_value(token)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -689,7 +689,7 @@ class Storage(Service):
 
         return response
 
-    def get_file_preview(
+    async def get_file_preview(
         self,
         bucket_id: str,
         file_id: str,
@@ -783,7 +783,7 @@ class Storage(Service):
         if token is not None:
             api_params['token'] = self._normalize_value(token)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -795,7 +795,7 @@ class Storage(Service):
 
         return response
 
-    def get_file_view(
+    async def get_file_view(
         self,
         bucket_id: str,
         file_id: str,
@@ -834,7 +834,7 @@ class Storage(Service):
         if token is not None:
             api_params['token'] = self._normalize_value(token)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {

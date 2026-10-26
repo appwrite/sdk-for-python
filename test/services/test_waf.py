@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.waf import Waf
 
 
-class WafServiceTest(unittest.TestCase):
+class WafServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.waf = Waf(self.client)
 
-    @requests_mock.Mocker()
-    def test_list_rules(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list_rules(self):
         data = {
             "total": 5.0,
             "rules": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.list_rules()
+        response = await self.waf.list_rules()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_bypass_rule(self, m):
+    @respx.mock
+    async def test_create_bypass_rule(self):
         data = {
             "$id": "wafRule1",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -49,21 +50,18 @@ class WafServiceTest(unittest.TestCase):
             "config": {},
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.create_bypass_rule(
+        response = await self.waf.create_bypass_rule(
             '<RULE_ID>',
             'api',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_bypass_rule(self, m):
+    @respx.mock
+    async def test_update_bypass_rule(self):
         data = {
             "$id": "wafRule1",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -81,19 +79,16 @@ class WafServiceTest(unittest.TestCase):
             "config": {},
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.update_bypass_rule(
+        response = await self.waf.update_bypass_rule(
             '<RULE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_challenge_rule(self, m):
+    @respx.mock
+    async def test_create_challenge_rule(self):
         data = {
             "$id": "wafRule1",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -114,21 +109,18 @@ class WafServiceTest(unittest.TestCase):
             "ttl": 1800.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.create_challenge_rule(
+        response = await self.waf.create_challenge_rule(
             '<RULE_ID>',
             'api',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_challenge_rule(self, m):
+    @respx.mock
+    async def test_update_challenge_rule(self):
         data = {
             "$id": "wafRule1",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -149,19 +141,16 @@ class WafServiceTest(unittest.TestCase):
             "ttl": 1800.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.update_challenge_rule(
+        response = await self.waf.update_challenge_rule(
             '<RULE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_deny_rule(self, m):
+    @respx.mock
+    async def test_create_deny_rule(self):
         data = {
             "$id": "wafRule1",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -179,21 +168,18 @@ class WafServiceTest(unittest.TestCase):
             "config": {},
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.create_deny_rule(
+        response = await self.waf.create_deny_rule(
             '<RULE_ID>',
             'api',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_deny_rule(self, m):
+    @respx.mock
+    async def test_update_deny_rule(self):
         data = {
             "$id": "wafRule1",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -211,19 +197,16 @@ class WafServiceTest(unittest.TestCase):
             "config": {},
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.update_deny_rule(
+        response = await self.waf.update_deny_rule(
             '<RULE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_rate_limit_rule(self, m):
+    @respx.mock
+    async def test_create_rate_limit_rule(self):
         data = {
             "$id": "wafRule1",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -246,13 +229,10 @@ class WafServiceTest(unittest.TestCase):
             "maxBucketSize": 200.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.create_rate_limit_rule(
+        response = await self.waf.create_rate_limit_rule(
             '<RULE_ID>',
             'api',
             '<NAME>',
@@ -261,8 +241,8 @@ class WafServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_rate_limit_rule(self, m):
+    @respx.mock
+    async def test_update_rate_limit_rule(self):
         data = {
             "$id": "wafRule1",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -285,19 +265,16 @@ class WafServiceTest(unittest.TestCase):
             "maxBucketSize": 200.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.update_rate_limit_rule(
+        response = await self.waf.update_rate_limit_rule(
             '<RULE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_redirect_rule(self, m):
+    @respx.mock
+    async def test_create_redirect_rule(self):
         data = {
             "$id": "wafRule1",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -317,13 +294,10 @@ class WafServiceTest(unittest.TestCase):
             "statusCode": 301.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.create_redirect_rule(
+        response = await self.waf.create_redirect_rule(
             '<RULE_ID>',
             'api',
             '<NAME>',
@@ -332,8 +306,8 @@ class WafServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_redirect_rule(self, m):
+    @respx.mock
+    async def test_update_redirect_rule(self):
         data = {
             "$id": "wafRule1",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -353,19 +327,16 @@ class WafServiceTest(unittest.TestCase):
             "statusCode": 301.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.update_redirect_rule(
+        response = await self.waf.update_redirect_rule(
             '<RULE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_rule(self, m):
+    @respx.mock
+    async def test_get_rule(self):
         data = {
             "$id": "wafRule1",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -383,28 +354,22 @@ class WafServiceTest(unittest.TestCase):
             "config": {},
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.get_rule(
+        response = await self.waf.get_rule(
             '<RULE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_rule(self, m):
+    @respx.mock
+    async def test_delete_rule(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.waf.delete_rule(
+        response = await self.waf.delete_rule(
             '<RULE_ID>',
         )
         self.assertEqual(response, data)

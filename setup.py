@@ -20,10 +20,10 @@ setuptools.setup(
     url='https://appwrite.io/support',
     download_url='https://github.com/appwrite/sdk-for-python/archive/26.0.0.tar.gz',
     install_requires=[
-        'requests',
+        'httpx2>=2.0,<3',
         'pydantic>=2,<3',
     ],
-    python_requires='>=3.9',
+    python_requires='>=3.11',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
@@ -31,8 +31,6 @@ setuptools.setup(
         'Topic :: Software Development',
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3.13',

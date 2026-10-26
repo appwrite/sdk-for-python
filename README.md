@@ -13,7 +13,7 @@ Appwrite is an open-source backend as a service server that abstracts and simpli
 
 ## Installation
 
-Requires Python 3.9 or later. Install the [`appwrite`](https://pypi.org/project/appwrite/) package from PyPI:
+Requires Python 3.11 or later. Install the [`appwrite`](https://pypi.org/project/appwrite/) package from PyPI:
 
 ```bash
 pip install appwrite
@@ -26,6 +26,8 @@ uv add appwrite
 ```
 
 ## Getting started
+
+Every API call is asynchronous, so every service method returns a coroutine you `await`.
 
 ### Initialize the client
 
@@ -44,24 +46,31 @@ API keys grant server-level access to your project. Keep them out of client-side
 
 ### Make a request
 
-Create a service object with the client and call any of its methods. Every method returns a typed Pydantic model, so response fields are available as attributes.
+Create a service object with the client and await any of its methods. Every method returns a typed Pydantic model, so response fields are available as attributes.
 
 ```python
+import asyncio
+
 from appwrite.id import ID
 from appwrite.services.users import Users
 
-users = Users(client)
 
-user = users.create(
-    user_id=ID.unique(),
-    email='email@example.com',
-    password='password',
-    name="Walter O'Brien",
-)
+async def main():
+    users = Users(client)
 
-print(user.id)
-print(user.name)
-print(user.to_dict())
+    user = await users.create(
+        user_id=ID.unique(),
+        email='email@example.com',
+        password='password',
+        name="Walter O'Brien",
+    )
+
+    print(user.id)
+    print(user.name)
+    print(user.to_dict())
+
+
+asyncio.run(main())
 ```
 
 See the [API reference](https://appwrite.io/docs/references/cloud/server-python/users) for every service and method.
@@ -86,28 +95,29 @@ class Post(BaseModel):
     excerpt: Optional[str] = None
 
 
-tables_db = TablesDB(client)
+async def main():
+    tables_db = TablesDB(client)
 
-row = tables_db.create_row(
-    database_id='<DATABASE_ID>',
-    table_id='<TABLE_ID>',
-    row_id=ID.unique(),
-    data={'title': 'Hello, world', 'published': True},
-    model_type=Post,
-)
+    row = await tables_db.create_row(
+        database_id='<DATABASE_ID>',
+        table_id='<TABLE_ID>',
+        row_id=ID.unique(),
+        data={'title': 'Hello, world', 'published': True},
+        model_type=Post,
+    )
 
-print(row.id)
-print(row.data.title)
-
-result = tables_db.list_rows(
-    database_id='<DATABASE_ID>',
-    table_id='<TABLE_ID>',
-    queries=[Query.equal('published', True), Query.limit(25)],
-    model_type=Post,
-)
-
-for row in result.rows:
+    print(row.id)
     print(row.data.title)
+
+    result = await tables_db.list_rows(
+        database_id='<DATABASE_ID>',
+        table_id='<TABLE_ID>',
+        queries=[Query.equal('published', True), Query.limit(25)],
+        model_type=Post,
+    )
+
+    for row in result.rows:
+        print(row.data.title)
 ```
 
 ### Handle errors
@@ -118,9 +128,22 @@ Failed requests raise `AppwriteException`, which carries `message`, `code`, `typ
 from appwrite.exception import AppwriteException
 
 try:
-    user = users.get(user_id='<USER_ID>')
+    user = await users.get(user_id='<USER_ID>')
 except AppwriteException as error:
     print(error.code, error.type, error.message)
+```
+
+### Close the client
+
+The client keeps a pooled HTTP connection open. Close it when you are done, or use it as an async context manager.
+
+```python
+await client.aclose()
+```
+
+```python
+async with Client() as client:
+    ...
 ```
 
 ### Self-hosted Appwrite

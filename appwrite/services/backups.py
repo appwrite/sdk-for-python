@@ -17,7 +17,7 @@ class Backups(Service):
     def __init__(self, client) -> None:
         super(Backups, self).__init__(client)
 
-    def list_archives(
+    async def list_archives(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -49,7 +49,7 @@ class Backups(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -61,7 +61,7 @@ class Backups(Service):
 
         return self._parse_response(response, model=BackupArchiveList)
 
-    def create_archive(
+    async def create_archive(
         self,
         services: List[BackupServices],
         resource_id: Optional[str] = None,
@@ -94,7 +94,7 @@ class Backups(Service):
         if resource_id is not None:
             api_params['resourceId'] = self._normalize_value(resource_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -107,7 +107,7 @@ class Backups(Service):
 
         return self._parse_response(response, model=BackupArchive)
 
-    def get_archive(
+    async def get_archive(
         self,
         archive_id: str,
     ) -> BackupArchive:
@@ -135,7 +135,7 @@ class Backups(Service):
             raise AppwriteException('Missing required parameter: "archive_id"')
         api_path = api_path.replace('{archiveId}', str(self._normalize_value(archive_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -147,7 +147,7 @@ class Backups(Service):
 
         return self._parse_response(response, model=BackupArchive)
 
-    def delete_archive(
+    async def delete_archive(
         self,
         archive_id: str,
     ) -> Dict[str, Any]:
@@ -175,7 +175,7 @@ class Backups(Service):
             raise AppwriteException('Missing required parameter: "archive_id"')
         api_path = api_path.replace('{archiveId}', str(self._normalize_value(archive_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -188,7 +188,7 @@ class Backups(Service):
 
         return response
 
-    def list_policies(
+    async def list_policies(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -220,7 +220,7 @@ class Backups(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -232,7 +232,7 @@ class Backups(Service):
 
         return self._parse_response(response, model=BackupPolicyList)
 
-    def create_policy(
+    async def create_policy(
         self,
         policy_id: str,
         services: List[BackupServices],
@@ -293,7 +293,7 @@ class Backups(Service):
         api_params['retention'] = self._normalize_value(retention)
         api_params['schedule'] = self._normalize_value(schedule)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -306,7 +306,7 @@ class Backups(Service):
 
         return self._parse_response(response, model=BackupPolicy)
 
-    def get_policy(
+    async def get_policy(
         self,
         policy_id: str,
     ) -> BackupPolicy:
@@ -334,7 +334,7 @@ class Backups(Service):
             raise AppwriteException('Missing required parameter: "policy_id"')
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -346,7 +346,7 @@ class Backups(Service):
 
         return self._parse_response(response, model=BackupPolicy)
 
-    def update_policy(
+    async def update_policy(
         self,
         policy_id: str,
         name: Optional[str] = None,
@@ -394,7 +394,7 @@ class Backups(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -407,7 +407,7 @@ class Backups(Service):
 
         return self._parse_response(response, model=BackupPolicy)
 
-    def delete_policy(
+    async def delete_policy(
         self,
         policy_id: str,
     ) -> Dict[str, Any]:
@@ -435,7 +435,7 @@ class Backups(Service):
             raise AppwriteException('Missing required parameter: "policy_id"')
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -448,7 +448,7 @@ class Backups(Service):
 
         return response
 
-    def create_restoration(
+    async def create_restoration(
         self,
         archive_id: str,
         services: List[BackupServices],
@@ -500,7 +500,7 @@ class Backups(Service):
         if new_resource_name is not None:
             api_params['newResourceName'] = self._normalize_value(new_resource_name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -513,7 +513,7 @@ class Backups(Service):
 
         return self._parse_response(response, model=BackupRestoration)
 
-    def list_restorations(
+    async def list_restorations(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -545,7 +545,7 @@ class Backups(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -557,7 +557,7 @@ class Backups(Service):
 
         return self._parse_response(response, model=BackupRestorationList)
 
-    def get_restoration(
+    async def get_restoration(
         self,
         restoration_id: str,
     ) -> BackupRestoration:
@@ -585,7 +585,7 @@ class Backups(Service):
             raise AppwriteException('Missing required parameter: "restoration_id"')
         api_path = api_path.replace('{restorationId}', str(self._normalize_value(restoration_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {

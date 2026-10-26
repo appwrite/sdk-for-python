@@ -35,7 +35,7 @@ class Account(Service):
     def __init__(self, client) -> None:
         super(Account, self).__init__(client)
 
-    def get(
+    async def get(
         self,
         model_type: Type[T] = dict,
     ) -> User[T]:
@@ -61,7 +61,7 @@ class Account(Service):
         api_path = '/account'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -73,7 +73,7 @@ class Account(Service):
 
         return User.with_data(response, model_type)
 
-    def create(
+    async def create(
         self,
         user_id: str,
         email: str,
@@ -122,7 +122,7 @@ class Account(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -135,7 +135,7 @@ class Account(Service):
 
         return User.with_data(response, model_type)
 
-    def list_consents(
+    async def list_consents(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -167,7 +167,7 @@ class Account(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -179,7 +179,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Oauth2ConsentList)
 
-    def get_consent(
+    async def get_consent(
         self,
         consent_id: str,
     ) -> Oauth2Consent:
@@ -207,7 +207,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "consent_id"')
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -219,7 +219,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Oauth2Consent)
 
-    def delete_consent(
+    async def delete_consent(
         self,
         consent_id: str,
     ) -> Dict[str, Any]:
@@ -247,7 +247,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "consent_id"')
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -260,7 +260,7 @@ class Account(Service):
 
         return response
 
-    def list_consent_tokens(
+    async def list_consent_tokens(
         self,
         consent_id: str,
         queries: Optional[List[str]] = None,
@@ -298,7 +298,7 @@ class Account(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -310,7 +310,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Oauth2ConsentTokenList)
 
-    def get_consent_token(
+    async def get_consent_token(
         self,
         consent_id: str,
         token_id: str,
@@ -344,7 +344,7 @@ class Account(Service):
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
         api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -356,7 +356,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Oauth2ConsentToken)
 
-    def delete_consent_token(
+    async def delete_consent_token(
         self,
         consent_id: str,
         token_id: str,
@@ -390,7 +390,7 @@ class Account(Service):
         api_path = api_path.replace('{consentId}', str(self._normalize_value(consent_id)))
         api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -403,7 +403,7 @@ class Account(Service):
 
         return response
 
-    def update_email(
+    async def update_email(
         self,
         email: str,
         password: str,
@@ -442,7 +442,7 @@ class Account(Service):
         api_params['email'] = self._normalize_value(email)
         api_params['password'] = self._normalize_value(password)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -455,7 +455,7 @@ class Account(Service):
 
         return User.with_data(response, model_type)
 
-    def list_identities(
+    async def list_identities(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -487,7 +487,7 @@ class Account(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -499,7 +499,7 @@ class Account(Service):
 
         return self._parse_response(response, model=IdentityList)
 
-    def delete_identity(
+    async def delete_identity(
         self,
         identity_id: str,
     ) -> Dict[str, Any]:
@@ -527,7 +527,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "identity_id"')
         api_path = api_path.replace('{identityId}', str(self._normalize_value(identity_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -540,7 +540,7 @@ class Account(Service):
 
         return response
 
-    def list_memberships(
+    async def list_memberships(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -572,7 +572,7 @@ class Account(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -584,7 +584,7 @@ class Account(Service):
 
         return self._parse_response(response, model=MembershipList)
 
-    def update_mfa(
+    async def update_mfa(
         self,
         mfa: bool,
         model_type: Type[T] = dict,
@@ -616,7 +616,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "mfa"')
         api_params['mfa'] = self._normalize_value(mfa)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -629,7 +629,7 @@ class Account(Service):
 
         return User.with_data(response, model_type)
 
-    def create_mfa_authenticator(
+    async def create_mfa_authenticator(
         self,
         type: AuthenticatorType,
     ) -> MfaType:
@@ -657,7 +657,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "type"')
         api_path = api_path.replace('{type}', str(self._normalize_value(type)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -670,7 +670,7 @@ class Account(Service):
 
         return self._parse_response(response, model=MfaType)
 
-    def update_mfa_authenticator(
+    async def update_mfa_authenticator(
         self,
         type: AuthenticatorType,
         otp: str,
@@ -708,7 +708,7 @@ class Account(Service):
         api_path = api_path.replace('{type}', str(self._normalize_value(type)))
         api_params['otp'] = self._normalize_value(otp)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -721,7 +721,7 @@ class Account(Service):
 
         return User.with_data(response, model_type)
 
-    def delete_mfa_authenticator(
+    async def delete_mfa_authenticator(
         self,
         type: AuthenticatorType,
     ) -> Dict[str, Any]:
@@ -749,7 +749,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "type"')
         api_path = api_path.replace('{type}', str(self._normalize_value(type)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -762,7 +762,7 @@ class Account(Service):
 
         return response
 
-    def create_mfa_challenge(
+    async def create_mfa_challenge(
         self,
         factor: AuthenticationFactor,
     ) -> MfaChallenge:
@@ -790,7 +790,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "factor"')
         api_params['factor'] = self._normalize_value(factor)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -803,7 +803,7 @@ class Account(Service):
 
         return self._parse_response(response, model=MfaChallenge)
 
-    def update_mfa_challenge(
+    async def update_mfa_challenge(
         self,
         challenge_id: str,
         otp: str,
@@ -837,7 +837,7 @@ class Account(Service):
         api_params['challengeId'] = self._normalize_value(challenge_id)
         api_params['otp'] = self._normalize_value(otp)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -850,7 +850,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Session)
 
-    def list_mfa_factors(
+    async def list_mfa_factors(
         self,
     ) -> MfaFactors:
         """
@@ -869,7 +869,7 @@ class Account(Service):
         api_path = '/account/mfa/factors'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -881,7 +881,7 @@ class Account(Service):
 
         return self._parse_response(response, model=MfaFactors)
 
-    def get_mfa_recovery_codes(
+    async def get_mfa_recovery_codes(
         self,
     ) -> MfaRecoveryCodes:
         """
@@ -900,7 +900,7 @@ class Account(Service):
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -912,7 +912,7 @@ class Account(Service):
 
         return self._parse_response(response, model=MfaRecoveryCodes)
 
-    def create_mfa_recovery_codes(
+    async def create_mfa_recovery_codes(
         self,
     ) -> MfaRecoveryCodes:
         """
@@ -931,7 +931,7 @@ class Account(Service):
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -944,7 +944,7 @@ class Account(Service):
 
         return self._parse_response(response, model=MfaRecoveryCodes)
 
-    def update_mfa_recovery_codes(
+    async def update_mfa_recovery_codes(
         self,
     ) -> MfaRecoveryCodes:
         """
@@ -963,7 +963,7 @@ class Account(Service):
         api_path = '/account/mfa/recovery-codes'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -976,7 +976,7 @@ class Account(Service):
 
         return self._parse_response(response, model=MfaRecoveryCodes)
 
-    def update_name(
+    async def update_name(
         self,
         name: str,
         model_type: Type[T] = dict,
@@ -1008,7 +1008,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "name"')
         api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1021,7 +1021,7 @@ class Account(Service):
 
         return User.with_data(response, model_type)
 
-    def list_passkeys(
+    async def list_passkeys(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -1053,7 +1053,7 @@ class Account(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1065,7 +1065,7 @@ class Account(Service):
 
         return self._parse_response(response, model=PasskeyList)
 
-    def create_passkey(
+    async def create_passkey(
         self,
         passkey_id: Optional[str] = None,
         name: Optional[str] = None,
@@ -1097,7 +1097,7 @@ class Account(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1110,7 +1110,7 @@ class Account(Service):
 
         return self._parse_response(response, model=PasskeyChallenge)
 
-    def get_passkey(
+    async def get_passkey(
         self,
         passkey_id: str,
     ) -> Passkey:
@@ -1138,7 +1138,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "passkey_id"')
         api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1150,7 +1150,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Passkey)
 
-    def update_passkey(
+    async def update_passkey(
         self,
         passkey_id: str,
         name: str,
@@ -1184,7 +1184,7 @@ class Account(Service):
         api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
         api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1197,7 +1197,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Passkey)
 
-    def delete_passkey(
+    async def delete_passkey(
         self,
         passkey_id: str,
     ) -> Dict[str, Any]:
@@ -1225,7 +1225,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "passkey_id"')
         api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1238,7 +1238,7 @@ class Account(Service):
 
         return response
 
-    def update_passkey_verification(
+    async def update_passkey_verification(
         self,
         passkey_id: str,
         credential: Dict[str, Any],
@@ -1272,7 +1272,7 @@ class Account(Service):
         api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
         api_params['credential'] = self._normalize_value(credential)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1285,7 +1285,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Passkey)
 
-    def update_password(
+    async def update_password(
         self,
         password: str,
         old_password: Optional[str] = None,
@@ -1322,7 +1322,7 @@ class Account(Service):
         if old_password is not None:
             api_params['oldPassword'] = self._normalize_value(old_password)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1335,7 +1335,7 @@ class Account(Service):
 
         return User.with_data(response, model_type)
 
-    def update_phone(
+    async def update_phone(
         self,
         phone: str,
         password: str,
@@ -1373,7 +1373,7 @@ class Account(Service):
         api_params['phone'] = self._normalize_value(phone)
         api_params['password'] = self._normalize_value(password)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1386,7 +1386,7 @@ class Account(Service):
 
         return User.with_data(response, model_type)
 
-    def get_prefs(
+    async def get_prefs(
         self,
         model_type: Type[T] = dict,
     ) -> Preferences[T]:
@@ -1412,7 +1412,7 @@ class Account(Service):
         api_path = '/account/prefs'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1424,7 +1424,7 @@ class Account(Service):
 
         return Preferences.with_data(response, model_type)
 
-    def update_prefs(
+    async def update_prefs(
         self,
         prefs: Dict[str, Any],
         model_type: Type[T] = dict,
@@ -1456,7 +1456,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "prefs"')
         api_params['prefs'] = self._normalize_value(prefs)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1469,7 +1469,7 @@ class Account(Service):
 
         return User.with_data(response, model_type)
 
-    def create_recovery(
+    async def create_recovery(
         self,
         email: str,
         url: str,
@@ -1503,7 +1503,7 @@ class Account(Service):
         api_params['email'] = self._normalize_value(email)
         api_params['url'] = self._normalize_value(url)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1516,7 +1516,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def update_recovery(
+    async def update_recovery(
         self,
         user_id: str,
         secret: str,
@@ -1560,7 +1560,7 @@ class Account(Service):
         api_params['secret'] = self._normalize_value(secret)
         api_params['password'] = self._normalize_value(password)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1573,7 +1573,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def create_recovery_otp(
+    async def create_recovery_otp(
         self,
         email: str,
         phrase: Optional[bool] = None,
@@ -1608,7 +1608,7 @@ class Account(Service):
         if phrase is not None:
             api_params['phrase'] = self._normalize_value(phrase)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1621,7 +1621,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def update_recovery_otp(
+    async def update_recovery_otp(
         self,
         user_id: str,
         secret: str,
@@ -1663,7 +1663,7 @@ class Account(Service):
         api_params['secret'] = self._normalize_value(secret)
         api_params['password'] = self._normalize_value(password)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1676,7 +1676,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def list_sessions(
+    async def list_sessions(
         self,
         total: Optional[bool] = None,
     ) -> SessionList:
@@ -1703,7 +1703,7 @@ class Account(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1715,7 +1715,7 @@ class Account(Service):
 
         return self._parse_response(response, model=SessionList)
 
-    def delete_sessions(
+    async def delete_sessions(
         self,
         current: Optional[bool] = None,
     ) -> Dict[str, Any]:
@@ -1742,7 +1742,7 @@ class Account(Service):
         if current is not None:
             api_params['current'] = self._normalize_value(current)
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1755,7 +1755,7 @@ class Account(Service):
 
         return response
 
-    def create_anonymous_session(
+    async def create_anonymous_session(
         self,
     ) -> Session:
         """
@@ -1774,7 +1774,7 @@ class Account(Service):
         api_path = '/account/sessions/anonymous'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1787,7 +1787,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Session)
 
-    def create_email_password_session(
+    async def create_email_password_session(
         self,
         email: str,
         password: str,
@@ -1828,7 +1828,7 @@ class Account(Service):
         if duration is not None:
             api_params['duration'] = self._normalize_value(duration)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1841,7 +1841,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Session)
 
-    def create_id_token_session(
+    async def create_id_token_session(
         self,
         provider: IdTokenProvider,
         id_token: str,
@@ -1905,7 +1905,7 @@ class Account(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1919,7 +1919,7 @@ class Account(Service):
         return self._parse_response(response, model=Session)
 
     @deprecated("This API has been deprecated since 1.6.0. Please use `account.create_session` instead.")
-    def update_magic_url_session(
+    async def update_magic_url_session(
         self,
         user_id: str,
         secret: str,
@@ -1955,7 +1955,7 @@ class Account(Service):
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1969,7 +1969,7 @@ class Account(Service):
         return self._parse_response(response, model=Session)
 
     @deprecated("This API has been deprecated since 1.6.0. Please use `account.create_session` instead.")
-    def update_phone_session(
+    async def update_phone_session(
         self,
         user_id: str,
         secret: str,
@@ -2005,7 +2005,7 @@ class Account(Service):
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -2018,7 +2018,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Session)
 
-    def create_session(
+    async def create_session(
         self,
         user_id: str,
         secret: str,
@@ -2052,7 +2052,7 @@ class Account(Service):
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2065,7 +2065,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Session)
 
-    def get_session(
+    async def get_session(
         self,
         session_id: str,
     ) -> Session:
@@ -2093,7 +2093,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "session_id"')
         api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -2105,7 +2105,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Session)
 
-    def update_session(
+    async def update_session(
         self,
         session_id: str,
     ) -> Session:
@@ -2133,7 +2133,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "session_id"')
         api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2146,7 +2146,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Session)
 
-    def delete_session(
+    async def delete_session(
         self,
         session_id: str,
     ) -> Dict[str, Any]:
@@ -2174,7 +2174,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "session_id"')
         api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -2187,7 +2187,7 @@ class Account(Service):
 
         return response
 
-    def update_status(
+    async def update_status(
         self,
         model_type: Type[T] = dict,
     ) -> User[T]:
@@ -2213,7 +2213,7 @@ class Account(Service):
         api_path = '/account/status'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2226,7 +2226,7 @@ class Account(Service):
 
         return User.with_data(response, model_type)
 
-    def create_email_token(
+    async def create_email_token(
         self,
         user_id: str,
         email: str,
@@ -2267,7 +2267,7 @@ class Account(Service):
         if phrase is not None:
             api_params['phrase'] = self._normalize_value(phrase)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2280,7 +2280,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def create_magic_url_token(
+    async def create_magic_url_token(
         self,
         user_id: str,
         email: str,
@@ -2326,7 +2326,7 @@ class Account(Service):
         if phrase is not None:
             api_params['phrase'] = self._normalize_value(phrase)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2339,7 +2339,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def create_o_auth2_token(
+    async def create_o_auth2_token(
         self,
         provider: OAuthProvider,
         success: Optional[str] = None,
@@ -2393,7 +2393,7 @@ class Account(Service):
         if state is not None:
             api_params['state'] = self._normalize_value(state)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -2406,7 +2406,7 @@ class Account(Service):
 
         return response
 
-    def create_passkey_token(
+    async def create_passkey_token(
         self,
     ) -> PasskeyChallenge:
         """
@@ -2425,7 +2425,7 @@ class Account(Service):
         api_path = '/account/tokens/passkey'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2438,7 +2438,7 @@ class Account(Service):
 
         return self._parse_response(response, model=PasskeyChallenge)
 
-    def update_passkey_token(
+    async def update_passkey_token(
         self,
         challenge_id: str,
         credential: Dict[str, Any],
@@ -2472,7 +2472,7 @@ class Account(Service):
         api_params['challengeId'] = self._normalize_value(challenge_id)
         api_params['credential'] = self._normalize_value(credential)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -2485,7 +2485,7 @@ class Account(Service):
 
         return self._parse_response(response, model=TokenSecret)
 
-    def create_phone_token(
+    async def create_phone_token(
         self,
         user_id: str,
         phone: str,
@@ -2521,7 +2521,7 @@ class Account(Service):
         api_params['userId'] = self._normalize_value(user_id)
         api_params['phone'] = self._normalize_value(phone)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2534,7 +2534,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def create_email_verification(
+    async def create_email_verification(
         self,
         url: str,
     ) -> Token:
@@ -2564,7 +2564,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "url"')
         api_params['url'] = self._normalize_value(url)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2578,7 +2578,7 @@ class Account(Service):
         return self._parse_response(response, model=Token)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `account.create_email_verification` instead.")
-    def create_verification(
+    async def create_verification(
         self,
         url: str,
     ) -> Token:
@@ -2610,7 +2610,7 @@ class Account(Service):
             raise AppwriteException('Missing required parameter: "url"')
         api_params['url'] = self._normalize_value(url)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2623,7 +2623,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def update_email_verification(
+    async def update_email_verification(
         self,
         user_id: str,
         secret: str,
@@ -2657,7 +2657,7 @@ class Account(Service):
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -2671,7 +2671,7 @@ class Account(Service):
         return self._parse_response(response, model=Token)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `account.update_email_verification` instead.")
-    def update_verification(
+    async def update_verification(
         self,
         user_id: str,
         secret: str,
@@ -2707,7 +2707,7 @@ class Account(Service):
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -2720,7 +2720,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def create_email_verification_otp(
+    async def create_email_verification_otp(
         self,
         phrase: Optional[bool] = None,
     ) -> Token:
@@ -2749,7 +2749,7 @@ class Account(Service):
         if phrase is not None:
             api_params['phrase'] = self._normalize_value(phrase)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2762,7 +2762,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def update_email_verification_otp(
+    async def update_email_verification_otp(
         self,
         user_id: str,
         secret: str,
@@ -2796,7 +2796,7 @@ class Account(Service):
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -2809,7 +2809,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def create_phone_verification(
+    async def create_phone_verification(
         self,
     ) -> Token:
         """
@@ -2828,7 +2828,7 @@ class Account(Service):
         api_path = '/account/verifications/phone'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2841,7 +2841,7 @@ class Account(Service):
 
         return self._parse_response(response, model=Token)
 
-    def update_phone_verification(
+    async def update_phone_verification(
         self,
         user_id: str,
         secret: str,
@@ -2875,7 +2875,7 @@ class Account(Service):
         api_params['userId'] = self._normalize_value(user_id)
         api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {

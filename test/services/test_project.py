@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,14 +9,17 @@ from appwrite.models import *
 from appwrite.services.project import Project
 
 
-class ProjectServiceTest(unittest.TestCase):
+class ProjectServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.project = Project(self.client)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_get(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -45,30 +49,24 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.get()
+        response = await self.project.get()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete(self, m):
+    @respx.mock
+    async def test_delete(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.delete()
+        response = await self.project.delete()
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_auth_method(self, m):
+    @respx.mock
+    async def test_update_auth_method(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -98,36 +96,30 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_auth_method(
+        response = await self.project.update_auth_method(
             'email-password',
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_environments(self, m):
+    @respx.mock
+    async def test_list_environments(self):
         data = {
             "total": 5.0,
             "projects": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.list_environments()
+        response = await self.project.list_environments()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_environment(self, m):
+    @respx.mock
+    async def test_create_environment(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -157,20 +149,17 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.create_environment(
+        response = await self.project.create_environment(
             '<ENVIRONMENT_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_environment(self, m):
+    @respx.mock
+    async def test_get_environment(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -200,19 +189,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.get_environment(
+        response = await self.project.get_environment(
             '<ENVIRONMENT_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_environment(self, m):
+    @respx.mock
+    async def test_update_environment(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -242,51 +228,42 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_environment(
+        response = await self.project.update_environment(
             '<ENVIRONMENT_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_environment(self, m):
+    @respx.mock
+    async def test_delete_environment(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.delete_environment(
+        response = await self.project.delete_environment(
             '<ENVIRONMENT_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_keys(self, m):
+    @respx.mock
+    async def test_list_keys(self):
         data = {
             "total": 5.0,
             "keys": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.list_keys()
+        response = await self.project.list_keys()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_ephemeral_key(self, m):
+    @respx.mock
+    async def test_create_ephemeral_key(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -300,20 +277,17 @@ class ProjectServiceTest(unittest.TestCase):
             "sdks": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.create_ephemeral_key(
+        response = await self.project.create_ephemeral_key(
             [],
             1,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_key(self, m):
+    @respx.mock
+    async def test_get_key(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -327,19 +301,16 @@ class ProjectServiceTest(unittest.TestCase):
             "sdks": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.get_key(
+        response = await self.project.get_key(
             '<KEY_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_key(self, m):
+    @respx.mock
+    async def test_update_key(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -353,36 +324,30 @@ class ProjectServiceTest(unittest.TestCase):
             "sdks": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_key(
+        response = await self.project.update_key(
             '<KEY_ID>',
             '<NAME>',
             [],
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_key(self, m):
+    @respx.mock
+    async def test_delete_key(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.delete_key(
+        response = await self.project.delete_key(
             '<KEY_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_labels(self, m):
+    @respx.mock
+    async def test_update_labels(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -412,35 +377,29 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_labels(
+        response = await self.project.update_labels(
             [],
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_mock_phones(self, m):
+    @respx.mock
+    async def test_list_mock_phones(self):
         data = {
             "total": 5.0,
             "mockNumbers": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.list_mock_phones()
+        response = await self.project.list_mock_phones()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_mock_phone(self, m):
+    @respx.mock
+    async def test_create_mock_phone(self):
         data = {
             "number": "+1612842323",
             "otp": "123456",
@@ -448,20 +407,17 @@ class ProjectServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.create_mock_phone(
+        response = await self.project.create_mock_phone(
             '+12065550100',
             '<OTP>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_mock_phone(self, m):
+    @respx.mock
+    async def test_get_mock_phone(self):
         data = {
             "number": "+1612842323",
             "otp": "123456",
@@ -469,19 +425,16 @@ class ProjectServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.get_mock_phone(
+        response = await self.project.get_mock_phone(
             '+12065550100',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_mock_phone(self, m):
+    @respx.mock
+    async def test_update_mock_phone(self):
         data = {
             "number": "+1612842323",
             "otp": "123456",
@@ -489,51 +442,42 @@ class ProjectServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_mock_phone(
+        response = await self.project.update_mock_phone(
             '+12065550100',
             '<OTP>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_mock_phone(self, m):
+    @respx.mock
+    async def test_delete_mock_phone(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.delete_mock_phone(
+        response = await self.project.delete_mock_phone(
             '+12065550100',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_o_auth2_providers(self, m):
+    @respx.mock
+    async def test_list_o_auth2_providers(self):
         data = {
             "total": 5.0,
             "providers": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.list_o_auth2_providers()
+        response = await self.project.list_o_auth2_providers()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_server(self, m):
+    @respx.mock
+    async def test_update_o_auth2_server(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -563,20 +507,17 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_server(
+        response = await self.project.update_o_auth2_server(
             True,
             'https://example.com',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_amazon(self, m):
+    @respx.mock
+    async def test_update_o_auth2_amazon(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -584,17 +525,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "79ffe4000000000000000000000000000000000000000000000000000002de55",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_amazon()
+        response = await self.project.update_o_auth2_amazon()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_apple(self, m):
+    @respx.mock
+    async def test_update_o_auth2_apple(self):
         data = {
             "$id": "apple",
             "enabled": True,
@@ -606,17 +544,14 @@ class ProjectServiceTest(unittest.TestCase):
             "nativeClientIds": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_apple()
+        response = await self.project.update_o_auth2_apple()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_appwrite(self, m):
+    @respx.mock
+    async def test_update_o_auth2_appwrite(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -624,17 +559,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "b86afd000000000000000000000000000000000000000000000000000ced5f93",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_appwrite()
+        response = await self.project.update_o_auth2_appwrite()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_auth0(self, m):
+    @respx.mock
+    async def test_update_o_auth2_auth0(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -644,17 +576,14 @@ class ProjectServiceTest(unittest.TestCase):
             "endpoint": "example.us.auth0.com",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_auth0()
+        response = await self.project.update_o_auth2_auth0()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_authentik(self, m):
+    @respx.mock
+    async def test_update_o_auth2_authentik(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -663,17 +592,14 @@ class ProjectServiceTest(unittest.TestCase):
             "endpoint": "example.authentik.com",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_authentik()
+        response = await self.project.update_o_auth2_authentik()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_autodesk(self, m):
+    @respx.mock
+    async def test_update_o_auth2_autodesk(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -681,17 +607,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "7I000000000000MW",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_autodesk()
+        response = await self.project.update_o_auth2_autodesk()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_bitbucket(self, m):
+    @respx.mock
+    async def test_update_o_auth2_bitbucket(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -699,17 +622,14 @@ class ProjectServiceTest(unittest.TestCase):
             "secret": "NMfLZJ00000000000000000000TLQdDx",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_bitbucket()
+        response = await self.project.update_o_auth2_bitbucket()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_bitly(self, m):
+    @respx.mock
+    async def test_update_o_auth2_bitly(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -717,17 +637,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "a13e250000000000000000000000000000d73095",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_bitly()
+        response = await self.project.update_o_auth2_bitly()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_box(self, m):
+    @respx.mock
+    async def test_update_o_auth2_box(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -735,17 +652,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "OKM1f100000000000000000000eshEif",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_box()
+        response = await self.project.update_o_auth2_box()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_cloudflare(self, m):
+    @respx.mock
+    async def test_update_o_auth2_cloudflare(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -753,17 +667,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "cfoc_5Q6YRl0000000000000000000000000000000000003d214f",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_cloudflare()
+        response = await self.project.update_o_auth2_cloudflare()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_dailymotion(self, m):
+    @respx.mock
+    async def test_update_o_auth2_dailymotion(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -771,17 +682,14 @@ class ProjectServiceTest(unittest.TestCase):
             "apiSecret": "a399a90000000000000000000000000000d90639",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_dailymotion()
+        response = await self.project.update_o_auth2_dailymotion()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_discord(self, m):
+    @respx.mock
+    async def test_update_o_auth2_discord(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -790,17 +698,14 @@ class ProjectServiceTest(unittest.TestCase):
             "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_discord()
+        response = await self.project.update_o_auth2_discord()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_disqus(self, m):
+    @respx.mock
+    async def test_update_o_auth2_disqus(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -808,17 +713,14 @@ class ProjectServiceTest(unittest.TestCase):
             "secretKey": "W7Bykj00000000000000000000000000000000000000000000000000003o43w9",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_disqus()
+        response = await self.project.update_o_auth2_disqus()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_dropbox(self, m):
+    @respx.mock
+    async def test_update_o_auth2_dropbox(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -826,17 +728,14 @@ class ProjectServiceTest(unittest.TestCase):
             "appSecret": "g200000000000vw",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_dropbox()
+        response = await self.project.update_o_auth2_dropbox()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_etsy(self, m):
+    @respx.mock
+    async def test_update_o_auth2_etsy(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -844,17 +743,14 @@ class ProjectServiceTest(unittest.TestCase):
             "sharedSecret": "tp000000ru",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_etsy()
+        response = await self.project.update_o_auth2_etsy()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_facebook(self, m):
+    @respx.mock
+    async def test_update_o_auth2_facebook(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -862,17 +758,14 @@ class ProjectServiceTest(unittest.TestCase):
             "appSecret": "2d0b2800000000000000000000d38af4",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_facebook()
+        response = await self.project.update_o_auth2_facebook()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_figma(self, m):
+    @respx.mock
+    async def test_update_o_auth2_figma(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -880,17 +773,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "yEpOYn0000000000000000004iIsU5",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_figma()
+        response = await self.project.update_o_auth2_figma()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_fusion_auth(self, m):
+    @respx.mock
+    async def test_update_o_auth2_fusion_auth(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -899,17 +789,14 @@ class ProjectServiceTest(unittest.TestCase):
             "endpoint": "example.fusionauth.io",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_fusion_auth()
+        response = await self.project.update_o_auth2_fusion_auth()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_git_hub(self, m):
+    @respx.mock
+    async def test_update_o_auth2_git_hub(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -918,17 +805,14 @@ class ProjectServiceTest(unittest.TestCase):
             "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_git_hub()
+        response = await self.project.update_o_auth2_git_hub()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_gitlab(self, m):
+    @respx.mock
+    async def test_update_o_auth2_gitlab(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -937,17 +821,14 @@ class ProjectServiceTest(unittest.TestCase):
             "endpoint": "https:\/\/gitlab.com",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_gitlab()
+        response = await self.project.update_o_auth2_gitlab()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_google(self, m):
+    @respx.mock
+    async def test_update_o_auth2_google(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -958,17 +839,14 @@ class ProjectServiceTest(unittest.TestCase):
             "nativeClientIds": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_google()
+        response = await self.project.update_o_auth2_google()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_hugging_face(self, m):
+    @respx.mock
+    async def test_update_o_auth2_hugging_face(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -976,17 +854,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "oauth_app_secret_wcLhRtl000000000000000000000xbNdLt",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_hugging_face()
+        response = await self.project.update_o_auth2_hugging_face()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_kakao(self, m):
+    @respx.mock
+    async def test_update_o_auth2_kakao(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -995,17 +870,14 @@ class ProjectServiceTest(unittest.TestCase):
             "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_kakao()
+        response = await self.project.update_o_auth2_kakao()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_keycloak(self, m):
+    @respx.mock
+    async def test_update_o_auth2_keycloak(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1015,17 +887,14 @@ class ProjectServiceTest(unittest.TestCase):
             "realmName": "appwrite-realm",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_keycloak()
+        response = await self.project.update_o_auth2_keycloak()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_kick(self, m):
+    @respx.mock
+    async def test_update_o_auth2_kick(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1033,17 +902,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "34ac5600000000000000000000000000000000000000000000000000e830c8b",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_kick()
+        response = await self.project.update_o_auth2_kick()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_linkedin(self, m):
+    @respx.mock
+    async def test_update_o_auth2_linkedin(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1051,17 +917,14 @@ class ProjectServiceTest(unittest.TestCase):
             "primaryClientSecret": "WPL_AP1.2Bf0000000000000.\/HtlYw==",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_linkedin()
+        response = await self.project.update_o_auth2_linkedin()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_microsoft(self, m):
+    @respx.mock
+    async def test_update_o_auth2_microsoft(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1071,17 +934,14 @@ class ProjectServiceTest(unittest.TestCase):
             "tenant": "common",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_microsoft()
+        response = await self.project.update_o_auth2_microsoft()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_notion(self, m):
+    @respx.mock
+    async def test_update_o_auth2_notion(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1089,17 +949,14 @@ class ProjectServiceTest(unittest.TestCase):
             "oauthClientSecret": "secret_dLUr4b000000000000000000000000000000lFHAa9",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_notion()
+        response = await self.project.update_o_auth2_notion()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_oidc(self, m):
+    @respx.mock
+    async def test_update_o_auth2_oidc(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1112,17 +969,14 @@ class ProjectServiceTest(unittest.TestCase):
             "userInfoURL": "https:\/\/myoauth.com\/oauth2\/userinfo",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_oidc()
+        response = await self.project.update_o_auth2_oidc()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_okta(self, m):
+    @respx.mock
+    async def test_update_o_auth2_okta(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1133,17 +987,14 @@ class ProjectServiceTest(unittest.TestCase):
             "authorizationServerId": "aus000000000000000h7z",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_okta()
+        response = await self.project.update_o_auth2_okta()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_paypal(self, m):
+    @respx.mock
+    async def test_update_o_auth2_paypal(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1151,17 +1002,14 @@ class ProjectServiceTest(unittest.TestCase):
             "secretKey": "EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_paypal()
+        response = await self.project.update_o_auth2_paypal()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_paypal_sandbox(self, m):
+    @respx.mock
+    async def test_update_o_auth2_paypal_sandbox(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1169,17 +1017,14 @@ class ProjectServiceTest(unittest.TestCase):
             "secretKey": "EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_paypal_sandbox()
+        response = await self.project.update_o_auth2_paypal_sandbox()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_podio(self, m):
+    @respx.mock
+    async def test_update_o_auth2_podio(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1187,17 +1032,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "Rn247T0000000000000000000000000000000000000000000000000000W2zWTN",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_podio()
+        response = await self.project.update_o_auth2_podio()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_resend(self, m):
+    @respx.mock
+    async def test_update_o_auth2_resend(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1205,17 +1047,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "9c1e4b00000000000000000000000000000000000000000000000000a72d5f4",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_resend()
+        response = await self.project.update_o_auth2_resend()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_salesforce(self, m):
+    @respx.mock
+    async def test_update_o_auth2_salesforce(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1224,17 +1063,14 @@ class ProjectServiceTest(unittest.TestCase):
             "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_salesforce()
+        response = await self.project.update_o_auth2_salesforce()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_slack(self, m):
+    @respx.mock
+    async def test_update_o_auth2_slack(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1242,17 +1078,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "81656000000000000000000000f3d2fd",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_slack()
+        response = await self.project.update_o_auth2_slack()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_spotify(self, m):
+    @respx.mock
+    async def test_update_o_auth2_spotify(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1260,17 +1093,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "db068a000000000000000000008b5b9f",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_spotify()
+        response = await self.project.update_o_auth2_spotify()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_stripe(self, m):
+    @respx.mock
+    async def test_update_o_auth2_stripe(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1278,17 +1108,14 @@ class ProjectServiceTest(unittest.TestCase):
             "apiSecretKey": "sk_51SfOd000000000000000000000000000000000000000000000000000000000000000000000000000000000000000QGWYfp",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_stripe()
+        response = await self.project.update_o_auth2_stripe()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_tik_tok(self, m):
+    @respx.mock
+    async def test_update_o_auth2_tik_tok(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1296,17 +1123,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "6wXewM00000000000000000000yXnite",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_tik_tok()
+        response = await self.project.update_o_auth2_tik_tok()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_tradeshift(self, m):
+    @respx.mock
+    async def test_update_o_auth2_tradeshift(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1314,17 +1138,14 @@ class ProjectServiceTest(unittest.TestCase):
             "oauth2ClientSecret": "7cb52700-0000-0000-0000-000000ca5b83",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_tradeshift()
+        response = await self.project.update_o_auth2_tradeshift()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_tradeshift_sandbox(self, m):
+    @respx.mock
+    async def test_update_o_auth2_tradeshift_sandbox(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1332,17 +1153,14 @@ class ProjectServiceTest(unittest.TestCase):
             "oauth2ClientSecret": "7cb52700-0000-0000-0000-000000ca5b83",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_tradeshift_sandbox()
+        response = await self.project.update_o_auth2_tradeshift_sandbox()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_twitch(self, m):
+    @respx.mock
+    async def test_update_o_auth2_twitch(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1350,17 +1168,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "pmapue000000000000000000zylw3v",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_twitch()
+        response = await self.project.update_o_auth2_twitch()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_webflow(self, m):
+    @respx.mock
+    async def test_update_o_auth2_webflow(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1368,17 +1183,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "59bf00000000000000000000000000000000000000000000000000000000fe59",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_webflow()
+        response = await self.project.update_o_auth2_webflow()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_word_press(self, m):
+    @respx.mock
+    async def test_update_o_auth2_word_press(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1386,17 +1198,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "PlBfJS0000000000000000000000000000000000000000000000000000EdUZJk",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_word_press()
+        response = await self.project.update_o_auth2_word_press()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_x(self, m):
+    @respx.mock
+    async def test_update_o_auth2_x(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1404,17 +1213,14 @@ class ProjectServiceTest(unittest.TestCase):
             "secretKey": "tkEPkp00000000000000000000000000000000000000FTxbI9",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_x()
+        response = await self.project.update_o_auth2_x()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_yahoo(self, m):
+    @respx.mock
+    async def test_update_o_auth2_yahoo(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1422,17 +1228,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "cf978f0000000000000000000000000000c5e2e9",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_yahoo()
+        response = await self.project.update_o_auth2_yahoo()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_yandex(self, m):
+    @respx.mock
+    async def test_update_o_auth2_yandex(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1440,17 +1243,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "bbf98500000000000000000000c75a63",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_yandex()
+        response = await self.project.update_o_auth2_yandex()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_zoho(self, m):
+    @respx.mock
+    async def test_update_o_auth2_zoho(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1459,17 +1259,14 @@ class ProjectServiceTest(unittest.TestCase):
             "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_zoho()
+        response = await self.project.update_o_auth2_zoho()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_o_auth2_zoom(self, m):
+    @respx.mock
+    async def test_update_o_auth2_zoom(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1477,17 +1274,14 @@ class ProjectServiceTest(unittest.TestCase):
             "clientSecret": "GAWsG4000000000000000000007U01ON",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_o_auth2_zoom()
+        response = await self.project.update_o_auth2_zoom()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_o_auth2_provider(self, m):
+    @respx.mock
+    async def test_get_o_auth2_provider(self):
         data = {
             "$id": "github",
             "enabled": True,
@@ -1496,35 +1290,29 @@ class ProjectServiceTest(unittest.TestCase):
             "prompt": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.get_o_auth2_provider(
+        response = await self.project.get_o_auth2_provider(
             'amazon',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_platforms(self, m):
+    @respx.mock
+    async def test_list_platforms(self):
         data = {
             "total": 5.0,
             "platforms": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.list_platforms()
+        response = await self.project.list_platforms()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_android_platform(self, m):
+    @respx.mock
+    async def test_create_android_platform(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1535,21 +1323,18 @@ class ProjectServiceTest(unittest.TestCase):
             "fingerprints": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.create_android_platform(
+        response = await self.project.create_android_platform(
             '<PLATFORM_ID>',
             '<NAME>',
             '<APPLICATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_android_platform(self, m):
+    @respx.mock
+    async def test_update_android_platform(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1560,21 +1345,18 @@ class ProjectServiceTest(unittest.TestCase):
             "fingerprints": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_android_platform(
+        response = await self.project.update_android_platform(
             '<PLATFORM_ID>',
             '<NAME>',
             '<APPLICATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_apple_platform(self, m):
+    @respx.mock
+    async def test_create_apple_platform(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1584,21 +1366,18 @@ class ProjectServiceTest(unittest.TestCase):
             "bundleIdentifier": "com.company.appname",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.create_apple_platform(
+        response = await self.project.create_apple_platform(
             '<PLATFORM_ID>',
             '<NAME>',
             '<BUNDLE_IDENTIFIER>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_apple_platform(self, m):
+    @respx.mock
+    async def test_update_apple_platform(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1608,21 +1387,18 @@ class ProjectServiceTest(unittest.TestCase):
             "bundleIdentifier": "com.company.appname",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_apple_platform(
+        response = await self.project.update_apple_platform(
             '<PLATFORM_ID>',
             '<NAME>',
             '<BUNDLE_IDENTIFIER>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_linux_platform(self, m):
+    @respx.mock
+    async def test_create_linux_platform(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1632,21 +1408,18 @@ class ProjectServiceTest(unittest.TestCase):
             "packageName": "com.company.appname",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.create_linux_platform(
+        response = await self.project.create_linux_platform(
             '<PLATFORM_ID>',
             '<NAME>',
             '<PACKAGE_NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_linux_platform(self, m):
+    @respx.mock
+    async def test_update_linux_platform(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1656,21 +1429,18 @@ class ProjectServiceTest(unittest.TestCase):
             "packageName": "com.company.appname",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_linux_platform(
+        response = await self.project.update_linux_platform(
             '<PLATFORM_ID>',
             '<NAME>',
             '<PACKAGE_NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_web_platform(self, m):
+    @respx.mock
+    async def test_create_web_platform(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1680,21 +1450,18 @@ class ProjectServiceTest(unittest.TestCase):
             "hostname": "app.example.com",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.create_web_platform(
+        response = await self.project.create_web_platform(
             '<PLATFORM_ID>',
             '<NAME>',
             'app.example.com',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_web_platform(self, m):
+    @respx.mock
+    async def test_update_web_platform(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1704,21 +1471,18 @@ class ProjectServiceTest(unittest.TestCase):
             "hostname": "app.example.com",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_web_platform(
+        response = await self.project.update_web_platform(
             '<PLATFORM_ID>',
             '<NAME>',
             'app.example.com',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_windows_platform(self, m):
+    @respx.mock
+    async def test_create_windows_platform(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1728,21 +1492,18 @@ class ProjectServiceTest(unittest.TestCase):
             "packageIdentifierName": "com.company.appname",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.create_windows_platform(
+        response = await self.project.create_windows_platform(
             '<PLATFORM_ID>',
             '<NAME>',
             '<PACKAGE_IDENTIFIER_NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_windows_platform(self, m):
+    @respx.mock
+    async def test_update_windows_platform(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1752,21 +1513,18 @@ class ProjectServiceTest(unittest.TestCase):
             "packageIdentifierName": "com.company.appname",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_windows_platform(
+        response = await self.project.update_windows_platform(
             '<PLATFORM_ID>',
             '<NAME>',
             '<PACKAGE_IDENTIFIER_NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_platform(self, m):
+    @respx.mock
+    async def test_get_platform(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1776,50 +1534,41 @@ class ProjectServiceTest(unittest.TestCase):
             "hostname": "app.example.com",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.get_platform(
+        response = await self.project.get_platform(
             '<PLATFORM_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_platform(self, m):
+    @respx.mock
+    async def test_delete_platform(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.delete_platform(
+        response = await self.project.delete_platform(
             '<PLATFORM_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_policies(self, m):
+    @respx.mock
+    async def test_list_policies(self):
         data = {
             "total": 10.0,
             "policies": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.list_policies()
+        response = await self.project.list_policies()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_deny_aliased_email_policy(self, m):
+    @respx.mock
+    async def test_update_deny_aliased_email_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1849,19 +1598,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_deny_aliased_email_policy(
+        response = await self.project.update_deny_aliased_email_policy(
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_deny_corporate_email_policy(self, m):
+    @respx.mock
+    async def test_update_deny_corporate_email_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1891,19 +1637,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_deny_corporate_email_policy(
+        response = await self.project.update_deny_corporate_email_policy(
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_deny_disposable_email_policy(self, m):
+    @respx.mock
+    async def test_update_deny_disposable_email_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1933,19 +1676,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_deny_disposable_email_policy(
+        response = await self.project.update_deny_disposable_email_policy(
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_deny_free_email_policy(self, m):
+    @respx.mock
+    async def test_update_deny_free_email_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1975,19 +1715,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_deny_free_email_policy(
+        response = await self.project.update_deny_free_email_policy(
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_membership_privacy_policy(self, m):
+    @respx.mock
+    async def test_update_membership_privacy_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2017,17 +1754,14 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_membership_privacy_policy()
+        response = await self.project.update_membership_privacy_policy()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_mfa_factors_policy(self, m):
+    @respx.mock
+    async def test_update_mfa_factors_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2057,17 +1791,14 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_mfa_factors_policy()
+        response = await self.project.update_mfa_factors_policy()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_passkey_policy(self, m):
+    @respx.mock
+    async def test_update_passkey_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2097,19 +1828,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_passkey_policy(
+        response = await self.project.update_passkey_policy(
             '<RP_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_password_dictionary_policy(self, m):
+    @respx.mock
+    async def test_update_password_dictionary_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2139,19 +1867,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_password_dictionary_policy(
+        response = await self.project.update_password_dictionary_policy(
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_password_history_policy(self, m):
+    @respx.mock
+    async def test_update_password_history_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2181,19 +1906,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_password_history_policy(
+        response = await self.project.update_password_history_policy(
             1,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_password_personal_data_policy(self, m):
+    @respx.mock
+    async def test_update_password_personal_data_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2223,19 +1945,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_password_personal_data_policy(
+        response = await self.project.update_password_personal_data_policy(
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_password_pwned_policy(self, m):
+    @respx.mock
+    async def test_update_password_pwned_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2265,17 +1984,14 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_password_pwned_policy()
+        response = await self.project.update_password_pwned_policy()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_password_rotation_policy(self, m):
+    @respx.mock
+    async def test_update_password_rotation_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2305,17 +2021,14 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_password_rotation_policy()
+        response = await self.project.update_password_rotation_policy()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_password_strength_policy(self, m):
+    @respx.mock
+    async def test_update_password_strength_policy(self):
         data = {
             "$id": "password-dictionary",
             "min": 12.0,
@@ -2325,17 +2038,14 @@ class ProjectServiceTest(unittest.TestCase):
             "symbols": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_password_strength_policy()
+        response = await self.project.update_password_strength_policy()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_session_alert_policy(self, m):
+    @respx.mock
+    async def test_update_session_alert_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2365,19 +2075,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_session_alert_policy(
+        response = await self.project.update_session_alert_policy(
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_session_duration_policy(self, m):
+    @respx.mock
+    async def test_update_session_duration_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2407,19 +2114,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_session_duration_policy(
+        response = await self.project.update_session_duration_policy(
             1,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_session_invalidation_policy(self, m):
+    @respx.mock
+    async def test_update_session_invalidation_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2449,19 +2153,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_session_invalidation_policy(
+        response = await self.project.update_session_invalidation_policy(
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_session_limit_policy(self, m):
+    @respx.mock
+    async def test_update_session_limit_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2491,19 +2192,16 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_session_limit_policy(
+        response = await self.project.update_session_limit_policy(
             1,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_user_limit_policy(self, m):
+    @respx.mock
+    async def test_update_user_limit_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2533,38 +2231,32 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_user_limit_policy(
+        response = await self.project.update_user_limit_policy(
             1,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_policy(self, m):
+    @respx.mock
+    async def test_get_policy(self):
         data = {
             "$id": "password-dictionary",
             "enabled": True,
             "denyList": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.get_policy(
+        response = await self.project.get_policy(
             'password-dictionary',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_protocol(self, m):
+    @respx.mock
+    async def test_update_protocol(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2594,20 +2286,17 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_protocol(
+        response = await self.project.update_protocol(
             'rest',
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_service(self, m):
+    @respx.mock
+    async def test_update_service(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2637,20 +2326,17 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_service(
+        response = await self.project.update_service(
             'account',
             True,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_smtp(self, m):
+    @respx.mock
+    async def test_update_smtp(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2680,48 +2366,39 @@ class ProjectServiceTest(unittest.TestCase):
             "consoleAccessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_smtp()
+        response = await self.project.update_smtp()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_smtp_test(self, m):
+    @respx.mock
+    async def test_create_smtp_test(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.create_smtp_test(
+        response = await self.project.create_smtp_test(
             [],
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_email_templates(self, m):
+    @respx.mock
+    async def test_list_email_templates(self):
         data = {
             "total": 5.0,
             "templates": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.list_email_templates()
+        response = await self.project.list_email_templates()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_email_template(self, m):
+    @respx.mock
+    async def test_update_email_template(self):
         data = {
             "templateId": "verification",
             "locale": "en_us",
@@ -2733,19 +2410,16 @@ class ProjectServiceTest(unittest.TestCase):
             "subject": "Please verify your email address",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_email_template(
+        response = await self.project.update_email_template(
             'verification',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_email_template(self, m):
+    @respx.mock
+    async def test_get_email_template(self):
         data = {
             "templateId": "verification",
             "locale": "en_us",
@@ -2757,35 +2431,29 @@ class ProjectServiceTest(unittest.TestCase):
             "subject": "Please verify your email address",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.get_email_template(
+        response = await self.project.get_email_template(
             'verification',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_variables(self, m):
+    @respx.mock
+    async def test_list_variables(self):
         data = {
             "total": 5.0,
             "variables": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.list_variables()
+        response = await self.project.list_variables()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_variable(self, m):
+    @respx.mock
+    async def test_create_variable(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2798,21 +2466,18 @@ class ProjectServiceTest(unittest.TestCase):
             "resourceId": "myAwesomeFunction",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.create_variable(
+        response = await self.project.create_variable(
             '<VARIABLE_ID>',
             '<KEY>',
             '<VALUE>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_variable(self, m):
+    @respx.mock
+    async def test_get_variable(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2825,19 +2490,16 @@ class ProjectServiceTest(unittest.TestCase):
             "resourceId": "myAwesomeFunction",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.get_variable(
+        response = await self.project.get_variable(
             '<VARIABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_variable(self, m):
+    @respx.mock
+    async def test_update_variable(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -2850,28 +2512,22 @@ class ProjectServiceTest(unittest.TestCase):
             "resourceId": "myAwesomeFunction",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.update_variable(
+        response = await self.project.update_variable(
             '<VARIABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_variable(self, m):
+    @respx.mock
+    async def test_delete_variable(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.project.delete_variable(
+        response = await self.project.delete_variable(
             '<VARIABLE_ID>',
         )
         self.assertEqual(response, data)

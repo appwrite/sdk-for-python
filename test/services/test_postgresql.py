@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.postgresql import Postgresql
 
 
-class PostgresqlServiceTest(unittest.TestCase):
+class PostgresqlServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.postgresql = Postgresql(self.client)
 
-    @requests_mock.Mocker()
-    def test_list(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list(self):
         data = {
             "total": 5.0,
             "databases": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.list()
+        response = await self.postgresql.list()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create(self, m):
+    @respx.mock
+    async def test_create(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -80,36 +81,30 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.create(
+        response = await self.postgresql.create(
             '<DATABASE_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_specifications(self, m):
+    @respx.mock
+    async def test_list_specifications(self):
         data = {
             "specifications": [],
             "total": 9.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.list_specifications()
+        response = await self.postgresql.list_specifications()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    @respx.mock
+    async def test_get(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -158,19 +153,16 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.get(
+        response = await self.postgresql.get(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update(self, m):
+    @respx.mock
+    async def test_update(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -219,52 +211,43 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.update(
+        response = await self.postgresql.update(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete(self, m):
+    @respx.mock
+    async def test_delete(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.delete(
+        response = await self.postgresql.delete(
             '<DATABASE_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_backups(self, m):
+    @respx.mock
+    async def test_list_backups(self):
         data = {
             "total": 5.0,
             "backups": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.list_backups(
+        response = await self.postgresql.list_backups(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_backup(self, m):
+    @respx.mock
+    async def test_create_backup(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -280,37 +263,31 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.create_backup(
+        response = await self.postgresql.create_backup(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_backup_policies(self, m):
+    @respx.mock
+    async def test_list_backup_policies(self):
         data = {
             "total": 5.0,
             "policies": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.list_backup_policies(
+        response = await self.postgresql.list_backup_policies(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_backup_policy(self, m):
+    @respx.mock
+    async def test_create_backup_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -324,13 +301,10 @@ class PostgresqlServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.create_backup_policy(
+        response = await self.postgresql.create_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
             '<NAME>',
@@ -339,8 +313,8 @@ class PostgresqlServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_backup_policy(self, m):
+    @respx.mock
+    async def test_get_backup_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -354,20 +328,17 @@ class PostgresqlServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.get_backup_policy(
+        response = await self.postgresql.get_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_backup_policy(self, m):
+    @respx.mock
+    async def test_update_backup_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -381,36 +352,30 @@ class PostgresqlServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.update_backup_policy(
+        response = await self.postgresql.update_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_backup_policy(self, m):
+    @respx.mock
+    async def test_delete_backup_policy(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.delete_backup_policy(
+        response = await self.postgresql.delete_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_backup_storage(self, m):
+    @respx.mock
+    async def test_update_backup_storage(self):
         data = {
             "provider": "s3",
             "bucket": "my-backup-bucket",
@@ -419,13 +384,10 @@ class PostgresqlServiceTest(unittest.TestCase):
             "endpoint": "https:\/\/minio.example.com",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.update_backup_storage(
+        response = await self.postgresql.update_backup_storage(
             '<DATABASE_ID>',
             's3',
             '<BUCKET>',
@@ -434,8 +396,8 @@ class PostgresqlServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_backup(self, m):
+    @respx.mock
+    async def test_get_backup(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -451,54 +413,45 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.get_backup(
+        response = await self.postgresql.get_backup(
             '<DATABASE_ID>',
             '<BACKUP_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_backup(self, m):
+    @respx.mock
+    async def test_delete_backup(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.delete_backup(
+        response = await self.postgresql.delete_backup(
             '<DATABASE_ID>',
             '<BACKUP_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_branches(self, m):
+    @respx.mock
+    async def test_list_branches(self):
         data = {
             "total": 2.0,
             "branches": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.list_branches(
+        response = await self.postgresql.list_branches(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_branch(self, m):
+    @respx.mock
+    async def test_create_branch(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -547,19 +500,16 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.create_branch(
+        response = await self.postgresql.create_branch(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_branch(self, m):
+    @respx.mock
+    async def test_delete_branch(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -608,20 +558,17 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.delete_branch(
+        response = await self.postgresql.delete_branch(
             '<DATABASE_ID>',
             '<BRANCH_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_credentials(self, m):
+    @respx.mock
+    async def test_update_credentials(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -633,19 +580,16 @@ class PostgresqlServiceTest(unittest.TestCase):
             "errorMessage": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.update_credentials(
+        response = await self.postgresql.update_credentials(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_execution(self, m):
+    @respx.mock
+    async def test_create_execution(self):
         data = {
             "rows": [],
             "rowCount": 1.0,
@@ -655,39 +599,33 @@ class PostgresqlServiceTest(unittest.TestCase):
             "bytes": 1024.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.create_execution(
+        response = await self.postgresql.create_execution(
             '<DATABASE_ID>',
             '<SQL>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_extensions(self, m):
+    @respx.mock
+    async def test_list_extensions(self):
         data = {
             "installed": [],
             "available": [],
             "metadata": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.list_extensions(
+        response = await self.postgresql.list_extensions(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_extension(self, m):
+    @respx.mock
+    async def test_create_extension(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -736,20 +674,17 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.create_extension(
+        response = await self.postgresql.create_extension(
             '<DATABASE_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_extension(self, m):
+    @respx.mock
+    async def test_delete_extension(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -798,20 +733,17 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.delete_extension(
+        response = await self.postgresql.delete_extension(
             '<DATABASE_ID>',
             '<EXTENSION_NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_failover(self, m):
+    @respx.mock
+    async def test_create_failover(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -860,19 +792,16 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.create_failover(
+        response = await self.postgresql.create_failover(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_maintenance(self, m):
+    @respx.mock
+    async def test_update_maintenance(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -921,21 +850,18 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.update_maintenance(
+        response = await self.postgresql.update_maintenance(
             '<DATABASE_ID>',
             'sun',
             1,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_migration(self, m):
+    @respx.mock
+    async def test_create_migration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -984,56 +910,47 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.create_migration(
+        response = await self.postgresql.create_migration(
             '<DATABASE_ID>',
             'shared',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_operations(self, m):
+    @respx.mock
+    async def test_list_operations(self):
         data = {
             "total": 5.0,
             "operations": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.list_operations(
+        response = await self.postgresql.list_operations(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_pitr(self, m):
+    @respx.mock
+    async def test_get_pitr(self):
         data = {
             "earliest": "2020-10-15T06:38:00.000+00:00",
             "latest": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.get_pitr(
+        response = await self.postgresql.get_pitr(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_pooler(self, m):
+    @respx.mock
+    async def test_get_pooler(self):
         data = {
             "enabled": True,
             "mode": "transaction",
@@ -1047,19 +964,16 @@ class PostgresqlServiceTest(unittest.TestCase):
             "poolerMemoryLimit": "128Mi",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.get_pooler(
+        response = await self.postgresql.get_pooler(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_pooler(self, m):
+    @respx.mock
+    async def test_update_pooler(self):
         data = {
             "enabled": True,
             "mode": "transaction",
@@ -1073,19 +987,16 @@ class PostgresqlServiceTest(unittest.TestCase):
             "poolerMemoryLimit": "128Mi",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.update_pooler(
+        response = await self.postgresql.update_pooler(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_replicas(self, m):
+    @respx.mock
+    async def test_get_replicas(self):
         data = {
             "replicas": 2.0,
             "syncMode": "async",
@@ -1095,37 +1006,31 @@ class PostgresqlServiceTest(unittest.TestCase):
             "members": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.get_replicas(
+        response = await self.postgresql.get_replicas(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_restorations(self, m):
+    @respx.mock
+    async def test_list_restorations(self):
         data = {
             "total": 5.0,
             "restorations": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.list_restorations(
+        response = await self.postgresql.list_restorations(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_restoration(self, m):
+    @respx.mock
+    async def test_create_restoration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1137,19 +1042,16 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.create_restoration(
+        response = await self.postgresql.create_restoration(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_restoration(self, m):
+    @respx.mock
+    async def test_get_restoration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1161,20 +1063,17 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.get_restoration(
+        response = await self.postgresql.get_restoration(
             '<DATABASE_ID>',
             '<RESTORATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_promote_restoration(self, m):
+    @respx.mock
+    async def test_promote_restoration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1186,20 +1085,17 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.promote_restoration(
+        response = await self.postgresql.promote_restoration(
             '<DATABASE_ID>',
             '<RESTORATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_status(self, m):
+    @respx.mock
+    async def test_get_status(self):
         data = {
             "health": "healthy",
             "ready": True,
@@ -1214,19 +1110,16 @@ class PostgresqlServiceTest(unittest.TestCase):
             "volumes": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.get_status(
+        response = await self.postgresql.get_status(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_upgrade(self, m):
+    @respx.mock
+    async def test_create_upgrade(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1275,13 +1168,10 @@ class PostgresqlServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.postgresql.create_upgrade(
+        response = await self.postgresql.create_upgrade(
             '<DATABASE_ID>',
             '<TARGET_VERSION>',
         )

@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,38 +9,35 @@ from appwrite.models import *
 from appwrite.services.graphql import Graphql
 
 
-class GraphqlServiceTest(unittest.TestCase):
+class GraphqlServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.graphql = Graphql(self.client)
 
-    @requests_mock.Mocker()
-    def test_query(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_query(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.graphql.query(
+        response = await self.graphql.query(
             {},
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_mutation(self, m):
+    @respx.mock
+    async def test_mutation(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.graphql.mutation(
+        response = await self.graphql.mutation(
             {},
         )
         self.assertEqual(response, data)

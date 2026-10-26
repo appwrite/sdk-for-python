@@ -113,7 +113,7 @@ class Project(Service):
     def __init__(self, client) -> None:
         super(Project, self).__init__(client)
 
-    def get(
+    async def get(
         self,
     ) -> ProjectModel:
         """
@@ -132,7 +132,7 @@ class Project(Service):
         api_path = '/project'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -144,7 +144,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def delete(
+    async def delete(
         self,
     ) -> Dict[str, Any]:
         """
@@ -163,7 +163,7 @@ class Project(Service):
         api_path = '/project'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -176,7 +176,7 @@ class Project(Service):
 
         return response
 
-    def update_auth_method(
+    async def update_auth_method(
         self,
         method_id: ProjectAuthMethodId,
         enabled: bool,
@@ -210,7 +210,7 @@ class Project(Service):
         api_path = api_path.replace('{methodId}', str(self._normalize_value(method_id)))
         api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -223,7 +223,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def list_environments(
+    async def list_environments(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -255,7 +255,7 @@ class Project(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -267,7 +267,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectList)
 
-    def create_environment(
+    async def create_environment(
         self,
         environment_id: str,
         name: str,
@@ -301,7 +301,7 @@ class Project(Service):
         api_params['environmentId'] = self._normalize_value(environment_id)
         api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -314,7 +314,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def get_environment(
+    async def get_environment(
         self,
         environment_id: str,
     ) -> ProjectModel:
@@ -342,7 +342,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "environment_id"')
         api_path = api_path.replace('{environmentId}', str(self._normalize_value(environment_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -354,7 +354,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_environment(
+    async def update_environment(
         self,
         environment_id: str,
         name: str,
@@ -388,7 +388,7 @@ class Project(Service):
         api_path = api_path.replace('{environmentId}', str(self._normalize_value(environment_id)))
         api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -401,7 +401,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def delete_environment(
+    async def delete_environment(
         self,
         environment_id: str,
     ) -> Dict[str, Any]:
@@ -429,7 +429,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "environment_id"')
         api_path = api_path.replace('{environmentId}', str(self._normalize_value(environment_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -442,7 +442,7 @@ class Project(Service):
 
         return response
 
-    def list_keys(
+    async def list_keys(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -474,7 +474,7 @@ class Project(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -486,7 +486,7 @@ class Project(Service):
 
         return self._parse_response(response, model=KeyList)
 
-    def create_ephemeral_key(
+    async def create_ephemeral_key(
         self,
         scopes: List[ProjectKeyScopes],
         duration: float,
@@ -522,7 +522,7 @@ class Project(Service):
         api_params['scopes'] = self._normalize_value(scopes)
         api_params['duration'] = self._normalize_value(duration)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -535,7 +535,7 @@ class Project(Service):
 
         return self._parse_response(response, model=EphemeralKey)
 
-    def get_key(
+    async def get_key(
         self,
         key_id: str,
     ) -> Key:
@@ -563,7 +563,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "key_id"')
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -575,7 +575,7 @@ class Project(Service):
 
         return self._parse_response(response, model=Key)
 
-    def update_key(
+    async def update_key(
         self,
         key_id: str,
         name: str,
@@ -625,7 +625,7 @@ class Project(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -638,7 +638,7 @@ class Project(Service):
 
         return self._parse_response(response, model=Key)
 
-    def delete_key(
+    async def delete_key(
         self,
         key_id: str,
     ) -> Dict[str, Any]:
@@ -666,7 +666,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "key_id"')
         api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -679,7 +679,7 @@ class Project(Service):
 
         return response
 
-    def update_labels(
+    async def update_labels(
         self,
         labels: List[str],
     ) -> ProjectModel:
@@ -707,7 +707,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "labels"')
         api_params['labels'] = self._normalize_value(labels)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -720,7 +720,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def list_mock_phones(
+    async def list_mock_phones(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -752,7 +752,7 @@ class Project(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -764,7 +764,7 @@ class Project(Service):
 
         return self._parse_response(response, model=MockNumberList)
 
-    def create_mock_phone(
+    async def create_mock_phone(
         self,
         number: str,
         otp: str,
@@ -798,7 +798,7 @@ class Project(Service):
         api_params['number'] = self._normalize_value(number)
         api_params['otp'] = self._normalize_value(otp)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -811,7 +811,7 @@ class Project(Service):
 
         return self._parse_response(response, model=MockNumber)
 
-    def get_mock_phone(
+    async def get_mock_phone(
         self,
         number: str,
     ) -> MockNumber:
@@ -839,7 +839,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "number"')
         api_path = api_path.replace('{number}', str(self._normalize_value(number)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -851,7 +851,7 @@ class Project(Service):
 
         return self._parse_response(response, model=MockNumber)
 
-    def update_mock_phone(
+    async def update_mock_phone(
         self,
         number: str,
         otp: str,
@@ -885,7 +885,7 @@ class Project(Service):
         api_path = api_path.replace('{number}', str(self._normalize_value(number)))
         api_params['otp'] = self._normalize_value(otp)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -898,7 +898,7 @@ class Project(Service):
 
         return self._parse_response(response, model=MockNumber)
 
-    def delete_mock_phone(
+    async def delete_mock_phone(
         self,
         number: str,
     ) -> Dict[str, Any]:
@@ -926,7 +926,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "number"')
         api_path = api_path.replace('{number}', str(self._normalize_value(number)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -939,7 +939,7 @@ class Project(Service):
 
         return response
 
-    def list_o_auth2_providers(
+    async def list_o_auth2_providers(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -971,7 +971,7 @@ class Project(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -983,7 +983,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2ProviderList)
 
-    def update_o_auth2_server(
+    async def update_o_auth2_server(
         self,
         enabled: bool,
         authorization_url: str,
@@ -1087,7 +1087,7 @@ class Project(Service):
         if installation_scopes is not None:
             api_params['installationScopes'] = self._normalize_value(installation_scopes)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1100,7 +1100,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_o_auth2_amazon(
+    async def update_o_auth2_amazon(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -1137,7 +1137,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1150,7 +1150,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Amazon)
 
-    def update_o_auth2_apple(
+    async def update_o_auth2_apple(
         self,
         service_id: Optional[str] = None,
         key_id: Optional[str] = None,
@@ -1207,7 +1207,7 @@ class Project(Service):
         if native_enabled is not None:
             api_params['nativeEnabled'] = self._normalize_value(native_enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1220,7 +1220,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Apple)
 
-    def update_o_auth2_appwrite(
+    async def update_o_auth2_appwrite(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -1257,7 +1257,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1270,7 +1270,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Appwrite)
 
-    def update_o_auth2_auth0(
+    async def update_o_auth2_auth0(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -1317,7 +1317,7 @@ class Project(Service):
         if prompt is not None:
             api_params['prompt'] = self._normalize_value(prompt)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1330,7 +1330,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Auth0)
 
-    def update_o_auth2_authentik(
+    async def update_o_auth2_authentik(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -1372,7 +1372,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1385,7 +1385,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Authentik)
 
-    def update_o_auth2_autodesk(
+    async def update_o_auth2_autodesk(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -1422,7 +1422,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1435,7 +1435,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Autodesk)
 
-    def update_o_auth2_bitbucket(
+    async def update_o_auth2_bitbucket(
         self,
         key: Optional[str] = None,
         secret: Optional[str] = None,
@@ -1472,7 +1472,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1485,7 +1485,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Bitbucket)
 
-    def update_o_auth2_bitly(
+    async def update_o_auth2_bitly(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -1522,7 +1522,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1535,7 +1535,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Bitly)
 
-    def update_o_auth2_box(
+    async def update_o_auth2_box(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -1572,7 +1572,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1585,7 +1585,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Box)
 
-    def update_o_auth2_cloudflare(
+    async def update_o_auth2_cloudflare(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -1622,7 +1622,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1635,7 +1635,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Cloudflare)
 
-    def update_o_auth2_dailymotion(
+    async def update_o_auth2_dailymotion(
         self,
         api_key: Optional[str] = None,
         api_secret: Optional[str] = None,
@@ -1672,7 +1672,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1685,7 +1685,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Dailymotion)
 
-    def update_o_auth2_discord(
+    async def update_o_auth2_discord(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -1727,7 +1727,7 @@ class Project(Service):
         if prompt is not None:
             api_params['prompt'] = self._normalize_value(prompt)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1740,7 +1740,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Discord)
 
-    def update_o_auth2_disqus(
+    async def update_o_auth2_disqus(
         self,
         public_key: Optional[str] = None,
         secret_key: Optional[str] = None,
@@ -1777,7 +1777,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1790,7 +1790,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Disqus)
 
-    def update_o_auth2_dropbox(
+    async def update_o_auth2_dropbox(
         self,
         app_key: Optional[str] = None,
         app_secret: Optional[str] = None,
@@ -1827,7 +1827,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1840,7 +1840,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Dropbox)
 
-    def update_o_auth2_etsy(
+    async def update_o_auth2_etsy(
         self,
         key_string: Optional[str] = None,
         shared_secret: Optional[str] = None,
@@ -1877,7 +1877,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1890,7 +1890,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Etsy)
 
-    def update_o_auth2_facebook(
+    async def update_o_auth2_facebook(
         self,
         app_id: Optional[str] = None,
         app_secret: Optional[str] = None,
@@ -1927,7 +1927,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1940,7 +1940,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Facebook)
 
-    def update_o_auth2_figma(
+    async def update_o_auth2_figma(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -1977,7 +1977,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1990,7 +1990,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Figma)
 
-    def update_o_auth2_fusion_auth(
+    async def update_o_auth2_fusion_auth(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -2032,7 +2032,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2045,7 +2045,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2FusionAuth)
 
-    def update_o_auth2_git_hub(
+    async def update_o_auth2_git_hub(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -2087,7 +2087,7 @@ class Project(Service):
         if prompt is not None:
             api_params['prompt'] = self._normalize_value(prompt)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2100,7 +2100,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Github)
 
-    def update_o_auth2_gitlab(
+    async def update_o_auth2_gitlab(
         self,
         application_id: Optional[str] = None,
         secret: Optional[str] = None,
@@ -2142,7 +2142,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2155,7 +2155,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Gitlab)
 
-    def update_o_auth2_google(
+    async def update_o_auth2_google(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -2207,7 +2207,7 @@ class Project(Service):
         if native_enabled is not None:
             api_params['nativeEnabled'] = self._normalize_value(native_enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2220,7 +2220,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Google)
 
-    def update_o_auth2_hugging_face(
+    async def update_o_auth2_hugging_face(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -2257,7 +2257,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2270,7 +2270,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2HuggingFace)
 
-    def update_o_auth2_kakao(
+    async def update_o_auth2_kakao(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -2312,7 +2312,7 @@ class Project(Service):
         if prompt is not None:
             api_params['prompt'] = self._normalize_value(prompt)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2325,7 +2325,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Kakao)
 
-    def update_o_auth2_keycloak(
+    async def update_o_auth2_keycloak(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -2372,7 +2372,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2385,7 +2385,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Keycloak)
 
-    def update_o_auth2_kick(
+    async def update_o_auth2_kick(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -2422,7 +2422,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2435,7 +2435,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Kick)
 
-    def update_o_auth2_linkedin(
+    async def update_o_auth2_linkedin(
         self,
         client_id: Optional[str] = None,
         primary_client_secret: Optional[str] = None,
@@ -2472,7 +2472,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2485,7 +2485,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Linkedin)
 
-    def update_o_auth2_microsoft(
+    async def update_o_auth2_microsoft(
         self,
         application_id: Optional[str] = None,
         application_secret: Optional[str] = None,
@@ -2532,7 +2532,7 @@ class Project(Service):
         if prompt is not None:
             api_params['prompt'] = self._normalize_value(prompt)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2545,7 +2545,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Microsoft)
 
-    def update_o_auth2_notion(
+    async def update_o_auth2_notion(
         self,
         oauth_client_id: Optional[str] = None,
         oauth_client_secret: Optional[str] = None,
@@ -2582,7 +2582,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2595,7 +2595,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Notion)
 
-    def update_o_auth2_oidc(
+    async def update_o_auth2_oidc(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -2662,7 +2662,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2675,7 +2675,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Oidc)
 
-    def update_o_auth2_okta(
+    async def update_o_auth2_okta(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -2727,7 +2727,7 @@ class Project(Service):
         if prompt is not None:
             api_params['prompt'] = self._normalize_value(prompt)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2740,7 +2740,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Okta)
 
-    def update_o_auth2_paypal(
+    async def update_o_auth2_paypal(
         self,
         client_id: Optional[str] = None,
         secret_key: Optional[str] = None,
@@ -2777,7 +2777,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2790,7 +2790,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Paypal)
 
-    def update_o_auth2_paypal_sandbox(
+    async def update_o_auth2_paypal_sandbox(
         self,
         client_id: Optional[str] = None,
         secret_key: Optional[str] = None,
@@ -2827,7 +2827,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2840,7 +2840,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Paypal)
 
-    def update_o_auth2_podio(
+    async def update_o_auth2_podio(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -2877,7 +2877,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2890,7 +2890,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Podio)
 
-    def update_o_auth2_resend(
+    async def update_o_auth2_resend(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -2927,7 +2927,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2940,7 +2940,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Resend)
 
-    def update_o_auth2_salesforce(
+    async def update_o_auth2_salesforce(
         self,
         customer_key: Optional[str] = None,
         customer_secret: Optional[str] = None,
@@ -2982,7 +2982,7 @@ class Project(Service):
         if prompt is not None:
             api_params['prompt'] = self._normalize_value(prompt)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2995,7 +2995,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Salesforce)
 
-    def update_o_auth2_slack(
+    async def update_o_auth2_slack(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -3032,7 +3032,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3045,7 +3045,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Slack)
 
-    def update_o_auth2_spotify(
+    async def update_o_auth2_spotify(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -3082,7 +3082,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3095,7 +3095,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Spotify)
 
-    def update_o_auth2_stripe(
+    async def update_o_auth2_stripe(
         self,
         client_id: Optional[str] = None,
         api_secret_key: Optional[str] = None,
@@ -3132,7 +3132,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3145,7 +3145,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Stripe)
 
-    def update_o_auth2_tik_tok(
+    async def update_o_auth2_tik_tok(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -3182,7 +3182,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3195,7 +3195,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2TikTok)
 
-    def update_o_auth2_tradeshift(
+    async def update_o_auth2_tradeshift(
         self,
         oauth2_client_id: Optional[str] = None,
         oauth2_client_secret: Optional[str] = None,
@@ -3232,7 +3232,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3245,7 +3245,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Tradeshift)
 
-    def update_o_auth2_tradeshift_sandbox(
+    async def update_o_auth2_tradeshift_sandbox(
         self,
         oauth2_client_id: Optional[str] = None,
         oauth2_client_secret: Optional[str] = None,
@@ -3282,7 +3282,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3295,7 +3295,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Tradeshift)
 
-    def update_o_auth2_twitch(
+    async def update_o_auth2_twitch(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -3332,7 +3332,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3345,7 +3345,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Twitch)
 
-    def update_o_auth2_webflow(
+    async def update_o_auth2_webflow(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -3382,7 +3382,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3395,7 +3395,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Webflow)
 
-    def update_o_auth2_word_press(
+    async def update_o_auth2_word_press(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -3432,7 +3432,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3445,7 +3445,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2WordPress)
 
-    def update_o_auth2_x(
+    async def update_o_auth2_x(
         self,
         customer_key: Optional[str] = None,
         secret_key: Optional[str] = None,
@@ -3482,7 +3482,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3495,7 +3495,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2X)
 
-    def update_o_auth2_yahoo(
+    async def update_o_auth2_yahoo(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -3532,7 +3532,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3545,7 +3545,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Yahoo)
 
-    def update_o_auth2_yandex(
+    async def update_o_auth2_yandex(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -3582,7 +3582,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3595,7 +3595,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Yandex)
 
-    def update_o_auth2_zoho(
+    async def update_o_auth2_zoho(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -3637,7 +3637,7 @@ class Project(Service):
         if prompt is not None:
             api_params['prompt'] = self._normalize_value(prompt)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3650,7 +3650,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Zoho)
 
-    def update_o_auth2_zoom(
+    async def update_o_auth2_zoom(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
@@ -3687,7 +3687,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3700,7 +3700,7 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Zoom)
 
-    def get_o_auth2_provider(
+    async def get_o_auth2_provider(
         self,
         provider_id: ProjectOAuthProviderId,
     ) -> Union[
@@ -3775,7 +3775,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -3927,7 +3927,7 @@ class Project(Service):
 
         raise AppwriteException('Unable to match response to any known model')
 
-    def list_platforms(
+    async def list_platforms(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -3959,7 +3959,7 @@ class Project(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -3971,7 +3971,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PlatformList)
 
-    def create_android_platform(
+    async def create_android_platform(
         self,
         platform_id: str,
         name: str,
@@ -4016,7 +4016,7 @@ class Project(Service):
         if fingerprints is not None:
             api_params['fingerprints'] = self._normalize_value(fingerprints)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -4029,7 +4029,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PlatformAndroid)
 
-    def update_android_platform(
+    async def update_android_platform(
         self,
         platform_id: str,
         name: str,
@@ -4074,7 +4074,7 @@ class Project(Service):
         if fingerprints is not None:
             api_params['fingerprints'] = self._normalize_value(fingerprints)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -4087,7 +4087,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PlatformAndroid)
 
-    def create_apple_platform(
+    async def create_apple_platform(
         self,
         platform_id: str,
         name: str,
@@ -4127,7 +4127,7 @@ class Project(Service):
         api_params['name'] = self._normalize_value(name)
         api_params['bundleIdentifier'] = self._normalize_value(bundle_identifier)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -4140,7 +4140,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PlatformApple)
 
-    def update_apple_platform(
+    async def update_apple_platform(
         self,
         platform_id: str,
         name: str,
@@ -4180,7 +4180,7 @@ class Project(Service):
         api_params['name'] = self._normalize_value(name)
         api_params['bundleIdentifier'] = self._normalize_value(bundle_identifier)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -4193,7 +4193,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PlatformApple)
 
-    def create_linux_platform(
+    async def create_linux_platform(
         self,
         platform_id: str,
         name: str,
@@ -4233,7 +4233,7 @@ class Project(Service):
         api_params['name'] = self._normalize_value(name)
         api_params['packageName'] = self._normalize_value(package_name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -4246,7 +4246,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PlatformLinux)
 
-    def update_linux_platform(
+    async def update_linux_platform(
         self,
         platform_id: str,
         name: str,
@@ -4286,7 +4286,7 @@ class Project(Service):
         api_params['name'] = self._normalize_value(name)
         api_params['packageName'] = self._normalize_value(package_name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -4299,7 +4299,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PlatformLinux)
 
-    def create_web_platform(
+    async def create_web_platform(
         self,
         platform_id: str,
         name: str,
@@ -4339,7 +4339,7 @@ class Project(Service):
         api_params['name'] = self._normalize_value(name)
         api_params['hostname'] = self._normalize_value(hostname)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -4352,7 +4352,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PlatformWeb)
 
-    def update_web_platform(
+    async def update_web_platform(
         self,
         platform_id: str,
         name: str,
@@ -4392,7 +4392,7 @@ class Project(Service):
         api_params['name'] = self._normalize_value(name)
         api_params['hostname'] = self._normalize_value(hostname)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -4405,7 +4405,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PlatformWeb)
 
-    def create_windows_platform(
+    async def create_windows_platform(
         self,
         platform_id: str,
         name: str,
@@ -4445,7 +4445,7 @@ class Project(Service):
         api_params['name'] = self._normalize_value(name)
         api_params['packageIdentifierName'] = self._normalize_value(package_identifier_name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -4458,7 +4458,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PlatformWindows)
 
-    def update_windows_platform(
+    async def update_windows_platform(
         self,
         platform_id: str,
         name: str,
@@ -4498,7 +4498,7 @@ class Project(Service):
         api_params['name'] = self._normalize_value(name)
         api_params['packageIdentifierName'] = self._normalize_value(package_identifier_name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -4511,7 +4511,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PlatformWindows)
 
-    def get_platform(
+    async def get_platform(
         self,
         platform_id: str,
     ) -> Union[
@@ -4545,7 +4545,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "platform_id"')
         api_path = api_path.replace('{platformId}', str(self._normalize_value(platform_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -4574,7 +4574,7 @@ class Project(Service):
 
         raise AppwriteException('Unable to match response to any known model')
 
-    def delete_platform(
+    async def delete_platform(
         self,
         platform_id: str,
     ) -> Dict[str, Any]:
@@ -4602,7 +4602,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "platform_id"')
         api_path = api_path.replace('{platformId}', str(self._normalize_value(platform_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -4615,7 +4615,7 @@ class Project(Service):
 
         return response
 
-    def list_policies(
+    async def list_policies(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -4647,7 +4647,7 @@ class Project(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -4659,7 +4659,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PolicyList)
 
-    def update_deny_aliased_email_policy(
+    async def update_deny_aliased_email_policy(
         self,
         enabled: bool,
     ) -> ProjectModel:
@@ -4687,7 +4687,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "enabled"')
         api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -4700,7 +4700,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_deny_corporate_email_policy(
+    async def update_deny_corporate_email_policy(
         self,
         enabled: bool,
     ) -> ProjectModel:
@@ -4728,7 +4728,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "enabled"')
         api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -4741,7 +4741,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_deny_disposable_email_policy(
+    async def update_deny_disposable_email_policy(
         self,
         enabled: bool,
     ) -> ProjectModel:
@@ -4769,7 +4769,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "enabled"')
         api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -4782,7 +4782,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_deny_free_email_policy(
+    async def update_deny_free_email_policy(
         self,
         enabled: bool,
     ) -> ProjectModel:
@@ -4810,7 +4810,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "enabled"')
         api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -4823,7 +4823,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_membership_privacy_policy(
+    async def update_membership_privacy_policy(
         self,
         user_id: Optional[bool] = None,
         user_email: Optional[bool] = None,
@@ -4875,7 +4875,7 @@ class Project(Service):
         if user_accessed_at is not None:
             api_params['userAccessedAt'] = self._normalize_value(user_accessed_at)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -4888,7 +4888,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_mfa_factors_policy(
+    async def update_mfa_factors_policy(
         self,
         totp: Optional[bool] = None,
         email: Optional[bool] = None,
@@ -4930,7 +4930,7 @@ class Project(Service):
         if custom is not None:
             api_params['custom'] = self._normalize_value(custom)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -4943,7 +4943,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_passkey_policy(
+    async def update_passkey_policy(
         self,
         rp_id: str,
     ) -> ProjectModel:
@@ -4971,7 +4971,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "rp_id"')
         api_params['rpId'] = self._normalize_value(rp_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -4984,7 +4984,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_password_dictionary_policy(
+    async def update_password_dictionary_policy(
         self,
         enabled: bool,
         deny_list: Optional[List[str]] = None,
@@ -5019,7 +5019,7 @@ class Project(Service):
         if deny_list is not None:
             api_params['denyList'] = self._normalize_value(deny_list)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5032,7 +5032,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_password_history_policy(
+    async def update_password_history_policy(
         self,
         total: Optional[float],
     ) -> ProjectModel:
@@ -5060,7 +5060,7 @@ class Project(Service):
         api_params = {}
         api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5073,7 +5073,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_password_personal_data_policy(
+    async def update_password_personal_data_policy(
         self,
         enabled: bool,
         deny_list: Optional[List[str]] = None,
@@ -5109,7 +5109,7 @@ class Project(Service):
         if deny_list is not None:
             api_params['denyList'] = self._normalize_value(deny_list)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5122,7 +5122,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_password_pwned_policy(
+    async def update_password_pwned_policy(
         self,
         enabled: Optional[bool] = None,
         sessions: Optional[bool] = None,
@@ -5159,7 +5159,7 @@ class Project(Service):
         if users is not None:
             api_params['users'] = self._normalize_value(users)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5172,7 +5172,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_password_rotation_policy(
+    async def update_password_rotation_policy(
         self,
         enabled: Optional[bool] = None,
         max_age: Optional[float] = None,
@@ -5204,7 +5204,7 @@ class Project(Service):
         if max_age is not None:
             api_params['maxAge'] = self._normalize_value(max_age)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5217,7 +5217,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_password_strength_policy(
+    async def update_password_strength_policy(
         self,
         min: Optional[float] = None,
         uppercase: Optional[bool] = None,
@@ -5264,7 +5264,7 @@ class Project(Service):
         if symbols is not None:
             api_params['symbols'] = self._normalize_value(symbols)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5277,7 +5277,7 @@ class Project(Service):
 
         return self._parse_response(response, model=PolicyPasswordStrength)
 
-    def update_session_alert_policy(
+    async def update_session_alert_policy(
         self,
         enabled: bool,
     ) -> ProjectModel:
@@ -5305,7 +5305,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "enabled"')
         api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5318,7 +5318,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_session_duration_policy(
+    async def update_session_duration_policy(
         self,
         duration: float,
     ) -> ProjectModel:
@@ -5346,7 +5346,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "duration"')
         api_params['duration'] = self._normalize_value(duration)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5359,7 +5359,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_session_invalidation_policy(
+    async def update_session_invalidation_policy(
         self,
         enabled: bool,
     ) -> ProjectModel:
@@ -5387,7 +5387,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "enabled"')
         api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5400,7 +5400,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_session_limit_policy(
+    async def update_session_limit_policy(
         self,
         total: float,
     ) -> ProjectModel:
@@ -5428,7 +5428,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "total"')
         api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5441,7 +5441,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_user_limit_policy(
+    async def update_user_limit_policy(
         self,
         total: Optional[float],
     ) -> ProjectModel:
@@ -5467,7 +5467,7 @@ class Project(Service):
         api_params = {}
         api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5480,7 +5480,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def get_policy(
+    async def get_policy(
         self,
         policy_id: ProjectPolicyId,
     ) -> Union[
@@ -5527,7 +5527,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "policy_id"')
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -5595,7 +5595,7 @@ class Project(Service):
 
         raise AppwriteException('Unable to match response to any known model')
 
-    def update_protocol(
+    async def update_protocol(
         self,
         protocol_id: ProjectProtocolId,
         enabled: bool,
@@ -5629,7 +5629,7 @@ class Project(Service):
         api_path = api_path.replace('{protocolId}', str(self._normalize_value(protocol_id)))
         api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5642,7 +5642,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_service(
+    async def update_service(
         self,
         service_id: ProjectServiceId,
         enabled: bool,
@@ -5676,7 +5676,7 @@ class Project(Service):
         api_path = api_path.replace('{serviceId}', str(self._normalize_value(service_id)))
         api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5689,7 +5689,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def update_smtp(
+    async def update_smtp(
         self,
         host: Optional[str] = None,
         port: Optional[float] = None,
@@ -5761,7 +5761,7 @@ class Project(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5774,7 +5774,7 @@ class Project(Service):
 
         return self._parse_response(response, model=ProjectModel)
 
-    def create_smtp_test(
+    async def create_smtp_test(
         self,
         emails: List[str],
     ) -> Dict[str, Any]:
@@ -5802,7 +5802,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "emails"')
         api_params['emails'] = self._normalize_value(emails)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -5815,7 +5815,7 @@ class Project(Service):
 
         return response
 
-    def list_email_templates(
+    async def list_email_templates(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -5847,7 +5847,7 @@ class Project(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -5859,7 +5859,7 @@ class Project(Service):
 
         return self._parse_response(response, model=EmailTemplateList)
 
-    def update_email_template(
+    async def update_email_template(
         self,
         template_id: ProjectEmailTemplateId,
         locale: Optional[ProjectEmailTemplateLocale] = None,
@@ -5922,7 +5922,7 @@ class Project(Service):
         if reply_to_name is not None:
             api_params['replyToName'] = self._normalize_value(reply_to_name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -5935,7 +5935,7 @@ class Project(Service):
 
         return self._parse_response(response, model=EmailTemplate)
 
-    def get_email_template(
+    async def get_email_template(
         self,
         template_id: ProjectEmailTemplateId,
         locale: Optional[ProjectEmailTemplateLocale] = None,
@@ -5968,7 +5968,7 @@ class Project(Service):
         if locale is not None:
             api_params['locale'] = self._normalize_value(locale)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -5980,7 +5980,7 @@ class Project(Service):
 
         return self._parse_response(response, model=EmailTemplate)
 
-    def list_variables(
+    async def list_variables(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -6012,7 +6012,7 @@ class Project(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -6024,7 +6024,7 @@ class Project(Service):
 
         return self._parse_response(response, model=VariableList)
 
-    def create_variable(
+    async def create_variable(
         self,
         variable_id: str,
         key: str,
@@ -6074,7 +6074,7 @@ class Project(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -6087,7 +6087,7 @@ class Project(Service):
 
         return self._parse_response(response, model=Variable)
 
-    def get_variable(
+    async def get_variable(
         self,
         variable_id: str,
     ) -> Variable:
@@ -6115,7 +6115,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "variable_id"')
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -6127,7 +6127,7 @@ class Project(Service):
 
         return self._parse_response(response, model=Variable)
 
-    def update_variable(
+    async def update_variable(
         self,
         variable_id: str,
         key: Optional[str] = None,
@@ -6175,7 +6175,7 @@ class Project(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -6188,7 +6188,7 @@ class Project(Service):
 
         return self._parse_response(response, model=Variable)
 
-    def delete_variable(
+    async def delete_variable(
         self,
         variable_id: str,
     ) -> Dict[str, Any]:
@@ -6216,7 +6216,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "variable_id"')
         api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {

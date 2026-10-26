@@ -6,6 +6,7 @@ Compatible with Python 2.7+ and Python 3.x.
 """
 
 import functools
+import inspect
 import warnings
 
 
@@ -25,6 +26,19 @@ def deprecated(reason=None):
 
     def decorator(func):
         message = "Call to deprecated function '{}'.{}".format(func.__name__, " " + reason if reason else "")
+
+        if inspect.iscoroutinefunction(func):
+
+            @functools.wraps(func)
+            async def wrapped(*args, **kwargs):
+                warnings.simplefilter('always', DeprecationWarning)  # show warning every time
+                try:
+                    warnings.warn(message, category=DeprecationWarning, stacklevel=2)
+                    return await func(*args, **kwargs)
+                finally:
+                    warnings.simplefilter('default', DeprecationWarning)  # reset filter
+
+            return wrapped
 
         @functools.wraps(func)
         def wrapped(*args, **kwargs):

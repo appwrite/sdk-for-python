@@ -10,7 +10,7 @@ class Graphql(Service):
     def __init__(self, client) -> None:
         super(Graphql, self).__init__(client)
 
-    def query(
+    async def query(
         self,
         query: Dict[str, Any],
     ) -> Dict[str, Any]:
@@ -38,7 +38,7 @@ class Graphql(Service):
             raise AppwriteException('Missing required parameter: "query"')
         api_params['query'] = self._normalize_value(query)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -52,7 +52,7 @@ class Graphql(Service):
 
         return response
 
-    def mutation(
+    async def mutation(
         self,
         query: Dict[str, Any],
     ) -> Dict[str, Any]:
@@ -80,7 +80,7 @@ class Graphql(Service):
             raise AppwriteException('Missing required parameter: "query"')
         api_params['query'] = self._normalize_value(query)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {

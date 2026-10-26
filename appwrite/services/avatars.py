@@ -21,7 +21,7 @@ class Avatars(Service):
     def __init__(self, client) -> None:
         super(Avatars, self).__init__(client)
 
-    def get_browser(
+    async def get_browser(
         self,
         code: Browser,
         width: Optional[float] = None,
@@ -66,7 +66,7 @@ class Avatars(Service):
         if quality is not None:
             api_params['quality'] = self._normalize_value(quality)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -78,7 +78,7 @@ class Avatars(Service):
 
         return response
 
-    def get_credit_card(
+    async def get_credit_card(
         self,
         code: CreditCard,
         width: Optional[float] = None,
@@ -123,7 +123,7 @@ class Avatars(Service):
         if quality is not None:
             api_params['quality'] = self._normalize_value(quality)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -135,7 +135,7 @@ class Avatars(Service):
 
         return response
 
-    def get_favicon(
+    async def get_favicon(
         self,
         url: str,
     ) -> bytes:
@@ -165,7 +165,7 @@ class Avatars(Service):
             raise AppwriteException('Missing required parameter: "url"')
         api_params['url'] = self._normalize_value(url)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -177,7 +177,7 @@ class Avatars(Service):
 
         return response
 
-    def get_flag(
+    async def get_flag(
         self,
         code: Flag,
         width: Optional[float] = None,
@@ -222,7 +222,7 @@ class Avatars(Service):
         if quality is not None:
             api_params['quality'] = self._normalize_value(quality)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -234,7 +234,7 @@ class Avatars(Service):
 
         return response
 
-    def get_image(
+    async def get_image(
         self,
         url: str,
         width: Optional[float] = None,
@@ -276,7 +276,7 @@ class Avatars(Service):
         if height is not None:
             api_params['height'] = self._normalize_value(height)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -288,7 +288,7 @@ class Avatars(Service):
 
         return response
 
-    def get_initials(
+    async def get_initials(
         self,
         name: Optional[str] = None,
         width: Optional[float] = None,
@@ -334,7 +334,7 @@ class Avatars(Service):
         if background is not None:
             api_params['background'] = self._normalize_value(background)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -346,7 +346,7 @@ class Avatars(Service):
 
         return response
 
-    def get_photo(
+    async def get_photo(
         self,
         width: Optional[float] = None,
         height: Optional[float] = None,
@@ -410,7 +410,7 @@ class Avatars(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -422,7 +422,7 @@ class Avatars(Service):
 
         return response
 
-    def update_photo(
+    async def update_photo(
         self,
         file: InputFile,
         on_progress=None,
@@ -462,7 +462,7 @@ class Avatars(Service):
 
         upload_id = ''
 
-        response = self.client.chunked_upload(
+        response = await self.client.chunked_upload(
             api_path,
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
@@ -478,7 +478,7 @@ class Avatars(Service):
 
         return Account.with_data(response, model_type)
 
-    def delete_photo(
+    async def delete_photo(
         self,
     ) -> Dict[str, Any]:
         """
@@ -497,7 +497,7 @@ class Avatars(Service):
         api_path = '/avatars/photo'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -510,7 +510,7 @@ class Avatars(Service):
 
         return response
 
-    def get_qr(
+    async def get_qr(
         self,
         text: str,
         size: Optional[float] = None,
@@ -553,7 +553,7 @@ class Avatars(Service):
         if download is not None:
             api_params['download'] = self._normalize_value(download)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -565,7 +565,7 @@ class Avatars(Service):
 
         return response
 
-    def get_screenshot(
+    async def get_screenshot(
         self,
         url: str,
         headers: Optional[Dict[str, Any]] = None,
@@ -692,7 +692,7 @@ class Avatars(Service):
         if output is not None:
             api_params['output'] = self._normalize_value(output)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {

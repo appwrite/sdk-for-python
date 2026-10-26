@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.documents_db import DocumentsDB
 
 
-class DocumentsDBServiceTest(unittest.TestCase):
+class DocumentsDBServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.documents_db = DocumentsDB(self.client)
 
-    @requests_mock.Mocker()
-    def test_list(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list(self):
         data = {
             "total": 5.0,
             "databases": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.list()
+        response = await self.documents_db.list()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create(self, m):
+    @respx.mock
+    async def test_create(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
@@ -42,52 +43,43 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "type": "legacy",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.create(
+        response = await self.documents_db.create(
             '<DATABASE_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_specifications(self, m):
+    @respx.mock
+    async def test_list_specifications(self):
         data = {
             "specifications": [],
             "total": 9.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.list_specifications()
+        response = await self.documents_db.list_specifications()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_transactions(self, m):
+    @respx.mock
+    async def test_list_transactions(self):
         data = {
             "total": 5.0,
             "transactions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.list_transactions()
+        response = await self.documents_db.list_transactions()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_transaction(self, m):
+    @respx.mock
+    async def test_create_transaction(self):
         data = {
             "$id": "259125845563242502",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -97,17 +89,14 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "expiresAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.create_transaction()
+        response = await self.documents_db.create_transaction()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_transaction(self, m):
+    @respx.mock
+    async def test_get_transaction(self):
         data = {
             "$id": "259125845563242502",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -117,19 +106,16 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "expiresAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.get_transaction(
+        response = await self.documents_db.get_transaction(
             '<TRANSACTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_transaction(self, m):
+    @respx.mock
+    async def test_update_transaction(self):
         data = {
             "$id": "259125845563242502",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -139,34 +125,28 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "expiresAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.update_transaction(
+        response = await self.documents_db.update_transaction(
             '<TRANSACTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_transaction(self, m):
+    @respx.mock
+    async def test_delete_transaction(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.delete_transaction(
+        response = await self.documents_db.delete_transaction(
             '<TRANSACTION_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_create_operations(self, m):
+    @respx.mock
+    async def test_create_operations(self):
         data = {
             "$id": "259125845563242502",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -176,19 +156,16 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "expiresAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.create_operations(
+        response = await self.documents_db.create_operations(
             '<TRANSACTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    @respx.mock
+    async def test_get(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
@@ -199,19 +176,16 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "type": "legacy",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.get(
+        response = await self.documents_db.get(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update(self, m):
+    @respx.mock
+    async def test_update(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
@@ -222,53 +196,44 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "type": "legacy",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.update(
+        response = await self.documents_db.update(
             '<DATABASE_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete(self, m):
+    @respx.mock
+    async def test_delete(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.delete(
+        response = await self.documents_db.delete(
             '<DATABASE_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_collections(self, m):
+    @respx.mock
+    async def test_list_collections(self):
         data = {
             "total": 5.0,
             "collections": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.list_collections(
+        response = await self.documents_db.list_collections(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_collection(self, m):
+    @respx.mock
+    async def test_create_collection(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -285,21 +250,18 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "bytesUsed": 1500.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.create_collection(
+        response = await self.documents_db.create_collection(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_collection(self, m):
+    @respx.mock
+    async def test_get_collection(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -316,20 +278,17 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "bytesUsed": 1500.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.get_collection(
+        response = await self.documents_db.get_collection(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_collection(self, m):
+    @respx.mock
+    async def test_update_collection(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -346,56 +305,47 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "bytesUsed": 1500.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.update_collection(
+        response = await self.documents_db.update_collection(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_collection(self, m):
+    @respx.mock
+    async def test_delete_collection(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.delete_collection(
+        response = await self.documents_db.delete_collection(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_documents(self, m):
+    @respx.mock
+    async def test_list_documents(self):
         data = {
             "total": 5.0,
             "documents": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.list_documents(
+        response = await self.documents_db.list_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_document(self, m):
+    @respx.mock
+    async def test_create_document(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -406,13 +356,10 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.create_document(
+        response = await self.documents_db.create_document(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
@@ -421,105 +368,90 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_documents(self, m):
+    @respx.mock
+    async def test_create_documents(self):
         data = {
             "total": 5.0,
             "documents": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.create_documents(
+        response = await self.documents_db.create_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             [],
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_upsert_documents(self, m):
+    @respx.mock
+    async def test_upsert_documents(self):
         data = {
             "total": 5.0,
             "documents": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.upsert_documents(
+        response = await self.documents_db.upsert_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             [],
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_documents(self, m):
+    @respx.mock
+    async def test_update_documents(self):
         data = {
             "total": 5.0,
             "documents": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.update_documents(
+        response = await self.documents_db.update_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_documents(self, m):
+    @respx.mock
+    async def test_delete_documents(self):
         data = {
             "total": 5.0,
             "documents": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.delete_documents(
+        response = await self.documents_db.delete_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_query(self, m):
+    @respx.mock
+    async def test_create_query(self):
         data = {
             "total": 5.0,
             "documents": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.create_query(
+        response = await self.documents_db.create_query(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_document(self, m):
+    @respx.mock
+    async def test_get_document(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -530,13 +462,10 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.get_document(
+        response = await self.documents_db.get_document(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
@@ -544,8 +473,8 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_upsert_document(self, m):
+    @respx.mock
+    async def test_upsert_document(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -556,13 +485,10 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.upsert_document(
+        response = await self.documents_db.upsert_document(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
@@ -570,8 +496,8 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_document(self, m):
+    @respx.mock
+    async def test_update_document(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -582,13 +508,10 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.update_document(
+        response = await self.documents_db.update_document(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
@@ -596,25 +519,22 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_document(self, m):
+    @respx.mock
+    async def test_delete_document(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.delete_document(
+        response = await self.documents_db.delete_document(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_decrement_document_attribute(self, m):
+    @respx.mock
+    async def test_decrement_document_attribute(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -625,13 +545,10 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.decrement_document_attribute(
+        response = await self.documents_db.decrement_document_attribute(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
@@ -640,8 +557,8 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_increment_document_attribute(self, m):
+    @respx.mock
+    async def test_increment_document_attribute(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -652,13 +569,10 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.increment_document_attribute(
+        response = await self.documents_db.increment_document_attribute(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
@@ -667,27 +581,24 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_indexes(self, m):
+    @respx.mock
+    async def test_list_indexes(self):
         data = {
             "total": 5.0,
             "indexes": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.list_indexes(
+        response = await self.documents_db.list_indexes(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_index(self, m):
+    @respx.mock
+    async def test_create_index(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -701,13 +612,10 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "lengths": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.create_index(
+        response = await self.documents_db.create_index(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
@@ -716,8 +624,8 @@ class DocumentsDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_index(self, m):
+    @respx.mock
+    async def test_get_index(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -731,38 +639,32 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "lengths": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.get_index(
+        response = await self.documents_db.get_index(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_index(self, m):
+    @respx.mock
+    async def test_delete_index(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.delete_index(
+        response = await self.documents_db.delete_index(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_create_failover(self, m):
+    @respx.mock
+    async def test_create_failover(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -811,37 +713,31 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.create_failover(
+        response = await self.documents_db.create_failover(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_operations(self, m):
+    @respx.mock
+    async def test_list_operations(self):
         data = {
             "total": 5.0,
             "operations": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.list_operations(
+        response = await self.documents_db.list_operations(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_replicas(self, m):
+    @respx.mock
+    async def test_get_replicas(self):
         data = {
             "replicas": 2.0,
             "syncMode": "async",
@@ -851,19 +747,16 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "members": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.get_replicas(
+        response = await self.documents_db.get_replicas(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_status(self, m):
+    @respx.mock
+    async def test_get_status(self):
         data = {
             "health": "healthy",
             "ready": True,
@@ -878,13 +771,10 @@ class DocumentsDBServiceTest(unittest.TestCase):
             "volumes": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.documents_db.get_status(
+        response = await self.documents_db.get_status(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)

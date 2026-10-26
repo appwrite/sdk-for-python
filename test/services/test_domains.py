@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.domains import Domains
 
 
-class DomainsServiceTest(unittest.TestCase):
+class DomainsServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.domains = Domains(self.client)
 
-    @requests_mock.Mocker()
-    def test_list(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list(self):
         data = {
             "total": 5.0,
             "domains": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.list()
+        response = await self.domains.list()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create(self, m):
+    @respx.mock
+    async def test_create(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -47,20 +48,17 @@ class DomainsServiceTest(unittest.TestCase):
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create(
+        response = await self.domains.create(
             '<TEAM_ID>',
             'example.com',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_price(self, m):
+    @respx.mock
+    async def test_get_price(self):
         data = {
             "domain": "example.com",
             "tld": "com",
@@ -70,37 +68,31 @@ class DomainsServiceTest(unittest.TestCase):
             "renewalPeriodYears": 1.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.get_price(
+        response = await self.domains.get_price(
             'example.com',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_prices(self, m):
+    @respx.mock
+    async def test_list_prices(self):
         data = {
             "total": 5.0,
             "prices": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.list_prices(
+        response = await self.domains.list_prices(
             [],
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    @respx.mock
+    async def test_get(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -116,34 +108,28 @@ class DomainsServiceTest(unittest.TestCase):
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.get(
+        response = await self.domains.get(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete(self, m):
+    @respx.mock
+    async def test_delete(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.delete(
+        response = await self.domains.delete(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_nameservers(self, m):
+    @respx.mock
+    async def test_update_nameservers(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -159,19 +145,16 @@ class DomainsServiceTest(unittest.TestCase):
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_nameservers(
+        response = await self.domains.update_nameservers(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_verify_nameservers(self, m):
+    @respx.mock
+    async def test_verify_nameservers(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -187,253 +170,211 @@ class DomainsServiceTest(unittest.TestCase):
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.verify_nameservers(
+        response = await self.domains.verify_nameservers(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_preset_google_workspace(self, m):
+    @respx.mock
+    async def test_get_preset_google_workspace(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.get_preset_google_workspace(
+        response = await self.domains.get_preset_google_workspace(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_preset_google_workspace(self, m):
+    @respx.mock
+    async def test_create_preset_google_workspace(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_preset_google_workspace(
+        response = await self.domains.create_preset_google_workspace(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_preset_i_cloud(self, m):
+    @respx.mock
+    async def test_get_preset_i_cloud(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.get_preset_i_cloud(
+        response = await self.domains.get_preset_i_cloud(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_preset_i_cloud(self, m):
+    @respx.mock
+    async def test_create_preset_i_cloud(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_preset_i_cloud(
+        response = await self.domains.create_preset_i_cloud(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_preset_mailgun(self, m):
+    @respx.mock
+    async def test_get_preset_mailgun(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.get_preset_mailgun(
+        response = await self.domains.get_preset_mailgun(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_preset_mailgun(self, m):
+    @respx.mock
+    async def test_create_preset_mailgun(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_preset_mailgun(
+        response = await self.domains.create_preset_mailgun(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_preset_outlook(self, m):
+    @respx.mock
+    async def test_get_preset_outlook(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.get_preset_outlook(
+        response = await self.domains.get_preset_outlook(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_preset_outlook(self, m):
+    @respx.mock
+    async def test_create_preset_outlook(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_preset_outlook(
+        response = await self.domains.create_preset_outlook(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_preset_proton_mail(self, m):
+    @respx.mock
+    async def test_get_preset_proton_mail(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.get_preset_proton_mail(
+        response = await self.domains.get_preset_proton_mail(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_preset_proton_mail(self, m):
+    @respx.mock
+    async def test_create_preset_proton_mail(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_preset_proton_mail(
+        response = await self.domains.create_preset_proton_mail(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_preset_zoho(self, m):
+    @respx.mock
+    async def test_get_preset_zoho(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.get_preset_zoho(
+        response = await self.domains.get_preset_zoho(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_preset_zoho(self, m):
+    @respx.mock
+    async def test_create_preset_zoho(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_preset_zoho(
+        response = await self.domains.create_preset_zoho(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_records(self, m):
+    @respx.mock
+    async def test_list_records(self):
         data = {
             "total": 5.0,
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.list_records(
+        response = await self.domains.list_records(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_record_a(self, m):
+    @respx.mock
+    async def test_create_record_a(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -449,13 +390,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_record_a(
+        response = await self.domains.create_record_a(
             '<DOMAIN_ID>',
             'name',
             'value',
@@ -463,8 +401,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_record_a(self, m):
+    @respx.mock
+    async def test_update_record_a(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -480,13 +418,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_record_a(
+        response = await self.domains.update_record_a(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
             'name',
@@ -495,8 +430,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_record_aaaa(self, m):
+    @respx.mock
+    async def test_create_record_aaaa(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -512,13 +447,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_record_aaaa(
+        response = await self.domains.create_record_aaaa(
             '<DOMAIN_ID>',
             'name',
             'value',
@@ -526,8 +458,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_record_aaaa(self, m):
+    @respx.mock
+    async def test_update_record_aaaa(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -543,13 +475,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_record_aaaa(
+        response = await self.domains.update_record_aaaa(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
             'name',
@@ -558,8 +487,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_record_alias(self, m):
+    @respx.mock
+    async def test_create_record_alias(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -575,13 +504,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_record_alias(
+        response = await self.domains.create_record_alias(
             '<DOMAIN_ID>',
             'name',
             '<VALUE>',
@@ -589,8 +515,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_record_alias(self, m):
+    @respx.mock
+    async def test_update_record_alias(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -606,13 +532,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_record_alias(
+        response = await self.domains.update_record_alias(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
             'name',
@@ -621,8 +544,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_record_caa(self, m):
+    @respx.mock
+    async def test_create_record_caa(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -638,13 +561,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_record_caa(
+        response = await self.domains.create_record_caa(
             '<DOMAIN_ID>',
             'name',
             'value',
@@ -652,8 +572,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_record_caa(self, m):
+    @respx.mock
+    async def test_update_record_caa(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -669,13 +589,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_record_caa(
+        response = await self.domains.update_record_caa(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
             'name',
@@ -684,8 +601,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_record_cname(self, m):
+    @respx.mock
+    async def test_create_record_cname(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -701,13 +618,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_record_cname(
+        response = await self.domains.create_record_cname(
             '<DOMAIN_ID>',
             'name',
             '<VALUE>',
@@ -715,8 +629,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_record_cname(self, m):
+    @respx.mock
+    async def test_update_record_cname(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -732,13 +646,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_record_cname(
+        response = await self.domains.update_record_cname(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
             'name',
@@ -747,8 +658,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_record_https(self, m):
+    @respx.mock
+    async def test_create_record_https(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -764,13 +675,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_record_https(
+        response = await self.domains.create_record_https(
             '<DOMAIN_ID>',
             'name',
             '<VALUE>',
@@ -778,8 +686,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_record_https(self, m):
+    @respx.mock
+    async def test_update_record_https(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -795,13 +703,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_record_https(
+        response = await self.domains.update_record_https(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
             'name',
@@ -810,8 +715,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_record_mx(self, m):
+    @respx.mock
+    async def test_create_record_mx(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -827,13 +732,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_record_mx(
+        response = await self.domains.create_record_mx(
             '<DOMAIN_ID>',
             'name',
             '<VALUE>',
@@ -842,8 +744,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_record_mx(self, m):
+    @respx.mock
+    async def test_update_record_mx(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -859,13 +761,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_record_mx(
+        response = await self.domains.update_record_mx(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
             'name',
@@ -875,8 +774,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_record_ns(self, m):
+    @respx.mock
+    async def test_create_record_ns(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -892,13 +791,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_record_ns(
+        response = await self.domains.create_record_ns(
             '<DOMAIN_ID>',
             'name',
             '<VALUE>',
@@ -906,8 +802,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_record_ns(self, m):
+    @respx.mock
+    async def test_update_record_ns(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -923,13 +819,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_record_ns(
+        response = await self.domains.update_record_ns(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
             'name',
@@ -938,8 +831,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_record_srv(self, m):
+    @respx.mock
+    async def test_create_record_srv(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -955,13 +848,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_record_srv(
+        response = await self.domains.create_record_srv(
             '<DOMAIN_ID>',
             'name',
             '<VALUE>',
@@ -972,8 +862,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_record_srv(self, m):
+    @respx.mock
+    async def test_update_record_srv(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -989,13 +879,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_record_srv(
+        response = await self.domains.update_record_srv(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
             'name',
@@ -1007,8 +894,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_record_txt(self, m):
+    @respx.mock
+    async def test_create_record_txt(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1024,21 +911,18 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.create_record_txt(
+        response = await self.domains.create_record_txt(
             '<DOMAIN_ID>',
             'name',
             1,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_record_txt(self, m):
+    @respx.mock
+    async def test_update_record_txt(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1054,13 +938,10 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_record_txt(
+        response = await self.domains.update_record_txt(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
             'name',
@@ -1069,8 +950,8 @@ class DomainsServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_record(self, m):
+    @respx.mock
+    async def test_get_record(self):
         data = {
             "$id": "5f40a6e10c65e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1086,36 +967,30 @@ class DomainsServiceTest(unittest.TestCase):
             "comment": "Mail server record",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.get_record(
+        response = await self.domains.get_record(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_record(self, m):
+    @respx.mock
+    async def test_delete_record(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.delete_record(
+        response = await self.domains.delete_record(
             '<DOMAIN_ID>',
             '<RECORD_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_team(self, m):
+    @respx.mock
+    async def test_update_team(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1131,54 +1006,45 @@ class DomainsServiceTest(unittest.TestCase):
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_team(
+        response = await self.domains.update_team(
             '<DOMAIN_ID>',
             '<TEAM_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_transfer_status(self, m):
+    @respx.mock
+    async def test_get_transfer_status(self):
         data = {
             "status": "pending_registry",
             "reason": "Transfer in progress",
             "timestamp": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.get_transfer_status(
+        response = await self.domains.get_transfer_status(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_zone(self, m):
+    @respx.mock
+    async def test_get_zone(self):
         data = '; café zone\nwww 3600 IN A 192.0.2.1\n'
         headers = {'Content-Type': 'text/plain; charset=utf-8'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=data, headers=headers),
         )
-        response = self.domains.get_zone(
+        response = await self.domains.get_zone(
             '<DOMAIN_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_zone(self, m):
+    @respx.mock
+    async def test_update_zone(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1194,13 +1060,10 @@ class DomainsServiceTest(unittest.TestCase):
             "dnsRecords": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.domains.update_zone(
+        response = await self.domains.update_zone(
             '<DOMAIN_ID>',
             '<CONTENT>',
         )

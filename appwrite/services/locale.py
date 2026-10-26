@@ -17,7 +17,7 @@ class Locale(Service):
     def __init__(self, client) -> None:
         super(Locale, self).__init__(client)
 
-    def get(
+    async def get(
         self,
     ) -> LocaleModel:
         """
@@ -38,7 +38,7 @@ class Locale(Service):
         api_path = '/locale'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -50,7 +50,7 @@ class Locale(Service):
 
         return self._parse_response(response, model=LocaleModel)
 
-    def list_codes(
+    async def list_codes(
         self,
         total: Optional[bool] = None,
     ) -> LocaleCodeList:
@@ -77,7 +77,7 @@ class Locale(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -89,7 +89,7 @@ class Locale(Service):
 
         return self._parse_response(response, model=LocaleCodeList)
 
-    def list_continents(
+    async def list_continents(
         self,
         total: Optional[bool] = None,
     ) -> ContinentList:
@@ -116,7 +116,7 @@ class Locale(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -128,7 +128,7 @@ class Locale(Service):
 
         return self._parse_response(response, model=ContinentList)
 
-    def list_countries(
+    async def list_countries(
         self,
         total: Optional[bool] = None,
     ) -> CountryList:
@@ -155,7 +155,7 @@ class Locale(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -167,7 +167,7 @@ class Locale(Service):
 
         return self._parse_response(response, model=CountryList)
 
-    def list_countries_eu(
+    async def list_countries_eu(
         self,
         total: Optional[bool] = None,
     ) -> CountryList:
@@ -194,7 +194,7 @@ class Locale(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -206,7 +206,7 @@ class Locale(Service):
 
         return self._parse_response(response, model=CountryList)
 
-    def list_countries_phones(
+    async def list_countries_phones(
         self,
         total: Optional[bool] = None,
     ) -> PhoneList:
@@ -233,7 +233,7 @@ class Locale(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -245,7 +245,7 @@ class Locale(Service):
 
         return self._parse_response(response, model=PhoneList)
 
-    def list_currencies(
+    async def list_currencies(
         self,
         total: Optional[bool] = None,
     ) -> CurrencyList:
@@ -272,7 +272,7 @@ class Locale(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -284,7 +284,7 @@ class Locale(Service):
 
         return self._parse_response(response, model=CurrencyList)
 
-    def list_languages(
+    async def list_languages(
         self,
         total: Optional[bool] = None,
     ) -> LanguageList:
@@ -311,7 +311,7 @@ class Locale(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {

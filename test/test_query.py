@@ -3,7 +3,8 @@ import unittest
 from urllib.parse import parse_qsl
 from urllib.parse import urlsplit
 
-import requests_mock
+import httpx2
+import respx
 
 from appwrite.client import Client
 from appwrite.query import Query
@@ -30,7 +31,7 @@ tests = [
 ]
 
 
-class TestQueryMethods(unittest.TestCase):
+class TestQueryMethods(unittest.IsolatedAsyncioTestCase):
 
     def test_equal(self):
         for t in tests:
@@ -352,39 +353,40 @@ class TestQueryMethods(unittest.TestCase):
             Query._flatten([builder, ['a', 'b']]),
         )
 
-    @requests_mock.Mocker()
-    def test_client_sends_flattened_params(self, m):
-        m.register_uri(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            json={},
-            headers={'Content-Type': 'application/json'},
+    @respx.mock
+    async def test_client_sends_flattened_params(self):
+        respx.route().mock(
+            return_value=httpx2.Response(200, json={}, headers={'Content-Type': 'application/json'}),
         )
-        client = Client().set_endpoint('https://example.com/v1')
         queries = [Query.limit(1), Query.offset(2)]
 
         def params():
             return {'queries': Query.builder().limit(1).offset(2), 'tags': [['a', 'b']]}
 
-        client.call('post', '/items', {'content-type': 'application/json'}, params())
-        client.call('get', '/items', {'content-type': 'application/json'}, params())
-        client.call('post', '/items', {'content-type': 'multipart/form-data'}, params())
+        async with Client().set_endpoint('https://example.com/v1') as client:
+            await client.call('post', '/items', {'content-type': 'application/json'}, params())
+            await client.call('get', '/items', {'content-type': 'application/json'}, params())
+            await client.call('post', '/items', {'content-type': 'multipart/form-data'}, params())
 
-        json_request, get_request, multipart_request = m.request_history
-        self.assertEqual(
-            {'queries': queries, 'tags': [['a', 'b']]},
-            json.loads(json_request.body),
-        )
-        self.assertEqual(
-            [
-                ('queries[0]', queries[0]),
-                ('queries[1]', queries[1]),
-                ('tags[0][0]', 'a'),
-                ('tags[0][1]', 'b'),
-            ],
-            parse_qsl(urlsplit(get_request.url).query),
-        )
-        multipart_body = multipart_request.body.decode()
-        self.assertIn('name="tags[0][0]"\r\n\r\na\r\n', multipart_body)
-        self.assertIn('name="tags[0][1]"\r\n\r\nb\r\n', multipart_body)
-        self.assertIn(f'name="queries[1]"\r\n\r\n{queries[1]}\r\n', multipart_body)
+            json_request, get_request, multipart_request = [call.request for call in respx.calls]
+
+            await json_request.aread()
+            await multipart_request.aread()
+
+            self.assertEqual(
+                {'queries': queries, 'tags': [['a', 'b']]},
+                json.loads(json_request.content),
+            )
+            self.assertEqual(
+                [
+                    ('queries[0]', queries[0]),
+                    ('queries[1]', queries[1]),
+                    ('tags[0][0]', 'a'),
+                    ('tags[0][1]', 'b'),
+                ],
+                parse_qsl(urlsplit(str(get_request.url)).query),
+            )
+            multipart_body = multipart_request.content.decode()
+            self.assertIn('name="tags[0][0]"\r\n\r\na\r\n', multipart_body)
+            self.assertIn('name="tags[0][1]"\r\n\r\nb\r\n', multipart_body)
+            self.assertIn(f'name="queries[1]"\r\n\r\n{queries[1]}\r\n', multipart_body)

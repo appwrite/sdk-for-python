@@ -31,7 +31,7 @@ class Users(Service):
     def __init__(self, client) -> None:
         super(Users, self).__init__(client)
 
-    def list(
+    async def list(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -72,7 +72,7 @@ class Users(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -84,7 +84,7 @@ class Users(Service):
 
         return UserList.with_data(response, model_type)
 
-    def create(
+    async def create(
         self,
         user_id: str,
         email: Optional[str] = None,
@@ -136,7 +136,7 @@ class Users(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -149,7 +149,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def create_argon2_user(
+    async def create_argon2_user(
         self,
         user_id: str,
         email: str,
@@ -198,7 +198,7 @@ class Users(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -211,7 +211,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def create_bcrypt_user(
+    async def create_bcrypt_user(
         self,
         user_id: str,
         email: str,
@@ -260,7 +260,7 @@ class Users(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -273,7 +273,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def list_identities(
+    async def list_identities(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -310,7 +310,7 @@ class Users(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -322,7 +322,7 @@ class Users(Service):
 
         return self._parse_response(response, model=IdentityList)
 
-    def delete_identity(
+    async def delete_identity(
         self,
         identity_id: str,
     ) -> Dict[str, Any]:
@@ -350,7 +350,7 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "identity_id"')
         api_path = api_path.replace('{identityId}', str(self._normalize_value(identity_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -363,7 +363,7 @@ class Users(Service):
 
         return response
 
-    def create_md5_user(
+    async def create_md5_user(
         self,
         user_id: str,
         email: str,
@@ -412,7 +412,7 @@ class Users(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -425,7 +425,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def create_ph_pass_user(
+    async def create_ph_pass_user(
         self,
         user_id: str,
         email: str,
@@ -474,7 +474,7 @@ class Users(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -487,7 +487,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def create_scrypt_user(
+    async def create_scrypt_user(
         self,
         user_id: str,
         email: str,
@@ -566,7 +566,7 @@ class Users(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -579,7 +579,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def create_scrypt_modified_user(
+    async def create_scrypt_modified_user(
         self,
         user_id: str,
         email: str,
@@ -646,7 +646,7 @@ class Users(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -659,7 +659,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def create_sha_user(
+    async def create_sha_user(
         self,
         user_id: str,
         email: str,
@@ -713,7 +713,7 @@ class Users(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -726,7 +726,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def get(
+    async def get(
         self,
         user_id: str,
         model_type: Type[T] = dict,
@@ -758,7 +758,7 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -770,7 +770,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def delete(
+    async def delete(
         self,
         user_id: str,
     ) -> Dict[str, Any]:
@@ -798,7 +798,7 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -811,7 +811,7 @@ class Users(Service):
 
         return response
 
-    def update_email(
+    async def update_email(
         self,
         user_id: str,
         email: str,
@@ -849,7 +849,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_params['email'] = self._normalize_value(email)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -862,7 +862,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def update_impersonator(
+    async def update_impersonator(
         self,
         user_id: str,
         impersonator: bool,
@@ -900,7 +900,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_params['impersonator'] = self._normalize_value(impersonator)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -913,7 +913,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def create_jwt(
+    async def create_jwt(
         self,
         user_id: str,
         session_id: Optional[str] = None,
@@ -951,7 +951,7 @@ class Users(Service):
         if duration is not None:
             api_params['duration'] = self._normalize_value(duration)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -964,7 +964,7 @@ class Users(Service):
 
         return self._parse_response(response, model=Jwt)
 
-    def update_labels(
+    async def update_labels(
         self,
         user_id: str,
         labels: List[str],
@@ -1004,7 +1004,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_params['labels'] = self._normalize_value(labels)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1017,7 +1017,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def list_memberships(
+    async def list_memberships(
         self,
         user_id: str,
         queries: Optional[List[str]] = None,
@@ -1060,7 +1060,7 @@ class Users(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1072,7 +1072,7 @@ class Users(Service):
 
         return self._parse_response(response, model=MembershipList)
 
-    def update_mfa(
+    async def update_mfa(
         self,
         user_id: str,
         mfa: bool,
@@ -1110,7 +1110,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_params['mfa'] = self._normalize_value(mfa)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1123,7 +1123,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def delete_mfa_authenticator(
+    async def delete_mfa_authenticator(
         self,
         user_id: str,
         type: AuthenticatorType,
@@ -1157,7 +1157,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{type}', str(self._normalize_value(type)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1170,7 +1170,7 @@ class Users(Service):
 
         return response
 
-    def get_mfa_challenge(
+    async def get_mfa_challenge(
         self,
         user_id: str,
         challenge_id: str,
@@ -1204,7 +1204,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{challengeId}', str(self._normalize_value(challenge_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1216,7 +1216,7 @@ class Users(Service):
 
         return self._parse_response(response, model=MfaChallengeSecret)
 
-    def list_mfa_factors(
+    async def list_mfa_factors(
         self,
         user_id: str,
     ) -> MfaFactors:
@@ -1244,7 +1244,7 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1256,7 +1256,7 @@ class Users(Service):
 
         return self._parse_response(response, model=MfaFactors)
 
-    def get_mfa_recovery_codes(
+    async def get_mfa_recovery_codes(
         self,
         user_id: str,
     ) -> MfaRecoveryCodes:
@@ -1284,7 +1284,7 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1296,7 +1296,7 @@ class Users(Service):
 
         return self._parse_response(response, model=MfaRecoveryCodes)
 
-    def update_mfa_recovery_codes(
+    async def update_mfa_recovery_codes(
         self,
         user_id: str,
     ) -> MfaRecoveryCodes:
@@ -1324,7 +1324,7 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -1337,7 +1337,7 @@ class Users(Service):
 
         return self._parse_response(response, model=MfaRecoveryCodes)
 
-    def create_mfa_recovery_codes(
+    async def create_mfa_recovery_codes(
         self,
         user_id: str,
     ) -> MfaRecoveryCodes:
@@ -1365,7 +1365,7 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1378,7 +1378,7 @@ class Users(Service):
 
         return self._parse_response(response, model=MfaRecoveryCodes)
 
-    def update_name(
+    async def update_name(
         self,
         user_id: str,
         name: str,
@@ -1416,7 +1416,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1429,7 +1429,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def list_passkeys(
+    async def list_passkeys(
         self,
         user_id: str,
         queries: Optional[List[str]] = None,
@@ -1467,7 +1467,7 @@ class Users(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1479,7 +1479,7 @@ class Users(Service):
 
         return self._parse_response(response, model=PasskeyList)
 
-    def get_passkey(
+    async def get_passkey(
         self,
         user_id: str,
         passkey_id: str,
@@ -1513,7 +1513,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1525,7 +1525,7 @@ class Users(Service):
 
         return self._parse_response(response, model=Passkey)
 
-    def update_passkey(
+    async def update_passkey(
         self,
         user_id: str,
         passkey_id: str,
@@ -1565,7 +1565,7 @@ class Users(Service):
         api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
         api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1578,7 +1578,7 @@ class Users(Service):
 
         return self._parse_response(response, model=Passkey)
 
-    def delete_passkey(
+    async def delete_passkey(
         self,
         user_id: str,
         passkey_id: str,
@@ -1612,7 +1612,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{passkeyId}', str(self._normalize_value(passkey_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1625,7 +1625,7 @@ class Users(Service):
 
         return response
 
-    def update_password(
+    async def update_password(
         self,
         user_id: str,
         password: str,
@@ -1663,7 +1663,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_params['password'] = self._normalize_value(password)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1676,7 +1676,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def update_phone(
+    async def update_phone(
         self,
         user_id: str,
         number: str,
@@ -1714,7 +1714,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_params['number'] = self._normalize_value(number)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1727,7 +1727,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def get_prefs(
+    async def get_prefs(
         self,
         user_id: str,
         model_type: Type[T] = dict,
@@ -1759,7 +1759,7 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1771,7 +1771,7 @@ class Users(Service):
 
         return Preferences.with_data(response, model_type)
 
-    def update_prefs(
+    async def update_prefs(
         self,
         user_id: str,
         prefs: Dict[str, Any],
@@ -1809,7 +1809,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_params['prefs'] = self._normalize_value(prefs)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1822,7 +1822,7 @@ class Users(Service):
 
         return Preferences.with_data(response, model_type)
 
-    def list_sessions(
+    async def list_sessions(
         self,
         user_id: str,
         total: Optional[bool] = None,
@@ -1855,7 +1855,7 @@ class Users(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1867,7 +1867,7 @@ class Users(Service):
 
         return self._parse_response(response, model=SessionList)
 
-    def create_session(
+    async def create_session(
         self,
         user_id: str,
     ) -> Session:
@@ -1897,7 +1897,7 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1910,7 +1910,7 @@ class Users(Service):
 
         return self._parse_response(response, model=Session)
 
-    def delete_sessions(
+    async def delete_sessions(
         self,
         user_id: str,
     ) -> Dict[str, Any]:
@@ -1938,7 +1938,7 @@ class Users(Service):
             raise AppwriteException('Missing required parameter: "user_id"')
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1951,7 +1951,7 @@ class Users(Service):
 
         return response
 
-    def delete_session(
+    async def delete_session(
         self,
         user_id: str,
         session_id: str,
@@ -1985,7 +1985,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{sessionId}', str(self._normalize_value(session_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1998,7 +1998,7 @@ class Users(Service):
 
         return response
 
-    def update_status(
+    async def update_status(
         self,
         user_id: str,
         status: bool,
@@ -2036,7 +2036,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_params['status'] = self._normalize_value(status)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2049,7 +2049,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def list_targets(
+    async def list_targets(
         self,
         user_id: str,
         queries: Optional[List[str]] = None,
@@ -2087,7 +2087,7 @@ class Users(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -2099,7 +2099,7 @@ class Users(Service):
 
         return self._parse_response(response, model=TargetList)
 
-    def create_target(
+    async def create_target(
         self,
         user_id: str,
         target_id: str,
@@ -2155,7 +2155,7 @@ class Users(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2168,7 +2168,7 @@ class Users(Service):
 
         return self._parse_response(response, model=Target)
 
-    def get_target(
+    async def get_target(
         self,
         user_id: str,
         target_id: str,
@@ -2202,7 +2202,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{targetId}', str(self._normalize_value(target_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -2214,7 +2214,7 @@ class Users(Service):
 
         return self._parse_response(response, model=Target)
 
-    def update_target(
+    async def update_target(
         self,
         user_id: str,
         target_id: str,
@@ -2263,7 +2263,7 @@ class Users(Service):
         if name is not None:
             api_params['name'] = self._normalize_value(name)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2276,7 +2276,7 @@ class Users(Service):
 
         return self._parse_response(response, model=Target)
 
-    def delete_target(
+    async def delete_target(
         self,
         user_id: str,
         target_id: str,
@@ -2310,7 +2310,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_path = api_path.replace('{targetId}', str(self._normalize_value(target_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -2323,7 +2323,7 @@ class Users(Service):
 
         return response
 
-    def create_token(
+    async def create_token(
         self,
         user_id: str,
         length: Optional[float] = None,
@@ -2361,7 +2361,7 @@ class Users(Service):
         if expire is not None:
             api_params['expire'] = self._normalize_value(expire)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2374,7 +2374,7 @@ class Users(Service):
 
         return self._parse_response(response, model=Token)
 
-    def update_email_verification(
+    async def update_email_verification(
         self,
         user_id: str,
         email_verification: bool,
@@ -2412,7 +2412,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_params['emailVerification'] = self._normalize_value(email_verification)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2425,7 +2425,7 @@ class Users(Service):
 
         return User.with_data(response, model_type)
 
-    def update_phone_verification(
+    async def update_phone_verification(
         self,
         user_id: str,
         phone_verification: bool,
@@ -2463,7 +2463,7 @@ class Users(Service):
         api_path = api_path.replace('{userId}', str(self._normalize_value(user_id)))
         api_params['phoneVerification'] = self._normalize_value(phone_verification)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {

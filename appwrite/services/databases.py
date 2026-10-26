@@ -46,7 +46,7 @@ class Databases(Service):
         super(Databases, self).__init__(client)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list` instead.")
-    def list(
+    async def list(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -85,7 +85,7 @@ class Databases(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -98,7 +98,7 @@ class Databases(Service):
         return self._parse_response(response, model=DatabaseList)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create` instead.")
-    def create(
+    async def create(
         self,
         database_id: str,
         name: str,
@@ -144,7 +144,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -158,7 +158,7 @@ class Databases(Service):
         return self._parse_response(response, model=Database)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_transactions` instead.")
-    def list_transactions(
+    async def list_transactions(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -192,7 +192,7 @@ class Databases(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -205,7 +205,7 @@ class Databases(Service):
         return self._parse_response(response, model=TransactionList)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_transaction` instead.")
-    def create_transaction(
+    async def create_transaction(
         self,
         ttl: Optional[float] = None,
     ) -> Transaction:
@@ -234,7 +234,7 @@ class Databases(Service):
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -248,7 +248,7 @@ class Databases(Service):
         return self._parse_response(response, model=Transaction)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get_transaction` instead.")
-    def get_transaction(
+    async def get_transaction(
         self,
         transaction_id: str,
     ) -> Transaction:
@@ -278,7 +278,7 @@ class Databases(Service):
             raise AppwriteException('Missing required parameter: "transaction_id"')
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -291,7 +291,7 @@ class Databases(Service):
         return self._parse_response(response, model=Transaction)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_transaction` instead.")
-    def update_transaction(
+    async def update_transaction(
         self,
         transaction_id: str,
         commit: Optional[bool] = None,
@@ -331,7 +331,7 @@ class Databases(Service):
         if rollback is not None:
             api_params['rollback'] = self._normalize_value(rollback)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -345,7 +345,7 @@ class Databases(Service):
         return self._parse_response(response, model=Transaction)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_transaction` instead.")
-    def delete_transaction(
+    async def delete_transaction(
         self,
         transaction_id: str,
     ) -> Dict[str, Any]:
@@ -375,7 +375,7 @@ class Databases(Service):
             raise AppwriteException('Missing required parameter: "transaction_id"')
         api_path = api_path.replace('{transactionId}', str(self._normalize_value(transaction_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -389,7 +389,7 @@ class Databases(Service):
         return response
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_operations` instead.")
-    def create_operations(
+    async def create_operations(
         self,
         transaction_id: str,
         operations: Optional[List[Dict[str, Any]]] = None,
@@ -424,7 +424,7 @@ class Databases(Service):
         if operations is not None:
             api_params['operations'] = self._normalize_value(operations)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -438,7 +438,7 @@ class Databases(Service):
         return self._parse_response(response, model=Transaction)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get` instead.")
-    def get(
+    async def get(
         self,
         database_id: str,
     ) -> Database:
@@ -468,7 +468,7 @@ class Databases(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -481,7 +481,7 @@ class Databases(Service):
         return self._parse_response(response, model=Database)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update` instead.")
-    def update(
+    async def update(
         self,
         database_id: str,
         name: Optional[str] = None,
@@ -526,7 +526,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -540,7 +540,7 @@ class Databases(Service):
         return self._parse_response(response, model=Database)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete` instead.")
-    def delete(
+    async def delete(
         self,
         database_id: str,
     ) -> Dict[str, Any]:
@@ -570,7 +570,7 @@ class Databases(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -584,7 +584,7 @@ class Databases(Service):
         return response
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_tables` instead.")
-    def list_collections(
+    async def list_collections(
         self,
         database_id: str,
         queries: Optional[List[str]] = None,
@@ -629,7 +629,7 @@ class Databases(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -642,7 +642,7 @@ class Databases(Service):
         return self._parse_response(response, model=CollectionList)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_table` instead.")
-    def create_collection(
+    async def create_collection(
         self,
         database_id: str,
         collection_id: str,
@@ -714,7 +714,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -728,7 +728,7 @@ class Databases(Service):
         return self._parse_response(response, model=Collection)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get_table` instead.")
-    def get_collection(
+    async def get_collection(
         self,
         database_id: str,
         collection_id: str,
@@ -764,7 +764,7 @@ class Databases(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -777,7 +777,7 @@ class Databases(Service):
         return self._parse_response(response, model=Collection)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_table` instead.")
-    def update_collection(
+    async def update_collection(
         self,
         database_id: str,
         collection_id: str,
@@ -843,7 +843,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -857,7 +857,7 @@ class Databases(Service):
         return self._parse_response(response, model=Collection)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_table` instead.")
-    def delete_collection(
+    async def delete_collection(
         self,
         database_id: str,
         collection_id: str,
@@ -893,7 +893,7 @@ class Databases(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -907,7 +907,7 @@ class Databases(Service):
         return response
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_columns` instead.")
-    def list_attributes(
+    async def list_attributes(
         self,
         database_id: str,
         collection_id: str,
@@ -953,7 +953,7 @@ class Databases(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -966,7 +966,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeList)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_big_int_column` instead.")
-    def create_big_int_attribute(
+    async def create_big_int_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1039,7 +1039,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1053,7 +1053,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeBigint)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_big_int_column` instead.")
-    def update_big_int_attribute(
+    async def update_big_int_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1125,7 +1125,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1139,7 +1139,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeBigint)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_boolean_column` instead.")
-    def create_boolean_attribute(
+    async def create_boolean_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1202,7 +1202,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1216,7 +1216,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeBoolean)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_boolean_column` instead.")
-    def update_boolean_attribute(
+    async def update_boolean_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1278,7 +1278,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1292,7 +1292,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeBoolean)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_datetime_column` instead.")
-    def create_datetime_attribute(
+    async def create_datetime_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1355,7 +1355,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1369,7 +1369,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeDatetime)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_datetime_column` instead.")
-    def update_datetime_attribute(
+    async def update_datetime_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1431,7 +1431,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1445,7 +1445,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeDatetime)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_email_column` instead.")
-    def create_email_attribute(
+    async def create_email_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1508,7 +1508,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1522,7 +1522,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeEmail)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_email_column` instead.")
-    def update_email_attribute(
+    async def update_email_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1584,7 +1584,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1598,7 +1598,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeEmail)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_enum_column` instead.")
-    def create_enum_attribute(
+    async def create_enum_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1667,7 +1667,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1681,7 +1681,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeEnum)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_enum_column` instead.")
-    def update_enum_attribute(
+    async def update_enum_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1749,7 +1749,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1763,7 +1763,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeEnum)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_float_column` instead.")
-    def create_float_attribute(
+    async def create_float_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1836,7 +1836,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1850,7 +1850,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeFloat)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_float_column` instead.")
-    def update_float_attribute(
+    async def update_float_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -1922,7 +1922,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1936,7 +1936,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeFloat)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_integer_column` instead.")
-    def create_integer_attribute(
+    async def create_integer_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2009,7 +2009,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2023,7 +2023,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeInteger)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_integer_column` instead.")
-    def update_integer_attribute(
+    async def update_integer_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2095,7 +2095,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2109,7 +2109,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeInteger)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_ip_column` instead.")
-    def create_ip_attribute(
+    async def create_ip_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2172,7 +2172,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2186,7 +2186,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeIp)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_ip_column` instead.")
-    def update_ip_attribute(
+    async def update_ip_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2248,7 +2248,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2262,7 +2262,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeIp)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_line_column` instead.")
-    def create_line_attribute(
+    async def create_line_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2320,7 +2320,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2334,7 +2334,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeLine)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_line_column` instead.")
-    def update_line_attribute(
+    async def update_line_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2397,7 +2397,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2411,7 +2411,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeLine)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_longtext_column` instead.")
-    def create_longtext_attribute(
+    async def create_longtext_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2479,7 +2479,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2493,7 +2493,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeLongtext)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_longtext_column` instead.")
-    def update_longtext_attribute(
+    async def update_longtext_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2555,7 +2555,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2569,7 +2569,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeLongtext)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_mediumtext_column` instead.")
-    def create_mediumtext_attribute(
+    async def create_mediumtext_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2637,7 +2637,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2651,7 +2651,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeMediumtext)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_mediumtext_column` instead.")
-    def update_mediumtext_attribute(
+    async def update_mediumtext_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2713,7 +2713,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2727,7 +2727,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeMediumtext)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_point_column` instead.")
-    def create_point_attribute(
+    async def create_point_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2785,7 +2785,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2799,7 +2799,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributePoint)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_point_column` instead.")
-    def update_point_attribute(
+    async def update_point_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2862,7 +2862,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2876,7 +2876,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributePoint)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_polygon_column` instead.")
-    def create_polygon_attribute(
+    async def create_polygon_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -2934,7 +2934,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2948,7 +2948,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributePolygon)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_polygon_column` instead.")
-    def update_polygon_attribute(
+    async def update_polygon_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3011,7 +3011,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3025,7 +3025,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributePolygon)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_relationship_column` instead.")
-    def create_relationship_attribute(
+    async def create_relationship_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3098,7 +3098,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -3112,7 +3112,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeRelationship)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_relationship_column` instead.")
-    def update_relationship_attribute(
+    async def update_relationship_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3169,7 +3169,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3183,7 +3183,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeRelationship)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_string_column` instead.")
-    def create_string_attribute(
+    async def create_string_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3257,7 +3257,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -3271,7 +3271,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeString)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_string_column` instead.")
-    def update_string_attribute(
+    async def update_string_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3338,7 +3338,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3352,7 +3352,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeString)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_text_column` instead.")
-    def create_text_attribute(
+    async def create_text_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3420,7 +3420,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -3434,7 +3434,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeText)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_text_column` instead.")
-    def update_text_attribute(
+    async def update_text_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3496,7 +3496,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3510,7 +3510,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeText)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_url_column` instead.")
-    def create_url_attribute(
+    async def create_url_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3573,7 +3573,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -3587,7 +3587,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeUrl)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_url_column` instead.")
-    def update_url_attribute(
+    async def update_url_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3649,7 +3649,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3663,7 +3663,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeUrl)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_varchar_column` instead.")
-    def create_varchar_attribute(
+    async def create_varchar_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3737,7 +3737,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -3751,7 +3751,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeVarchar)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_varchar_column` instead.")
-    def update_varchar_attribute(
+    async def update_varchar_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3818,7 +3818,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3832,7 +3832,7 @@ class Databases(Service):
         return self._parse_response(response, model=AttributeVarchar)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get_column` instead.")
-    def get_attribute(
+    async def get_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -3893,7 +3893,7 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -3962,7 +3962,7 @@ class Databases(Service):
         raise AppwriteException('Unable to match response to any known model')
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_column` instead.")
-    def delete_attribute(
+    async def delete_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -4004,7 +4004,7 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -4018,7 +4018,7 @@ class Databases(Service):
         return response
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_rows` instead.")
-    def list_documents(
+    async def list_documents(
         self,
         database_id: str,
         collection_id: str,
@@ -4080,7 +4080,7 @@ class Databases(Service):
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -4093,7 +4093,7 @@ class Databases(Service):
         return DocumentList.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_row` instead.")
-    def create_document(
+    async def create_document(
         self,
         database_id: str,
         collection_id: str,
@@ -4155,7 +4155,7 @@ class Databases(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -4169,7 +4169,7 @@ class Databases(Service):
         return Document.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_rows` instead.")
-    def create_documents(
+    async def create_documents(
         self,
         database_id: str,
         collection_id: str,
@@ -4220,7 +4220,7 @@ class Databases(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -4234,7 +4234,7 @@ class Databases(Service):
         return DocumentList.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.upsert_rows` instead.")
-    def upsert_documents(
+    async def upsert_documents(
         self,
         database_id: str,
         collection_id: str,
@@ -4285,7 +4285,7 @@ class Databases(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -4299,7 +4299,7 @@ class Databases(Service):
         return DocumentList.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_rows` instead.")
-    def update_documents(
+    async def update_documents(
         self,
         database_id: str,
         collection_id: str,
@@ -4354,7 +4354,7 @@ class Databases(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -4368,7 +4368,7 @@ class Databases(Service):
         return DocumentList.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_rows` instead.")
-    def delete_documents(
+    async def delete_documents(
         self,
         database_id: str,
         collection_id: str,
@@ -4418,7 +4418,7 @@ class Databases(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -4432,7 +4432,7 @@ class Databases(Service):
         return DocumentList.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_query` instead.")
-    def create_query(
+    async def create_query(
         self,
         database_id: str,
         collection_id: str,
@@ -4492,7 +4492,7 @@ class Databases(Service):
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -4506,7 +4506,7 @@ class Databases(Service):
         return DocumentList.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get_row` instead.")
-    def get_document(
+    async def get_document(
         self,
         database_id: str,
         collection_id: str,
@@ -4562,7 +4562,7 @@ class Databases(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -4575,7 +4575,7 @@ class Databases(Service):
         return Document.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.upsert_row` instead.")
-    def upsert_document(
+    async def upsert_document(
         self,
         database_id: str,
         collection_id: str,
@@ -4636,7 +4636,7 @@ class Databases(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -4650,7 +4650,7 @@ class Databases(Service):
         return Document.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.update_row` instead.")
-    def update_document(
+    async def update_document(
         self,
         database_id: str,
         collection_id: str,
@@ -4711,7 +4711,7 @@ class Databases(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -4725,7 +4725,7 @@ class Databases(Service):
         return Document.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_row` instead.")
-    def delete_document(
+    async def delete_document(
         self,
         database_id: str,
         collection_id: str,
@@ -4772,7 +4772,7 @@ class Databases(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -4786,7 +4786,7 @@ class Databases(Service):
         return response
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.decrement_row_column` instead.")
-    def decrement_document_attribute(
+    async def decrement_document_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -4853,7 +4853,7 @@ class Databases(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -4867,7 +4867,7 @@ class Databases(Service):
         return Document.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.increment_row_column` instead.")
-    def increment_document_attribute(
+    async def increment_document_attribute(
         self,
         database_id: str,
         collection_id: str,
@@ -4934,7 +4934,7 @@ class Databases(Service):
         if transaction_id is not None:
             api_params['transactionId'] = self._normalize_value(transaction_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -4948,7 +4948,7 @@ class Databases(Service):
         return Document.with_data(response, model_type)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.list_indexes` instead.")
-    def list_indexes(
+    async def list_indexes(
         self,
         database_id: str,
         collection_id: str,
@@ -4994,7 +4994,7 @@ class Databases(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -5007,7 +5007,7 @@ class Databases(Service):
         return self._parse_response(response, model=IndexList)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.create_index` instead.")
-    def create_index(
+    async def create_index(
         self,
         database_id: str,
         collection_id: str,
@@ -5077,7 +5077,7 @@ class Databases(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -5091,7 +5091,7 @@ class Databases(Service):
         return self._parse_response(response, model=Index)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.get_index` instead.")
-    def get_index(
+    async def get_index(
         self,
         database_id: str,
         collection_id: str,
@@ -5133,7 +5133,7 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -5146,7 +5146,7 @@ class Databases(Service):
         return self._parse_response(response, model=Index)
 
     @deprecated("This API has been deprecated since 1.8.0. Please use `tablesDB.delete_index` instead.")
-    def delete_index(
+    async def delete_index(
         self,
         database_id: str,
         collection_id: str,
@@ -5188,7 +5188,7 @@ class Databases(Service):
         api_path = api_path.replace('{collectionId}', str(self._normalize_value(collection_id)))
         api_path = api_path.replace('{key}', str(self._normalize_value(key)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {

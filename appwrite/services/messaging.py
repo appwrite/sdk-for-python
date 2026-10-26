@@ -21,7 +21,7 @@ class Messaging(Service):
     def __init__(self, client) -> None:
         super(Messaging, self).__init__(client)
 
-    def list_messages(
+    async def list_messages(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -58,7 +58,7 @@ class Messaging(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -70,7 +70,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=MessageList)
 
-    def create_email(
+    async def create_email(
         self,
         message_id: str,
         subject: str,
@@ -170,7 +170,7 @@ class Messaging(Service):
         if emails is not None:
             api_params['emails'] = self._normalize_value(emails)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -183,7 +183,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Message)
 
-    def update_email(
+    async def update_email(
         self,
         message_id: str,
         topics: Optional[List[str]] = None,
@@ -281,7 +281,7 @@ class Messaging(Service):
         if emails is not None:
             api_params['emails'] = self._normalize_value(emails)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -294,7 +294,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Message)
 
-    def create_push(
+    async def create_push(
         self,
         message_id: str,
         title: Optional[str] = None,
@@ -417,7 +417,7 @@ class Messaging(Service):
         if channel_id is not None:
             api_params['channelId'] = self._normalize_value(channel_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -430,7 +430,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Message)
 
-    def update_push(
+    async def update_push(
         self,
         message_id: str,
         topics: Optional[List[str]] = None,
@@ -553,7 +553,7 @@ class Messaging(Service):
         if channel_id is not None:
             api_params['channelId'] = self._normalize_value(channel_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -566,7 +566,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Message)
 
-    def create_sms(
+    async def create_sms(
         self,
         message_id: str,
         content: str,
@@ -625,7 +625,7 @@ class Messaging(Service):
         if scheduled_at is not None:
             api_params['scheduledAt'] = self._normalize_value(scheduled_at)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -638,7 +638,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Message)
 
-    def update_sms(
+    async def update_sms(
         self,
         message_id: str,
         topics: Optional[List[str]] = None,
@@ -696,7 +696,7 @@ class Messaging(Service):
         if scheduled_at is not None:
             api_params['scheduledAt'] = self._normalize_value(scheduled_at)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -709,7 +709,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Message)
 
-    def get_message(
+    async def get_message(
         self,
         message_id: str,
     ) -> Message:
@@ -737,7 +737,7 @@ class Messaging(Service):
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -749,7 +749,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Message)
 
-    def delete(
+    async def delete(
         self,
         message_id: str,
     ) -> Dict[str, Any]:
@@ -777,7 +777,7 @@ class Messaging(Service):
             raise AppwriteException('Missing required parameter: "message_id"')
         api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -790,7 +790,7 @@ class Messaging(Service):
 
         return response
 
-    def list_targets(
+    async def list_targets(
         self,
         message_id: str,
         queries: Optional[List[str]] = None,
@@ -828,7 +828,7 @@ class Messaging(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -840,7 +840,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=TargetList)
 
-    def list_providers(
+    async def list_providers(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -877,7 +877,7 @@ class Messaging(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -889,7 +889,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=ProviderList)
 
-    def create_apns_provider(
+    async def create_apns_provider(
         self,
         provider_id: str,
         name: str,
@@ -953,7 +953,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -966,7 +966,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_apns_provider(
+    async def update_apns_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -1029,7 +1029,7 @@ class Messaging(Service):
         if sandbox is not None:
             api_params['sandbox'] = self._normalize_value(sandbox)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1042,7 +1042,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_appwrite_provider(
+    async def create_appwrite_provider(
         self,
         provider_id: str,
         name: str,
@@ -1091,7 +1091,7 @@ class Messaging(Service):
         if expiry is not None:
             api_params['expiry'] = self._normalize_value(expiry)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1104,7 +1104,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_appwrite_provider(
+    async def update_appwrite_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -1152,7 +1152,7 @@ class Messaging(Service):
         if expiry is not None:
             api_params['expiry'] = self._normalize_value(expiry)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1165,7 +1165,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_fcm_provider(
+    async def create_fcm_provider(
         self,
         provider_id: str,
         name: str,
@@ -1209,7 +1209,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1222,7 +1222,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_fcm_provider(
+    async def update_fcm_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -1265,7 +1265,7 @@ class Messaging(Service):
         if service_account_json is not None:
             api_params['serviceAccountJSON'] = self._normalize_value(service_account_json)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1278,7 +1278,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_mailgun_provider(
+    async def create_mailgun_provider(
         self,
         provider_id: str,
         name: str,
@@ -1352,7 +1352,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1365,7 +1365,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_mailgun_provider(
+    async def update_mailgun_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -1438,7 +1438,7 @@ class Messaging(Service):
         if reply_to_email is not None:
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1451,7 +1451,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_msg91_provider(
+    async def create_msg91_provider(
         self,
         provider_id: str,
         name: str,
@@ -1505,7 +1505,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1518,7 +1518,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_msg91_provider(
+    async def update_msg91_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -1571,7 +1571,7 @@ class Messaging(Service):
         if auth_key is not None:
             api_params['authKey'] = self._normalize_value(auth_key)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1584,7 +1584,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_resend_provider(
+    async def create_resend_provider(
         self,
         provider_id: str,
         name: str,
@@ -1648,7 +1648,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1661,7 +1661,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_resend_provider(
+    async def update_resend_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -1724,7 +1724,7 @@ class Messaging(Service):
         if reply_to_email is not None:
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1737,7 +1737,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_sendgrid_provider(
+    async def create_sendgrid_provider(
         self,
         provider_id: str,
         name: str,
@@ -1801,7 +1801,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1814,7 +1814,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_sendgrid_provider(
+    async def update_sendgrid_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -1877,7 +1877,7 @@ class Messaging(Service):
         if reply_to_email is not None:
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1890,7 +1890,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_ses_provider(
+    async def create_ses_provider(
         self,
         provider_id: str,
         name: str,
@@ -1964,7 +1964,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1977,7 +1977,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_ses_provider(
+    async def update_ses_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -2050,7 +2050,7 @@ class Messaging(Service):
         if reply_to_email is not None:
             api_params['replyToEmail'] = self._normalize_value(reply_to_email)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2063,7 +2063,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_smtp_provider(
+    async def create_smtp_provider(
         self,
         provider_id: str,
         name: str,
@@ -2158,7 +2158,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2171,7 +2171,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_smtp_provider(
+    async def update_smtp_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -2264,7 +2264,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2277,7 +2277,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_telesign_provider(
+    async def create_telesign_provider(
         self,
         provider_id: str,
         name: str,
@@ -2331,7 +2331,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2344,7 +2344,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_telesign_provider(
+    async def update_telesign_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -2397,7 +2397,7 @@ class Messaging(Service):
         if xfrom is not None:
             api_params['from'] = self._normalize_value(xfrom)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2410,7 +2410,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_textmagic_provider(
+    async def create_textmagic_provider(
         self,
         provider_id: str,
         name: str,
@@ -2464,7 +2464,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2477,7 +2477,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_textmagic_provider(
+    async def update_textmagic_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -2530,7 +2530,7 @@ class Messaging(Service):
         if xfrom is not None:
             api_params['from'] = self._normalize_value(xfrom)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2543,7 +2543,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_twilio_provider(
+    async def create_twilio_provider(
         self,
         provider_id: str,
         name: str,
@@ -2597,7 +2597,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2610,7 +2610,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_twilio_provider(
+    async def update_twilio_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -2663,7 +2663,7 @@ class Messaging(Service):
         if xfrom is not None:
             api_params['from'] = self._normalize_value(xfrom)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2676,7 +2676,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def create_vonage_provider(
+    async def create_vonage_provider(
         self,
         provider_id: str,
         name: str,
@@ -2730,7 +2730,7 @@ class Messaging(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -2743,7 +2743,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def update_vonage_provider(
+    async def update_vonage_provider(
         self,
         provider_id: str,
         name: Optional[str] = None,
@@ -2796,7 +2796,7 @@ class Messaging(Service):
         if xfrom is not None:
             api_params['from'] = self._normalize_value(xfrom)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -2809,7 +2809,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def get_provider(
+    async def get_provider(
         self,
         provider_id: str,
     ) -> Provider:
@@ -2837,7 +2837,7 @@ class Messaging(Service):
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -2849,7 +2849,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
-    def delete_provider(
+    async def delete_provider(
         self,
         provider_id: str,
     ) -> Dict[str, Any]:
@@ -2877,7 +2877,7 @@ class Messaging(Service):
             raise AppwriteException('Missing required parameter: "provider_id"')
         api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -2890,7 +2890,7 @@ class Messaging(Service):
 
         return response
 
-    def list_topics(
+    async def list_topics(
         self,
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
@@ -2927,7 +2927,7 @@ class Messaging(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -2939,7 +2939,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=TopicList)
 
-    def create_topic(
+    async def create_topic(
         self,
         topic_id: str,
         name: str,
@@ -2993,7 +2993,7 @@ class Messaging(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -3006,7 +3006,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Topic)
 
-    def get_topic(
+    async def get_topic(
         self,
         topic_id: str,
     ) -> Topic:
@@ -3034,7 +3034,7 @@ class Messaging(Service):
             raise AppwriteException('Missing required parameter: "topic_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -3046,7 +3046,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Topic)
 
-    def update_topic(
+    async def update_topic(
         self,
         topic_id: str,
         name: Optional[str] = None,
@@ -3099,7 +3099,7 @@ class Messaging(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -3112,7 +3112,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Topic)
 
-    def delete_topic(
+    async def delete_topic(
         self,
         topic_id: str,
     ) -> Dict[str, Any]:
@@ -3140,7 +3140,7 @@ class Messaging(Service):
             raise AppwriteException('Missing required parameter: "topic_id"')
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -3153,7 +3153,7 @@ class Messaging(Service):
 
         return response
 
-    def list_subscribers(
+    async def list_subscribers(
         self,
         topic_id: str,
         queries: Optional[List[str]] = None,
@@ -3196,7 +3196,7 @@ class Messaging(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -3208,7 +3208,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=SubscriberList)
 
-    def create_subscriber(
+    async def create_subscriber(
         self,
         topic_id: str,
         subscriber_id: str,
@@ -3248,7 +3248,7 @@ class Messaging(Service):
         api_params['subscriberId'] = self._normalize_value(subscriber_id)
         api_params['targetId'] = self._normalize_value(target_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -3261,7 +3261,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Subscriber)
 
-    def get_subscriber(
+    async def get_subscriber(
         self,
         topic_id: str,
         subscriber_id: str,
@@ -3295,7 +3295,7 @@ class Messaging(Service):
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         api_path = api_path.replace('{subscriberId}', str(self._normalize_value(subscriber_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -3307,7 +3307,7 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Subscriber)
 
-    def delete_subscriber(
+    async def delete_subscriber(
         self,
         topic_id: str,
         subscriber_id: str,
@@ -3341,7 +3341,7 @@ class Messaging(Service):
         api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
         api_path = api_path.replace('{subscriberId}', str(self._normalize_value(subscriber_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {

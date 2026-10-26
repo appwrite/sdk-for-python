@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.tables_db import TablesDB
 
 
-class TablesDBServiceTest(unittest.TestCase):
+class TablesDBServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.tables_db = TablesDB(self.client)
 
-    @requests_mock.Mocker()
-    def test_list(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list(self):
         data = {
             "total": 5.0,
             "databases": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.list()
+        response = await self.tables_db.list()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create(self, m):
+    @respx.mock
+    async def test_create(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
@@ -42,52 +43,43 @@ class TablesDBServiceTest(unittest.TestCase):
             "type": "legacy",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create(
+        response = await self.tables_db.create(
             '<DATABASE_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_specifications(self, m):
+    @respx.mock
+    async def test_list_specifications(self):
         data = {
             "specifications": [],
             "total": 9.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.list_specifications()
+        response = await self.tables_db.list_specifications()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_transactions(self, m):
+    @respx.mock
+    async def test_list_transactions(self):
         data = {
             "total": 5.0,
             "transactions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.list_transactions()
+        response = await self.tables_db.list_transactions()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_transaction(self, m):
+    @respx.mock
+    async def test_create_transaction(self):
         data = {
             "$id": "259125845563242502",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -97,17 +89,14 @@ class TablesDBServiceTest(unittest.TestCase):
             "expiresAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_transaction()
+        response = await self.tables_db.create_transaction()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_transaction(self, m):
+    @respx.mock
+    async def test_get_transaction(self):
         data = {
             "$id": "259125845563242502",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -117,19 +106,16 @@ class TablesDBServiceTest(unittest.TestCase):
             "expiresAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.get_transaction(
+        response = await self.tables_db.get_transaction(
             '<TRANSACTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_transaction(self, m):
+    @respx.mock
+    async def test_update_transaction(self):
         data = {
             "$id": "259125845563242502",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -139,34 +125,28 @@ class TablesDBServiceTest(unittest.TestCase):
             "expiresAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_transaction(
+        response = await self.tables_db.update_transaction(
             '<TRANSACTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_transaction(self, m):
+    @respx.mock
+    async def test_delete_transaction(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.delete_transaction(
+        response = await self.tables_db.delete_transaction(
             '<TRANSACTION_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_create_operations(self, m):
+    @respx.mock
+    async def test_create_operations(self):
         data = {
             "$id": "259125845563242502",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -176,19 +156,16 @@ class TablesDBServiceTest(unittest.TestCase):
             "expiresAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_operations(
+        response = await self.tables_db.create_operations(
             '<TRANSACTION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    @respx.mock
+    async def test_get(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
@@ -199,19 +176,16 @@ class TablesDBServiceTest(unittest.TestCase):
             "type": "legacy",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.get(
+        response = await self.tables_db.get(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update(self, m):
+    @respx.mock
+    async def test_update(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "My Database",
@@ -222,34 +196,28 @@ class TablesDBServiceTest(unittest.TestCase):
             "type": "legacy",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update(
+        response = await self.tables_db.update(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete(self, m):
+    @respx.mock
+    async def test_delete(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.delete(
+        response = await self.tables_db.delete(
             '<DATABASE_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_create_failover(self, m):
+    @respx.mock
+    async def test_create_failover(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -298,37 +266,31 @@ class TablesDBServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_failover(
+        response = await self.tables_db.create_failover(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_migrations(self, m):
+    @respx.mock
+    async def test_list_migrations(self):
         data = {
             "total": 5.0,
             "migrations": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.list_migrations(
+        response = await self.tables_db.list_migrations(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_migration(self, m):
+    @respx.mock
+    async def test_create_migration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -349,20 +311,17 @@ class TablesDBServiceTest(unittest.TestCase):
             "paused": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_migration(
+        response = await self.tables_db.create_migration(
             '<DATABASE_ID>',
             's-1vcpu-1gb',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_migration(self, m):
+    @respx.mock
+    async def test_get_migration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -383,36 +342,30 @@ class TablesDBServiceTest(unittest.TestCase):
             "paused": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.get_migration(
+        response = await self.tables_db.get_migration(
             '<DATABASE_ID>',
             '<MIGRATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_migration(self, m):
+    @respx.mock
+    async def test_delete_migration(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.delete_migration(
+        response = await self.tables_db.delete_migration(
             '<DATABASE_ID>',
             '<MIGRATION_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_create_cutover(self, m):
+    @respx.mock
+    async def test_create_cutover(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -433,38 +386,32 @@ class TablesDBServiceTest(unittest.TestCase):
             "paused": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_cutover(
+        response = await self.tables_db.create_cutover(
             '<DATABASE_ID>',
             '<MIGRATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_operations(self, m):
+    @respx.mock
+    async def test_list_operations(self):
         data = {
             "total": 5.0,
             "operations": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.list_operations(
+        response = await self.tables_db.list_operations(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_replicas(self, m):
+    @respx.mock
+    async def test_get_replicas(self):
         data = {
             "replicas": 2.0,
             "syncMode": "async",
@@ -474,19 +421,16 @@ class TablesDBServiceTest(unittest.TestCase):
             "members": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.get_replicas(
+        response = await self.tables_db.get_replicas(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_status(self, m):
+    @respx.mock
+    async def test_get_status(self):
         data = {
             "health": "healthy",
             "ready": True,
@@ -501,37 +445,31 @@ class TablesDBServiceTest(unittest.TestCase):
             "volumes": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.get_status(
+        response = await self.tables_db.get_status(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_tables(self, m):
+    @respx.mock
+    async def test_list_tables(self):
         data = {
             "total": 5.0,
             "tables": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.list_tables(
+        response = await self.tables_db.list_tables(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_table(self, m):
+    @respx.mock
+    async def test_create_table(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -548,21 +486,18 @@ class TablesDBServiceTest(unittest.TestCase):
             "bytesUsed": 1500.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_table(
+        response = await self.tables_db.create_table(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_table(self, m):
+    @respx.mock
+    async def test_get_table(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -579,20 +514,17 @@ class TablesDBServiceTest(unittest.TestCase):
             "bytesUsed": 1500.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.get_table(
+        response = await self.tables_db.get_table(
             '<DATABASE_ID>',
             '<TABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_table(self, m):
+    @respx.mock
+    async def test_update_table(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -609,55 +541,46 @@ class TablesDBServiceTest(unittest.TestCase):
             "bytesUsed": 1500.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_table(
+        response = await self.tables_db.update_table(
             '<DATABASE_ID>',
             '<TABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_table(self, m):
+    @respx.mock
+    async def test_delete_table(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.delete_table(
+        response = await self.tables_db.delete_table(
             '<DATABASE_ID>',
             '<TABLE_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_columns(self, m):
+    @respx.mock
+    async def test_list_columns(self):
         data = {
             "total": 5.0,
             "columns": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.list_columns(
+        response = await self.tables_db.list_columns(
             '<DATABASE_ID>',
             '<TABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_big_int_column(self, m):
+    @respx.mock
+    async def test_create_big_int_column(self):
         data = {
             "key": "count",
             "description": "Name shown on the public profile.",
@@ -669,13 +592,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_big_int_column(
+        response = await self.tables_db.create_big_int_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -683,8 +603,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_big_int_column(self, m):
+    @respx.mock
+    async def test_update_big_int_column(self):
         data = {
             "key": "count",
             "description": "Name shown on the public profile.",
@@ -696,13 +616,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_big_int_column(
+        response = await self.tables_db.update_big_int_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -711,8 +628,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_boolean_column(self, m):
+    @respx.mock
+    async def test_create_boolean_column(self):
         data = {
             "key": "isEnabled",
             "description": "Name shown on the public profile.",
@@ -724,13 +641,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_boolean_column(
+        response = await self.tables_db.create_boolean_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -738,8 +652,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_boolean_column(self, m):
+    @respx.mock
+    async def test_update_boolean_column(self):
         data = {
             "key": "isEnabled",
             "description": "Name shown on the public profile.",
@@ -751,13 +665,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_boolean_column(
+        response = await self.tables_db.update_boolean_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -766,8 +677,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_datetime_column(self, m):
+    @respx.mock
+    async def test_create_datetime_column(self):
         data = {
             "key": "birthDay",
             "description": "Name shown on the public profile.",
@@ -780,13 +691,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "format": "datetime",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_datetime_column(
+        response = await self.tables_db.create_datetime_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -794,8 +702,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_datetime_column(self, m):
+    @respx.mock
+    async def test_update_datetime_column(self):
         data = {
             "key": "birthDay",
             "description": "Name shown on the public profile.",
@@ -808,13 +716,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "format": "datetime",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_datetime_column(
+        response = await self.tables_db.update_datetime_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -823,8 +728,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_email_column(self, m):
+    @respx.mock
+    async def test_create_email_column(self):
         data = {
             "key": "userEmail",
             "description": "Name shown on the public profile.",
@@ -837,13 +742,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "format": "email",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_email_column(
+        response = await self.tables_db.create_email_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -851,8 +753,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_email_column(self, m):
+    @respx.mock
+    async def test_update_email_column(self):
         data = {
             "key": "userEmail",
             "description": "Name shown on the public profile.",
@@ -865,13 +767,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "format": "email",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_email_column(
+        response = await self.tables_db.update_email_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -880,8 +779,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_enum_column(self, m):
+    @respx.mock
+    async def test_create_enum_column(self):
         data = {
             "key": "status",
             "description": "Name shown on the public profile.",
@@ -895,13 +794,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "format": "enum",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_enum_column(
+        response = await self.tables_db.create_enum_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -910,8 +806,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_enum_column(self, m):
+    @respx.mock
+    async def test_update_enum_column(self):
         data = {
             "key": "status",
             "description": "Name shown on the public profile.",
@@ -925,13 +821,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "format": "enum",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_enum_column(
+        response = await self.tables_db.update_enum_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -941,8 +834,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_float_column(self, m):
+    @respx.mock
+    async def test_create_float_column(self):
         data = {
             "key": "percentageCompleted",
             "description": "Name shown on the public profile.",
@@ -954,13 +847,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_float_column(
+        response = await self.tables_db.create_float_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -968,8 +858,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_float_column(self, m):
+    @respx.mock
+    async def test_update_float_column(self):
         data = {
             "key": "percentageCompleted",
             "description": "Name shown on the public profile.",
@@ -981,13 +871,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_float_column(
+        response = await self.tables_db.update_float_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -996,8 +883,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_integer_column(self, m):
+    @respx.mock
+    async def test_create_integer_column(self):
         data = {
             "key": "count",
             "description": "Name shown on the public profile.",
@@ -1009,13 +896,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_integer_column(
+        response = await self.tables_db.create_integer_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1023,8 +907,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_integer_column(self, m):
+    @respx.mock
+    async def test_update_integer_column(self):
         data = {
             "key": "count",
             "description": "Name shown on the public profile.",
@@ -1036,13 +920,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_integer_column(
+        response = await self.tables_db.update_integer_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1051,8 +932,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_ip_column(self, m):
+    @respx.mock
+    async def test_create_ip_column(self):
         data = {
             "key": "ipAddress",
             "description": "Name shown on the public profile.",
@@ -1065,13 +946,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "format": "ip",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_ip_column(
+        response = await self.tables_db.create_ip_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1079,8 +957,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_ip_column(self, m):
+    @respx.mock
+    async def test_update_ip_column(self):
         data = {
             "key": "ipAddress",
             "description": "Name shown on the public profile.",
@@ -1093,13 +971,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "format": "ip",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_ip_column(
+        response = await self.tables_db.update_ip_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1108,8 +983,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_line_column(self, m):
+    @respx.mock
+    async def test_create_line_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1121,13 +996,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_line_column(
+        response = await self.tables_db.create_line_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1135,8 +1007,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_line_column(self, m):
+    @respx.mock
+    async def test_update_line_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1148,13 +1020,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_line_column(
+        response = await self.tables_db.update_line_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1162,8 +1031,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_longtext_column(self, m):
+    @respx.mock
+    async def test_create_longtext_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1175,13 +1044,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_longtext_column(
+        response = await self.tables_db.create_longtext_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1189,8 +1055,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_longtext_column(self, m):
+    @respx.mock
+    async def test_update_longtext_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1202,13 +1068,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_longtext_column(
+        response = await self.tables_db.update_longtext_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1217,8 +1080,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_mediumtext_column(self, m):
+    @respx.mock
+    async def test_create_mediumtext_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1230,13 +1093,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_mediumtext_column(
+        response = await self.tables_db.create_mediumtext_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1244,8 +1104,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_mediumtext_column(self, m):
+    @respx.mock
+    async def test_update_mediumtext_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1257,13 +1117,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_mediumtext_column(
+        response = await self.tables_db.update_mediumtext_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1272,8 +1129,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_point_column(self, m):
+    @respx.mock
+    async def test_create_point_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1285,13 +1142,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_point_column(
+        response = await self.tables_db.create_point_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1299,8 +1153,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_point_column(self, m):
+    @respx.mock
+    async def test_update_point_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1312,13 +1166,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_point_column(
+        response = await self.tables_db.update_point_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1326,8 +1177,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_polygon_column(self, m):
+    @respx.mock
+    async def test_create_polygon_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1339,13 +1190,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_polygon_column(
+        response = await self.tables_db.create_polygon_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1353,8 +1201,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_polygon_column(self, m):
+    @respx.mock
+    async def test_update_polygon_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1366,13 +1214,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_polygon_column(
+        response = await self.tables_db.update_polygon_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1380,8 +1225,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_relationship_column(self, m):
+    @respx.mock
+    async def test_create_relationship_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1399,13 +1244,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "side": "parent|child",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_relationship_column(
+        response = await self.tables_db.create_relationship_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<RELATED_TABLE_ID>',
@@ -1413,8 +1255,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_relationship_column(self, m):
+    @respx.mock
+    async def test_update_relationship_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1432,21 +1274,18 @@ class TablesDBServiceTest(unittest.TestCase):
             "side": "parent|child",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_relationship_column(
+        response = await self.tables_db.update_relationship_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_string_column(self, m):
+    @respx.mock
+    async def test_create_string_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1459,13 +1298,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "size": 128.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_string_column(
+        response = await self.tables_db.create_string_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1474,8 +1310,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_string_column(self, m):
+    @respx.mock
+    async def test_update_string_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1488,13 +1324,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "size": 128.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_string_column(
+        response = await self.tables_db.update_string_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1503,8 +1336,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_text_column(self, m):
+    @respx.mock
+    async def test_create_text_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1516,13 +1349,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_text_column(
+        response = await self.tables_db.create_text_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1530,8 +1360,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_text_column(self, m):
+    @respx.mock
+    async def test_update_text_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1543,13 +1373,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_text_column(
+        response = await self.tables_db.update_text_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1558,8 +1385,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_url_column(self, m):
+    @respx.mock
+    async def test_create_url_column(self):
         data = {
             "key": "githubUrl",
             "description": "Name shown on the public profile.",
@@ -1572,13 +1399,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "format": "url",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_url_column(
+        response = await self.tables_db.create_url_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1586,8 +1410,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_url_column(self, m):
+    @respx.mock
+    async def test_update_url_column(self):
         data = {
             "key": "githubUrl",
             "description": "Name shown on the public profile.",
@@ -1600,13 +1424,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "format": "url",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_url_column(
+        response = await self.tables_db.update_url_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1615,8 +1436,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_varchar_column(self, m):
+    @respx.mock
+    async def test_create_varchar_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1629,13 +1450,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "size": 128.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_varchar_column(
+        response = await self.tables_db.create_varchar_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1644,8 +1462,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_varchar_column(self, m):
+    @respx.mock
+    async def test_update_varchar_column(self):
         data = {
             "key": "fullName",
             "description": "Name shown on the public profile.",
@@ -1658,13 +1476,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "size": 128.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_varchar_column(
+        response = await self.tables_db.update_varchar_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1673,8 +1488,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_column(self, m):
+    @respx.mock
+    async def test_get_column(self):
         data = {
             "key": "isEnabled",
             "description": "Name shown on the public profile.",
@@ -1686,57 +1501,48 @@ class TablesDBServiceTest(unittest.TestCase):
             "$updatedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.get_column(
+        response = await self.tables_db.get_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_column(self, m):
+    @respx.mock
+    async def test_delete_column(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.delete_column(
+        response = await self.tables_db.delete_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_indexes(self, m):
+    @respx.mock
+    async def test_list_indexes(self):
         data = {
             "total": 5.0,
             "indexes": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.list_indexes(
+        response = await self.tables_db.list_indexes(
             '<DATABASE_ID>',
             '<TABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_index(self, m):
+    @respx.mock
+    async def test_create_index(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1750,13 +1556,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "lengths": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_index(
+        response = await self.tables_db.create_index(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
@@ -1765,8 +1568,8 @@ class TablesDBServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_index(self, m):
+    @respx.mock
+    async def test_get_index(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1780,57 +1583,48 @@ class TablesDBServiceTest(unittest.TestCase):
             "lengths": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.get_index(
+        response = await self.tables_db.get_index(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_index(self, m):
+    @respx.mock
+    async def test_delete_index(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.delete_index(
+        response = await self.tables_db.delete_index(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<KEY>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_rows(self, m):
+    @respx.mock
+    async def test_list_rows(self):
         data = {
             "total": 5.0,
             "rows": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.list_rows(
+        response = await self.tables_db.list_rows(
             '<DATABASE_ID>',
             '<TABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_row(self, m):
+    @respx.mock
+    async def test_create_row(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -1841,13 +1635,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_row(
+        response = await self.tables_db.create_row(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<ROW_ID>',
@@ -1856,105 +1647,90 @@ class TablesDBServiceTest(unittest.TestCase):
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_rows(self, m):
+    @respx.mock
+    async def test_create_rows(self):
         data = {
             "total": 5.0,
             "rows": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_rows(
+        response = await self.tables_db.create_rows(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             [],
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_upsert_rows(self, m):
+    @respx.mock
+    async def test_upsert_rows(self):
         data = {
             "total": 5.0,
             "rows": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.upsert_rows(
+        response = await self.tables_db.upsert_rows(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             [],
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_rows(self, m):
+    @respx.mock
+    async def test_update_rows(self):
         data = {
             "total": 5.0,
             "rows": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_rows(
+        response = await self.tables_db.update_rows(
             '<DATABASE_ID>',
             '<TABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_rows(self, m):
+    @respx.mock
+    async def test_delete_rows(self):
         data = {
             "total": 5.0,
             "rows": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.delete_rows(
+        response = await self.tables_db.delete_rows(
             '<DATABASE_ID>',
             '<TABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_query(self, m):
+    @respx.mock
+    async def test_create_query(self):
         data = {
             "total": 5.0,
             "rows": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.create_query(
+        response = await self.tables_db.create_query(
             '<DATABASE_ID>',
             '<TABLE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_row(self, m):
+    @respx.mock
+    async def test_get_row(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -1965,13 +1741,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.get_row(
+        response = await self.tables_db.get_row(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<ROW_ID>',
@@ -1979,8 +1752,8 @@ class TablesDBServiceTest(unittest.TestCase):
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_upsert_row(self, m):
+    @respx.mock
+    async def test_upsert_row(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -1991,13 +1764,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.upsert_row(
+        response = await self.tables_db.upsert_row(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<ROW_ID>',
@@ -2005,8 +1775,8 @@ class TablesDBServiceTest(unittest.TestCase):
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_row(self, m):
+    @respx.mock
+    async def test_update_row(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -2017,13 +1787,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.update_row(
+        response = await self.tables_db.update_row(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<ROW_ID>',
@@ -2031,25 +1798,22 @@ class TablesDBServiceTest(unittest.TestCase):
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_row(self, m):
+    @respx.mock
+    async def test_delete_row(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.delete_row(
+        response = await self.tables_db.delete_row(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<ROW_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_decrement_row_column(self, m):
+    @respx.mock
+    async def test_decrement_row_column(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -2060,13 +1824,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.decrement_row_column(
+        response = await self.tables_db.decrement_row_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<ROW_ID>',
@@ -2075,8 +1836,8 @@ class TablesDBServiceTest(unittest.TestCase):
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_increment_row_column(self, m):
+    @respx.mock
+    async def test_increment_row_column(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$sequence": "1",
@@ -2087,13 +1848,10 @@ class TablesDBServiceTest(unittest.TestCase):
             "$permissions": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tables_db.increment_row_column(
+        response = await self.tables_db.increment_row_column(
             '<DATABASE_ID>',
             '<TABLE_ID>',
             '<ROW_ID>',

@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.mongo import Mongo
 
 
-class MongoServiceTest(unittest.TestCase):
+class MongoServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.mongo = Mongo(self.client)
 
-    @requests_mock.Mocker()
-    def test_list(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list(self):
         data = {
             "total": 5.0,
             "databases": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.list()
+        response = await self.mongo.list()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create(self, m):
+    @respx.mock
+    async def test_create(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -80,36 +81,30 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.create(
+        response = await self.mongo.create(
             '<DATABASE_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_specifications(self, m):
+    @respx.mock
+    async def test_list_specifications(self):
         data = {
             "specifications": [],
             "total": 9.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.list_specifications()
+        response = await self.mongo.list_specifications()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    @respx.mock
+    async def test_get(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -158,19 +153,16 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.get(
+        response = await self.mongo.get(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update(self, m):
+    @respx.mock
+    async def test_update(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -219,52 +211,43 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.update(
+        response = await self.mongo.update(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete(self, m):
+    @respx.mock
+    async def test_delete(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.delete(
+        response = await self.mongo.delete(
             '<DATABASE_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_backups(self, m):
+    @respx.mock
+    async def test_list_backups(self):
         data = {
             "total": 5.0,
             "backups": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.list_backups(
+        response = await self.mongo.list_backups(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_backup(self, m):
+    @respx.mock
+    async def test_create_backup(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -280,37 +263,31 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.create_backup(
+        response = await self.mongo.create_backup(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_backup_policies(self, m):
+    @respx.mock
+    async def test_list_backup_policies(self):
         data = {
             "total": 5.0,
             "policies": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.list_backup_policies(
+        response = await self.mongo.list_backup_policies(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_backup_policy(self, m):
+    @respx.mock
+    async def test_create_backup_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -324,13 +301,10 @@ class MongoServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.create_backup_policy(
+        response = await self.mongo.create_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
             '<NAME>',
@@ -339,8 +313,8 @@ class MongoServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_backup_policy(self, m):
+    @respx.mock
+    async def test_get_backup_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -354,20 +328,17 @@ class MongoServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.get_backup_policy(
+        response = await self.mongo.get_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_backup_policy(self, m):
+    @respx.mock
+    async def test_update_backup_policy(self):
         data = {
             "$id": "5e5ea5c16897e",
             "name": "Hourly backups",
@@ -381,36 +352,30 @@ class MongoServiceTest(unittest.TestCase):
             "enabled": True,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.update_backup_policy(
+        response = await self.mongo.update_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_backup_policy(self, m):
+    @respx.mock
+    async def test_delete_backup_policy(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.delete_backup_policy(
+        response = await self.mongo.delete_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_update_backup_storage(self, m):
+    @respx.mock
+    async def test_update_backup_storage(self):
         data = {
             "provider": "s3",
             "bucket": "my-backup-bucket",
@@ -419,13 +384,10 @@ class MongoServiceTest(unittest.TestCase):
             "endpoint": "https:\/\/minio.example.com",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.update_backup_storage(
+        response = await self.mongo.update_backup_storage(
             '<DATABASE_ID>',
             's3',
             '<BUCKET>',
@@ -434,8 +396,8 @@ class MongoServiceTest(unittest.TestCase):
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_backup(self, m):
+    @respx.mock
+    async def test_get_backup(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -451,54 +413,45 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.get_backup(
+        response = await self.mongo.get_backup(
             '<DATABASE_ID>',
             '<BACKUP_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_backup(self, m):
+    @respx.mock
+    async def test_delete_backup(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.delete_backup(
+        response = await self.mongo.delete_backup(
             '<DATABASE_ID>',
             '<BACKUP_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_branches(self, m):
+    @respx.mock
+    async def test_list_branches(self):
         data = {
             "total": 2.0,
             "branches": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.list_branches(
+        response = await self.mongo.list_branches(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_branch(self, m):
+    @respx.mock
+    async def test_create_branch(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -547,19 +500,16 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.create_branch(
+        response = await self.mongo.create_branch(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_branch(self, m):
+    @respx.mock
+    async def test_delete_branch(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -608,20 +558,17 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.delete_branch(
+        response = await self.mongo.delete_branch(
             '<DATABASE_ID>',
             '<BRANCH_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_credentials(self, m):
+    @respx.mock
+    async def test_update_credentials(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -633,19 +580,16 @@ class MongoServiceTest(unittest.TestCase):
             "errorMessage": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.update_credentials(
+        response = await self.mongo.update_credentials(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_failover(self, m):
+    @respx.mock
+    async def test_create_failover(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -694,19 +638,16 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.create_failover(
+        response = await self.mongo.create_failover(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_maintenance(self, m):
+    @respx.mock
+    async def test_update_maintenance(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -755,21 +696,18 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.update_maintenance(
+        response = await self.mongo.update_maintenance(
             '<DATABASE_ID>',
             'sun',
             1,
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_migration(self, m):
+    @respx.mock
+    async def test_create_migration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -818,56 +756,47 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.create_migration(
+        response = await self.mongo.create_migration(
             '<DATABASE_ID>',
             'shared',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_operations(self, m):
+    @respx.mock
+    async def test_list_operations(self):
         data = {
             "total": 5.0,
             "operations": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.list_operations(
+        response = await self.mongo.list_operations(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_pitr(self, m):
+    @respx.mock
+    async def test_get_pitr(self):
         data = {
             "earliest": "2020-10-15T06:38:00.000+00:00",
             "latest": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.get_pitr(
+        response = await self.mongo.get_pitr(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_replicas(self, m):
+    @respx.mock
+    async def test_get_replicas(self):
         data = {
             "replicas": 2.0,
             "syncMode": "async",
@@ -877,37 +806,31 @@ class MongoServiceTest(unittest.TestCase):
             "members": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.get_replicas(
+        response = await self.mongo.get_replicas(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_list_restorations(self, m):
+    @respx.mock
+    async def test_list_restorations(self):
         data = {
             "total": 5.0,
             "restorations": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.list_restorations(
+        response = await self.mongo.list_restorations(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_restoration(self, m):
+    @respx.mock
+    async def test_create_restoration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -919,19 +842,16 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.create_restoration(
+        response = await self.mongo.create_restoration(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_restoration(self, m):
+    @respx.mock
+    async def test_get_restoration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -943,20 +863,17 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.get_restoration(
+        response = await self.mongo.get_restoration(
             '<DATABASE_ID>',
             '<RESTORATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_promote_restoration(self, m):
+    @respx.mock
+    async def test_promote_restoration(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -968,20 +885,17 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.promote_restoration(
+        response = await self.mongo.promote_restoration(
             '<DATABASE_ID>',
             '<RESTORATION_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_status(self, m):
+    @respx.mock
+    async def test_get_status(self):
         data = {
             "health": "healthy",
             "ready": True,
@@ -996,19 +910,16 @@ class MongoServiceTest(unittest.TestCase):
             "volumes": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.get_status(
+        response = await self.mongo.get_status(
             '<DATABASE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_upgrade(self, m):
+    @respx.mock
+    async def test_create_upgrade(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -1057,13 +968,10 @@ class MongoServiceTest(unittest.TestCase):
             "error": "",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.mongo.create_upgrade(
+        response = await self.mongo.create_upgrade(
             '<DATABASE_ID>',
             '<TARGET_VERSION>',
         )

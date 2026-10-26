@@ -12,7 +12,7 @@ class Webhooks(Service):
     def __init__(self, client) -> None:
         super(Webhooks, self).__init__(client)
 
-    def list(
+    async def list(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -44,7 +44,7 @@ class Webhooks(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -56,7 +56,7 @@ class Webhooks(Service):
 
         return self._parse_response(response, model=WebhookList)
 
-    def create(
+    async def create(
         self,
         webhook_id: str,
         url: str,
@@ -132,7 +132,7 @@ class Webhooks(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -145,7 +145,7 @@ class Webhooks(Service):
 
         return self._parse_response(response, model=Webhook)
 
-    def get(
+    async def get(
         self,
         webhook_id: str,
     ) -> Webhook:
@@ -173,7 +173,7 @@ class Webhooks(Service):
             raise AppwriteException('Missing required parameter: "webhook_id"')
         api_path = api_path.replace('{webhookId}', str(self._normalize_value(webhook_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -185,7 +185,7 @@ class Webhooks(Service):
 
         return self._parse_response(response, model=Webhook)
 
-    def update(
+    async def update(
         self,
         webhook_id: str,
         name: str,
@@ -256,7 +256,7 @@ class Webhooks(Service):
         if description is not None:
             api_params['description'] = self._normalize_value(description)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -269,7 +269,7 @@ class Webhooks(Service):
 
         return self._parse_response(response, model=Webhook)
 
-    def delete(
+    async def delete(
         self,
         webhook_id: str,
     ) -> Dict[str, Any]:
@@ -297,7 +297,7 @@ class Webhooks(Service):
             raise AppwriteException('Missing required parameter: "webhook_id"')
         api_path = api_path.replace('{webhookId}', str(self._normalize_value(webhook_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -310,7 +310,7 @@ class Webhooks(Service):
 
         return response
 
-    def update_secret(
+    async def update_secret(
         self,
         webhook_id: str,
         secret: Optional[str] = None,
@@ -343,7 +343,7 @@ class Webhooks(Service):
         if secret is not None:
             api_params['secret'] = self._normalize_value(secret)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {

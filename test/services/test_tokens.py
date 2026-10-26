@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,33 +9,33 @@ from appwrite.models import *
 from appwrite.services.tokens import Tokens
 
 
-class TokensServiceTest(unittest.TestCase):
+class TokensServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.tokens = Tokens(self.client)
 
-    @requests_mock.Mocker()
-    def test_list(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list(self):
         data = {
             "total": 5.0,
             "tokens": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tokens.list(
+        response = await self.tokens.list(
             '<BUCKET_ID>',
             '<FILE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_file_token(self, m):
+    @respx.mock
+    async def test_create_file_token(self):
         data = {
             "$id": "bb8ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -45,20 +46,17 @@ class TokensServiceTest(unittest.TestCase):
             "accessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tokens.create_file_token(
+        response = await self.tokens.create_file_token(
             '<BUCKET_ID>',
             '<FILE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get(self, m):
+    @respx.mock
+    async def test_get(self):
         data = {
             "$id": "bb8ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -69,19 +67,16 @@ class TokensServiceTest(unittest.TestCase):
             "accessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tokens.get(
+        response = await self.tokens.get(
             '<TOKEN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update(self, m):
+    @respx.mock
+    async def test_update(self):
         data = {
             "$id": "bb8ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -92,28 +87,22 @@ class TokensServiceTest(unittest.TestCase):
             "accessedAt": "2020-10-15T06:38:00.000+00:00",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tokens.update(
+        response = await self.tokens.update(
             '<TOKEN_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete(self, m):
+    @respx.mock
+    async def test_delete(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.tokens.delete(
+        response = await self.tokens.delete(
             '<TOKEN_ID>',
         )
         self.assertEqual(response, data)

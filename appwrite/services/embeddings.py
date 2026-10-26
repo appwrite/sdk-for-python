@@ -12,7 +12,7 @@ class Embeddings(Service):
     def __init__(self, client) -> None:
         super(Embeddings, self).__init__(client)
 
-    def create_text_embeddings(
+    async def create_text_embeddings(
         self,
         texts: List[str],
         model: Optional[EmbeddingModel] = None,
@@ -45,7 +45,7 @@ class Embeddings(Service):
         if model is not None:
             api_params['model'] = self._normalize_value(model)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {

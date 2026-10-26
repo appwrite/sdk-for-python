@@ -1,5 +1,6 @@
 import json
-import requests_mock
+import httpx2
+import respx
 import unittest
 
 from appwrite.client import Client
@@ -8,30 +9,30 @@ from appwrite.models import *
 from appwrite.services.storage import Storage
 
 
-class StorageServiceTest(unittest.TestCase):
+class StorageServiceTest(unittest.IsolatedAsyncioTestCase):
 
-    def setUp(self):
+    async def asyncSetUp(self):
         self.client = Client()
         self.storage = Storage(self.client)
 
-    @requests_mock.Mocker()
-    def test_list_buckets(self, m):
+    async def asyncTearDown(self):
+        await self.client.aclose()
+
+    @respx.mock
+    async def test_list_buckets(self):
         data = {
             "total": 5.0,
             "buckets": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.storage.list_buckets()
+        response = await self.storage.list_buckets()
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_bucket(self, m):
+    @respx.mock
+    async def test_create_bucket(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -51,20 +52,17 @@ class StorageServiceTest(unittest.TestCase):
             "totalSize": 128.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.storage.create_bucket(
+        response = await self.storage.create_bucket(
             '<BUCKET_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_bucket(self, m):
+    @respx.mock
+    async def test_get_bucket(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -84,19 +82,16 @@ class StorageServiceTest(unittest.TestCase):
             "totalSize": 128.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.storage.get_bucket(
+        response = await self.storage.get_bucket(
             '<BUCKET_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_bucket(self, m):
+    @respx.mock
+    async def test_update_bucket(self):
         data = {
             "$id": "5e5ea5c16897e",
             "$createdAt": "2020-10-15T06:38:00.000+00:00",
@@ -116,53 +111,44 @@ class StorageServiceTest(unittest.TestCase):
             "totalSize": 128.0,
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.storage.update_bucket(
+        response = await self.storage.update_bucket(
             '<BUCKET_ID>',
             '<NAME>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_bucket(self, m):
+    @respx.mock
+    async def test_delete_bucket(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.storage.delete_bucket(
+        response = await self.storage.delete_bucket(
             '<BUCKET_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_list_files(self, m):
+    @respx.mock
+    async def test_list_files(self):
         data = {
             "total": 5.0,
             "files": [],
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.storage.list_files(
+        response = await self.storage.list_files(
             '<BUCKET_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_create_file(self, m):
+    @respx.mock
+    async def test_create_file(self):
         data = {
             "$id": "5e5ea5c16897e",
             "bucketId": "5e5ea5c16897e",
@@ -182,21 +168,18 @@ class StorageServiceTest(unittest.TestCase):
             "compression": "gzip",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.storage.create_file(
+        response = await self.storage.create_file(
             '<BUCKET_ID>',
             '<FILE_ID>',
             InputFile.from_bytes(bytearray(), "example.file"),
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_get_file(self, m):
+    @respx.mock
+    async def test_get_file(self):
         data = {
             "$id": "5e5ea5c16897e",
             "bucketId": "5e5ea5c16897e",
@@ -216,20 +199,17 @@ class StorageServiceTest(unittest.TestCase):
             "compression": "gzip",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.storage.get_file(
+        response = await self.storage.get_file(
             '<BUCKET_ID>',
             '<FILE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_update_file(self, m):
+    @respx.mock
+    async def test_update_file(self):
         data = {
             "$id": "5e5ea5c16897e",
             "bucketId": "5e5ea5c16897e",
@@ -249,77 +229,62 @@ class StorageServiceTest(unittest.TestCase):
             "compression": "gzip",
         }
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.storage.update_file(
+        response = await self.storage.update_file(
             '<BUCKET_ID>',
             '<FILE_ID>',
         )
         self.assertEqual(response.to_dict(), data)
 
-    @requests_mock.Mocker()
-    def test_delete_file(self, m):
+    @respx.mock
+    async def test_delete_file(self):
         data = ''
         headers = {'Content-Type': 'application/json'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            text=json.dumps(data),
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, text=json.dumps(data), headers=headers),
         )
-        response = self.storage.delete_file(
+        response = await self.storage.delete_file(
             '<BUCKET_ID>',
             '<FILE_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_file_download(self, m):
+    @respx.mock
+    async def test_get_file_download(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.storage.get_file_download(
+        response = await self.storage.get_file_download(
             '<BUCKET_ID>',
             '<FILE_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_file_preview(self, m):
+    @respx.mock
+    async def test_get_file_preview(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.storage.get_file_preview(
+        response = await self.storage.get_file_preview(
             '<BUCKET_ID>',
             '<FILE_ID>',
         )
         self.assertEqual(response, data)
 
-    @requests_mock.Mocker()
-    def test_get_file_view(self, m):
+    @respx.mock
+    async def test_get_file_view(self):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
-        m.request(
-            requests_mock.ANY,
-            requests_mock.ANY,
-            body=data,
-            headers=headers,
+        respx.route().mock(
+            return_value=httpx2.Response(200, content=bytes(data), headers=headers),
         )
-        response = self.storage.get_file_view(
+        response = await self.storage.get_file_view(
             '<BUCKET_ID>',
             '<FILE_ID>',
         )

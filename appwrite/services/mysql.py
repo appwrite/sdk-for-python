@@ -28,7 +28,7 @@ class Mysql(Service):
     def __init__(self, client) -> None:
         super(Mysql, self).__init__(client)
 
-    def list(
+    async def list(
         self,
         queries: Optional[List[str]] = None,
         total: Optional[bool] = None,
@@ -60,7 +60,7 @@ class Mysql(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -72,7 +72,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseList)
 
-    def create(
+    async def create(
         self,
         database_id: str,
         name: str,
@@ -168,7 +168,7 @@ class Mysql(Service):
         if storage_autoscaling_max_gb is not None:
             api_params['storageAutoscalingMaxGb'] = self._normalize_value(storage_autoscaling_max_gb)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -181,7 +181,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabase)
 
-    def list_specifications(
+    async def list_specifications(
         self,
     ) -> DedicatedDatabaseSpecificationList:
         """
@@ -200,7 +200,7 @@ class Mysql(Service):
         api_path = '/mysql/specifications'
         api_params = {}
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -212,7 +212,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseSpecificationList)
 
-    def get(
+    async def get(
         self,
         database_id: str,
     ) -> DedicatedDatabase:
@@ -240,7 +240,7 @@ class Mysql(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -252,7 +252,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabase)
 
-    def update(
+    async def update(
         self,
         database_id: str,
         name: Optional[str] = None,
@@ -382,7 +382,7 @@ class Mysql(Service):
         if sql_api_timeout_seconds is not None:
             api_params['sqlApiTimeoutSeconds'] = self._normalize_value(sql_api_timeout_seconds)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -395,7 +395,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabase)
 
-    def delete(
+    async def delete(
         self,
         database_id: str,
     ) -> Dict[str, Any]:
@@ -423,7 +423,7 @@ class Mysql(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -436,7 +436,7 @@ class Mysql(Service):
 
         return response
 
-    def list_backups(
+    async def list_backups(
         self,
         database_id: str,
         queries: Optional[List[str]] = None,
@@ -474,7 +474,7 @@ class Mysql(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -486,7 +486,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseBackupList)
 
-    def create_backup(
+    async def create_backup(
         self,
         database_id: str,
         type: Optional[str] = None,
@@ -519,7 +519,7 @@ class Mysql(Service):
         if type is not None:
             api_params['type'] = self._normalize_value(type)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -532,7 +532,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseBackup)
 
-    def list_backup_policies(
+    async def list_backup_policies(
         self,
         database_id: str,
         queries: Optional[List[str]] = None,
@@ -570,7 +570,7 @@ class Mysql(Service):
         if total is not None:
             api_params['total'] = self._normalize_value(total)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -582,7 +582,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=BackupPolicyList)
 
-    def create_backup_policy(
+    async def create_backup_policy(
         self,
         database_id: str,
         policy_id: str,
@@ -644,7 +644,7 @@ class Mysql(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -657,7 +657,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=BackupPolicy)
 
-    def get_backup_policy(
+    async def get_backup_policy(
         self,
         database_id: str,
         policy_id: str,
@@ -691,7 +691,7 @@ class Mysql(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -703,7 +703,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=BackupPolicy)
 
-    def update_backup_policy(
+    async def update_backup_policy(
         self,
         database_id: str,
         policy_id: str,
@@ -757,7 +757,7 @@ class Mysql(Service):
         if enabled is not None:
             api_params['enabled'] = self._normalize_value(enabled)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -770,7 +770,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=BackupPolicy)
 
-    def delete_backup_policy(
+    async def delete_backup_policy(
         self,
         database_id: str,
         policy_id: str,
@@ -804,7 +804,7 @@ class Mysql(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -817,7 +817,7 @@ class Mysql(Service):
 
         return response
 
-    def update_backup_storage(
+    async def update_backup_storage(
         self,
         database_id: str,
         provider: str,
@@ -884,7 +884,7 @@ class Mysql(Service):
         api_params['accessKey'] = self._normalize_value(access_key)
         api_params['secretKey'] = self._normalize_value(secret_key)
 
-        response = self.client.call(
+        response = await self.client.call(
             'put',
             api_path,
             {
@@ -897,7 +897,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseBackupStorage)
 
-    def get_backup(
+    async def get_backup(
         self,
         database_id: str,
         backup_id: str,
@@ -931,7 +931,7 @@ class Mysql(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{backupId}', str(self._normalize_value(backup_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -943,7 +943,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseBackup)
 
-    def delete_backup(
+    async def delete_backup(
         self,
         database_id: str,
         backup_id: str,
@@ -977,7 +977,7 @@ class Mysql(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{backupId}', str(self._normalize_value(backup_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -990,7 +990,7 @@ class Mysql(Service):
 
         return response
 
-    def list_branches(
+    async def list_branches(
         self,
         database_id: str,
     ) -> DedicatedDatabaseBranchList:
@@ -1018,7 +1018,7 @@ class Mysql(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1030,7 +1030,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseBranchList)
 
-    def create_branch(
+    async def create_branch(
         self,
         database_id: str,
         branch_id: Optional[str] = None,
@@ -1068,7 +1068,7 @@ class Mysql(Service):
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1081,7 +1081,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabase)
 
-    def delete_branch(
+    async def delete_branch(
         self,
         database_id: str,
         branch_id: str,
@@ -1115,7 +1115,7 @@ class Mysql(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{branchId}', str(self._normalize_value(branch_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'delete',
             api_path,
             {
@@ -1128,7 +1128,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabase)
 
-    def update_credentials(
+    async def update_credentials(
         self,
         database_id: str,
     ) -> DedicatedDatabaseOperation:
@@ -1156,7 +1156,7 @@ class Mysql(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1169,7 +1169,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseOperation)
 
-    def create_execution(
+    async def create_execution(
         self,
         database_id: str,
         sql: str,
@@ -1213,7 +1213,7 @@ class Mysql(Service):
         if timeout_seconds is not None:
             api_params['timeoutSeconds'] = self._normalize_value(timeout_seconds)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1226,7 +1226,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseExecution)
 
-    def create_failover(
+    async def create_failover(
         self,
         database_id: str,
         target_replica_id: Optional[str] = None,
@@ -1259,7 +1259,7 @@ class Mysql(Service):
         if target_replica_id is not None:
             api_params['targetReplicaId'] = self._normalize_value(target_replica_id)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1272,7 +1272,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabase)
 
-    def update_maintenance(
+    async def update_maintenance(
         self,
         database_id: str,
         day: str,
@@ -1312,7 +1312,7 @@ class Mysql(Service):
         api_params['day'] = self._normalize_value(day)
         api_params['hourUtc'] = self._normalize_value(hour_utc)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1325,7 +1325,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabase)
 
-    def create_migration(
+    async def create_migration(
         self,
         database_id: str,
         target_type: str,
@@ -1364,7 +1364,7 @@ class Mysql(Service):
         if specification is not None:
             api_params['specification'] = self._normalize_value(specification)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1377,7 +1377,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabase)
 
-    def list_operations(
+    async def list_operations(
         self,
         database_id: str,
         status: Optional[str] = None,
@@ -1420,7 +1420,7 @@ class Mysql(Service):
         if offset is not None:
             api_params['offset'] = self._normalize_value(offset)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1432,7 +1432,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseOperationList)
 
-    def get_pitr(
+    async def get_pitr(
         self,
         database_id: str,
     ) -> DedicatedDatabasePITRWindows:
@@ -1460,7 +1460,7 @@ class Mysql(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1472,7 +1472,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabasePITRWindows)
 
-    def get_pooler(
+    async def get_pooler(
         self,
         database_id: str,
     ) -> DedicatedDatabasePooler:
@@ -1500,7 +1500,7 @@ class Mysql(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1512,7 +1512,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabasePooler)
 
-    def update_pooler(
+    async def update_pooler(
         self,
         database_id: str,
         mode: Optional[str] = None,
@@ -1580,7 +1580,7 @@ class Mysql(Service):
         if pooler_memory_limit is not None:
             api_params['poolerMemoryLimit'] = self._normalize_value(pooler_memory_limit)
 
-        response = self.client.call(
+        response = await self.client.call(
             'patch',
             api_path,
             {
@@ -1593,7 +1593,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabasePooler)
 
-    def get_replicas(
+    async def get_replicas(
         self,
         database_id: str,
     ) -> DedicatedDatabaseReplicas:
@@ -1621,7 +1621,7 @@ class Mysql(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1633,7 +1633,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseReplicas)
 
-    def list_restorations(
+    async def list_restorations(
         self,
         database_id: str,
         status: Optional[str] = None,
@@ -1681,7 +1681,7 @@ class Mysql(Service):
         if offset is not None:
             api_params['offset'] = self._normalize_value(offset)
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1693,7 +1693,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseRestorationList)
 
-    def create_restoration(
+    async def create_restoration(
         self,
         database_id: str,
         type: Optional[str] = None,
@@ -1758,7 +1758,7 @@ class Mysql(Service):
         if auto_promote is not None:
             api_params['autoPromote'] = self._normalize_value(auto_promote)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1771,7 +1771,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseRestoration)
 
-    def get_restoration(
+    async def get_restoration(
         self,
         database_id: str,
         restoration_id: str,
@@ -1805,7 +1805,7 @@ class Mysql(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{restorationId}', str(self._normalize_value(restoration_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1817,7 +1817,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseRestoration)
 
-    def promote_restoration(
+    async def promote_restoration(
         self,
         database_id: str,
         restoration_id: str,
@@ -1854,7 +1854,7 @@ class Mysql(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_path = api_path.replace('{restorationId}', str(self._normalize_value(restoration_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
@@ -1867,7 +1867,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DedicatedDatabaseRestoration)
 
-    def get_status(
+    async def get_status(
         self,
         database_id: str,
     ) -> DatabaseStatus:
@@ -1895,7 +1895,7 @@ class Mysql(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
 
-        response = self.client.call(
+        response = await self.client.call(
             'get',
             api_path,
             {
@@ -1907,7 +1907,7 @@ class Mysql(Service):
 
         return self._parse_response(response, model=DatabaseStatus)
 
-    def create_upgrade(
+    async def create_upgrade(
         self,
         database_id: str,
         target_version: str,
@@ -1941,7 +1941,7 @@ class Mysql(Service):
         api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
         api_params['targetVersion'] = self._normalize_value(target_version)
 
-        response = self.client.call(
+        response = await self.client.call(
             'post',
             api_path,
             {
