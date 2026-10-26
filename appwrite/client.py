@@ -403,7 +403,15 @@ class Client:
                 },
             )
 
-        await asyncio.gather(*(upload_remaining_chunk(chunk) for chunk in chunks[1:]))
+        # Wait for every sibling chunk to settle before surfacing a failure, so the
+        # caller never observes an error while other chunks are still being written.
+        outcomes = await asyncio.gather(
+            *(upload_remaining_chunk(chunk) for chunk in chunks[1:]),
+            return_exceptions=True,
+        )
+        for outcome in outcomes:
+            if isinstance(outcome, BaseException):
+                raise outcome
 
         return final_result or last_result
 
