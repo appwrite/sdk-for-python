@@ -1,24 +1,31 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.sites import Sites
 from appwrite.input_file import InputFile
 from appwrite.models import Deployment
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-sites = Sites(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: Deployment = sites.create_deployment(
-    site_id = '<SITE_ID>',
-    code = InputFile.from_path('file.png'),
-    install_command = '<INSTALL_COMMAND>', # optional
-    build_command = '<BUILD_COMMAND>', # optional
-    output_directory = '<OUTPUT_DIRECTORY>', # optional
-    activate = False # optional
-)
+    sites = Sites(client)
 
-print(result.model_dump())
+    result: Deployment = await sites.create_deployment(
+        site_id = '<SITE_ID>',
+        code = InputFile.from_path('file.png'),
+        install_command = '<INSTALL_COMMAND>', # optional
+        build_command = '<BUILD_COMMAND>', # optional
+        output_directory = '<OUTPUT_DIRECTORY>', # optional
+        activate = False # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

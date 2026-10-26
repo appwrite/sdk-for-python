@@ -1,20 +1,27 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.proxy import Proxy
 from appwrite.models import ProxyRule
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-proxy = Proxy(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: ProxyRule = proxy.create_smtp_rule(
-    domain = 'example.com',
-    function_id = '<FUNCTION_ID>',
-    branch = '<BRANCH>' # optional
-)
+    proxy = Proxy(client)
 
-print(result.model_dump())
+    result: ProxyRule = await proxy.create_smtp_rule(
+        domain = 'example.com',
+        function_id = '<FUNCTION_ID>',
+        branch = '<BRANCH>' # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

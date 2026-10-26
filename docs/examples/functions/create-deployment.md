@@ -1,23 +1,30 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.functions import Functions
 from appwrite.input_file import InputFile
 from appwrite.models import Deployment
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-functions = Functions(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: Deployment = functions.create_deployment(
-    function_id = '<FUNCTION_ID>',
-    code = InputFile.from_path('file.png'),
-    activate = False,
-    entrypoint = '<ENTRYPOINT>', # optional
-    commands = '<COMMANDS>' # optional
-)
+    functions = Functions(client)
 
-print(result.model_dump())
+    result: Deployment = await functions.create_deployment(
+        function_id = '<FUNCTION_ID>',
+        code = InputFile.from_path('file.png'),
+        activate = False,
+        entrypoint = '<ENTRYPOINT>', # optional
+        commands = '<COMMANDS>' # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

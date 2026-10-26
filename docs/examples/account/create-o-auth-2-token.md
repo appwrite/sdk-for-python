@@ -1,20 +1,27 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.account import Account
 from appwrite.enums.o_auth_provider import OAuthProvider
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-account = Account(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result: str = account.create_o_auth2_token(
-    provider = OAuthProvider.AMAZON,
-    success = 'https://example.com', # optional
-    failure = 'https://example.com', # optional
-    scopes = [], # optional
-    state = '<STATE>' # optional
-)
+    account = Account(client)
+
+    result: str = await account.create_o_auth2_token(
+        provider = OAuthProvider.AMAZON,
+        success = 'https://example.com', # optional
+        failure = 'https://example.com', # optional
+        scopes = [], # optional
+        state = '<STATE>' # optional
+    )
+
+
+asyncio.run(main())
 ```

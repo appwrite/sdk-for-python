@@ -1,18 +1,25 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.oauth2 import Oauth2
 from appwrite.models import Oauth2Grant
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-oauth2 = Oauth2(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result: Oauth2Grant = oauth2.create_grant(
-    user_code = '<USER_CODE>'
-)
+    oauth2 = Oauth2(client)
 
-print(result.model_dump())
+    result: Oauth2Grant = await oauth2.create_grant(
+        user_code = '<USER_CODE>'
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

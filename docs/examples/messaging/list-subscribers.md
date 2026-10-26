@@ -1,21 +1,28 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.messaging import Messaging
 from appwrite.models import SubscriberList
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-messaging = Messaging(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: SubscriberList = messaging.list_subscribers(
-    topic_id = '<TOPIC_ID>',
-    queries = [], # optional
-    search = '<SEARCH>', # optional
-    total = False # optional
-)
+    messaging = Messaging(client)
 
-print(result.model_dump())
+    result: SubscriberList = await messaging.list_subscribers(
+        topic_id = '<TOPIC_ID>',
+        queries = [], # optional
+        search = '<SEARCH>', # optional
+        total = False # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

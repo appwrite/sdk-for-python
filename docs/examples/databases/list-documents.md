@@ -1,23 +1,30 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.databases import Databases
 from appwrite.models import DocumentList
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-databases = Databases(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result: DocumentList = databases.list_documents(
-    database_id = '<DATABASE_ID>',
-    collection_id = '<COLLECTION_ID>',
-    queries = [], # optional
-    transaction_id = '<TRANSACTION_ID>', # optional
-    total = False, # optional
-    ttl = 0 # optional
-)
+    databases = Databases(client)
 
-print(result.model_dump())
+    result: DocumentList = await databases.list_documents(
+        database_id = '<DATABASE_ID>',
+        collection_id = '<COLLECTION_ID>',
+        queries = [], # optional
+        transaction_id = '<TRANSACTION_ID>', # optional
+        total = False, # optional
+        ttl = 0 # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

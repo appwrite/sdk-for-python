@@ -1,23 +1,30 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.storage import Storage
 from appwrite.models import File
 from appwrite.permission import Permission
 from appwrite.role import Role
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-storage = Storage(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result: File = storage.update_file(
-    bucket_id = '<BUCKET_ID>',
-    file_id = '<FILE_ID>',
-    name = '<NAME>', # optional
-    permissions = [Permission.read(Role.any())] # optional
-)
+    storage = Storage(client)
 
-print(result.model_dump())
+    result: File = await storage.update_file(
+        bucket_id = '<BUCKET_ID>',
+        file_id = '<FILE_ID>',
+        name = '<NAME>', # optional
+        permissions = [Permission.read(Role.any())] # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

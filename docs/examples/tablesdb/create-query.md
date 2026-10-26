@@ -1,23 +1,30 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.tables_db import TablesDB
 from appwrite.models import RowList
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-tables_db = TablesDB(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result: RowList = tables_db.create_query(
-    database_id = '<DATABASE_ID>',
-    table_id = '<TABLE_ID>',
-    queries = [], # optional
-    transaction_id = '<TRANSACTION_ID>', # optional
-    total = False, # optional
-    ttl = 0 # optional
-)
+    tables_db = TablesDB(client)
 
-print(result.model_dump())
+    result: RowList = await tables_db.create_query(
+        database_id = '<DATABASE_ID>',
+        table_id = '<TABLE_ID>',
+        queries = [], # optional
+        transaction_id = '<TRANSACTION_ID>', # optional
+        total = False, # optional
+        ttl = 0 # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

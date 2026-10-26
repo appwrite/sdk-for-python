@@ -1,4 +1,6 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.databases import Databases
 from appwrite.models import AttributeBoolean
@@ -21,18 +23,23 @@ from appwrite.models import AttributeLongtext
 from appwrite.models import AttributeString
 from typing import Union
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-databases = Databases(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: Union[AttributeBoolean, AttributeBigint, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributePoint, AttributeLine, AttributePolygon, AttributeVarchar, AttributeText, AttributeMediumtext, AttributeLongtext, AttributeString] = databases.get_attribute(
-    database_id = '<DATABASE_ID>',
-    collection_id = '<COLLECTION_ID>',
-    key = '<KEY>'
-)
+    databases = Databases(client)
 
-print(result.model_dump())
+    result: Union[AttributeBoolean, AttributeBigint, AttributeInteger, AttributeFloat, AttributeEmail, AttributeEnum, AttributeUrl, AttributeIp, AttributeDatetime, AttributeRelationship, AttributePoint, AttributeLine, AttributePolygon, AttributeVarchar, AttributeText, AttributeMediumtext, AttributeLongtext, AttributeString] = await databases.get_attribute(
+        database_id = '<DATABASE_ID>',
+        collection_id = '<COLLECTION_ID>',
+        key = '<KEY>'
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

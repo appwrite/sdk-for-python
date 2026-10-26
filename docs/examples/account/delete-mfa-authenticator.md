@@ -1,16 +1,23 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.account import Account
 from appwrite.enums.authenticator_type import AuthenticatorType
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-account = Account(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result = account.delete_mfa_authenticator(
-    type = AuthenticatorType.TOTP
-)
+    account = Account(client)
+
+    result = await account.delete_mfa_authenticator(
+        type = AuthenticatorType.TOTP
+    )
+
+
+asyncio.run(main())
 ```

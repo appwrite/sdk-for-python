@@ -1,19 +1,26 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.postgresql import Postgresql
 from appwrite.models import BackupPolicy
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-postgresql = Postgresql(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: BackupPolicy = postgresql.get_backup_policy(
-    database_id = '<DATABASE_ID>',
-    policy_id = '<POLICY_ID>'
-)
+    postgresql = Postgresql(client)
 
-print(result.model_dump())
+    result: BackupPolicy = await postgresql.get_backup_policy(
+        database_id = '<DATABASE_ID>',
+        policy_id = '<POLICY_ID>'
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

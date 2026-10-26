@@ -1,4 +1,6 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.project import Project
 from appwrite.models import PolicyPasswordDictionary
@@ -22,16 +24,21 @@ from appwrite.models import PolicyPasskey
 from typing import Union
 from appwrite.enums.project_policy_id import ProjectPolicyId
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-project = Project(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicyPasswordPwned, PolicyPasswordRotation, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail, PolicyPasskey] = project.get_policy(
-    policy_id = ProjectPolicyId.PASSWORD_DICTIONARY
-)
+    project = Project(client)
 
-print(result.model_dump())
+    result: Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicyPasswordPwned, PolicyPasswordRotation, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail, PolicyPasskey] = await project.get_policy(
+        policy_id = ProjectPolicyId.PASSWORD_DICTIONARY
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

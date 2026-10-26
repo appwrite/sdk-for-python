@@ -1,19 +1,26 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.advisor import Advisor
 from appwrite.models import Insight
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-advisor = Advisor(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: Insight = advisor.get_insight(
-    report_id = '<REPORT_ID>',
-    insight_id = '<INSIGHT_ID>'
-)
+    advisor = Advisor(client)
 
-print(result.model_dump())
+    result: Insight = await advisor.get_insight(
+        report_id = '<REPORT_ID>',
+        insight_id = '<INSIGHT_ID>'
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

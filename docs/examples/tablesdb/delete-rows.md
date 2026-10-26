@@ -1,21 +1,28 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.tables_db import TablesDB
 from appwrite.models import RowList
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-tables_db = TablesDB(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: RowList = tables_db.delete_rows(
-    database_id = '<DATABASE_ID>',
-    table_id = '<TABLE_ID>',
-    queries = ["{\"method\":\"equal\", \"attribute\":\"$id\", \"values\":[\"<ROW_ID>\"]}"], # optional
-    transaction_id = '<TRANSACTION_ID>' # optional
-)
+    tables_db = TablesDB(client)
 
-print(result.model_dump())
+    result: RowList = await tables_db.delete_rows(
+        database_id = '<DATABASE_ID>',
+        table_id = '<TABLE_ID>',
+        queries = ["{\"method\":\"equal\", \"attribute\":\"$id\", \"values\":[\"<ROW_ID>\"]}"], # optional
+        transaction_id = '<TRANSACTION_ID>' # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

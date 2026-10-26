@@ -1,20 +1,27 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.storage import Storage
 from appwrite.models import BucketList
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-storage = Storage(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: BucketList = storage.list_buckets(
-    queries = [], # optional
-    search = '<SEARCH>', # optional
-    total = False # optional
-)
+    storage = Storage(client)
 
-print(result.model_dump())
+    result: BucketList = await storage.list_buckets(
+        queries = [], # optional
+        search = '<SEARCH>', # optional
+        total = False # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

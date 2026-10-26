@@ -1,19 +1,26 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.project import Project
 from appwrite.models import PlatformList
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-project = Project(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: PlatformList = project.list_platforms(
-    queries = [], # optional
-    total = False # optional
-)
+    project = Project(client)
 
-print(result.model_dump())
+    result: PlatformList = await project.list_platforms(
+        queries = [], # optional
+        total = False # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

@@ -1,19 +1,26 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.mongo import Mongo
 from appwrite.models import DedicatedDatabaseList
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-mongo = Mongo(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: DedicatedDatabaseList = mongo.list(
-    queries = [], # optional
-    total = False # optional
-)
+    mongo = Mongo(client)
 
-print(result.model_dump())
+    result: DedicatedDatabaseList = await mongo.list(
+        queries = [], # optional
+        total = False # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

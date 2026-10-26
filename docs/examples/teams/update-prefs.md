@@ -1,19 +1,26 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.teams import Teams
 from appwrite.models import Preferences
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-teams = Teams(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result: Preferences = teams.update_prefs(
-    team_id = '<TEAM_ID>',
-    prefs = {}
-)
+    teams = Teams(client)
 
-print(result.model_dump())
+    result: Preferences = await teams.update_prefs(
+        team_id = '<TEAM_ID>',
+        prefs = {}
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

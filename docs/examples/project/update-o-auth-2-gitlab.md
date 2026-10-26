@@ -1,21 +1,28 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.project import Project
 from appwrite.models import OAuth2Gitlab
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-project = Project(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: OAuth2Gitlab = project.update_o_auth2_gitlab(
-    application_id = '<APPLICATION_ID>', # optional
-    secret = '<SECRET>', # optional
-    endpoint = 'https://example.com', # optional
-    enabled = False # optional
-)
+    project = Project(client)
 
-print(result.model_dump())
+    result: OAuth2Gitlab = await project.update_o_auth2_gitlab(
+        application_id = '<APPLICATION_ID>', # optional
+        secret = '<SECRET>', # optional
+        endpoint = 'https://example.com', # optional
+        enabled = False # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

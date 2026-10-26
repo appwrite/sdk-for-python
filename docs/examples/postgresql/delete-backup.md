@@ -1,16 +1,23 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.postgresql import Postgresql
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-postgresql = Postgresql(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result = postgresql.delete_backup(
-    database_id = '<DATABASE_ID>',
-    backup_id = '<BACKUP_ID>'
-)
+    postgresql = Postgresql(client)
+
+    result = await postgresql.delete_backup(
+        database_id = '<DATABASE_ID>',
+        backup_id = '<BACKUP_ID>'
+    )
+
+
+asyncio.run(main())
 ```

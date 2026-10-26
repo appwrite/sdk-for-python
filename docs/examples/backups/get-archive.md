@@ -1,18 +1,25 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.backups import Backups
 from appwrite.models import BackupArchive
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-backups = Backups(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: BackupArchive = backups.get_archive(
-    archive_id = '<ARCHIVE_ID>'
-)
+    backups = Backups(client)
 
-print(result.model_dump())
+    result: BackupArchive = await backups.get_archive(
+        archive_id = '<ARCHIVE_ID>'
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

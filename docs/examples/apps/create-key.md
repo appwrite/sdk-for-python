@@ -1,18 +1,25 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.apps import Apps
 from appwrite.models import AppKey
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-apps = Apps(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result: AppKey = apps.create_key(
-    app_id = '<APP_ID>'
-)
+    apps = Apps(client)
 
-print(result.model_dump())
+    result: AppKey = await apps.create_key(
+        app_id = '<APP_ID>'
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

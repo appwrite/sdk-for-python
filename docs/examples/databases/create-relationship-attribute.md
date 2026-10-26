@@ -1,28 +1,35 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.databases import Databases
 from appwrite.models import AttributeRelationship
 from appwrite.enums.relationship_type import RelationshipType
 from appwrite.enums.relation_mutate import RelationMutate
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-databases = Databases(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: AttributeRelationship = databases.create_relationship_attribute(
-    database_id = '<DATABASE_ID>',
-    collection_id = '<COLLECTION_ID>',
-    related_collection_id = '<RELATED_COLLECTION_ID>',
-    type = RelationshipType.ONETOONE,
-    two_way = False, # optional
-    key = '<KEY>', # optional
-    two_way_key = '<TWO_WAY_KEY>', # optional
-    on_delete = RelationMutate.CASCADE, # optional
-    description = '<DESCRIPTION>' # optional
-)
+    databases = Databases(client)
 
-print(result.model_dump())
+    result: AttributeRelationship = await databases.create_relationship_attribute(
+        database_id = '<DATABASE_ID>',
+        collection_id = '<COLLECTION_ID>',
+        related_collection_id = '<RELATED_COLLECTION_ID>',
+        type = RelationshipType.ONETOONE,
+        two_way = False, # optional
+        key = '<KEY>', # optional
+        two_way_key = '<TWO_WAY_KEY>', # optional
+        on_delete = RelationMutate.CASCADE, # optional
+        description = '<DESCRIPTION>' # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

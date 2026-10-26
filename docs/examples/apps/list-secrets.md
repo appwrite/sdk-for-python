@@ -1,20 +1,27 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.apps import Apps
 from appwrite.models import AppSecretList
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-apps = Apps(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result: AppSecretList = apps.list_secrets(
-    app_id = '<APP_ID>',
-    queries = [], # optional
-    total = False # optional
-)
+    apps = Apps(client)
 
-print(result.model_dump())
+    result: AppSecretList = await apps.list_secrets(
+        app_id = '<APP_ID>',
+        queries = [], # optional
+        total = False # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

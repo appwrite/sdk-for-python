@@ -1,32 +1,39 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.messaging import Messaging
 from appwrite.models import Message
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-messaging = Messaging(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: Message = messaging.create_email(
-    message_id = '<MESSAGE_ID>',
-    subject = '<SUBJECT>',
-    content = '<CONTENT>',
-    topics = [], # optional
-    users = [], # optional
-    targets = [], # optional
-    cc = [], # optional
-    bcc = [], # optional
-    attachments = [], # optional
-    draft = False, # optional
-    html = False, # optional
-    scheduled_at = '2020-10-15T06:38:00.000+00:00', # optional
-    reply_to_email = 'email@example.com', # optional
-    reply_to_name = '<REPLY_TO_NAME>', # optional
-    emails = [] # optional
-)
+    messaging = Messaging(client)
 
-print(result.model_dump())
+    result: Message = await messaging.create_email(
+        message_id = '<MESSAGE_ID>',
+        subject = '<SUBJECT>',
+        content = '<CONTENT>',
+        topics = [], # optional
+        users = [], # optional
+        targets = [], # optional
+        cc = [], # optional
+        bcc = [], # optional
+        attachments = [], # optional
+        draft = False, # optional
+        html = False, # optional
+        scheduled_at = '2020-10-15T06:38:00.000+00:00', # optional
+        reply_to_email = 'email@example.com', # optional
+        reply_to_name = '<REPLY_TO_NAME>', # optional
+        emails = [] # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

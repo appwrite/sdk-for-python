@@ -1,24 +1,31 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.proxy import Proxy
 from appwrite.models import ProxyRule
 from appwrite.enums.status_code import StatusCode
 from appwrite.enums.proxy_resource_type import ProxyResourceType
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-proxy = Proxy(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: ProxyRule = proxy.create_redirect_rule(
-    domain = 'example.com',
-    url = 'https://example.com',
-    status_code = StatusCode.MOVEDPERMANENTLY,
-    resource_id = '<RESOURCE_ID>',
-    resource_type = ProxyResourceType.SITE
-)
+    proxy = Proxy(client)
 
-print(result.model_dump())
+    result: ProxyRule = await proxy.create_redirect_rule(
+        domain = 'example.com',
+        url = 'https://example.com',
+        status_code = StatusCode.MOVEDPERMANENTLY,
+        resource_id = '<RESOURCE_ID>',
+        resource_type = ProxyResourceType.SITE
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

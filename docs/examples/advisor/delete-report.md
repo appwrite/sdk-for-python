@@ -1,15 +1,22 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.advisor import Advisor
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-advisor = Advisor(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result = advisor.delete_report(
-    report_id = '<REPORT_ID>'
-)
+    advisor = Advisor(client)
+
+    result = await advisor.delete_report(
+        report_id = '<REPORT_ID>'
+    )
+
+
+asyncio.run(main())
 ```

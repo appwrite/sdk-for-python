@@ -1,30 +1,37 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.storage import Storage
 from appwrite.enums.image_gravity import ImageGravity
 from appwrite.enums.image_format import ImageFormat
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-storage = Storage(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result: bytes = storage.get_file_preview(
-    bucket_id = '<BUCKET_ID>',
-    file_id = '<FILE_ID>',
-    width = 0, # optional
-    height = 0, # optional
-    gravity = ImageGravity.AUTO, # optional
-    quality = -1, # optional
-    border_width = 0, # optional
-    border_color = 'FFFFFF', # optional
-    border_radius = 0, # optional
-    opacity = 0, # optional
-    rotation = -360, # optional
-    background = 'FFFFFF', # optional
-    output = ImageFormat.JPG, # optional
-    token = '<TOKEN>' # optional
-)
+    storage = Storage(client)
+
+    result: bytes = await storage.get_file_preview(
+        bucket_id = '<BUCKET_ID>',
+        file_id = '<FILE_ID>',
+        width = 0, # optional
+        height = 0, # optional
+        gravity = ImageGravity.AUTO, # optional
+        quality = -1, # optional
+        border_width = 0, # optional
+        border_color = 'FFFFFF', # optional
+        border_radius = 0, # optional
+        opacity = 0, # optional
+        rotation = -360, # optional
+        background = 'FFFFFF', # optional
+        output = ImageFormat.JPG, # optional
+        token = '<TOKEN>' # optional
+    )
+
+
+asyncio.run(main())
 ```

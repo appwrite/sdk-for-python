@@ -1,15 +1,22 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.avatars import Avatars
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-avatars = Avatars(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result: bytes = avatars.get_favicon(
-    url = 'https://example.com'
-)
+    avatars = Avatars(client)
+
+    result: bytes = await avatars.get_favicon(
+        url = 'https://example.com'
+    )
+
+
+asyncio.run(main())
 ```

@@ -1,4 +1,6 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.avatars import Avatars
 from appwrite.enums.browser_theme import BrowserTheme
@@ -6,35 +8,40 @@ from appwrite.enums.timezone import Timezone
 from appwrite.enums.browser_permission import BrowserPermission
 from appwrite.enums.image_format import ImageFormat
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_session('') # The user session to authenticate with
 
-avatars = Avatars(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_session('') # The user session to authenticate with
 
-result: bytes = avatars.get_screenshot(
-    url = 'https://example.com',
-    headers = {
+    avatars = Avatars(client)
+
+    result: bytes = await avatars.get_screenshot(
+        url = 'https://example.com',
+        headers = {
         "Accept-Language": "en-US,en;q=0.9"
     }, # optional
-    viewport_width = 1920, # optional
-    viewport_height = 1080, # optional
-    scale = 2, # optional
-    theme = BrowserTheme.DARK, # optional
-    user_agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15', # optional
-    fullpage = True, # optional
-    locale = 'en-US', # optional
-    timezone = Timezone.AFRICA_ABIDJAN, # optional
-    latitude = 37.7749, # optional
-    longitude = -122.4194, # optional
-    accuracy = 100, # optional
-    touch = True, # optional
-    permissions = [BrowserPermission.GEOLOCATION, BrowserPermission.NOTIFICATIONS], # optional
-    sleep = 3, # optional
-    width = 800, # optional
-    height = 600, # optional
-    quality = 85, # optional
-    output = ImageFormat.JPEG # optional
-)
+        viewport_width = 1920, # optional
+        viewport_height = 1080, # optional
+        scale = 2, # optional
+        theme = BrowserTheme.DARK, # optional
+        user_agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15', # optional
+        fullpage = True, # optional
+        locale = 'en-US', # optional
+        timezone = Timezone.AFRICA_ABIDJAN, # optional
+        latitude = 37.7749, # optional
+        longitude = -122.4194, # optional
+        accuracy = 100, # optional
+        touch = True, # optional
+        permissions = [BrowserPermission.GEOLOCATION, BrowserPermission.NOTIFICATIONS], # optional
+        sleep = 3, # optional
+        width = 800, # optional
+        height = 600, # optional
+        quality = 85, # optional
+        output = ImageFormat.JPEG # optional
+    )
+
+
+asyncio.run(main())
 ```

@@ -1,4 +1,6 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.tables_db import TablesDB
 from appwrite.models import ColumnBoolean
@@ -21,18 +23,23 @@ from appwrite.models import ColumnLongtext
 from appwrite.models import ColumnString
 from typing import Union
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-tables_db = TablesDB(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: Union[ColumnBoolean, ColumnBigint, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnPoint, ColumnLine, ColumnPolygon, ColumnVarchar, ColumnText, ColumnMediumtext, ColumnLongtext, ColumnString] = tables_db.get_column(
-    database_id = '<DATABASE_ID>',
-    table_id = '<TABLE_ID>',
-    key = '<KEY>'
-)
+    tables_db = TablesDB(client)
 
-print(result.model_dump())
+    result: Union[ColumnBoolean, ColumnBigint, ColumnInteger, ColumnFloat, ColumnEmail, ColumnEnum, ColumnUrl, ColumnIp, ColumnDatetime, ColumnRelationship, ColumnPoint, ColumnLine, ColumnPolygon, ColumnVarchar, ColumnText, ColumnMediumtext, ColumnLongtext, ColumnString] = await tables_db.get_column(
+        database_id = '<DATABASE_ID>',
+        table_id = '<TABLE_ID>',
+        key = '<KEY>'
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

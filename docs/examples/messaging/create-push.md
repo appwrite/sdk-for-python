@@ -1,38 +1,45 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.messaging import Messaging
 from appwrite.models import Message
 from appwrite.enums.message_priority import MessagePriority
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-messaging = Messaging(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result: Message = messaging.create_push(
-    message_id = '<MESSAGE_ID>',
-    title = '<TITLE>', # optional
-    body = '<BODY>', # optional
-    topics = [], # optional
-    users = [], # optional
-    targets = [], # optional
-    data = {}, # optional
-    action = '<ACTION>', # optional
-    image = '<ID1:ID2>', # optional
-    icon = '<ICON>', # optional
-    sound = '<SOUND>', # optional
-    color = '<COLOR>', # optional
-    tag = '<TAG>', # optional
-    badge = 1, # optional
-    draft = False, # optional
-    scheduled_at = '2020-10-15T06:38:00.000+00:00', # optional
-    content_available = False, # optional
-    critical = False, # optional
-    priority = MessagePriority.NORMAL, # optional
-    channel_id = '<CHANNEL_ID>' # optional
-)
+    messaging = Messaging(client)
 
-print(result.model_dump())
+    result: Message = await messaging.create_push(
+        message_id = '<MESSAGE_ID>',
+        title = '<TITLE>', # optional
+        body = '<BODY>', # optional
+        topics = [], # optional
+        users = [], # optional
+        targets = [], # optional
+        data = {}, # optional
+        action = '<ACTION>', # optional
+        image = '<ID1:ID2>', # optional
+        icon = '<ICON>', # optional
+        sound = '<SOUND>', # optional
+        color = '<COLOR>', # optional
+        tag = '<TAG>', # optional
+        badge = 1, # optional
+        draft = False, # optional
+        scheduled_at = '2020-10-15T06:38:00.000+00:00', # optional
+        content_available = False, # optional
+        critical = False, # optional
+        priority = MessagePriority.NORMAL, # optional
+        channel_id = '<CHANNEL_ID>' # optional
+    )
+
+    print(result.model_dump())
+
+
+asyncio.run(main())
 ```

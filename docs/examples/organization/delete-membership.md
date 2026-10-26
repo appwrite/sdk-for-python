@@ -1,15 +1,22 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.organization import Organization
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-organization = Organization(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result = organization.delete_membership(
-    membership_id = '<MEMBERSHIP_ID>'
-)
+    organization = Organization(client)
+
+    result = await organization.delete_membership(
+        membership_id = '<MEMBERSHIP_ID>'
+    )
+
+
+asyncio.run(main())
 ```

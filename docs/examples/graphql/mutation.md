@@ -1,17 +1,24 @@
 ```python
+import asyncio
+
 from appwrite.client import Client
 from appwrite.services.graphql import Graphql
 
-client = Client()
-client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
-client.set_project('<YOUR_PROJECT_ID>') # Your project ID
-client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-graphql = Graphql(client)
+async def main():
+    client = Client()
+    client.set_endpoint('https://<REGION>.cloud.appwrite.io/v1') # Your API Endpoint
+    client.set_project('<YOUR_PROJECT_ID>') # Your project ID
+    client.set_key('<YOUR_API_KEY>') # Your secret API key
 
-result = graphql.mutation(
-    query = {
+    graphql = Graphql(client)
+
+    result = await graphql.mutation(
+        query = {
         "query": "mutation { accountUpdateName(name: \"Walter\") { name } }"
     }
-)
+    )
+
+
+asyncio.run(main())
 ```
