@@ -7,6 +7,7 @@ import respx
 from appwrite.client import Client
 from appwrite.exception import AppwriteException
 from appwrite.input_file import InputFile
+from appwrite.services.account import Account
 from appwrite.services.storage import Storage
 
 
@@ -160,3 +161,64 @@ class AsyncClientTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(context.exception.message, 'Chunk rejected')
         self.assertEqual(in_flight, 0, 'sibling chunk uploads were still running when the error surfaced')
         self.assertEqual(completed, 3, 'sibling chunk uploads did not run to completion')
+
+    @respx.mock
+    async def test_location_response_returns_the_redirect_url(self):
+        # httpx raises on 3xx, so a redirect is only a success when the client
+        # treats it as one; OAuth login depends on the Location header.
+        respx.route().mock(
+            return_value=httpx2.Response(
+                302,
+                headers={'Location': 'https://appwrite.io/oauth/callback?userId=1&secret=2'},
+            )
+        )
+
+        async with Client() as client:
+            location = await client.call(
+                'get',
+                '/account/tokens/oauth2/github',
+                {'accept': 'text/html'},
+                {},
+                response_type='location',
+            )
+
+        self.assertEqual(location, 'https://appwrite.io/oauth/callback?userId=1&secret=2')
+
+    @respx.mock
+    async def test_location_response_still_raises_on_client_errors(self):
+        respx.route().mock(
+            return_value=httpx2.Response(
+                400,
+                json={'message': 'Invalid provider', 'type': 'general_bad_request'},
+                headers={'Content-Type': 'application/json'},
+            )
+        )
+
+        async with Client() as client:
+            with self.assertRaises(AppwriteException) as context:
+                await client.call(
+                    'get',
+                    '/account/tokens/oauth2/github',
+                    {'accept': 'text/html'},
+                    {},
+                    response_type='location',
+                )
+
+        self.assertEqual(context.exception.message, 'Invalid provider')
+        self.assertEqual(context.exception.code, 400)
+        self.assertEqual(context.exception.type, 'general_bad_request')
+
+    @respx.mock
+    async def test_create_o_auth2_token_returns_the_redirect_url(self):
+        respx.route().mock(
+            return_value=httpx2.Response(
+                302,
+                headers={'Location': 'https://appwrite.io/oauth/callback?userId=1&secret=2'},
+            )
+        )
+
+        async with Client() as client:
+            account = Account(client)
+            response = await account.create_o_auth2_token('github')
+
+        self.assertEqual(response, 'https://appwrite.io/oauth/callback?userId=1&secret=2')

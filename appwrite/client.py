@@ -225,7 +225,10 @@ class Client:
                 follow_redirects=False if response_type == 'location' else True,
             )
 
-            response.raise_for_status()
+            # httpx raises on 3xx, unlike requests; a redirect is the expected
+            # outcome for response_type='location', so only 4xx/5xx are errors.
+            if response.status_code >= 400:
+                response.raise_for_status()
 
             warnings = response.headers.get('x-appwrite-warning')
             if warnings:
