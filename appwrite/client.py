@@ -1,4 +1,4 @@
-import asyncio
+import anyio
 import inspect
 import json
 import os
@@ -37,6 +37,7 @@ class Client:
         }
         self._config = {}
         self._http = self._new_http_client(verify=True)
+        self._retired_http = []
 
     def _new_http_client(self, verify):
         context = _default_ssl_context() if verify else False
@@ -50,6 +51,9 @@ class Client:
 
     async def aclose(self):
         """Close the underlying HTTP connection pool."""
+        for client in self._retired_http:
+            await client.aclose()
+        self._retired_http = []
         await self._http.aclose()
 
     def set_self_signed(self, status=True):
@@ -57,16 +61,10 @@ class Client:
         self._self_signed = status
         previous = self._http
         self._http = self._new_http_client(verify=not status)
-        self._dispose(previous)
+        # anyio has no fire-and-forget tasks, so the replaced client is parked here
+        # and closed together with the active one once aclose() runs.
+        self._retired_http.append(previous)
         return self
-
-    @staticmethod
-    def _dispose(client):
-        try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            return
-        loop.create_task(client.aclose())
 
     def set_endpoint(self, endpoint):
         if not endpoint.startswith('http://') and not endpoint.startswith('https://'):
@@ -344,7 +342,7 @@ class Client:
 
         async def upload_chunk(chunk, current_upload_id):
             chunk_input = InputFile.from_bytes(
-                await asyncio.to_thread(read_chunk, chunk['start'], chunk['end']),
+                await anyio.to_thread.run_sync(read_chunk, chunk['start'], chunk['end']),
                 input_file.filename,
                 getattr(input_file, 'mime_type', None),
             )
@@ -381,12 +379,20 @@ class Client:
             },
         )
 
-        semaphore = asyncio.Semaphore(8)
+        semaphore = anyio.Semaphore(8)
+
+        failures = []
 
         async def upload_remaining_chunk(chunk):
             nonlocal completed_count, uploaded_size, last_result, final_result
-            async with semaphore:
-                chunk_result = await upload_chunk(chunk, upload_id_header)
+            # a task group cancels siblings on the first raise, so failures are
+            # captured here to keep gather(return_exceptions=True) semantics.
+            try:
+                async with semaphore:
+                    chunk_result = await upload_chunk(chunk, upload_id_header)
+            except BaseException as exc:
+                failures.append(exc)
+                return
             completed_count = completed_count + 1
             uploaded_size = uploaded_size + (chunk['end'] - chunk['start'])
             last_result = chunk_result
@@ -405,13 +411,12 @@ class Client:
 
         # Wait for every sibling chunk to settle before surfacing a failure, so the
         # caller never observes an error while other chunks are still being written.
-        outcomes = await asyncio.gather(
-            *(upload_remaining_chunk(chunk) for chunk in chunks[1:]),
-            return_exceptions=True,
-        )
-        for outcome in outcomes:
-            if isinstance(outcome, BaseException):
-                raise outcome
+        async with anyio.create_task_group() as tg:
+            for chunk in chunks[1:]:
+                tg.start_soon(upload_remaining_chunk, chunk)
+
+        if failures:
+            raise failures[0]
 
         return final_result or last_result
 
