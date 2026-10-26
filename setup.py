@@ -22,6 +22,7 @@ setuptools.setup(
     install_requires=[
         'httpx2>=2.0,<3',
         'pydantic>=2,<3',
+        'anyio>=4,<5',
     ],
     python_requires='>=3.11',
     classifiers=[
