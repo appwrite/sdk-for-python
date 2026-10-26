@@ -129,12 +129,19 @@ asyncio.run(main())
 Failed requests raise `AppwriteException`, which carries `message`, `code`, `type` and `response`.
 
 ```python
+import asyncio
+
 from appwrite.exception import AppwriteException
 
-try:
-    user = await users.get(user_id='<USER_ID>')
-except AppwriteException as error:
-    print(error.code, error.type, error.message)
+
+async def main():
+    try:
+        user = await users.get(user_id='<USER_ID>')
+    except AppwriteException as error:
+        print(error.code, error.type, error.message)
+
+
+asyncio.run(main())
 ```
 
 ### Close the client
@@ -142,12 +149,23 @@ except AppwriteException as error:
 The client keeps a pooled HTTP connection open. Close it when you are done, or use it as an async context manager.
 
 ```python
-await client.aclose()
+async def main():
+    await client.aclose()
+
+
+asyncio.run(main())
 ```
 
 ```python
-async with Client() as client:
-    ...
+from appwrite.client import Client
+
+
+async def main():
+    async with Client() as client:
+        ...
+
+
+asyncio.run(main())
 ```
 
 ### Self-hosted Appwrite
