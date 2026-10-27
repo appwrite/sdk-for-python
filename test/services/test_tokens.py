@@ -1,6 +1,8 @@
 import json
+import re
 import requests_mock
 import unittest
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from appwrite.client import Client
 from appwrite.input_file import InputFile
@@ -22,7 +24,7 @@ class TokensServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -30,6 +32,21 @@ class TokensServiceTest(unittest.TestCase):
         response = self.tokens.list(
             '<BUCKET_ID>',
             '<FILE_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/tokens/buckets/<BUCKET_ID>/files/<FILE_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -46,7 +63,7 @@ class TokensServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -54,6 +71,20 @@ class TokensServiceTest(unittest.TestCase):
         response = self.tokens.create_file_token(
             '<BUCKET_ID>',
             '<FILE_ID>',
+            expire='2020-10-15T06:38:00.000+00:00',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/tokens/buckets/<BUCKET_ID>/files/<FILE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'expire': '2020-10-15T06:38:00.000+00:00',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -70,7 +101,7 @@ class TokensServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -78,6 +109,14 @@ class TokensServiceTest(unittest.TestCase):
         response = self.tokens.get(
             '<TOKEN_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/tokens/<TOKEN_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -93,13 +132,27 @@ class TokensServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.tokens.update(
             '<TOKEN_ID>',
+            expire='2020-10-15T06:38:00.000+00:00',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/tokens/<TOKEN_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'expire': '2020-10-15T06:38:00.000+00:00',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -108,7 +161,7 @@ class TokensServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -116,4 +169,12 @@ class TokensServiceTest(unittest.TestCase):
         response = self.tokens.delete(
             '<TOKEN_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/tokens/<TOKEN_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)

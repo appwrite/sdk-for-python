@@ -1,6 +1,8 @@
 import json
+import re
 import requests_mock
 import unittest
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from appwrite.client import Client
 from appwrite.input_file import InputFile
@@ -21,13 +23,30 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.oauth2.approve(
             '<GRANT_ID>',
+            authorization_details='<AUTHORIZATION_DETAILS>',
+            scope='<SCOPE>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//approve',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'grant_id': '<GRANT_ID>',
+                'authorization_details': '<AUTHORIZATION_DETAILS>',
+                'scope': '<SCOPE>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -39,12 +58,52 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.oauth2.authorize()
+        response = self.oauth2.authorize(
+            client_id='<CLIENT_ID>',
+            redirect_uri='https://example.com',
+            response_type='response_type',
+            scope='<SCOPE>',
+            state='<STATE>',
+            nonce='<NONCE>',
+            code_challenge='<CODE_CHALLENGE>',
+            code_challenge_method='s256',
+            prompt='<PROMPT>',
+            max_age=1,
+            authorization_details='<AUTHORIZATION_DETAILS>',
+            resource=[],
+            audience='<AUDIENCE>',
+            request_uri='<REQUEST_URI>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//authorize',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'client_id': ['<CLIENT_ID>'],
+                'redirect_uri': ['https://example.com'],
+                'response_type': ['response_type'],
+                'scope': ['<SCOPE>'],
+                'state': ['<STATE>'],
+                'nonce': ['<NONCE>'],
+                'code_challenge': ['<CODE_CHALLENGE>'],
+                'code_challenge_method': ['s256'],
+                'prompt': ['<PROMPT>'],
+                'max_age': ['1'],
+                'authorization_details': ['<AUTHORIZATION_DETAILS>'],
+                'audience': ['<AUDIENCE>'],
+                'request_uri': ['<REQUEST_URI>'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -55,12 +114,53 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.oauth2.authorize_post()
+        response = self.oauth2.authorize_post(
+            client_id='<CLIENT_ID>',
+            redirect_uri='https://example.com',
+            response_type='response_type',
+            scope='<SCOPE>',
+            state='<STATE>',
+            nonce='<NONCE>',
+            code_challenge='<CODE_CHALLENGE>',
+            code_challenge_method='s256',
+            prompt='<PROMPT>',
+            max_age=1,
+            authorization_details='<AUTHORIZATION_DETAILS>',
+            resource=[],
+            audience='<AUDIENCE>',
+            request_uri='<REQUEST_URI>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//authorize',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'client_id': '<CLIENT_ID>',
+                'redirect_uri': 'https://example.com',
+                'response_type': 'response_type',
+                'scope': '<SCOPE>',
+                'state': '<STATE>',
+                'nonce': '<NONCE>',
+                'code_challenge': '<CODE_CHALLENGE>',
+                'code_challenge_method': 's256',
+                'prompt': '<PROMPT>',
+                'max_age': 1,
+                'authorization_details': '<AUTHORIZATION_DETAILS>',
+                'resource': [],
+                'audience': '<AUDIENCE>',
+                'request_uri': '<REQUEST_URI>',
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -75,12 +175,35 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.oauth2.create_device_authorization()
+        response = self.oauth2.create_device_authorization(
+            client_id='<CLIENT_ID>',
+            scope='<SCOPE>',
+            authorization_details='<AUTHORIZATION_DETAILS>',
+            resource=[],
+            audience='<AUDIENCE>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//device_authorization',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'client_id': '<CLIENT_ID>',
+                'scope': '<SCOPE>',
+                'authorization_details': '<AUTHORIZATION_DETAILS>',
+                'resource': [],
+                'audience': '<AUDIENCE>',
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -101,13 +224,26 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.oauth2.create_grant(
             '<USER_CODE>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//grants',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'user_code': '<USER_CODE>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -129,7 +265,7 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -137,6 +273,14 @@ class Oauth2ServiceTest(unittest.TestCase):
         response = self.oauth2.get_grant(
             '<GRANT_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//grants/<GRANT_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -146,13 +290,32 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.oauth2.introspect(
             '<TOKEN>',
+            token_type_hint='access_token',
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//introspect',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'token': '<TOKEN>',
+                'token_type_hint': 'access_token',
+                'client_id': '<CLIENT_ID>',
+                'client_secret': '<CLIENT_SECRET>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -164,12 +327,31 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.oauth2.list_organizations()
+        response = self.oauth2.list_organizations(
+            limit=1,
+            offset=1,
+            search='<SEARCH>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//organizations',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'limit': ['1'],
+                'offset': ['1'],
+                'search': ['<SEARCH>'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -180,7 +362,7 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -189,6 +371,41 @@ class Oauth2ServiceTest(unittest.TestCase):
             '<CLIENT_ID>',
             'https://example.com',
             'code',
+            scope='<SCOPE>',
+            state='<STATE>',
+            nonce='<NONCE>',
+            code_challenge='<CODE_CHALLENGE>',
+            code_challenge_method='s256',
+            prompt='<PROMPT>',
+            max_age=1,
+            authorization_details='<AUTHORIZATION_DETAILS>',
+            resource=[],
+            audience='<AUDIENCE>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//par',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'client_id': '<CLIENT_ID>',
+                'redirect_uri': 'https://example.com',
+                'response_type': 'code',
+                'scope': '<SCOPE>',
+                'state': '<STATE>',
+                'nonce': '<NONCE>',
+                'code_challenge': '<CODE_CHALLENGE>',
+                'code_challenge_method': 's256',
+                'prompt': '<PROMPT>',
+                'max_age': 1,
+                'authorization_details': '<AUTHORIZATION_DETAILS>',
+                'resource': [],
+                'audience': '<AUDIENCE>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -200,12 +417,31 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.oauth2.list_projects()
+        response = self.oauth2.list_projects(
+            limit=1,
+            offset=1,
+            search='<SEARCH>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//projects',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'limit': ['1'],
+                'offset': ['1'],
+                'search': ['<SEARCH>'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -215,13 +451,26 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.oauth2.reject(
             '<GRANT_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//reject',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'grant_id': '<GRANT_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -230,13 +479,32 @@ class Oauth2ServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.oauth2.revoke(
             '<TOKEN>',
+            token_type_hint='access_token',
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//revoke',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'token': '<TOKEN>',
+                'token_type_hint': 'access_token',
+                'client_id': '<CLIENT_ID>',
+                'client_secret': '<CLIENT_SECRET>',
+            },
         )
         self.assertEqual(response, data)
 
@@ -251,12 +519,43 @@ class Oauth2ServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.oauth2.create_token(
             '<GRANT_TYPE>',
+            code='<CODE>',
+            refresh_token='<REFRESH_TOKEN>',
+            device_code='<DEVICE_CODE>',
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            code_verifier='<CODE_VERIFIER>',
+            redirect_uri='https://example.com',
+            resource=[],
+            audience='<AUDIENCE>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/oauth2//token',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'grant_type': '<GRANT_TYPE>',
+                'code': '<CODE>',
+                'refresh_token': '<REFRESH_TOKEN>',
+                'device_code': '<DEVICE_CODE>',
+                'client_id': '<CLIENT_ID>',
+                'client_secret': '<CLIENT_SECRET>',
+                'code_verifier': '<CODE_VERIFIER>',
+                'redirect_uri': 'https://example.com',
+                'resource': [],
+                'audience': '<AUDIENCE>',
+            },
         )
         self.assertEqual(response.to_dict(), data)

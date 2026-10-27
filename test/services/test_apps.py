@@ -1,6 +1,8 @@
 import json
+import re
 import requests_mock
 import unittest
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from appwrite.client import Client
 from appwrite.input_file import InputFile
@@ -22,12 +24,28 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.apps.list()
+        response = self.apps.list(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -62,7 +80,7 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -71,6 +89,53 @@ class AppsServiceTest(unittest.TestCase):
             '<APP_ID>',
             '<NAME>',
             [],
+            description='<DESCRIPTION>',
+            client_uri='https://example.com',
+            logo_uri='https://example.com',
+            privacy_policy_url='https://example.com',
+            terms_url='https://example.com',
+            contacts=[],
+            tagline='<TAGLINE>',
+            tags=[],
+            images=[],
+            support_url='https://example.com',
+            data_deletion_url='https://example.com',
+            post_logout_redirect_uris=[],
+            enabled=False,
+            type='public',
+            device_flow=False,
+            team_id='<TEAM_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'appId': '<APP_ID>',
+                'name': '<NAME>',
+                'description': '<DESCRIPTION>',
+                'clientUri': 'https://example.com',
+                'logoUri': 'https://example.com',
+                'privacyPolicyUrl': 'https://example.com',
+                'termsUrl': 'https://example.com',
+                'contacts': [],
+                'tagline': '<TAGLINE>',
+                'tags': [],
+                'images': [],
+                'supportUrl': 'https://example.com',
+                'dataDeletionUrl': 'https://example.com',
+                'redirectUris': [],
+                'postLogoutRedirectUris': [],
+                'enabled': False,
+                'type': 'public',
+                'deviceFlow': False,
+                'teamId': '<TEAM_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -82,12 +147,20 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.apps.list_installation_scopes()
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/scopes/installations',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -98,12 +171,20 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.apps.list_o_auth2_scopes()
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/scopes/oauth2',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -138,7 +219,7 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -146,6 +227,14 @@ class AppsServiceTest(unittest.TestCase):
         response = self.apps.get(
             '<APP_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -180,7 +269,7 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -188,6 +277,55 @@ class AppsServiceTest(unittest.TestCase):
         response = self.apps.update(
             '<APP_ID>',
             '<NAME>',
+            description='<DESCRIPTION>',
+            client_uri='https://example.com',
+            logo_uri='https://example.com',
+            privacy_policy_url='https://example.com',
+            terms_url='https://example.com',
+            contacts=[],
+            tagline='<TAGLINE>',
+            tags=[],
+            images=[],
+            support_url='https://example.com',
+            data_deletion_url='https://example.com',
+            enabled=False,
+            redirect_uris=[],
+            post_logout_redirect_uris=[],
+            type='public',
+            device_flow=False,
+            installation_scopes=[],
+            installation_redirect_url='https://example.com',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'description': '<DESCRIPTION>',
+                'clientUri': 'https://example.com',
+                'logoUri': 'https://example.com',
+                'privacyPolicyUrl': 'https://example.com',
+                'termsUrl': 'https://example.com',
+                'contacts': [],
+                'tagline': '<TAGLINE>',
+                'tags': [],
+                'images': [],
+                'supportUrl': 'https://example.com',
+                'dataDeletionUrl': 'https://example.com',
+                'enabled': False,
+                'redirectUris': [],
+                'postLogoutRedirectUris': [],
+                'type': 'public',
+                'deviceFlow': False,
+                'installationScopes': [],
+                'installationRedirectUrl': 'https://example.com',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -196,7 +334,7 @@ class AppsServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -204,6 +342,14 @@ class AppsServiceTest(unittest.TestCase):
         response = self.apps.delete(
             '<APP_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -214,13 +360,28 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.apps.list_installations(
             '<APP_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/installations',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -239,7 +400,7 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -248,6 +409,14 @@ class AppsServiceTest(unittest.TestCase):
             '<APP_ID>',
             '<INSTALLATION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/installations/<INSTALLATION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -255,7 +424,7 @@ class AppsServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -264,6 +433,14 @@ class AppsServiceTest(unittest.TestCase):
             '<APP_ID>',
             '<INSTALLATION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/installations/<INSTALLATION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -277,7 +454,7 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -286,6 +463,14 @@ class AppsServiceTest(unittest.TestCase):
             '<APP_ID>',
             '<INSTALLATION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/installations/<INSTALLATION_ID>/tokens',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -296,13 +481,28 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.apps.list_keys(
             '<APP_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/keys',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -320,7 +520,7 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -328,6 +528,14 @@ class AppsServiceTest(unittest.TestCase):
         response = self.apps.create_key(
             '<APP_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/keys',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -344,7 +552,7 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -353,6 +561,14 @@ class AppsServiceTest(unittest.TestCase):
             '<APP_ID>',
             '<KEY_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/keys/<KEY_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -360,7 +576,7 @@ class AppsServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -369,6 +585,14 @@ class AppsServiceTest(unittest.TestCase):
             '<APP_ID>',
             '<KEY_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/keys/<KEY_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -403,7 +627,7 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -411,6 +635,19 @@ class AppsServiceTest(unittest.TestCase):
         response = self.apps.update_labels(
             '<APP_ID>',
             [],
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/labels',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'labels': [],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -422,13 +659,28 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.apps.list_secrets(
             '<APP_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/secrets',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -446,7 +698,7 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -454,6 +706,14 @@ class AppsServiceTest(unittest.TestCase):
         response = self.apps.create_secret(
             '<APP_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/secrets',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -470,7 +730,7 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -479,6 +739,14 @@ class AppsServiceTest(unittest.TestCase):
             '<APP_ID>',
             '<SECRET_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/secrets/<SECRET_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -486,7 +754,7 @@ class AppsServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -495,6 +763,14 @@ class AppsServiceTest(unittest.TestCase):
             '<APP_ID>',
             '<SECRET_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/secrets/<SECRET_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -529,7 +805,7 @@ class AppsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -538,6 +814,19 @@ class AppsServiceTest(unittest.TestCase):
             '<APP_ID>',
             '<TEAM_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/team',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'teamId': '<TEAM_ID>',
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -545,7 +834,7 @@ class AppsServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -553,4 +842,12 @@ class AppsServiceTest(unittest.TestCase):
         response = self.apps.delete_tokens(
             '<APP_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/apps/<APP_ID>/tokens',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)

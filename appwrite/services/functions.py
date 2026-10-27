@@ -151,7 +151,7 @@ class Functions(Service):
         runtime_specification : Optional[str]
             Runtime specification for the function executions.
         deployment_retention : Optional[float]
-            Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+            Days to keep non-active deployments before deletion. Value 0 keeps all deployments unless the server applies a default retention.
         interval : Optional[float]
             Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule.
         description : Optional[str]
@@ -343,7 +343,7 @@ class Functions(Service):
         api_params = {}
         if function_id is None or function_id == '':
             raise AppwriteException('Missing required parameter: "function_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
 
         response = self.client.call(
             'get',
@@ -433,7 +433,7 @@ class Functions(Service):
         runtime_specification : Optional[str]
             Runtime specification for the function executions.
         deployment_retention : Optional[float]
-            Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+            Days to keep non-active deployments before deletion. Value 0 keeps all deployments unless the server applies a default retention.
         interval : Optional[float]
             Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule. When omitted, the current interval is kept unless schedule is set.
         description : Optional[str]
@@ -457,7 +457,7 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
         api_params['name'] = self._normalize_value(name)
         if runtime is not None:
             api_params['runtime'] = self._normalize_value(runtime)
@@ -545,7 +545,7 @@ class Functions(Service):
         api_params = {}
         if function_id is None or function_id == '':
             raise AppwriteException('Missing required parameter: "function_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
 
         response = self.client.call(
             'delete',
@@ -591,7 +591,7 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
         api_params['deploymentId'] = self._normalize_value(deployment_id)
 
         response = self.client.call(
@@ -642,7 +642,7 @@ class Functions(Service):
         api_params = {}
         if function_id is None or function_id == '':
             raise AppwriteException('Missing required parameter: "function_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -712,7 +712,7 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "code"')
         if activate is None:
             raise AppwriteException('Missing required parameter: "activate"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
         if entrypoint is not None:
             api_params['entrypoint'] = self._normalize_value(entrypoint)
         if commands is not None:
@@ -774,7 +774,7 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if deployment_id is None:
             raise AppwriteException('Missing required parameter: "deployment_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
         api_params['deploymentId'] = self._normalize_value(deployment_id)
         if build_id is not None:
             api_params['buildId'] = self._normalize_value(build_id)
@@ -848,7 +848,7 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "type"')
         if reference is None:
             raise AppwriteException('Missing required parameter: "reference"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
         api_params['repository'] = self._normalize_value(repository)
         api_params['owner'] = self._normalize_value(owner)
         api_params['rootDirectory'] = self._normalize_value(root_directory)
@@ -911,7 +911,7 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "type"')
         if reference is None:
             raise AppwriteException('Missing required parameter: "reference"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
         api_params['type'] = self._normalize_value(type)
         api_params['reference'] = self._normalize_value(reference)
         if activate is not None:
@@ -961,8 +961,8 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if deployment_id is None or deployment_id == '':
             raise AppwriteException('Missing required parameter: "deployment_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
-        api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
+        api_path = api_path.replace('{deploymentId}', self._encode_path(deployment_id))
 
         response = self.client.call(
             'get',
@@ -1007,8 +1007,8 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if deployment_id is None or deployment_id == '':
             raise AppwriteException('Missing required parameter: "deployment_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
-        api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
+        api_path = api_path.replace('{deploymentId}', self._encode_path(deployment_id))
 
         response = self.client.call(
             'delete',
@@ -1060,8 +1060,8 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if deployment_id is None or deployment_id == '':
             raise AppwriteException('Missing required parameter: "deployment_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
-        api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
+        api_path = api_path.replace('{deploymentId}', self._encode_path(deployment_id))
         if type is not None:
             api_params['type'] = self._normalize_value(type)
         if token is not None:
@@ -1110,8 +1110,8 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if deployment_id is None or deployment_id == '':
             raise AppwriteException('Missing required parameter: "deployment_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
-        api_path = api_path.replace('{deploymentId}', str(self._normalize_value(deployment_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
+        api_path = api_path.replace('{deploymentId}', self._encode_path(deployment_id))
 
         response = self.client.call(
             'patch',
@@ -1158,7 +1158,7 @@ class Functions(Service):
         api_params = {}
         if function_id is None or function_id == '':
             raise AppwriteException('Missing required parameter: "function_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
@@ -1220,7 +1220,7 @@ class Functions(Service):
         api_params = {}
         if function_id is None or function_id == '':
             raise AppwriteException('Missing required parameter: "function_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
         if body is not None:
             api_params['body'] = self._normalize_value(body)
         if xasync is not None:
@@ -1278,8 +1278,8 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if execution_id is None or execution_id == '':
             raise AppwriteException('Missing required parameter: "execution_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
-        api_path = api_path.replace('{executionId}', str(self._normalize_value(execution_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
+        api_path = api_path.replace('{executionId}', self._encode_path(execution_id))
 
         response = self.client.call(
             'get',
@@ -1324,8 +1324,8 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if execution_id is None or execution_id == '':
             raise AppwriteException('Missing required parameter: "execution_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
-        api_path = api_path.replace('{executionId}', str(self._normalize_value(execution_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
+        api_path = api_path.replace('{executionId}', self._encode_path(execution_id))
 
         response = self.client.call(
             'delete',
@@ -1372,7 +1372,7 @@ class Functions(Service):
         api_params = {}
         if function_id is None or function_id == '':
             raise AppwriteException('Missing required parameter: "function_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
@@ -1437,7 +1437,7 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "key"')
         if value is None:
             raise AppwriteException('Missing required parameter: "value"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
         api_params['variableId'] = self._normalize_value(variable_id)
         api_params['key'] = self._normalize_value(key)
         api_params['value'] = self._normalize_value(value)
@@ -1490,8 +1490,8 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
-        api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
+        api_path = api_path.replace('{variableId}', self._encode_path(variable_id))
 
         response = self.client.call(
             'get',
@@ -1548,8 +1548,8 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
-        api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
+        api_path = api_path.replace('{variableId}', self._encode_path(variable_id))
         if key is not None:
             api_params['key'] = self._normalize_value(key)
         if value is not None:
@@ -1603,8 +1603,8 @@ class Functions(Service):
             raise AppwriteException('Missing required parameter: "function_id"')
         if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
-        api_path = api_path.replace('{functionId}', str(self._normalize_value(function_id)))
-        api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
+        api_path = api_path.replace('{functionId}', self._encode_path(function_id))
+        api_path = api_path.replace('{variableId}', self._encode_path(variable_id))
 
         response = self.client.call(
             'delete',

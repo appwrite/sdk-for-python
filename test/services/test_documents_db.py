@@ -1,6 +1,8 @@
 import json
+import re
 import requests_mock
 import unittest
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from appwrite.client import Client
 from appwrite.input_file import InputFile
@@ -22,12 +24,28 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.documents_db.list()
+        response = self.documents_db.list(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -43,7 +61,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -51,6 +69,30 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.create(
             '<DATABASE_ID>',
             '<NAME>',
+            enabled=False,
+            description='<DESCRIPTION>',
+            specification='serverless',
+            replicas=1,
+            sync_mode='async',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'databaseId': '<DATABASE_ID>',
+                'name': '<NAME>',
+                'enabled': False,
+                'description': '<DESCRIPTION>',
+                'specification': 'serverless',
+                'replicas': 1,
+                'syncMode': 'async',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -62,12 +104,20 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.documents_db.list_specifications()
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/specifications',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -78,12 +128,28 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.documents_db.list_transactions()
+        response = self.documents_db.list_transactions(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/transactions',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -98,12 +164,27 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.documents_db.create_transaction()
+        response = self.documents_db.create_transaction(
+            ttl=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/transactions',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'ttl': 1,
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -118,7 +199,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -126,6 +207,14 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.get_transaction(
             '<TRANSACTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/transactions/<TRANSACTION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -140,13 +229,29 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.documents_db.update_transaction(
             '<TRANSACTION_ID>',
+            commit=False,
+            rollback=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/transactions/<TRANSACTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'commit': False,
+                'rollback': False,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -155,7 +260,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -163,6 +268,14 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.delete_transaction(
             '<TRANSACTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/transactions/<TRANSACTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -177,13 +290,27 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.documents_db.create_operations(
             '<TRANSACTION_ID>',
+            operations=[],
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/transactions/<TRANSACTION_ID>/operations',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'operations': [],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -200,7 +327,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -208,6 +335,14 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.get(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -223,7 +358,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -231,6 +366,29 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.update(
             '<DATABASE_ID>',
             '<NAME>',
+            enabled=False,
+            description='<DESCRIPTION>',
+            specification='serverless',
+            replicas=1,
+            sync_mode='async',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'enabled': False,
+                'description': '<DESCRIPTION>',
+                'specification': 'serverless',
+                'replicas': 1,
+                'syncMode': 'async',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -239,7 +397,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -247,6 +405,14 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.delete(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -257,13 +423,30 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.documents_db.list_collections(
             '<DATABASE_ID>',
+            queries=[],
+            search='<SEARCH>',
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'search': ['<SEARCH>'],
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -286,7 +469,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -295,6 +478,32 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<NAME>',
+            permissions=[],
+            document_security=False,
+            enabled=False,
+            attributes=[],
+            indexes=[],
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'collectionId': '<COLLECTION_ID>',
+                'name': '<NAME>',
+                'permissions': [],
+                'documentSecurity': False,
+                'enabled': False,
+                'attributes': [],
+                'indexes': [],
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -317,7 +526,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -326,6 +535,14 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -347,7 +564,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -356,6 +573,29 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<NAME>',
+            permissions=[],
+            document_security=False,
+            enabled=False,
+            purge=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'permissions': [],
+                'documentSecurity': False,
+                'enabled': False,
+                'purge': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -364,7 +604,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -373,6 +613,14 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -383,7 +631,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -391,6 +639,25 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.list_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+            total=False,
+            ttl=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'transactionId': ['<TRANSACTION_ID>'],
+                'total': ['false'],
+                'ttl': ['1'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -407,7 +674,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -417,6 +684,24 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
             {},
+            permissions=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'documentId': '<DOCUMENT_ID>',
+                'data': {},
+                'permissions': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -429,7 +714,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -438,6 +723,21 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             [],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'documents': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -449,7 +749,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -458,6 +758,21 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             [],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'documents': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -469,7 +784,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -477,6 +792,24 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.update_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            data={},
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'data': {},
+                'queries': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -488,7 +821,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -496,6 +829,22 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.delete_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'queries': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -507,7 +856,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -515,6 +864,26 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.create_query(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+            total=False,
+            ttl=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/query',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'queries': [],
+                'transactionId': '<TRANSACTION_ID>',
+                'total': False,
+                'ttl': 1,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -531,7 +900,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -540,6 +909,21 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'transactionId': ['<TRANSACTION_ID>'],
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -557,7 +941,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -566,6 +950,24 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            data={},
+            permissions=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'data': {},
+                'permissions': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -583,7 +985,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -592,6 +994,24 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            data={},
+            permissions=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'data': {},
+                'permissions': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -601,7 +1021,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -610,6 +1030,20 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response, data)
 
@@ -626,7 +1060,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -636,6 +1070,24 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
             '<ATTRIBUTE>',
+            value=1.0,
+            min=1.0,
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>/<ATTRIBUTE>/decrement',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'value': 1.0,
+                'min': 1.0,
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -653,7 +1105,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -663,6 +1115,24 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
             '<ATTRIBUTE>',
+            value=1.0,
+            max=1.0,
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>/<ATTRIBUTE>/increment',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'value': 1.0,
+                'max': 1.0,
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -675,7 +1145,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -683,6 +1153,21 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.list_indexes(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -702,7 +1187,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -713,6 +1198,27 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<KEY>',
             'key',
             [],
+            orders=[],
+            lengths=[],
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'type': 'key',
+                'attributes': [],
+                'orders': [],
+                'lengths': [],
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -732,7 +1238,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -742,6 +1248,14 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes/<KEY>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -749,7 +1263,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -759,6 +1273,14 @@ class DocumentsDBServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -812,13 +1334,27 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.documents_db.create_failover(
             '<DATABASE_ID>',
+            target_replica_id='<TARGET_REPLICA_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/failovers',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'targetReplicaId': '<TARGET_REPLICA_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -830,13 +1366,31 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.documents_db.list_operations(
             '<DATABASE_ID>',
+            status='queued',
+            limit=1,
+            offset=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/operations',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'status': ['queued'],
+                'limit': ['1'],
+                'offset': ['1'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -852,7 +1406,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -860,6 +1414,14 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.get_replicas(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/replicas',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -879,7 +1441,7 @@ class DocumentsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -887,4 +1449,12 @@ class DocumentsDBServiceTest(unittest.TestCase):
         response = self.documents_db.get_status(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/documentsdb/<DATABASE_ID>/status',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)

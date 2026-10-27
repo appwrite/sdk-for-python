@@ -1,6 +1,8 @@
 import json
+import re
 import requests_mock
 import unittest
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from appwrite.client import Client
 from appwrite.input_file import InputFile
@@ -22,12 +24,28 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.vectors_db.list()
+        response = self.vectors_db.list(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -43,7 +61,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -51,6 +69,30 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.create(
             '<DATABASE_ID>',
             '<NAME>',
+            enabled=False,
+            description='<DESCRIPTION>',
+            specification='serverless',
+            replicas=1,
+            sync_mode='async',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'databaseId': '<DATABASE_ID>',
+                'name': '<NAME>',
+                'enabled': False,
+                'description': '<DESCRIPTION>',
+                'specification': 'serverless',
+                'replicas': 1,
+                'syncMode': 'async',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -62,12 +104,20 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.vectors_db.list_specifications()
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/specifications',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -78,12 +128,28 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.vectors_db.list_transactions()
+        response = self.vectors_db.list_transactions(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/transactions',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -98,12 +164,27 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.vectors_db.create_transaction()
+        response = self.vectors_db.create_transaction(
+            ttl=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/transactions',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'ttl': 1,
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -118,7 +199,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -126,6 +207,14 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.get_transaction(
             '<TRANSACTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/transactions/<TRANSACTION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -140,13 +229,29 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.vectors_db.update_transaction(
             '<TRANSACTION_ID>',
+            commit=False,
+            rollback=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/transactions/<TRANSACTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'commit': False,
+                'rollback': False,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -155,7 +260,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -163,6 +268,14 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.delete_transaction(
             '<TRANSACTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/transactions/<TRANSACTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -177,13 +290,27 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.vectors_db.create_operations(
             '<TRANSACTION_ID>',
+            operations=[],
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/transactions/<TRANSACTION_ID>/operations',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'operations': [],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -200,7 +327,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -208,6 +335,14 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.get(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -223,7 +358,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -231,6 +366,29 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.update(
             '<DATABASE_ID>',
             '<NAME>',
+            enabled=False,
+            description='<DESCRIPTION>',
+            specification='serverless',
+            replicas=1,
+            sync_mode='async',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'enabled': False,
+                'description': '<DESCRIPTION>',
+                'specification': 'serverless',
+                'replicas': 1,
+                'syncMode': 'async',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -239,7 +397,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -247,6 +405,14 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.delete(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -257,13 +423,30 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.vectors_db.list_collections(
             '<DATABASE_ID>',
+            queries=[],
+            search='<SEARCH>',
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'search': ['<SEARCH>'],
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -287,7 +470,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -297,6 +480,29 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<NAME>',
             1,
+            permissions=[],
+            document_security=False,
+            enabled=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'collectionId': '<COLLECTION_ID>',
+                'name': '<NAME>',
+                'dimension': 1,
+                'permissions': [],
+                'documentSecurity': False,
+                'enabled': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -320,7 +526,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -329,6 +535,14 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -351,7 +565,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -360,6 +574,29 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<NAME>',
+            dimension=1,
+            permissions=[],
+            document_security=False,
+            enabled=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'dimension': 1,
+                'permissions': [],
+                'documentSecurity': False,
+                'enabled': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -368,7 +605,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -377,6 +614,14 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -387,7 +632,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -395,6 +640,25 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.list_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+            total=False,
+            ttl=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'transactionId': ['<TRANSACTION_ID>'],
+                'total': ['false'],
+                'ttl': ['1'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -411,7 +675,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -421,6 +685,24 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
             {},
+            permissions=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'documentId': '<DOCUMENT_ID>',
+                'data': {},
+                'permissions': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -433,7 +715,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -442,6 +724,21 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             [],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'documents': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -453,7 +750,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -462,6 +759,21 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             [],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'documents': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -473,7 +785,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -481,6 +793,24 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.update_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            data={},
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'data': {},
+                'queries': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -492,7 +822,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -500,6 +830,22 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.delete_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'queries': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -511,7 +857,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -519,6 +865,26 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.create_query(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+            total=False,
+            ttl=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/query',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'queries': [],
+                'transactionId': '<TRANSACTION_ID>',
+                'total': False,
+                'ttl': 1,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -535,7 +901,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -544,6 +910,21 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'transactionId': ['<TRANSACTION_ID>'],
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -561,7 +942,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -570,6 +951,24 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            data={},
+            permissions=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'data': {},
+                'permissions': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -587,7 +986,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -596,6 +995,24 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            data={},
+            permissions=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'data': {},
+                'permissions': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -605,7 +1022,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -614,6 +1031,20 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response, data)
 
@@ -625,7 +1056,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -633,6 +1064,21 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.list_indexes(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -652,7 +1098,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -663,6 +1109,27 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<KEY>',
             'hnsw_euclidean',
             [],
+            orders=[],
+            lengths=[],
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'type': 'hnsw_euclidean',
+                'attributes': [],
+                'orders': [],
+                'lengths': [],
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -682,7 +1149,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -692,6 +1159,14 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes/<KEY>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -699,7 +1174,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -709,6 +1184,14 @@ class VectorsDBServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -762,13 +1245,27 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.vectors_db.create_failover(
             '<DATABASE_ID>',
+            target_replica_id='<TARGET_REPLICA_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/failovers',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'targetReplicaId': '<TARGET_REPLICA_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -780,13 +1277,31 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.vectors_db.list_operations(
             '<DATABASE_ID>',
+            status='queued',
+            limit=1,
+            offset=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/operations',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'status': ['queued'],
+                'limit': ['1'],
+                'offset': ['1'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -802,7 +1317,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -810,6 +1325,14 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.get_replicas(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/replicas',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -829,7 +1352,7 @@ class VectorsDBServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -837,4 +1360,12 @@ class VectorsDBServiceTest(unittest.TestCase):
         response = self.vectors_db.get_status(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/vectorsdb/<DATABASE_ID>/status',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)

@@ -286,7 +286,7 @@ class Apps(Service):
         api_params = {}
         if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
 
         response = self.client.call(
             'get',
@@ -385,7 +385,7 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
         api_params['name'] = self._normalize_value(name)
         if description is not None:
             api_params['description'] = self._normalize_value(description)
@@ -463,7 +463,7 @@ class Apps(Service):
         api_params = {}
         if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
 
         response = self.client.call(
             'delete',
@@ -510,7 +510,7 @@ class Apps(Service):
         api_params = {}
         if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
@@ -559,8 +559,8 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-        api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
+        api_path = api_path.replace('{installationId}', self._encode_path(installation_id))
 
         response = self.client.call(
             'get',
@@ -605,8 +605,8 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-        api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
+        api_path = api_path.replace('{installationId}', self._encode_path(installation_id))
 
         response = self.client.call(
             'delete',
@@ -652,8 +652,8 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-        api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
+        api_path = api_path.replace('{installationId}', self._encode_path(installation_id))
 
         response = self.client.call(
             'post',
@@ -700,7 +700,7 @@ class Apps(Service):
         api_params = {}
         if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
@@ -744,7 +744,7 @@ class Apps(Service):
         api_params = {}
         if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
 
         response = self.client.call(
             'post',
@@ -790,8 +790,8 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         if key_id is None or key_id == '':
             raise AppwriteException('Missing required parameter: "key_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
+        api_path = api_path.replace('{keyId}', self._encode_path(key_id))
 
         response = self.client.call(
             'get',
@@ -836,8 +836,8 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         if key_id is None or key_id == '':
             raise AppwriteException('Missing required parameter: "key_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
+        api_path = api_path.replace('{keyId}', self._encode_path(key_id))
 
         response = self.client.call(
             'delete',
@@ -883,7 +883,7 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         if labels is None:
             raise AppwriteException('Missing required parameter: "labels"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
         api_params['labels'] = self._normalize_value(labels)
 
         response = self.client.call(
@@ -931,7 +931,7 @@ class Apps(Service):
         api_params = {}
         if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
@@ -975,7 +975,7 @@ class Apps(Service):
         api_params = {}
         if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
 
         response = self.client.call(
             'post',
@@ -1021,8 +1021,8 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         if secret_id is None or secret_id == '':
             raise AppwriteException('Missing required parameter: "secret_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-        api_path = api_path.replace('{secretId}', str(self._normalize_value(secret_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
+        api_path = api_path.replace('{secretId}', self._encode_path(secret_id))
 
         response = self.client.call(
             'get',
@@ -1067,8 +1067,8 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         if secret_id is None or secret_id == '':
             raise AppwriteException('Missing required parameter: "secret_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
-        api_path = api_path.replace('{secretId}', str(self._normalize_value(secret_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
+        api_path = api_path.replace('{secretId}', self._encode_path(secret_id))
 
         response = self.client.call(
             'delete',
@@ -1114,7 +1114,7 @@ class Apps(Service):
             raise AppwriteException('Missing required parameter: "app_id"')
         if team_id is None:
             raise AppwriteException('Missing required parameter: "team_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
         api_params['teamId'] = self._normalize_value(team_id)
 
         response = self.client.call(
@@ -1156,7 +1156,7 @@ class Apps(Service):
         api_params = {}
         if app_id is None or app_id == '':
             raise AppwriteException('Missing required parameter: "app_id"')
-        api_path = api_path.replace('{appId}', str(self._normalize_value(app_id)))
+        api_path = api_path.replace('{appId}', self._encode_path(app_id))
 
         response = self.client.call(
             'delete',

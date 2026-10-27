@@ -25,7 +25,7 @@ class Provider(AppwriteModel):
     type : str
         Type of provider.
     credentials : Dict[str, Any]
-        Provider credentials.
+        Provider credentials. Secret values are write-only and never returned.
     options : Optional[Dict[str, Any]]
         Provider options.
     """

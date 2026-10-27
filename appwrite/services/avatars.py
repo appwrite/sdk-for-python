@@ -58,7 +58,7 @@ class Avatars(Service):
         api_params = {}
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
-        api_path = api_path.replace('{code}', str(self._normalize_value(code)))
+        api_path = api_path.replace('{code}', self._encode_path(code))
         if width is not None:
             api_params['width'] = self._normalize_value(width)
         if height is not None:
@@ -115,7 +115,7 @@ class Avatars(Service):
         api_params = {}
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
-        api_path = api_path.replace('{code}', str(self._normalize_value(code)))
+        api_path = api_path.replace('{code}', self._encode_path(code))
         if width is not None:
             api_params['width'] = self._normalize_value(width)
         if height is not None:
@@ -214,7 +214,7 @@ class Avatars(Service):
         api_params = {}
         if code is None:
             raise AppwriteException('Missing required parameter: "code"')
-        api_path = api_path.replace('{code}', str(self._normalize_value(code)))
+        api_path = api_path.replace('{code}', self._encode_path(code))
         if width is not None:
             api_params['width'] = self._normalize_value(width)
         if height is not None:
