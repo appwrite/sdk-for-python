@@ -1,6 +1,8 @@
 import json
+import re
 import requests_mock
 import unittest
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from appwrite.client import Client
 from appwrite.input_file import InputFile
@@ -22,12 +24,28 @@ class BackupsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.backups.list_archives()
+        response = self.backups.list_archives(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/archives',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -44,13 +62,28 @@ class BackupsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.backups.create_archive(
             [],
+            resource_id='<RESOURCE_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/archives',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'services': [],
+                'resourceId': '<RESOURCE_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -68,7 +101,7 @@ class BackupsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -76,6 +109,14 @@ class BackupsServiceTest(unittest.TestCase):
         response = self.backups.get_archive(
             '<ARCHIVE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/archives/<ARCHIVE_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -83,7 +124,7 @@ class BackupsServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -91,6 +132,14 @@ class BackupsServiceTest(unittest.TestCase):
         response = self.backups.delete_archive(
             '<ARCHIVE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/archives/<ARCHIVE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -101,12 +150,28 @@ class BackupsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.backups.list_policies()
+        response = self.backups.list_policies(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/policies',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -125,7 +190,7 @@ class BackupsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -135,6 +200,28 @@ class BackupsServiceTest(unittest.TestCase):
             [],
             1,
             'schedule',
+            name='<NAME>',
+            resource_id='<RESOURCE_ID>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/policies',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'policyId': '<POLICY_ID>',
+                'name': '<NAME>',
+                'services': [],
+                'resourceId': '<RESOURCE_ID>',
+                'enabled': False,
+                'retention': 1,
+                'schedule': 'schedule',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -154,7 +241,7 @@ class BackupsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -162,6 +249,14 @@ class BackupsServiceTest(unittest.TestCase):
         response = self.backups.get_policy(
             '<POLICY_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/policies/<POLICY_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -180,13 +275,33 @@ class BackupsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.backups.update_policy(
             '<POLICY_ID>',
+            name='<NAME>',
+            retention=1,
+            schedule='schedule',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/policies/<POLICY_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'retention': 1,
+                'schedule': 'schedule',
+                'enabled': False,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -195,7 +310,7 @@ class BackupsServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -203,6 +318,14 @@ class BackupsServiceTest(unittest.TestCase):
         response = self.backups.delete_policy(
             '<POLICY_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/policies/<POLICY_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -221,7 +344,7 @@ class BackupsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -229,6 +352,24 @@ class BackupsServiceTest(unittest.TestCase):
         response = self.backups.create_restoration(
             '<ARCHIVE_ID>',
             [],
+            new_resource_id='<NEW_RESOURCE_ID>',
+            new_resource_name='<NEW_RESOURCE_NAME>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/restoration',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'archiveId': '<ARCHIVE_ID>',
+                'services': [],
+                'newResourceId': '<NEW_RESOURCE_ID>',
+                'newResourceName': '<NEW_RESOURCE_NAME>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -240,12 +381,28 @@ class BackupsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.backups.list_restorations()
+        response = self.backups.list_restorations(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/restorations',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -264,7 +421,7 @@ class BackupsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -272,4 +429,12 @@ class BackupsServiceTest(unittest.TestCase):
         response = self.backups.get_restoration(
             '<RESTORATION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/backups/restorations/<RESTORATION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)

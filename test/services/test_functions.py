@@ -1,6 +1,8 @@
 import json
+import re
 import requests_mock
 import unittest
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from appwrite.client import Client
 from appwrite.input_file import InputFile
@@ -22,12 +24,30 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.functions.list()
+        response = self.functions.list(
+            queries=[],
+            search='<SEARCH>',
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'search': ['<SEARCH>'],
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -70,7 +90,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -79,6 +99,63 @@ class FunctionsServiceTest(unittest.TestCase):
             '<FUNCTION_ID>',
             '<NAME>',
             'node-14.5',
+            execute=[],
+            events=[],
+            schedule='0 0 * * *',
+            timeout=1,
+            enabled=False,
+            logging=False,
+            entrypoint='<ENTRYPOINT>',
+            commands='<COMMANDS>',
+            scopes=[],
+            installation_id='<INSTALLATION_ID>',
+            provider_repository_id='<PROVIDER_REPOSITORY_ID>',
+            provider_branch='<PROVIDER_BRANCH>',
+            provider_silent_mode=False,
+            provider_root_directory='<PROVIDER_ROOT_DIRECTORY>',
+            provider_branches=[],
+            provider_paths=[],
+            build_specification='s-1vcpu-512mb',
+            runtime_specification='s-1vcpu-512mb',
+            deployment_retention=1,
+            interval=1,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'functionId': '<FUNCTION_ID>',
+                'name': '<NAME>',
+                'runtime': 'node-14.5',
+                'execute': [],
+                'events': [],
+                'schedule': '0 0 * * *',
+                'timeout': 1,
+                'enabled': False,
+                'logging': False,
+                'entrypoint': '<ENTRYPOINT>',
+                'commands': '<COMMANDS>',
+                'scopes': [],
+                'installationId': '<INSTALLATION_ID>',
+                'providerRepositoryId': '<PROVIDER_REPOSITORY_ID>',
+                'providerBranch': '<PROVIDER_BRANCH>',
+                'providerSilentMode': False,
+                'providerRootDirectory': '<PROVIDER_ROOT_DIRECTORY>',
+                'providerBranches': [],
+                'providerPaths': [],
+                'buildSpecification': 's-1vcpu-512mb',
+                'runtimeSpecification': 's-1vcpu-512mb',
+                'deploymentRetention': 1,
+                'interval': 1,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -90,12 +167,27 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.functions.list_runtimes()
+        response = self.functions.list_runtimes(
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/runtimes',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -106,12 +198,29 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.functions.list_specifications()
+        response = self.functions.list_specifications(
+            type='runtimes',
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/specifications',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'type': ['runtimes'],
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -154,7 +263,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -162,6 +271,14 @@ class FunctionsServiceTest(unittest.TestCase):
         response = self.functions.get(
             '<FUNCTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -204,7 +321,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -212,6 +329,65 @@ class FunctionsServiceTest(unittest.TestCase):
         response = self.functions.update(
             '<FUNCTION_ID>',
             '<NAME>',
+            runtime='node-14.5',
+            execute=[],
+            events=[],
+            schedule='0 0 * * *',
+            timeout=1,
+            enabled=False,
+            logging=False,
+            entrypoint='<ENTRYPOINT>',
+            commands='<COMMANDS>',
+            scopes=[],
+            installation_id='<INSTALLATION_ID>',
+            provider_repository_id='<PROVIDER_REPOSITORY_ID>',
+            provider_branch='<PROVIDER_BRANCH>',
+            provider_silent_mode=False,
+            provider_root_directory='<PROVIDER_ROOT_DIRECTORY>',
+            provider_branches=[],
+            provider_paths=[],
+            build_specification='s-1vcpu-512mb',
+            runtime_specification='s-1vcpu-512mb',
+            deployment_retention=1,
+            interval=1,
+            description='<DESCRIPTION>',
+            email_enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'runtime': 'node-14.5',
+                'execute': [],
+                'events': [],
+                'schedule': '0 0 * * *',
+                'timeout': 1,
+                'enabled': False,
+                'logging': False,
+                'entrypoint': '<ENTRYPOINT>',
+                'commands': '<COMMANDS>',
+                'scopes': [],
+                'installationId': '<INSTALLATION_ID>',
+                'providerRepositoryId': '<PROVIDER_REPOSITORY_ID>',
+                'providerBranch': '<PROVIDER_BRANCH>',
+                'providerSilentMode': False,
+                'providerRootDirectory': '<PROVIDER_ROOT_DIRECTORY>',
+                'providerBranches': [],
+                'providerPaths': [],
+                'buildSpecification': 's-1vcpu-512mb',
+                'runtimeSpecification': 's-1vcpu-512mb',
+                'deploymentRetention': 1,
+                'interval': 1,
+                'description': '<DESCRIPTION>',
+                'emailEnabled': False,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -220,7 +396,7 @@ class FunctionsServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -228,6 +404,14 @@ class FunctionsServiceTest(unittest.TestCase):
         response = self.functions.delete(
             '<FUNCTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -270,7 +454,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -278,6 +462,19 @@ class FunctionsServiceTest(unittest.TestCase):
         response = self.functions.update_function_deployment(
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/deployment',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'deploymentId': '<DEPLOYMENT_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -289,13 +486,30 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.functions.list_deployments(
             '<FUNCTION_ID>',
+            queries=[],
+            search='<SEARCH>',
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/deployments',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'search': ['<SEARCH>'],
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -332,7 +546,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -340,7 +554,31 @@ class FunctionsServiceTest(unittest.TestCase):
         response = self.functions.create_deployment(
             '<FUNCTION_ID>',
             InputFile.from_bytes(bytearray(), "example.file"),
-            True,
+            False,
+            entrypoint='<ENTRYPOINT>',
+            commands='<COMMANDS>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/deployments',
+        )
+        sent = dict(
+            re.findall(
+                r'form-data; name="([^"\[]+)[^\r\n]*\r\n(?:[^\r\n]+\r\n)*\r\n(.*?)\r\n--',
+                request.body.decode('latin-1'),
+                re.S,
+            )
+        )
+        self.assertEqual(
+            sent,
+            {
+                'entrypoint': '<ENTRYPOINT>',
+                'commands': '<COMMANDS>',
+                'code': '',
+                'activate': 'false',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -377,7 +615,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -385,6 +623,21 @@ class FunctionsServiceTest(unittest.TestCase):
         response = self.functions.create_duplicate_deployment(
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
+            build_id='<BUILD_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/deployments/duplicate',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'deploymentId': '<DEPLOYMENT_ID>',
+                'buildId': '<BUILD_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -421,7 +674,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -433,6 +686,25 @@ class FunctionsServiceTest(unittest.TestCase):
             '<ROOT_DIRECTORY>',
             'commit',
             '<REFERENCE>',
+            activate=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/deployments/template',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'repository': '<REPOSITORY>',
+                'owner': '<OWNER>',
+                'rootDirectory': '<ROOT_DIRECTORY>',
+                'type': 'commit',
+                'reference': '<REFERENCE>',
+                'activate': False,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -469,7 +741,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -478,6 +750,22 @@ class FunctionsServiceTest(unittest.TestCase):
             '<FUNCTION_ID>',
             'branch',
             '<REFERENCE>',
+            activate=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/deployments/vcs',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'type': 'branch',
+                'reference': '<REFERENCE>',
+                'activate': False,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -514,7 +802,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -523,6 +811,14 @@ class FunctionsServiceTest(unittest.TestCase):
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/deployments/<DEPLOYMENT_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -530,7 +826,7 @@ class FunctionsServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -539,6 +835,14 @@ class FunctionsServiceTest(unittest.TestCase):
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/deployments/<DEPLOYMENT_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -546,7 +850,7 @@ class FunctionsServiceTest(unittest.TestCase):
         data = bytearray()
         headers = {'Content-Type': 'application/octet-stream'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             body=data,
             headers=headers,
@@ -554,6 +858,22 @@ class FunctionsServiceTest(unittest.TestCase):
         response = self.functions.get_deployment_download(
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
+            type='source',
+            token='<TOKEN>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/deployments/<DEPLOYMENT_ID>/download',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'type': ['source'],
+                'token': ['<TOKEN>'],
+            },
         )
         self.assertEqual(response, data)
 
@@ -590,7 +910,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -599,6 +919,14 @@ class FunctionsServiceTest(unittest.TestCase):
             '<FUNCTION_ID>',
             '<DEPLOYMENT_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/deployments/<DEPLOYMENT_ID>/status',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -609,13 +937,28 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.functions.list_executions(
             '<FUNCTION_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/executions',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -643,13 +986,37 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.functions.create_execution(
             '<FUNCTION_ID>',
+            body='<BODY>',
+            xasync=False,
+            path='<PATH>',
+            method='GET',
+            headers={},
+            scheduled_at='<SCHEDULED_AT>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/executions',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'body': '<BODY>',
+                'async': False,
+                'path': '<PATH>',
+                'method': 'GET',
+                'headers': {},
+                'scheduledAt': '<SCHEDULED_AT>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -677,7 +1044,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -686,6 +1053,14 @@ class FunctionsServiceTest(unittest.TestCase):
             '<FUNCTION_ID>',
             '<EXECUTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/executions/<EXECUTION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -693,7 +1068,7 @@ class FunctionsServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -702,6 +1077,14 @@ class FunctionsServiceTest(unittest.TestCase):
             '<FUNCTION_ID>',
             '<EXECUTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/executions/<EXECUTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -712,13 +1095,28 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.functions.list_variables(
             '<FUNCTION_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/variables',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -737,7 +1135,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -747,6 +1145,25 @@ class FunctionsServiceTest(unittest.TestCase):
             '<VARIABLE_ID>',
             '<KEY>',
             '<VALUE>',
+            secret=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/variables',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'variableId': '<VARIABLE_ID>',
+                'key': '<KEY>',
+                'value': '<VALUE>',
+                'secret': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -765,7 +1182,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -774,6 +1191,14 @@ class FunctionsServiceTest(unittest.TestCase):
             '<FUNCTION_ID>',
             '<VARIABLE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/variables/<VARIABLE_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -791,7 +1216,7 @@ class FunctionsServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -799,6 +1224,26 @@ class FunctionsServiceTest(unittest.TestCase):
         response = self.functions.update_variable(
             '<FUNCTION_ID>',
             '<VARIABLE_ID>',
+            key='<KEY>',
+            value='<VALUE>',
+            secret=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/variables/<VARIABLE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'value': '<VALUE>',
+                'secret': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -807,7 +1252,7 @@ class FunctionsServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -816,4 +1261,12 @@ class FunctionsServiceTest(unittest.TestCase):
             '<FUNCTION_ID>',
             '<VARIABLE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/functions/<FUNCTION_ID>/variables/<VARIABLE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)

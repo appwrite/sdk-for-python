@@ -49,8 +49,8 @@ class Tokens(Service):
             raise AppwriteException('Missing required parameter: "bucket_id"')
         if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
-        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
+        api_path = api_path.replace('{fileId}', self._encode_path(file_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
@@ -102,8 +102,8 @@ class Tokens(Service):
             raise AppwriteException('Missing required parameter: "bucket_id"')
         if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
-        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
+        api_path = api_path.replace('{fileId}', self._encode_path(file_id))
         if expire is not None:
             api_params['expire'] = self._normalize_value(expire)
 
@@ -146,7 +146,7 @@ class Tokens(Service):
         api_params = {}
         if token_id is None or token_id == '':
             raise AppwriteException('Missing required parameter: "token_id"')
-        api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
+        api_path = api_path.replace('{tokenId}', self._encode_path(token_id))
 
         response = self.client.call(
             'get',
@@ -189,7 +189,7 @@ class Tokens(Service):
         api_params = {}
         if token_id is None or token_id == '':
             raise AppwriteException('Missing required parameter: "token_id"')
-        api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
+        api_path = api_path.replace('{tokenId}', self._encode_path(token_id))
         if expire is not None:
             api_params['expire'] = self._normalize_value(expire)
 
@@ -232,7 +232,7 @@ class Tokens(Service):
         api_params = {}
         if token_id is None or token_id == '':
             raise AppwriteException('Missing required parameter: "token_id"')
-        api_path = api_path.replace('{tokenId}', str(self._normalize_value(token_id)))
+        api_path = api_path.replace('{tokenId}', self._encode_path(token_id))
 
         response = self.client.call(
             'delete',

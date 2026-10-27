@@ -96,6 +96,7 @@ from ..models.policy_deny_aliased_email import PolicyDenyAliasedEmail
 from ..models.policy_deny_disposable_email import PolicyDenyDisposableEmail
 from ..models.policy_deny_free_email import PolicyDenyFreeEmail
 from ..models.policy_deny_corporate_email import PolicyDenyCorporateEmail
+from ..models.policy_deny_realtime_guests import PolicyDenyRealtimeGuests
 from ..models.policy_passkey import PolicyPasskey
 from ..enums.project_protocol_id import ProjectProtocolId
 from ..enums.project_service_id import ProjectServiceId
@@ -207,7 +208,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "method_id"')
         if enabled is None:
             raise AppwriteException('Missing required parameter: "enabled"')
-        api_path = api_path.replace('{methodId}', str(self._normalize_value(method_id)))
+        api_path = api_path.replace('{methodId}', self._encode_path(method_id))
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call(
@@ -340,7 +341,7 @@ class Project(Service):
         api_params = {}
         if environment_id is None or environment_id == '':
             raise AppwriteException('Missing required parameter: "environment_id"')
-        api_path = api_path.replace('{environmentId}', str(self._normalize_value(environment_id)))
+        api_path = api_path.replace('{environmentId}', self._encode_path(environment_id))
 
         response = self.client.call(
             'get',
@@ -385,7 +386,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "environment_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-        api_path = api_path.replace('{environmentId}', str(self._normalize_value(environment_id)))
+        api_path = api_path.replace('{environmentId}', self._encode_path(environment_id))
         api_params['name'] = self._normalize_value(name)
 
         response = self.client.call(
@@ -427,7 +428,7 @@ class Project(Service):
         api_params = {}
         if environment_id is None or environment_id == '':
             raise AppwriteException('Missing required parameter: "environment_id"')
-        api_path = api_path.replace('{environmentId}', str(self._normalize_value(environment_id)))
+        api_path = api_path.replace('{environmentId}', self._encode_path(environment_id))
 
         response = self.client.call(
             'delete',
@@ -561,7 +562,7 @@ class Project(Service):
         api_params = {}
         if key_id is None or key_id == '':
             raise AppwriteException('Missing required parameter: "key_id"')
-        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
+        api_path = api_path.replace('{keyId}', self._encode_path(key_id))
 
         response = self.client.call(
             'get',
@@ -617,7 +618,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "name"')
         if scopes is None:
             raise AppwriteException('Missing required parameter: "scopes"')
-        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
+        api_path = api_path.replace('{keyId}', self._encode_path(key_id))
         api_params['name'] = self._normalize_value(name)
         api_params['scopes'] = self._normalize_value(scopes)
         if expire is not None:
@@ -664,7 +665,7 @@ class Project(Service):
         api_params = {}
         if key_id is None or key_id == '':
             raise AppwriteException('Missing required parameter: "key_id"')
-        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
+        api_path = api_path.replace('{keyId}', self._encode_path(key_id))
 
         response = self.client.call(
             'delete',
@@ -837,7 +838,7 @@ class Project(Service):
         api_params = {}
         if number is None or number == '':
             raise AppwriteException('Missing required parameter: "number"')
-        api_path = api_path.replace('{number}', str(self._normalize_value(number)))
+        api_path = api_path.replace('{number}', self._encode_path(number))
 
         response = self.client.call(
             'get',
@@ -882,7 +883,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "number"')
         if otp is None:
             raise AppwriteException('Missing required parameter: "otp"')
-        api_path = api_path.replace('{number}', str(self._normalize_value(number)))
+        api_path = api_path.replace('{number}', self._encode_path(number))
         api_params['otp'] = self._normalize_value(otp)
 
         response = self.client.call(
@@ -924,7 +925,7 @@ class Project(Service):
         api_params = {}
         if number is None or number == '':
             raise AppwriteException('Missing required parameter: "number"')
-        api_path = api_path.replace('{number}', str(self._normalize_value(number)))
+        api_path = api_path.replace('{number}', self._encode_path(number))
 
         response = self.client.call(
             'delete',
@@ -3773,7 +3774,7 @@ class Project(Service):
         api_params = {}
         if provider_id is None:
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
 
         response = self.client.call(
             'get',
@@ -4068,7 +4069,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "name"')
         if application_id is None:
             raise AppwriteException('Missing required parameter: "application_id"')
-        api_path = api_path.replace('{platformId}', str(self._normalize_value(platform_id)))
+        api_path = api_path.replace('{platformId}', self._encode_path(platform_id))
         api_params['name'] = self._normalize_value(name)
         api_params['applicationId'] = self._normalize_value(application_id)
         if fingerprints is not None:
@@ -4176,7 +4177,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "name"')
         if bundle_identifier is None:
             raise AppwriteException('Missing required parameter: "bundle_identifier"')
-        api_path = api_path.replace('{platformId}', str(self._normalize_value(platform_id)))
+        api_path = api_path.replace('{platformId}', self._encode_path(platform_id))
         api_params['name'] = self._normalize_value(name)
         api_params['bundleIdentifier'] = self._normalize_value(bundle_identifier)
 
@@ -4282,7 +4283,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "name"')
         if package_name is None:
             raise AppwriteException('Missing required parameter: "package_name"')
-        api_path = api_path.replace('{platformId}', str(self._normalize_value(platform_id)))
+        api_path = api_path.replace('{platformId}', self._encode_path(platform_id))
         api_params['name'] = self._normalize_value(name)
         api_params['packageName'] = self._normalize_value(package_name)
 
@@ -4388,7 +4389,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "name"')
         if hostname is None:
             raise AppwriteException('Missing required parameter: "hostname"')
-        api_path = api_path.replace('{platformId}', str(self._normalize_value(platform_id)))
+        api_path = api_path.replace('{platformId}', self._encode_path(platform_id))
         api_params['name'] = self._normalize_value(name)
         api_params['hostname'] = self._normalize_value(hostname)
 
@@ -4494,7 +4495,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "name"')
         if package_identifier_name is None:
             raise AppwriteException('Missing required parameter: "package_identifier_name"')
-        api_path = api_path.replace('{platformId}', str(self._normalize_value(platform_id)))
+        api_path = api_path.replace('{platformId}', self._encode_path(platform_id))
         api_params['name'] = self._normalize_value(name)
         api_params['packageIdentifierName'] = self._normalize_value(package_identifier_name)
 
@@ -4543,7 +4544,7 @@ class Project(Service):
         api_params = {}
         if platform_id is None or platform_id == '':
             raise AppwriteException('Missing required parameter: "platform_id"')
-        api_path = api_path.replace('{platformId}', str(self._normalize_value(platform_id)))
+        api_path = api_path.replace('{platformId}', self._encode_path(platform_id))
 
         response = self.client.call(
             'get',
@@ -4600,7 +4601,7 @@ class Project(Service):
         api_params = {}
         if platform_id is None or platform_id == '':
             raise AppwriteException('Missing required parameter: "platform_id"')
-        api_path = api_path.replace('{platformId}', str(self._normalize_value(platform_id)))
+        api_path = api_path.replace('{platformId}', self._encode_path(platform_id))
 
         response = self.client.call(
             'delete',
@@ -4805,6 +4806,47 @@ class Project(Service):
         """
 
         api_path = '/project/policies/deny-free-email'
+        api_params = {}
+        if enabled is None:
+            raise AppwriteException('Missing required parameter: "enabled"')
+        api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=ProjectModel)
+
+    def update_deny_realtime_guests_policy(
+        self,
+        enabled: bool,
+    ) -> ProjectModel:
+        """
+        Configures if guests, connections without a signed-in user, may subscribe to realtime channels. When enabled, a guest can still connect and sign in over the connection, but cannot subscribe until it does.
+
+        Parameters
+        ----------
+        enabled : bool
+            Set whether or not to stop guests from subscribing to realtime channels.
+        Returns
+        -------
+        ProjectModel
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/policies/deny-realtime-guests'
         api_params = {}
         if enabled is None:
             raise AppwriteException('Missing required parameter: "enabled"')
@@ -5501,6 +5543,7 @@ class Project(Service):
         PolicyDenyDisposableEmail,
         PolicyDenyFreeEmail,
         PolicyDenyCorporateEmail,
+        PolicyDenyRealtimeGuests,
         PolicyPasskey,
     ]:
         """
@@ -5509,10 +5552,10 @@ class Project(Service):
         Parameters
         ----------
         policy_id : ProjectPolicyId
-            Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, password-pwned, password-rotation, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email, passkey.
+            Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, password-pwned, password-rotation, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email, deny-realtime-guests, passkey.
         Returns
         -------
-        Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicyPasswordPwned, PolicyPasswordRotation, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail, PolicyPasskey]
+        Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicyPasswordPwned, PolicyPasswordRotation, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail, PolicyDenyRealtimeGuests, PolicyPasskey]
             API response as one of the typed response models
 
         Raises
@@ -5525,7 +5568,7 @@ class Project(Service):
         api_params = {}
         if policy_id is None:
             raise AppwriteException('Missing required parameter: "policy_id"')
-        api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
+        api_path = api_path.replace('{policyId}', self._encode_path(policy_id))
 
         response = self.client.call(
             'get',
@@ -5590,6 +5633,9 @@ class Project(Service):
         if response.get('$id') == 'deny-corporate-email':
             return self._parse_response(response, model=PolicyDenyCorporateEmail)
 
+        if response.get('$id') == 'deny-realtime-guests':
+            return self._parse_response(response, model=PolicyDenyRealtimeGuests)
+
         if response.get('$id') == 'passkey':
             return self._parse_response(response, model=PolicyPasskey)
 
@@ -5626,7 +5672,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "protocol_id"')
         if enabled is None:
             raise AppwriteException('Missing required parameter: "enabled"')
-        api_path = api_path.replace('{protocolId}', str(self._normalize_value(protocol_id)))
+        api_path = api_path.replace('{protocolId}', self._encode_path(protocol_id))
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call(
@@ -5673,7 +5719,7 @@ class Project(Service):
             raise AppwriteException('Missing required parameter: "service_id"')
         if enabled is None:
             raise AppwriteException('Missing required parameter: "enabled"')
-        api_path = api_path.replace('{serviceId}', str(self._normalize_value(service_id)))
+        api_path = api_path.replace('{serviceId}', self._encode_path(service_id))
         api_params['enabled'] = self._normalize_value(enabled)
 
         response = self.client.call(
@@ -5688,6 +5734,38 @@ class Project(Service):
         )
 
         return self._parse_response(response, model=ProjectModel)
+
+    def delete_sessions(
+        self,
+    ) -> Dict[str, Any]:
+        """
+        Delete all sessions in the project. Any session created before this request will be invalidated immediately: users will be signed out of every active client (web, mobile, server SDKs, JWTs), and will be able to sign in again afterwards. API keys are not affected by this action.
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/sessions'
+        api_params = {}
+
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return response
 
     def update_smtp(
         self,
@@ -5964,7 +6042,7 @@ class Project(Service):
         api_params = {}
         if template_id is None:
             raise AppwriteException('Missing required parameter: "template_id"')
-        api_path = api_path.replace('{templateId}', str(self._normalize_value(template_id)))
+        api_path = api_path.replace('{templateId}', self._encode_path(template_id))
         if locale is not None:
             api_params['locale'] = self._normalize_value(locale)
 
@@ -6113,7 +6191,7 @@ class Project(Service):
         api_params = {}
         if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
-        api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
+        api_path = api_path.replace('{variableId}', self._encode_path(variable_id))
 
         response = self.client.call(
             'get',
@@ -6165,7 +6243,7 @@ class Project(Service):
         api_params = {}
         if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
-        api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
+        api_path = api_path.replace('{variableId}', self._encode_path(variable_id))
         if key is not None:
             api_params['key'] = self._normalize_value(key)
         if value is not None:
@@ -6214,7 +6292,7 @@ class Project(Service):
         api_params = {}
         if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
-        api_path = api_path.replace('{variableId}', str(self._normalize_value(variable_id)))
+        api_path = api_path.replace('{variableId}', self._encode_path(variable_id))
 
         response = self.client.call(
             'delete',

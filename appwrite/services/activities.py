@@ -82,7 +82,7 @@ class Activities(Service):
         api_params = {}
         if event_id is None or event_id == '':
             raise AppwriteException('Missing required parameter: "event_id"')
-        api_path = api_path.replace('{eventId}', str(self._normalize_value(event_id)))
+        api_path = api_path.replace('{eventId}', self._encode_path(event_id))
 
         response = self.client.call(
             'get',

@@ -251,7 +251,7 @@ class Messaging(Service):
         api_params = {}
         if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
-        api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
+        api_path = api_path.replace('{messageId}', self._encode_path(message_id))
         if topics is not None:
             api_params['topics'] = self._normalize_value(topics)
         if users is not None:
@@ -513,7 +513,7 @@ class Messaging(Service):
         api_params = {}
         if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
-        api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
+        api_path = api_path.replace('{messageId}', self._encode_path(message_id))
         if topics is not None:
             api_params['topics'] = self._normalize_value(topics)
         if users is not None:
@@ -682,7 +682,7 @@ class Messaging(Service):
         api_params = {}
         if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
-        api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
+        api_path = api_path.replace('{messageId}', self._encode_path(message_id))
         if topics is not None:
             api_params['topics'] = self._normalize_value(topics)
         if users is not None:
@@ -735,7 +735,7 @@ class Messaging(Service):
         api_params = {}
         if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
-        api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
+        api_path = api_path.replace('{messageId}', self._encode_path(message_id))
 
         response = self.client.call(
             'get',
@@ -775,7 +775,7 @@ class Messaging(Service):
         api_params = {}
         if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
-        api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
+        api_path = api_path.replace('{messageId}', self._encode_path(message_id))
 
         response = self.client.call(
             'delete',
@@ -822,7 +822,7 @@ class Messaging(Service):
         api_params = {}
         if message_id is None or message_id == '':
             raise AppwriteException('Missing required parameter: "message_id"')
-        api_path = api_path.replace('{messageId}', str(self._normalize_value(message_id)))
+        api_path = api_path.replace('{messageId}', self._encode_path(message_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
@@ -1013,7 +1013,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -1142,7 +1142,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -1257,7 +1257,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -1418,7 +1418,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if api_key is not None:
@@ -1559,7 +1559,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -1708,7 +1708,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -1861,7 +1861,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -2030,7 +2030,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -2236,7 +2236,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if host is not None:
@@ -2385,7 +2385,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -2518,7 +2518,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -2651,7 +2651,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -2784,7 +2784,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if enabled is not None:
@@ -2835,7 +2835,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
 
         response = self.client.call(
             'get',
@@ -2875,7 +2875,7 @@ class Messaging(Service):
         api_params = {}
         if provider_id is None or provider_id == '':
             raise AppwriteException('Missing required parameter: "provider_id"')
-        api_path = api_path.replace('{providerId}', str(self._normalize_value(provider_id)))
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
 
         response = self.client.call(
             'delete',
@@ -3032,7 +3032,7 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
-        api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
+        api_path = api_path.replace('{topicId}', self._encode_path(topic_id))
 
         response = self.client.call(
             'get',
@@ -3087,7 +3087,7 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
-        api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
+        api_path = api_path.replace('{topicId}', self._encode_path(topic_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if subscribe is not None:
@@ -3138,7 +3138,7 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
-        api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
+        api_path = api_path.replace('{topicId}', self._encode_path(topic_id))
 
         response = self.client.call(
             'delete',
@@ -3188,7 +3188,7 @@ class Messaging(Service):
         api_params = {}
         if topic_id is None or topic_id == '':
             raise AppwriteException('Missing required parameter: "topic_id"')
-        api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
+        api_path = api_path.replace('{topicId}', self._encode_path(topic_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -3244,7 +3244,7 @@ class Messaging(Service):
             raise AppwriteException('Missing required parameter: "subscriber_id"')
         if target_id is None:
             raise AppwriteException('Missing required parameter: "target_id"')
-        api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
+        api_path = api_path.replace('{topicId}', self._encode_path(topic_id))
         api_params['subscriberId'] = self._normalize_value(subscriber_id)
         api_params['targetId'] = self._normalize_value(target_id)
 
@@ -3292,8 +3292,8 @@ class Messaging(Service):
             raise AppwriteException('Missing required parameter: "topic_id"')
         if subscriber_id is None or subscriber_id == '':
             raise AppwriteException('Missing required parameter: "subscriber_id"')
-        api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
-        api_path = api_path.replace('{subscriberId}', str(self._normalize_value(subscriber_id)))
+        api_path = api_path.replace('{topicId}', self._encode_path(topic_id))
+        api_path = api_path.replace('{subscriberId}', self._encode_path(subscriber_id))
 
         response = self.client.call(
             'get',
@@ -3338,8 +3338,8 @@ class Messaging(Service):
             raise AppwriteException('Missing required parameter: "topic_id"')
         if subscriber_id is None or subscriber_id == '':
             raise AppwriteException('Missing required parameter: "subscriber_id"')
-        api_path = api_path.replace('{topicId}', str(self._normalize_value(topic_id)))
-        api_path = api_path.replace('{subscriberId}', str(self._normalize_value(subscriber_id)))
+        api_path = api_path.replace('{topicId}', self._encode_path(topic_id))
+        api_path = api_path.replace('{subscriberId}', self._encode_path(subscriber_id))
 
         response = self.client.call(
             'delete',

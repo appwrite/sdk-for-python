@@ -171,7 +171,7 @@ class Webhooks(Service):
         api_params = {}
         if webhook_id is None or webhook_id == '':
             raise AppwriteException('Missing required parameter: "webhook_id"')
-        api_path = api_path.replace('{webhookId}', str(self._normalize_value(webhook_id)))
+        api_path = api_path.replace('{webhookId}', self._encode_path(webhook_id))
 
         response = self.client.call(
             'get',
@@ -241,7 +241,7 @@ class Webhooks(Service):
             raise AppwriteException('Missing required parameter: "url"')
         if events is None:
             raise AppwriteException('Missing required parameter: "events"')
-        api_path = api_path.replace('{webhookId}', str(self._normalize_value(webhook_id)))
+        api_path = api_path.replace('{webhookId}', self._encode_path(webhook_id))
         api_params['name'] = self._normalize_value(name)
         api_params['url'] = self._normalize_value(url)
         api_params['events'] = self._normalize_value(events)
@@ -295,7 +295,7 @@ class Webhooks(Service):
         api_params = {}
         if webhook_id is None or webhook_id == '':
             raise AppwriteException('Missing required parameter: "webhook_id"')
-        api_path = api_path.replace('{webhookId}', str(self._normalize_value(webhook_id)))
+        api_path = api_path.replace('{webhookId}', self._encode_path(webhook_id))
 
         response = self.client.call(
             'delete',
@@ -339,7 +339,7 @@ class Webhooks(Service):
         api_params = {}
         if webhook_id is None or webhook_id == '':
             raise AppwriteException('Missing required parameter: "webhook_id"')
-        api_path = api_path.replace('{webhookId}', str(self._normalize_value(webhook_id)))
+        api_path = api_path.replace('{webhookId}', self._encode_path(webhook_id))
         if secret is not None:
             api_params['secret'] = self._normalize_value(secret)
 

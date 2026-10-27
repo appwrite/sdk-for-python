@@ -27,6 +27,11 @@ from ..enums.deployment_download_type import DeploymentDownloadType
 from ..enums.execution_method import ExecutionMethod
 from ..enums.message_priority import MessagePriority
 from ..enums.smtp_encryption import SmtpEncryption
+from ..enums.appwrite_migration_resource import AppwriteMigrationResource
+from ..enums.on_duplicate import OnDuplicate
+from ..enums.firebase_migration_resource import FirebaseMigrationResource
+from ..enums.n_host_migration_resource import NHostMigrationResource
+from ..enums.supabase_migration_resource import SupabaseMigrationResource
 from ..enums.region import Region
 from ..enums.project_auth_method_id import ProjectAuthMethodId
 from ..enums.project_o_auth2_auth0_prompt import ProjectOAuth2Auth0Prompt
@@ -171,6 +176,21 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, SmtpEncryption):
+            return o.value
+
+        if isinstance(o, AppwriteMigrationResource):
+            return o.value
+
+        if isinstance(o, OnDuplicate):
+            return o.value
+
+        if isinstance(o, FirebaseMigrationResource):
+            return o.value
+
+        if isinstance(o, NHostMigrationResource):
+            return o.value
+
+        if isinstance(o, SupabaseMigrationResource):
             return o.value
 
         if isinstance(o, Region):

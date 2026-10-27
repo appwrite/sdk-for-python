@@ -1,6 +1,8 @@
 import json
+import re
 import requests_mock
 import unittest
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from appwrite.client import Client
 from appwrite.input_file import InputFile
@@ -22,12 +24,28 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.postgresql.list()
+        response = self.postgresql.list(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -81,7 +99,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -89,6 +107,44 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.create(
             '<DATABASE_ID>',
             '<NAME>',
+            version='17',
+            specification='<SPECIFICATION>',
+            replicas=1,
+            sync_mode='async',
+            network_idle_timeout_seconds=1,
+            network_ip_allowlist=[],
+            idle_timeout_minutes=1,
+            pitr=False,
+            pitr_retention_days=1,
+            storage_autoscaling=False,
+            storage_autoscaling_threshold_percent=1,
+            storage_autoscaling_max_gb=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'databaseId': '<DATABASE_ID>',
+                'name': '<NAME>',
+                'version': '17',
+                'specification': '<SPECIFICATION>',
+                'replicas': 1,
+                'syncMode': 'async',
+                'networkIdleTimeoutSeconds': 1,
+                'networkIPAllowlist': [],
+                'idleTimeoutMinutes': 1,
+                'pitr': False,
+                'pitrRetentionDays': 1,
+                'storageAutoscaling': False,
+                'storageAutoscalingThresholdPercent': 1,
+                'storageAutoscalingMaxGb': 1,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -100,12 +156,20 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.postgresql.list_specifications()
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/specifications',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -159,7 +223,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -167,6 +231,14 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.get(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -220,13 +292,65 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.postgresql.update(
             '<DATABASE_ID>',
+            name='<NAME>',
+            status='ready',
+            specification='<SPECIFICATION>',
+            replicas=1,
+            sync_mode='async',
+            network_idle_timeout_seconds=1,
+            network_ip_allowlist=[],
+            idle_timeout_minutes=1,
+            pitr=False,
+            pitr_retention_days=1,
+            storage_autoscaling=False,
+            storage_autoscaling_threshold_percent=1,
+            storage_autoscaling_max_gb=1,
+            metrics_trace_sample_rate=1.0,
+            metrics_slow_query_log_threshold_ms=1,
+            sql_api_enabled=False,
+            sql_api_allowed_statements=[],
+            sql_api_max_rows=1,
+            sql_api_max_bytes=1,
+            sql_api_timeout_seconds=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'status': 'ready',
+                'specification': '<SPECIFICATION>',
+                'replicas': 1,
+                'syncMode': 'async',
+                'networkIdleTimeoutSeconds': 1,
+                'networkIPAllowlist': [],
+                'idleTimeoutMinutes': 1,
+                'pitr': False,
+                'pitrRetentionDays': 1,
+                'storageAutoscaling': False,
+                'storageAutoscalingThresholdPercent': 1,
+                'storageAutoscalingMaxGb': 1,
+                'metricsTraceSampleRate': 1.0,
+                'metricsSlowQueryLogThresholdMs': 1,
+                'sqlApiEnabled': False,
+                'sqlApiAllowedStatements': [],
+                'sqlApiMaxRows': 1,
+                'sqlApiMaxBytes': 1,
+                'sqlApiTimeoutSeconds': 1,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -235,7 +359,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -243,6 +367,14 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.delete(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -253,13 +385,28 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.postgresql.list_backups(
             '<DATABASE_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/backups',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -281,13 +428,27 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.postgresql.create_backup(
             '<DATABASE_ID>',
+            type='full',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/backups',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'type': 'full',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -299,13 +460,28 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.postgresql.list_backup_policies(
             '<DATABASE_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/backups/policies',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -325,7 +501,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -336,6 +512,26 @@ class PostgresqlServiceTest(unittest.TestCase):
             '<NAME>',
             'schedule',
             1,
+            type='full',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/backups/policies',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'policyId': '<POLICY_ID>',
+                'name': '<NAME>',
+                'schedule': 'schedule',
+                'retention': 1,
+                'type': 'full',
+                'enabled': False,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -355,7 +551,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -364,6 +560,14 @@ class PostgresqlServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<POLICY_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/backups/policies/<POLICY_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -382,7 +586,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -390,6 +594,26 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.update_backup_policy(
             '<DATABASE_ID>',
             '<POLICY_ID>',
+            name='<NAME>',
+            schedule='schedule',
+            retention=1,
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/backups/policies/<POLICY_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'schedule': 'schedule',
+                'retention': 1,
+                'enabled': False,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -398,7 +622,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -407,6 +631,14 @@ class PostgresqlServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<POLICY_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/backups/policies/<POLICY_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -420,7 +652,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -431,6 +663,28 @@ class PostgresqlServiceTest(unittest.TestCase):
             '<BUCKET>',
             '<ACCESS_KEY>',
             '<SECRET_KEY>',
+            region='<REGION>',
+            prefix='<PREFIX>',
+            endpoint='https://example.com',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/backups/storage',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'provider': 's3',
+                'bucket': '<BUCKET>',
+                'region': '<REGION>',
+                'prefix': '<PREFIX>',
+                'endpoint': 'https://example.com',
+                'accessKey': '<ACCESS_KEY>',
+                'secretKey': '<SECRET_KEY>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -452,7 +706,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -461,6 +715,14 @@ class PostgresqlServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<BACKUP_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/backups/<BACKUP_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -468,7 +730,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -477,6 +739,14 @@ class PostgresqlServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<BACKUP_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/backups/<BACKUP_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -487,7 +757,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -495,6 +765,14 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.list_branches(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/branches',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -548,13 +826,29 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.postgresql.create_branch(
             '<DATABASE_ID>',
+            branch_id='<BRANCH_ID>',
+            ttl=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/branches',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'branchId': '<BRANCH_ID>',
+                'ttl': 1,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -609,7 +903,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -618,6 +912,14 @@ class PostgresqlServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<BRANCH_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/branches/<BRANCH_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -634,7 +936,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -642,6 +944,14 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.update_credentials(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/credentials',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -656,7 +966,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -664,6 +974,23 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.create_execution(
             '<DATABASE_ID>',
             '<SQL>',
+            bindings={},
+            timeout_seconds=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/executions',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'sql': '<SQL>',
+                'bindings': {},
+                'timeoutSeconds': 1,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -676,7 +1003,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -684,6 +1011,14 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.list_extensions(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/extensions',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -737,7 +1072,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -745,6 +1080,19 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.create_extension(
             '<DATABASE_ID>',
             '<NAME>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/extensions',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -799,7 +1147,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -808,6 +1156,14 @@ class PostgresqlServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<EXTENSION_NAME>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/extensions/<EXTENSION_NAME>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -861,13 +1217,27 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.postgresql.create_failover(
             '<DATABASE_ID>',
+            target_replica_id='<TARGET_REPLICA_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/failovers',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'targetReplicaId': '<TARGET_REPLICA_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -922,7 +1292,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -931,6 +1301,20 @@ class PostgresqlServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             'sun',
             1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/maintenance',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'day': 'sun',
+                'hourUtc': 1,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -985,7 +1369,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -993,6 +1377,21 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.create_migration(
             '<DATABASE_ID>',
             'shared',
+            specification='<SPECIFICATION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/migrations',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'targetType': 'shared',
+                'specification': '<SPECIFICATION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1004,13 +1403,31 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.postgresql.list_operations(
             '<DATABASE_ID>',
+            status='queued',
+            limit=1,
+            offset=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/operations',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'status': ['queued'],
+                'limit': ['1'],
+                'offset': ['1'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1022,7 +1439,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1030,6 +1447,14 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.get_pitr(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/pitr',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -1048,7 +1473,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1056,6 +1481,14 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.get_pooler(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/pooler',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -1074,13 +1507,41 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.postgresql.update_pooler(
             '<DATABASE_ID>',
+            mode='transaction',
+            max_connections=1,
+            default_pool_size=1,
+            read_write_splitting=False,
+            pooler_cpu_request='<POOLER_CPU_REQUEST>',
+            pooler_cpu_limit='<POOLER_CPU_LIMIT>',
+            pooler_memory_request='<POOLER_MEMORY_REQUEST>',
+            pooler_memory_limit='<POOLER_MEMORY_LIMIT>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/pooler',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'mode': 'transaction',
+                'maxConnections': 1,
+                'defaultPoolSize': 1,
+                'readWriteSplitting': False,
+                'poolerCpuRequest': '<POOLER_CPU_REQUEST>',
+                'poolerCpuLimit': '<POOLER_CPU_LIMIT>',
+                'poolerMemoryRequest': '<POOLER_MEMORY_REQUEST>',
+                'poolerMemoryLimit': '<POOLER_MEMORY_LIMIT>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1096,7 +1557,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1104,6 +1565,14 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.get_replicas(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/replicas',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -1114,13 +1583,33 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.postgresql.list_restorations(
             '<DATABASE_ID>',
+            status='pending',
+            type='backup',
+            limit=1,
+            offset=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/restorations',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'status': ['pending'],
+                'type': ['backup'],
+                'limit': ['1'],
+                'offset': ['1'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1138,13 +1627,39 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.postgresql.create_restoration(
             '<DATABASE_ID>',
+            type='backup',
+            backup_id='<BACKUP_ID>',
+            target_database_id='<TARGET_DATABASE_ID>',
+            target_time='2020-10-15T06:38:00.000+00:00',
+            restore_mode='in_place',
+            target_name='<TARGET_NAME>',
+            auto_promote=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/restorations',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'type': 'backup',
+                'backupId': '<BACKUP_ID>',
+                'targetDatabaseId': '<TARGET_DATABASE_ID>',
+                'targetTime': '2020-10-15T06:38:00.000+00:00',
+                'restoreMode': 'in_place',
+                'targetName': '<TARGET_NAME>',
+                'autoPromote': False,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1162,7 +1677,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1171,6 +1686,14 @@ class PostgresqlServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<RESTORATION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/restorations/<RESTORATION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -1187,7 +1710,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1196,6 +1719,14 @@ class PostgresqlServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<RESTORATION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/restorations/<RESTORATION_ID>/promotions',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -1215,7 +1746,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1223,6 +1754,14 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.get_status(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/status',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -1276,7 +1815,7 @@ class PostgresqlServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1284,5 +1823,18 @@ class PostgresqlServiceTest(unittest.TestCase):
         response = self.postgresql.create_upgrade(
             '<DATABASE_ID>',
             '<TARGET_VERSION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/postgresql/<DATABASE_ID>/upgrades',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'targetVersion': '<TARGET_VERSION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)

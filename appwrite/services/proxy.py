@@ -412,7 +412,7 @@ class Proxy(Service):
         api_params = {}
         if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
-        api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
 
         response = self.client.call(
             'get',
@@ -452,7 +452,7 @@ class Proxy(Service):
         api_params = {}
         if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
-        api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
 
         response = self.client.call(
             'delete',
@@ -493,7 +493,7 @@ class Proxy(Service):
         api_params = {}
         if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
-        api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
 
         response = self.client.call(
             'patch',

@@ -14,7 +14,7 @@ result: BackupPolicy = mysql.update_backup_policy(
     database_id = '<DATABASE_ID>',
     policy_id = '<POLICY_ID>',
     name = '<NAME>', # optional
-    schedule = '', # optional
+    schedule = None, # optional
     retention = 1, # optional
     enabled = False # optional
 )

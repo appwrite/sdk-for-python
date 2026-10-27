@@ -195,7 +195,7 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
 
         response = self.client.call(
             'get',
@@ -273,7 +273,7 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "bucket_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
         api_params['name'] = self._normalize_value(name)
         if permissions is not None:
             api_params['permissions'] = self._normalize_value(permissions)
@@ -337,7 +337,7 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
 
         response = self.client.call(
             'delete',
@@ -387,7 +387,7 @@ class Storage(Service):
         api_params = {}
         if bucket_id is None or bucket_id == '':
             raise AppwriteException('Missing required parameter: "bucket_id"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if search is not None:
@@ -459,7 +459,7 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "file_id"')
         if file is None:
             raise AppwriteException('Missing required parameter: "file"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
         api_params['fileId'] = self._normalize_value(file_id)
         api_params['file'] = self._normalize_value(file)
         if permissions is not None:
@@ -519,8 +519,8 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "bucket_id"')
         if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
-        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
+        api_path = api_path.replace('{fileId}', self._encode_path(file_id))
 
         response = self.client.call(
             'get',
@@ -571,8 +571,8 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "bucket_id"')
         if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
-        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
+        api_path = api_path.replace('{fileId}', self._encode_path(file_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if permissions is not None:
@@ -622,8 +622,8 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "bucket_id"')
         if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
-        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
+        api_path = api_path.replace('{fileId}', self._encode_path(file_id))
 
         response = self.client.call(
             'delete',
@@ -672,8 +672,8 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "bucket_id"')
         if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
-        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
+        api_path = api_path.replace('{fileId}', self._encode_path(file_id))
         if token is not None:
             api_params['token'] = self._normalize_value(token)
 
@@ -756,8 +756,8 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "bucket_id"')
         if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
-        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
+        api_path = api_path.replace('{fileId}', self._encode_path(file_id))
         if width is not None:
             api_params['width'] = self._normalize_value(width)
         if height is not None:
@@ -829,8 +829,8 @@ class Storage(Service):
             raise AppwriteException('Missing required parameter: "bucket_id"')
         if file_id is None or file_id == '':
             raise AppwriteException('Missing required parameter: "file_id"')
-        api_path = api_path.replace('{bucketId}', str(self._normalize_value(bucket_id)))
-        api_path = api_path.replace('{fileId}', str(self._normalize_value(file_id)))
+        api_path = api_path.replace('{bucketId}', self._encode_path(bucket_id))
+        api_path = api_path.replace('{fileId}', self._encode_path(file_id))
         if token is not None:
             api_params['token'] = self._normalize_value(token)
 
