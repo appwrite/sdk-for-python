@@ -169,6 +169,58 @@ class AsyncClientTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(completed, 3, 'sibling chunk uploads did not run to completion')
 
     @respx.mock
+    async def test_chunked_upload_waits_for_siblings_when_progress_callback_fails(self):
+        total_chunks = 4
+        in_flight = 0
+        completed = 0
+
+        async def handler(request):
+            nonlocal in_flight, completed
+            if request.method == 'GET':
+                # Resume probe: the SDK asks whether an upload is already in progress.
+                return httpx2.Response(
+                    200,
+                    json={'$id': 'file-1', 'chunksTotal': total_chunks, 'chunksUploaded': 0},
+                    headers={'Content-Type': 'application/json'},
+                )
+            in_flight += 1
+            await asyncio.sleep(0.2)
+            in_flight -= 1
+            completed += 1
+            return httpx2.Response(
+                200,
+                json={'$id': 'file-1', 'chunksTotal': total_chunks, 'chunksUploaded': 1},
+                headers={'Content-Type': 'application/json'},
+            )
+
+        respx.route().mock(side_effect=handler)
+
+        calls = 0
+
+        async def on_progress(payload):
+            nonlocal calls
+            calls += 1
+            if calls > 1:
+                # The first chunk is reported before siblings start; raising on
+                # the sibling reports targets the concurrent reporting path.
+                raise RuntimeError('progress callback failed')
+
+        async with Client() as client:
+            client._chunk_size = 10
+            storage = Storage(client)
+            with self.assertRaises(RuntimeError):
+                await storage.create_file(
+                    bucket_id='bucket-1',
+                    file_id='file-1',
+                    file=InputFile.from_bytes(b'x' * 40, 'test.txt'),
+                    on_progress=on_progress,
+                )
+
+        self.assertEqual(in_flight, 0, 'sibling chunk uploads were still running when the error surfaced')
+        self.assertEqual(completed, 4, 'sibling chunk uploads did not run to completion')
+        self.assertGreaterEqual(calls, 1, 'progress callback was not invoked')
+
+    @respx.mock
     async def test_location_response_returns_the_redirect_url(self):
         # httpx raises on 3xx, so a redirect is only a success when the client
         # treats it as one; OAuth login depends on the Location header.

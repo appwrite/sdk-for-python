@@ -388,29 +388,30 @@ class Client:
 
         async def upload_remaining_chunk(chunk):
             nonlocal completed_count, uploaded_size, last_result, final_result
-            # a task group cancels siblings on the first raise, so failures are
-            # captured here to keep gather(return_exceptions=True) semantics.
+            # a task group cancels siblings on the first raise, so failures,
+            # including ones raised by the progress callback, are captured here
+            # to keep gather(return_exceptions=True) semantics.
             try:
                 async with semaphore:
                     chunk_result = await upload_chunk(chunk, upload_id_header)
+                completed_count = completed_count + 1
+                uploaded_size = uploaded_size + (chunk['end'] - chunk['start'])
+                last_result = chunk_result
+                if is_upload_complete(chunk_result):
+                    final_result = chunk_result
+                await self._report_progress(
+                    on_progress,
+                    {
+                        "$id": upload_id_header,
+                        "progress": uploaded_size / size * 100,
+                        "sizeUploaded": uploaded_size,
+                        "chunksTotal": total_chunks,
+                        "chunksUploaded": completed_count,
+                    },
+                )
             except BaseException as exc:
                 failures.append(exc)
                 return
-            completed_count = completed_count + 1
-            uploaded_size = uploaded_size + (chunk['end'] - chunk['start'])
-            last_result = chunk_result
-            if is_upload_complete(chunk_result):
-                final_result = chunk_result
-            await self._report_progress(
-                on_progress,
-                {
-                    "$id": upload_id_header,
-                    "progress": uploaded_size / size * 100,
-                    "sizeUploaded": uploaded_size,
-                    "chunksTotal": total_chunks,
-                    "chunksUploaded": completed_count,
-                },
-            )
 
         # Wait for every sibling chunk to settle before surfacing a failure, so the
         # caller never observes an error while other chunks are still being written.
