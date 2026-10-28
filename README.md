@@ -132,9 +132,12 @@ Failed requests raise `AppwriteException`, which carries `message`, `code`, `typ
 import asyncio
 
 from appwrite.exception import AppwriteException
+from appwrite.services.users import Users
 
 
 async def main():
+    users = Users(client)
+
     try:
         user = await users.get(user_id='<USER_ID>')
     except AppwriteException as error:
