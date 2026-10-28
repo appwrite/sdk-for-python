@@ -84,7 +84,7 @@ class Advisor(Service):
         api_params = {}
         if report_id is None or report_id == '':
             raise AppwriteException('Missing required parameter: "report_id"')
-        api_path = api_path.replace('{reportId}', str(self._normalize_value(report_id)))
+        api_path = api_path.replace('{reportId}', self._encode_path(report_id))
 
         response = self.client.call(
             'get',
@@ -124,7 +124,7 @@ class Advisor(Service):
         api_params = {}
         if report_id is None or report_id == '':
             raise AppwriteException('Missing required parameter: "report_id"')
-        api_path = api_path.replace('{reportId}', str(self._normalize_value(report_id)))
+        api_path = api_path.replace('{reportId}', self._encode_path(report_id))
 
         response = self.client.call(
             'delete',
@@ -171,7 +171,7 @@ class Advisor(Service):
         api_params = {}
         if report_id is None or report_id == '':
             raise AppwriteException('Missing required parameter: "report_id"')
-        api_path = api_path.replace('{reportId}', str(self._normalize_value(report_id)))
+        api_path = api_path.replace('{reportId}', self._encode_path(report_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
@@ -220,8 +220,8 @@ class Advisor(Service):
             raise AppwriteException('Missing required parameter: "report_id"')
         if insight_id is None or insight_id == '':
             raise AppwriteException('Missing required parameter: "insight_id"')
-        api_path = api_path.replace('{reportId}', str(self._normalize_value(report_id)))
-        api_path = api_path.replace('{insightId}', str(self._normalize_value(insight_id)))
+        api_path = api_path.replace('{reportId}', self._encode_path(report_id))
+        api_path = api_path.replace('{insightId}', self._encode_path(insight_id))
 
         response = self.client.call(
             'get',

@@ -18,6 +18,7 @@ from appwrite.models import PolicyDenyAliasedEmail
 from appwrite.models import PolicyDenyDisposableEmail
 from appwrite.models import PolicyDenyFreeEmail
 from appwrite.models import PolicyDenyCorporateEmail
+from appwrite.models import PolicyDenyRealtimeGuests
 from appwrite.models import PolicyPasskey
 from typing import Union
 from appwrite.enums.project_policy_id import ProjectPolicyId
@@ -29,7 +30,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 project = Project(client)
 
-result: Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicyPasswordPwned, PolicyPasswordRotation, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail, PolicyPasskey] = project.get_policy(
+result: Union[PolicyPasswordDictionary, PolicyPasswordHistory, PolicyPasswordStrength, PolicyPasswordPersonalData, PolicyPasswordPwned, PolicyPasswordRotation, PolicySessionAlert, PolicySessionDuration, PolicySessionInvalidation, PolicySessionLimit, PolicyUserLimit, PolicyMembershipPrivacy, PolicyMfaFactors, PolicyDenyAliasedEmail, PolicyDenyDisposableEmail, PolicyDenyFreeEmail, PolicyDenyCorporateEmail, PolicyDenyRealtimeGuests, PolicyPasskey] = project.get_policy(
     policy_id = ProjectPolicyId.PASSWORD_DICTIONARY
 )
 

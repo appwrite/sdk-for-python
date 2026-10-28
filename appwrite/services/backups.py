@@ -133,7 +133,7 @@ class Backups(Service):
         api_params = {}
         if archive_id is None or archive_id == '':
             raise AppwriteException('Missing required parameter: "archive_id"')
-        api_path = api_path.replace('{archiveId}', str(self._normalize_value(archive_id)))
+        api_path = api_path.replace('{archiveId}', self._encode_path(archive_id))
 
         response = self.client.call(
             'get',
@@ -173,7 +173,7 @@ class Backups(Service):
         api_params = {}
         if archive_id is None or archive_id == '':
             raise AppwriteException('Missing required parameter: "archive_id"')
-        api_path = api_path.replace('{archiveId}', str(self._normalize_value(archive_id)))
+        api_path = api_path.replace('{archiveId}', self._encode_path(archive_id))
 
         response = self.client.call(
             'delete',
@@ -332,7 +332,7 @@ class Backups(Service):
         api_params = {}
         if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
-        api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
+        api_path = api_path.replace('{policyId}', self._encode_path(policy_id))
 
         response = self.client.call(
             'get',
@@ -384,7 +384,7 @@ class Backups(Service):
         api_params = {}
         if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
-        api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
+        api_path = api_path.replace('{policyId}', self._encode_path(policy_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if retention is not None:
@@ -433,7 +433,7 @@ class Backups(Service):
         api_params = {}
         if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
-        api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
+        api_path = api_path.replace('{policyId}', self._encode_path(policy_id))
 
         response = self.client.call(
             'delete',
@@ -583,7 +583,7 @@ class Backups(Service):
         api_params = {}
         if restoration_id is None or restoration_id == '':
             raise AppwriteException('Missing required parameter: "restoration_id"')
-        api_path = api_path.replace('{restorationId}', str(self._normalize_value(restoration_id)))
+        api_path = api_path.replace('{restorationId}', self._encode_path(restoration_id))
 
         response = self.client.call(
             'get',

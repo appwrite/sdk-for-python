@@ -15,7 +15,7 @@ storage = Storage(client)
 result: File = storage.update_file(
     bucket_id = '<BUCKET_ID>',
     file_id = '<FILE_ID>',
-    name = '<NAME>', # optional
+    name = None, # optional
     permissions = [Permission.read(Role.any())] # optional
 )
 

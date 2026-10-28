@@ -255,7 +255,7 @@ class Organization(Service):
         api_params = {}
         if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
-        api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
+        api_path = api_path.replace('{installationId}', self._encode_path(installation_id))
 
         response = self.client.call(
             'get',
@@ -298,7 +298,7 @@ class Organization(Service):
         api_params = {}
         if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
-        api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
+        api_path = api_path.replace('{installationId}', self._encode_path(installation_id))
         if authorization_details is not None:
             api_params['authorizationDetails'] = self._normalize_value(authorization_details)
 
@@ -341,7 +341,7 @@ class Organization(Service):
         api_params = {}
         if installation_id is None or installation_id == '':
             raise AppwriteException('Missing required parameter: "installation_id"')
-        api_path = api_path.replace('{installationId}', str(self._normalize_value(installation_id)))
+        api_path = api_path.replace('{installationId}', self._encode_path(installation_id))
 
         response = self.client.call(
             'delete',
@@ -497,7 +497,7 @@ class Organization(Service):
         api_params = {}
         if membership_id is None or membership_id == '':
             raise AppwriteException('Missing required parameter: "membership_id"')
-        api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
+        api_path = api_path.replace('{membershipId}', self._encode_path(membership_id))
 
         response = self.client.call(
             'get',
@@ -542,7 +542,7 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "membership_id"')
         if roles is None:
             raise AppwriteException('Missing required parameter: "roles"')
-        api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
+        api_path = api_path.replace('{membershipId}', self._encode_path(membership_id))
         api_params['roles'] = self._normalize_value(roles)
 
         response = self.client.call(
@@ -584,7 +584,7 @@ class Organization(Service):
         api_params = {}
         if membership_id is None or membership_id == '':
             raise AppwriteException('Missing required parameter: "membership_id"')
-        api_path = api_path.replace('{membershipId}', str(self._normalize_value(membership_id)))
+        api_path = api_path.replace('{membershipId}', self._encode_path(membership_id))
 
         response = self.client.call(
             'delete',
@@ -726,7 +726,7 @@ class Organization(Service):
         api_params = {}
         if project_id is None or project_id == '':
             raise AppwriteException('Missing required parameter: "project_id"')
-        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
+        api_path = api_path.replace('{projectId}', self._encode_path(project_id))
 
         response = self.client.call(
             'get',
@@ -771,7 +771,7 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "project_id"')
         if name is None:
             raise AppwriteException('Missing required parameter: "name"')
-        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
+        api_path = api_path.replace('{projectId}', self._encode_path(project_id))
         api_params['name'] = self._normalize_value(name)
 
         response = self.client.call(
@@ -813,7 +813,7 @@ class Organization(Service):
         api_params = {}
         if project_id is None or project_id == '':
             raise AppwriteException('Missing required parameter: "project_id"')
-        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
+        api_path = api_path.replace('{projectId}', self._encode_path(project_id))
 
         response = self.client.call(
             'delete',
@@ -860,7 +860,7 @@ class Organization(Service):
         api_params = {}
         if project_id is None or project_id == '':
             raise AppwriteException('Missing required parameter: "project_id"')
-        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
+        api_path = api_path.replace('{projectId}', self._encode_path(project_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
@@ -916,7 +916,7 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "scopes"')
         if duration is None:
             raise AppwriteException('Missing required parameter: "duration"')
-        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
+        api_path = api_path.replace('{projectId}', self._encode_path(project_id))
         api_params['scopes'] = self._normalize_value(scopes)
         api_params['duration'] = self._normalize_value(duration)
 
@@ -964,8 +964,8 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "project_id"')
         if key_id is None or key_id == '':
             raise AppwriteException('Missing required parameter: "key_id"')
-        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
-        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
+        api_path = api_path.replace('{projectId}', self._encode_path(project_id))
+        api_path = api_path.replace('{keyId}', self._encode_path(key_id))
 
         response = self.client.call(
             'get',
@@ -1026,8 +1026,8 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "name"')
         if scopes is None:
             raise AppwriteException('Missing required parameter: "scopes"')
-        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
-        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
+        api_path = api_path.replace('{projectId}', self._encode_path(project_id))
+        api_path = api_path.replace('{keyId}', self._encode_path(key_id))
         api_params['name'] = self._normalize_value(name)
         api_params['scopes'] = self._normalize_value(scopes)
         if expire is not None:
@@ -1079,8 +1079,8 @@ class Organization(Service):
             raise AppwriteException('Missing required parameter: "project_id"')
         if key_id is None or key_id == '':
             raise AppwriteException('Missing required parameter: "key_id"')
-        api_path = api_path.replace('{projectId}', str(self._normalize_value(project_id)))
-        api_path = api_path.replace('{keyId}', str(self._normalize_value(key_id)))
+        api_path = api_path.replace('{projectId}', self._encode_path(project_id))
+        api_path = api_path.replace('{keyId}', self._encode_path(key_id))
 
         response = self.client.call(
             'delete',

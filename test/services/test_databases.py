@@ -1,6 +1,8 @@
 import json
+import re
 import requests_mock
 import unittest
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from appwrite.client import Client
 from appwrite.input_file import InputFile
@@ -22,12 +24,30 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.databases.list()
+        response = self.databases.list(
+            queries=[],
+            search='<SEARCH>',
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'search': ['<SEARCH>'],
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -43,7 +63,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -51,6 +71,24 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.create(
             '<DATABASE_ID>',
             '<NAME>',
+            enabled=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'databaseId': '<DATABASE_ID>',
+                'name': '<NAME>',
+                'enabled': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -62,12 +100,28 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.databases.list_transactions()
+        response = self.databases.list_transactions(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/transactions',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -82,12 +136,27 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.databases.create_transaction()
+        response = self.databases.create_transaction(
+            ttl=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/transactions',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'ttl': 1,
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -102,7 +171,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -110,6 +179,14 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.get_transaction(
             '<TRANSACTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/transactions/<TRANSACTION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -124,13 +201,29 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.databases.update_transaction(
             '<TRANSACTION_ID>',
+            commit=False,
+            rollback=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/transactions/<TRANSACTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'commit': False,
+                'rollback': False,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -139,7 +232,7 @@ class DatabasesServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -147,6 +240,14 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.delete_transaction(
             '<TRANSACTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/transactions/<TRANSACTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -161,13 +262,27 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.databases.create_operations(
             '<TRANSACTION_ID>',
+            operations=[],
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/transactions/<TRANSACTION_ID>/operations',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'operations': [],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -184,7 +299,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -192,6 +307,14 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.get(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -207,13 +330,31 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.databases.update(
             '<DATABASE_ID>',
+            name='<NAME>',
+            enabled=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'enabled': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -222,7 +363,7 @@ class DatabasesServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -230,6 +371,14 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.delete(
             '<DATABASE_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -240,13 +389,30 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.databases.list_collections(
             '<DATABASE_ID>',
+            queries=[],
+            search='<SEARCH>',
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'search': ['<SEARCH>'],
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -269,7 +435,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -278,6 +444,32 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<NAME>',
+            permissions=[],
+            document_security=False,
+            enabled=False,
+            attributes=[],
+            indexes=[],
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'collectionId': '<COLLECTION_ID>',
+                'name': '<NAME>',
+                'permissions': [],
+                'documentSecurity': False,
+                'enabled': False,
+                'attributes': [],
+                'indexes': [],
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -300,7 +492,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -309,6 +501,14 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -330,7 +530,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -338,6 +538,30 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.update_collection(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            name='<NAME>',
+            permissions=[],
+            document_security=False,
+            enabled=False,
+            purge=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'permissions': [],
+                'documentSecurity': False,
+                'enabled': False,
+                'purge': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -346,7 +570,7 @@ class DatabasesServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -355,6 +579,14 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -365,7 +597,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -373,6 +605,21 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.list_attributes(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -390,7 +637,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -399,7 +646,31 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            min=1,
+            max=1,
+            default=1,
+            array=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/bigint',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'min': 1,
+                'max': 1,
+                'default': 1,
+                'array': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -417,7 +688,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -426,8 +697,30 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             1,
+            min=1,
+            max=1,
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/bigint/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'min': 1,
+                'max': 1,
+                'default': 1,
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -445,7 +738,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -454,7 +747,27 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default=False,
+            array=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/boolean',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'default': False,
+                'array': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -472,7 +785,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -481,8 +794,26 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
-            True,
+            False,
+            False,
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/boolean/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': False,
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -501,7 +832,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -510,7 +841,27 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default='2020-10-15T06:38:00.000+00:00',
+            array=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/datetime',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'default': '2020-10-15T06:38:00.000+00:00',
+                'array': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -529,7 +880,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -538,8 +889,26 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             '2020-10-15T06:38:00.000+00:00',
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/datetime/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': '2020-10-15T06:38:00.000+00:00',
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -558,7 +927,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -567,7 +936,27 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default='email@example.com',
+            array=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/email',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'default': 'email@example.com',
+                'array': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -586,7 +975,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -595,8 +984,26 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             'email@example.com',
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/email/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': 'email@example.com',
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -616,7 +1023,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -626,7 +1033,28 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
             [],
-            True,
+            False,
+            default='active',
+            array=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/enum',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'elements': [],
+                'required': False,
+                'default': 'active',
+                'array': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -646,7 +1074,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -656,8 +1084,27 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
             [],
-            True,
+            False,
             'active',
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/enum/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'elements': [],
+                'required': False,
+                'default': 'active',
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -675,7 +1122,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -684,7 +1131,31 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            min=1.0,
+            max=1.0,
+            default=1.0,
+            array=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/float',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'min': 1.0,
+                'max': 1.0,
+                'default': 1.0,
+                'array': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -702,7 +1173,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -711,8 +1182,30 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             1.0,
+            min=1.0,
+            max=1.0,
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/float/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'min': 1.0,
+                'max': 1.0,
+                'default': 1.0,
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -730,7 +1223,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -739,7 +1232,31 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            min=1,
+            max=1,
+            default=1,
+            array=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/integer',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'min': 1,
+                'max': 1,
+                'default': 1,
+                'array': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -757,7 +1274,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -766,8 +1283,30 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             1,
+            min=1,
+            max=1,
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/integer/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'min': 1,
+                'max': 1,
+                'default': 1,
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -786,7 +1325,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -795,7 +1334,27 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default='192.0.2.0',
+            array=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/ip',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'default': '192.0.2.0',
+                'array': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -814,7 +1373,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -823,8 +1382,26 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             '192.0.2.0',
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/ip/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': '192.0.2.0',
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -842,7 +1419,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -851,7 +1428,25 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default=[],
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/line',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'default': [],
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -869,7 +1464,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -878,7 +1473,26 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default=[],
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/line/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': [],
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -896,7 +1510,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -905,7 +1519,29 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default='Hello World',
+            array=False,
+            encrypt=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/longtext',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'default': 'Hello World',
+                'array': False,
+                'encrypt': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -923,7 +1559,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -932,8 +1568,26 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             'Hello World',
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/longtext/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': 'Hello World',
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -951,7 +1605,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -960,7 +1614,29 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default='Hello World',
+            array=False,
+            encrypt=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/mediumtext',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'default': 'Hello World',
+                'array': False,
+                'encrypt': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -978,7 +1654,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -987,8 +1663,26 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             'Hello World',
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/mediumtext/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': 'Hello World',
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1006,7 +1700,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1015,7 +1709,25 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default=[],
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/point',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'default': [],
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1033,7 +1745,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1042,7 +1754,26 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default=[],
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/point/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': [],
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1060,7 +1791,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1069,7 +1800,25 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default=[],
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/polygon',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'default': [],
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1087,7 +1836,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1096,7 +1845,26 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default=[],
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/polygon/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': [],
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1120,7 +1888,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1130,6 +1898,30 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<RELATED_COLLECTION_ID>',
             'oneToOne',
+            two_way=False,
+            key='<KEY>',
+            two_way_key='<TWO_WAY_KEY>',
+            on_delete='cascade',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/relationship',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'relatedCollectionId': '<RELATED_COLLECTION_ID>',
+                'type': 'oneToOne',
+                'twoWay': False,
+                'key': '<KEY>',
+                'twoWayKey': '<TWO_WAY_KEY>',
+                'onDelete': 'cascade',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1153,7 +1945,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1162,6 +1954,24 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
+            on_delete='cascade',
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/relationship/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'onDelete': 'cascade',
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1180,7 +1990,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1190,7 +2000,30 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
             1,
-            True,
+            False,
+            default='Hello World',
+            array=False,
+            encrypt=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/string',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'size': 1,
+                'required': False,
+                'default': 'Hello World',
+                'array': False,
+                'encrypt': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1209,7 +2042,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1218,8 +2051,28 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             'Hello World',
+            size=1,
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/string/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': 'Hello World',
+                'size': 1,
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1237,7 +2090,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1246,7 +2099,29 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default='Hello World',
+            array=False,
+            encrypt=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/text',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'default': 'Hello World',
+                'array': False,
+                'encrypt': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1264,7 +2139,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1273,8 +2148,26 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             'Hello World',
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/text/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': 'Hello World',
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1293,7 +2186,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1302,7 +2195,27 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
+            default='https://example.com',
+            array=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/url',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'required': False,
+                'default': 'https://example.com',
+                'array': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1321,7 +2234,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1330,8 +2243,26 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             'https://example.com',
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/url/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': 'https://example.com',
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1350,7 +2281,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1360,7 +2291,30 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
             1,
-            True,
+            False,
+            default='Hello World',
+            array=False,
+            encrypt=False,
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/varchar',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'size': 1,
+                'required': False,
+                'default': 'Hello World',
+                'array': False,
+                'encrypt': False,
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1379,7 +2333,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1388,8 +2342,28 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<KEY>',
-            True,
+            False,
             'Hello World',
+            size=1,
+            new_key='<NEW_KEY>',
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/varchar/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'required': False,
+                'default': 'Hello World',
+                'size': 1,
+                'newKey': '<NEW_KEY>',
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1407,7 +2381,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1417,6 +2391,14 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/<KEY>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -1424,7 +2406,7 @@ class DatabasesServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1434,6 +2416,14 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/attributes/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -1444,7 +2434,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1452,6 +2442,25 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.list_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+            total=False,
+            ttl=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'transactionId': ['<TRANSACTION_ID>'],
+                'total': ['false'],
+                'ttl': ['1'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1468,7 +2477,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1478,6 +2487,24 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
             {},
+            permissions=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'documentId': '<DOCUMENT_ID>',
+                'data': {},
+                'permissions': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -1490,7 +2517,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1499,6 +2526,21 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             [],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'documents': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1510,7 +2552,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1519,6 +2561,21 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             [],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'documents': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1530,7 +2587,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1538,6 +2595,24 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.update_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            data={},
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'data': {},
+                'queries': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1549,7 +2624,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1557,6 +2632,22 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.delete_documents(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'queries': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1568,7 +2659,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1576,6 +2667,26 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.create_query(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+            total=False,
+            ttl=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/query',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'queries': [],
+                'transactionId': '<TRANSACTION_ID>',
+                'total': False,
+                'ttl': 1,
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1592,7 +2703,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1601,6 +2712,21 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            queries=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'transactionId': ['<TRANSACTION_ID>'],
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -1618,7 +2744,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PUT',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1627,6 +2753,24 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            data={},
+            permissions=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'data': {},
+                'permissions': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -1644,7 +2788,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1653,6 +2797,24 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            data={},
+            permissions=[],
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'data': {},
+                'permissions': [],
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -1662,7 +2824,7 @@ class DatabasesServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1671,6 +2833,20 @@ class DatabasesServiceTest(unittest.TestCase):
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         self.assertEqual(response, data)
 
@@ -1687,7 +2863,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1697,6 +2873,24 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
             '<ATTRIBUTE>',
+            value=1.0,
+            min=1.0,
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>/<ATTRIBUTE>/decrement',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'value': 1.0,
+                'min': 1.0,
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -1714,7 +2908,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'PATCH',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1724,6 +2918,24 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<DOCUMENT_ID>',
             '<ATTRIBUTE>',
+            value=1.0,
+            max=1.0,
+            transaction_id='<TRANSACTION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/documents/<DOCUMENT_ID>/<ATTRIBUTE>/increment',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'value': 1.0,
+                'max': 1.0,
+                'transactionId': '<TRANSACTION_ID>',
+            },
         )
         data['data'] = {}
         self.assertEqual(response.to_dict(), data)
@@ -1736,7 +2948,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1744,6 +2956,21 @@ class DatabasesServiceTest(unittest.TestCase):
         response = self.databases.list_indexes(
             '<DATABASE_ID>',
             '<COLLECTION_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1763,7 +2990,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'POST',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1774,6 +3001,27 @@ class DatabasesServiceTest(unittest.TestCase):
             '<KEY>',
             'key',
             [],
+            orders=[],
+            lengths=[],
+            description='<DESCRIPTION>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'key': '<KEY>',
+                'type': 'key',
+                'attributes': [],
+                'orders': [],
+                'lengths': [],
+                'description': '<DESCRIPTION>',
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -1793,7 +3041,7 @@ class DatabasesServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1803,6 +3051,14 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes/<KEY>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -1810,7 +3066,7 @@ class DatabasesServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -1820,4 +3076,12 @@ class DatabasesServiceTest(unittest.TestCase):
             '<COLLECTION_ID>',
             '<KEY>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/databases/<DATABASE_ID>/collections/<COLLECTION_ID>/indexes/<KEY>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)

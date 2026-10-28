@@ -13,7 +13,7 @@ users = Users(client)
 result: User = users.create_bcrypt_user(
     user_id = '<USER_ID>',
     email = 'email@example.com',
-    password = 'password',
+    password = '$2y$10$vBiMe4NOvlbYL1iJUNdqkO.QJy17fvslZQ5oiqKq1G4uwyRWvdrXC',
     name = '<NAME>' # optional
 )
 

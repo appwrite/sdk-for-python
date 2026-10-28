@@ -1,6 +1,8 @@
 import json
+import re
 import requests_mock
 import unittest
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from appwrite.client import Client
 from appwrite.input_file import InputFile
@@ -22,12 +24,28 @@ class AdvisorServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
-        response = self.advisor.list_reports()
+        response = self.advisor.list_reports(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/reports',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -47,7 +65,7 @@ class AdvisorServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -55,6 +73,14 @@ class AdvisorServiceTest(unittest.TestCase):
         response = self.advisor.get_report(
             '<REPORT_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/reports/<REPORT_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
@@ -62,7 +88,7 @@ class AdvisorServiceTest(unittest.TestCase):
         data = ''
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'DELETE',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -70,6 +96,14 @@ class AdvisorServiceTest(unittest.TestCase):
         response = self.advisor.delete_report(
             '<REPORT_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/reports/<REPORT_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
@@ -80,13 +114,28 @@ class AdvisorServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
         )
         response = self.advisor.list_insights(
             '<REPORT_ID>',
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/reports/<REPORT_ID>/insights',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
         )
         self.assertEqual(response.to_dict(), data)
 
@@ -110,7 +159,7 @@ class AdvisorServiceTest(unittest.TestCase):
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
-            requests_mock.ANY,
+            'GET',
             requests_mock.ANY,
             text=json.dumps(data),
             headers=headers,
@@ -119,4 +168,12 @@ class AdvisorServiceTest(unittest.TestCase):
             '<REPORT_ID>',
             '<INSIGHT_ID>',
         )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/reports/<REPORT_ID>/insights/<INSIGHT_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
         self.assertEqual(response.to_dict(), data)

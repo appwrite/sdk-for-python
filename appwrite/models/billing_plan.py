@@ -73,6 +73,12 @@ class BillingPlan(AppwriteModel):
         Function executions
     executionsretentioncount : float
         Rolling max executions retained per function/site
+    deploymentretention : Optional[float]
+        Days non-active deployments are kept when a function or site sets no retention.
+    deploymentretentionmax : Optional[float]
+        Maximum deployment retention in days a function or site can set. 0 means unlimited.
+    deploymentsretentioncount : Optional[float]
+        Non-active deployments kept per function or site. 0 means unlimited.
     gbhours : float
         GB hours for functions
     realtime : float
@@ -199,6 +205,9 @@ class BillingPlan(AppwriteModel):
     sites: float = Field(..., alias='sites')
     executions: float = Field(..., alias='executions')
     executionsretentioncount: float = Field(..., alias='executionsRetentionCount')
+    deploymentretention: Optional[float] = Field(default=None, alias='deploymentRetention')
+    deploymentretentionmax: Optional[float] = Field(default=None, alias='deploymentRetentionMax')
+    deploymentsretentioncount: Optional[float] = Field(default=None, alias='deploymentsRetentionCount')
     gbhours: float = Field(..., alias='GBHours')
     realtime: float = Field(..., alias='realtime')
     realtimemessages: float = Field(..., alias='realtimeMessages')

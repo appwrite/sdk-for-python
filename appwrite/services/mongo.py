@@ -236,7 +236,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
 
         response = self.client.call(
             'get',
@@ -336,7 +336,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if status is not None:
@@ -419,7 +419,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
 
         response = self.client.call(
             'delete',
@@ -466,7 +466,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
@@ -513,7 +513,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         if type is not None:
             api_params['type'] = self._normalize_value(type)
 
@@ -562,7 +562,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         if queries is not None:
             api_params['queries'] = self._normalize_value(queries)
         if total is not None:
@@ -632,7 +632,7 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "schedule"')
         if retention is None:
             raise AppwriteException('Missing required parameter: "retention"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         api_params['policyId'] = self._normalize_value(policy_id)
         api_params['name'] = self._normalize_value(name)
         api_params['schedule'] = self._normalize_value(schedule)
@@ -686,8 +686,8 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-        api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
+        api_path = api_path.replace('{policyId}', self._encode_path(policy_id))
 
         response = self.client.call(
             'get',
@@ -744,8 +744,8 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-        api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
+        api_path = api_path.replace('{policyId}', self._encode_path(policy_id))
         if name is not None:
             api_params['name'] = self._normalize_value(name)
         if schedule is not None:
@@ -799,8 +799,8 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         if policy_id is None or policy_id == '':
             raise AppwriteException('Missing required parameter: "policy_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-        api_path = api_path.replace('{policyId}', str(self._normalize_value(policy_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
+        api_path = api_path.replace('{policyId}', self._encode_path(policy_id))
 
         response = self.client.call(
             'delete',
@@ -870,7 +870,7 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "access_key"')
         if secret_key is None:
             raise AppwriteException('Missing required parameter: "secret_key"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         api_params['provider'] = self._normalize_value(provider)
         api_params['bucket'] = self._normalize_value(bucket)
         if region is not None:
@@ -926,8 +926,8 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         if backup_id is None or backup_id == '':
             raise AppwriteException('Missing required parameter: "backup_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-        api_path = api_path.replace('{backupId}', str(self._normalize_value(backup_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
+        api_path = api_path.replace('{backupId}', self._encode_path(backup_id))
 
         response = self.client.call(
             'get',
@@ -972,8 +972,8 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         if backup_id is None or backup_id == '':
             raise AppwriteException('Missing required parameter: "backup_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-        api_path = api_path.replace('{backupId}', str(self._normalize_value(backup_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
+        api_path = api_path.replace('{backupId}', self._encode_path(backup_id))
 
         response = self.client.call(
             'delete',
@@ -1014,7 +1014,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
 
         response = self.client.call(
             'get',
@@ -1060,7 +1060,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         if branch_id is not None:
             api_params['branchId'] = self._normalize_value(branch_id)
         if ttl is not None:
@@ -1110,8 +1110,8 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         if branch_id is None or branch_id == '':
             raise AppwriteException('Missing required parameter: "branch_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-        api_path = api_path.replace('{branchId}', str(self._normalize_value(branch_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
+        api_path = api_path.replace('{branchId}', self._encode_path(branch_id))
 
         response = self.client.call(
             'delete',
@@ -1152,7 +1152,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
 
         response = self.client.call(
             'patch',
@@ -1196,7 +1196,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         if target_replica_id is not None:
             api_params['targetReplicaId'] = self._normalize_value(target_replica_id)
 
@@ -1249,7 +1249,7 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "day"')
         if hour_utc is None:
             raise AppwriteException('Missing required parameter: "hour_utc"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         api_params['day'] = self._normalize_value(day)
         api_params['hourUtc'] = self._normalize_value(hour_utc)
 
@@ -1300,7 +1300,7 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         if target_type is None:
             raise AppwriteException('Missing required parameter: "target_type"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         api_params['targetType'] = self._normalize_value(target_type)
         if specification is not None:
             api_params['specification'] = self._normalize_value(specification)
@@ -1353,7 +1353,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         if status is not None:
             api_params['status'] = self._normalize_value(status)
         if limit is not None:
@@ -1399,7 +1399,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
 
         response = self.client.call(
             'get',
@@ -1439,7 +1439,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
 
         response = self.client.call(
             'get',
@@ -1491,7 +1491,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         if status is not None:
             api_params['status'] = self._normalize_value(status)
         if type is not None:
@@ -1562,7 +1562,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         if type is not None:
             api_params['type'] = self._normalize_value(type)
         if backup_id is not None:
@@ -1622,8 +1622,8 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         if restoration_id is None or restoration_id == '':
             raise AppwriteException('Missing required parameter: "restoration_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-        api_path = api_path.replace('{restorationId}', str(self._normalize_value(restoration_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
+        api_path = api_path.replace('{restorationId}', self._encode_path(restoration_id))
 
         response = self.client.call(
             'get',
@@ -1671,8 +1671,8 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         if restoration_id is None or restoration_id == '':
             raise AppwriteException('Missing required parameter: "restoration_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
-        api_path = api_path.replace('{restorationId}', str(self._normalize_value(restoration_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
+        api_path = api_path.replace('{restorationId}', self._encode_path(restoration_id))
 
         response = self.client.call(
             'post',
@@ -1713,7 +1713,7 @@ class Mongo(Service):
         api_params = {}
         if database_id is None or database_id == '':
             raise AppwriteException('Missing required parameter: "database_id"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
 
         response = self.client.call(
             'get',
@@ -1758,7 +1758,7 @@ class Mongo(Service):
             raise AppwriteException('Missing required parameter: "database_id"')
         if target_version is None:
             raise AppwriteException('Missing required parameter: "target_version"')
-        api_path = api_path.replace('{databaseId}', str(self._normalize_value(database_id)))
+        api_path = api_path.replace('{databaseId}', self._encode_path(database_id))
         api_params['targetVersion'] = self._normalize_value(target_version)
 
         response = self.client.call(

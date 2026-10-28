@@ -77,7 +77,7 @@ class Waf(Service):
         conditions: Optional[List[str]] = None,
     ) -> WafRuleBypass:
         """
-        Create a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+        Create a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
 
         Parameters
         ----------
@@ -155,7 +155,7 @@ class Waf(Service):
         conditions: Optional[List[str]] = None,
     ) -> WafRuleBypass:
         """
-        Update a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+        Update a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
 
         Parameters
         ----------
@@ -190,7 +190,7 @@ class Waf(Service):
         api_params = {}
         if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
-        api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
         if resource_type is not None:
             api_params['resourceType'] = self._normalize_value(resource_type)
         if resource_id is not None:
@@ -234,7 +234,7 @@ class Waf(Service):
         ttl: Optional[float] = None,
     ) -> WafRuleChallenge:
         """
-        Create a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+        Create a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
 
         Parameters
         ----------
@@ -327,7 +327,7 @@ class Waf(Service):
         ttl: Optional[float] = None,
     ) -> WafRuleChallenge:
         """
-        Update a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+        Update a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
 
         Parameters
         ----------
@@ -368,7 +368,7 @@ class Waf(Service):
         api_params = {}
         if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
-        api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
         if resource_type is not None:
             api_params['resourceType'] = self._normalize_value(resource_type)
         if resource_id is not None:
@@ -415,7 +415,7 @@ class Waf(Service):
         conditions: Optional[List[str]] = None,
     ) -> WafRuleDeny:
         """
-        Create a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+        Create a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon. `sessionAge` and `mfaAge` hold the seconds since the request's session was created and since its last MFA challenge. Both are null for requests without a session, such as guests and API keys, while a request authenticated with the `x-appwrite-jwt` header carries the age of the session its token is bound to; on `functions` rules the session comes from the `x-appwrite-user-jwt` header, and `mfaAge` is null when the session never completed MFA. A deny matching on `mfaAge` returns `user_challenge_required` and one matching on `sessionAge` returns `user_reauthentication_required`, both with status 401, so the user can sign in again and retry. To also deny requests without a session, combine `isNull` and `greaterThan` in an `or` condition.
 
         Parameters
         ----------
@@ -493,7 +493,7 @@ class Waf(Service):
         conditions: Optional[List[str]] = None,
     ) -> WafRuleDeny:
         """
-        Update a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+        Update a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon. `sessionAge` and `mfaAge` hold the seconds since the request's session was created and since its last MFA challenge. Both are null for requests without a session, such as guests and API keys, while a request authenticated with the `x-appwrite-jwt` header carries the age of the session its token is bound to; on `functions` rules the session comes from the `x-appwrite-user-jwt` header, and `mfaAge` is null when the session never completed MFA. A deny matching on `mfaAge` returns `user_challenge_required` and one matching on `sessionAge` returns `user_reauthentication_required`, both with status 401, so the user can sign in again and retry. To also deny requests without a session, combine `isNull` and `greaterThan` in an `or` condition.
 
         Parameters
         ----------
@@ -528,7 +528,7 @@ class Waf(Service):
         api_params = {}
         if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
-        api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
         if resource_type is not None:
             api_params['resourceType'] = self._normalize_value(resource_type)
         if resource_id is not None:
@@ -574,7 +574,7 @@ class Waf(Service):
         conditions: Optional[List[str]] = None,
     ) -> WafRuleRateLimit:
         """
-        Create a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+        Create a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
 
         Parameters
         ----------
@@ -678,7 +678,7 @@ class Waf(Service):
         conditions: Optional[List[str]] = None,
     ) -> WafRuleRateLimit:
         """
-        Update a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+        Update a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
 
         Parameters
         ----------
@@ -721,7 +721,7 @@ class Waf(Service):
         api_params = {}
         if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
-        api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
         if resource_type is not None:
             api_params['resourceType'] = self._normalize_value(resource_type)
         if resource_id is not None:
@@ -772,7 +772,7 @@ class Waf(Service):
         conditions: Optional[List[str]] = None,
     ) -> WafRuleRedirect:
         """
-        Create a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+        Create a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
 
         Parameters
         ----------
@@ -862,7 +862,7 @@ class Waf(Service):
         conditions: Optional[List[str]] = None,
     ) -> WafRuleRedirect:
         """
-        Update a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+        Update a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
 
         Parameters
         ----------
@@ -901,7 +901,7 @@ class Waf(Service):
         api_params = {}
         if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
-        api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
         if resource_type is not None:
             api_params['resourceType'] = self._normalize_value(resource_type)
         if resource_id is not None:
@@ -966,7 +966,7 @@ class Waf(Service):
         api_params = {}
         if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
-        api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
 
         response = self.client.call(
             'get',
@@ -1023,7 +1023,7 @@ class Waf(Service):
         api_params = {}
         if rule_id is None or rule_id == '':
             raise AppwriteException('Missing required parameter: "rule_id"')
-        api_path = api_path.replace('{ruleId}', str(self._normalize_value(rule_id)))
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
 
         response = self.client.call(
             'delete',

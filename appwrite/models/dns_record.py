@@ -19,7 +19,7 @@ class DnsRecord(AppwriteModel):
     type : str
         DNS record type (e.g. A, CNAME, MX).
     name : str
-        Record name or subdomain.
+        Record name relative to the domain, or `@` for the domain itself.
     value : str
         Value of the record (IP address, domain, etc.).
     ttl : float

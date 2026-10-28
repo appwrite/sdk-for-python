@@ -41,6 +41,7 @@ from .topic_list import TopicList
 from .subscriber_list import SubscriberList
 from .target_list import TargetList
 from .transaction_list import TransactionList
+from .migration_list import MigrationList
 from .specification_list import SpecificationList
 from .vectorsdb_collection_list import VectorsdbCollectionList
 from .embedding_list import EmbeddingList
@@ -198,6 +199,7 @@ from .policy_deny_aliased_email import PolicyDenyAliasedEmail
 from .policy_deny_disposable_email import PolicyDenyDisposableEmail
 from .policy_deny_free_email import PolicyDenyFreeEmail
 from .policy_deny_corporate_email import PolicyDenyCorporateEmail
+from .policy_deny_realtime_guests import PolicyDenyRealtimeGuests
 from .platform_web import PlatformWeb
 from .platform_apple import PlatformApple
 from .platform_android import PlatformAndroid
@@ -229,6 +231,7 @@ from .topic import Topic
 from .transaction import Transaction
 from .subscriber import Subscriber
 from .target import Target
+from .migration import Migration
 from .insight import Insight
 from .insight_cta import InsightCTA
 from .report import Report
@@ -365,6 +368,7 @@ __all__ = [
     'SubscriberList',
     'TargetList',
     'TransactionList',
+    'MigrationList',
     'SpecificationList',
     'VectorsdbCollectionList',
     'EmbeddingList',
@@ -522,6 +526,7 @@ __all__ = [
     'PolicyDenyDisposableEmail',
     'PolicyDenyFreeEmail',
     'PolicyDenyCorporateEmail',
+    'PolicyDenyRealtimeGuests',
     'PlatformWeb',
     'PlatformApple',
     'PlatformAndroid',
@@ -553,6 +558,7 @@ __all__ = [
     'Transaction',
     'Subscriber',
     'Target',
+    'Migration',
     'Insight',
     'InsightCTA',
     'Report',
