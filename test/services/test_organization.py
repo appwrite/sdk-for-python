@@ -26,6 +26,8 @@ class OrganizationServiceTest(unittest.TestCase):
             "total": 7.0,
             "prefs": {},
             "budgetAlerts": [],
+            "budgetNotify": [],
+            "budgetCritical": [],
             "billingPlan": "tier-1",
             "billingPlanId": "tier-1",
             "billingPlanDetails": {
@@ -133,6 +135,8 @@ class OrganizationServiceTest(unittest.TestCase):
             "total": 7.0,
             "prefs": {},
             "budgetAlerts": [],
+            "budgetNotify": [],
+            "budgetCritical": [],
             "billingPlan": "tier-1",
             "billingPlanId": "tier-1",
             "billingPlanDetails": {

@@ -21,3 +21,4 @@ class ProjectPolicyId(Enum):
     DENY_CORPORATE_EMAIL = "deny-corporate-email"
     DENY_REALTIME_GUESTS = "deny-realtime-guests"
     PASSKEY = "passkey"
+    ACCOUNT_DEVICES = "account-devices"

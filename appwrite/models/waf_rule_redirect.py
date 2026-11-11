@@ -39,6 +39,8 @@ class WafRuleRedirect(AppwriteModel):
         List of conditions evaluated for this rule.
     config : Dict[str, Any]
         Action specific configuration.
+    schedule : Optional[Dict[str, Any]]
+        When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
     location : str
         Target location for the redirect.
     statuscode : float
@@ -59,6 +61,7 @@ class WafRuleRedirect(AppwriteModel):
     enabled: bool = Field(..., alias='enabled')
     conditions: List[Any] = Field(..., alias='conditions')
     config: Dict[str, Any] = Field(..., alias='config')
+    schedule: Optional[Dict[str, Any]] = Field(default=None, alias='schedule')
     location: str = Field(..., alias='location')
     statuscode: float = Field(..., alias='statusCode')
 

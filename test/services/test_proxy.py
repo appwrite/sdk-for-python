@@ -102,6 +102,8 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "expireAt": "2020-10-15T06:38:00.000+00:00",
+            "certificateStatus": "issued",
             "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
@@ -146,6 +148,8 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "expireAt": "2020-10-15T06:38:00.000+00:00",
+            "certificateStatus": "issued",
             "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
@@ -194,6 +198,8 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "expireAt": "2020-10-15T06:38:00.000+00:00",
+            "certificateStatus": "issued",
             "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
@@ -246,6 +252,8 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "expireAt": "2020-10-15T06:38:00.000+00:00",
+            "certificateStatus": "issued",
             "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
@@ -294,6 +302,8 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "expireAt": "2020-10-15T06:38:00.000+00:00",
+            "certificateStatus": "issued",
             "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
@@ -342,6 +352,8 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "expireAt": "2020-10-15T06:38:00.000+00:00",
+            "certificateStatus": "issued",
             "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}
@@ -388,6 +400,157 @@ class ProxyServiceTest(unittest.TestCase):
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
+    def test_update_function_rule(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "domain": "appwrite.company.com",
+            "type": "deployment",
+            "trigger": "manual",
+            "redirectUrl": "https:\/\/appwrite.io\/docs",
+            "redirectStatusCode": 301.0,
+            "deploymentId": "n3u9feiwmf",
+            "deploymentResourceId": "n3u9feiwmf",
+            "deploymentVcsProviderBranch": "main",
+            "status": "verified",
+            "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
+            "renewAt": "datetime",
+            "expireAt": "2020-10-15T06:38:00.000+00:00",
+            "certificateStatus": "issued",
+            "protocol": "http",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.proxy.update_function_rule(
+            '<RULE_ID>',
+            '<FUNCTION_ID>',
+            branch='<BRANCH>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/proxy/rules/<RULE_ID>/function',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'functionId': '<FUNCTION_ID>',
+                'branch': '<BRANCH>',
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_redirect_rule(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "domain": "appwrite.company.com",
+            "type": "deployment",
+            "trigger": "manual",
+            "redirectUrl": "https:\/\/appwrite.io\/docs",
+            "redirectStatusCode": 301.0,
+            "deploymentId": "n3u9feiwmf",
+            "deploymentResourceId": "n3u9feiwmf",
+            "deploymentVcsProviderBranch": "main",
+            "status": "verified",
+            "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
+            "renewAt": "datetime",
+            "expireAt": "2020-10-15T06:38:00.000+00:00",
+            "certificateStatus": "issued",
+            "protocol": "http",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.proxy.update_redirect_rule(
+            '<RULE_ID>',
+            'https://example.com',
+            '301',
+            '<RESOURCE_ID>',
+            'site',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/proxy/rules/<RULE_ID>/redirect',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'url': 'https://example.com',
+                'statusCode': '301',
+                'resourceId': '<RESOURCE_ID>',
+                'resourceType': 'site',
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_site_rule(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "domain": "appwrite.company.com",
+            "type": "deployment",
+            "trigger": "manual",
+            "redirectUrl": "https:\/\/appwrite.io\/docs",
+            "redirectStatusCode": 301.0,
+            "deploymentId": "n3u9feiwmf",
+            "deploymentResourceId": "n3u9feiwmf",
+            "deploymentVcsProviderBranch": "main",
+            "status": "verified",
+            "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
+            "renewAt": "datetime",
+            "expireAt": "2020-10-15T06:38:00.000+00:00",
+            "certificateStatus": "issued",
+            "protocol": "http",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.proxy.update_site_rule(
+            '<RULE_ID>',
+            '<SITE_ID>',
+            branch='<BRANCH>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/proxy/rules/<RULE_ID>/site',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'siteId': '<SITE_ID>',
+                'branch': '<BRANCH>',
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_rule_status(self, m):
         data = {
             "$id": "5e5ea5c16897e",
@@ -404,6 +567,8 @@ class ProxyServiceTest(unittest.TestCase):
             "status": "verified",
             "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
             "renewAt": "datetime",
+            "expireAt": "2020-10-15T06:38:00.000+00:00",
+            "certificateStatus": "issued",
             "protocol": "http",
         }
         headers = {'Content-Type': 'application/json'}

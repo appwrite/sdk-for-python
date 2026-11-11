@@ -20,12 +20,12 @@ class Client:
         self._endpoint = 'https://cloud.appwrite.io/v1'
         self._global_headers = {
             'content-type': '',
-            'user-agent': f'AppwritePythonSDK/27.1.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
+            'user-agent': f'AppwritePythonSDK/27.2.0 ({platform.uname().system}; {platform.uname().version}; {platform.uname().machine})',
             'x-sdk-name': 'Python',
             'x-sdk-platform': 'server',
             'x-sdk-language': 'python',
-            'x-sdk-version': '27.1.0',
-            'X-Appwrite-Response-Format': '2.6.2',
+            'x-sdk-version': '27.2.0',
+            'X-Appwrite-Response-Format': '2.7.1',
         }
         self._config = {}
 
@@ -87,6 +87,13 @@ class Client:
     def set_locale(self, value):
         self._global_headers['x-appwrite-locale'] = value
         self._config['locale'] = value
+        return self
+
+    def set_environment(self, value):
+        """The ID of the project environment to act in, alongside the project ID. Used with Appwrite Cloud projects that have environments."""
+
+        self._global_headers['x-appwrite-environment'] = value
+        self._config['environment'] = value
         return self
 
     def set_session(self, value):

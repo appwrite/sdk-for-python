@@ -8,13 +8,14 @@ from ..models.oauth2_consent_list import Oauth2ConsentList
 from ..models.oauth2_consent import Oauth2Consent
 from ..models.oauth2_consent_token_list import Oauth2ConsentTokenList
 from ..models.oauth2_consent_token import Oauth2ConsentToken
+from ..models.device import Device
+from ..models.session import Session
 from ..models.identity_list import IdentityList
 from ..models.membership_list import MembershipList
 from ..enums.authenticator_type import AuthenticatorType
 from ..models.mfa_type import MfaType
 from ..enums.authentication_factor import AuthenticationFactor
 from ..models.mfa_challenge import MfaChallenge
-from ..models.session import Session
 from ..models.mfa_factors import MfaFactors
 from ..models.mfa_recovery_codes import MfaRecoveryCodes
 from ..models.passkey_list import PasskeyList
@@ -402,6 +403,172 @@ class Account(Service):
         )
 
         return response
+
+    def create_device(
+        self,
+    ) -> Device:
+        """
+        Create an account switching device. A device is a container, scoped to one browser or app install, that holds multiple sessions and tracks which one is active. Once a device exists, session creation endpoints attach the new session to it automatically, so a single browser can stay signed in to several accounts and switch between them. A device holds at most one session per user: signing in again as a user it already holds replaces that user's session. The device lives as long as its newest session.
+
+        The device secret is returned in a cookie. Run this on app start: if the browser already has a valid device, the existing one is returned with the same status code instead of an error, so it is always safe to call.
+
+        Every session that joins the device rotates the device secret and re-issues the cookie, so an earlier copy of the secret stops working. A client that keeps the secret itself, rather than relying on the cookie, must replace it from each session response.
+        Returns
+        -------
+        Device
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/devices'
+        api_params = {}
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Device)
+
+    def get_device(
+        self,
+        device_id: str,
+    ) -> Device:
+        """
+        Get the account switching device for the current browser, including every session it holds, the name of the user each session belongs to, and the ID of the active session. Use the string 'current' to reference the current browser's device.
+
+        Parameters
+        ----------
+        device_id : str
+            Device ID. Use the string 'current' to reference the device of the current browser.
+        Returns
+        -------
+        Device
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/devices/{deviceId}'
+        api_params = {}
+        if device_id is None or device_id == '':
+            raise AppwriteException('Missing required parameter: "device_id"')
+        api_path = api_path.replace('{deviceId}', self._encode_path(device_id))
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Device)
+
+    def delete_device(
+        self,
+        device_id: str,
+    ) -> Dict[str, Any]:
+        """
+        Delete the account switching device for the current browser. Every session the device holds is signed out, each firing its own session delete event, the device is removed, and both the device and session cookies are cleared. Use the string 'current' to reference the current browser's device.
+
+        Parameters
+        ----------
+        device_id : str
+            Device ID. Use the string 'current' to reference the device of the current browser.
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/devices/{deviceId}'
+        api_params = {}
+        if device_id is None or device_id == '':
+            raise AppwriteException('Missing required parameter: "device_id"')
+        api_path = api_path.replace('{deviceId}', self._encode_path(device_id))
+
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return response
+
+    def update_device_session(
+        self,
+        device_id: str,
+        session_id: str,
+    ) -> Session:
+        """
+        Switch the active account on an account switching device to one of the sessions it holds. The chosen session becomes active and its secret is written to the browser's session cookie, so subsequent requests authenticate as that account. Use the string 'current' to reference the current browser's device.
+
+        Switching rotates the chosen session's secret. Any other holder of that session, such as a copy kept elsewhere, stops working, so a session should not be shared across devices.
+
+        Parameters
+        ----------
+        device_id : str
+            Device ID. Use the string 'current' to reference the device of the current browser.
+        session_id : str
+            ID of the session, held by the device, to make active.
+        Returns
+        -------
+        Session
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/account/devices/{deviceId}/session'
+        api_params = {}
+        if device_id is None or device_id == '':
+            raise AppwriteException('Missing required parameter: "device_id"')
+        if session_id is None:
+            raise AppwriteException('Missing required parameter: "session_id"')
+        api_path = api_path.replace('{deviceId}', self._encode_path(device_id))
+        api_params['sessionId'] = self._normalize_value(session_id)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Session)
 
     def update_email(
         self,
@@ -2359,7 +2526,7 @@ class Account(Service):
         Parameters
         ----------
         provider : OAuthProvider
-            OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
+            OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, vipps, vippsSandbox, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
         success : Optional[str]
             URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
         failure : Optional[str]

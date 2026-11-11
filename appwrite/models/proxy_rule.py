@@ -43,6 +43,10 @@ class ProxyRule(AppwriteModel):
         Logs from rule verification or certificate generation. Certificate generation logs are prioritized if both are available.
     renewat : str
         Certificate auto-renewal date in ISO 8601 format.
+    expireat : str
+        Certificate expiry date in ISO 8601 format. Empty when unknown or not checked yet.
+    certificatestatus : str
+        Certificate status, as last reported by the certificate provider. Possible values are &quot;pending&quot;, &quot;processing&quot;, &quot;issued&quot;, &quot;renewing&quot;, &quot;expiring&quot;, &quot;blocked&quot;, &quot;failed&quot;, or &quot;unknown&quot;. &quot;expiring&quot; means the certificate expires soon, or has already expired, and the provider has not renewed it yet, &quot;blocked&quot; means the provider waits on a DNS record from the domain owner, and &quot;failed&quot; means the provider stopped trying or the last issuance or renewal attempt failed. Empty until the certificate is next checked.
     protocol : ProxyRuleProtocol
         Ingress protocol for the rule.
     """
@@ -65,6 +69,8 @@ class ProxyRule(AppwriteModel):
     status: ProxyRuleStatus = Field(..., alias='status')
     logs: str = Field(..., alias='logs')
     renewat: str = Field(..., alias='renewAt')
+    expireat: str = Field(..., alias='expireAt')
+    certificatestatus: str = Field(..., alias='certificateStatus')
     protocol: ProxyRuleProtocol = Field(..., alias='protocol')
 
     @model_validator(mode='before')
@@ -100,6 +106,10 @@ class ProxyRule(AppwriteModel):
             data['status'] = 'unverified'
         if 'logs' not in data:
             data['logs'] = ''
+        if 'expireAt' not in data and 'expireat' not in data:
+            data['expireAt'] = ''
+        if 'certificateStatus' not in data and 'certificatestatus' not in data:
+            data['certificateStatus'] = ''
         if 'protocol' not in data:
             data['protocol'] = 'http'
         return data

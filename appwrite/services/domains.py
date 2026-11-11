@@ -1503,7 +1503,7 @@ class Domains(Service):
         domain_id : str
             Domain unique ID.
         name : str
-            Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
+            Record name relative to the domain, such as `www`. A CNAME cannot be at the domain itself; use an ALIAS record there. A full name ending in the domain is also accepted and stored relative to it.
         value : str
             Canonical target for this CNAME record.
         ttl : float
@@ -1570,7 +1570,7 @@ class Domains(Service):
         record_id : str
             DNS record unique ID.
         name : str
-            Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
+            Record name relative to the domain, such as `www`. A CNAME cannot be at the domain itself; use an ALIAS record there. A full name ending in the domain is also accepted and stored relative to it.
         value : str
             Canonical target for this CNAME record.
         ttl : float

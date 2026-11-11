@@ -68,6 +68,8 @@ class ActivityEvent(AppwriteModel):
         Name of the SDK that triggered the event.
     sdkversion : str
         Version of the SDK that triggered the event.
+    reason : str
+        Why the actor made the request, as sent in the `X-Appwrite-Reason` header. Empty when no reason was given.
     """
 
     id: str = Field(..., alias='$id')
@@ -99,6 +101,7 @@ class ActivityEvent(AppwriteModel):
     hostname: str = Field(..., alias='hostname')
     sdk: str = Field(..., alias='sdk')
     sdkversion: str = Field(..., alias='sdkVersion')
+    reason: str = Field(..., alias='reason')
 
     @model_validator(mode='before')
     @classmethod
@@ -165,4 +168,6 @@ class ActivityEvent(AppwriteModel):
             data['sdk'] = ''
         if 'sdkVersion' not in data and 'sdkversion' not in data:
             data['sdkVersion'] = ''
+        if 'reason' not in data:
+            data['reason'] = ''
         return data

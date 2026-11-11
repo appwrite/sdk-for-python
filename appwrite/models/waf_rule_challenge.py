@@ -39,6 +39,8 @@ class WafRuleChallenge(AppwriteModel):
         List of conditions evaluated for this rule.
     config : Dict[str, Any]
         Action specific configuration.
+    schedule : Optional[Dict[str, Any]]
+        When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
     challengetype : str
         Challenge type enforced when the rule matches.
     difficulty : float
@@ -61,6 +63,7 @@ class WafRuleChallenge(AppwriteModel):
     enabled: bool = Field(..., alias='enabled')
     conditions: List[Any] = Field(..., alias='conditions')
     config: Dict[str, Any] = Field(..., alias='config')
+    schedule: Optional[Dict[str, Any]] = Field(default=None, alias='schedule')
     challengetype: str = Field(..., alias='challengeType')
     difficulty: float = Field(..., alias='difficulty')
     ttl: float = Field(..., alias='ttl')

@@ -1,15 +1,18 @@
-from typing import Any, Dict, List, Optional, Union, cast
+from typing import Any, Dict, List, Optional, Union, cast, Generic, TypeVar, Type
 from pydantic import Field, PrivateAttr, model_validator
 
 from .base_model import AppwriteModel
+from .preferences import Preferences
 from .project_auth_method import ProjectAuthMethod
 from .project_service import ProjectService
 from .project_protocol import ProjectProtocol
 from .block import Block
 from .billing_limits import BillingLimits
 
+T = TypeVar('T')
 
-class Project(AppwriteModel):
+
+class Project(AppwriteModel, Generic[T]):
     """
     Project
 
@@ -53,6 +56,8 @@ class Project(AppwriteModel):
         Last ping datetime in ISO 8601 format.
     labels : List[Any]
         Labels for the project.
+    prefs : Optional[Preferences[T]]
+        Project preferences as a key-value object
     status : str
         Project status
     onboarding : Dict[str, Any]
@@ -71,6 +76,8 @@ class Project(AppwriteModel):
         Whether WAF enforcement is enabled for the project.
     parentid : Optional[str]
         ID of the project this environment belongs to. Null when the project is not an environment.
+    environmentid : Optional[str]
+        ID of the environment, as passed in the X-Appwrite-Environment header, when the project is accessed as one. Null when the project is not an environment.
     billinglimits : Optional[BillingLimits]
         Billing limits reached
     firstaccessedat : Optional[str]
@@ -132,6 +139,7 @@ class Project(AppwriteModel):
     pingcount: float = Field(..., alias='pingCount')
     pingedat: str = Field(..., alias='pingedAt')
     labels: List[Any] = Field(..., alias='labels')
+    prefs: Optional[Preferences[T]] = Field(default=None, alias='prefs')
     status: str = Field(..., alias='status')
     onboarding: Dict[str, Any] = Field(..., alias='onboarding')
     authmethods: List[ProjectAuthMethod] = Field(..., alias='authMethods')
@@ -141,6 +149,7 @@ class Project(AppwriteModel):
     consoleaccessedat: str = Field(..., alias='consoleAccessedAt')
     wafenabled: Optional[bool] = Field(default=None, alias='wafEnabled')
     parentid: Optional[str] = Field(default=None, alias='parentId')
+    environmentid: Optional[str] = Field(default=None, alias='environmentId')
     billinglimits: Optional[BillingLimits] = Field(default=None, alias='billingLimits')
     firstaccessedat: Optional[str] = Field(default=None, alias='firstAccessedAt')
     mcpaccessedat: Optional[str] = Field(default=None, alias='mcpAccessedAt')
@@ -234,3 +243,11 @@ class Project(AppwriteModel):
         if 'consoleAccessedAt' not in data and 'consoleaccessedat' not in data:
             data['consoleAccessedAt'] = ''
         return data
+
+    @classmethod
+    def with_data(cls, data: Dict[str, Any], model_type: Type[T] = dict) -> 'Project[T]':
+        """Create Project instance with typed data."""
+        instance = cls.model_validate(data)
+        if 'prefs' in data and data['prefs'] is not None:
+            instance.prefs = Preferences.with_data(data['prefs'], model_type)
+        return instance

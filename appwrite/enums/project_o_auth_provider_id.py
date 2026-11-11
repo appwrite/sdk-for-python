@@ -44,6 +44,8 @@ class ProjectOAuthProviderId(Enum):
     TRADESHIFT = "tradeshift"
     TRADESHIFTBOX = "tradeshiftBox"
     TWITCH = "twitch"
+    VIPPS = "vipps"
+    VIPPSSANDBOX = "vippsSandbox"
     WEBFLOW = "webflow"
     WORDPRESS = "wordpress"
     X = "x"

@@ -21,7 +21,8 @@ result: WafRuleChallenge = waf.create_challenge_rule(
     enabled = False, # optional
     conditions = [], # optional
     difficulty = 1, # optional
-    ttl = 900 # optional
+    ttl = 900, # optional
+    schedule = {} # optional
 )
 
 print(result.model_dump())

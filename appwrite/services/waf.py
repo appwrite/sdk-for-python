@@ -75,6 +75,7 @@ class Waf(Service):
         priority: Optional[float] = None,
         enabled: Optional[bool] = None,
         conditions: Optional[List[str]] = None,
+        schedule: Optional[Dict[str, Any]] = None,
     ) -> WafRuleBypass:
         """
         Create a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -97,6 +98,8 @@ class Waf(Service):
             Set to false to create the rule in a disabled state.
         conditions : Optional[List[str]]
             Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+        schedule : Optional[Dict[str, Any]]
+            When the rule is active: mode, days, interval, anchor, startTime and endTime (HH:MM), and an optional IANA timezone (UTC by default). Leave out for always on; on update, leave out to keep the current schedule and pass an empty object to remove it.
         Returns
         -------
         WafRuleBypass
@@ -129,6 +132,8 @@ class Waf(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
+        if schedule is not None:
+            api_params['schedule'] = self._normalize_value(schedule)
 
         response = self.client.call(
             'post',
@@ -153,6 +158,7 @@ class Waf(Service):
         priority: Optional[float] = None,
         enabled: Optional[bool] = None,
         conditions: Optional[List[str]] = None,
+        schedule: Optional[Dict[str, Any]] = None,
     ) -> WafRuleBypass:
         """
         Update a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -175,6 +181,8 @@ class Waf(Service):
             Set to false to disable the rule.
         conditions : Optional[List[str]]
             Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+        schedule : Optional[Dict[str, Any]]
+            When the rule is active: mode, days, interval, anchor, startTime and endTime (HH:MM), and an optional IANA timezone (UTC by default). Leave out for always on; on update, leave out to keep the current schedule and pass an empty object to remove it.
         Returns
         -------
         WafRuleBypass
@@ -205,6 +213,8 @@ class Waf(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
+        if schedule is not None:
+            api_params['schedule'] = self._normalize_value(schedule)
 
         response = self.client.call(
             'patch',
@@ -232,6 +242,7 @@ class Waf(Service):
         conditions: Optional[List[str]] = None,
         difficulty: Optional[float] = None,
         ttl: Optional[float] = None,
+        schedule: Optional[Dict[str, Any]] = None,
     ) -> WafRuleChallenge:
         """
         Create a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -260,6 +271,8 @@ class Waf(Service):
             Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
         ttl : Optional[float]
             How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
+        schedule : Optional[Dict[str, Any]]
+            When the rule is active: mode, days, interval, anchor, startTime and endTime (HH:MM), and an optional IANA timezone (UTC by default). Leave out for always on; on update, leave out to keep the current schedule and pass an empty object to remove it.
         Returns
         -------
         WafRuleChallenge
@@ -298,6 +311,8 @@ class Waf(Service):
             api_params['difficulty'] = self._normalize_value(difficulty)
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
+        if schedule is not None:
+            api_params['schedule'] = self._normalize_value(schedule)
 
         response = self.client.call(
             'post',
@@ -325,6 +340,7 @@ class Waf(Service):
         conditions: Optional[List[str]] = None,
         difficulty: Optional[float] = None,
         ttl: Optional[float] = None,
+        schedule: Optional[Dict[str, Any]] = None,
     ) -> WafRuleChallenge:
         """
         Update a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -353,6 +369,8 @@ class Waf(Service):
             Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
         ttl : Optional[float]
             How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
+        schedule : Optional[Dict[str, Any]]
+            When the rule is active: mode, days, interval, anchor, startTime and endTime (HH:MM), and an optional IANA timezone (UTC by default). Leave out for always on; on update, leave out to keep the current schedule and pass an empty object to remove it.
         Returns
         -------
         WafRuleChallenge
@@ -389,6 +407,8 @@ class Waf(Service):
             api_params['difficulty'] = self._normalize_value(difficulty)
         if ttl is not None:
             api_params['ttl'] = self._normalize_value(ttl)
+        if schedule is not None:
+            api_params['schedule'] = self._normalize_value(schedule)
 
         response = self.client.call(
             'patch',
@@ -413,6 +433,7 @@ class Waf(Service):
         priority: Optional[float] = None,
         enabled: Optional[bool] = None,
         conditions: Optional[List[str]] = None,
+        schedule: Optional[Dict[str, Any]] = None,
     ) -> WafRuleDeny:
         """
         Create a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon. `sessionAge` and `mfaAge` hold the seconds since the request's session was created and since its last MFA challenge. Both are null for requests without a session, such as guests and API keys, while a request authenticated with the `x-appwrite-jwt` header carries the age of the session its token is bound to; on `functions` rules the session comes from the `x-appwrite-user-jwt` header, and `mfaAge` is null when the session never completed MFA. A deny matching on `mfaAge` returns `user_challenge_required` and one matching on `sessionAge` returns `user_reauthentication_required`, both with status 401, so the user can sign in again and retry. To also deny requests without a session, combine `isNull` and `greaterThan` in an `or` condition.
@@ -435,6 +456,8 @@ class Waf(Service):
             Set to false to create the rule in a disabled state.
         conditions : Optional[List[str]]
             Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+        schedule : Optional[Dict[str, Any]]
+            When the rule is active: mode, days, interval, anchor, startTime and endTime (HH:MM), and an optional IANA timezone (UTC by default). Leave out for always on; on update, leave out to keep the current schedule and pass an empty object to remove it.
         Returns
         -------
         WafRuleDeny
@@ -467,6 +490,8 @@ class Waf(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
+        if schedule is not None:
+            api_params['schedule'] = self._normalize_value(schedule)
 
         response = self.client.call(
             'post',
@@ -491,6 +516,7 @@ class Waf(Service):
         priority: Optional[float] = None,
         enabled: Optional[bool] = None,
         conditions: Optional[List[str]] = None,
+        schedule: Optional[Dict[str, Any]] = None,
     ) -> WafRuleDeny:
         """
         Update a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon. `sessionAge` and `mfaAge` hold the seconds since the request's session was created and since its last MFA challenge. Both are null for requests without a session, such as guests and API keys, while a request authenticated with the `x-appwrite-jwt` header carries the age of the session its token is bound to; on `functions` rules the session comes from the `x-appwrite-user-jwt` header, and `mfaAge` is null when the session never completed MFA. A deny matching on `mfaAge` returns `user_challenge_required` and one matching on `sessionAge` returns `user_reauthentication_required`, both with status 401, so the user can sign in again and retry. To also deny requests without a session, combine `isNull` and `greaterThan` in an `or` condition.
@@ -513,6 +539,8 @@ class Waf(Service):
             Set to false to disable the rule.
         conditions : Optional[List[str]]
             Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+        schedule : Optional[Dict[str, Any]]
+            When the rule is active: mode, days, interval, anchor, startTime and endTime (HH:MM), and an optional IANA timezone (UTC by default). Leave out for always on; on update, leave out to keep the current schedule and pass an empty object to remove it.
         Returns
         -------
         WafRuleDeny
@@ -543,6 +571,8 @@ class Waf(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
+        if schedule is not None:
+            api_params['schedule'] = self._normalize_value(schedule)
 
         response = self.client.call(
             'patch',
@@ -572,6 +602,7 @@ class Waf(Service):
         priority: Optional[float] = None,
         enabled: Optional[bool] = None,
         conditions: Optional[List[str]] = None,
+        schedule: Optional[Dict[str, Any]] = None,
     ) -> WafRuleRateLimit:
         """
         Create a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -604,6 +635,8 @@ class Waf(Service):
             Set to false to create the rule in a disabled state.
         conditions : Optional[List[str]]
             Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+        schedule : Optional[Dict[str, Any]]
+            When the rule is active: mode, days, interval, anchor, startTime and endTime (HH:MM), and an optional IANA timezone (UTC by default). Leave out for always on; on update, leave out to keep the current schedule and pass an empty object to remove it.
         Returns
         -------
         WafRuleRateLimit
@@ -648,6 +681,8 @@ class Waf(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
+        if schedule is not None:
+            api_params['schedule'] = self._normalize_value(schedule)
 
         response = self.client.call(
             'post',
@@ -676,6 +711,7 @@ class Waf(Service):
         priority: Optional[float] = None,
         enabled: Optional[bool] = None,
         conditions: Optional[List[str]] = None,
+        schedule: Optional[Dict[str, Any]] = None,
     ) -> WafRuleRateLimit:
         """
         Update a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -706,6 +742,8 @@ class Waf(Service):
             Set to false to disable the rule.
         conditions : Optional[List[str]]
             Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+        schedule : Optional[Dict[str, Any]]
+            When the rule is active: mode, days, interval, anchor, startTime and endTime (HH:MM), and an optional IANA timezone (UTC by default). Leave out for always on; on update, leave out to keep the current schedule and pass an empty object to remove it.
         Returns
         -------
         WafRuleRateLimit
@@ -744,6 +782,8 @@ class Waf(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
+        if schedule is not None:
+            api_params['schedule'] = self._normalize_value(schedule)
 
         response = self.client.call(
             'patch',
@@ -770,6 +810,7 @@ class Waf(Service):
         priority: Optional[float] = None,
         enabled: Optional[bool] = None,
         conditions: Optional[List[str]] = None,
+        schedule: Optional[Dict[str, Any]] = None,
     ) -> WafRuleRedirect:
         """
         Create a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -796,6 +837,8 @@ class Waf(Service):
             Set to false to create the rule in a disabled state.
         conditions : Optional[List[str]]
             Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+        schedule : Optional[Dict[str, Any]]
+            When the rule is active: mode, days, interval, anchor, startTime and endTime (HH:MM), and an optional IANA timezone (UTC by default). Leave out for always on; on update, leave out to keep the current schedule and pass an empty object to remove it.
         Returns
         -------
         WafRuleRedirect
@@ -834,6 +877,8 @@ class Waf(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
+        if schedule is not None:
+            api_params['schedule'] = self._normalize_value(schedule)
 
         response = self.client.call(
             'post',
@@ -860,6 +905,7 @@ class Waf(Service):
         priority: Optional[float] = None,
         enabled: Optional[bool] = None,
         conditions: Optional[List[str]] = None,
+        schedule: Optional[Dict[str, Any]] = None,
     ) -> WafRuleRedirect:
         """
         Update a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -886,6 +932,8 @@ class Waf(Service):
             Set to false to disable the rule.
         conditions : Optional[List[str]]
             Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+        schedule : Optional[Dict[str, Any]]
+            When the rule is active: mode, days, interval, anchor, startTime and endTime (HH:MM), and an optional IANA timezone (UTC by default). Leave out for always on; on update, leave out to keep the current schedule and pass an empty object to remove it.
         Returns
         -------
         WafRuleRedirect
@@ -920,6 +968,8 @@ class Waf(Service):
             api_params['enabled'] = self._normalize_value(enabled)
         if conditions is not None:
             api_params['conditions'] = self._normalize_value(conditions)
+        if schedule is not None:
+            api_params['schedule'] = self._normalize_value(schedule)
 
         response = self.client.call(
             'patch',
