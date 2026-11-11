@@ -105,7 +105,7 @@ class Storage(Service):
         compression : Optional[Compression]
             Compression algorithm chosen for compression. Can be one of none,  [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd), For file size above 20MB compression is skipped even if it's enabled
         encryption : Optional[bool]
-            Is encryption enabled? For file size above 20MB encryption is skipped even if it's enabled
+            Is encryption enabled? Files of any size are encrypted.
         antivirus : Optional[bool]
             Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
         transformations : Optional[bool]
@@ -247,7 +247,7 @@ class Storage(Service):
         compression : Optional[Compression]
             Compression algorithm chosen for compression. Can be one of none, [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd), For file size above 20MB compression is skipped even if it's enabled
         encryption : Optional[bool]
-            Is encryption enabled? For file size above 20MB encryption is skipped even if it's enabled
+            Is encryption enabled? Files of any size are encrypted.
         antivirus : Optional[bool]
             Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
         transformations : Optional[bool]

@@ -18,6 +18,8 @@ class Session(AppwriteModel):
         Session update date in ISO 8601 format.
     userid : str
         User ID.
+    username : str
+        Name of the user the session belongs to. Lets a client label the account, for example in an account switcher.
     expire : str
         Session expiration date in ISO 8601 format.
     provider : str
@@ -74,6 +76,7 @@ class Session(AppwriteModel):
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     userid: str = Field(..., alias='userId')
+    username: str = Field(..., alias='userName')
     expire: str = Field(..., alias='expire')
     provider: str = Field(..., alias='provider')
     provideruid: str = Field(..., alias='providerUid')
@@ -115,6 +118,8 @@ class Session(AppwriteModel):
             data['$updatedAt'] = ''
         if 'userId' not in data and 'userid' not in data:
             data['userId'] = ''
+        if 'userName' not in data and 'username' not in data:
+            data['userName'] = ''
         if 'expire' not in data:
             data['expire'] = ''
         if 'provider' not in data:

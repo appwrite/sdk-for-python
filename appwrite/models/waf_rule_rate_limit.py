@@ -39,6 +39,8 @@ class WafRuleRateLimit(AppwriteModel):
         List of conditions evaluated for this rule.
     config : Dict[str, Any]
         Action specific configuration.
+    schedule : Optional[Dict[str, Any]]
+        When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
     limit : float
         Maximum number of matching requests allowed for the given interval.
     interval : float
@@ -65,6 +67,7 @@ class WafRuleRateLimit(AppwriteModel):
     enabled: bool = Field(..., alias='enabled')
     conditions: List[Any] = Field(..., alias='conditions')
     config: Dict[str, Any] = Field(..., alias='config')
+    schedule: Optional[Dict[str, Any]] = Field(default=None, alias='schedule')
     limit: float = Field(..., alias='limit')
     interval: float = Field(..., alias='interval')
     key: str = Field(..., alias='key')

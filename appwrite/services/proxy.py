@@ -467,12 +467,181 @@ class Proxy(Service):
 
         return response
 
+    def update_function_rule(
+        self,
+        rule_id: str,
+        function_id: str,
+        branch: Optional[str] = None,
+    ) -> ProxyRule:
+        """
+        Update the function and VCS branch a function proxy rule executes. The rule domain cannot be changed.
+
+        Parameters
+        ----------
+        rule_id : str
+            Rule ID.
+        function_id : str
+            ID of function to be executed.
+        branch : Optional[str]
+            Name of VCS branch to deploy changes automatically
+        Returns
+        -------
+        ProxyRule
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/proxy/rules/{ruleId}/function'
+        api_params = {}
+        if rule_id is None or rule_id == '':
+            raise AppwriteException('Missing required parameter: "rule_id"')
+        if function_id is None:
+            raise AppwriteException('Missing required parameter: "function_id"')
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
+        api_params['functionId'] = self._normalize_value(function_id)
+        if branch is not None:
+            api_params['branch'] = self._normalize_value(branch)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=ProxyRule)
+
+    def update_redirect_rule(
+        self,
+        rule_id: str,
+        url: str,
+        status_code: StatusCode,
+        resource_id: str,
+        resource_type: ProxyResourceType,
+    ) -> ProxyRule:
+        """
+        Update the target URL, status code and parent resource of a redirect proxy rule. The rule domain cannot be changed.
+
+        Parameters
+        ----------
+        rule_id : str
+            Rule ID.
+        url : str
+            Target URL of redirection
+        status_code : StatusCode
+            Status code of redirection
+        resource_id : str
+            ID of parent resource.
+        resource_type : ProxyResourceType
+            Type of parent resource.
+        Returns
+        -------
+        ProxyRule
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/proxy/rules/{ruleId}/redirect'
+        api_params = {}
+        if rule_id is None or rule_id == '':
+            raise AppwriteException('Missing required parameter: "rule_id"')
+        if url is None:
+            raise AppwriteException('Missing required parameter: "url"')
+        if status_code is None:
+            raise AppwriteException('Missing required parameter: "status_code"')
+        if resource_id is None:
+            raise AppwriteException('Missing required parameter: "resource_id"')
+        if resource_type is None:
+            raise AppwriteException('Missing required parameter: "resource_type"')
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
+        api_params['url'] = self._normalize_value(url)
+        api_params['statusCode'] = self._normalize_value(status_code)
+        api_params['resourceId'] = self._normalize_value(resource_id)
+        api_params['resourceType'] = self._normalize_value(resource_type)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=ProxyRule)
+
+    def update_site_rule(
+        self,
+        rule_id: str,
+        site_id: str,
+        branch: Optional[str] = None,
+    ) -> ProxyRule:
+        """
+        Update the site and VCS branch a site proxy rule serves. The rule domain cannot be changed.
+
+        Parameters
+        ----------
+        rule_id : str
+            Rule ID.
+        site_id : str
+            ID of site to be executed.
+        branch : Optional[str]
+            Name of VCS branch to deploy changes automatically
+        Returns
+        -------
+        ProxyRule
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/proxy/rules/{ruleId}/site'
+        api_params = {}
+        if rule_id is None or rule_id == '':
+            raise AppwriteException('Missing required parameter: "rule_id"')
+        if site_id is None:
+            raise AppwriteException('Missing required parameter: "site_id"')
+        api_path = api_path.replace('{ruleId}', self._encode_path(rule_id))
+        api_params['siteId'] = self._normalize_value(site_id)
+        if branch is not None:
+            api_params['branch'] = self._normalize_value(branch)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=ProxyRule)
+
     def update_rule_status(
         self,
         rule_id: str,
     ) -> ProxyRule:
         """
-        If not succeeded yet, retry verification process of a proxy rule domain. This endpoint triggers domain verification by checking DNS records. If verification is successful, a TLS certificate will be automatically provisioned for the domain asynchronously in the background.
+        If not succeeded yet, retry verification process of a proxy rule domain. This endpoint triggers domain verification by checking DNS records. If verification is successful, a TLS certificate will be automatically provisioned for the domain asynchronously in the background. A verified rule whose certificate renewal failed or is blocked, or whose certificate expired, is checked the same way, and its certificate renewed in the background.
 
         Parameters
         ----------

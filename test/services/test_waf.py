@@ -84,6 +84,7 @@ class WafServiceTest(unittest.TestCase):
             priority=1,
             enabled=False,
             conditions=[],
+            schedule={},
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -103,6 +104,7 @@ class WafServiceTest(unittest.TestCase):
                 'priority': 1,
                 'enabled': False,
                 'conditions': [],
+                'schedule': {},
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -141,6 +143,7 @@ class WafServiceTest(unittest.TestCase):
             priority=1,
             enabled=False,
             conditions=[],
+            schedule={},
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -159,6 +162,7 @@ class WafServiceTest(unittest.TestCase):
                 'priority': 1,
                 'enabled': False,
                 'conditions': [],
+                'schedule': {},
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -203,6 +207,7 @@ class WafServiceTest(unittest.TestCase):
             conditions=[],
             difficulty=1,
             ttl=1,
+            schedule={},
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -225,6 +230,7 @@ class WafServiceTest(unittest.TestCase):
                 'conditions': [],
                 'difficulty': 1,
                 'ttl': 1,
+                'schedule': {},
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -269,6 +275,7 @@ class WafServiceTest(unittest.TestCase):
             conditions=[],
             difficulty=1,
             ttl=1,
+            schedule={},
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -290,6 +297,7 @@ class WafServiceTest(unittest.TestCase):
                 'conditions': [],
                 'difficulty': 1,
                 'ttl': 1,
+                'schedule': {},
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -328,6 +336,7 @@ class WafServiceTest(unittest.TestCase):
             priority=1,
             enabled=False,
             conditions=[],
+            schedule={},
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -347,6 +356,7 @@ class WafServiceTest(unittest.TestCase):
                 'priority': 1,
                 'enabled': False,
                 'conditions': [],
+                'schedule': {},
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -385,6 +395,7 @@ class WafServiceTest(unittest.TestCase):
             priority=1,
             enabled=False,
             conditions=[],
+            schedule={},
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -403,6 +414,7 @@ class WafServiceTest(unittest.TestCase):
                 'priority': 1,
                 'enabled': False,
                 'conditions': [],
+                'schedule': {},
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -451,6 +463,7 @@ class WafServiceTest(unittest.TestCase):
             priority=1,
             enabled=False,
             conditions=[],
+            schedule={},
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -475,6 +488,7 @@ class WafServiceTest(unittest.TestCase):
                 'priority': 1,
                 'enabled': False,
                 'conditions': [],
+                'schedule': {},
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -522,6 +536,7 @@ class WafServiceTest(unittest.TestCase):
             priority=1,
             enabled=False,
             conditions=[],
+            schedule={},
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -544,6 +559,7 @@ class WafServiceTest(unittest.TestCase):
                 'priority': 1,
                 'enabled': False,
                 'conditions': [],
+                'schedule': {},
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -586,6 +602,7 @@ class WafServiceTest(unittest.TestCase):
             priority=1,
             enabled=False,
             conditions=[],
+            schedule={},
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -607,6 +624,7 @@ class WafServiceTest(unittest.TestCase):
                 'priority': 1,
                 'enabled': False,
                 'conditions': [],
+                'schedule': {},
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -649,6 +667,7 @@ class WafServiceTest(unittest.TestCase):
             priority=1,
             enabled=False,
             conditions=[],
+            schedule={},
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -669,6 +688,7 @@ class WafServiceTest(unittest.TestCase):
                 'priority': 1,
                 'enabled': False,
                 'conditions': [],
+                'schedule': {},
             },
         )
         self.assertEqual(response.to_dict(), data)
