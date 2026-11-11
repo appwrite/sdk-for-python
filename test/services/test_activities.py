@@ -80,6 +80,7 @@ class ActivitiesServiceTest(unittest.TestCase):
             "hostname": "appwrite.io",
             "sdk": "web",
             "sdkVersion": "14.0.0",
+            "reason": "Reported as spam by 25 users in the last 24 hours",
         }
         headers = {'Content-Type': 'application/json'}
         m.request(

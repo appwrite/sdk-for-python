@@ -31,6 +31,10 @@ class Organization(AppwriteModel, Generic[T]):
         Project budget limit. Null when no budget is set.
     budgetalerts : List[Any]
         Project budget limit
+    budgetnotify : List[Any]
+        Organization roles whose confirmed members are emailed when a budget alert fires.
+    budgetcritical : List[Any]
+        Budget alert percentages whose push notifications are critical.
     billingplan : str
         Organization&#039;s billing plan ID.
     billingplanid : str
@@ -73,6 +77,8 @@ class Organization(AppwriteModel, Generic[T]):
         Program&#039;s discord channel name.
     programdiscordchannelurl : Optional[str]
         Program&#039;s discord channel URL.
+    educationexpiresat : Optional[str]
+        When the education plan ends, for an organization on it.
     billinglimits : Optional[BillingLimits]
         Billing limits reached
     billingplandowngrade : Optional[str]
@@ -95,6 +101,8 @@ class Organization(AppwriteModel, Generic[T]):
     prefs: Preferences[T] = Field(..., alias='prefs')
     billingbudget: Optional[float] = Field(default=None, alias='billingBudget')
     budgetalerts: List[Any] = Field(..., alias='budgetAlerts')
+    budgetnotify: List[Any] = Field(..., alias='budgetNotify')
+    budgetcritical: List[Any] = Field(..., alias='budgetCritical')
     billingplan: str = Field(..., alias='billingPlan')
     billingplanid: str = Field(..., alias='billingPlanId')
     billingplandetails: BillingPlan = Field(..., alias='billingPlanDetails')
@@ -116,6 +124,7 @@ class Organization(AppwriteModel, Generic[T]):
     programmanagercalendar: Optional[str] = Field(default=None, alias='programManagerCalendar')
     programdiscordchannelname: Optional[str] = Field(default=None, alias='programDiscordChannelName')
     programdiscordchannelurl: Optional[str] = Field(default=None, alias='programDiscordChannelUrl')
+    educationexpiresat: Optional[str] = Field(default=None, alias='educationExpiresAt')
     billinglimits: Optional[BillingLimits] = Field(default=None, alias='billingLimits')
     billingplandowngrade: Optional[str] = Field(default=None, alias='billingPlanDowngrade')
     billingtaxid: Optional[str] = Field(default=None, alias='billingTaxId')
@@ -142,6 +151,10 @@ class Organization(AppwriteModel, Generic[T]):
             data['total'] = 0
         if 'budgetAlerts' not in data and 'budgetalerts' not in data:
             data['budgetAlerts'] = [75]
+        if 'budgetNotify' not in data and 'budgetnotify' not in data:
+            data['budgetNotify'] = ['owner', 'billing']
+        if 'budgetCritical' not in data and 'budgetcritical' not in data:
+            data['budgetCritical'] = []
         if 'billingPlan' not in data and 'billingplan' not in data:
             data['billingPlan'] = 'tier-0'
         if 'billingPlanId' not in data and 'billingplanid' not in data:

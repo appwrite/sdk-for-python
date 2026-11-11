@@ -49,6 +49,7 @@ from .o_auth2_resend import OAuth2Resend
 from .o_auth2_cloudflare import OAuth2Cloudflare
 from .o_auth2_tik_tok import OAuth2TikTok
 from .o_auth2_kakao import OAuth2Kakao
+from .o_auth2_vipps import OAuth2Vipps
 
 
 class OAuth2ProviderList(AppwriteModel):
@@ -59,7 +60,7 @@ class OAuth2ProviderList(AppwriteModel):
     ----------
     total : float
         Total number of OAuth2 providers in the given project.
-    providers : List[Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Webflow, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Appwrite, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2HuggingFace, OAuth2Resend, OAuth2Cloudflare, OAuth2TikTok, OAuth2Kakao]]
+    providers : List[Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Webflow, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Appwrite, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2HuggingFace, OAuth2Resend, OAuth2Cloudflare, OAuth2TikTok, OAuth2Kakao, OAuth2Vipps]]
         List of OAuth2 providers.
     """
 
@@ -113,6 +114,7 @@ class OAuth2ProviderList(AppwriteModel):
             OAuth2Cloudflare,
             OAuth2TikTok,
             OAuth2Kakao,
+            OAuth2Vipps,
         ]
     ] = Field(..., alias='providers')
 

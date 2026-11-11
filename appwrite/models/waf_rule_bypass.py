@@ -39,6 +39,8 @@ class WafRuleBypass(AppwriteModel):
         List of conditions evaluated for this rule.
     config : Dict[str, Any]
         Action specific configuration.
+    schedule : Optional[Dict[str, Any]]
+        When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
     """
 
     id: str = Field(..., alias='$id')
@@ -55,6 +57,7 @@ class WafRuleBypass(AppwriteModel):
     enabled: bool = Field(..., alias='enabled')
     conditions: List[Any] = Field(..., alias='conditions')
     config: Dict[str, Any] = Field(..., alias='config')
+    schedule: Optional[Dict[str, Any]] = Field(default=None, alias='schedule')
 
     @model_validator(mode='before')
     @classmethod

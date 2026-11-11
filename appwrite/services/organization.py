@@ -604,7 +604,8 @@ class Organization(Service):
         queries: Optional[List[str]] = None,
         search: Optional[str] = None,
         total: Optional[bool] = None,
-    ) -> ProjectList:
+        model_type: Type[T] = dict,
+    ) -> ProjectList[T]:
         """
         Get a list of all projects. You can use the query params to filter your results.
 
@@ -616,9 +617,12 @@ class Organization(Service):
             Search term to filter your list results. Max length: 256 chars.
         total : Optional[bool]
             When set to false, the total count returned will be 0 and will not be calculated.
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+
         Returns
         -------
-        ProjectList
+        ProjectList[T]
             API response as a typed Pydantic model
 
         Raises
@@ -646,14 +650,15 @@ class Organization(Service):
             api_params,
         )
 
-        return self._parse_response(response, model=ProjectList)
+        return ProjectList.with_data(response, model_type)
 
     def create_project(
         self,
         project_id: str,
         name: str,
         region: Optional[Region] = None,
-    ) -> Project:
+        model_type: Type[T] = dict,
+    ) -> Project[T]:
         """
         Create a new project.
 
@@ -665,9 +670,12 @@ class Organization(Service):
             Project name. Max length: 128 chars.
         region : Optional[Region]
             Project Region.
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+
         Returns
         -------
-        Project
+        Project[T]
             API response as a typed Pydantic model
 
         Raises
@@ -698,12 +706,13 @@ class Organization(Service):
             api_params,
         )
 
-        return self._parse_response(response, model=Project)
+        return Project.with_data(response, model_type)
 
     def get_project(
         self,
         project_id: str,
-    ) -> Project:
+        model_type: Type[T] = dict,
+    ) -> Project[T]:
         """
         Get a project.
 
@@ -711,9 +720,12 @@ class Organization(Service):
         ----------
         project_id : str
             Project unique ID.
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+
         Returns
         -------
-        Project
+        Project[T]
             API response as a typed Pydantic model
 
         Raises
@@ -738,13 +750,14 @@ class Organization(Service):
             api_params,
         )
 
-        return self._parse_response(response, model=Project)
+        return Project.with_data(response, model_type)
 
     def update_project(
         self,
         project_id: str,
         name: str,
-    ) -> Project:
+        model_type: Type[T] = dict,
+    ) -> Project[T]:
         """
         Update a project by its unique ID.
 
@@ -754,9 +767,12 @@ class Organization(Service):
             Project unique ID.
         name : str
             Project name. Max length: 128 chars.
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+
         Returns
         -------
-        Project
+        Project[T]
             API response as a typed Pydantic model
 
         Raises
@@ -785,7 +801,7 @@ class Organization(Service):
             api_params,
         )
 
-        return self._parse_response(response, model=Project)
+        return Project.with_data(response, model_type)
 
     def delete_project(
         self,

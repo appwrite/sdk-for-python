@@ -108,6 +108,7 @@ from .algo_argon2 import AlgoArgon2
 from .account import Account
 from .preferences import Preferences
 from .session import Session
+from .device import Device
 from .identity import Identity
 from .token import Token
 from .jwt import Jwt
@@ -175,6 +176,7 @@ from .o_auth2_keycloak import OAuth2Keycloak
 from .o_auth2_oidc import OAuth2Oidc
 from .o_auth2_okta import OAuth2Okta
 from .o_auth2_kick import OAuth2Kick
+from .o_auth2_vipps import OAuth2Vipps
 from .o_auth2_apple import OAuth2Apple
 from .o_auth2_microsoft import OAuth2Microsoft
 from .o_auth2_resend import OAuth2Resend
@@ -200,6 +202,7 @@ from .policy_deny_disposable_email import PolicyDenyDisposableEmail
 from .policy_deny_free_email import PolicyDenyFreeEmail
 from .policy_deny_corporate_email import PolicyDenyCorporateEmail
 from .policy_deny_realtime_guests import PolicyDenyRealtimeGuests
+from .policy_account_devices import PolicyAccountDevices
 from .platform_web import PlatformWeb
 from .platform_apple import PlatformApple
 from .platform_android import PlatformAndroid
@@ -273,6 +276,8 @@ from .backup_policy import BackupPolicy
 from .dedicated_database_pooler import DedicatedDatabasePooler
 from .postgres_extension import PostgresExtension
 from .program import Program
+from .environment import Environment
+from .environment_list import EnvironmentList
 from .backup_restoration import BackupRestoration
 from .dedicated_database_restoration_list import DedicatedDatabaseRestorationList
 from .dedicated_database_specification import DedicatedDatabaseSpecification
@@ -435,6 +440,7 @@ __all__ = [
     'Account',
     'Preferences',
     'Session',
+    'Device',
     'Identity',
     'Token',
     'Jwt',
@@ -502,6 +508,7 @@ __all__ = [
     'OAuth2Oidc',
     'OAuth2Okta',
     'OAuth2Kick',
+    'OAuth2Vipps',
     'OAuth2Apple',
     'OAuth2Microsoft',
     'OAuth2Resend',
@@ -527,6 +534,7 @@ __all__ = [
     'PolicyDenyFreeEmail',
     'PolicyDenyCorporateEmail',
     'PolicyDenyRealtimeGuests',
+    'PolicyAccountDevices',
     'PlatformWeb',
     'PlatformApple',
     'PlatformAndroid',
@@ -600,6 +608,8 @@ __all__ = [
     'DedicatedDatabasePooler',
     'PostgresExtension',
     'Program',
+    'Environment',
+    'EnvironmentList',
     'BackupRestoration',
     'DedicatedDatabaseRestorationList',
     'DedicatedDatabaseSpecification',
