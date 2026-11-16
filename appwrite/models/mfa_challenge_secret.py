@@ -26,7 +26,7 @@ class MfaChallengeSecret(AppwriteModel):
     createdat: str = Field(..., alias='$createdAt')
     userid: str = Field(..., alias='userId')
     expire: str = Field(..., alias='expire')
-    code: str = Field(..., alias='code')
+    code: str = Field(..., alias='code', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

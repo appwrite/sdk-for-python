@@ -33,7 +33,7 @@ class OAuth2Apple(AppwriteModel):
     serviceid: str = Field(..., alias='serviceId')
     keyid: str = Field(..., alias='keyId')
     teamid: str = Field(..., alias='teamId')
-    p8file: str = Field(..., alias='p8File')
+    p8file: str = Field(..., alias='p8File', json_schema_extra={'format': 'password'})
     nativeenabled: bool = Field(..., alias='nativeEnabled')
     nativeclientids: List[Any] = Field(..., alias='nativeClientIds')
 

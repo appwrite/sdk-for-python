@@ -26,7 +26,7 @@ class OAuth2Salesforce(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     customerkey: str = Field(..., alias='customerKey')
-    customersecret: str = Field(..., alias='customerSecret')
+    customersecret: str = Field(..., alias='customerSecret', json_schema_extra={'format': 'password'})
     prompt: List[OAuth2SalesforcePrompt] = Field(..., alias='prompt')
 
     @model_validator(mode='before')

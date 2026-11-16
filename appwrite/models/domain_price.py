@@ -26,6 +26,8 @@ class DomainPrice(AppwriteModel):
         Domain renewal price for the same period. Null when the domain was not priced or the registrar has no renewal price for it.
     renewalperiodyears : float
         Renewal price period in years.
+    reason : Optional[str]
+        Why the domain was not priced for the requested registration type, for example a transfer of an unregistered domain. Empty otherwise.
     """
 
     domain: str = Field(..., alias='domain')
@@ -36,6 +38,7 @@ class DomainPrice(AppwriteModel):
     premium: bool = Field(..., alias='premium')
     renewalprice: Optional[float] = Field(default=None, alias='renewalPrice')
     renewalperiodyears: float = Field(..., alias='renewalPeriodYears')
+    reason: Optional[str] = Field(default=None, alias='reason')
 
     @model_validator(mode='before')
     @classmethod

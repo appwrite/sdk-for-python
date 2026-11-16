@@ -83,6 +83,10 @@ class Site(AppwriteModel):
         Site framework adapter.
     fallbackfile : str
         Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
+    analyticsenabled : bool
+        Whether the analytics tracker is injected into pages served on the site&#039;s production domains.
+    analyticspropertyid : str
+        ID of the analytics property the site reports to. Kept when analytics is turned off, so turning it back on resumes the same property.
     """
 
     id: str = Field(..., alias='$id')
@@ -121,6 +125,8 @@ class Site(AppwriteModel):
     buildruntime: str = Field(..., alias='buildRuntime')
     adapter: str = Field(..., alias='adapter')
     fallbackfile: str = Field(..., alias='fallbackFile')
+    analyticsenabled: bool = Field(..., alias='analyticsEnabled')
+    analyticspropertyid: str = Field(..., alias='analyticsPropertyId')
 
     @model_validator(mode='before')
     @classmethod
@@ -197,4 +203,8 @@ class Site(AppwriteModel):
             data['runtimeSpecification'] = 's-1vcpu-512mb'
         if 'buildRuntime' not in data and 'buildruntime' not in data:
             data['buildRuntime'] = ''
+        if 'analyticsEnabled' not in data and 'analyticsenabled' not in data:
+            data['analyticsEnabled'] = False
+        if 'analyticsPropertyId' not in data and 'analyticspropertyid' not in data:
+            data['analyticsPropertyId'] = ''
         return data

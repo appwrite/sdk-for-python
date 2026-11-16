@@ -23,7 +23,7 @@ class OAuth2X(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     customerkey: str = Field(..., alias='customerKey')
-    secretkey: str = Field(..., alias='secretKey')
+    secretkey: str = Field(..., alias='secretKey', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

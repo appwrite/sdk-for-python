@@ -89,6 +89,8 @@ class SitesServiceTest(unittest.TestCase):
             "buildRuntime": "node-22",
             "adapter": "static",
             "fallbackFile": "index.html",
+            "analyticsEnabled": True,
+            "analyticsPropertyId": "5e5ea5c16897e",
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -266,6 +268,8 @@ class SitesServiceTest(unittest.TestCase):
             "buildRuntime": "node-22",
             "adapter": "static",
             "fallbackFile": "index.html",
+            "analyticsEnabled": True,
+            "analyticsPropertyId": "5e5ea5c16897e",
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -326,6 +330,8 @@ class SitesServiceTest(unittest.TestCase):
             "buildRuntime": "node-22",
             "adapter": "static",
             "fallbackFile": "index.html",
+            "analyticsEnabled": True,
+            "analyticsPropertyId": "5e5ea5c16897e",
         }
         headers = {'Content-Type': 'application/json'}
         m.request(
@@ -423,6 +429,74 @@ class SitesServiceTest(unittest.TestCase):
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
+    def test_update_analytics(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "My Site",
+            "description": "Marketing site for the spring launch.",
+            "enabled": True,
+            "live": True,
+            "logging": True,
+            "framework": "react",
+            "deploymentRetention": 7.0,
+            "deploymentId": "5e5ea5c16897e",
+            "deploymentCreatedAt": "2020-10-15T06:38:00.000+00:00",
+            "deploymentScreenshotLight": "5e5ea5c16897e",
+            "deploymentScreenshotDark": "5e5ea5c16897e",
+            "latestDeploymentId": "5e5ea5c16897e",
+            "latestDeploymentCreatedAt": "2020-10-15T06:38:00.000+00:00",
+            "latestDeploymentStatus": "ready",
+            "scopes": [],
+            "vars": [],
+            "timeout": 300.0,
+            "installCommand": "npm install",
+            "buildCommand": "npm run build",
+            "startCommand": "node custom-server.mjs",
+            "outputDirectory": "build",
+            "installationId": "6m40at4ejk5h2u9s1hboo",
+            "providerRepositoryId": "appwrite",
+            "providerBranch": "main",
+            "providerRootDirectory": "sites\/helloWorld",
+            "providerSilentMode": True,
+            "providerBranches": [],
+            "providerPaths": [],
+            "buildSpecification": "s-1vcpu-512mb",
+            "runtimeSpecification": "s-1vcpu-512mb",
+            "buildRuntime": "node-22",
+            "adapter": "static",
+            "fallbackFile": "index.html",
+            "analyticsEnabled": True,
+            "analyticsPropertyId": "5e5ea5c16897e",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.sites.update_analytics(
+            '<SITE_ID>',
+            False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/sites/<SITE_ID>/analytics',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_site_deployment(self, m):
         data = {
             "$id": "5e5ea5c16897e",
@@ -461,6 +535,8 @@ class SitesServiceTest(unittest.TestCase):
             "buildRuntime": "node-22",
             "adapter": "static",
             "fallbackFile": "index.html",
+            "analyticsEnabled": True,
+            "analyticsPropertyId": "5e5ea5c16897e",
         }
         headers = {'Content-Type': 'application/json'}
         m.request(

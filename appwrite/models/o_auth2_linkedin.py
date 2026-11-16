@@ -23,7 +23,7 @@ class OAuth2Linkedin(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')
-    primaryclientsecret: str = Field(..., alias='primaryClientSecret')
+    primaryclientsecret: str = Field(..., alias='primaryClientSecret', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

@@ -31,7 +31,7 @@ class ResourceToken(AppwriteModel):
     resourceid: str = Field(..., alias='resourceId')
     resourcetype: str = Field(..., alias='resourceType')
     expire: str = Field(..., alias='expire')
-    secret: str = Field(..., alias='secret')
+    secret: str = Field(..., alias='secret', json_schema_extra={'format': 'password'})
     accessedat: str = Field(..., alias='accessedAt')
 
     @model_validator(mode='before')

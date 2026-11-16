@@ -23,7 +23,7 @@ class AlgoScryptModified(AppwriteModel):
     type: str = Field(..., alias='type')
     salt: str = Field(..., alias='salt')
     saltseparator: str = Field(..., alias='saltSeparator')
-    signerkey: str = Field(..., alias='signerKey')
+    signerkey: str = Field(..., alias='signerKey', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

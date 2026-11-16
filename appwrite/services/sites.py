@@ -568,6 +568,53 @@ class Sites(Service):
 
         return response
 
+    def update_analytics(
+        self,
+        site_id: str,
+        enabled: bool,
+    ) -> Site:
+        """
+        Turn analytics on or off for a site. Turning it on links an analytics property named after the site, creating one on first use, and injects the tracker into pages served on the site's production domains. Turning it on also needs the `analytics.write` scope. Turning it off stops the injection and keeps the property and its data.
+
+        Parameters
+        ----------
+        site_id : str
+            Site ID.
+        enabled : bool
+            Inject the analytics tracker into the site's production domains. Injected pageviews and events are billed as analytics usage.
+        Returns
+        -------
+        Site
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/sites/{siteId}/analytics'
+        api_params = {}
+        if site_id is None or site_id == '':
+            raise AppwriteException('Missing required parameter: "site_id"')
+        if enabled is None:
+            raise AppwriteException('Missing required parameter: "enabled"')
+        api_path = api_path.replace('{siteId}', self._encode_path(site_id))
+        api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Site)
+
     def update_site_deployment(
         self,
         site_id: str,

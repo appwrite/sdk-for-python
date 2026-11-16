@@ -23,7 +23,7 @@ class OAuth2Paypal(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')
-    secretkey: str = Field(..., alias='secretKey')
+    secretkey: str = Field(..., alias='secretKey', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

@@ -707,7 +707,7 @@ class Storage(Service):
         token: Optional[str] = None,
     ) -> bytes:
         """
-        Get a file preview image. Currently, this method supports preview for image files (jpg, png, and gif), other supported formats, like pdf, docs, slides, and spreadsheets, will return the file icon image. You can also pass query string arguments for cutting and resizing your preview image. Preview is supported only for image files smaller than 10MB.
+        Get a file preview image. Currently, this method supports preview for image files (jpg, png, and gif), other supported formats, like pdf, docs, slides, and spreadsheets, will return the file icon image. You can also pass query string arguments for cutting and resizing your preview image. Set `output` to `auto` to receive avif or webp when the client's `Accept` header supports it, falling back to the original image format. Preview is supported only for image files smaller than 10MB.
 
         Parameters
         ----------
@@ -736,7 +736,7 @@ class Storage(Service):
         background : Optional[str]
             Preview image background color. Only works with transparent images (png). Use a valid HEX color, no # is needed for prefix.
         output : Optional[ImageFormat]
-            Output format type (jpeg, jpg, png, gif and webp).
+            Output format type (jpeg, jpg, png, gif, webp, heic and avif). Pass auto to serve avif or webp when the client's Accept header supports it, falling back to the original format.
         token : Optional[str]
             File token for accessing this file.
         Returns

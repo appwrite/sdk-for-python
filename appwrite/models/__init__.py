@@ -182,6 +182,7 @@ from .o_auth2_microsoft import OAuth2Microsoft
 from .o_auth2_resend import OAuth2Resend
 from .o_auth2_tik_tok import OAuth2TikTok
 from .o_auth2_kakao import OAuth2Kakao
+from .o_auth2_naver import OAuth2Naver
 from .o_auth2_provider_list import OAuth2ProviderList
 from .policy_password_dictionary import PolicyPasswordDictionary
 from .policy_password_history import PolicyPasswordHistory
@@ -514,6 +515,7 @@ __all__ = [
     'OAuth2Resend',
     'OAuth2TikTok',
     'OAuth2Kakao',
+    'OAuth2Naver',
     'OAuth2ProviderList',
     'PolicyPasswordDictionary',
     'PolicyPasswordHistory',

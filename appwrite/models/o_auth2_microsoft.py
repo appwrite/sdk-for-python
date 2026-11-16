@@ -28,7 +28,7 @@ class OAuth2Microsoft(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     applicationid: str = Field(..., alias='applicationId')
-    applicationsecret: str = Field(..., alias='applicationSecret')
+    applicationsecret: str = Field(..., alias='applicationSecret', json_schema_extra={'format': 'password'})
     prompt: List[OAuth2MicrosoftPrompt] = Field(..., alias='prompt')
     tenant: str = Field(..., alias='tenant')
 

@@ -23,7 +23,7 @@ class OAuth2Dropbox(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     appkey: str = Field(..., alias='appKey')
-    appsecret: str = Field(..., alias='appSecret')
+    appsecret: str = Field(..., alias='appSecret', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

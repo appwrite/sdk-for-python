@@ -23,7 +23,7 @@ class OAuth2Dailymotion(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     apikey: str = Field(..., alias='apiKey')
-    apisecret: str = Field(..., alias='apiSecret')
+    apisecret: str = Field(..., alias='apiSecret', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

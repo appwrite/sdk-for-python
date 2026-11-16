@@ -26,7 +26,7 @@ class OAuth2Kakao(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')
-    clientsecret: str = Field(..., alias='clientSecret')
+    clientsecret: str = Field(..., alias='clientSecret', json_schema_extra={'format': 'password'})
     prompt: List[OAuth2KakaoPrompt] = Field(..., alias='prompt')
 
     @model_validator(mode='before')

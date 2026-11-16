@@ -34,7 +34,7 @@ class AppSecret(AppwriteModel):
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     appid: str = Field(..., alias='appId')
-    secret: str = Field(..., alias='secret')
+    secret: str = Field(..., alias='secret', json_schema_extra={'format': 'password'})
     hint: str = Field(..., alias='hint')
     createdbyid: str = Field(..., alias='createdById')
     createdbyname: str = Field(..., alias='createdByName')

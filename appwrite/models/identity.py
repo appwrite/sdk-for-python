@@ -41,10 +41,10 @@ class Identity(AppwriteModel):
     provider: str = Field(..., alias='provider')
     provideruid: str = Field(..., alias='providerUid')
     provideremail: str = Field(..., alias='providerEmail')
-    provideraccesstoken: str = Field(..., alias='providerAccessToken')
+    provideraccesstoken: str = Field(..., alias='providerAccessToken', json_schema_extra={'format': 'password'})
     provideraccesstokenexpiry: str = Field(..., alias='providerAccessTokenExpiry')
-    providerrefreshtoken: str = Field(..., alias='providerRefreshToken')
-    provideridtoken: str = Field(..., alias='providerIdToken')
+    providerrefreshtoken: str = Field(..., alias='providerRefreshToken', json_schema_extra={'format': 'password'})
+    provideridtoken: str = Field(..., alias='providerIdToken', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

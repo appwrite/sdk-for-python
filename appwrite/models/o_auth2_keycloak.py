@@ -27,7 +27,7 @@ class OAuth2Keycloak(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')
-    clientsecret: str = Field(..., alias='clientSecret')
+    clientsecret: str = Field(..., alias='clientSecret', json_schema_extra={'format': 'password'})
     endpoint: str = Field(..., alias='endpoint')
     realmname: str = Field(..., alias='realmName')
 

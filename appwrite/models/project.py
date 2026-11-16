@@ -50,6 +50,38 @@ class Project(AppwriteModel, Generic[T]):
         SMTP server password. This property is write-only and always returned empty.
     smtpsecure : str
         SMTP server secure protocol
+    ldapenabled : bool
+        Status for LDAP sign-in
+    ldaphosts : List[Any]
+        LDAP directory hosts, tried in order.
+    ldapport : float
+        LDAP directory port.
+    ldapencryption : str
+        LDAP transport encryption: none, ldaps or starttls.
+    ldapverification : bool
+        Whether the LDAP directory certificate is verified.
+    ldapcertificate : str
+        Certificate in PEM format of the authority that signed the LDAP directory certificate, or the directory certificate itself when it is self-signed. Empty for the system trust store.
+    ldaptimeout : float
+        Seconds to wait for the LDAP directory to connect and answer.
+    ldapbasedn : str
+        LDAP subtree the user search starts from.
+    ldapbinddn : str
+        LDAP service account used to search for users, empty for anonymous search.
+    ldapbindpassword : str
+        LDAP service account password. This property is write-only and always returned empty.
+    ldapuserfilter : str
+        LDAP filter that finds the user signing in, with {username} where the username they enter goes.
+    ldaprequiredgroupdn : str
+        LDAP group a user must belong to in order to sign in, empty to allow every user.
+    ldapidattribute : str
+        LDAP attribute holding the identifier that stays the same when an entry is renamed or moved.
+    ldapemailattribute : str
+        LDAP attribute holding the email address.
+    ldapnameattribute : str
+        LDAP attribute holding the display name.
+    ldapphoneattribute : str
+        LDAP attribute holding the phone number, empty when unmapped.
     pingcount : float
         Number of times the ping was received for this project.
     pingedat : str
@@ -134,8 +166,24 @@ class Project(AppwriteModel, Generic[T]):
     smtphost: str = Field(..., alias='smtpHost')
     smtpport: float = Field(..., alias='smtpPort')
     smtpusername: str = Field(..., alias='smtpUsername')
-    smtppassword: str = Field(..., alias='smtpPassword')
+    smtppassword: str = Field(..., alias='smtpPassword', json_schema_extra={'format': 'password'})
     smtpsecure: str = Field(..., alias='smtpSecure')
+    ldapenabled: bool = Field(..., alias='ldapEnabled')
+    ldaphosts: List[Any] = Field(..., alias='ldapHosts')
+    ldapport: float = Field(..., alias='ldapPort')
+    ldapencryption: str = Field(..., alias='ldapEncryption')
+    ldapverification: bool = Field(..., alias='ldapVerification')
+    ldapcertificate: str = Field(..., alias='ldapCertificate')
+    ldaptimeout: float = Field(..., alias='ldapTimeout')
+    ldapbasedn: str = Field(..., alias='ldapBaseDn')
+    ldapbinddn: str = Field(..., alias='ldapBindDn')
+    ldapbindpassword: str = Field(..., alias='ldapBindPassword', json_schema_extra={'format': 'password'})
+    ldapuserfilter: str = Field(..., alias='ldapUserFilter')
+    ldaprequiredgroupdn: str = Field(..., alias='ldapRequiredGroupDn')
+    ldapidattribute: str = Field(..., alias='ldapIdAttribute')
+    ldapemailattribute: str = Field(..., alias='ldapEmailAttribute')
+    ldapnameattribute: str = Field(..., alias='ldapNameAttribute')
+    ldapphoneattribute: str = Field(..., alias='ldapPhoneAttribute')
     pingcount: float = Field(..., alias='pingCount')
     pingedat: str = Field(..., alias='pingedAt')
     labels: List[Any] = Field(..., alias='labels')
@@ -222,6 +270,38 @@ class Project(AppwriteModel, Generic[T]):
             data['smtpPassword'] = ''
         if 'smtpSecure' not in data and 'smtpsecure' not in data:
             data['smtpSecure'] = ''
+        if 'ldapEnabled' not in data and 'ldapenabled' not in data:
+            data['ldapEnabled'] = False
+        if 'ldapHosts' not in data and 'ldaphosts' not in data:
+            data['ldapHosts'] = []
+        if 'ldapPort' not in data and 'ldapport' not in data:
+            data['ldapPort'] = 636
+        if 'ldapEncryption' not in data and 'ldapencryption' not in data:
+            data['ldapEncryption'] = 'ldaps'
+        if 'ldapVerification' not in data and 'ldapverification' not in data:
+            data['ldapVerification'] = True
+        if 'ldapCertificate' not in data and 'ldapcertificate' not in data:
+            data['ldapCertificate'] = ''
+        if 'ldapTimeout' not in data and 'ldaptimeout' not in data:
+            data['ldapTimeout'] = 10
+        if 'ldapBaseDn' not in data and 'ldapbasedn' not in data:
+            data['ldapBaseDn'] = ''
+        if 'ldapBindDn' not in data and 'ldapbinddn' not in data:
+            data['ldapBindDn'] = ''
+        if 'ldapBindPassword' not in data and 'ldapbindpassword' not in data:
+            data['ldapBindPassword'] = ''
+        if 'ldapUserFilter' not in data and 'ldapuserfilter' not in data:
+            data['ldapUserFilter'] = '(uid={username})'
+        if 'ldapRequiredGroupDn' not in data and 'ldaprequiredgroupdn' not in data:
+            data['ldapRequiredGroupDn'] = ''
+        if 'ldapIdAttribute' not in data and 'ldapidattribute' not in data:
+            data['ldapIdAttribute'] = 'entryUUID'
+        if 'ldapEmailAttribute' not in data and 'ldapemailattribute' not in data:
+            data['ldapEmailAttribute'] = 'mail'
+        if 'ldapNameAttribute' not in data and 'ldapnameattribute' not in data:
+            data['ldapNameAttribute'] = 'cn'
+        if 'ldapPhoneAttribute' not in data and 'ldapphoneattribute' not in data:
+            data['ldapPhoneAttribute'] = ''
         if 'pingCount' not in data and 'pingcount' not in data:
             data['pingCount'] = 0
         if 'pingedAt' not in data and 'pingedat' not in data:

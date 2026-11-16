@@ -10,3 +10,4 @@ class ProjectAuthMethodId(Enum):
     JWT = "jwt"
     PHONE = "phone"
     PASSKEY = "passkey"
+    LDAP = "ldap"

@@ -27,7 +27,7 @@ class TokenSecret(AppwriteModel):
     id: str = Field(..., alias='$id')
     createdat: str = Field(..., alias='$createdAt')
     userid: str = Field(..., alias='userId')
-    secret: str = Field(..., alias='secret')
+    secret: str = Field(..., alias='secret', json_schema_extra={'format': 'password'})
     expire: str = Field(..., alias='expire')
     phrase: str = Field(..., alias='phrase')
 
