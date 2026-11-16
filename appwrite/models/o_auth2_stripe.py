@@ -23,7 +23,7 @@ class OAuth2Stripe(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')
-    apisecretkey: str = Field(..., alias='apiSecretKey')
+    apisecretkey: str = Field(..., alias='apiSecretKey', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

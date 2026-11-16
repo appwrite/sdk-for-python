@@ -12,6 +12,7 @@ from ..models.key_list import KeyList
 from ..enums.project_key_scopes import ProjectKeyScopes
 from ..models.ephemeral_key import EphemeralKey
 from ..models.key import Key
+from ..enums.project_ldap_encryption import ProjectLDAPEncryption
 from ..models.mock_number_list import MockNumberList
 from ..models.mock_number import MockNumber
 from ..models.o_auth2_provider_list import OAuth2ProviderList
@@ -48,6 +49,7 @@ from ..models.o_auth2_kick import OAuth2Kick
 from ..models.o_auth2_linkedin import OAuth2Linkedin
 from ..enums.project_o_auth2_microsoft_prompt import ProjectOAuth2MicrosoftPrompt
 from ..models.o_auth2_microsoft import OAuth2Microsoft
+from ..models.o_auth2_naver import OAuth2Naver
 from ..models.o_auth2_notion import OAuth2Notion
 from ..enums.project_o_auth2_oidc_prompt import ProjectOAuth2OidcPrompt
 from ..models.o_auth2_oidc import OAuth2Oidc
@@ -203,7 +205,7 @@ class Project(Service):
         Parameters
         ----------
         method_id : ProjectAuthMethodId
-            Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone,passkey
+            Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone,passkey,ldap
         enabled : bool
             Auth method status.
         model_type : Type[T], optional
@@ -749,6 +751,170 @@ class Project(Service):
         )
 
         return ProjectModel.with_data(response, model_type)
+
+    def update_ldap(
+        self,
+        enabled: Optional[bool] = None,
+        hosts: Optional[List[str]] = None,
+        port: Optional[float] = None,
+        encryption: Optional[ProjectLDAPEncryption] = None,
+        verification: Optional[bool] = None,
+        certificate: Optional[str] = None,
+        timeout: Optional[float] = None,
+        base_dn: Optional[str] = None,
+        bind_dn: Optional[str] = None,
+        bind_password: Optional[str] = None,
+        user_filter: Optional[str] = None,
+        required_group_dn: Optional[str] = None,
+        id_attribute: Optional[str] = None,
+        email_attribute: Optional[str] = None,
+        name_attribute: Optional[str] = None,
+        phone_attribute: Optional[str] = None,
+        model_type: Type[T] = dict,
+    ) -> ProjectModel[T]:
+        """
+        Update the LDAP configuration for your project. Use this endpoint to connect your project to an LDAP directory, such as OpenLDAP or Active Directory, so users can sign in with their directory credentials. Omitted parameters keep their stored value. Enabling LDAP connects to the directory and binds as the service account, so a project cannot be left enabled with a configuration that cannot sign anyone in.
+
+        Parameters
+        ----------
+        enabled : Optional[bool]
+            Enable or disable LDAP sign-in. Enabling connects to the directory to validate the configuration.
+        hosts : Optional[List[str]]
+            Directory hostnames or IP addresses, tried in order until one answers. IPv6 addresses can be written with or without square brackets. Maximum of 10 hosts are allowed. For example: ["ldap.example.com"]
+        port : Optional[float]
+            Directory port. Defaults to 636 for LDAPS and 389 otherwise.
+        encryption : Optional[ProjectLDAPEncryption]
+            Transport encryption. Use "ldaps" for TLS from the first byte, "starttls" to upgrade a plain connection, or "none" for a trusted network only. Allowed values are: none, ldaps, starttls. Defaults to ldaps.
+        verification : Optional[bool]
+            Certificate verification, false for disabled or true for enabled. Defaults to true. Has no effect when encryption is none.
+        certificate : Optional[str]
+            Certificate in PEM format of the authority that signed the directory certificate, or the directory certificate itself when it is self-signed. Several certificates can be given one after another. Leave empty to use the system trust store. Pass an empty string to clear a previously set value.
+        timeout : Optional[float]
+            Seconds to wait for the directory to connect and answer each operation. Maximum is 30 seconds. Defaults to 10.
+        base_dn : Optional[str]
+            Subtree the user search starts from. For example: ou=people,dc=example,dc=com
+        bind_dn : Optional[str]
+            Service account used to search for users. Pass an empty string if the directory allows anonymous search. For example: cn=appwrite,ou=services,dc=example,dc=com
+        bind_password : Optional[str]
+            Service account password. This property is stored securely and cannot be read in future (write-only). Required again when hosts, port, encryption, verification, certificate or bindDn change.
+        user_filter : Optional[str]
+            LDAP filter that finds the user signing in. {username} is replaced with the username they enter and must appear at least once. Pass an empty string to use the default, (uid={username}). For example: (sAMAccountName={username}) on Active Directory, or (|(uid={username})(mail={username})) to accept a username or an email address.
+        required_group_dn : Optional[str]
+            Group a user must belong to in order to sign in, checked on every sign-in. Pass an empty string to allow every user the directory authenticates. For example: cn=staff,ou=groups,dc=example,dc=com
+        id_attribute : Optional[str]
+            Attribute holding the identifier that stays the same when an entry is renamed or moved. Defaults to entryUUID; use objectGUID on Active Directory.
+        email_attribute : Optional[str]
+            Attribute holding the email address. Defaults to mail.
+        name_attribute : Optional[str]
+            Attribute holding the display name. Defaults to cn.
+        phone_attribute : Optional[str]
+            Attribute holding the phone number, in international format. Leave empty, the default, to leave the phone unmapped. For example: mobile
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+
+        Returns
+        -------
+        ProjectModel[T]
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/ldap'
+        api_params = {}
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+        if hosts is not None:
+            api_params['hosts'] = self._normalize_value(hosts)
+        if port is not None:
+            api_params['port'] = self._normalize_value(port)
+        if encryption is not None:
+            api_params['encryption'] = self._normalize_value(encryption)
+        if verification is not None:
+            api_params['verification'] = self._normalize_value(verification)
+        if certificate is not None:
+            api_params['certificate'] = self._normalize_value(certificate)
+        if timeout is not None:
+            api_params['timeout'] = self._normalize_value(timeout)
+        if base_dn is not None:
+            api_params['baseDn'] = self._normalize_value(base_dn)
+        if bind_dn is not None:
+            api_params['bindDn'] = self._normalize_value(bind_dn)
+        if bind_password is not None:
+            api_params['bindPassword'] = self._normalize_value(bind_password)
+        if user_filter is not None:
+            api_params['userFilter'] = self._normalize_value(user_filter)
+        if required_group_dn is not None:
+            api_params['requiredGroupDn'] = self._normalize_value(required_group_dn)
+        if id_attribute is not None:
+            api_params['idAttribute'] = self._normalize_value(id_attribute)
+        if email_attribute is not None:
+            api_params['emailAttribute'] = self._normalize_value(email_attribute)
+        if name_attribute is not None:
+            api_params['nameAttribute'] = self._normalize_value(name_attribute)
+        if phone_attribute is not None:
+            api_params['phoneAttribute'] = self._normalize_value(phone_attribute)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return ProjectModel.with_data(response, model_type)
+
+    def create_ldap_test(
+        self,
+        username: Optional[str] = None,
+        password: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Test the stored LDAP configuration against the directory without signing anyone in. Connects to the directory, binds as the service account and reads the base DN. Pass a username to also look the user up and check the required group, and a password to also verify it. The error names the step that failed.
+
+        Parameters
+        ----------
+        username : Optional[str]
+            Username to look up in the directory. Leave empty to test the connection and service account only.
+        password : Optional[str]
+            Password of the user to verify. Only used together with a username.
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/ldap/tests'
+        api_params = {}
+        if username is not None:
+            api_params['username'] = self._normalize_value(username)
+        if password is not None:
+            api_params['password'] = self._normalize_value(password)
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return response
 
     def list_mock_phones(
         self,
@@ -2579,6 +2745,56 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Microsoft)
 
+    def update_o_auth2_naver(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Naver:
+        """
+        Update the project OAuth2 Naver configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Naver OAuth2 app. For example: jK8pQ0000000000000Zv
+        client_secret : Optional[str]
+            'Client Secret' of Naver OAuth2 app. For example: 9f42A0000000000c1dEb. Find it under Application > My Applications, on the overview of your app
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Naver
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/naver'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Naver)
+
     def update_o_auth2_notion(
         self,
         oauth_client_id: Optional[str] = None,
@@ -3884,6 +4100,7 @@ class Project(Service):
         OAuth2Microsoft,
         OAuth2TikTok,
         OAuth2Kakao,
+        OAuth2Naver,
         OAuth2Vipps,
     ]:
         """
@@ -3895,7 +4112,7 @@ class Project(Service):
             OAuth2 provider key. For example: github, google, apple.
         Returns
         -------
-        Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Webflow, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2HuggingFace, OAuth2Resend, OAuth2Cloudflare, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2TikTok, OAuth2Kakao, OAuth2Vipps]
+        Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Webflow, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2HuggingFace, OAuth2Resend, OAuth2Cloudflare, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2TikTok, OAuth2Kakao, OAuth2Naver, OAuth2Vipps]
             API response as one of the typed response models
 
         Raises
@@ -4066,6 +4283,9 @@ class Project(Service):
         if response.get('$id') == 'kakao':
             return self._parse_response(response, model=OAuth2Kakao)
 
+        if response.get('$id') == 'naver':
+            return self._parse_response(response, model=OAuth2Naver)
+
         if response.get('$id') == 'vipps':
             return self._parse_response(response, model=OAuth2Vipps)
 
@@ -4073,6 +4293,38 @@ class Project(Service):
             return self._parse_response(response, model=OAuth2Vipps)
 
         raise AppwriteException('Unable to match response to any known model')
+
+    def delete_passwords(
+        self,
+    ) -> Dict[str, Any]:
+        """
+        Delete all passwords in the project, forcing every user to reset their password. Any password set before this request stops working for email and password sign-in immediately: signing in returns a `user_password_reset_required` error until the user sets a new password through password recovery, or until a new password is set for them with the Users API. Existing sessions are not affected; call the delete sessions endpoint to sign users out as well. Users without a password and API keys are not affected by this action.
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/passwords'
+        api_params = {}
+
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return response
 
     def list_platforms(
         self,

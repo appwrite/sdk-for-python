@@ -30,7 +30,7 @@ class OAuth2Google(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')
-    clientsecret: str = Field(..., alias='clientSecret')
+    clientsecret: str = Field(..., alias='clientSecret', json_schema_extra={'format': 'password'})
     prompt: List[OAuth2GooglePrompt] = Field(..., alias='prompt')
     nativeenabled: bool = Field(..., alias='nativeEnabled')
     nativeclientids: List[Any] = Field(..., alias='nativeClientIds')

@@ -23,7 +23,7 @@ class OAuth2Notion(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     oauthclientid: str = Field(..., alias='oauthClientId')
-    oauthclientsecret: str = Field(..., alias='oauthClientSecret')
+    oauthclientsecret: str = Field(..., alias='oauthClientSecret', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

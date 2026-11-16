@@ -39,7 +39,7 @@ class Key(AppwriteModel):
     description: str = Field(..., alias='description')
     expire: str = Field(..., alias='expire')
     scopes: List[Any] = Field(..., alias='scopes')
-    secret: str = Field(..., alias='secret')
+    secret: str = Field(..., alias='secret', json_schema_extra={'format': 'password'})
     accessedat: str = Field(..., alias='accessedAt')
     sdks: List[Any] = Field(..., alias='sdks')
 

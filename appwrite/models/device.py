@@ -33,7 +33,7 @@ class Device(AppwriteModel):
     expire: str = Field(..., alias='expire')
     activesessionid: str = Field(..., alias='activeSessionId')
     sessions: List[Session] = Field(..., alias='sessions')
-    secret: str = Field(..., alias='secret')
+    secret: str = Field(..., alias='secret', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

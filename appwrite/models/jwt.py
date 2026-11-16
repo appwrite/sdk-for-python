@@ -14,7 +14,7 @@ class Jwt(AppwriteModel):
         JWT encoded string.
     """
 
-    jwt: str = Field(..., alias='jwt')
+    jwt: str = Field(..., alias='jwt', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

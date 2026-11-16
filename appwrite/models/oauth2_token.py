@@ -26,13 +26,13 @@ class Oauth2Token(AppwriteModel):
         OpenID Connect ID token. Returned when the `openid` scope is granted.
     """
 
-    access_token: str = Field(..., alias='access_token')
+    access_token: str = Field(..., alias='access_token', json_schema_extra={'format': 'password'})
     token_type: str = Field(..., alias='token_type')
     expires_in: float = Field(..., alias='expires_in')
-    refresh_token: str = Field(..., alias='refresh_token')
+    refresh_token: str = Field(..., alias='refresh_token', json_schema_extra={'format': 'password'})
     scope: str = Field(..., alias='scope')
     authorization_details: Optional[str] = Field(default=None, alias='authorization_details')
-    id_token: Optional[str] = Field(default=None, alias='id_token')
+    id_token: Optional[str] = Field(default=None, alias='id_token', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

@@ -24,7 +24,7 @@ class Oauth2DeviceAuthorization(AppwriteModel):
         Minimum polling interval for the token endpoint in seconds.
     """
 
-    device_code: str = Field(..., alias='device_code')
+    device_code: str = Field(..., alias='device_code', json_schema_extra={'format': 'password'})
     user_code: str = Field(..., alias='user_code')
     verification_uri: str = Field(..., alias='verification_uri')
     verification_uri_complete: str = Field(..., alias='verification_uri_complete')

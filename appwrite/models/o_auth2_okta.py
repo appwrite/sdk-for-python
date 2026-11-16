@@ -30,7 +30,7 @@ class OAuth2Okta(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     clientid: str = Field(..., alias='clientId')
-    clientsecret: str = Field(..., alias='clientSecret')
+    clientsecret: str = Field(..., alias='clientSecret', json_schema_extra={'format': 'password'})
     prompt: List[OAuth2OktaPrompt] = Field(..., alias='prompt')
     domain: str = Field(..., alias='domain')
     authorizationserverid: str = Field(..., alias='authorizationServerId')

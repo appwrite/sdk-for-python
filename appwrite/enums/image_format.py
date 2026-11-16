@@ -9,3 +9,4 @@ class ImageFormat(Enum):
     HEIC = "heic"
     AVIF = "avif"
     GIF = "gif"
+    AUTO = "auto"

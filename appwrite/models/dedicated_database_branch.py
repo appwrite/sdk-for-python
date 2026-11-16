@@ -44,10 +44,10 @@ class DedicatedDatabaseBranch(AppwriteModel):
     port: Optional[float] = Field(default=None, alias='port')
     database: str = Field(..., alias='database')
     username: str = Field(..., alias='username')
-    password: str = Field(..., alias='password')
+    password: str = Field(..., alias='password', json_schema_extra={'format': 'password'})
     ssl: bool = Field(..., alias='ssl')
     engine: str = Field(..., alias='engine')
-    connectionstring: str = Field(..., alias='connectionString')
+    connectionstring: str = Field(..., alias='connectionString', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

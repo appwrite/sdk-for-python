@@ -23,7 +23,7 @@ class OAuth2Etsy(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     keystring: str = Field(..., alias='keyString')
-    sharedsecret: str = Field(..., alias='sharedSecret')
+    sharedsecret: str = Field(..., alias='sharedSecret', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

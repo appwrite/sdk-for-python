@@ -25,7 +25,7 @@ class OAuth2Gitlab(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     applicationid: str = Field(..., alias='applicationId')
-    secret: str = Field(..., alias='secret')
+    secret: str = Field(..., alias='secret', json_schema_extra={'format': 'password'})
     endpoint: str = Field(..., alias='endpoint')
 
     @model_validator(mode='before')

@@ -1970,6 +1970,69 @@ class AccountServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_create_ldap_session(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "userId": "5e5bb8c16897e",
+            "userName": "John Doe",
+            "expire": "2020-10-15T06:38:00.000+00:00",
+            "provider": "email",
+            "providerUid": "user@example.com",
+            "providerAccessToken": "MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3",
+            "providerAccessTokenExpiry": "2020-10-15T06:38:00.000+00:00",
+            "providerRefreshToken": "MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3",
+            "ip": "127.0.0.1",
+            "osCode": "Mac",
+            "osName": "Mac",
+            "osVersion": "Mac",
+            "clientType": "browser",
+            "clientCode": "CM",
+            "clientName": "Chrome Mobile iOS",
+            "clientVersion": "84.0",
+            "clientEngine": "WebKit",
+            "clientEngineVersion": "605.1.15",
+            "deviceName": "smartphone",
+            "deviceBrand": "Google",
+            "deviceModel": "Nexus 5",
+            "countryCode": "US",
+            "countryName": "United States",
+            "current": True,
+            "factors": [],
+            "secret": "5e5bb8c16897e",
+            "mfaUpdatedAt": "2020-10-15T06:38:00.000+00:00",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'POST',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.account.create_ldap_session(
+            '<USERNAME>',
+            'password',
+            duration=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/account/sessions/ldap',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'username': '<USERNAME>',
+                'password': 'password',
+                'duration': 1,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_magic_url_session(self, m):
         data = {
             "$id": "5e5ea5c16897e",

@@ -23,7 +23,7 @@ class OAuth2Tradeshift(AppwriteModel):
     id: str = Field(..., alias='$id')
     enabled: bool = Field(..., alias='enabled')
     oauth2clientid: str = Field(..., alias='oauth2ClientId')
-    oauth2clientsecret: str = Field(..., alias='oauth2ClientSecret')
+    oauth2clientsecret: str = Field(..., alias='oauth2ClientSecret', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

@@ -16,8 +16,8 @@ class MfaType(AppwriteModel):
         URI for authenticator apps.
     """
 
-    secret: str = Field(..., alias='secret')
-    uri: str = Field(..., alias='uri')
+    secret: str = Field(..., alias='secret', json_schema_extra={'format': 'password'})
+    uri: str = Field(..., alias='uri', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

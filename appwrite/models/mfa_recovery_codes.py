@@ -14,7 +14,7 @@ class MfaRecoveryCodes(AppwriteModel):
         Recovery codes.
     """
 
-    recoverycodes: List[Any] = Field(..., alias='recoveryCodes')
+    recoverycodes: List[Any] = Field(..., alias='recoveryCodes', json_schema_extra={'format': 'password'})
 
     @model_validator(mode='before')
     @classmethod

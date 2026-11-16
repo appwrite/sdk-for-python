@@ -595,6 +595,8 @@ class Avatars(Service):
 
         When width and height are specified, the image is resized accordingly. If both dimensions are 0, the API provides an image at original size. If dimensions are not specified, the default viewport size is 1280x720px.
 
+        Set `output` to `auto` to receive avif or webp when the `Accept` header of your request supports it, falling back to png.
+
         Parameters
         ----------
         url : str
@@ -636,7 +638,7 @@ class Avatars(Service):
         quality : Optional[float]
             Screenshot quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
         output : Optional[ImageFormat]
-            Output format type (jpeg, jpg, png, gif and webp).
+            Output format type (jpeg, jpg, png, gif, webp, heic and avif). Pass auto to serve avif or webp when the Accept header of your request supports it, falling back to png.
         Returns
         -------
         bytes
@@ -697,7 +699,7 @@ class Avatars(Service):
             api_path,
             {
                 'X-Appwrite-Project': self.client.get_config('project'),
-                'accept': 'image/png',
+                'accept': 'image/*',
             },
             api_params,
         )

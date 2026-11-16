@@ -81,7 +81,7 @@ class User(AppwriteModel, Generic[T]):
     createdat: str = Field(..., alias='$createdAt')
     updatedat: str = Field(..., alias='$updatedAt')
     name: str = Field(..., alias='name')
-    password: Optional[str] = Field(default=None, alias='password')
+    password: Optional[str] = Field(default=None, alias='password', json_schema_extra={'format': 'password'})
     hash: Optional[str] = Field(default=None, alias='hash')
     hashoptions: Optional[
         Union[
