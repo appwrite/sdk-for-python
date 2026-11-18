@@ -160,6 +160,19 @@ from .o_auth2_salesforce import OAuth2Salesforce
 from .o_auth2_yahoo import OAuth2Yahoo
 from .o_auth2_cloudflare import OAuth2Cloudflare
 from .o_auth2_hugging_face import OAuth2HuggingFace
+from .o_auth2_instagram import OAuth2Instagram
+from .o_auth2_patreon import OAuth2Patreon
+from .o_auth2_strava import OAuth2Strava
+from .o_auth2_vk import OAuth2VK
+from .o_auth2_netlify import OAuth2Netlify
+from .o_auth2_railway import OAuth2Railway
+from .o_auth2_reddit import OAuth2Reddit
+from .o_auth2_vercel import OAuth2Vercel
+from .o_auth2_atlassian import OAuth2Atlassian
+from .o_auth2_line import OAuth2Line
+from .o_auth2_linear import OAuth2Linear
+from .o_auth2_roblox import OAuth2Roblox
+from .o_auth2_work_os import OAuth2WorkOS
 from .o_auth2_linkedin import OAuth2Linkedin
 from .o_auth2_disqus import OAuth2Disqus
 from .o_auth2_amazon import OAuth2Amazon
@@ -493,6 +506,19 @@ __all__ = [
     'OAuth2Yahoo',
     'OAuth2Cloudflare',
     'OAuth2HuggingFace',
+    'OAuth2Instagram',
+    'OAuth2Patreon',
+    'OAuth2Strava',
+    'OAuth2VK',
+    'OAuth2Netlify',
+    'OAuth2Railway',
+    'OAuth2Reddit',
+    'OAuth2Vercel',
+    'OAuth2Atlassian',
+    'OAuth2Line',
+    'OAuth2Linear',
+    'OAuth2Roblox',
+    'OAuth2WorkOS',
     'OAuth2Linkedin',
     'OAuth2Disqus',
     'OAuth2Amazon',

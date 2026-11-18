@@ -102,6 +102,9 @@ class Functions(Service):
         deployment_retention: Optional[float] = None,
         interval: Optional[float] = None,
         description: Optional[str] = None,
+        provider_comments: Optional[bool] = None,
+        provider_deployments: Optional[bool] = None,
+        provider_statuses: Optional[bool] = None,
     ) -> Function:
         """
         Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
@@ -139,7 +142,7 @@ class Functions(Service):
         provider_branch : Optional[str]
             Production branch for the repo linked to the function.
         provider_silent_mode : Optional[bool]
-            Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
+            Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, no comments or checks are posted to commits and pull requests.
         provider_root_directory : Optional[str]
             Path to function code in the linked repo.
         provider_branches : Optional[List[str]]
@@ -156,6 +159,12 @@ class Functions(Service):
             Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule.
         description : Optional[str]
             Optional description for the function.
+        provider_comments : Optional[bool]
+            Post a build summary on pull requests for the repo linked to the function. Commit statuses are still reported when disabled. Ignored in silent mode.
+        provider_deployments : Optional[bool]
+            Deploy every push that matches the branch and path rules for the repo linked to the function. When disabled, deploy manually.
+        provider_statuses : Optional[bool]
+            Report the build status on each commit for the repo linked to the function. Ignored in silent mode.
         Returns
         -------
         Function
@@ -220,6 +229,12 @@ class Functions(Service):
             api_params['interval'] = self._normalize_value(interval)
         if description is not None:
             api_params['description'] = self._normalize_value(description)
+        if provider_comments is not None:
+            api_params['providerComments'] = self._normalize_value(provider_comments)
+        if provider_deployments is not None:
+            api_params['providerDeployments'] = self._normalize_value(provider_deployments)
+        if provider_statuses is not None:
+            api_params['providerStatuses'] = self._normalize_value(provider_statuses)
 
         response = self.client.call(
             'post',
@@ -383,6 +398,9 @@ class Functions(Service):
         deployment_retention: Optional[float] = None,
         interval: Optional[float] = None,
         description: Optional[str] = None,
+        provider_comments: Optional[bool] = None,
+        provider_deployments: Optional[bool] = None,
+        provider_statuses: Optional[bool] = None,
         email_enabled: Optional[bool] = None,
     ) -> Function:
         """
@@ -421,7 +439,7 @@ class Functions(Service):
         provider_branch : Optional[str]
             Production branch for the repo linked to the function
         provider_silent_mode : Optional[bool]
-            Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
+            Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, no comments or checks are posted to commits and pull requests.
         provider_root_directory : Optional[str]
             Path to function code in the linked repo.
         provider_branches : Optional[List[str]]
@@ -438,6 +456,12 @@ class Functions(Service):
             Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule. When omitted, the current interval is kept unless schedule is set.
         description : Optional[str]
             Optional description for the function.
+        provider_comments : Optional[bool]
+            Post a build summary on pull requests for the repo linked to the function. Commit statuses are still reported when disabled. Ignored in silent mode.
+        provider_deployments : Optional[bool]
+            Deploy every push that matches the branch and path rules for the repo linked to the function. When disabled, deploy manually.
+        provider_statuses : Optional[bool]
+            Report the build status on each commit for the repo linked to the function. Ignored in silent mode.
         email_enabled : Optional[bool]
             Enable inbound email triggering for this function. When false or omitted on create, SMTP recipients are rejected. Opt-in; default is off.
         Returns
@@ -503,6 +527,12 @@ class Functions(Service):
             api_params['interval'] = self._normalize_value(interval)
         if description is not None:
             api_params['description'] = self._normalize_value(description)
+        if provider_comments is not None:
+            api_params['providerComments'] = self._normalize_value(provider_comments)
+        if provider_deployments is not None:
+            api_params['providerDeployments'] = self._normalize_value(provider_deployments)
+        if provider_statuses is not None:
+            api_params['providerStatuses'] = self._normalize_value(provider_statuses)
         if email_enabled is not None:
             api_params['emailEnabled'] = self._normalize_value(email_enabled)
 

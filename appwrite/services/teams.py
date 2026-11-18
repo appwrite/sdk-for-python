@@ -9,6 +9,7 @@ from ..models.app_installation_list import AppInstallationList
 from ..models.app_installation import AppInstallation
 from ..models.membership_list import MembershipList
 from ..models.membership import Membership
+from ..input_file import InputFile
 from ..models.preferences import Preferences
 
 T = TypeVar('T')
@@ -855,6 +856,169 @@ class Teams(Service):
         )
 
         return self._parse_response(response, model=Membership)
+
+    def get_photo(
+        self,
+        team_id: str,
+        width: Optional[float] = None,
+        height: Optional[float] = None,
+        quality: Optional[float] = None,
+        output: Optional[str] = None,
+    ) -> bytes:
+        """
+        Returns the photo of a team: the uploaded photo (see teams.updatePhoto), else the initials of the team name, else a built-in static placeholder.
+
+        Parameters
+        ----------
+        team_id : str
+            Team ID.
+        width : Optional[float]
+            Output image width in pixels. Pass an integer between 0 and 2000. Defaults to 256.
+        height : Optional[float]
+            Output image height in pixels. Pass an integer between 0 and 2000. Defaults to 256.
+        quality : Optional[float]
+            Output image quality between 0 and 100. Defaults to 100.
+        output : Optional[str]
+            Output image format. Defaults to 'png'.
+        Returns
+        -------
+        bytes
+            Response as bytes
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/teams/{teamId}/photo'
+        api_params = {}
+        if team_id is None or team_id == '':
+            raise AppwriteException('Missing required parameter: "team_id"')
+        api_path = api_path.replace('{teamId}', self._encode_path(team_id))
+        if width is not None:
+            api_params['width'] = self._normalize_value(width)
+        if height is not None:
+            api_params['height'] = self._normalize_value(height)
+        if quality is not None:
+            api_params['quality'] = self._normalize_value(quality)
+        if output is not None:
+            api_params['output'] = self._normalize_value(output)
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'image/*',
+            },
+            api_params,
+        )
+
+        return response
+
+    def update_photo(
+        self,
+        team_id: str,
+        file: InputFile,
+        on_progress=None,
+        model_type: Type[T] = dict,
+    ) -> Team[T]:
+        """
+        Update the photo of a team. Updating an already customized photo replaces it. The image must be at most 5MB and is sent in a single request.
+
+        Parameters
+        ----------
+        team_id : str
+            Team ID.
+        file : InputFile
+            Binary image file of at most 5MB. Allowed file types are png, jpg, jpeg, and webp.
+        on_progress : callable, optional
+            Optional callback for upload progress
+
+        model_type : Type[T], optional
+            Pydantic model class for the user-defined data. Defaults to dict for backward compatibility.
+
+        Returns
+        -------
+        Team[T]
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/teams/{teamId}/photo'
+        api_params = {}
+        if team_id is None or team_id == '':
+            raise AppwriteException('Missing required parameter: "team_id"')
+        if file is None:
+            raise AppwriteException('Missing required parameter: "file"')
+        api_path = api_path.replace('{teamId}', self._encode_path(team_id))
+        api_params['file'] = self._normalize_value(file)
+
+        param_name = 'file'
+
+        upload_id = ''
+
+        response = self.client.chunked_upload(
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'multipart/form-data',
+                'accept': 'application/json',
+            },
+            api_params,
+            param_name,
+            on_progress,
+            upload_id,
+            method='put',
+        )
+
+        return Team.with_data(response, model_type)
+
+    def delete_photo(
+        self,
+        team_id: str,
+    ) -> Dict[str, Any]:
+        """
+        Delete the photo of a team and store the built-in static placeholder in its place. The placeholder is the team's photo from then on, so it takes priority over the initials of the team name until a new photo is uploaded with teams.updatePhoto.
+
+        Parameters
+        ----------
+        team_id : str
+            Team ID.
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/teams/{teamId}/photo'
+        api_params = {}
+        if team_id is None or team_id == '':
+            raise AppwriteException('Missing required parameter: "team_id"')
+        api_path = api_path.replace('{teamId}', self._encode_path(team_id))
+
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return response
 
     def get_prefs(
         self,

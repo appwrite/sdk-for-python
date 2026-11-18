@@ -45,6 +45,19 @@ from .o_auth2_okta import OAuth2Okta
 from .o_auth2_kick import OAuth2Kick
 from .o_auth2_microsoft import OAuth2Microsoft
 from .o_auth2_hugging_face import OAuth2HuggingFace
+from .o_auth2_instagram import OAuth2Instagram
+from .o_auth2_patreon import OAuth2Patreon
+from .o_auth2_strava import OAuth2Strava
+from .o_auth2_vk import OAuth2VK
+from .o_auth2_netlify import OAuth2Netlify
+from .o_auth2_railway import OAuth2Railway
+from .o_auth2_reddit import OAuth2Reddit
+from .o_auth2_vercel import OAuth2Vercel
+from .o_auth2_atlassian import OAuth2Atlassian
+from .o_auth2_line import OAuth2Line
+from .o_auth2_linear import OAuth2Linear
+from .o_auth2_roblox import OAuth2Roblox
+from .o_auth2_work_os import OAuth2WorkOS
 from .o_auth2_resend import OAuth2Resend
 from .o_auth2_cloudflare import OAuth2Cloudflare
 from .o_auth2_tik_tok import OAuth2TikTok
@@ -61,7 +74,7 @@ class OAuth2ProviderList(AppwriteModel):
     ----------
     total : float
         Total number of OAuth2 providers in the given project.
-    providers : List[Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Webflow, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Appwrite, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2HuggingFace, OAuth2Resend, OAuth2Cloudflare, OAuth2TikTok, OAuth2Kakao, OAuth2Naver, OAuth2Vipps]]
+    providers : List[Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Webflow, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Appwrite, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2HuggingFace, OAuth2Instagram, OAuth2Patreon, OAuth2Strava, OAuth2VK, OAuth2Netlify, OAuth2Railway, OAuth2Reddit, OAuth2Vercel, OAuth2Atlassian, OAuth2Line, OAuth2Linear, OAuth2Roblox, OAuth2WorkOS, OAuth2Resend, OAuth2Cloudflare, OAuth2TikTok, OAuth2Kakao, OAuth2Naver, OAuth2Vipps]]
         List of OAuth2 providers.
     """
 
@@ -111,6 +124,19 @@ class OAuth2ProviderList(AppwriteModel):
             OAuth2Kick,
             OAuth2Microsoft,
             OAuth2HuggingFace,
+            OAuth2Instagram,
+            OAuth2Patreon,
+            OAuth2Strava,
+            OAuth2VK,
+            OAuth2Netlify,
+            OAuth2Railway,
+            OAuth2Reddit,
+            OAuth2Vercel,
+            OAuth2Atlassian,
+            OAuth2Line,
+            OAuth2Linear,
+            OAuth2Roblox,
+            OAuth2WorkOS,
             OAuth2Resend,
             OAuth2Cloudflare,
             OAuth2TikTok,

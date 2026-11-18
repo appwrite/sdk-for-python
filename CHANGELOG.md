@@ -1,5 +1,12 @@
 # Change Log
 
+## 28.0.0
+
+* Breaking: `email_enabled` moved after the new provider params in positional `functions.update` calls
+* Added: `provider_comments`, `provider_deployments` and `provider_statuses` on function and site create and update, and on `Function` and `Site`
+* Added: `teams.get_photo`, `teams.update_photo` and `teams.delete_photo`
+* Added: `project` OAuth2 settings for Atlassian, Instagram, LINE, Linear, Netlify, Patreon, Railway, Reddit, Roblox, Strava, Vercel, VK and WorkOS
+
 ## 27.3.0
 
 * Added: `account.create_ldap_session` for LDAP sign-in

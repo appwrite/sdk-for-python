@@ -26,6 +26,19 @@ from appwrite.models import OAuth2Notion
 from appwrite.models import OAuth2Salesforce
 from appwrite.models import OAuth2Yahoo
 from appwrite.models import OAuth2HuggingFace
+from appwrite.models import OAuth2Instagram
+from appwrite.models import OAuth2Patreon
+from appwrite.models import OAuth2Strava
+from appwrite.models import OAuth2VK
+from appwrite.models import OAuth2Netlify
+from appwrite.models import OAuth2Railway
+from appwrite.models import OAuth2Reddit
+from appwrite.models import OAuth2Vercel
+from appwrite.models import OAuth2Atlassian
+from appwrite.models import OAuth2Line
+from appwrite.models import OAuth2Linear
+from appwrite.models import OAuth2Roblox
+from appwrite.models import OAuth2WorkOS
 from appwrite.models import OAuth2Resend
 from appwrite.models import OAuth2Cloudflare
 from appwrite.models import OAuth2Linkedin
@@ -59,7 +72,7 @@ client.set_key('<YOUR_API_KEY>') # Your secret API key
 
 project = Project(client)
 
-result: Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Webflow, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2HuggingFace, OAuth2Resend, OAuth2Cloudflare, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2TikTok, OAuth2Kakao, OAuth2Naver, OAuth2Vipps] = project.get_o_auth2_provider(
+result: Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Webflow, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2HuggingFace, OAuth2Instagram, OAuth2Patreon, OAuth2Strava, OAuth2VK, OAuth2Netlify, OAuth2Railway, OAuth2Reddit, OAuth2Vercel, OAuth2Atlassian, OAuth2Line, OAuth2Linear, OAuth2Roblox, OAuth2WorkOS, OAuth2Resend, OAuth2Cloudflare, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2TikTok, OAuth2Kakao, OAuth2Naver, OAuth2Vipps] = project.get_o_auth2_provider(
     provider_id = ProjectOAuthProviderId.AMAZON
 )
 

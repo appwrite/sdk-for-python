@@ -19,6 +19,7 @@ from ..models.o_auth2_provider_list import OAuth2ProviderList
 from ..models.o_auth2_amazon import OAuth2Amazon
 from ..models.o_auth2_apple import OAuth2Apple
 from ..models.o_auth2_appwrite import OAuth2Appwrite
+from ..models.o_auth2_atlassian import OAuth2Atlassian
 from ..enums.project_o_auth2_auth0_prompt import ProjectOAuth2Auth0Prompt
 from ..models.o_auth2_auth0 import OAuth2Auth0
 from ..models.o_auth2_authentik import OAuth2Authentik
@@ -42,33 +43,45 @@ from ..models.o_auth2_gitlab import OAuth2Gitlab
 from ..enums.project_o_auth2_google_prompt import ProjectOAuth2GooglePrompt
 from ..models.o_auth2_google import OAuth2Google
 from ..models.o_auth2_hugging_face import OAuth2HuggingFace
+from ..models.o_auth2_instagram import OAuth2Instagram
 from ..enums.project_o_auth2_kakao_prompt import ProjectOAuth2KakaoPrompt
 from ..models.o_auth2_kakao import OAuth2Kakao
 from ..models.o_auth2_keycloak import OAuth2Keycloak
 from ..models.o_auth2_kick import OAuth2Kick
+from ..models.o_auth2_line import OAuth2Line
+from ..models.o_auth2_linear import OAuth2Linear
 from ..models.o_auth2_linkedin import OAuth2Linkedin
 from ..enums.project_o_auth2_microsoft_prompt import ProjectOAuth2MicrosoftPrompt
 from ..models.o_auth2_microsoft import OAuth2Microsoft
 from ..models.o_auth2_naver import OAuth2Naver
+from ..models.o_auth2_netlify import OAuth2Netlify
 from ..models.o_auth2_notion import OAuth2Notion
 from ..enums.project_o_auth2_oidc_prompt import ProjectOAuth2OidcPrompt
 from ..models.o_auth2_oidc import OAuth2Oidc
 from ..enums.project_o_auth2_okta_prompt import ProjectOAuth2OktaPrompt
 from ..models.o_auth2_okta import OAuth2Okta
+from ..models.o_auth2_patreon import OAuth2Patreon
 from ..models.o_auth2_paypal import OAuth2Paypal
 from ..models.o_auth2_podio import OAuth2Podio
+from ..models.o_auth2_railway import OAuth2Railway
+from ..models.o_auth2_reddit import OAuth2Reddit
 from ..models.o_auth2_resend import OAuth2Resend
+from ..models.o_auth2_roblox import OAuth2Roblox
 from ..enums.project_o_auth2_salesforce_prompt import ProjectOAuth2SalesforcePrompt
 from ..models.o_auth2_salesforce import OAuth2Salesforce
 from ..models.o_auth2_slack import OAuth2Slack
 from ..models.o_auth2_spotify import OAuth2Spotify
+from ..models.o_auth2_strava import OAuth2Strava
 from ..models.o_auth2_stripe import OAuth2Stripe
 from ..models.o_auth2_tik_tok import OAuth2TikTok
 from ..models.o_auth2_tradeshift import OAuth2Tradeshift
 from ..models.o_auth2_twitch import OAuth2Twitch
+from ..models.o_auth2_vercel import OAuth2Vercel
 from ..models.o_auth2_vipps import OAuth2Vipps
+from ..models.o_auth2_vk import OAuth2VK
 from ..models.o_auth2_webflow import OAuth2Webflow
 from ..models.o_auth2_word_press import OAuth2WordPress
+from ..models.o_auth2_work_os import OAuth2WorkOS
 from ..models.o_auth2_x import OAuth2X
 from ..models.o_auth2_yahoo import OAuth2Yahoo
 from ..models.o_auth2_yandex import OAuth2Yandex
@@ -1470,6 +1483,56 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Appwrite)
 
+    def update_o_auth2_atlassian(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Atlassian:
+        """
+        Update the project OAuth2 Atlassian configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Atlassian OAuth2 app. For example: uQ7mZ3s0000000000000000000000000
+        client_secret : Optional[str]
+            'Client Secret' of Atlassian OAuth2 app. For example: ATOA0000000000000000000000000000000000000000000000000000000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Atlassian
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/atlassian'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Atlassian)
+
     def update_o_auth2_auth0(
         self,
         client_id: Optional[str] = None,
@@ -2470,6 +2533,56 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2HuggingFace)
 
+    def update_o_auth2_instagram(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Instagram:
+        """
+        Update the project OAuth2 Instagram configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Instagram OAuth2 app. For example: 00000000000000000000000000000000
+        client_secret : Optional[str]
+            'Client Secret' of Instagram OAuth2 app. For example: 00000000000000000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Instagram
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/instagram'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Instagram)
+
     def update_o_auth2_kakao(
         self,
         client_id: Optional[str] = None,
@@ -2635,6 +2748,106 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Kick)
 
+    def update_o_auth2_line(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Line:
+        """
+        Update the project OAuth2 LINE configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of LINE OAuth2 app. For example: 1650000000
+        client_secret : Optional[str]
+            'Client Secret' of LINE OAuth2 app. For example: a1b2c3d4e5f600000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Line
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/line'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Line)
+
+    def update_o_auth2_linear(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Linear:
+        """
+        Update the project OAuth2 Linear configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Linear OAuth2 app. For example: 5e1c0000000000000000000000000000
+        client_secret : Optional[str]
+            'Client Secret' of Linear OAuth2 app. For example: 9f8e7d6c5b4a00000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Linear
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/linear'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Linear)
+
     def update_o_auth2_linkedin(
         self,
         client_id: Optional[str] = None,
@@ -2794,6 +3007,56 @@ class Project(Service):
         )
 
         return self._parse_response(response, model=OAuth2Naver)
+
+    def update_o_auth2_netlify(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Netlify:
+        """
+        Update the project OAuth2 Netlify configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Netlify OAuth2 app. For example: 00000000000000000000000000000000
+        client_secret : Optional[str]
+            'Client Secret' of Netlify OAuth2 app. For example: 00000000000000000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Netlify
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/netlify'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Netlify)
 
     def update_o_auth2_notion(
         self,
@@ -2990,6 +3253,56 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Okta)
 
+    def update_o_auth2_patreon(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Patreon:
+        """
+        Update the project OAuth2 Patreon configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Patreon OAuth2 app. For example: 00000000000000000000000000000000
+        client_secret : Optional[str]
+            'Client Secret' of Patreon OAuth2 app. For example: 00000000000000000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Patreon
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/patreon'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Patreon)
+
     def update_o_auth2_paypal(
         self,
         client_id: Optional[str] = None,
@@ -3140,6 +3453,106 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Podio)
 
+    def update_o_auth2_railway(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Railway:
+        """
+        Update the project OAuth2 Railway configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Railway OAuth2 app. For example: 00000000000000000000000000000000
+        client_secret : Optional[str]
+            'Client Secret' of Railway OAuth2 app. For example: 00000000000000000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Railway
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/railway'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Railway)
+
+    def update_o_auth2_reddit(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Reddit:
+        """
+        Update the project OAuth2 Reddit configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Reddit OAuth2 app. For example: aBcD0000000000000000aB
+        client_secret : Optional[str]
+            'Client Secret' of Reddit OAuth2 app. For example: xYz00000000000000000000000000a
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Reddit
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/reddit'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Reddit)
+
     def update_o_auth2_resend(
         self,
         client_id: Optional[str] = None,
@@ -3189,6 +3602,56 @@ class Project(Service):
         )
 
         return self._parse_response(response, model=OAuth2Resend)
+
+    def update_o_auth2_roblox(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Roblox:
+        """
+        Update the project OAuth2 Roblox configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Roblox OAuth2 app. For example: 1234567890123456789
+        client_secret : Optional[str]
+            'Client Secret' of Roblox OAuth2 app. For example: RBX-0000000000000000000000000000000000000000000000000000000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Roblox
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/roblox'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Roblox)
 
     def update_o_auth2_salesforce(
         self,
@@ -3344,6 +3807,56 @@ class Project(Service):
         )
 
         return self._parse_response(response, model=OAuth2Spotify)
+
+    def update_o_auth2_strava(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Strava:
+        """
+        Update the project OAuth2 Strava configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Strava OAuth2 app. For example: 00000000000000000000000000000000
+        client_secret : Optional[str]
+            'Client Secret' of Strava OAuth2 app. For example: 00000000000000000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Strava
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/strava'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Strava)
 
     def update_o_auth2_stripe(
         self,
@@ -3595,6 +4108,56 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Twitch)
 
+    def update_o_auth2_vercel(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2Vercel:
+        """
+        Update the project OAuth2 Vercel configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of Vercel OAuth2 app. For example: cl_0000000000000000000000000000000
+        client_secret : Optional[str]
+            'Client Secret' of Vercel OAuth2 app. For example: vc_0000000000000000000000000000000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2Vercel
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/vercel'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2Vercel)
+
     def update_o_auth2_vipps(
         self,
         client_id: Optional[str] = None,
@@ -3695,6 +4258,56 @@ class Project(Service):
 
         return self._parse_response(response, model=OAuth2Vipps)
 
+    def update_o_auth2_vk(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2VK:
+        """
+        Update the project OAuth2 VK configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of VK OAuth2 app. For example: 00000000000000000000000000000000
+        client_secret : Optional[str]
+            'Client Secret' of VK OAuth2 app. For example: 00000000000000000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2VK
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/vk'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2VK)
+
     def update_o_auth2_webflow(
         self,
         client_id: Optional[str] = None,
@@ -3794,6 +4407,56 @@ class Project(Service):
         )
 
         return self._parse_response(response, model=OAuth2WordPress)
+
+    def update_o_auth2_work_os(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> OAuth2WorkOS:
+        """
+        Update the project OAuth2 WorkOS configuration.
+
+        Parameters
+        ----------
+        client_id : Optional[str]
+            'Client ID' of WorkOS OAuth2 app. For example: client_01H0000000000000000000000
+        client_secret : Optional[str]
+            'Client Secret' of WorkOS OAuth2 app. For example: wos0000000000000000000000000000000000000000000000000000000000000
+        enabled : Optional[bool]
+            OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+        Returns
+        -------
+        OAuth2WorkOS
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/oauth2/workos'
+        api_params = {}
+        if client_id is not None:
+            api_params['clientId'] = self._normalize_value(client_id)
+        if client_secret is not None:
+            api_params['clientSecret'] = self._normalize_value(client_secret)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=OAuth2WorkOS)
 
     def update_o_auth2_x(
         self,
@@ -4079,6 +4742,19 @@ class Project(Service):
         OAuth2Salesforce,
         OAuth2Yahoo,
         OAuth2HuggingFace,
+        OAuth2Instagram,
+        OAuth2Patreon,
+        OAuth2Strava,
+        OAuth2VK,
+        OAuth2Netlify,
+        OAuth2Railway,
+        OAuth2Reddit,
+        OAuth2Vercel,
+        OAuth2Atlassian,
+        OAuth2Line,
+        OAuth2Linear,
+        OAuth2Roblox,
+        OAuth2WorkOS,
         OAuth2Resend,
         OAuth2Cloudflare,
         OAuth2Linkedin,
@@ -4112,7 +4788,7 @@ class Project(Service):
             OAuth2 provider key. For example: github, google, apple.
         Returns
         -------
-        Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Webflow, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2HuggingFace, OAuth2Resend, OAuth2Cloudflare, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2TikTok, OAuth2Kakao, OAuth2Naver, OAuth2Vipps]
+        Union[OAuth2Github, OAuth2Discord, OAuth2Figma, OAuth2Dropbox, OAuth2Dailymotion, OAuth2Bitbucket, OAuth2Bitly, OAuth2Box, OAuth2Autodesk, OAuth2Google, OAuth2Zoom, OAuth2Zoho, OAuth2Yandex, OAuth2X, OAuth2WordPress, OAuth2Webflow, OAuth2Twitch, OAuth2Stripe, OAuth2Spotify, OAuth2Slack, OAuth2Podio, OAuth2Notion, OAuth2Salesforce, OAuth2Yahoo, OAuth2HuggingFace, OAuth2Instagram, OAuth2Patreon, OAuth2Strava, OAuth2VK, OAuth2Netlify, OAuth2Railway, OAuth2Reddit, OAuth2Vercel, OAuth2Atlassian, OAuth2Line, OAuth2Linear, OAuth2Roblox, OAuth2WorkOS, OAuth2Resend, OAuth2Cloudflare, OAuth2Linkedin, OAuth2Disqus, OAuth2Amazon, OAuth2Etsy, OAuth2Facebook, OAuth2Tradeshift, OAuth2Paypal, OAuth2Gitlab, OAuth2Authentik, OAuth2Auth0, OAuth2FusionAuth, OAuth2Keycloak, OAuth2Oidc, OAuth2Apple, OAuth2Okta, OAuth2Kick, OAuth2Microsoft, OAuth2TikTok, OAuth2Kakao, OAuth2Naver, OAuth2Vipps]
             API response as one of the typed response models
 
         Raises
@@ -4213,6 +4889,45 @@ class Project(Service):
 
         if response.get('$id') == 'huggingface':
             return self._parse_response(response, model=OAuth2HuggingFace)
+
+        if response.get('$id') == 'instagram':
+            return self._parse_response(response, model=OAuth2Instagram)
+
+        if response.get('$id') == 'patreon':
+            return self._parse_response(response, model=OAuth2Patreon)
+
+        if response.get('$id') == 'strava':
+            return self._parse_response(response, model=OAuth2Strava)
+
+        if response.get('$id') == 'vk':
+            return self._parse_response(response, model=OAuth2VK)
+
+        if response.get('$id') == 'netlify':
+            return self._parse_response(response, model=OAuth2Netlify)
+
+        if response.get('$id') == 'railway':
+            return self._parse_response(response, model=OAuth2Railway)
+
+        if response.get('$id') == 'reddit':
+            return self._parse_response(response, model=OAuth2Reddit)
+
+        if response.get('$id') == 'vercel':
+            return self._parse_response(response, model=OAuth2Vercel)
+
+        if response.get('$id') == 'atlassian':
+            return self._parse_response(response, model=OAuth2Atlassian)
+
+        if response.get('$id') == 'line':
+            return self._parse_response(response, model=OAuth2Line)
+
+        if response.get('$id') == 'linear':
+            return self._parse_response(response, model=OAuth2Linear)
+
+        if response.get('$id') == 'roblox':
+            return self._parse_response(response, model=OAuth2Roblox)
+
+        if response.get('$id') == 'workos':
+            return self._parse_response(response, model=OAuth2WorkOS)
 
         if response.get('$id') == 'resend':
             return self._parse_response(response, model=OAuth2Resend)

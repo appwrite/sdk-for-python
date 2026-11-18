@@ -104,6 +104,9 @@ class Sites(Service):
         deployment_retention: Optional[float] = None,
         scopes: Optional[List[ProjectKeyScopes]] = None,
         description: Optional[str] = None,
+        provider_comments: Optional[bool] = None,
+        provider_deployments: Optional[bool] = None,
+        provider_statuses: Optional[bool] = None,
     ) -> Site:
         """
         Create a new site.
@@ -143,7 +146,7 @@ class Sites(Service):
         provider_branch : Optional[str]
             Production branch for the repo linked to the site.
         provider_silent_mode : Optional[bool]
-            Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
+            Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, no comments or checks are posted to commits and pull requests.
         provider_root_directory : Optional[str]
             Path to site code in the linked repo.
         provider_branches : Optional[List[str]]
@@ -160,6 +163,12 @@ class Sites(Service):
             List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
         description : Optional[str]
             Optional description for the site.
+        provider_comments : Optional[bool]
+            Post a build summary on pull requests for the repo linked to the site. Commit statuses are still reported when disabled. Ignored in silent mode.
+        provider_deployments : Optional[bool]
+            Deploy every push that matches the branch and path rules for the repo linked to the site. When disabled, deploy manually.
+        provider_statuses : Optional[bool]
+            Report the build status on each commit for the repo linked to the site. Ignored in silent mode.
         Returns
         -------
         Site
@@ -227,6 +236,12 @@ class Sites(Service):
             api_params['scopes'] = self._normalize_value(scopes)
         if description is not None:
             api_params['description'] = self._normalize_value(description)
+        if provider_comments is not None:
+            api_params['providerComments'] = self._normalize_value(provider_comments)
+        if provider_deployments is not None:
+            api_params['providerDeployments'] = self._normalize_value(provider_deployments)
+        if provider_statuses is not None:
+            api_params['providerStatuses'] = self._normalize_value(provider_statuses)
 
         response = self.client.call(
             'post',
@@ -391,6 +406,9 @@ class Sites(Service):
         deployment_retention: Optional[float] = None,
         scopes: Optional[List[ProjectKeyScopes]] = None,
         description: Optional[str] = None,
+        provider_comments: Optional[bool] = None,
+        provider_deployments: Optional[bool] = None,
+        provider_statuses: Optional[bool] = None,
     ) -> Site:
         """
         Update site by its unique ID.
@@ -430,7 +448,7 @@ class Sites(Service):
         provider_branch : Optional[str]
             Production branch for the repo linked to the site.
         provider_silent_mode : Optional[bool]
-            Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
+            Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, no comments or checks are posted to commits and pull requests.
         provider_root_directory : Optional[str]
             Path to site code in the linked repo.
         provider_branches : Optional[List[str]]
@@ -447,6 +465,12 @@ class Sites(Service):
             List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
         description : Optional[str]
             Optional description for the site.
+        provider_comments : Optional[bool]
+            Post a build summary on pull requests for the repo linked to the site. Commit statuses are still reported when disabled. Ignored in silent mode.
+        provider_deployments : Optional[bool]
+            Deploy every push that matches the branch and path rules for the repo linked to the site. When disabled, deploy manually.
+        provider_statuses : Optional[bool]
+            Report the build status on each commit for the repo linked to the site. Ignored in silent mode.
         Returns
         -------
         Site
@@ -513,6 +537,12 @@ class Sites(Service):
             api_params['scopes'] = self._normalize_value(scopes)
         if description is not None:
             api_params['description'] = self._normalize_value(description)
+        if provider_comments is not None:
+            api_params['providerComments'] = self._normalize_value(provider_comments)
+        if provider_deployments is not None:
+            api_params['providerDeployments'] = self._normalize_value(provider_deployments)
+        if provider_statuses is not None:
+            api_params['providerStatuses'] = self._normalize_value(provider_statuses)
 
         response = self.client.call(
             'put',
