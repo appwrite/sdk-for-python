@@ -601,6 +601,106 @@ class TeamsServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_get_photo(self, m):
+        data = bytearray()
+        headers = {'Content-Type': 'application/octet-stream'}
+        m.request(
+            'GET',
+            requests_mock.ANY,
+            body=data,
+            headers=headers,
+        )
+        response = self.teams.get_photo(
+            '<TEAM_ID>',
+            width=1,
+            height=1,
+            quality=1,
+            output='png',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/teams/<TEAM_ID>/photo',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'width': ['1'],
+                'height': ['1'],
+                'quality': ['1'],
+                'output': ['png'],
+            },
+        )
+        self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
+    def test_update_photo(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "VIP",
+            "total": 7.0,
+            "prefs": {},
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PUT',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.teams.update_photo(
+            '<TEAM_ID>',
+            InputFile.from_bytes(bytearray(), "example.file"),
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/teams/<TEAM_ID>/photo',
+        )
+        sent = dict(
+            re.findall(
+                r'form-data; name="([^"\[]+)[^\r\n]*\r\n(?:[^\r\n]+\r\n)*\r\n(.*?)\r\n--',
+                request.body.decode('latin-1'),
+                re.S,
+            )
+        )
+        self.assertEqual(
+            sent,
+            {
+                'file': '',
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_delete_photo(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'DELETE',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.teams.delete_photo(
+            '<TEAM_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/teams/<TEAM_ID>/photo',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
+        self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
     def test_get_prefs(self, m):
         data = {}
         headers = {'Content-Type': 'application/json'}

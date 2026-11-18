@@ -82,6 +82,9 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerBranch": "main",
             "providerRootDirectory": "functions\/helloWorld",
             "providerSilentMode": True,
+            "providerComments": True,
+            "providerDeployments": True,
+            "providerStatuses": True,
             "providerBranches": [],
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
@@ -120,6 +123,9 @@ class FunctionsServiceTest(unittest.TestCase):
             deployment_retention=1,
             interval=1,
             description='<DESCRIPTION>',
+            provider_comments=False,
+            provider_deployments=False,
+            provider_statuses=False,
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -155,6 +161,9 @@ class FunctionsServiceTest(unittest.TestCase):
                 'deploymentRetention': 1,
                 'interval': 1,
                 'description': '<DESCRIPTION>',
+                'providerComments': False,
+                'providerDeployments': False,
+                'providerStatuses': False,
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -255,6 +264,9 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerBranch": "main",
             "providerRootDirectory": "functions\/helloWorld",
             "providerSilentMode": True,
+            "providerComments": True,
+            "providerDeployments": True,
+            "providerStatuses": True,
             "providerBranches": [],
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
@@ -313,6 +325,9 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerBranch": "main",
             "providerRootDirectory": "functions\/helloWorld",
             "providerSilentMode": True,
+            "providerComments": True,
+            "providerDeployments": True,
+            "providerStatuses": True,
             "providerBranches": [],
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
@@ -351,6 +366,9 @@ class FunctionsServiceTest(unittest.TestCase):
             deployment_retention=1,
             interval=1,
             description='<DESCRIPTION>',
+            provider_comments=False,
+            provider_deployments=False,
+            provider_statuses=False,
             email_enabled=False,
         )
         request = m.last_request
@@ -386,6 +404,9 @@ class FunctionsServiceTest(unittest.TestCase):
                 'deploymentRetention': 1,
                 'interval': 1,
                 'description': '<DESCRIPTION>',
+                'providerComments': False,
+                'providerDeployments': False,
+                'providerStatuses': False,
                 'emailEnabled': False,
             },
         )
@@ -446,6 +467,9 @@ class FunctionsServiceTest(unittest.TestCase):
             "providerBranch": "main",
             "providerRootDirectory": "functions\/helloWorld",
             "providerSilentMode": True,
+            "providerComments": True,
+            "providerDeployments": True,
+            "providerStatuses": True,
             "providerBranches": [],
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",

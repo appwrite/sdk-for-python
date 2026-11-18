@@ -1117,6 +1117,43 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_update_o_auth2_atlassian(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "uQ7mZ3s0000000000000000000000000",
+            "clientSecret": "ATOA0000000000000000000000000000000000000000000000000000000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_atlassian(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/atlassian',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_o_auth2_auth0(self, m):
         data = {
             "$id": "github",
@@ -1850,6 +1887,43 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_update_o_auth2_instagram(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "00000000000000000000000000000000",
+            "clientSecret": "00000000000000000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_instagram(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/instagram',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_o_auth2_kakao(self, m):
         data = {
             "$id": "github",
@@ -1970,6 +2044,80 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_update_o_auth2_line(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "1650000000",
+            "clientSecret": "a1b2c3d4e5f600000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_line(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/line',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_o_auth2_linear(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "5e1c0000000000000000000000000000",
+            "clientSecret": "9f8e7d6c5b4a00000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_linear(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/linear',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_o_auth2_linkedin(self, m):
         data = {
             "$id": "github",
@@ -2074,6 +2222,43 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(
             unquote(url.path),
             '/v1/project/oauth2/naver',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_o_auth2_netlify(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "00000000000000000000000000000000",
+            "clientSecret": "00000000000000000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_netlify(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/netlify',
         )
         sent = json.loads(request.body or '{}')
         self.assertEqual(
@@ -2224,6 +2409,43 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_update_o_auth2_patreon(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "00000000000000000000000000000000",
+            "clientSecret": "00000000000000000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_patreon(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/patreon',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_o_auth2_paypal(self, m):
         data = {
             "$id": "github",
@@ -2335,6 +2557,80 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_update_o_auth2_railway(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "00000000000000000000000000000000",
+            "clientSecret": "00000000000000000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_railway(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/railway',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_o_auth2_reddit(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "aBcD0000000000000000aB",
+            "clientSecret": "xYz00000000000000000000000000a",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_reddit(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/reddit',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_o_auth2_resend(self, m):
         data = {
             "$id": "github",
@@ -2359,6 +2655,43 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(
             unquote(url.path),
             '/v1/project/oauth2/resend',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_o_auth2_roblox(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "1234567890123456789",
+            "clientSecret": "RBX-0000000000000000000000000000000000000000000000000000000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_roblox(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/roblox',
         )
         sent = json.loads(request.body or '{}')
         self.assertEqual(
@@ -2473,6 +2806,43 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(
             unquote(url.path),
             '/v1/project/oauth2/spotify',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_o_auth2_strava(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "00000000000000000000000000000000",
+            "clientSecret": "00000000000000000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_strava(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/strava',
         )
         sent = json.loads(request.body or '{}')
         self.assertEqual(
@@ -2671,6 +3041,43 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_update_o_auth2_vercel(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "cl_0000000000000000000000000000000",
+            "clientSecret": "vc_0000000000000000000000000000000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_vercel(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/vercel',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_o_auth2_vipps(self, m):
         data = {
             "$id": "github",
@@ -2745,6 +3152,43 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_update_o_auth2_vk(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "00000000000000000000000000000000",
+            "clientSecret": "00000000000000000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_vk(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/vk',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_update_o_auth2_webflow(self, m):
         data = {
             "$id": "github",
@@ -2806,6 +3250,43 @@ class ProjectServiceTest(unittest.TestCase):
         self.assertEqual(
             unquote(url.path),
             '/v1/project/oauth2/wordpress',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'clientId': '<CLIENT_ID>',
+                'clientSecret': '<CLIENT_SECRET>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_o_auth2_work_os(self, m):
+        data = {
+            "$id": "github",
+            "enabled": True,
+            "clientId": "client_01H0000000000000000000000",
+            "clientSecret": "wos0000000000000000000000000000000000000000000000000000000000000",
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_o_auth2_work_os(
+            client_id='<CLIENT_ID>',
+            client_secret='<CLIENT_SECRET>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/oauth2/workos',
         )
         sent = json.loads(request.body or '{}')
         self.assertEqual(

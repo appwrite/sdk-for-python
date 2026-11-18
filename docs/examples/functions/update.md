@@ -37,6 +37,9 @@ result: Function = functions.update(
     deployment_retention = 0, # optional
     interval = 0, # optional
     description = '<DESCRIPTION>', # optional
+    provider_comments = False, # optional
+    provider_deployments = False, # optional
+    provider_statuses = False, # optional
     email_enabled = False # optional
 )
 

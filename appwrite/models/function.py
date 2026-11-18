@@ -71,6 +71,12 @@ class Function(AppwriteModel):
         Path to function in VCS (Version Control System) repository
     providersilentmode : bool
         Is VCS (Version Control System) connection is in silent mode? When in silence mode, no comments will be posted on the repository pull or merge requests
+    providercomments : bool
+        Whether a build summary is posted on pull requests. Commit statuses are still reported when disabled.
+    providerdeployments : bool
+        Whether pushes that match the branch and path rules are deployed automatically.
+    providerstatuses : bool
+        Whether the build status is reported on each commit.
     providerbranches : List[Any]
         List of branch name patterns that trigger automatic deployments. Supports glob wildcards. Empty list deploys on all branches.
     providerpaths : List[Any]
@@ -113,6 +119,9 @@ class Function(AppwriteModel):
     providerbranch: str = Field(..., alias='providerBranch')
     providerrootdirectory: str = Field(..., alias='providerRootDirectory')
     providersilentmode: bool = Field(..., alias='providerSilentMode')
+    providercomments: bool = Field(..., alias='providerComments')
+    providerdeployments: bool = Field(..., alias='providerDeployments')
+    providerstatuses: bool = Field(..., alias='providerStatuses')
     providerbranches: List[Any] = Field(..., alias='providerBranches')
     providerpaths: List[Any] = Field(..., alias='providerPaths')
     buildspecification: str = Field(..., alias='buildSpecification')
@@ -184,6 +193,12 @@ class Function(AppwriteModel):
             data['providerRootDirectory'] = ''
         if 'providerSilentMode' not in data and 'providersilentmode' not in data:
             data['providerSilentMode'] = False
+        if 'providerComments' not in data and 'providercomments' not in data:
+            data['providerComments'] = True
+        if 'providerDeployments' not in data and 'providerdeployments' not in data:
+            data['providerDeployments'] = True
+        if 'providerStatuses' not in data and 'providerstatuses' not in data:
+            data['providerStatuses'] = True
         if 'providerBranches' not in data and 'providerbranches' not in data:
             data['providerBranches'] = []
         if 'providerPaths' not in data and 'providerpaths' not in data:

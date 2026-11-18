@@ -82,6 +82,9 @@ class SitesServiceTest(unittest.TestCase):
             "providerBranch": "main",
             "providerRootDirectory": "sites\/helloWorld",
             "providerSilentMode": True,
+            "providerComments": True,
+            "providerDeployments": True,
+            "providerStatuses": True,
             "providerBranches": [],
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
@@ -125,6 +128,9 @@ class SitesServiceTest(unittest.TestCase):
             deployment_retention=1,
             scopes=[],
             description='<DESCRIPTION>',
+            provider_comments=False,
+            provider_deployments=False,
+            provider_statuses=False,
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -161,6 +167,9 @@ class SitesServiceTest(unittest.TestCase):
                 'deploymentRetention': 1,
                 'scopes': [],
                 'description': '<DESCRIPTION>',
+                'providerComments': False,
+                'providerDeployments': False,
+                'providerStatuses': False,
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -261,6 +270,9 @@ class SitesServiceTest(unittest.TestCase):
             "providerBranch": "main",
             "providerRootDirectory": "sites\/helloWorld",
             "providerSilentMode": True,
+            "providerComments": True,
+            "providerDeployments": True,
+            "providerStatuses": True,
             "providerBranches": [],
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
@@ -323,6 +335,9 @@ class SitesServiceTest(unittest.TestCase):
             "providerBranch": "main",
             "providerRootDirectory": "sites\/helloWorld",
             "providerSilentMode": True,
+            "providerComments": True,
+            "providerDeployments": True,
+            "providerStatuses": True,
             "providerBranches": [],
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
@@ -366,6 +381,9 @@ class SitesServiceTest(unittest.TestCase):
             deployment_retention=1,
             scopes=[],
             description='<DESCRIPTION>',
+            provider_comments=False,
+            provider_deployments=False,
+            provider_statuses=False,
         )
         request = m.last_request
         url = urlsplit(request.url)
@@ -401,6 +419,9 @@ class SitesServiceTest(unittest.TestCase):
                 'deploymentRetention': 1,
                 'scopes': [],
                 'description': '<DESCRIPTION>',
+                'providerComments': False,
+                'providerDeployments': False,
+                'providerStatuses': False,
             },
         )
         self.assertEqual(response.to_dict(), data)
@@ -460,6 +481,9 @@ class SitesServiceTest(unittest.TestCase):
             "providerBranch": "main",
             "providerRootDirectory": "sites\/helloWorld",
             "providerSilentMode": True,
+            "providerComments": True,
+            "providerDeployments": True,
+            "providerStatuses": True,
             "providerBranches": [],
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
@@ -528,6 +552,9 @@ class SitesServiceTest(unittest.TestCase):
             "providerBranch": "main",
             "providerRootDirectory": "sites\/helloWorld",
             "providerSilentMode": True,
+            "providerComments": True,
+            "providerDeployments": True,
+            "providerStatuses": True,
             "providerBranches": [],
             "providerPaths": [],
             "buildSpecification": "s-1vcpu-512mb",
