@@ -13,7 +13,7 @@ messaging = Messaging(client)
 result: Provider = messaging.create_bird_sms_provider(
     provider_id = '<PROVIDER_ID>',
     name = '<NAME>',
-    from = '<FROM>', # optional
+    xfrom = '<FROM>', # optional
     api_key = '<API_KEY>', # optional
     enabled = False # optional
 )

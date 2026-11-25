@@ -15,7 +15,7 @@ result: Provider = messaging.update_bird_sms_provider(
     name = '<NAME>', # optional
     enabled = False, # optional
     api_key = '<API_KEY>', # optional
-    from = '<FROM>' # optional
+    xfrom = '<FROM>' # optional
 )
 
 print(result.model_dump())
