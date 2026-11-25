@@ -23,6 +23,8 @@ from .deployment_list import DeploymentList
 from .execution_list import ExecutionList
 from .project_list import ProjectList
 from .webhook_list import WebhookList
+from .monitor_list import MonitorList
+from .alert_list import AlertList
 from .key_list import KeyList
 from .country_list import CountryList
 from .continent_list import ContinentList
@@ -131,6 +133,8 @@ from .project_auth_method import ProjectAuthMethod
 from .project_service import ProjectService
 from .project_protocol import ProjectProtocol
 from .webhook import Webhook
+from .monitor import Monitor
+from .alert import Alert
 from .key import Key
 from .ephemeral_key import EphemeralKey
 from .mock_number import MockNumber
@@ -369,6 +373,8 @@ __all__ = [
     'ExecutionList',
     'ProjectList',
     'WebhookList',
+    'MonitorList',
+    'AlertList',
     'KeyList',
     'CountryList',
     'ContinentList',
@@ -477,6 +483,8 @@ __all__ = [
     'ProjectService',
     'ProjectProtocol',
     'Webhook',
+    'Monitor',
+    'Alert',
     'Key',
     'EphemeralKey',
     'MockNumber',

@@ -32,6 +32,10 @@ from ..enums.on_duplicate import OnDuplicate
 from ..enums.firebase_migration_resource import FirebaseMigrationResource
 from ..enums.n_host_migration_resource import NHostMigrationResource
 from ..enums.supabase_migration_resource import SupabaseMigrationResource
+from ..enums.monitor_record import MonitorRecord
+from ..enums.monitor_severity import MonitorSeverity
+from ..enums.monitor_method import MonitorMethod
+from ..enums.monitor_tls_mode import MonitorTlsMode
 from ..enums.region import Region
 from ..enums.project_auth_method_id import ProjectAuthMethodId
 from ..enums.environment_resource import EnvironmentResource
@@ -74,6 +78,13 @@ from ..enums.deployment_status import DeploymentStatus
 from ..enums.execution_resource_type import ExecutionResourceType
 from ..enums.execution_trigger import ExecutionTrigger
 from ..enums.execution_status import ExecutionStatus
+from ..enums.monitor_type import MonitorType
+from ..enums.monitor_resource_type import MonitorResourceType
+from ..enums.monitor_status import MonitorStatus
+from ..enums.monitor_result import MonitorResult
+from ..enums.alert_status import AlertStatus
+from ..enums.alert_metric import AlertMetric
+from ..enums.alert_comparator import AlertComparator
 from ..enums.o_auth2_github_prompt import OAuth2GithubPrompt
 from ..enums.o_auth2_discord_prompt import OAuth2DiscordPrompt
 from ..enums.o_auth2_google_prompt import OAuth2GooglePrompt
@@ -193,6 +204,18 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, SupabaseMigrationResource):
+            return o.value
+
+        if isinstance(o, MonitorRecord):
+            return o.value
+
+        if isinstance(o, MonitorSeverity):
+            return o.value
+
+        if isinstance(o, MonitorMethod):
+            return o.value
+
+        if isinstance(o, MonitorTlsMode):
             return o.value
 
         if isinstance(o, Region):
@@ -319,6 +342,27 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, ExecutionStatus):
+            return o.value
+
+        if isinstance(o, MonitorType):
+            return o.value
+
+        if isinstance(o, MonitorResourceType):
+            return o.value
+
+        if isinstance(o, MonitorStatus):
+            return o.value
+
+        if isinstance(o, MonitorResult):
+            return o.value
+
+        if isinstance(o, AlertStatus):
+            return o.value
+
+        if isinstance(o, AlertMetric):
+            return o.value
+
+        if isinstance(o, AlertComparator):
             return o.value
 
         if isinstance(o, OAuth2GithubPrompt):
