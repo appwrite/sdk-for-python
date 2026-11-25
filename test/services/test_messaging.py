@@ -954,6 +954,196 @@ class MessagingServiceTest(unittest.TestCase):
         self.assertEqual(response.to_dict(), data)
 
     @requests_mock.Mocker()
+    def test_create_bird_email_provider(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "Mailgun",
+            "provider": "mailgun",
+            "enabled": True,
+            "type": "sms",
+            "credentials": {},
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'POST',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.messaging.create_bird_email_provider(
+            '<PROVIDER_ID>',
+            '<NAME>',
+            api_key='<API_KEY>',
+            from_name='<FROM_NAME>',
+            from_email='email@example.com',
+            reply_to_name='<REPLY_TO_NAME>',
+            reply_to_email='email@example.com',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/messaging/providers/bird-email',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'providerId': '<PROVIDER_ID>',
+                'name': '<NAME>',
+                'apiKey': '<API_KEY>',
+                'fromName': '<FROM_NAME>',
+                'fromEmail': 'email@example.com',
+                'replyToName': '<REPLY_TO_NAME>',
+                'replyToEmail': 'email@example.com',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_bird_email_provider(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "Mailgun",
+            "provider": "mailgun",
+            "enabled": True,
+            "type": "sms",
+            "credentials": {},
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.messaging.update_bird_email_provider(
+            '<PROVIDER_ID>',
+            name='<NAME>',
+            enabled=False,
+            api_key='<API_KEY>',
+            from_name='<FROM_NAME>',
+            from_email='email@example.com',
+            reply_to_name='<REPLY_TO_NAME>',
+            reply_to_email='email@example.com',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/messaging/providers/bird-email/<PROVIDER_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'enabled': False,
+                'apiKey': '<API_KEY>',
+                'fromName': '<FROM_NAME>',
+                'fromEmail': 'email@example.com',
+                'replyToName': '<REPLY_TO_NAME>',
+                'replyToEmail': 'email@example.com',
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_bird_sms_provider(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "Mailgun",
+            "provider": "mailgun",
+            "enabled": True,
+            "type": "sms",
+            "credentials": {},
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'POST',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.messaging.create_bird_sms_provider(
+            '<PROVIDER_ID>',
+            '<NAME>',
+            xfrom='<FROM>',
+            api_key='<API_KEY>',
+            enabled=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/messaging/providers/bird-sms',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'providerId': '<PROVIDER_ID>',
+                'name': '<NAME>',
+                'from': '<FROM>',
+                'apiKey': '<API_KEY>',
+                'enabled': False,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_bird_sms_provider(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "Mailgun",
+            "provider": "mailgun",
+            "enabled": True,
+            "type": "sms",
+            "credentials": {},
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.messaging.update_bird_sms_provider(
+            '<PROVIDER_ID>',
+            name='<NAME>',
+            enabled=False,
+            api_key='<API_KEY>',
+            xfrom='<FROM>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/messaging/providers/bird-sms/<PROVIDER_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'enabled': False,
+                'apiKey': '<API_KEY>',
+                'from': '<FROM>',
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
     def test_create_fcm_provider(self, m):
         data = {
             "$id": "5e5ea5c16897e",

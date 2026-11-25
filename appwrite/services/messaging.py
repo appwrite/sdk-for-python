@@ -1165,6 +1165,282 @@ class Messaging(Service):
 
         return self._parse_response(response, model=Provider)
 
+    def create_bird_email_provider(
+        self,
+        provider_id: str,
+        name: str,
+        api_key: Optional[str] = None,
+        from_name: Optional[str] = None,
+        from_email: Optional[str] = None,
+        reply_to_name: Optional[str] = None,
+        reply_to_email: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> Provider:
+        """
+        Create a new Bird email provider. It sends email through Bird's email API with a workspace API key that holds the `emails:write` scope.
+
+        Parameters
+        ----------
+        provider_id : str
+            Provider ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+        name : str
+            Provider name.
+        api_key : Optional[str]
+            Bird workspace API key.
+        from_name : Optional[str]
+            Sender Name.
+        from_email : Optional[str]
+            Sender email address. Its domain must be verified in the Bird workspace.
+        reply_to_name : Optional[str]
+            Name set in the reply to field for the mail. Default value is sender name.
+        reply_to_email : Optional[str]
+            Email set in the reply to field for the mail. Default value is sender email.
+        enabled : Optional[bool]
+            Set as enabled.
+        Returns
+        -------
+        Provider
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/messaging/providers/bird-email'
+        api_params = {}
+        if provider_id is None:
+            raise AppwriteException('Missing required parameter: "provider_id"')
+        if name is None:
+            raise AppwriteException('Missing required parameter: "name"')
+        api_params['providerId'] = self._normalize_value(provider_id)
+        api_params['name'] = self._normalize_value(name)
+        if api_key is not None:
+            api_params['apiKey'] = self._normalize_value(api_key)
+        if from_name is not None:
+            api_params['fromName'] = self._normalize_value(from_name)
+        if from_email is not None:
+            api_params['fromEmail'] = self._normalize_value(from_email)
+        if reply_to_name is not None:
+            api_params['replyToName'] = self._normalize_value(reply_to_name)
+        if reply_to_email is not None:
+            api_params['replyToEmail'] = self._normalize_value(reply_to_email)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Provider)
+
+    def update_bird_email_provider(
+        self,
+        provider_id: str,
+        name: Optional[str] = None,
+        enabled: Optional[bool] = None,
+        api_key: Optional[str] = None,
+        from_name: Optional[str] = None,
+        from_email: Optional[str] = None,
+        reply_to_name: Optional[str] = None,
+        reply_to_email: Optional[str] = None,
+    ) -> Provider:
+        """
+        Update a Bird email provider by its unique ID.
+
+        Parameters
+        ----------
+        provider_id : str
+            Provider ID.
+        name : Optional[str]
+            Provider name.
+        enabled : Optional[bool]
+            Set as enabled.
+        api_key : Optional[str]
+            Bird workspace API key.
+        from_name : Optional[str]
+            Sender Name.
+        from_email : Optional[str]
+            Sender email address. Its domain must be verified in the Bird workspace.
+        reply_to_name : Optional[str]
+            Name set in the Reply To field for the mail. Default value is Sender Name.
+        reply_to_email : Optional[str]
+            Email set in the Reply To field for the mail. Default value is Sender Email.
+        Returns
+        -------
+        Provider
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/messaging/providers/bird-email/{providerId}'
+        api_params = {}
+        if provider_id is None or provider_id == '':
+            raise AppwriteException('Missing required parameter: "provider_id"')
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
+        if name is not None:
+            api_params['name'] = self._normalize_value(name)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+        if api_key is not None:
+            api_params['apiKey'] = self._normalize_value(api_key)
+        if from_name is not None:
+            api_params['fromName'] = self._normalize_value(from_name)
+        if from_email is not None:
+            api_params['fromEmail'] = self._normalize_value(from_email)
+        if reply_to_name is not None:
+            api_params['replyToName'] = self._normalize_value(reply_to_name)
+        if reply_to_email is not None:
+            api_params['replyToEmail'] = self._normalize_value(reply_to_email)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Provider)
+
+    def create_bird_sms_provider(
+        self,
+        provider_id: str,
+        name: str,
+        xfrom: Optional[str] = None,
+        api_key: Optional[str] = None,
+        enabled: Optional[bool] = None,
+    ) -> Provider:
+        """
+        Create a new Bird SMS provider. It sends SMS through Bird with a workspace API key that holds the `sms:write` scope.
+
+        Parameters
+        ----------
+        provider_id : str
+            Provider ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+        name : str
+            Provider name.
+        xfrom : Optional[str]
+            Sender phone number or alphanumeric sender ID. Format phone numbers with a leading '+' and a country code, e.g., +16175551212.
+        api_key : Optional[str]
+            Bird workspace API key.
+        enabled : Optional[bool]
+            Set as enabled.
+        Returns
+        -------
+        Provider
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/messaging/providers/bird-sms'
+        api_params = {}
+        if provider_id is None:
+            raise AppwriteException('Missing required parameter: "provider_id"')
+        if name is None:
+            raise AppwriteException('Missing required parameter: "name"')
+        api_params['providerId'] = self._normalize_value(provider_id)
+        api_params['name'] = self._normalize_value(name)
+        if xfrom is not None:
+            api_params['from'] = self._normalize_value(xfrom)
+        if api_key is not None:
+            api_params['apiKey'] = self._normalize_value(api_key)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Provider)
+
+    def update_bird_sms_provider(
+        self,
+        provider_id: str,
+        name: Optional[str] = None,
+        enabled: Optional[bool] = None,
+        api_key: Optional[str] = None,
+        xfrom: Optional[str] = None,
+    ) -> Provider:
+        """
+        Update a Bird SMS provider by its unique ID.
+
+        Parameters
+        ----------
+        provider_id : str
+            Provider ID.
+        name : Optional[str]
+            Provider name.
+        enabled : Optional[bool]
+            Set as enabled.
+        api_key : Optional[str]
+            Bird workspace API key.
+        xfrom : Optional[str]
+            Sender phone number or alphanumeric sender ID. Format phone numbers with a leading '+' and a country code, e.g., +16175551212.
+        Returns
+        -------
+        Provider
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/messaging/providers/bird-sms/{providerId}'
+        api_params = {}
+        if provider_id is None or provider_id == '':
+            raise AppwriteException('Missing required parameter: "provider_id"')
+        api_path = api_path.replace('{providerId}', self._encode_path(provider_id))
+        if name is not None:
+            api_params['name'] = self._normalize_value(name)
+        if enabled is not None:
+            api_params['enabled'] = self._normalize_value(enabled)
+        if api_key is not None:
+            api_params['apiKey'] = self._normalize_value(api_key)
+        if xfrom is not None:
+            api_params['from'] = self._normalize_value(xfrom)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Provider)
+
     def create_fcm_provider(
         self,
         provider_id: str,
