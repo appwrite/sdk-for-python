@@ -4,6 +4,8 @@ from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 from ..exception import AppwriteException
 from appwrite.utils.deprecated import deprecated
 from ..models.organization import Organization as OrganizationModel
+from ..models.escalation_list import EscalationList
+from ..models.escalation import Escalation
 from ..models.app_installation_list import AppInstallationList
 from ..models.app_installation import AppInstallation
 from ..models.membership_list import MembershipList
@@ -125,6 +127,245 @@ class Organization(Service):
 
         api_path = '/organization'
         api_params = {}
+
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return response
+
+    def list_escalations(
+        self,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
+    ) -> EscalationList:
+        """
+        Get a list of your organization's escalations. Use `Query.search('search', term)` to search escalation IDs and names.
+
+        Parameters
+        ----------
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, repeat, search
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        Returns
+        -------
+        EscalationList
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/escalations'
+        api_params = {}
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=EscalationList)
+
+    def create_escalation(
+        self,
+        escalation_id: str,
+        name: str,
+        steps: List[Dict[str, Any]],
+        repeat: Optional[float] = None,
+    ) -> Escalation:
+        """
+        Create an escalation for your organization. A monitor using it notifies the escalation's steps one after another while its alert fires, each by email, push and in the console, until a member acknowledges the alert or it resolves. Each step waits its `delay` in seconds, after the alert fires for the first step and after the previous step for the others, then notifies the members holding its `roles` and those named in `userIds`. With `repeat`, the steps run again from the first, a monitor's cooldown after the last step.
+
+        Parameters
+        ----------
+        escalation_id : str
+            Escalation ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+        name : str
+            Escalation name. Max length: 128 chars.
+        steps : List[Dict[str, Any]]
+            Steps notified in order while nobody acknowledges the alert. Each step is an object with `delay` (seconds to wait before the step, 0 to 2592000, default 0), `roles` (organization roles such as `owner` or `developer`) and `userIds` (organization members who accepted their invitation). A step names each role and member at most once and needs at least one of `roles` or `userIds`. Maximum of 100 steps.
+        repeat : Optional[float]
+            How many more times the steps run from the first while nobody acknowledges the alert, between 0 and 9. Each round starts a monitor's cooldown after the last step.
+        Returns
+        -------
+        Escalation
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/escalations'
+        api_params = {}
+        if escalation_id is None:
+            raise AppwriteException('Missing required parameter: "escalation_id"')
+        if name is None:
+            raise AppwriteException('Missing required parameter: "name"')
+        if steps is None:
+            raise AppwriteException('Missing required parameter: "steps"')
+        api_params['escalationId'] = self._normalize_value(escalation_id)
+        api_params['name'] = self._normalize_value(name)
+        api_params['steps'] = self._normalize_value(steps)
+        if repeat is not None:
+            api_params['repeat'] = self._normalize_value(repeat)
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Escalation)
+
+    def get_escalation(
+        self,
+        escalation_id: str,
+    ) -> Escalation:
+        """
+        Get one of your organization's escalations by its ID.
+
+        Parameters
+        ----------
+        escalation_id : str
+            Escalation ID.
+        Returns
+        -------
+        Escalation
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/escalations/{escalationId}'
+        api_params = {}
+        if escalation_id is None or escalation_id == '':
+            raise AppwriteException('Missing required parameter: "escalation_id"')
+        api_path = api_path.replace('{escalationId}', self._encode_path(escalation_id))
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Escalation)
+
+    def update_escalation(
+        self,
+        escalation_id: str,
+        name: Optional[str] = None,
+        steps: Optional[List[Dict[str, Any]]] = None,
+        repeat: Optional[float] = None,
+    ) -> Escalation:
+        """
+        Update an escalation's name, steps or repeats; what you leave out stays as it is. Alerts already escalating keep the steps they started with; the next alert uses the new ones.
+
+        Parameters
+        ----------
+        escalation_id : str
+            Escalation ID.
+        name : Optional[str]
+            Escalation name. Max length: 128 chars.
+        steps : Optional[List[Dict[str, Any]]]
+            Steps notified in order while nobody acknowledges the alert. Each step is an object with `delay` (seconds to wait before the step, 0 to 2592000, default 0), `roles` (organization roles such as `owner` or `developer`) and `userIds` (organization members who accepted their invitation). A step names each role and member at most once and needs at least one of `roles` or `userIds`. Maximum of 100 steps.
+        repeat : Optional[float]
+            How many more times the steps run from the first while nobody acknowledges the alert, between 0 and 9. Each round starts a monitor's cooldown after the last step.
+        Returns
+        -------
+        Escalation
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/escalations/{escalationId}'
+        api_params = {}
+        if escalation_id is None or escalation_id == '':
+            raise AppwriteException('Missing required parameter: "escalation_id"')
+        api_path = api_path.replace('{escalationId}', self._encode_path(escalation_id))
+        if name is not None:
+            api_params['name'] = self._normalize_value(name)
+        if steps is not None:
+            api_params['steps'] = self._normalize_value(steps)
+        if repeat is not None:
+            api_params['repeat'] = self._normalize_value(repeat)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=Escalation)
+
+    def delete_escalation(
+        self,
+        escalation_id: str,
+    ) -> Dict[str, Any]:
+        """
+        Delete an escalation. An escalation that a monitor uses cannot be deleted: move the monitor to another escalation or to `notify` roles first. Open alerts keep the steps they started with.
+
+        Parameters
+        ----------
+        escalation_id : str
+            Escalation ID.
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/organization/escalations/{escalationId}'
+        api_params = {}
+        if escalation_id is None or escalation_id == '':
+            raise AppwriteException('Missing required parameter: "escalation_id"')
+        api_path = api_path.replace('{escalationId}', self._encode_path(escalation_id))
 
         response = self.client.call(
             'delete',
