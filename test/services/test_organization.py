@@ -263,6 +263,172 @@ class OrganizationServiceTest(unittest.TestCase):
         self.assertEqual(response, data)
 
     @requests_mock.Mocker()
+    def test_list_escalations(self, m):
+        data = {
+            "total": 5.0,
+            "escalations": [],
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'GET',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.organization.list_escalations(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/organization/escalations',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_escalation(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "Platform",
+            "steps": [],
+            "repeat": 2.0,
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'POST',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.organization.create_escalation(
+            '<ESCALATION_ID>',
+            '<NAME>',
+            [],
+            repeat=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/organization/escalations',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'escalationId': '<ESCALATION_ID>',
+                'name': '<NAME>',
+                'steps': [],
+                'repeat': 1,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_escalation(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "Platform",
+            "steps": [],
+            "repeat": 2.0,
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'GET',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.organization.get_escalation(
+            '<ESCALATION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/organization/escalations/<ESCALATION_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_escalation(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "Platform",
+            "steps": [],
+            "repeat": 2.0,
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.organization.update_escalation(
+            '<ESCALATION_ID>',
+            name='<NAME>',
+            steps=[],
+            repeat=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/organization/escalations/<ESCALATION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'steps': [],
+                'repeat': 1,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_delete_escalation(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'DELETE',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.organization.delete_escalation(
+            '<ESCALATION_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/organization/escalations/<ESCALATION_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
+        self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
     def test_list_installations(self, m):
         data = {
             "total": 5.0,
