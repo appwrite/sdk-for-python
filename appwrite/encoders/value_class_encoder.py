@@ -57,6 +57,7 @@ from ..enums.project_service_id import ProjectServiceId
 from ..enums.project_smtp_secure import ProjectSMTPSecure
 from ..enums.project_email_template_id import ProjectEmailTemplateId
 from ..enums.project_email_template_locale import ProjectEmailTemplateLocale
+from ..enums.video_codec_id import VideoCodecId
 from ..enums.invalidation_type import InvalidationType
 from ..enums.status_code import StatusCode
 from ..enums.proxy_resource_type import ProxyResourceType
@@ -69,6 +70,7 @@ from ..enums.tables_db_index_type import TablesDBIndexType
 from ..enums.password_hash import PasswordHash
 from ..enums.messaging_provider_type import MessagingProviderType
 from ..enums.vectors_db_index_type import VectorsDBIndexType
+from ..enums.video_output import VideoOutput
 from ..enums.database_type import DatabaseType
 from ..enums.database_status import DatabaseStatus
 from ..enums.attribute_status import AttributeStatus
@@ -100,6 +102,9 @@ from ..enums.proxy_rule_deployment_resource_type import ProxyRuleDeploymentResou
 from ..enums.proxy_rule_status import ProxyRuleStatus
 from ..enums.proxy_rule_protocol import ProxyRuleProtocol
 from ..enums.message_status import MessageStatus
+from ..enums.video_timeline_status import VideoTimelineStatus
+from ..enums.video_rendition_status import VideoRenditionStatus
+from ..enums.video_caption_status import VideoCaptionStatus
 from ..enums.billing_plan_group import BillingPlanGroup
 from ..enums.domain_transfer_status_enum import DomainTransferStatusEnum
 from ..enums.waf_rule_action import WafRuleAction
@@ -281,6 +286,9 @@ class ValueClassEncoder(json.JSONEncoder):
         if isinstance(o, ProjectEmailTemplateLocale):
             return o.value
 
+        if isinstance(o, VideoCodecId):
+            return o.value
+
         if isinstance(o, InvalidationType):
             return o.value
 
@@ -315,6 +323,9 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, VectorsDBIndexType):
+            return o.value
+
+        if isinstance(o, VideoOutput):
             return o.value
 
         if isinstance(o, DatabaseType):
@@ -408,6 +419,15 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, MessageStatus):
+            return o.value
+
+        if isinstance(o, VideoTimelineStatus):
+            return o.value
+
+        if isinstance(o, VideoRenditionStatus):
+            return o.value
+
+        if isinstance(o, VideoCaptionStatus):
             return o.value
 
         if isinstance(o, BillingPlanGroup):

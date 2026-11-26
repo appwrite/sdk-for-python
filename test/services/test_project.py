@@ -6120,3 +6120,188 @@ class ProjectServiceTest(unittest.TestCase):
         sent = json.loads(request.body or '{}')
         self.assertEqual(sent, {})
         self.assertEqual(response, data)
+
+    @requests_mock.Mocker()
+    def test_list_video_profiles(self, m):
+        data = {
+            "total": 5.0,
+            "profiles": [],
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'GET',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.list_video_profiles(
+            queries=[],
+            total=False,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/videos/profiles',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(
+            sent,
+            {
+                'total': ['false'],
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_create_video_profile(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "360p",
+            "codec": "h264",
+            "videoBitRate": 890000.0,
+            "audioBitRate": 64000.0,
+            "width": 640.0,
+            "height": 360.0,
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'POST',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.create_video_profile(
+            '<PROFILE_ID>',
+            '<NAME>',
+            1,
+            1,
+            1,
+            1,
+            codec='h264',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/videos/profiles',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'profileId': '<PROFILE_ID>',
+                'name': '<NAME>',
+                'videoBitRate': 1,
+                'audioBitRate': 1,
+                'width': 1,
+                'height': 1,
+                'codec': 'h264',
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_get_video_profile(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "360p",
+            "codec": "h264",
+            "videoBitRate": 890000.0,
+            "audioBitRate": 64000.0,
+            "width": 640.0,
+            "height": 360.0,
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'GET',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.get_video_profile(
+            '<PROFILE_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/videos/profiles/<PROFILE_ID>',
+        )
+        sent = parse_qs(url.query, keep_blank_values=True)
+        self.assertEqual(sent, {})
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_update_video_profile(self, m):
+        data = {
+            "$id": "5e5ea5c16897e",
+            "$createdAt": "2020-10-15T06:38:00.000+00:00",
+            "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+            "name": "360p",
+            "codec": "h264",
+            "videoBitRate": 890000.0,
+            "audioBitRate": 64000.0,
+            "width": 640.0,
+            "height": 360.0,
+        }
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'PATCH',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.update_video_profile(
+            '<PROFILE_ID>',
+            name='<NAME>',
+            video_bit_rate=1,
+            audio_bit_rate=1,
+            width=1,
+            height=1,
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/videos/profiles/<PROFILE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(
+            sent,
+            {
+                'name': '<NAME>',
+                'videoBitRate': 1,
+                'audioBitRate': 1,
+                'width': 1,
+                'height': 1,
+            },
+        )
+        self.assertEqual(response.to_dict(), data)
+
+    @requests_mock.Mocker()
+    def test_delete_video_profile(self, m):
+        data = ''
+        headers = {'Content-Type': 'application/json'}
+        m.request(
+            'DELETE',
+            requests_mock.ANY,
+            text=json.dumps(data),
+            headers=headers,
+        )
+        response = self.project.delete_video_profile(
+            '<PROFILE_ID>',
+        )
+        request = m.last_request
+        url = urlsplit(request.url)
+        self.assertEqual(
+            unquote(url.path),
+            '/v1/project/videos/profiles/<PROFILE_ID>',
+        )
+        sent = json.loads(request.body or '{}')
+        self.assertEqual(sent, {})
+        self.assertEqual(response, data)

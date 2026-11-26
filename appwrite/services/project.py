@@ -127,6 +127,9 @@ from ..enums.project_email_template_locale import ProjectEmailTemplateLocale
 from ..models.email_template import EmailTemplate
 from ..models.variable_list import VariableList
 from ..models.variable import Variable
+from ..models.video_profile_list import VideoProfileList
+from ..enums.video_codec_id import VideoCodecId
+from ..models.video_profile import VideoProfile
 
 T = TypeVar('T')
 
@@ -7622,6 +7625,273 @@ class Project(Service):
         if variable_id is None or variable_id == '':
             raise AppwriteException('Missing required parameter: "variable_id"')
         api_path = api_path.replace('{variableId}', self._encode_path(variable_id))
+
+        response = self.client.call(
+            'delete',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return response
+
+    def list_video_profiles(
+        self,
+        queries: Optional[List[str]] = None,
+        total: Optional[bool] = None,
+    ) -> VideoProfileList:
+        """
+        Get a list of video profiles in the current project (`GET /v1/project/videos/profiles`). Every profile is returned regardless of codec. Filter with `queries`, for example `Query.equal('codec', ['h264'])` for one encode ladder, or on `name`, `width`, `height`, `videoBitRate` and `audioBitRate`. Search with `Query.search()` on the `search` attribute.
+
+        Parameters
+        ----------
+        queries : Optional[List[str]]
+            Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, codec, width, height, videoBitRate, audioBitRate, search
+        total : Optional[bool]
+            When set to false, the total count returned will be 0 and will not be calculated.
+        Returns
+        -------
+        VideoProfileList
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/videos/profiles'
+        api_params = {}
+        if queries is not None:
+            api_params['queries'] = self._normalize_value(queries)
+        if total is not None:
+            api_params['total'] = self._normalize_value(total)
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=VideoProfileList)
+
+    def create_video_profile(
+        self,
+        profile_id: str,
+        name: str,
+        video_bit_rate: float,
+        audio_bit_rate: float,
+        width: float,
+        height: float,
+        codec: Optional[VideoCodecId] = None,
+    ) -> VideoProfile:
+        """
+        Create a video profile (`POST /v1/project/videos/profiles`) describing an encoding target: output dimensions, video/audio bitrates, and encode codec. Only codecs enabled on this instance are accepted; the default is `h264`. A disabled codec is rejected. Creating a profile with the same width, height, bitrates, and codec fails with `video_profile_already_exists`. Bitrates are in bits per second and must be multiples of 1000. Renditions are encoded against a profile.
+
+        Parameters
+        ----------
+        profile_id : str
+            Video profile ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+        name : str
+            Video profile name.
+        video_bit_rate : float
+            Target video bitrate in bits per second. Must be a multiple of 1000.
+        audio_bit_rate : float
+            Target audio bitrate in bits per second. Must be a multiple of 1000.
+        width : float
+            Target video width in pixels. Must be an even number.
+        height : float
+            Target video height in pixels. Must be an even number.
+        codec : Optional[VideoCodecId]
+            Video encode codec. Codecs not enabled on this instance are rejected. Defaults to `h264`.
+        Returns
+        -------
+        VideoProfile
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/videos/profiles'
+        api_params = {}
+        if profile_id is None:
+            raise AppwriteException('Missing required parameter: "profile_id"')
+        if name is None:
+            raise AppwriteException('Missing required parameter: "name"')
+        if video_bit_rate is None:
+            raise AppwriteException('Missing required parameter: "video_bit_rate"')
+        if audio_bit_rate is None:
+            raise AppwriteException('Missing required parameter: "audio_bit_rate"')
+        if width is None:
+            raise AppwriteException('Missing required parameter: "width"')
+        if height is None:
+            raise AppwriteException('Missing required parameter: "height"')
+        api_params['profileId'] = self._normalize_value(profile_id)
+        api_params['name'] = self._normalize_value(name)
+        api_params['videoBitRate'] = self._normalize_value(video_bit_rate)
+        api_params['audioBitRate'] = self._normalize_value(audio_bit_rate)
+        api_params['width'] = self._normalize_value(width)
+        api_params['height'] = self._normalize_value(height)
+        if codec is not None:
+            api_params['codec'] = self._normalize_value(codec)
+
+        response = self.client.call(
+            'post',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=VideoProfile)
+
+    def get_video_profile(
+        self,
+        profile_id: str,
+    ) -> VideoProfile:
+        """
+        Get a video profile by its unique ID (`GET /v1/project/videos/profiles/:profileId`).
+
+        Parameters
+        ----------
+        profile_id : str
+            Video profile unique ID.
+        Returns
+        -------
+        VideoProfile
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/videos/profiles/{profileId}'
+        api_params = {}
+        if profile_id is None or profile_id == '':
+            raise AppwriteException('Missing required parameter: "profile_id"')
+        api_path = api_path.replace('{profileId}', self._encode_path(profile_id))
+
+        response = self.client.call(
+            'get',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=VideoProfile)
+
+    def update_video_profile(
+        self,
+        profile_id: str,
+        name: Optional[str] = None,
+        video_bit_rate: Optional[float] = None,
+        audio_bit_rate: Optional[float] = None,
+        width: Optional[float] = None,
+        height: Optional[float] = None,
+    ) -> VideoProfile:
+        """
+        Update a video profile by its unique ID (`PATCH /v1/project/videos/profiles/:profileId`). Existing renditions are not re-encoded. Changing the profile onto the same width, height, bitrates, and codec as another profile fails with `video_profile_already_exists`.
+
+        Parameters
+        ----------
+        profile_id : str
+            Video profile unique ID.
+        name : Optional[str]
+            Video profile name.
+        video_bit_rate : Optional[float]
+            Target video bitrate in bits per second. Must be a multiple of 1000.
+        audio_bit_rate : Optional[float]
+            Target audio bitrate in bits per second. Must be a multiple of 1000.
+        width : Optional[float]
+            Target video width in pixels. Must be an even number.
+        height : Optional[float]
+            Target video height in pixels. Must be an even number.
+        Returns
+        -------
+        VideoProfile
+            API response as a typed Pydantic model
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/videos/profiles/{profileId}'
+        api_params = {}
+        if profile_id is None or profile_id == '':
+            raise AppwriteException('Missing required parameter: "profile_id"')
+        api_path = api_path.replace('{profileId}', self._encode_path(profile_id))
+        if name is not None:
+            api_params['name'] = self._normalize_value(name)
+        if video_bit_rate is not None:
+            api_params['videoBitRate'] = self._normalize_value(video_bit_rate)
+        if audio_bit_rate is not None:
+            api_params['audioBitRate'] = self._normalize_value(audio_bit_rate)
+        if width is not None:
+            api_params['width'] = self._normalize_value(width)
+        if height is not None:
+            api_params['height'] = self._normalize_value(height)
+
+        response = self.client.call(
+            'patch',
+            api_path,
+            {
+                'X-Appwrite-Project': self.client.get_config('project'),
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            },
+            api_params,
+        )
+
+        return self._parse_response(response, model=VideoProfile)
+
+    def delete_video_profile(
+        self,
+        profile_id: str,
+    ) -> Dict[str, Any]:
+        """
+        Delete a video profile by its unique ID (`DELETE /v1/project/videos/profiles/:profileId`). Renditions already encoded against it are left in place.
+
+        Parameters
+        ----------
+        profile_id : str
+            Video profile unique ID.
+        Returns
+        -------
+        Dict[str, Any]
+            API response as a dictionary
+
+        Raises
+        ------
+        AppwriteException
+            If API request fails
+        """
+
+        api_path = '/project/videos/profiles/{profileId}'
+        api_params = {}
+        if profile_id is None or profile_id == '':
+            raise AppwriteException('Missing required parameter: "profile_id"')
+        api_path = api_path.replace('{profileId}', self._encode_path(profile_id))
 
         response = self.client.call(
             'delete',
