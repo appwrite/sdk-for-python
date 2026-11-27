@@ -271,6 +271,10 @@ from .video_rendition import VideoRendition
 from .video_caption import VideoCaption
 from .activity_event import ActivityEvent
 from .additional_resource import AdditionalResource
+from .analytics_annotation import AnalyticsAnnotation
+from .analytics_metric import AnalyticsMetric
+from .analytics_metric_list import AnalyticsMetricList
+from .analytics_property import AnalyticsProperty
 from .backup_archive import BackupArchive
 from .dedicated_database_backup import DedicatedDatabaseBackup
 from .dedicated_database_backup_list import DedicatedDatabaseBackupList
@@ -346,6 +350,8 @@ from .oauth2_organization_list import Oauth2OrganizationList
 from .oauth2_consent_list import Oauth2ConsentList
 from .oauth2_consent_token_list import Oauth2ConsentTokenList
 from .activity_event_list import ActivityEventList
+from .analytics_property_list import AnalyticsPropertyList
+from .analytics_annotation_list import AnalyticsAnnotationList
 from .backup_archive_list import BackupArchiveList
 from .backup_policy_list import BackupPolicyList
 from .backup_restoration_list import BackupRestorationList
@@ -634,6 +640,10 @@ __all__ = [
     'VideoCaption',
     'ActivityEvent',
     'AdditionalResource',
+    'AnalyticsAnnotation',
+    'AnalyticsMetric',
+    'AnalyticsMetricList',
+    'AnalyticsProperty',
     'BackupArchive',
     'DedicatedDatabaseBackup',
     'DedicatedDatabaseBackupList',
@@ -709,6 +719,8 @@ __all__ = [
     'Oauth2ConsentList',
     'Oauth2ConsentTokenList',
     'ActivityEventList',
+    'AnalyticsPropertyList',
+    'AnalyticsAnnotationList',
     'BackupArchiveList',
     'BackupPolicyList',
     'BackupRestorationList',

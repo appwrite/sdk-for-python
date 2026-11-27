@@ -1,5 +1,13 @@
 # Change Log
 
+## 28.4.0
+
+* Added: `analytics` service to create, list, get, update and delete analytics properties
+* Added: `analytics.createEvent` to send events from a server, with `userId`, `ip` and `userAgent` overrides for API keys with the `analytics.write` scope
+* Added: `analytics.listMetrics` to query visitors, sessions, views and events over time or broken down by a dimension
+* Added: `analytics.listAnnotations`, `createAnnotation`, `getAnnotation`, `updateAnnotation` and `deleteAnnotation`
+* Added: `AnalyticsProperty`, `AnalyticsAnnotation` and `AnalyticsMetric` models, their list models, and the `AnalyticsDimension`, `AnalyticsInterval` and `AnalyticsPropertyType` enums
+
 ## 28.3.0
 
 * Added: `videos` service to create, list, get, update and delete videos from files in Storage
