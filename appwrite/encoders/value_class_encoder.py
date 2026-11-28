@@ -4,6 +4,9 @@ from ..enums.authenticator_type import AuthenticatorType
 from ..enums.authentication_factor import AuthenticationFactor
 from ..enums.id_token_provider import IdTokenProvider
 from ..enums.o_auth_provider import OAuthProvider
+from ..enums.analytics_property_type import AnalyticsPropertyType
+from ..enums.analytics_interval import AnalyticsInterval
+from ..enums.analytics_dimension import AnalyticsDimension
 from ..enums.browser import Browser
 from ..enums.credit_card import CreditCard
 from ..enums.flag import Flag
@@ -125,6 +128,15 @@ class ValueClassEncoder(json.JSONEncoder):
             return o.value
 
         if isinstance(o, OAuthProvider):
+            return o.value
+
+        if isinstance(o, AnalyticsPropertyType):
+            return o.value
+
+        if isinstance(o, AnalyticsInterval):
+            return o.value
+
+        if isinstance(o, AnalyticsDimension):
             return o.value
 
         if isinstance(o, Browser):
